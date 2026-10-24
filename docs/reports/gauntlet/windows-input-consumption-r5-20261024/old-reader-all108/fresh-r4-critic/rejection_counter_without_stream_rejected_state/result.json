@@ -1,0 +1,131 @@
+{
+  "group": "fresh-r4-critic",
+  "name": "rejection_counter_without_stream_rejected_state",
+  "expected_complete": false,
+  "actual_complete": true,
+  "expectation_met": false,
+  "source_basis": "InputStream rejection increments rejected before synchronous Match input_stream_rejected hook; a rejection counter1 cannot have stream_rejected0.",
+  "prior_expectation": null,
+  "result": {
+    "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+    "diagnostic_complete": true,
+    "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+    "roles": {
+      "client": {
+        "records": 7,
+        "coverage": [
+          "client_attempt",
+          "client_connected",
+          "client_tick",
+          "input_send_called",
+          "ready",
+          "snapshot_applied",
+          "welcome_received"
+        ],
+        "counters": {
+          "client_attempt": 1,
+          "client_connected": 1,
+          "client_tick": 2,
+          "input_send_called": 1,
+          "ready": 1,
+          "snapshot_applied": 1,
+          "welcome_received": 1
+        },
+        "max_observation_gap_msec": 1000,
+        "max_snapshot_age_msec": 3000,
+        "pending_saturation_indices": [],
+        "accepted_events": [],
+        "consumed_events": [],
+        "expiry_events": [],
+        "disconnect_events": [],
+        "welcome_events": [
+          {
+            "transport_id": 9,
+            "local_attempt": 1,
+            "local_id": 1,
+            "wall_unix_msec": 104000
+          }
+        ],
+        "binding_events": [],
+        "local_attempts": 1
+      },
+      "authority": {
+        "records": 8,
+        "coverage": [
+          "authority_tick",
+          "input_accepted",
+          "input_consumed",
+          "input_received",
+          "input_stream_rejected",
+          "peer_bound",
+          "peer_connected",
+          "ready"
+        ],
+        "counters": {
+          "authority_tick": 1,
+          "input_accepted": 1,
+          "input_consumed": 1,
+          "input_received": 2,
+          "input_stream_rejected": 1,
+          "peer_bound": 1,
+          "peer_connected": 1,
+          "ready": 1
+        },
+        "max_observation_gap_msec": 5000,
+        "max_snapshot_age_msec": -1,
+        "pending_saturation_indices": [],
+        "accepted_events": [
+          {
+            "index": 6,
+            "count": 1,
+            "epoch": 1,
+            "fire": 1,
+            "first": 1,
+            "last": 1,
+            "moving": 0,
+            "reload": 0,
+            "wall_msec": 9000
+          }
+        ],
+        "consumed_events": [
+          {
+            "index": 7,
+            "actor": 1,
+            "fire": true,
+            "generation": 1,
+            "move": [
+              0.0,
+              0.0
+            ],
+            "peer": 9,
+            "reload": false,
+            "sequence": 1,
+            "wall_msec": 10000
+          }
+        ],
+        "expiry_events": [],
+        "disconnect_events": [],
+        "welcome_events": [],
+        "binding_events": [
+          {
+            "peer": 9,
+            "generation": 1,
+            "bound_actor": 1,
+            "wall_unix_msec": 103000
+          }
+        ],
+        "local_attempts": 0
+      }
+    },
+    "errors": [],
+    "attempt_generation_links": [
+      {
+        "client_local_attempt": 1,
+        "peer": 9,
+        "generation": 1,
+        "bound_actor": 1,
+        "wall_unix_msec": 103000
+      }
+    ]
+  }
+}

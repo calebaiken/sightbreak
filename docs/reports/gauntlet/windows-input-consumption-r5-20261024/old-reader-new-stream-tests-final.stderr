@@ -1,0 +1,111 @@
+test_empty_array_has_no_endpoints_but_nondictionaries_are_observable (__main__.InputObservationStreamControls.test_empty_array_has_no_endpoints_but_nondictionaries_are_observable) ... 
+  test_empty_array_has_no_endpoints_but_nondictionaries_are_observable (__main__.InputObservationStreamControls.test_empty_array_has_no_endpoints_but_nondictionaries_are_observable) (count=0, first=21, last=21) ... FAIL
+  test_empty_array_has_no_endpoints_but_nondictionaries_are_observable (__main__.InputObservationStreamControls.test_empty_array_has_no_endpoints_but_nondictionaries_are_observable) (count=0, first=-1, last=21) ... FAIL
+test_hidden_metadata_calls_stay_inside_observed_time_interval (__main__.InputObservationStreamControls.test_hidden_metadata_calls_stay_inside_observed_time_interval) ... 
+  test_hidden_metadata_calls_stay_inside_observed_time_interval (__main__.InputObservationStreamControls.test_hidden_metadata_calls_stay_inside_observed_time_interval) (offset=-1) ... FAIL
+test_live_binding_round_epoch_change_keeps_rejection_state (__main__.InputObservationStreamControls.test_live_binding_round_epoch_change_keeps_rejection_state) ... FAIL
+test_only_fully_exposed_batches_need_a_fresh_endpoint (__main__.InputObservationStreamControls.test_only_fully_exposed_batches_need_a_fresh_endpoint) ... 
+  test_only_fully_exposed_batches_need_a_fresh_endpoint (__main__.InputObservationStreamControls.test_only_fully_exposed_batches_need_a_fresh_endpoint) (first=1, last=1, count=2) ... FAIL
+test_queue_window_bound_includes_valid_full_queue_and_later_ticks (__main__.InputObservationStreamControls.test_queue_window_bound_includes_valid_full_queue_and_later_ticks) ... 
+  test_queue_window_bound_includes_valid_full_queue_and_later_ticks (__main__.InputObservationStreamControls.test_queue_window_bound_includes_valid_full_queue_and_later_ticks) (index=-3) ... FAIL
+  test_queue_window_bound_includes_valid_full_queue_and_later_ticks (__main__.InputObservationStreamControls.test_queue_window_bound_includes_valid_full_queue_and_later_ticks) (index=-1) ... FAIL
+test_rejection_state_and_calls_agree_in_both_directions (__main__.InputObservationStreamControls.test_rejection_state_and_calls_agree_in_both_directions) ... FAIL
+test_single_command_is_fresh_and_inside_ack_window (__main__.InputObservationStreamControls.test_single_command_is_fresh_and_inside_ack_window) ... 
+  test_single_command_is_fresh_and_inside_ack_window (__main__.InputObservationStreamControls.test_single_command_is_fresh_and_inside_ack_window) (sequence=1) ... FAIL
+  test_single_command_is_fresh_and_inside_ack_window (__main__.InputObservationStreamControls.test_single_command_is_fresh_and_inside_ack_window) (sequence=122) ... FAIL
+test_unchanged_metadata_can_remain_older_than_current_interval (__main__.InputObservationStreamControls.test_unchanged_metadata_can_remain_older_than_current_interval) ... ok
+test_zero_peer_lobby_reset_retains_history_and_allows_new_rejections (__main__.InputObservationStreamControls.test_zero_peer_lobby_reset_retains_history_and_allows_new_rejections) ... ok
+test_zero_peers_alone_cannot_explain_state_reset_without_epoch_advance (__main__.InputObservationStreamControls.test_zero_peers_alone_cannot_explain_state_reset_without_epoch_advance) ... FAIL
+
+======================================================================
+FAIL: test_empty_array_has_no_endpoints_but_nondictionaries_are_observable (__main__.InputObservationStreamControls.test_empty_array_has_no_endpoints_but_nondictionaries_are_observable) (count=0, first=21, last=21)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-r5/.local/old-reader/scripts/test_input_consumption_stream.py", line 128, in test_empty_array_has_no_endpoints_but_nondictionaries_are_observable
+    self.assertEqual(result['diagnostic_complete'], expected, result['errors'])
+AssertionError: True != False : []
+
+======================================================================
+FAIL: test_empty_array_has_no_endpoints_but_nondictionaries_are_observable (__main__.InputObservationStreamControls.test_empty_array_has_no_endpoints_but_nondictionaries_are_observable) (count=0, first=-1, last=21)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-r5/.local/old-reader/scripts/test_input_consumption_stream.py", line 128, in test_empty_array_has_no_endpoints_but_nondictionaries_are_observable
+    self.assertEqual(result['diagnostic_complete'], expected, result['errors'])
+AssertionError: True != False : []
+
+======================================================================
+FAIL: test_hidden_metadata_calls_stay_inside_observed_time_interval (__main__.InputObservationStreamControls.test_hidden_metadata_calls_stay_inside_observed_time_interval) (offset=-1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-r5/.local/old-reader/scripts/test_input_consumption_stream.py", line 188, in test_hidden_metadata_calls_stay_inside_observed_time_interval
+    self.assertEqual(result['diagnostic_complete'], expected, result['errors'])
+AssertionError: True != False : []
+
+======================================================================
+FAIL: test_live_binding_round_epoch_change_keeps_rejection_state (__main__.InputObservationStreamControls.test_live_binding_round_epoch_change_keeps_rejection_state)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-r5/.local/old-reader/scripts/test_input_consumption_stream.py", line 171, in test_live_binding_round_epoch_change_keeps_rejection_state
+    self.assertFalse(self.report(rows)['diagnostic_complete'])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_only_fully_exposed_batches_need_a_fresh_endpoint (__main__.InputObservationStreamControls.test_only_fully_exposed_batches_need_a_fresh_endpoint) (first=1, last=1, count=2)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-r5/.local/old-reader/scripts/test_input_consumption_stream.py", line 110, in test_only_fully_exposed_batches_need_a_fresh_endpoint
+    self.assertEqual(result['diagnostic_complete'], expected, result['errors'])
+AssertionError: True != False : []
+
+======================================================================
+FAIL: test_queue_window_bound_includes_valid_full_queue_and_later_ticks (__main__.InputObservationStreamControls.test_queue_window_bound_includes_valid_full_queue_and_later_ticks) (index=-3)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-r5/.local/old-reader/scripts/test_input_consumption_stream.py", line 121, in test_queue_window_bound_includes_valid_full_queue_and_later_ticks
+    self.assertFalse(self.report(altered)['diagnostic_complete'])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_queue_window_bound_includes_valid_full_queue_and_later_ticks (__main__.InputObservationStreamControls.test_queue_window_bound_includes_valid_full_queue_and_later_ticks) (index=-1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-r5/.local/old-reader/scripts/test_input_consumption_stream.py", line 121, in test_queue_window_bound_includes_valid_full_queue_and_later_ticks
+    self.assertFalse(self.report(altered)['diagnostic_complete'])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_rejection_state_and_calls_agree_in_both_directions (__main__.InputObservationStreamControls.test_rejection_state_and_calls_agree_in_both_directions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-r5/.local/old-reader/scripts/test_input_consumption_stream.py", line 133, in test_rejection_state_and_calls_agree_in_both_directions
+    self.assertFalse(self.report(rows)['diagnostic_complete'])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_single_command_is_fresh_and_inside_ack_window (__main__.InputObservationStreamControls.test_single_command_is_fresh_and_inside_ack_window) (sequence=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-r5/.local/old-reader/scripts/test_input_consumption_stream.py", line 101, in test_single_command_is_fresh_and_inside_ack_window
+    self.assertEqual(result['diagnostic_complete'], expected, result['errors'])
+AssertionError: True != False : []
+
+======================================================================
+FAIL: test_single_command_is_fresh_and_inside_ack_window (__main__.InputObservationStreamControls.test_single_command_is_fresh_and_inside_ack_window) (sequence=122)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-r5/.local/old-reader/scripts/test_input_consumption_stream.py", line 101, in test_single_command_is_fresh_and_inside_ack_window
+    self.assertEqual(result['diagnostic_complete'], expected, result['errors'])
+AssertionError: True != False : []
+
+======================================================================
+FAIL: test_zero_peers_alone_cannot_explain_state_reset_without_epoch_advance (__main__.InputObservationStreamControls.test_zero_peers_alone_cannot_explain_state_reset_without_epoch_advance)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-r5/.local/old-reader/scripts/test_input_consumption_stream.py", line 176, in test_zero_peers_alone_cannot_explain_state_reset_without_epoch_advance
+    self.assertFalse(self.report(rows)['diagnostic_complete'])
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.113s
+
+FAILED (failures=11)

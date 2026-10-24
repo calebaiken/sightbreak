@@ -1,0 +1,1447 @@
+{
+  "scope": "Offline consistency only; old92 requirements explicitly adjudicated",
+  "source": "7d8ec7dda37764e0f45fd2ea1e8d330f84bc2508",
+  "reader_path": "/workspace/sightbreak-windows-input-consumption-r5/scripts/analyze_input_consumption.py",
+  "reader_sha256": "c0fe4d9f078a28043a7c89eaef2b0402ca03c486fb3a8c781040a5e6e517f7e0",
+  "cpu_affinity": [
+    4
+  ],
+  "cases": [
+    {
+      "group": "historical-independent-25",
+      "name": "coherent_independent_pipeline",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": true,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-source-corrected-independent-25",
+      "name": "coherent_independent_pipeline",
+      "expected_complete": true,
+      "actual_complete": true,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": true,
+        "r4_required_complete": true,
+        "r4_actual_complete": true,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-independent-25",
+      "name": "stale_receive",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-source-corrected-independent-25",
+      "name": "stale_receive",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-independent-25",
+      "name": "receive_wrong_epoch",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": true,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-source-corrected-independent-25",
+      "name": "receive_wrong_epoch",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately. Final R4 critic adjudicates hidden rejection counter1 with stream state0 in the same live epoch as impossible; reject this newly obsolete positive.",
+      "prior_expectation": {
+        "original_expected_complete": true,
+        "r4_required_complete": true,
+        "r4_actual_complete": true,
+        "r5_newly_obsolete": true
+      }
+    },
+    {
+      "group": "state-corrected-source-corrected-independent-25",
+      "name": "receive_wrong_epoch",
+      "expected_complete": true,
+      "actual_complete": true,
+      "expectation_met": true,
+      "source_basis": "Only stream_rejected becomes1 once the hidden rejection counter is1; source increments stream state before Match1068-1070 observes rejection. Same live epoch excludes replacement. Exact prior bytes remain above.",
+      "prior_expectation": null
+    },
+    {
+      "group": "historical-independent-25",
+      "name": "receive_impossible_sequence",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": true,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-source-corrected-independent-25",
+      "name": "receive_impossible_sequence",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately. Final R4 critic adjudicates hidden rejection counter1 with stream state0 in the same live epoch as impossible; reject this newly obsolete positive.",
+      "prior_expectation": {
+        "original_expected_complete": true,
+        "r4_required_complete": true,
+        "r4_actual_complete": true,
+        "r5_newly_obsolete": true
+      }
+    },
+    {
+      "group": "state-corrected-source-corrected-independent-25",
+      "name": "receive_impossible_sequence",
+      "expected_complete": true,
+      "actual_complete": true,
+      "expectation_met": true,
+      "source_basis": "Only stream_rejected becomes1 once the hidden rejection counter is1; source increments stream state before Match1068-1070 observes rejection. Same live epoch excludes replacement. Exact prior bytes remain above.",
+      "prior_expectation": null
+    },
+    {
+      "group": "historical-independent-25",
+      "name": "receive_missing_metadata",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-source-corrected-independent-25",
+      "name": "receive_missing_metadata",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-independent-25",
+      "name": "receive_unbound_different_peer",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-source-corrected-independent-25",
+      "name": "receive_unbound_different_peer",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-independent-25",
+      "name": "accepted_reversed_sequence_interval",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-source-corrected-independent-25",
+      "name": "accepted_reversed_sequence_interval",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-independent-25",
+      "name": "consumption_outside_accepted_batch",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": true,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-source-corrected-independent-25",
+      "name": "consumption_outside_accepted_batch",
+      "expected_complete": true,
+      "actual_complete": true,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": true,
+        "r4_required_complete": true,
+        "r4_actual_complete": true,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-independent-25",
+      "name": "consumption_before_receive_accept",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-source-corrected-independent-25",
+      "name": "consumption_before_receive_accept",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-independent-25",
+      "name": "client_send_different_transport",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-source-corrected-independent-25",
+      "name": "client_send_different_transport",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-independent-25",
+      "name": "client_send_unwelcomed_attempt",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-source-corrected-independent-25",
+      "name": "client_send_unwelcomed_attempt",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-independent-25",
+      "name": "client_send_different_actor",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-source-corrected-independent-25",
+      "name": "client_send_different_actor",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-independent-25",
+      "name": "client_send_epoch_disagrees_with_authority",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": true,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-source-corrected-independent-25",
+      "name": "client_send_epoch_disagrees_with_authority",
+      "expected_complete": true,
+      "actual_complete": true,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": true,
+        "r4_required_complete": true,
+        "r4_actual_complete": true,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-independent-25",
+      "name": "send_outside_pending_interval",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-source-corrected-independent-25",
+      "name": "send_outside_pending_interval",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-independent-25",
+      "name": "missing_consumption",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-source-corrected-independent-25",
+      "name": "missing_consumption",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-independent-25",
+      "name": "stale_consumption",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-source-corrected-independent-25",
+      "name": "stale_consumption",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-independent-25",
+      "name": "consumption_wrong_generation",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-source-corrected-independent-25",
+      "name": "consumption_wrong_generation",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-independent-25",
+      "name": "explicit_cap_truncation",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-source-corrected-independent-25",
+      "name": "explicit_cap_truncation",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-independent-25",
+      "name": "index_gap",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-source-corrected-independent-25",
+      "name": "index_gap",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-independent-25",
+      "name": "account_field",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-source-corrected-independent-25",
+      "name": "account_field",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-independent-25",
+      "name": "hidden_spatial_field",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-source-corrected-independent-25",
+      "name": "hidden_spatial_field",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-independent-25",
+      "name": "private_value_in_allowed_field",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-source-corrected-independent-25",
+      "name": "private_value_in_allowed_field",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-independent-25",
+      "name": "malformed_truncated_json",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-source-corrected-independent-25",
+      "name": "malformed_truncated_json",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-independent-25",
+      "name": "empty_logs",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-source-corrected-independent-25",
+      "name": "empty_logs",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-independent-25",
+      "name": "original_failed_windows_untraced",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-source-corrected-independent-25",
+      "name": "original_failed_windows_untraced",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-supplemental-4",
+      "name": "duplicate_index_record",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-source-corrected-supplemental-4",
+      "name": "duplicate_index_record",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-supplemental-4",
+      "name": "duplicate_json_key",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-source-corrected-supplemental-4",
+      "name": "duplicate_json_key",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-supplemental-4",
+      "name": "duplicate_consumption_sequence",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-source-corrected-supplemental-4",
+      "name": "duplicate_consumption_sequence",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-supplemental-4",
+      "name": "authority_expiry_stage_in_client_role",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-source-corrected-supplemental-4",
+      "name": "authority_expiry_stage_in_client_role",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-additional-9",
+      "name": "coherent_control",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": true,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-source-corrected-additional-9",
+      "name": "coherent_control",
+      "expected_complete": true,
+      "actual_complete": true,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": true,
+        "r4_required_complete": true,
+        "r4_actual_complete": true,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-additional-9",
+      "name": "bound_generation_never_connected",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-source-corrected-additional-9",
+      "name": "bound_generation_never_connected",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-additional-9",
+      "name": "bound_peer_never_connected",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-source-corrected-additional-9",
+      "name": "bound_peer_never_connected",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-additional-9",
+      "name": "binding_before_connection",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-source-corrected-additional-9",
+      "name": "binding_before_connection",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-additional-9",
+      "name": "same_generation_rebound_to_other_actor",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-source-corrected-additional-9",
+      "name": "same_generation_rebound_to_other_actor",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-additional-9",
+      "name": "first_accept_before_first_receive",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-source-corrected-additional-9",
+      "name": "first_accept_before_first_receive",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-additional-9",
+      "name": "one_command_two_sequence_endpoints",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-source-corrected-additional-9",
+      "name": "one_command_two_sequence_endpoints",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-additional-9",
+      "name": "welcome_claims_unobserved_attempt",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-source-corrected-additional-9",
+      "name": "welcome_claims_unobserved_attempt",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-additional-9",
+      "name": "accepted_unordered_two_command_batch",
+      "expected_complete": true,
+      "actual_complete": true,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": true,
+        "r4_required_complete": true,
+        "r4_actual_complete": true,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-source-corrected-additional-9",
+      "name": "accepted_unordered_two_command_batch",
+      "expected_complete": true,
+      "actual_complete": true,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": true,
+        "r4_required_complete": true,
+        "r4_actual_complete": true,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-new-controls",
+      "name": "accepted_latest_differs_from_synchronous_receive",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-new-controls",
+      "name": "binding_counter_claims_hidden_lifecycle_event",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-new-controls",
+      "name": "consumed_ack_disagrees_with_command",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-new-controls",
+      "name": "consumed_actor_projection_disagrees",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-new-controls",
+      "name": "direct_accepted_has_empty_queue",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-new-controls",
+      "name": "emitted_reason_counter_does_not_increment",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-new-controls",
+      "name": "latest_accepted_deleted_without_reset",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-new-controls",
+      "name": "malformed_receive_then_coalesced_valid_receive",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately. Final R4 critic adjudicates hidden rejection counter1 with stream state0 in the same live epoch as impossible; reject this newly obsolete positive.",
+      "prior_expectation": {
+        "original_expected_complete": true,
+        "r4_required_complete": true,
+        "r4_actual_complete": true,
+        "r5_newly_obsolete": true
+      }
+    },
+    {
+      "group": "state-corrected-new-controls",
+      "name": "malformed_receive_then_coalesced_valid_receive",
+      "expected_complete": true,
+      "actual_complete": true,
+      "expectation_met": true,
+      "source_basis": "Only stream_rejected becomes1 once the hidden rejection counter is1; source increments stream state before Match1068-1070 observes rejection. Same live epoch excludes replacement. Exact prior bytes remain above.",
+      "prior_expectation": null
+    },
+    {
+      "group": "historical-new-controls",
+      "name": "normalized_stream_control",
+      "expected_complete": true,
+      "actual_complete": true,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": true,
+        "r4_required_complete": true,
+        "r4_actual_complete": true,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-new-controls",
+      "name": "received_one_command_two_endpoints",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-new-controls",
+      "name": "same_peer_second_live_generation",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-new-controls",
+      "name": "second_accept_without_receive_counter_increment",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-new-controls",
+      "name": "second_peer_coalesced_acceptance",
+      "expected_complete": true,
+      "actual_complete": true,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": true,
+        "r4_required_complete": true,
+        "r4_actual_complete": true,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-new-controls",
+      "name": "second_peer_pop_without_any_acceptance",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": false,
+        "r4_required_complete": false,
+        "r4_actual_complete": false,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-new-controls",
+      "name": "valid_batch_endpoints_1_1",
+      "expected_complete": true,
+      "actual_complete": true,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": true,
+        "r4_required_complete": true,
+        "r4_actual_complete": true,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "historical-new-controls",
+      "name": "valid_batch_endpoints_2_1",
+      "expected_complete": true,
+      "actual_complete": true,
+      "expectation_met": true,
+      "source_basis": "Exact prior R4 fixture preserved, with original receipt/outcome retained separately.",
+      "prior_expectation": {
+        "original_expected_complete": true,
+        "r4_required_complete": true,
+        "r4_actual_complete": true,
+        "r5_newly_obsolete": false
+      }
+    },
+    {
+      "group": "fresh-r4-critic",
+      "name": "acknowledged_single_command_falsely_accepted",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "InputStream24-38: packet count1 sequence1 with ACK1 has no staged command and MUST reject.",
+      "prior_expectation": null
+    },
+    {
+      "group": "fresh-r4-critic",
+      "name": "declared_source_corrected_control",
+      "expected_complete": true,
+      "actual_complete": true,
+      "expectation_met": true,
+      "source_basis": "The maintained corrected shared fixture is an explicit synthetic control, not native capture.",
+      "prior_expectation": null
+    },
+    {
+      "group": "fresh-r4-critic",
+      "name": "empty_malformed_receive_then_valid",
+      "expected_complete": true,
+      "actual_complete": true,
+      "expectation_met": true,
+      "source_basis": "Match1249-1264 projects an empty commands array as count0,endpoints-1/-1,actions0. RPC rejection does not print; changed valid receive does print before acceptance.",
+      "prior_expectation": null
+    },
+    {
+      "group": "fresh-r4-critic",
+      "name": "empty_packet_projects_nonempty_endpoint",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Match1249-1264 initializes first/last=-1 and only changes them while visiting dictionary commands. Empty count0 cannot project sequence21.",
+      "prior_expectation": null
+    },
+    {
+      "group": "fresh-r4-critic",
+      "name": "fresh_single_command_above_ack",
+      "expected_complete": true,
+      "actual_complete": true,
+      "expectation_met": true,
+      "source_basis": "InputStream14-47 permits sequence2 after ACK1; existing actor controls remain sequence1 until next pop.",
+      "prior_expectation": null
+    },
+    {
+      "group": "fresh-r4-critic",
+      "name": "hidden_accept_latest_timestamp_regresses",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Time.get_ticks_msec sampled by Match1269 is monotonic; stage calls after prior emitted row cannot acquire timestamp1 after prior wall11000.",
+      "prior_expectation": null
+    },
+    {
+      "group": "fresh-r4-critic",
+      "name": "hidden_accept_timestamp_after_prior_row",
+      "expected_complete": true,
+      "actual_complete": true,
+      "expectation_met": true,
+      "source_basis": "Match1295 coalesces same action aggregates while global counters and latest advance. Hidden receive/accept occur after preceding emitted row.",
+      "prior_expectation": null
+    },
+    {
+      "group": "fresh-r4-critic",
+      "name": "inserted_client_tick_counter_only_falsifier",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "Only client_tick counter is changed relative to the paired current fresh event. No stale snapshot confound.",
+      "prior_expectation": null
+    },
+    {
+      "group": "fresh-r4-critic",
+      "name": "inserted_client_tick_freshness_control",
+      "expected_complete": true,
+      "actual_complete": true,
+      "expectation_met": true,
+      "source_basis": "New client_tick advances all current timing, snapshot_age and its stage counter.",
+      "prior_expectation": null
+    },
+    {
+      "group": "fresh-r4-critic",
+      "name": "nondictionary_malformed_receive_then_valid",
+      "expected_complete": true,
+      "actual_complete": true,
+      "expectation_met": true,
+      "source_basis": "Match1256 skips nondictionaries while count retains raw array size. Two nondictionary values project endpoints-1/-1 and zero actions.",
+      "prior_expectation": null
+    },
+    {
+      "group": "fresh-r4-critic",
+      "name": "queue_exceeds_max_ahead",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "InputStream5,24-47: queue keys remain unique in (ACK,ACK+120]; pop deletes, forget/reset clears. Queue121 is impossible.",
+      "prior_expectation": null
+    },
+    {
+      "group": "fresh-r4-critic",
+      "name": "rejection_counter_without_stream_rejected_state",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "InputStream rejection increments rejected before synchronous Match input_stream_rejected hook; a rejection counter1 cannot have stream_rejected0.",
+      "prior_expectation": null
+    },
+    {
+      "group": "fresh-r4-critic",
+      "name": "stream_rejected_without_rejection_call",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "source_basis": "InputStream14-47 increments rejected once for each failed accept, followed synchronously by Match1068 rejection observation. No rejection counter or call exists here.",
+      "prior_expectation": null
+    }
+  ],
+  "total": 108,
+  "met": 108,
+  "newly_obsolete_prior_positive_count": 3,
+  "passed": true
+}

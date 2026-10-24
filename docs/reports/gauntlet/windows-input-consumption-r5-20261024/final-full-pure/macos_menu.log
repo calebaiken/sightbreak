@@ -1,0 +1,34 @@
+{
+  "scope": "Actual ARM Mac ordinary menu pointer/Escape navigation only; no gameplay/device acceptance",
+  "passed": false,
+  "permission_requests_made": 0,
+  "captures": [],
+  "actions": [],
+  "controller_pid": 62059,
+  "failure": {
+    "type": "RuntimeError",
+    "message": "requires ARM Mac"
+  },
+  "failure_ordinary_close": {
+    "needed": false
+  },
+  "cleanup": [],
+  "seconds": 3.513199771987274e-05,
+  "status": "FAILED"
+}
+test_actual_down_boundary_rejects_newly_dirty_os_controls (__main__.MenuControls.test_actual_down_boundary_rejects_newly_dirty_os_controls) ... ok
+test_cleanup_releases_only_recorded_owned_controls (__main__.MenuControls.test_cleanup_releases_only_recorded_owned_controls) ... ok
+test_failure_cleanup_tries_public_quit_before_owned_group_fallback (__main__.MenuControls.test_failure_cleanup_tries_public_quit_before_owned_group_fallback) ... ok
+test_fresh_neutral_observation_cannot_ignore_lost_foreground (__main__.MenuControls.test_fresh_neutral_observation_cannot_ignore_lost_foreground) ... ok
+test_non_mac_host_never_launches_helper_or_client (__main__.MenuControls.test_non_mac_host_never_launches_helper_or_client) ... ok
+test_prior_preflight_must_match_source_artifact_permissions_and_cleanup (__main__.MenuControls.test_prior_preflight_must_match_source_artifact_permissions_and_cleanup) ... ok
+test_retina_and_titlebar_use_one_window_coordinate_space (__main__.MenuControls.test_retina_and_titlebar_use_one_window_coordinate_space) ... ok
+test_screen_confirmation_requires_both_menu_and_settings_outcomes (__main__.MenuControls.test_screen_confirmation_requires_both_menu_and_settings_outcomes) ... ok
+test_target_requires_unique_exact_confident_in_bounds_text (__main__.MenuControls.test_target_requires_unique_exact_confident_in_bounds_text) ... ok
+test_unknown_chrome_or_backing_scale_never_authorizes_pointer (__main__.MenuControls.test_unknown_chrome_or_backing_scale_never_authorizes_pointer) ... ok
+test_wrong_focus_geometry_permission_or_profile_prevents_down_event (__main__.MenuControls.test_wrong_focus_geometry_permission_or_profile_prevents_down_event) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.027s
+
+OK
