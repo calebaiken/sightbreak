@@ -1,0 +1,36 @@
+{
+  "methods": 8,
+  "failures": 1,
+  "errors": 0,
+  "skips": 0,
+  "successful": false,
+  "failure_names": [
+    "__main__.ClockControls.test_05_finite_read_failure_does_not_commit_invalid_state"
+  ],
+  "error_names": [],
+  "transitions": [
+    {
+      "case": "finite integer cumulative overflow",
+      "error": "OverflowError: integer division result too large for a float",
+      "before": {
+        "origin_ns": 1000000000000,
+        "now_ns": 100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000000000,
+        "wall_origin_ns": 1792800000000000000,
+        "perf_origin_ns": 200000000000000,
+        "wall_step_ns": 0
+      },
+      "after": {
+        "origin_ns": 1000000000000,
+        "now_ns": 200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001000000000000,
+        "wall_origin_ns": 1792800000000000000,
+        "perf_origin_ns": 200000000000000,
+        "wall_step_ns": 0
+      },
+      "plausible_study_schedule": false
+    }
+  ],
+  "proposal_imported_for_controls": true,
+  "compiled_clock_only": true,
+  "R2_validator_or_actual_collector_executed": false,
+  "native_API_helper_process_CI_trials": 0
+}
