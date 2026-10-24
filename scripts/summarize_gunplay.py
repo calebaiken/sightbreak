@@ -102,11 +102,47 @@ def floor_tenth(value):
     return math.floor(value * 10.0 + 1e-9) / 10.0
 
 
+def stability(paths):
+    """How much the same measurement cell moves between runs with different seeds."""
+    runs = [load(path) for path in paths]
+    print("Cells compared across %d runs (%s). Spread = largest minus smallest value of the cell." % (len(runs), ", ".join(paths)))
+    worst = {}
+    for kind, key_fields, value_fields in (
+        ("ACCURACY", ("weapon", "distance", "mode"), ("hit_rate", "kill_rate", "kill_time_median_s", "head_share_of_hits")),
+        ("DUEL", ("a", "b", "distance"), ("a_wins", "b_wins")),
+    ):
+        cells = defaultdict(list)
+        for rows in runs:
+            for row in rows.get(kind, []):
+                cells[tuple(row[f] for f in key_fields)].append(row)
+        for field in value_fields:
+            spreads = []
+            for key, rows in cells.items():
+                if len(rows) < 2:
+                    continue
+                values = [r[field] for r in rows]
+                if field in ("a_wins", "b_wins"):
+                    values = [v / r["duels"] for v, r in zip(values, rows)]
+                if field == "kill_time_median_s" and any(v < 0 for v in values):
+                    continue
+                spreads.append((max(values) - min(values), key, values))
+            spreads.sort(reverse=True)
+            if spreads:
+                top = spreads[0]
+                print("%-9s %-20s cells=%3d  largest spread %.3f at %s  values %s" % (kind, field, len(spreads), top[0], "/".join(str(k) for k in top[1]), ", ".join("%.3f" % v for v in top[2])))
+                worst[(kind, field)] = top[0]
+    return worst
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("log")
     parser.add_argument("--weapons", default="game/scripts/gameplay/weapons.gd")
+    parser.add_argument("--stability", nargs="+", metavar="LOG", help="print how far the same cells differ between these logs (different seeds) instead of the tables")
     arguments = parser.parse_args()
+    if arguments.stability:
+        stability([arguments.log] + arguments.stability)
+        return
     spec = read_weapons(arguments.weapons)
     rows = load(arguments.log)
     names = [w for w in ORDER if w in spec]
