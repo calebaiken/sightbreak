@@ -183,3 +183,15 @@ bytes come from the named commits, without production changes.
 [Offline verification](native-journal-only-restart-evidence/verification.json) ·
 [Git-blob publication proof](NATIVE_JOURNAL_ONLY_RESTART_GIT_PUBLICATION.json) ·
 [Frozen protocol](NATIVE_JOURNAL_ONLY_RESTART_PROTOCOL.md).
+
+## Neutral outcome handoff
+
+The [separate two-case neutral ZIP](native-journal-only-restart-review/README.md)
+is 70,232 bytes with 55 entries. Its SHA-256 is
+`7a12ec5de2b8344794c60eab1b83cc116f40de5b0cf0360e6cc0a6e84032625f`;
+MANIFEST SHA-256 is
+`26ff68587ab032c55d27cbfc56adcb8d45aa5b377d7aac947516b94a7e4fc2b4`.
+The ZIP's exact Git blob is `47c02e8c41fb4e7cb650839b3969c19013095635`.
+Give a fresh outcome critic only that ZIP and its pins. The prior verdict and
+controller mapping remain external. Every neutral transformation is reversible
+from the controller's logged substitutions and immutable-original bindings.
