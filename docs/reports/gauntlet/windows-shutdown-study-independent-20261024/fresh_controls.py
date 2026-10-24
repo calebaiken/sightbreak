@@ -2,13 +2,13 @@
 import copy,hashlib,json,os,subprocess,sys,tempfile,zipfile
 from pathlib import Path
 from unittest.mock import patch
-HERE=Path(__file__).resolve().parent;ROOT=Path('/workspace/reviews/windows-shutdown-study-independent-source-20261024')
+HERE=Path(__file__).resolve().parent;ROOT=Path(os.environ.get('STUDY_REVIEW_SOURCE_ROOT','/workspace/reviews/windows-shutdown-study-independent-source-20261024'))
 SOURCE='c90fedfd56a09bd0ba13cce5565ccd160891c3fb'
 sys.path.insert(0,str(ROOT/'scripts'))
 import shutdown_study_retention as retention
 import windows_shutdown_study as study
 assert sorted(os.sched_getaffinity(0))==[4]
-OUT=HERE/'own-fresh-controls';OUT.mkdir(exist_ok=True)
+OUT=HERE/os.environ.get('STUDY_REVIEW_RUN_LABEL','own-fresh-controls-r2');OUT.mkdir(exist_ok=True)
 records=[]
 def save(name,value):
  (OUT/(name+'.json')).write_text(json.dumps(value,indent=2)+'\n');records.append(dict(name=name,**value))
@@ -32,13 +32,15 @@ save('public_preflight_exit',dict(expected_exit=2,actual_exit=code,matched=code=
 p=ROOT/'scripts/shutdown_study_retention.py';original=p.read_bytes();flag_before=git('ls-files','-v','--',str(p.relative_to(ROOT))).decode()
 changed=original+b'\n# Independent source-binding witness: materialized bytes differ.\n'
 (OUT/'source-binding-original.py').write_bytes(original);(OUT/'source-binding-altered.py').write_bytes(changed)
-try:
- git('update-index','--skip-worktree','scripts/shutdown_study_retention.py');p.write_bytes(changed)
- status=git('status','--porcelain','--untracked-files=all').decode();flags=git('ls-files','-v','--','scripts/shutdown_study_retention.py').decode()
- actual=retention.source_binding(SOURCE,ROOT)
- save('skip_worktree_materialized_source_mismatch',dict(expected='REJECT materialized model-source byte mismatch',actual='ACCEPTED unchanged source identity',binding_equal_baseline=actual==base,git_status=status,index_flags=flags,original_bytes=len(original),altered_bytes=len(changed),original_sha256=sha(original),altered_sha256=sha(changed),binding=actual,matched=False))
-finally:
- p.write_bytes(original);git('update-index','--no-skip-worktree','scripts/shutdown_study_retention.py')
+for flag in ('skip-worktree','assume-unchanged'):
+ try:
+  git('update-index','--'+flag,'scripts/shutdown_study_retention.py');p.write_bytes(changed)
+  status=git('status','--porcelain','--untracked-files=all').decode();flags=git('ls-files','-v','--','scripts/shutdown_study_retention.py').decode()
+  try:actual=retention.source_binding(SOURCE,ROOT);error=None
+  except ValueError as e:actual=None;error=str(e)
+  save(flag+'_materialized_source_mismatch',dict(expected='REJECT materialized model-source byte mismatch',actual='ACCEPTED unchanged source identity' if actual else 'REJECTED',binding_equal_baseline=actual==base,git_status=status,index_flags=flags,original_bytes=len(original),altered_bytes=len(changed),original_sha256=sha(original),altered_sha256=sha(changed),binding=actual,error=error,matched=actual is None))
+ finally:
+  p.write_bytes(original);git('update-index','--no-'+flag,'scripts/shutdown_study_retention.py')
 assert git('ls-files','-v','--','scripts/shutdown_study_retention.py').decode()==flag_before
 assert not git('status','--porcelain','--untracked-files=all')
 # Deliberately finite but not partitionable. Model-only is never execution.

@@ -1,7 +1,7 @@
 import hashlib,json,os,stat,subprocess
 from pathlib import Path
 HERE=Path(__file__).resolve().parent
-ROOT=Path('/workspace/reviews/windows-shutdown-study-independent-source-20261024')
+ROOT=Path(os.environ.get('STUDY_REVIEW_SOURCE_ROOT','/workspace/reviews/windows-shutdown-study-independent-source-20261024'))
 BUILDER=Path('/workspace/sightbreak-windows-shutdown-bounded-study')
 BASE='8ee93ac725d519c9f6d7f1ffbb3f7c9ee960baf8';SOURCE='c90fedfd56a09bd0ba13cce5565ccd160891c3fb';HANDOFF='239fa222ab2c34e6f9c640e468f8855e9163594d'
 PREFIX='docs/reports/gauntlet/windows-shutdown-study-controller-20261024/'
@@ -49,5 +49,5 @@ result=dict(source=SOURCE,handoff=HANDOFF,base=BASE,actual_builder_manifest_memb
  non_doc_physical_count=len(physical),non_doc_physical=physical,protected_original_paths=len(protected),original_paths=len(old),
  game_tree_exact=True,default_driver_byte_erasure_exact=True,non_doc_delta=sorted(p for p in set(old)|set(new) if not p.startswith('docs/') and old.get(p)!=new.get(p)),
  actual_native_invocations=0)
-(HERE/'BINDINGS.json').write_text(json.dumps(result,indent=2)+'\n')
+(HERE/os.environ.get('STUDY_REVIEW_BINDING_FILE','BINDINGS.json')).write_text(json.dumps(result,indent=2)+'\n')
 print(json.dumps({k:v for k,v in result.items() if k not in ('evidence','non_doc_physical')},indent=2))

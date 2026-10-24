@@ -115,3 +115,14 @@ boundary; source_binding must directly hash materialized model bytes to establis
 its advertised physical-source agreement rather than relying on this flag.
 Keep the plain skip-worktree case as a valid rejection and retain any flag-specific
 limitation in the verdict. Restore exact bytes and all flags after each case.
+
+## Source-view repeat
+
+Repeat the registered controls and138 regression methods in an initialized
+one-commit-depth repository at exact c90fedfd. The view was initialized empty,
+read-tree HEAD occurred before sparse materialization, and all512 non-doc files
+are selected. It deliberately shares the existing Git object directory through
+an alternate, with no full clone or independent-object-store claim. Keep outputs
+separate from both prior iterations. Harness changes only parameterize root/output
+locations; assertions and adversarial inputs stay the same. Verify all physical
+source bytes/modes again after the flags are restored.
