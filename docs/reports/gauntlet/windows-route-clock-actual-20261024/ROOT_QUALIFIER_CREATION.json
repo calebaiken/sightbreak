@@ -1,0 +1,57 @@
+{
+  "repository": "calebaiken/sightbreak",
+  "branch": "qualifier/windows-route-clock-4cf6ac8e-20261024",
+  "source": "4cf6ac8e744603ed6af122a362036d276754cc76",
+  "absence": {
+    "chunk_id": "0d0f2e",
+    "wall_time_seconds": 0.375566958,
+    "exit_code": 0,
+    "original_token_count": 0,
+    "output": ""
+  },
+  "incorrect_update_attempt": {
+    "content": [
+      {
+        "type": "text",
+        "text": "GitHub API error 422: {\"message\":\"Reference does not exist\",\"documentation_url\":\"https://docs.github.com/rest/git/refs#update-a-reference\",\"status\":\"422\"}"
+      }
+    ],
+    "structuredContent": {
+      "error": "GitHub API error 422: {\"message\":\"Reference does not exist\",\"documentation_url\":\"https://docs.github.com/rest/git/refs#update-a-reference\",\"status\":\"422\"}",
+      "error_code": "INVALID_ARGUMENT",
+      "error_data": {
+        "message": "Reference does not exist",
+        "documentation_url": "https://docs.github.com/rest/git/refs#update-a-reference",
+        "status": "422"
+      }
+    },
+    "isError": true
+  },
+  "post_rejected_update_readback": {
+    "chunk_id": "94dcf4",
+    "wall_time_seconds": 0.357104051,
+    "exit_code": 0,
+    "original_token_count": 0,
+    "output": ""
+  },
+  "supported_create_branch": {
+    "content": [
+      {
+        "type": "text",
+        "text": "Action completed."
+      }
+    ],
+    "structuredContent": {
+      "branch": "qualifier/windows-route-clock-4cf6ac8e-20261024"
+    },
+    "isError": false
+  },
+  "verified_readback": {
+    "chunk_id": "91eef3",
+    "wall_time_seconds": 0.383012944,
+    "exit_code": 0,
+    "original_token_count": 25,
+    "output": "4cf6ac8e744603ed6af122a362036d276754cc76\trefs/heads/qualifier/windows-route-clock-4cf6ac8e-20261024\n"
+  },
+  "scope": "Actual supported create_branch after rejected update_ref on absent branch; no reference moved/forced and no native execution admitted."
+}
