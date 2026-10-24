@@ -4,100 +4,93 @@ Last updated: 2026-10-24 (continuing recovered execution). Permanent tracker: [i
 
 Statuses: `NOT STARTED`, `IN PROGRESS`, `FAILED`, `VERIFIED`, `BLOCKED EXTERNALLY`. **Verified by** says who ran it. "Reported" means a source document says so and nobody on this line has re-run it. Reported results are not promoted to `VERIFIED` until someone re-runs them.
 
-## Current checkpoint — 2026-10-24 16:58 UTC
+## Current checkpoint — 2026-10-24 17:51 UTC
 
 SIGHTBREAK — Steam-Ready v1.0 remains IN PROGRESS / PRIMARY in issue25.
 Root `/workspace/sightbreak-v1-recovered`, branch
-`codex/v1-executor-recovery-20261023`, pushed checkpoint `06d80955`, draft PR31
-above PR27. Preserve PR27→24→23→22→16 and separate contributor/V3 branches.
-Runtime source stays exact `4cf6ac8e` / 508 non-document paths. All whole G1–G19
-remain open; G20 is persistence only. No native goal ID is exposed.
+`codex/v1-executor-recovery-20261023`, pushed recovery checkpoint `5f0775e4`,
+draft PR31 over PR27. Preserve PR27→24→23→22→16 and contributor/V3 ownership.
+Runtime source remains exact 4cf6ac8e / 508 non-document paths. No whole G1–G19
+closes; G20 is persistence only. No native goal ID is exposed.
 
-1. **Owner decision pending.** Revised shutdown contract R2 `3698b545` is
-   independently accepted `96d85c93` for owner decision only. The coordinator
-   presented it to Caleb; do not run the changed study or capability tests until
-   his response is forwarded. Limits: 193 MiB peak study storage, ten artifacts
-   below 32 MiB / 160 MiB retrieved ZIP bytes, 120-second preservation cutoff and
-   explicit partial/unavailable failure evidence as inconclusive. No execution
-   approval, main merge or new workflow registration. Hard enforcement, routing,
-   Windows volume/API and finite client/service envelopes remain prerequisites.
-2. **Root's implemented authority reader is REVISE.** Worktree
-   `/workspace/sightbreak-windows-input-consumption-r7` is now on NEW own branch
-   `codex/windows-input-foundation-enforcement-20261024`, source `ca9a04cd`, sealed
-   handoff `db954429`. The prior builder explicitly handed it off clean and now
-   edits only math. New lifecycle prepass rejects eight preserved contradictions
-   and keeps 54 concrete witnesses; 11 focused methods pass. Literal full run:
-   134 methods / 44 assertion failure events / one error. Historical pre-edit18
-   baseline passes separately under a registered hash-bound adapter; never count
-   that as candidate pass. All 105 old methods/226 assertions are AST exact;
-   520 physical paths, three deltas/517 protected. Exact six-row/ten-field timer
-   amendment was independently permitted `4ee3cb10`; no broad normalization.
-   Existing objective critic is independently reviewing source-valid false
-   rejections versus invalid derived fixtures and the baseline adapter. Preserve
-   every failure; do not weaken assertions or retime descendants without precise
-   adjudication. Whole-reader/readiness/207-row replay remain BLOCKED/unexecuted.
-   R3 remains the critic's fixed target: its priority matrix finds eight known
-   structural contradictions masked as UNKNOWN. Root implemented queued R4 source
-   `52d2fe5e` / handoff `d84e8d80`: prefix validation first, 12 focused passes;
-   literal 135 has 45 failure events/one error (one extra expected-error substring,
-   still a correct rejection). No old assertion changes. Original 26 frozen report
-   members remain exact. Derived four-field proposal `a45a2b68` is unadjudicated;
-   do not switch the active critic target implicitly.
-3. **Receipt candidate rejected; correction preparing.** Source `0f478a07` /
-   handoff `99a864a8` has 58 maintained passes in both independent views but fresh
-   controls reproduce 14 false accepts, one false reject and publication overwrite.
-   Immutable interim source REJECT `7f6e601e` is pushed: 849 members / 205,366,615
-   uncompressed bytes; manifest d8d82357. Preserve originals without a full second
-   copy. Final audit/narrative continues; no acceptance from 69 builder passes.
-   R2 builder owns `/workspace/sightbreak-windows-shutdown-evidence-completeness-r2`,
-   branch `codex/windows-shutdown-evidence-completeness-r2-20261024`, prereg
-   `43198ae8`. It verified the interim corpus and started source repair under the
-   producer-link model: initial 149 process-relation controls match and the three
-   publication-collision scenarios pass. One old fault-injection test misses the
-   new exclusive writer and needs precise adjudication. Old fixtures/helpers/
-   assertions are unchanged; versioned capture/action construction needs separate
-   independent adjudication before amendment. Not a source-ready candidate.
-   Public collection remains BLOCKED; no actual trial/API/driver action occurred.
-4. **Windows math repair awaits separate review.** Original source `b16b012d` /
-   handoff `25603855` independently REJECTED `eac72c2e`: both views, 15 controls /
-   seven matches/eight failures, 80 selected pure passes; five SDK/proc methods
-   explicitly omitted, three API-total models excluded from verdict. The new builder
-   repair source `ab864ab9` / handoff `bede80b8`, branch
-   `codex/windows-fov-math-acquisition-20261024`, is frozen: 101 builder pure passes
-   each view,14/14 builder comparison,527 physical paths/525 protected. Original
-   setup failure is retained. It attempts all finalizers and preserves terminal
-   audit evidence, but has no independent repair acceptance. Source critic will
-   review it after the receipt verdict. Public acquisition stays BLOCKED.
-5. **Linux ancestry and physical binding stay blocked.** Rejected source
-   `8cc38cdc` / critic `85cba435` is unchanged. Pre-edit proposals `7b98abd8`,
-   `bc91e973`, `41c2dbe2`, `88a9443f` address lifetime/zombie accounting and the
-   old four-Git-call test construction. Existing windows_shutdown agent now
-   independently adjudicates these ROOT proposals; the source critic's queued
-   scopes were cancelled before activation, avoiding duplicate review. Independent
-   adjudication `e4685e48` rejects the incomplete lifetime proposal and narrowly
-   supports only the named timing-constructor/baseline amendment. No new reap API
-   or blanket erasure. That agent is now assigned as physical-binding builder
-   from root's clean 88 checkout/new own branch; a DIFFERENT reviewer must assess
-   its implementation. No binder acceptance or native retry follows.
+1. **New independent component acceptance.** Windows math finalization/audit
+   source `ab864ab9` / handoff `bede80b8` is accepted ONLY for that source slice
+   by DIFFERENT Root critic `f43e756f`. Original b16/eac rejection is preserved.
+   Corrected own and initialized views each pass 96 selected methods (80 old + 16 new;
+   five SDK/proc methods explicitly omitted), 15 independent benchmark cases and
+   three coupled cases. Same adapted benchmark baseline 7/15→repair 15/15. All 527
+   physical sources/modes verified, 525 protected. Literal-harness type mismatch,
+   two sparse setup failures and all raw outputs are retained. Actual detached
+   source preflight remains BLOCKED with 0 SDK/job/execute calls. No native/API,
+   FOV/Windows/retention or whole acquisition qualification. Root review context
+   reuse is disclosed, not falsely fresh/blind. Full 62-member review is retained.
+2. **Select and begin next component: physical binder.** Source `71b779b7` /
+   handoff `b5c698bc`, branch `codex/fov-physical-binding-20261024`, related
+   `/workspace/sightbreak-fov-owned-ancestry-r3`. Builder reports 78 pure passes
+   per view, 527 physical paths/522 protected, three old hidden-source accepts
+   now rejected. Four declared Git queries retain all five original timing-test
+   assertions and 100→101/.1 budgets. Source/lifetime classes remain rejected 8cc
+   and unchanged. A DIFFERENT critic (Root next, after math checkpoint) must
+   assess implementation and exact named-method guard adaptation; no selfapproval
+   or acceptance inherited from builder's pre-edit e468 adjudication. No new
+   poll/wait/reap API, native retry or Linux capability claim.
+3. **Authority R5 is frozen for independent review.** Prior Root R3 ca9/db95 is
+   REVISE 2945287b; R4 source52d2/d84 is REVISE 28604124. Eight old structural gaps
+   close in R4, but five further pipeline/state contradictions remain hidden by
+   UNKNOWN and one additional immutable packet-projection gap affects prior code
+   too. Preserve those distinct provenances. Objective reviewer changed to R5
+   BUILDER, so cannot approve its new implementation. Related R7 checkout is now
+   on NEW `codex/windows-input-foundation-r5-20261024`, source
+   `8b52601ca29d807f54ed318114d10d849c267e83`, clean handoff
+   `1e045025fdc5e86a1850ebd18565ad08a12253e3`; old branches stay intact.
+   New 14 methods/49 controls/168 bounded witnesses+336 contradictory expectations
+   pass, but literal 149 still 45 failure events/one error: NOTPASS. Old 135 methods/
+   315 assertions/helpers are unchanged; 521 physical paths/519 protected. Current
+   critic Windows agent registered e673 and is independently reviewing R5/new
+   constructor proposal, disclosing its older R7 role. It did not build R3/R4/R5.
+   One Root-authored control used already-ACKed sequence1 and is source-invalid;
+   preserve it and its failure. Exact 23-leaf constructor correction requires the
+   DIFFERENT critic's adjudication before edits, keeping original assertions.
+   No whole-reader/readiness or 207-row replay; actual replay is UNEXECUTED.
+4. **Receipt R2 source and staged constructor continue.** Original 0f478/99a is
+   independently REJECTED 67a2e53b after 58 maintained passes per view plus 14 false
+   accepts/one false reject/publication overwrite in 81 fresh cases. Full 858-member
+   corpus (~205MiB) remains unchanged/pushed; retain hashes, avoid duplicate copies.
+   Builder owns `/workspace/sightbreak-windows-shutdown-evidence-completeness-r2`,
+   branch `codex/windows-shutdown-evidence-completeness-r2-20261024`. Source is
+   UNFROZEN; scope-isolated ownership/named/focus/held-state/numeric-monitor tests
+   improve, not a whole-flow pass. Archived monitor floats are preserved. Exact
+   narrow timestamp/two injection permits 2904 applied without old assertions
+   changing. Source macro compiler 63021 was rejected and is unexecuted/unapplied.
+   Shared clock/five-site helper architecture is conditionally permitted 3f30af0f
+   after correcting atomic overflow; full consumer/compiler/route/data remain
+   withheld pending exact source-linked staged proposal and same critic. No
+   silent owner/close retiming, success outputs before launch failure, or native
+   schedule change. Source critic remains sole receipt adjudicator.
+5. **Owner decision still pending.** Coordinator presented shutdown contract R2
+   `3698b545` (independently acceptable 96d85c93) to Caleb. Do not execute changed
+   study or capability runs until approval is forwarded. 193MiB peak study-owned
+   storage, ≤10 artifacts each<32MiB /160MiB retrieved ZIP bytes, fixed preservation
+   cutoff and explicit partial/unavailable failure evidence as inconclusive.
+   Hard enforcement/write routing/Windows capability/client-service envelope/
+   exact source and independent admission remain prerequisites. Reuse registered
+   workflow 390221868 on an immutable own ref; no main merge/new registration.
 
-Accepted source slices remain expiry `2d4214c4` / critic `09b2a1f7`, binary codec
-`329d3ff5` / `9fa673ab`, and POSIX physical binding `ebc1a941` / `f05741f8`.
-They do not qualify a whole reader, study, native decoding or platform.
+All source candidates remain separate from root game 4cf. Original Windows
+40080238905 three-object leak is unresolved; 40089125575 remains strict warnings
+FAIL /leak NONREPRODUCTION e88 despite bounded genuine controls/objectives/stock
+rounds/earned restart evidence. Sole Linux math550 attempt is consumed/REJECTED;
+missing child-list interface, root identity and 18 input-bit mismatches are not
+waived. Accepted binary codec 9fa/POSIX binding f057/expiry 09b do not override that.
+No native attempt/qualification repeat is active. Pure-control CI is not native.
 
-Windows40089125575 remains strict FAIL_WARNINGS / leak NONREPRODUCTION
-`e88d2cb9`, despite bounded objectives/rounds/earned restart evidence. Original
-40080238905 three-object leak remains unresolved. Sole Linux math550 acquisition
-is consumed and REJECTED `6e6d7159`; missing child-list API and 18 operand-bit
-mismatches are not waived. No full qualification, math retry or native attempt
-is active. Root pure-control CI success is not native acceptance.
-
-Continue source fixes/reviews, retain actual outputs and failures, freeze and use
-an independent critic before integration. No builder self-approval or false fresh-
-thread claim. Physical desktop/mobile gameplay/performance, Intel, human CS2 and
-8.5/category review, signing/Steam credentials and owner release sign-off remain
-external. Linux software-driver warning, touch child cleanup and Mac ordinary
-play remain open. Automated Mac source-review rejection for possible cybersecurity
-risk remains recorded; no retry or account/model/environment bypass.
+Continue while authorized tools/session permit: verified increment→retain review/
+failed outputs→update gates→commit/push→next dependency. Physical desktop/mobile
+play/performance, Intel, human CS2/8.5-category review, signing/Steam credentials
+and owner release sign-off remain external. Linux software-driver warning, touch
+child cleanup and ordinary Mac gameplay stay open. Automated Mac source-review
+possible-cybersecurity-risk rejection remains recorded; no retry/bypass. Do not
+switch account/model/environment or create duplicate critics to evade limits.
 
 ## Historical checkpoint — 2026-10-24 14:44 UTC
 

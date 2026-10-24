@@ -20,18 +20,16 @@ signing, credentials and unavailable hosts stay explicitly blocked until observe
 A script, simulated match, software render or successful export cannot silently
 satisfy a different gate. No deployment, Steam publication or paid action is implied.
 
-At 16:58 UTC, expiry component `09b2a1f7` retains its independent acceptance.
-The implemented authority foundation `ca9a04cd` / handoff `db954429` is REVISE:
-134 literal methods, 44 failure events and one error. Independent critique is
-active. Separately queued prefix revision `52d2fe5e` / `d84e8d80` has 12 focused
-passes but 45 failure events and one error in its 135-method literal run. Whole-
-reader acceptance and the 207-row replay remain blocked. Receipt
-candidate `0f478` is rejected in immutable interim review `7f6e601e`; R2 correction
-has started under a registered producer-link model, without source approval. Original Windows math `b16` is REJECTED `eac72c2e`; repair `ab864` /
-`bede` has 101 builder passes per view and awaits separate review. Shutdown
-contract R2 `3698` is independently accepted for owner decision only. Approval
-is pending; no changed study or capability run is authorized. No whole release
-gate closes. Exact owners and failures are in the progress and resume records.
+At 17:51 UTC, Windows math finalization/audit repair ab864/bede has independent
+component-only acceptance f43e756f: both views, 96 selected passes, 15 source cases and
+3 coupled cases. Native/API/SDK/retention remain unverified and public acquisition
+BLOCKED. New physical binder 71b/b5 awaits a DIFFERENT review. Authority R5 source8b /
+handoff1e is frozen under a DIFFERENT critic: 14 new methods pass, literal 149 has 45
+failure events/one error. Prior R3/R4 remain REVISE, native 207 replay unexecuted.
+Receipt original 0f is independently REJECTED 67a; R2 is unfrozen and its staged
+consumer remains withheld. Shutdown R2 study approval is still pending. No whole
+G1–G19 closes, and no release/platform/8.5-category standard is lowered. Read the
+current progress/resume record for exact owners, targets and retained failures.
 
 Historical bounded evidence includes the independently passing recovered afca2f1
 aggregate, narrow bot dry-primary comparison, ten-account settlement/recovery,

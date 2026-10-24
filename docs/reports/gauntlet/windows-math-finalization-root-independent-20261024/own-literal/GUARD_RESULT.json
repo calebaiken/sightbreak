@@ -1,0 +1,14 @@
+{
+  "scope": "Source-only controlled execution, no native/API proof",
+  "root": "/workspace/reviews/windows-math-finalization-root-20261024",
+  "cpu": [
+    4
+  ],
+  "completed": false,
+  "exception_type": "ResourceFinalizationError",
+  "exception": "stream finalization failed",
+  "traceback": "Traceback (most recent call last):\n  File \"/workspace/reviews/windows-math-finalization-root-20261024/docs/reports/gauntlet/windows-math-finalization-root-independent-20261024/guarded_runner.py\", line 43, in <module>\n    runpy.run_path(str(args.script),run_name='__main__')\n  File \"<frozen runpy>\", line 287, in run_path\n  File \"<frozen runpy>\", line 98, in _run_module_code\n  File \"<frozen runpy>\", line 88, in _run_code\n  File \"docs/reports/gauntlet/windows-math-finalization-root-independent-20261024/literal_original_controls.py\", line 136, in <module>\n    try:obj.close();error=None\n        ^^^^^^^^^^^\n  File \"/workspace/reviews/windows-math-finalization-root-20261024/scripts/windows_fov_math.py\", line 388, in close\n    if not report['complete']:raise ResourceFinalizationError('stream finalization failed',report)\n                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nwindows_fov_math.ResourceFinalizationError: stream finalization failed\n",
+  "seconds": 1.4915021569977398,
+  "forbidden_calls": [],
+  "actual_native_invocations": 0
+}
