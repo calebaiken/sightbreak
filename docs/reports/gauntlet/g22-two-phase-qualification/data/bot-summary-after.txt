@@ -1,0 +1,29 @@
+diff    matches  rounds  med_live  p10_live  p90_live   plant  atk_win carrier@site  time_out   first_kill
+normal       60     660     13.7s      6.5s     32.3s      9%      24%          10%        4%         1.7s
+        reasons: {'Defenders eliminated': 160, 'Attackers eliminated': 421, 'Time expired': 25, 'Relay device defused': 53, 'Relay device detonated': 1}
+hard         60     624     15.7s      6.1s    100.0s      1%      27%           1%       19%         0.4s
+        reasons: {'Attackers eliminated': 337, 'Defenders eliminated': 167, 'Time expired': 118, 'Relay device defused': 2}
+
+== normal: 4454 kills in 660 rounds
+attacker victims  n=2861  distance med 31.9 m  p10 11.1  p90 37.6   victim z med -18.0   time med 5.4s
+defender victims  n=1593  distance med 29.2 m  p10 10.9  p90 37.5   victim z med 18.0   time med 5.7s
+first-kill victim cells (columns x west to east, rows z attacker end to defender end):
+  z0:  0  0 405  8  0  0
+  z1:  0  0  1  0  0  0
+  z2:  0  0  0  0  0  0
+  z3:  0  0  0  0  0  0
+  z4:  0  0  4 32  0  0
+  z5:  0  0 11 199  0  0
+most bots stuck >1 s at once in a round: mean 0.02, max 2
+
+== hard: 4245 kills in 624 rounds
+attacker victims  n=2482  distance med 37.3 m  p10 15.7  p90 42.4   victim z med -21.0   time med 3.1s
+defender victims  n=1763  distance med 41.6 m  p10 17.6  p90 42.2   victim z med 20.6   time med 1.3s
+first-kill victim cells (columns x west to east, rows z attacker end to defender end):
+  z0:  0  0 350 123  0  0
+  z1:  0  0  0  0  0  0
+  z2:  0  0  0  0  0  0
+  z3:  0  0  0  0  0  0
+  z4:  0  0  2  0  0  0
+  z5:  0  0 48 100  0  0
+most bots stuck >1 s at once in a round: mean 0.09, max 2
