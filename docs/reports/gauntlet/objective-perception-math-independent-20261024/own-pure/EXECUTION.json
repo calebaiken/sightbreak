@@ -1,0 +1,56 @@
+{
+  "source": "/workspace/reviews/objective-perception-math-independent-20261024",
+  "cpu_affinity": [
+    4
+  ],
+  "rows": [
+    {
+      "name": "math",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "scripts",
+        "-p",
+        "test_fov_math_reference.py",
+        "-v"
+      ],
+      "exit": 0,
+      "seconds": 6.154807833998348,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "05f1081e5b394569fbbebd9264006a5decd6715be061a6e2450d7a9c44e0502d"
+    },
+    {
+      "name": "native_log",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "scripts",
+        "-p",
+        "test_native_log.py",
+        "-v"
+      ],
+      "exit": 0,
+      "seconds": 0.37002517500150134,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "8ed0c16693153098c13170d23f3c1a5d0b95d30e3653cbb40e03ae0017409e5e"
+    },
+    {
+      "name": "independent",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "/workspace/reviews/objective-perception-math-independent-20261024/docs/reports/gauntlet/objective-perception-math-independent-20261024/independent_controls.py"
+      ],
+      "exit": 0,
+      "seconds": 3.4397362800009432,
+      "stdout_sha256": "b22f7656c8c852e29bd750fc7e9277187f83e937ad50bbd4526cc1ce9c0d92a8",
+      "stderr_sha256": "b8d59562bd84213788c00746e9d35e254bcf23204b361f988b31309918aa8383"
+    }
+  ],
+  "passed": true
+}

@@ -22,6 +22,16 @@ root ref was stale because the fetch configuration covers main; actual ls-remote
 and GitHub PR metadata agree. Never reset the newer local work to that stale ref.
 No shared merge, history rewrite, release or production deployment is authorized.
 
+## One-shot math release — consume at most once
+
+Independent source/concrete admissionee47c7b4 is retained in
+`docs/reports/gauntlet/objective-perception-math-independent-20261024`.
+ROOT_RELEASE.json binds sole550e96c9 command/output/60s+5s bounds. This root commit
+releases one call ONLY AFTER it is pushed and remotely read back. Native attempts
+at release0. If output exists after resumption, inspect that attempt; never rerun.
+All unmeasured/whole-perception/platform gates remain unresolved. This current
+release supersedes pending-admission wording in the earlier checkpoint below.
+
 ## Current checkpoint and exact continuation
 
 Mission remains IN PROGRESS / PRIMARY in issue25 and committed mission files.

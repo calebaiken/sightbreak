@@ -1,0 +1,1401 @@
+{
+  "base": "fb5953c217c8a4112c9296334c65a9e1b95d0388",
+  "target": "550e96c9c2e3388a7e06e3df8aa31f973baeae59",
+  "base_non_doc": 513,
+  "target_non_doc": 519,
+  "union_count": 519,
+  "protected_paths": 513,
+  "changed": {
+    "scripts/acquire_fov_math_reference.py": {
+      "base": null,
+      "target": {
+        "mode": "100644",
+        "kind": "blob",
+        "oid": "e6e4d0025ba01b8dc3971e9f5c46b25e95d8def2"
+      }
+    },
+    "scripts/fov_math_reference.py": {
+      "base": null,
+      "target": {
+        "mode": "100644",
+        "kind": "blob",
+        "oid": "8823d4f1d011b24f7c4f557e816444b9a43e48fe"
+      }
+    },
+    "scripts/test_fov_math_reference.py": {
+      "base": null,
+      "target": {
+        "mode": "100644",
+        "kind": "blob",
+        "oid": "dcb9c2f2a4206d0b52de3df5e7935b82490a35f2"
+      }
+    },
+    "tools/fov_math_reference/cases.json": {
+      "base": null,
+      "target": {
+        "mode": "100644",
+        "kind": "blob",
+        "oid": "9738fc5cece7baa19f74b97aa985afc88e759929"
+      }
+    },
+    "tools/fov_math_reference/project.godot": {
+      "base": null,
+      "target": {
+        "mode": "100644",
+        "kind": "blob",
+        "oid": "b65ca631d078008f58fc0866158daa02ed4664a1"
+      }
+    },
+    "tools/fov_math_reference/reference.gd": {
+      "base": null,
+      "target": {
+        "mode": "100644",
+        "kind": "blob",
+        "oid": "6924a34bd34cfb74d938df57d5f92b253984b198"
+      }
+    }
+  },
+  "all_existing_non_doc_exact": true,
+  "game_tree_exact": true,
+  "materialized_count": 356,
+  "materialized_paths": [
+    ".claude/agents/gameplay-builder.md",
+    ".claude/agents/harsh-critic.md",
+    ".claude/agents/integration-reviewer.md",
+    ".claude/agents/qa-regression.md",
+    ".claude/agents/visual-ux-builder.md",
+    ".claude/settings.json",
+    ".claude/skills/gauntlet-loop/LICENSE",
+    ".claude/skills/gauntlet-loop/PROVENANCE.md",
+    ".claude/skills/gauntlet-loop/SKILL.md",
+    ".claude/skills/no-ai-slop/LICENSE",
+    ".claude/skills/no-ai-slop/PROVENANCE.md",
+    ".claude/skills/no-ai-slop/SKILL.md",
+    ".claude/skills/no-ai-slop/eval.md",
+    ".claude/skills/sightbreak-gauntlet/SKILL.md",
+    ".gitattributes",
+    ".github/workflows/desktop-alpha.yml",
+    ".github/workflows/engineering.yml",
+    ".github/workflows/macos-render-diagnostic.yml",
+    ".github/workflows/market-refresh-pure.yml",
+    ".github/workflows/three-agent-artifacts.yml",
+    ".gitignore",
+    "AGENTS.md",
+    "CLAUDE.md",
+    "README.md",
+    "game/export_presets.cfg",
+    "game/main.tscn",
+    "game/project.godot",
+    "game/tests/account_match_probe.gd",
+    "game/tests/account_match_probe.gd.uid",
+    "game/tests/account_network_probe.gd",
+    "game/tests/account_network_probe.gd.uid",
+    "game/tests/activity_provenance_probe.gd",
+    "game/tests/activity_provenance_probe.gd.uid",
+    "game/tests/activity_provenance_test.gd",
+    "game/tests/activity_provenance_test.gd.uid",
+    "game/tests/actor_test.gd",
+    "game/tests/actor_test.gd.uid",
+    "game/tests/admission_capacity_probe.gd",
+    "game/tests/admission_capacity_probe.gd.uid",
+    "game/tests/armory_state_test.gd",
+    "game/tests/armory_state_test.gd.uid",
+    "game/tests/armory_ui_test.gd",
+    "game/tests/armory_ui_test.gd.uid",
+    "game/tests/authority_order_test.gd",
+    "game/tests/authority_order_test.gd.uid",
+    "game/tests/bot_ai_regression_test.gd",
+    "game/tests/bot_ai_regression_test.gd.uid",
+    "game/tests/bot_dry_weapon_test.gd",
+    "game/tests/bot_dry_weapon_test.gd.uid",
+    "game/tests/bot_exhausted_primary_probe.gd",
+    "game/tests/bot_exhausted_primary_probe.gd.uid",
+    "game/tests/bot_exhausted_primary_test.gd",
+    "game/tests/bot_exhausted_primary_test.gd.uid",
+    "game/tests/bot_lifecycle_test.gd",
+    "game/tests/bot_lifecycle_test.gd.uid",
+    "game/tests/bot_match_test.gd",
+    "game/tests/bot_match_test.gd.uid",
+    "game/tests/bot_objective_observation_probe.gd",
+    "game/tests/bot_objective_observation_probe.gd.uid",
+    "game/tests/bot_squad_observation.gd",
+    "game/tests/bot_squad_observation.gd.uid",
+    "game/tests/bot_squad_symmetry_test.gd",
+    "game/tests/bot_squad_symmetry_test.gd.uid",
+    "game/tests/bridge_transport_test.gd",
+    "game/tests/bridge_transport_test.gd.uid",
+    "game/tests/combat_presentation_capture.gd",
+    "game/tests/combat_presentation_capture.gd.uid",
+    "game/tests/connection_lifecycle_probe.gd",
+    "game/tests/connection_lifecycle_probe.gd.uid",
+    "game/tests/cosmetic_lifecycle_test.gd",
+    "game/tests/cosmetic_lifecycle_test.gd.uid",
+    "game/tests/cosmetic_presentation_test.gd",
+    "game/tests/cosmetic_presentation_test.gd.uid",
+    "game/tests/economy_recovery_test.gd",
+    "game/tests/economy_recovery_test.gd.uid",
+    "game/tests/economy_ui_test.gd",
+    "game/tests/economy_ui_test.gd.uid",
+    "game/tests/environment_probe.gd",
+    "game/tests/environment_probe.gd.uid",
+    "game/tests/fixtures/backend_world.json",
+    "game/tests/fixtures/bot_objective_contract.json",
+    "game/tests/fixtures/bot_objective_timeout.jsonl",
+    "game/tests/gunplay_rules_probe.gd",
+    "game/tests/gunplay_rules_probe.gd.uid",
+    "game/tests/handshake_attack_probe.gd",
+    "game/tests/handshake_attack_probe.gd.uid",
+    "game/tests/handshake_server_probe.gd",
+    "game/tests/handshake_server_probe.gd.uid",
+    "game/tests/hit_feedback_test.gd",
+    "game/tests/hit_feedback_test.gd.uid",
+    "game/tests/hit_history_test.gd",
+    "game/tests/hit_history_test.gd.uid",
+    "game/tests/hit_volume_test.gd",
+    "game/tests/hit_volume_test.gd.uid",
+    "game/tests/hud_objective_hint_test.gd",
+    "game/tests/hud_objective_hint_test.gd.uid",
+    "game/tests/hud_overflow_test.gd",
+    "game/tests/hud_overflow_test.gd.uid",
+    "game/tests/independent_reconnect_review_test.gd",
+    "game/tests/independent_reconnect_review_test.gd.uid",
+    "game/tests/independent_resume_admission_test.gd",
+    "game/tests/independent_resume_admission_test.gd.uid",
+    "game/tests/independent_resume_alias_test.gd",
+    "game/tests/independent_resume_alias_test.gd.uid",
+    "game/tests/input_freshness_probe.gd",
+    "game/tests/input_freshness_probe.gd.uid",
+    "game/tests/input_lifecycle_test.gd",
+    "game/tests/input_lifecycle_test.gd.uid",
+    "game/tests/input_mode_test.gd",
+    "game/tests/input_mode_test.gd.uid",
+    "game/tests/input_stream_test.gd",
+    "game/tests/input_stream_test.gd.uid",
+    "game/tests/integration_actor_lifecycle_test.gd",
+    "game/tests/integration_actor_lifecycle_test.gd.uid",
+    "game/tests/integration_aspect_probe.gd",
+    "game/tests/integration_aspect_probe.gd.uid",
+    "game/tests/integration_render_profile.gd",
+    "game/tests/integration_render_profile.gd.uid",
+    "game/tests/landscape_ui_test.gd",
+    "game/tests/landscape_ui_test.gd.uid",
+    "game/tests/lost_welcome_test.gd",
+    "game/tests/lost_welcome_test.gd.uid",
+    "game/tests/main_test.gd",
+    "game/tests/main_test.gd.uid",
+    "game/tests/match_test.gd",
+    "game/tests/match_test.gd.uid",
+    "game/tests/menu_capture.gd",
+    "game/tests/menu_capture.gd.uid",
+    "game/tests/menu_contrast_probe.gd",
+    "game/tests/menu_contrast_probe.gd.uid",
+    "game/tests/menu_focus_test.gd",
+    "game/tests/menu_focus_test.gd.uid",
+    "game/tests/menu_occlusion_probe.gd",
+    "game/tests/menu_occlusion_probe.gd.uid",
+    "game/tests/menu_state_test.gd",
+    "game/tests/menu_state_test.gd.uid",
+    "game/tests/movement_prediction_test.gd",
+    "game/tests/movement_prediction_test.gd.uid",
+    "game/tests/native_economy_test.gd",
+    "game/tests/native_economy_test.gd.uid",
+    "game/tests/network_probe.gd",
+    "game/tests/network_probe.gd.uid",
+    "game/tests/network_profile.gd",
+    "game/tests/network_profile.gd.uid",
+    "game/tests/network_simulation_probe.gd",
+    "game/tests/network_simulation_probe.gd.uid",
+    "game/tests/offline_diagnostics_test.gd",
+    "game/tests/offline_diagnostics_test.gd.uid",
+    "game/tests/paint_visibility_test.gd",
+    "game/tests/paint_visibility_test.gd.uid",
+    "game/tests/peer_lifecycle_test.gd",
+    "game/tests/peer_lifecycle_test.gd.uid",
+    "game/tests/postgres_receipt_probe.gd",
+    "game/tests/postgres_receipt_probe.gd.uid",
+    "game/tests/profile_test.gd",
+    "game/tests/profile_test.gd.uid",
+    "game/tests/protocol_client_probe.gd",
+    "game/tests/protocol_client_probe.gd.uid",
+    "game/tests/receipt_lifecycle_probe.gd",
+    "game/tests/receipt_lifecycle_probe.gd.uid",
+    "game/tests/reconnect_policy_test.gd",
+    "game/tests/reconnect_policy_test.gd.uid",
+    "game/tests/reload_audio_capture.gd",
+    "game/tests/reload_audio_capture.gd.uid",
+    "game/tests/reload_audio_test.gd",
+    "game/tests/reload_audio_test.gd.uid",
+    "game/tests/reload_discolour_probe.gd",
+    "game/tests/reload_discolour_probe.gd.uid",
+    "game/tests/reload_legibility_probe.gd",
+    "game/tests/reload_legibility_probe.gd.uid",
+    "game/tests/reload_perf_probe.gd",
+    "game/tests/reload_perf_probe.gd.uid",
+    "game/tests/reload_sequence_capture.gd",
+    "game/tests/reload_sequence_capture.gd.uid",
+    "game/tests/reload_sequence_test.gd",
+    "game/tests/reload_sequence_test.gd.uid",
+    "game/tests/reload_visibility_test.gd",
+    "game/tests/reload_visibility_test.gd.uid",
+    "game/tests/render_benchmark.gd",
+    "game/tests/render_benchmark.gd.uid",
+    "game/tests/render_budget_test.gd",
+    "game/tests/render_budget_test.gd.uid",
+    "game/tests/render_lifecycle_test.gd",
+    "game/tests/render_lifecycle_test.gd.uid",
+    "game/tests/render_probe.gd",
+    "game/tests/render_probe.gd.uid",
+    "game/tests/result_outbox_crash_probe.gd",
+    "game/tests/result_outbox_crash_probe.gd.uid",
+    "game/tests/result_outbox_test.gd",
+    "game/tests/result_outbox_test.gd.uid",
+    "game/tests/resume_auth_loss_test.gd",
+    "game/tests/resume_auth_loss_test.gd.uid",
+    "game/tests/reward_bridge_test.gd",
+    "game/tests/reward_bridge_test.gd.uid",
+    "game/tests/smoke_presentation_test.gd",
+    "game/tests/smoke_presentation_test.gd.uid",
+    "game/tests/smoke_render_probe.gd",
+    "game/tests/smoke_render_probe.gd.uid",
+    "game/tests/smoke_visual_capture.gd",
+    "game/tests/smoke_visual_capture.gd.uid",
+    "game/tests/snapshot_buffer_test.gd",
+    "game/tests/snapshot_buffer_test.gd.uid",
+    "game/tests/state_privacy_test.gd",
+    "game/tests/state_privacy_test.gd.uid",
+    "game/tests/touch_test.gd",
+    "game/tests/touch_test.gd.uid",
+    "game/tests/transaction_crash_probe.gd",
+    "game/tests/transaction_crash_probe.gd.uid",
+    "game/tests/transaction_journal_test.gd",
+    "game/tests/transaction_journal_test.gd.uid",
+    "game/tests/transaction_lock_probe.gd",
+    "game/tests/transaction_lock_probe.gd.uid",
+    "game/tests/ux_contract_test.gd",
+    "game/tests/ux_contract_test.gd.uid",
+    "game/tests/viewmodel_light_probe.gd",
+    "game/tests/viewmodel_light_probe.gd.uid",
+    "game/tests/visual_scene.gd",
+    "game/tests/visual_scene.gd.uid",
+    "game/tests/weapon_art_capture.gd",
+    "game/tests/weapon_art_capture.gd.uid",
+    "game/tests/weapon_art_test.gd",
+    "game/tests/weapon_art_test.gd.uid",
+    "game/tests/weapon_integrity_test.gd",
+    "game/tests/weapon_integrity_test.gd.uid",
+    "game/tests/weapon_motion_capture.gd",
+    "game/tests/weapon_motion_capture.gd.uid",
+    "game/tests/weapon_render_benchmark.gd",
+    "game/tests/weapon_render_benchmark.gd.uid",
+    "game/tests/world_test.gd",
+    "game/tests/world_test.gd.uid",
+    "scripts/acquire_fov_math_reference.py",
+    "scripts/build_manifest.py",
+    "scripts/capture_desktop_layouts.py",
+    "scripts/capture_reload_matrix.sh",
+    "scripts/diagnose_macos_render.py",
+    "scripts/diagnose_macos_startup.py",
+    "scripts/diagnose_native_input_mode.py",
+    "scripts/diagnostics/linux_profile_overhead.gd",
+    "scripts/diagnostics/linux_profile_overhead.tscn",
+    "scripts/diagnostics/render_feature_probe.gd",
+    "scripts/export.py",
+    "scripts/export.sh",
+    "scripts/export_catalog_fixture.py",
+    "scripts/export_ios.py",
+    "scripts/fixtures/export_integration.gd",
+    "scripts/fixtures/macos_ordinary_source/default_capture_body.swift.txt",
+    "scripts/fixtures/macos_ordinary_source/reference.json",
+    "scripts/fixtures/native_log/.gitattributes",
+    "scripts/fixtures/native_log/input-mode.log",
+    "scripts/fixtures/native_log/provenance.json",
+    "scripts/fixtures/network_soak.gd",
+    "scripts/fixtures/offline_capture_observations.json",
+    "scripts/fixtures/offline_focus_observations.json",
+    "scripts/fov_math_reference.py",
+    "scripts/generate_surfaces.py",
+    "scripts/godot.sh",
+    "scripts/linux_frame_sampler.py",
+    "scripts/linux_profile_overhead.py",
+    "scripts/macos_deploy_ocr.py",
+    "scripts/macos_native_input.py",
+    "scripts/macos_ordinary_input.py",
+    "scripts/macos_window_capture.swift",
+    "scripts/measure_bot_squad_symmetry.py",
+    "scripts/native_approach.py",
+    "scripts/native_focus_fence.py",
+    "scripts/native_log.py",
+    "scripts/native_observation.py",
+    "scripts/native_settings_route.py",
+    "scripts/package_qa_receipts.py",
+    "scripts/postgres_receipt_oracle.py",
+    "scripts/probe_macos_input.py",
+    "scripts/profile_import.py",
+    "scripts/profile_render.sh",
+    "scripts/qualify_ios_compile.py",
+    "scripts/reload_negative_controls.py",
+    "scripts/run_native_regressions.py",
+    "scripts/run_network_campaign.py",
+    "scripts/serve-account-match.sh",
+    "scripts/session_brief.sh",
+    "scripts/setup-android.sh",
+    "scripts/setup.sh",
+    "scripts/simulate_network.py",
+    "scripts/test_account_isolated.py",
+    "scripts/test_account_match.py",
+    "scripts/test_account_match_output.py",
+    "scripts/test_account_network.py",
+    "scripts/test_account_network_output.py",
+    "scripts/test_activity_provenance.py",
+    "scripts/test_admission_capacity.py",
+    "scripts/test_bot_objective_observation.py",
+    "scripts/test_bridge_transport.py",
+    "scripts/test_build_manifest.py",
+    "scripts/test_connection_lifecycle.py",
+    "scripts/test_diagnose_native_input_mode.py",
+    "scripts/test_focus_resume_timing.py",
+    "scripts/test_fov_math_reference.py",
+    "scripts/test_full_account_reconnect.py",
+    "scripts/test_handshake_hardening.sh",
+    "scripts/test_hud_fixture_cleanup.py",
+    "scripts/test_input_freshness.py",
+    "scripts/test_linux_frame_sampler.py",
+    "scripts/test_linux_gpu_profile.py",
+    "scripts/test_linux_profile_overhead.py",
+    "scripts/test_macos_deploy_ocr.py",
+    "scripts/test_macos_focus.py",
+    "scripts/test_macos_menu.py",
+    "scripts/test_macos_ordinary.py",
+    "scripts/test_macos_ordinary_controller.py",
+    "scripts/test_macos_ordinary_paths.py",
+    "scripts/test_macos_ordinary_startup.py",
+    "scripts/test_macos_render_diagnostic.py",
+    "scripts/test_macos_screen_identity.py",
+    "scripts/test_native_approach.py",
+    "scripts/test_native_economy.py",
+    "scripts/test_native_first_leak.py",
+    "scripts/test_native_focus_fence.py",
+    "scripts/test_native_log.py",
+    "scripts/test_native_observation.py",
+    "scripts/test_native_route_pulse.py",
+    "scripts/test_native_settings_route.py",
+    "scripts/test_native_suite_cleanup.py",
+    "scripts/test_native_suite_isolation.py",
+    "scripts/test_native_window_lifetime.py",
+    "scripts/test_network.sh",
+    "scripts/test_network_soak.py",
+    "scripts/test_offline_capture_fences.py",
+    "scripts/test_offline_export_ocr.py",
+    "scripts/test_offline_role_guidance.py",
+    "scripts/test_package_qa_receipts.py",
+    "scripts/test_postgres_receipt_guards.py",
+    "scripts/test_postgres_receipt_oracle.py",
+    "scripts/test_postgres_receipt_recovery.py",
+    "scripts/test_postgres_receipt_refresh.py",
+    "scripts/test_probe_macos_input.py",
+    "scripts/test_protocol_compat.sh",
+    "scripts/test_qualify_ios_compile.py",
+    "scripts/test_reload_contact.py",
+    "scripts/test_render.sh",
+    "scripts/test_rendered_layout_hud.py",
+    "scripts/test_result_outbox.py",
+    "scripts/test_reward_bridge.py",
+    "scripts/test_transaction_restart_oracle.py",
+    "scripts/toolchain.py",
+    "scripts/validate.sh",
+    "scripts/validate_matrix.py",
+    "scripts/validate_transaction_restart.py",
+    "scripts/verify_bot_objective_observation.py",
+    "scripts/verify_builds.py",
+    "scripts/verify_integration_export.py",
+    "scripts/verify_macos_menu.py",
+    "scripts/verify_macos_ordinary.py",
+    "scripts/verify_offline_export.py",
+    "scripts/verify_offline_match.py",
+    "tools/fov_math_reference/cases.json",
+    "tools/fov_math_reference/project.godot",
+    "tools/fov_math_reference/reference.gd"
+  ],
+  "all_materialized_blobs_modes_equal": true,
+  "sparse_omissions": [
+    {
+      "path": "backend/app.py",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "bb15f054d622fc4f6164248a2f4453d20a3e7fff"
+    },
+    {
+      "path": "backend/bridge_fixture.py",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "b8ff2aebebb3bb2a2750c2b12284c25606962926"
+    },
+    {
+      "path": "backend/config/economy.json",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "fe7f8e0c17cbae4ecd5177835de5e0a06db5bfa0"
+    },
+    {
+      "path": "backend/config/simulation-baseline.json",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "0e3eb68eeb28e9583d1b4405c0ba20fe194ad252"
+    },
+    {
+      "path": "backend/dev-api.sh",
+      "mode": "100755",
+      "kind": "blob",
+      "oid": "8bb7360a131bab2ee70319879b0bb5b2ea53cd99"
+    },
+    {
+      "path": "backend/dev-db.sh",
+      "mode": "100755",
+      "kind": "blob",
+      "oid": "d3942005473723a2aa1362f78b028217661ff606"
+    },
+    {
+      "path": "backend/migrate.py",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "4a7489172c94077e79df0b02cf19f80b9fe55170"
+    },
+    {
+      "path": "backend/migrations/001_integrity.sql",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "7aaac12f4d22d4b9d4698c4e6ab9ef401a9b1e77"
+    },
+    {
+      "path": "backend/migrations/002_game_tickets.sql",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "c37f018b9b536f96940bcfc7cad83329997c57f0"
+    },
+    {
+      "path": "backend/migrations/003_loadouts.sql",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "9e70fd0529d3aaaa62e31346175297114ab86cea"
+    },
+    {
+      "path": "backend/migrations/004_market_index.sql",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "c8bb739299510670c665ba687598d7a891608051"
+    },
+    {
+      "path": "backend/models.py",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "8dc03d668a696f889d89b71c07602b02593befaa"
+    },
+    {
+      "path": "backend/pyproject.toml",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "2069a235656320af83545cd56c57d55a99355ef5"
+    },
+    {
+      "path": "backend/simulate.py",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "401b400d97e1b472629975c27fc64d67e76d4984"
+    },
+    {
+      "path": "backend/tests/test_economy.py",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "2214ba53daec34713c1535aae5f194661e4b39bf"
+    },
+    {
+      "path": "backend/uv.lock",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "cc63c8426301a44a0b13d82339b1177cd0f10b90"
+    },
+    {
+      "path": "game/assets/environments/relay_sky.tres",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "654e47b1dc428895406969253a0b68d5eb7ccd25"
+    },
+    {
+      "path": "game/assets/icon.svg",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "a9bf7a6ca6cd0cfdf61f963349c9715f88b9b04e"
+    },
+    {
+      "path": "game/assets/icon.svg.import",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "a2a74038da270192cf33afe444c79696c3501661"
+    },
+    {
+      "path": "game/assets/materials/asphalt.png",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "1091e72e72acae0deb7ff7f9a10be4ee0278dc64"
+    },
+    {
+      "path": "game/assets/materials/asphalt.png.import",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "4b402576e114968dd34d107d9b2be07efac9d7e2"
+    },
+    {
+      "path": "game/assets/materials/asphalt_normal.png",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "9806b05215a6a0a245118114dddfe865f615c8ef"
+    },
+    {
+      "path": "game/assets/materials/asphalt_normal.png.import",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "2fa4160b4f91c6a1c184e2b10bbfb3dc7f5f5f9e"
+    },
+    {
+      "path": "game/assets/materials/asphalt_roughness.png",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "c2eed56388067814d39babdcef0c0abdb98f1887"
+    },
+    {
+      "path": "game/assets/materials/asphalt_roughness.png.import",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "c99b7e0c71c441e5c7b6b1c42aa72ffd7a929805"
+    },
+    {
+      "path": "game/assets/materials/concrete.png",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "850af89a73cfda9c9a1cc8267e8c1270243a2f1e"
+    },
+    {
+      "path": "game/assets/materials/concrete.png.import",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "90573851c1e392fbf0733576466c98cf7ef4758b"
+    },
+    {
+      "path": "game/assets/materials/concrete_normal.png",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "6090a9c4118dc108e789e896c7f5127297484bc3"
+    },
+    {
+      "path": "game/assets/materials/concrete_normal.png.import",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "58c20fa698c00ce4d414e309326c2aa8e717346a"
+    },
+    {
+      "path": "game/assets/materials/concrete_roughness.png",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "dbff504516c3e1d2a4c3d8d1165c770b620bf949"
+    },
+    {
+      "path": "game/assets/materials/concrete_roughness.png.import",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "ed003d9c08266c96f9d70acfa4bd9c18f7972ef6"
+    },
+    {
+      "path": "game/assets/materials/painted_metal.png",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "fc37bd63c77b0fa6d682519b2464be74ba6c79cc"
+    },
+    {
+      "path": "game/assets/materials/painted_metal.png.import",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "2812bae7da42111fec088d941f1b058e39434bdb"
+    },
+    {
+      "path": "game/assets/materials/painted_metal_normal.png",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "e732a67ed77a5efc244625ee20b624011c43e1c0"
+    },
+    {
+      "path": "game/assets/materials/painted_metal_normal.png.import",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "cf44c72ee5c58e4461627379cfd25ad665719071"
+    },
+    {
+      "path": "game/assets/materials/painted_metal_roughness.png",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "7201e584dd7447de2026134a6cede3211255322f"
+    },
+    {
+      "path": "game/assets/materials/painted_metal_roughness.png.import",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "a8d25424da6dc40629ea95c702a380adf3563e4f"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar.glb",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "5fede01d0bba4cadc477d75482589c4d9e9b6aad"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar.glb.import",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "4b4fb0f7edcc3e2d60b07fbd3256f81e16c3ecfa"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_albedo.png",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "c268b3dbad0499710d1e3f64cc7f556a4a9672ef"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_albedo.png.import",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "560754fe6a5b4114bf5262418d6c036fc02aef0f"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_arms.glb",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "159af6a305f97e43658c61a6f9d279fba00f5411"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_arms.glb.import",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "108572ee1a81251c7bcf4a2b097930220a849f2d"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_arms_albedo.png",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "f0b41d0f3741eed77b27d8a16dfc72c346ea21b6"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_arms_albedo.png.import",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "9bca2a701fcee90cd206215f3ad095034a23206e"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_arms_normal.png",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "eccb6af12283cb99628f2235e5fd746e15bb7d1e"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_arms_normal.png.import",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "8beca535f320d153bb69380ce2221321ff889bbf"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_arms_orm.png",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "a5d567d87352f013485758b822faa4b06e420b0c"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_arms_orm.png.import",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "c0831f44ce0de26f7f344f429f78c7a56d1f9b2f"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_body.tres",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "9cf39175fa98184f63b7c42077d4482ca6d7f774"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_hands.glb",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "69c69fa414f13acfc937c6f00780f28dd4d38a53"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_hands.glb.import",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "8d4f293400fdd12c2a7744a9e88db0666cf659b2"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_hands.tres",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "028a75a46a480cc4a534ea958380f85d249a292c"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_hands_albedo.png",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "db6acd004e7e649c9d40064dec26cb724b39bece"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_hands_albedo.png.import",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "cd392a06b97db889373a371993c73fc5982a2bb0"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_hands_normal.png",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "94880e6aa9b5ced3a1e831f7255caff822fb1626"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_hands_normal.png.import",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "b2d3dd92b81ed6ea35ced7d0062e8aaf0d6f76ed"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_hands_orm.png",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "2f3630d72e8145d782c1d9c9f1daa3ab54b813be"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_hands_orm.png.import",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "a6ffebc547f355455757e6690b84387c1a4c2ce0"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_normal.png",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "9127c6eeedb31b94dbb6c2814dab6f3aed9adfe5"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_normal.png.import",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "7eff2d0e1a0b3b8eaa9c9538c662809165273b0f"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_orm.png",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "251e41cbc00341868e20769842474cd83ef6e066"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_orm.png.import",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "fd9e341668dfe21ce99d6c4f1eed6600678bab94"
+    },
+    {
+      "path": "game/scripts/gameplay/actor.gd",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "430169676a1fedef687bd156d579e827cf0e6182"
+    },
+    {
+      "path": "game/scripts/gameplay/actor.gd.uid",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "1f9255be4e01cbbe9694518e471d88f9693a486f"
+    },
+    {
+      "path": "game/scripts/gameplay/arena.gd",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "d70e4ac4f9a3f16948743849e5ea98cba7a7a5a9"
+    },
+    {
+      "path": "game/scripts/gameplay/arena.gd.uid",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "c8f162af297a0118714b2a88e0dbf33d0d476b76"
+    },
+    {
+      "path": "game/scripts/gameplay/bot_ai.gd",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "37bb588b18a63249d66532122a1d91ba56c10a6f"
+    },
+    {
+      "path": "game/scripts/gameplay/bot_ai.gd.uid",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "9883e43bf0b5450d14f1bc243ff04302c12d183f"
+    },
+    {
+      "path": "game/scripts/gameplay/combat_effects.gd",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "690ac3d0b2ae370e375cd11615002c36a75966fb"
+    },
+    {
+      "path": "game/scripts/gameplay/combat_effects.gd.uid",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "18d83ab1a71dbf9e51a935d4260b589a74b897a0"
+    },
+    {
+      "path": "game/scripts/gameplay/match.gd",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "b994a2cd40be160dc29bd8ed63646c7ceb01190a"
+    },
+    {
+      "path": "game/scripts/gameplay/match.gd.uid",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "3c9c1ecbcbfb0daab047a65480c145080e571bf1"
+    },
+    {
+      "path": "game/scripts/gameplay/reload_audio.gd",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "83624ffe5075b68b1f07f5dfe9b65dd2824c499d"
+    },
+    {
+      "path": "game/scripts/gameplay/reload_audio.gd.uid",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "3a5c17b6e787eb456fab7c4cb5be7e6621682f89"
+    },
+    {
+      "path": "game/scripts/gameplay/reload_phases.gd",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "21c1c8046cb5182fce6233b7a81035753e10139e"
+    },
+    {
+      "path": "game/scripts/gameplay/reload_phases.gd.uid",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "4b7a6492d6c84a3643f037860671a2b2a728fcef"
+    },
+    {
+      "path": "game/scripts/gameplay/utility.gd",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "4f61d29639f18761dbafde3ffa2f4f5fe434aa0e"
+    },
+    {
+      "path": "game/scripts/gameplay/utility.gd.uid",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "5a3617a5dd255ac4c295f5c59713265d984b7653"
+    },
+    {
+      "path": "game/scripts/gameplay/viewmodel_shading.gd",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "00c64573c1f294e7895665bb79846b83e66380ef"
+    },
+    {
+      "path": "game/scripts/gameplay/viewmodel_shading.gd.uid",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "742eaeb7df681aad1e16ae6a01f28daf39e9d25b"
+    },
+    {
+      "path": "game/scripts/gameplay/weapon_model.gd",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "e5ecdff0b8ef5f039e81233b9b8f79df41e8c2ae"
+    },
+    {
+      "path": "game/scripts/gameplay/weapon_model.gd.uid",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "aac3b001612af78082334e19fa34603a28bf86f1"
+    },
+    {
+      "path": "game/scripts/gameplay/weapons.gd",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "89431953e3fc9c34341c43cdc24ca858bc2d44e2"
+    },
+    {
+      "path": "game/scripts/gameplay/weapons.gd.uid",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "23819f565cb13b904a79ce7f2a4eda9512479f95"
+    },
+    {
+      "path": "game/scripts/main.gd",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "996edab146d70c72f654876259f2fb16eb5b5a65"
+    },
+    {
+      "path": "game/scripts/main.gd.uid",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "6d84d705691de47fb1cea57d3d70034519423ca4"
+    },
+    {
+      "path": "game/scripts/network/economy_bridge.gd",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "870cba1d87c84ec5a714a7eeef6f9376ae4ccd03"
+    },
+    {
+      "path": "game/scripts/network/economy_bridge.gd.uid",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "d3226d362a983d1125ef837d1ede6e5d8ea25fb9"
+    },
+    {
+      "path": "game/scripts/network/hit_history.gd",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "24fce18e94307ff5e4b908a24ec6a05050362e27"
+    },
+    {
+      "path": "game/scripts/network/hit_history.gd.uid",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "cb99a1a2bced8afddba27e1590017b3435c72ecf"
+    },
+    {
+      "path": "game/scripts/network/input_gate.gd",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "bf23a5b8c6e634121fca9f5daeb2a4d731ff6538"
+    },
+    {
+      "path": "game/scripts/network/input_gate.gd.uid",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "a28a8edabb6db1fe34ce9f7a5305a4b4eadc10d6"
+    },
+    {
+      "path": "game/scripts/network/input_stream.gd",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "f0516be1ab2416d36ba3b62f37083f371364f3a4"
+    },
+    {
+      "path": "game/scripts/network/input_stream.gd.uid",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "e3e4a54c1e2265d10fb9183396d7e067507b7581"
+    },
+    {
+      "path": "game/scripts/network/movement_prediction.gd",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "f83dc4514c6c2f64f582b1860f0c3fd65ccd66cf"
+    },
+    {
+      "path": "game/scripts/network/movement_prediction.gd.uid",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "7a7a4e134bb30b8e8a0a9eae0fca53aab3f1e937"
+    },
+    {
+      "path": "game/scripts/network/movement_step.gd",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "8350095e0096ab97c6098e9b982c596102af8ee5"
+    },
+    {
+      "path": "game/scripts/network/movement_step.gd.uid",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "eabb524c069235b09395dfa75b38bc3a0f0e8583"
+    },
+    {
+      "path": "game/scripts/network/peer_lifecycle.gd",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "2ccaf99bc18f1f76ad94089190e4d31ece4a90eb"
+    },
+    {
+      "path": "game/scripts/network/peer_lifecycle.gd.uid",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "d659d1b097be90fec9d835a3c5321f7e0bf9b742"
+    },
+    {
+      "path": "game/scripts/network/reconnect_policy.gd",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "6912de1d4309778bdcb707ace00465c001cea985"
+    },
+    {
+      "path": "game/scripts/network/reconnect_policy.gd.uid",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "84d8057108554df36c2ce521b81800b724827912"
+    },
+    {
+      "path": "game/scripts/network/result_outbox.gd",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "5e66816d9e6092f955acb58ab17794b7ea0e3e99"
+    },
+    {
+      "path": "game/scripts/network/result_outbox.gd.uid",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "cc3af4a907b31a9c4082e2ebc637a58b5c96d21d"
+    },
+    {
+      "path": "game/scripts/network/snapshot_buffer.gd",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "5787cd7dbac005085b85f40a5976c411a42364f9"
+    },
+    {
+      "path": "game/scripts/network/snapshot_buffer.gd.uid",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "5c92879d26c803a69b6a5eec35a0a29b3c0b29c0"
+    },
+    {
+      "path": "game/scripts/network/snapshot_schema.gd",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "ffd4fde4a263aa9c656a39327dec39ebe421ba60"
+    },
+    {
+      "path": "game/scripts/network/snapshot_schema.gd.uid",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "d3d3d86a0a5c0522bc61e22b3082e5d7e2876751"
+    },
+    {
+      "path": "game/scripts/network/state_privacy.gd",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "6bc4e5bbf0961034b4c32d25702983150d28567c"
+    },
+    {
+      "path": "game/scripts/network/state_privacy.gd.uid",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "364e28b72b7fdfdd52ec28f57411627d0fde8cc3"
+    },
+    {
+      "path": "game/scripts/offline_diagnostics.gd",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "b5908b682731dcf45381a11eeb197e85b72dc7a1"
+    },
+    {
+      "path": "game/scripts/offline_diagnostics.gd.uid",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "f8e89af0495e2891d89f299735b92e90d273619f"
+    },
+    {
+      "path": "game/scripts/profile.gd",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "f5d230e3bdcd9014d96bc2a108869c1c58624d0e"
+    },
+    {
+      "path": "game/scripts/profile.gd.uid",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "8137e6fb6d4706532d754136f1088b357df1b9c1"
+    },
+    {
+      "path": "game/scripts/ui/case_reveal.gd",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "c45a380de27f353c190affe367d2cfccbb70adb3"
+    },
+    {
+      "path": "game/scripts/ui/case_reveal.gd.uid",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "2a55813298c802b9f4e2243b158a81f208aaa23e"
+    },
+    {
+      "path": "game/scripts/ui/confirm_sheet.gd",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "8e8fd6d02db8bb3caf2838f76194ed2b68d2ba4e"
+    },
+    {
+      "path": "game/scripts/ui/confirm_sheet.gd.uid",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "49f859d22d7b935d42186401055ee00bdd69bdb8"
+    },
+    {
+      "path": "game/scripts/ui/cosmetic_material.gd",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "483f05c3b66be720a660ccb044a929abcf1e2526"
+    },
+    {
+      "path": "game/scripts/ui/cosmetic_material.gd.uid",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "be28b52007d1d4fe6864f5e0761441bbec5d474f"
+    },
+    {
+      "path": "game/scripts/ui/design_tokens.gd",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "544831bb702600249c7faa90e20bee87536ae0d1"
+    },
+    {
+      "path": "game/scripts/ui/design_tokens.gd.uid",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "824e778229c64a8607e2379166ef4a3734966ff3"
+    },
+    {
+      "path": "game/scripts/ui/display_models.gd",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "22f85a3aa4073a23211f8e1b8d57d46dc3989df0"
+    },
+    {
+      "path": "game/scripts/ui/display_models.gd.uid",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "02273a554e12be28d8ef17caf89dd792f0daaadf"
+    },
+    {
+      "path": "game/scripts/ui/economy_api.gd",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "595662a12bdc3828b78decb8b7c3c341faddb346"
+    },
+    {
+      "path": "game/scripts/ui/economy_api.gd.uid",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "8e6a6fe0e603af8b278ba3ad2d8a7cd002cc32bd"
+    },
+    {
+      "path": "game/scripts/ui/economy_ui.gd",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "c482c553264781db2a66a373ab4e4496fb59531a"
+    },
+    {
+      "path": "game/scripts/ui/economy_ui.gd.uid",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "36963dfa7b92525c9c560def0d6778714834a0fe"
+    },
+    {
+      "path": "game/scripts/ui/item_inspector.gd",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "834c08b346ae558c1d6f5bb2e961d164ea764d55"
+    },
+    {
+      "path": "game/scripts/ui/item_inspector.gd.uid",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "e66d56b37a18e7d3d43ea62ee2dce61bb341e538"
+    },
+    {
+      "path": "game/scripts/ui/radar.gd",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "d17c52ee6be54438c52660e31b981753f76abeec"
+    },
+    {
+      "path": "game/scripts/ui/radar.gd.uid",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "31f2402f7b1ae5115751553845e3981e788882f0"
+    },
+    {
+      "path": "game/scripts/ui/safe_area.gd",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "a05b2a13bdc78b9ba64e11343d88245178452473"
+    },
+    {
+      "path": "game/scripts/ui/safe_area.gd.uid",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "bb31445f79b74a191b68bdad24a4ace5a251375a"
+    },
+    {
+      "path": "game/scripts/ui/touch_controls.gd",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "4c13c454f1935491110fc682058a36ee53c2c926"
+    },
+    {
+      "path": "game/scripts/ui/touch_controls.gd.uid",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "00f6091a47f82f84a31b54b0b9785ccd79d836f4"
+    },
+    {
+      "path": "game/scripts/ui/transaction_journal.gd",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "cbac7a494f14c88127196c848a3f874892e7b94c"
+    },
+    {
+      "path": "game/scripts/ui/transaction_journal.gd.uid",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "6b9eeeab5e36978a061ba51797c9aedf7264e5f3"
+    },
+    {
+      "path": "game/scripts/ui/weapon_glyph.gd",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "cfb16cf3b2c4533f1594de09649b195c58fb019d"
+    },
+    {
+      "path": "game/scripts/ui/weapon_glyph.gd.uid",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "417bc046f46d268ef71720cc6cc6f9140b81e2d0"
+    },
+    {
+      "path": "server/result_outbox.py",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "0fe0438c719109b4573eb1019b361e63375d7b4a"
+    },
+    {
+      "path": "server/tests/test_result_outbox.py",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "370530d97c661fb8cdc2cdea49b45dcf826826bf"
+    },
+    {
+      "path": "server/tests/test_supervision.py",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "2dd3e1ff5703d4e9e8bf203f9ccaef23be4304b3"
+    },
+    {
+      "path": "tools/art/REFERENCES.md",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "79c2a6a80a4bf8d5484625a5b133e698f7e7651a"
+    },
+    {
+      "path": "tools/art/arms_build.py",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "a62f90a1bdf2b00b70a56eb0bce48864736354ec"
+    },
+    {
+      "path": "tools/art/bake.py",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "dd40e4adf1d315b40dc511c8d429612f1f3be4f0"
+    },
+    {
+      "path": "tools/art/compare_stages.py",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "9244388f4c6eb0680d5836be454e10c7f3be42b2"
+    },
+    {
+      "path": "tools/art/export.py",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "31c370f6eb61d2d2e1a5c7f9e9e09c9f20c8e33f"
+    },
+    {
+      "path": "tools/art/hardsurface.py",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "e3b796dcf1f8a8e0049cc9d353a67d7839c22cd6"
+    },
+    {
+      "path": "tools/art/motion_sheet.py",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "d38e3586ab69d27861e5a46d441f6ad431d60549"
+    },
+    {
+      "path": "tools/art/patch_part_ao.py",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "2c83d829d87f4dc7ddc384d364a87733ccc2a53c"
+    },
+    {
+      "path": "tools/art/preview_glove.py",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "351b623c17e299b75d0e55b9a5d61814febd0a21"
+    },
+    {
+      "path": "tools/art/rebake_part_ao.py",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "8c33be215c4329a462cdb961e70070751b6e5004"
+    },
+    {
+      "path": "tools/art/relay_ar.py",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "d95a88ccb8e04c4ac1ed4adfea9a3bfc8ce1169c"
+    },
+    {
+      "path": "tools/art/relay_ar_arms.py",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "647137082a33c1534c2ab7f960548a026108d5dd"
+    },
+    {
+      "path": "tools/art/relay_ar_hands.py",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "0fb2b5c69f5825824a7ef26c95e8d54fbf749b51"
+    },
+    {
+      "path": "tools/art/render_arms.py",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "6b83d9dd611878a7422268973073cb39d2fc4e1f"
+    },
+    {
+      "path": "tools/art/render_views.py",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "7ee50a6ee3b507f503a6dc5d7300aea08c175afc"
+    },
+    {
+      "path": "tools/art/sdf.py",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "9ae3a6ae50e99572016f556877dc7b5ab7164825"
+    },
+    {
+      "path": "tools/art/spectrogram.py",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "81fbaff47d15824a8734ea6506500b145a15c0d7"
+    },
+    {
+      "path": "tools/art/textures.py",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "c9620899284a0964a53e88b8b7c6bb7c8e96038c"
+    },
+    {
+      "path": "tools/art/viewmodel_fit.py",
+      "mode": "100644",
+      "kind": "blob",
+      "oid": "12d30f654547747e1ee3fbde366a8044e4ed8d25"
+    }
+  ],
+  "all_omitted_source_objects_available": true
+}
