@@ -1,0 +1,95 @@
+{
+  "passed": true,
+  "controls": [
+    {
+      "id": "connection-deadline",
+      "replacements": 1,
+      "killed_by_assertion": true,
+      "failures": 1,
+      "errors": 0,
+      "mutant_sha256": "9a227ee2c009c45535e7bf6758f52355e34a21f8c0288564cc9768cbf51353d4",
+      "output": "test_delayed_successful_connection_capture_is_not_forced_age_zero (test_input_consumption_foundation_model.LiteralLifecycleModelControls.test_delayed_successful_connection_capture_is_not_forced_age_zero) ... FAIL\n\n======================================================================\nFAIL: test_delayed_successful_connection_capture_is_not_forced_age_zero (test_input_consumption_foundation_model.LiteralLifecycleModelControls.test_delayed_successful_connection_capture_is_not_forced_age_zero)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/workspace/sightbreak-windows-input-consumption-r7/scripts/test_input_consumption_foundation_model.py\", line 52, in test_delayed_successful_connection_capture_is_not_forced_age_zero\n    self.assertTrue(accepted);self.assertEqual(row['input_age_msec'],delay);self.assertEqual(row['deadline_remaining_msec'],20000-delay)\n                                                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 20001 != 20000\n\n----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nFAILED (failures=1)\n"
+    },
+    {
+      "id": "generation-increment",
+      "replacements": 1,
+      "killed_by_assertion": true,
+      "failures": 1,
+      "errors": 0,
+      "mutant_sha256": "bf19629fd5fcf3d3c0d50f1d6f2af00ca7276842b5d15782e7de846dcef7edb6",
+      "output": "test_failed_duplicate_hook_does_not_invent_new_generation_timer_or_forget (test_input_consumption_foundation_model.LiteralLifecycleModelControls.test_failed_duplicate_hook_does_not_invent_new_generation_timer_or_forget) ... FAIL\n\n======================================================================\nFAIL: test_failed_duplicate_hook_does_not_invent_new_generation_timer_or_forget (test_input_consumption_foundation_model.LiteralLifecycleModelControls.test_failed_duplicate_hook_does_not_invent_new_generation_timer_or_forget)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/workspace/sightbreak-windows-input-consumption-r7/scripts/test_input_consumption_foundation_model.py\", line 115, in test_failed_duplicate_hook_does_not_invent_new_generation_timer_or_forget\n    self.assertFalse(accepted);self.assertEqual(m.lifecycle.generation,1);self.assertEqual(m.lifecycle.peers[9],before)\n                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 2 != 1\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n"
+    },
+    {
+      "id": "admission-equality",
+      "replacements": 2,
+      "killed_by_assertion": true,
+      "failures": 1,
+      "errors": 0,
+      "mutant_sha256": "c4b050ad5c352befbbac01a3abdebe25752c45f6df6bf0436d1cb3b41fcf0b06",
+      "output": "test_begin_join_and_admission_use_strict_original_deadline (test_input_consumption_foundation_model.LiteralLifecycleModelControls.test_begin_join_and_admission_use_strict_original_deadline) ... FAIL\n\n======================================================================\nFAIL: test_begin_join_and_admission_use_strict_original_deadline (test_input_consumption_foundation_model.LiteralLifecycleModelControls.test_begin_join_and_admission_use_strict_original_deadline)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/workspace/sightbreak-windows-input-consumption-r7/scripts/test_input_consumption_foundation_model.py\", line 58, in test_begin_join_and_admission_use_strict_original_deadline\n    self.assertEqual(attempt>0,allowed)\nAssertionError: True != False\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n"
+    },
+    {
+      "id": "idle-equality",
+      "replacements": 2,
+      "killed_by_assertion": true,
+      "failures": 1,
+      "errors": 0,
+      "mutant_sha256": "76fd7d0e8cbbbbbc9bc56d90557e31fcd622ea38e7af5dc86737ce038815fa2e",
+      "output": "test_active_and_allow_gate_boundaries_and_rate_window_are_literal (test_input_consumption_foundation_model.LiteralLifecycleModelControls.test_active_and_allow_gate_boundaries_and_rate_window_are_literal) ... FAIL\n\n======================================================================\nFAIL: test_active_and_allow_gate_boundaries_and_rate_window_are_literal (test_input_consumption_foundation_model.LiteralLifecycleModelControls.test_active_and_allow_gate_boundaries_and_rate_window_are_literal)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/workspace/sightbreak-windows-input-consumption-r7/scripts/test_input_consumption_foundation_model.py\", line 65, in test_active_and_allow_gate_boundaries_and_rate_window_are_literal\n    self.assertEqual(p.allow_input(9,age),allowed);p.active(9,age)\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: True != False\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n"
+    },
+    {
+      "id": "reject-moves-again",
+      "replacements": 1,
+      "killed_by_assertion": true,
+      "failures": 1,
+      "errors": 0,
+      "mutant_sha256": "3c870805f9a0f8f15861d8cc63296220b3d59b53a7d54ad6da9fa092653623e8",
+      "output": "test_rejection_is_absorbing_and_repeated_reject_does_not_move_deadline (test_input_consumption_foundation_model.LiteralLifecycleModelControls.test_rejection_is_absorbing_and_repeated_reject_does_not_move_deadline) ... FAIL\n\n======================================================================\nFAIL: test_rejection_is_absorbing_and_repeated_reject_does_not_move_deadline (test_input_consumption_foundation_model.LiteralLifecycleModelControls.test_rejection_is_absorbing_and_repeated_reject_does_not_move_deadline)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/workspace/sightbreak-windows-input-consumption-r7/scripts/test_input_consumption_foundation_model.py\", line 76, in test_rejection_is_absorbing_and_repeated_reject_does_not_move_deadline\n    self.assertEqual((p.peers[9]['deadline'],p.peers[9]['last_input'],p.peers[9]['joined']),(600,0,joined))\nAssertionError: Tuples differ: (700, 0, False) != (600, 0, False)\n\nFirst differing element 0:\n700\n600\n\n- (700, 0, False)\n?  ^\n\n+ (600, 0, False)\n?  ^\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nFAILED (failures=1)\n"
+    },
+    {
+      "id": "admission-no-activity",
+      "replacements": 1,
+      "killed_by_assertion": true,
+      "failures": 1,
+      "errors": 0,
+      "mutant_sha256": "389f2ec760f038b7d3cda53fb03aaeab8388ec1cf70847c134419612bda1ed2e",
+      "output": "test_begin_join_and_admission_use_strict_original_deadline (test_input_consumption_foundation_model.LiteralLifecycleModelControls.test_begin_join_and_admission_use_strict_original_deadline) ... FAIL\n\n======================================================================\nFAIL: test_begin_join_and_admission_use_strict_original_deadline (test_input_consumption_foundation_model.LiteralLifecycleModelControls.test_begin_join_and_admission_use_strict_original_deadline)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/workspace/sightbreak-windows-input-consumption-r7/scripts/test_input_consumption_foundation_model.py\", line 60, in test_begin_join_and_admission_use_strict_original_deadline\n    self.assertEqual(p.peers[9]['last_input'],1000+delta if allowed else 1000)\nAssertionError: 1000 != 20999\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n"
+    },
+    {
+      "id": "sticky-actor-reset",
+      "replacements": 1,
+      "killed_by_assertion": true,
+      "failures": 1,
+      "errors": 0,
+      "mutant_sha256": "cbe736be58fe5d869c70d62bf7750701301b3d2472b2984c40128e428865877a",
+      "output": "test_selected_peer_and_sticky_last_actor_are_distinct (test_input_consumption_foundation_model.LiteralLifecycleModelControls.test_selected_peer_and_sticky_last_actor_are_distinct) ... FAIL\n\n======================================================================\nFAIL: test_selected_peer_and_sticky_last_actor_are_distinct (test_input_consumption_foundation_model.LiteralLifecycleModelControls.test_selected_peer_and_sticky_last_actor_are_distinct)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/workspace/sightbreak-windows-input-consumption-r7/scripts/test_input_consumption_foundation_model.py\", line 98, in test_selected_peer_and_sticky_last_actor_are_distinct\n    self.assertEqual((other['peer'],other['bound_actor'],other['last_bound_actor'],other['joined']),(10,0,1,False))\nAssertionError: Tuples differ: (10, 0, 0, False) != (10, 0, 1, False)\n\nFirst differing element 2:\n0\n1\n\n- (10, 0, 0, False)\n?         ^\n\n+ (10, 0, 1, False)\n?         ^\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.001s\n\nFAILED (failures=1)\n"
+    },
+    {
+      "id": "forget-before-hook",
+      "replacements": 1,
+      "killed_by_assertion": true,
+      "failures": 1,
+      "errors": 0,
+      "mutant_sha256": "a12e77022dbc6a67dee7bf1a20cd7dcb6496ed062db3cdb54ec81008e0e4c17a",
+      "output": "test_disconnect_captures_before_forget_and_reconnect_has_new_timer_generation (test_input_consumption_foundation_model.LiteralLifecycleModelControls.test_disconnect_captures_before_forget_and_reconnect_has_new_timer_generation) ... FAIL\n\n======================================================================\nFAIL: test_disconnect_captures_before_forget_and_reconnect_has_new_timer_generation (test_input_consumption_foundation_model.LiteralLifecycleModelControls.test_disconnect_captures_before_forget_and_reconnect_has_new_timer_generation)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/workspace/sightbreak-windows-input-consumption-r7/scripts/test_input_consumption_foundation_model.py\", line 106, in test_disconnect_captures_before_forget_and_reconnect_has_new_timer_generation\n    self.assertEqual((row['generation'],row['bound_actor'],row['joined']),(1,1,True))\nAssertionError: Tuples differ: (-1, 0, False) != (1, 1, True)\n\nFirst differing element 0:\n-1\n1\n\n- (-1, 0, False)\n+ (1, 1, True)\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n"
+    },
+    {
+      "id": "expiry-equality",
+      "replacements": 1,
+      "killed_by_assertion": true,
+      "failures": 1,
+      "errors": 0,
+      "mutant_sha256": "25cfed40a7d67e3c02a90b679b3aa86f6009bc83fe2e2430b9c7216d96d3f790",
+      "output": "test_source_expired_predicate_boundaries_with_joined_rejected_priority (test_input_consumption_foundation_model.LiteralLifecycleModelControls.test_source_expired_predicate_boundaries_with_joined_rejected_priority) ... FAIL\n\n======================================================================\nFAIL: test_source_expired_predicate_boundaries_with_joined_rejected_priority (test_input_consumption_foundation_model.LiteralLifecycleModelControls.test_source_expired_predicate_boundaries_with_joined_rejected_priority)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/workspace/sightbreak-windows-input-consumption-r7/scripts/test_input_consumption_foundation_model.py\", line 84, in test_source_expired_predicate_boundaries_with_joined_rejected_priority\n    self.assertEqual(p.expired(boundary+offset),[9] if offset>=0 else [])\nAssertionError: Lists differ: [] != [9]\n\nSecond list contains 1 additional elements.\nFirst extra element 0:\n9\n\n- []\n+ [9]\n?  +\n\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n"
+    },
+    {
+      "id": "capacity-eleventh",
+      "replacements": 1,
+      "killed_by_assertion": true,
+      "failures": 1,
+      "errors": 0,
+      "mutant_sha256": "da952f80851e0f1f47244b6948807c8e5a6e354e62db524fcc321821ae78dcfb",
+      "output": "test_capacity_hook_has_absent_projection_and_no_generation_increment (test_input_consumption_foundation_model.LiteralLifecycleModelControls.test_capacity_hook_has_absent_projection_and_no_generation_increment) ... FAIL\n\n======================================================================\nFAIL: test_capacity_hook_has_absent_projection_and_no_generation_increment (test_input_consumption_foundation_model.LiteralLifecycleModelControls.test_capacity_hook_has_absent_projection_and_no_generation_increment)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/workspace/sightbreak-windows-input-consumption-r7/scripts/test_input_consumption_foundation_model.py\", line 122, in test_capacity_hook_has_absent_projection_and_no_generation_increment\n    self.assertFalse(accepted);self.assertEqual(m.lifecycle.generation,10);self.assertEqual(len(m.lifecycle.peers),10)\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: True is not false\n\n----------------------------------------------------------------------\nRan 1 test in 0.000s\n\nFAILED (failures=1)\n"
+    }
+  ]
+}

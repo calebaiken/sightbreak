@@ -1,0 +1,115 @@
+{
+  "status": "UNADJUDICATED; old helper unchanged",
+  "scope": "authority lifecycle/selected-identity projection only",
+  "not_claimed": "complete emitter/frame/transport/native provenance",
+  "deltas": [
+    {
+      "index": 2,
+      "reason": "peer_connected",
+      "changes": {
+        "input_age_msec": {
+          "old": -1,
+          "proposed": 0
+        },
+        "deadline_remaining_msec": {
+          "old": -1,
+          "proposed": 20000
+        }
+      }
+    },
+    {
+      "index": 3,
+      "reason": "peer_bound",
+      "changes": {
+        "deadline_remaining_msec": {
+          "old": 20000,
+          "proposed": 19000
+        }
+      }
+    },
+    {
+      "index": 4,
+      "reason": "input_received",
+      "changes": {
+        "input_age_msec": {
+          "old": 0,
+          "proposed": 5000
+        },
+        "deadline_remaining_msec": {
+          "old": 20000,
+          "proposed": 14000
+        }
+      }
+    },
+    {
+      "index": 5,
+      "reason": "input_accepted",
+      "changes": {
+        "deadline_remaining_msec": {
+          "old": 20000,
+          "proposed": 13000
+        }
+      }
+    },
+    {
+      "index": 6,
+      "reason": "input_consumed",
+      "changes": {
+        "input_age_msec": {
+          "old": 0,
+          "proposed": 1000
+        },
+        "deadline_remaining_msec": {
+          "old": 20000,
+          "proposed": 12000
+        }
+      }
+    },
+    {
+      "index": 7,
+      "reason": "authority_tick",
+      "changes": {
+        "input_age_msec": {
+          "old": 0,
+          "proposed": 2000
+        },
+        "deadline_remaining_msec": {
+          "old": 20000,
+          "proposed": 11000
+        }
+      }
+    }
+  ],
+  "operations": [
+    {
+      "call": "connected",
+      "peer": 9,
+      "now": 2000,
+      "result": true
+    },
+    {
+      "call": "begin_join",
+      "peer": 9,
+      "now": 3000,
+      "result": 1
+    },
+    {
+      "call": "admitted",
+      "peer": 9,
+      "now": 3000,
+      "attempt": 1,
+      "result": true
+    },
+    {
+      "call": "allow_input",
+      "peer": 9,
+      "now": 8000,
+      "result": true
+    },
+    {
+      "call": "active",
+      "peer": 9,
+      "now": 9000
+    }
+  ]
+}
