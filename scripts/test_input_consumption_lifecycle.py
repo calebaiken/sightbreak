@@ -18,6 +18,10 @@ def restamp(rows):
         counters[reason] = counters.get(reason, 0) + 1
         if row['snapshot']:
             counters['snapshot_applied'] = 1
+            snapshot = deepcopy(latest.get('snapshot_applied', row['snapshot']))
+            if 'snapshot_applied' not in latest:
+                snapshot['wall_msec'] = rows[index - 2]['wall_msec'] if index > 1 else now
+            row['snapshot'] = snapshot
             row['snapshot_age_msec'] = now - row['snapshot']['wall_msec']
         row['counters'] = deepcopy(counters)
         if reason in row['latest']:

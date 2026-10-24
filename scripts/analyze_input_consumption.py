@@ -50,6 +50,7 @@ def record_valid(row):
     need(row['reason'] in ROLE_STAGES[row['role']] | {'observation_limit'}, 'stage does not belong to observed role')
     need(all(integer(row[k]) for k in INTEGER_FIELDS), 'observation integer field has wrong type')
     need(1 <= row['index'] <= 1024 and row['pending_count'] in range(121), 'invalid bounded observation/history count')
+    need(row['role'] != 'authority' or row['queue_count'] in range(121), 'authority queue exceeds bounded input window')
     need(all(row[k] >= 0 for k in ('wall_msec', 'wall_unix_msec', 'process_frames', 'physics_frames', 'drawn_frames', 'transport_id', 'local_attempt', 'local_id', 'peer', 'bound_actor', 'last_bound_actor', 'queue_count', 'stream_rejected', 'stream_skipped', 'simulation_tick')), 'negative observation counter')
     need(type(row['peer_bound']) is bool and type(row['joined']) is bool, 'invalid binding flags')
     need(row['peer_bound'] == (row['bound_actor'] > 0), 'binding flag disagrees with current actor')
@@ -82,6 +83,7 @@ def record_valid(row):
             need(set(value) == PACKET_KEYS and all(integer(v) for v in value.values()), 'invalid packet projection')
             need(value['count'] >= 0 and all(0 <= value[k] <= min(value['count'], 12) for k in ('fire', 'reload', 'moving')), 'invalid bounded packet action counts')
             need(value['count'] != 1 or value['first'] == value['last'], 'single-command packet has unequal sequence endpoints')
+            need(value['count'] != 0 or value['first'] == value['last'] == -1, 'empty packet has nonempty sequence endpoints')
         else:
             need(set(value) == SNAPSHOT_KEYS and all(integer(v) for v in value.values()), 'invalid snapshot header')
         need(0 <= value['wall_msec'] <= row['wall_msec'], 'future latest-stage observation')
@@ -122,6 +124,7 @@ def analyze_role(rows, role):
     need(REQUIRED[role] - {'snapshot_applied'} <= observed_events, 'missing direct pipeline event records')
     prior, bindings, ended, consumed_sequences = None, {}, set(), {}
     live_peers, binding_accept_counts, lifecycle_counts = {}, {}, {}
+    live_bindings = set()
     connected = set()
     observed_attempts = 0
     current_welcome = None
@@ -146,6 +149,15 @@ def analyze_role(rows, role):
             # captured before the synchronous accept/reject outcome.
             need(counters.get('input_received', 0) == counters.get('input_accepted', 0) + counters.get('input_stream_rejected', 0) + int(reason == 'input_received'),
                  'receive/accept/rejection counters disagree with synchronous pipeline')
+            rejections = counters.get('input_stream_rejected', 0)
+            need(row['stream_rejected'] <= rejections, 'stream rejection state exceeds observed rejection calls')
+            if prior:
+                expected = prior['stream_rejected'] + rejections - previous_counters.get('input_stream_rejected', 0)
+                # A lobby reset advances the epoch and needs zero bound peers.
+                # Its replacement stream resets state but retains observer history.
+                reset_possible = row['authority_epoch'] > prior['authority_epoch'] and not live_bindings
+                need(row['stream_rejected'] <= expected if reset_possible else row['stream_rejected'] == expected,
+                     'stream rejection state disagrees within observed stream lifetime')
         if prior:
             for key in ('wall_msec', 'wall_unix_msec', 'process_frames', 'physics_frames', 'drawn_frames'):
                 need(row[key] >= prior[key], 'regressed observation ' + key)
@@ -154,6 +166,9 @@ def analyze_role(rows, role):
             need(all(latest[stage] == value for stage, value in prior['latest'].items()
                      if counters.get(stage, 0) == previous_counters.get(stage, 0)),
                  'latest metadata changed without a stage counter increment')
+            need(all(value['wall_msec'] >= prior['wall_msec'] for stage, value in latest.items()
+                     if counters[stage] > previous_counters.get(stage, 0)),
+                 'latest stage call predates the preceding observation')
             max_gap = max(max_gap, row['wall_msec'] - prior['wall_msec'])
         identity = (row['peer'], row['generation'])
         if role == 'client':
@@ -175,6 +190,7 @@ def analyze_role(rows, role):
             need(identity not in bindings, 'peer generation already has an observed binding')
             need(not any(actor == row['bound_actor'] and key != identity and key not in ended for key, actor in bindings.items()), 'actor bound to two live peer generations')
             bindings[identity] = row['bound_actor']
+            live_bindings.add(identity)
             binding_accept_counts[identity] = counters.get('input_accepted', 0)
             binding_events.append({k: row[k] for k in ('peer', 'generation', 'bound_actor', 'wall_unix_msec')})
         if row['reason'] == 'welcome_received':
@@ -185,6 +201,8 @@ def analyze_role(rows, role):
             ended.add(identity)
             if row['reason'] == 'peer_disconnected' and live_peers.get(row['peer']) == row['generation']:
                 del live_peers[row['peer']]
+            if row['reason'] == 'peer_disconnected':
+                live_bindings.discard(identity)
             (expiries if row['reason'] == 'peer_expired' else disconnects).append({'index': row['index'], 'peer': row['peer'], 'generation': row['generation'], 'wall_msec': row['wall_msec'], 'wall_unix_msec': row['wall_unix_msec'], 'input_age_msec': row['input_age_msec']})
         if row['reason'] == 'input_send_called':
             value = row['latest'].get('input_send_called')
@@ -217,6 +235,12 @@ def analyze_role(rows, role):
                 # These are incoming array endpoints, not sorted extrema.
                 need(value['first'] >= 1 and value['last'] >= 1 and (value['count'] > 1 or value['first'] == value['last']),
                      'accepted packet has invalid sequence endpoints')
+                ack = max(row['stream_ack'], 0)
+                need(max(value['first'], value['last']) <= ack + 120, 'accepted endpoint exceeds input sequence window')
+                # Only batches of one or two expose every command. Larger
+                # batches may hide a fresh middle command behind stale endpoints.
+                need(value['count'] > 2 or max(value['first'], value['last']) > ack,
+                     'fully exposed accepted batch contains no fresh command')
                 accepted.append({'index': row['index'], **value})
             else:
                 # Receive is after the identity gate but before packet validation.

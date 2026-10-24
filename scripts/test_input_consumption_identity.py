@@ -33,6 +33,7 @@ class InputObservationIdentityControls(unittest.TestCase):
         malformed = deepcopy(rows[3]['latest']['input_received'])
         for row in rows[4:]:
             row['counters'].update(input_received=2, input_stream_rejected=1)
+            row['stream_rejected'] = 1
             row['latest']['input_stream_rejected'] = deepcopy(malformed)
             row['latest']['input_received']['wall_msec'] = rows[4]['wall_msec'] - 1
         self.assertTrue(self.report(authority=rows)['diagnostic_complete'])
