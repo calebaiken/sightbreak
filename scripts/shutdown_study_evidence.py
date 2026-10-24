@@ -162,7 +162,10 @@ def snapshot_shape(value):
     ui=value['ui'];need(type(ui) is dict and all(field in ui for field in ('screen','paused','focused','waiting_for_input_release','window_size')) and type(ui['screen']) is str and all(type(ui[field]) is bool for field in ('paused','focused','waiting_for_input_release')) and type(ui['window_size']) is list and len(ui['window_size'])==2 and all(integer(v,1) for v in ui['window_size']),'UI snapshot incomplete')
     need(all(field in ui for field in ('status_text','scoreboard_visible','touch_controls','capabilities','mouse_mode','window_mode')) and type(ui['status_text']) is str and all(type(ui[field]) is bool for field in ('scoreboard_visible','touch_controls')) and type(ui['capabilities']) is dict and integer(ui['mouse_mode']) and integer(ui['window_mode']),'UI diagnostic fields incomplete')
     frame=value['frame_diagnostics'];need(type(frame) is dict and integer(frame.get('read_begin_usec')) and integer(frame.get('read_end_usec')) and frame['read_begin_usec']<=frame['read_end_usec'],'frame diagnostics incomplete')
-    for field in ('max_physics_steps_per_frame','physics_ticks_per_second','max_fps','process_frames','physics_frames','drawn_frames','draw_calls_last_rendered_frame','primitives_last_rendered_frame'):need(integer(frame.get(field)),'frame counter absent: '+field)
+    for field in ('max_physics_steps_per_frame','physics_ticks_per_second','max_fps','process_frames','physics_frames','drawn_frames'):need(integer(frame.get(field)),'frame counter absent: '+field)
+    for field in ('draw_calls_last_rendered_frame','primitives_last_rendered_frame'):
+        value=frame.get(field)
+        need(number(value) and value==math.floor(value),'invalid numeric monitor count: '+field)
     for field in ('physics_jitter_fix','process_max_seconds_last_engine_window','physics_step_max_seconds_last_engine_window','viewport_3d_scale'):need(finite(frame.get(field)),'frame number absent: '+field)
     for field in ('viewport_visible_size','viewport_texture_size_pixels'):need(vector(frame.get(field),2),'viewport dimensions absent')
     target=frame.get('internal_3d_target_size');need(type(target) is dict and target.get('available') is False and type(target.get('reason')) is str and bool(target['reason']),'unavailable internal-target scope missing')

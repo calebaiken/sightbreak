@@ -1,0 +1,176 @@
+{
+  "source_sha256": "36a7b287c0720085acbeb4de7731e80b7cbd03645820529b575dd1e3ccc2dd8c",
+  "scope": "Snapshot schema only; archive strict study outcome remains failed/incomplete and unapproved",
+  "records": [
+    {
+      "original_path": "/workspace/reviews/windows-route-clock-actual-20261024/.local/windows40089125575/full/offline-input/initial-offline-trace/events.jsonl",
+      "sha256": "f2d59371bce67de7f5a3a2a0520d42fc3a8f4597ade4d8a344c92c8e9adfc480",
+      "primitive_schema_error": null,
+      "original_unchanged": true
+    },
+    {
+      "original_path": "/workspace/reviews/windows-collector-actual-20261024/.local/windows40080238905/full/offline-input/initial-offline-trace/events.jsonl",
+      "sha256": "c80341f7b2d23ff39790ceebd1bc2d0b21b520735b7992455b61d82e21a7e8cb",
+      "primitive_schema_error": null,
+      "original_unchanged": true
+    }
+  ],
+  "cases": [
+    {
+      "field": "draw_calls_last_rendered_frame",
+      "input": "int-zero",
+      "expected_valid": true,
+      "actual_valid": true,
+      "error": null
+    },
+    {
+      "field": "draw_calls_last_rendered_frame",
+      "input": "float-zero",
+      "expected_valid": true,
+      "actual_valid": true,
+      "error": null
+    },
+    {
+      "field": "draw_calls_last_rendered_frame",
+      "input": "int-count",
+      "expected_valid": true,
+      "actual_valid": true,
+      "error": null
+    },
+    {
+      "field": "draw_calls_last_rendered_frame",
+      "input": "float-count",
+      "expected_valid": true,
+      "actual_valid": true,
+      "error": null
+    },
+    {
+      "field": "draw_calls_last_rendered_frame",
+      "input": "bool",
+      "expected_valid": false,
+      "actual_valid": false,
+      "error": "ValueError: invalid numeric monitor count: draw_calls_last_rendered_frame"
+    },
+    {
+      "field": "draw_calls_last_rendered_frame",
+      "input": "negative",
+      "expected_valid": false,
+      "actual_valid": false,
+      "error": "ValueError: invalid numeric monitor count: draw_calls_last_rendered_frame"
+    },
+    {
+      "field": "draw_calls_last_rendered_frame",
+      "input": "fraction",
+      "expected_valid": false,
+      "actual_valid": false,
+      "error": "ValueError: invalid numeric monitor count: draw_calls_last_rendered_frame"
+    },
+    {
+      "field": "draw_calls_last_rendered_frame",
+      "input": "nan",
+      "expected_valid": false,
+      "actual_valid": false,
+      "error": "ValueError: invalid numeric monitor count: draw_calls_last_rendered_frame"
+    },
+    {
+      "field": "draw_calls_last_rendered_frame",
+      "input": "infinity",
+      "expected_valid": false,
+      "actual_valid": false,
+      "error": "ValueError: invalid numeric monitor count: draw_calls_last_rendered_frame"
+    },
+    {
+      "field": "draw_calls_last_rendered_frame",
+      "input": "huge-int",
+      "expected_valid": false,
+      "actual_valid": false,
+      "error": "ValueError: invalid numeric monitor count: draw_calls_last_rendered_frame"
+    },
+    {
+      "field": "primitives_last_rendered_frame",
+      "input": "int-zero",
+      "expected_valid": true,
+      "actual_valid": true,
+      "error": null
+    },
+    {
+      "field": "primitives_last_rendered_frame",
+      "input": "float-zero",
+      "expected_valid": true,
+      "actual_valid": true,
+      "error": null
+    },
+    {
+      "field": "primitives_last_rendered_frame",
+      "input": "int-count",
+      "expected_valid": true,
+      "actual_valid": true,
+      "error": null
+    },
+    {
+      "field": "primitives_last_rendered_frame",
+      "input": "float-count",
+      "expected_valid": true,
+      "actual_valid": true,
+      "error": null
+    },
+    {
+      "field": "primitives_last_rendered_frame",
+      "input": "bool",
+      "expected_valid": false,
+      "actual_valid": false,
+      "error": "ValueError: invalid numeric monitor count: primitives_last_rendered_frame"
+    },
+    {
+      "field": "primitives_last_rendered_frame",
+      "input": "negative",
+      "expected_valid": false,
+      "actual_valid": false,
+      "error": "ValueError: invalid numeric monitor count: primitives_last_rendered_frame"
+    },
+    {
+      "field": "primitives_last_rendered_frame",
+      "input": "fraction",
+      "expected_valid": false,
+      "actual_valid": false,
+      "error": "ValueError: invalid numeric monitor count: primitives_last_rendered_frame"
+    },
+    {
+      "field": "primitives_last_rendered_frame",
+      "input": "nan",
+      "expected_valid": false,
+      "actual_valid": false,
+      "error": "ValueError: invalid numeric monitor count: primitives_last_rendered_frame"
+    },
+    {
+      "field": "primitives_last_rendered_frame",
+      "input": "infinity",
+      "expected_valid": false,
+      "actual_valid": false,
+      "error": "ValueError: invalid numeric monitor count: primitives_last_rendered_frame"
+    },
+    {
+      "field": "primitives_last_rendered_frame",
+      "input": "huge-int",
+      "expected_valid": false,
+      "actual_valid": false,
+      "error": "ValueError: invalid numeric monitor count: primitives_last_rendered_frame"
+    },
+    {
+      "field": "drawn_frames",
+      "input": "float-engine-counter",
+      "expected_valid": false,
+      "actual_valid": false,
+      "error": "ValueError: frame counter absent: drawn_frames"
+    },
+    {
+      "field": "physics_frames",
+      "input": "float-engine-counter",
+      "expected_valid": false,
+      "actual_valid": false,
+      "error": "ValueError: frame counter absent: physics_frames"
+    }
+  ],
+  "mismatches": [],
+  "actual_native_invocations": 0
+}
