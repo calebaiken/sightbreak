@@ -14,6 +14,7 @@ run_godot import --headless --editor --import --quit
 run_godot actor --headless --script res://tests/actor_test.gd
 run_godot world --headless --script res://tests/world_test.gd
 run_godot hit-feedback --headless --script res://tests/hit_feedback_test.gd
+run_godot tracer-effects --headless --script res://tests/tracer_effects_test.gd
 run_godot weapon-integrity --headless --script res://tests/weapon_integrity_test.gd
 run_godot gunplay-rules --headless --audio-driver Dummy --script res://tests/gunplay_rules_probe.gd
 run_godot hit-volume --headless --script res://tests/hit_volume_test.gd
@@ -80,6 +81,8 @@ if [[ -n "${DISPLAY:-}" ]]; then
   # the rifle does not dissolve in a dark interior): bounds set from this round's measurements, see viewmodel_light_probe.gd.
   run_godot viewmodel-light --audio-driver Dummy --rendering-method gl_compatibility --script res://tests/viewmodel_light_probe.gd -- --assert --poses=ready,grab
   run_godot reload-finish-skin --audio-driver Dummy --rendering-method gl_compatibility --script res://tests/reload_discolour_probe.gd -- --assert --conditions=base --skin
+  # The same tracer suite on a rendering server, where the placed transforms and per-instance data can be read back.
+  run_godot tracer-effects-rendered --audio-driver Dummy --rendering-method gl_compatibility --script res://tests/tracer_effects_test.gd
 else
   printf 'reload-visibility skipped: no DISPLAY (needs a native rendering display)\n'
 fi

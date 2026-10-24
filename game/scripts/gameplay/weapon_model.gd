@@ -104,6 +104,11 @@ static var kestrel_9_rotation := Vector3(0.025, 0.07, -0.03)
 static var kestrel_9_offset := Vector3(-0.085, 0.160, 0.03)
 ## A pistol's flash is smaller than a rifle's: the shared flash mesh is sized for the rifle and covered the pistol's sights.
 const KESTREL_9_FLASH_SCALE := 0.62
+## The procedural SMG's and marksman's muzzles sit further down the view than the rifle's, so the shared flash drew less of the
+## screen (bright warm pixels, sun and backlit, rifle 1,946 and 921: SMG 1,147 and 846, marksman 528 and 475). These scales
+## (area goes with the square) bring them to the rifle's order: the SMG's a little under it, the marksman's about level.
+const SMG_FLASH_SCALE := 1.25
+const MARKSMAN_FLASH_SCALE := 1.9
 ## The tan magazine bakes to a dark brown (mean sRGB 84, 77, 66) under the grime and contact occlusion; this gain brings it
 ## back to the warm anchor of the silhouette the brief asks for, between graphite hands and a dark slide.
 const KESTREL_9_MAGAZINE_GAIN := 1.7
@@ -499,6 +504,7 @@ func _build_gun() -> void:
 			# Short suppressed PDW silhouette, flatter rail and straight box magazine.
 			_barrel(Vector3(0, 0.025, -0.62), 0.23, 0.040, metal)
 			magazine.scale = Vector3(0.8, 0.9, 0.75)
+			_flash_scale = SMG_FLASH_SCALE
 		elif weapon_id == "marksman":
 			_barrel(Vector3(0, 0.025, -0.77), 0.34, 0.025, metal)
 			_barrel(Vector3(0, 0.158, -0.23), 0.30, 0.049, metal)
@@ -506,6 +512,7 @@ func _build_gun() -> void:
 			for z in [-0.12, -0.32]:
 				_chamfer(Vector3(0, 0.11, z), Vector3(0.08, 0.048, 0.022), edge)
 			muzzle_z = -0.955
+			_flash_scale = MARKSMAN_FLASH_SCALE
 
 		# Compact bridge sight preserves center-screen target readability.
 		for x in [-0.026, 0.026]:
@@ -521,15 +528,7 @@ func _build_gun() -> void:
 	if _hands and not _authored.is_empty():
 		_muzzle.material_override = ViewmodelShading.flash(Color.WHITE, 2.0)
 	else:
-		var flash_material := StandardMaterial3D.new()
-		flash_material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-		flash_material.cull_mode = BaseMaterial3D.CULL_DISABLED
-		flash_material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
-		flash_material.blend_mode = BaseMaterial3D.BLEND_MODE_ADD
-		flash_material.vertex_color_use_as_albedo = true
-		flash_material.no_depth_test = false
-		flash_material.disable_receive_shadows = true
-		_muzzle.material_override = flash_material
+		_muzzle.material_override = world_flash_material()
 	_gun.add_child(_muzzle)
 	_muzzle.position = Vector3(0, 0.025, muzzle_z) if muzzle_at == Vector3.INF else muzzle_at
 	_muzzle.visible = false
@@ -547,6 +546,22 @@ func _build_gun() -> void:
 	for child in _gun.get_children():
 		if child is MeshInstance3D:
 			child.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+
+static var _flash_material: StandardMaterial3D
+
+## The additive, unshaded material for a flash that is drawn with the world camera (a procedural viewmodel's and every
+## operator's); the authored viewmodels use ViewmodelShading.flash() so the flash shares their projection. Shared.
+static func world_flash_material() -> StandardMaterial3D:
+	if _flash_material == null:
+		_flash_material = StandardMaterial3D.new()
+		_flash_material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+		_flash_material.cull_mode = BaseMaterial3D.CULL_DISABLED
+		_flash_material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+		_flash_material.blend_mode = BaseMaterial3D.BLEND_MODE_ADD
+		_flash_material.vertex_color_use_as_albedo = true
+		_flash_material.no_depth_test = false
+		_flash_material.disable_receive_shadows = true
+	return _flash_material
 
 static var _flash_mesh: ArrayMesh
 
