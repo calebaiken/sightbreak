@@ -1,0 +1,57 @@
+test_bound_root_remains_owned_without_children_discovery (__main__.IndependentProcessControls.test_bound_root_remains_owned_without_children_discovery) ... ok
+test_observer_exception_fails_and_reaps_fake_known_popen (__main__.IndependentProcessControls.test_observer_exception_fails_and_reaps_fake_known_popen) ... ok
+test_original_failed_input_roundtrip_remains_rejected (__main__.IndependentProcessControls.test_original_failed_input_roundtrip_remains_rejected) ... ok
+test_physical_source_bytes_and_modes_cannot_hide_behind_git_flags (__main__.IndependentProcessControls.test_physical_source_bytes_and_modes_cannot_hide_behind_git_flags) ... 
+  test_physical_source_bytes_and_modes_cannot_hide_behind_git_flags (__main__.IndependentProcessControls.test_physical_source_bytes_and_modes_cannot_hide_behind_git_flags) (name='component-byte') ... FAIL
+  test_physical_source_bytes_and_modes_cannot_hide_behind_git_flags (__main__.IndependentProcessControls.test_physical_source_bytes_and_modes_cannot_hide_behind_git_flags) (name='component-mode') ... FAIL
+  test_physical_source_bytes_and_modes_cannot_hide_behind_git_flags (__main__.IndependentProcessControls.test_physical_source_bytes_and_modes_cannot_hide_behind_git_flags) (name='imported-native-log-byte') ... FAIL
+test_queued_owned_parent_reuse_cannot_import_unrelated_descendants (__main__.IndependentProcessControls.test_queued_owned_parent_reuse_cannot_import_unrelated_descendants) ... FAIL
+test_stale_children_pid_with_unrelated_parent_is_never_owned_or_signaled (__main__.IndependentProcessControls.test_stale_children_pid_with_unrelated_parent_is_never_owned_or_signaled) ... FAIL
+
+======================================================================
+FAIL: test_physical_source_bytes_and_modes_cannot_hide_behind_git_flags (__main__.IndependentProcessControls.test_physical_source_bytes_and_modes_cannot_hide_behind_git_flags) (name='component-byte')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/objective-perception-math-independent-20261024/docs/reports/gauntlet/objective-perception-math-independent-20261024/process-source-r2/independent_controls.py", line 117, in test_physical_source_bytes_and_modes_cannot_hide_behind_git_flags
+    with self.subTest(name=name):self.assertIsNotNone(caught,'hidden physical source/mode change accepted')
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None : hidden physical source/mode change accepted
+
+======================================================================
+FAIL: test_physical_source_bytes_and_modes_cannot_hide_behind_git_flags (__main__.IndependentProcessControls.test_physical_source_bytes_and_modes_cannot_hide_behind_git_flags) (name='component-mode')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/objective-perception-math-independent-20261024/docs/reports/gauntlet/objective-perception-math-independent-20261024/process-source-r2/independent_controls.py", line 117, in test_physical_source_bytes_and_modes_cannot_hide_behind_git_flags
+    with self.subTest(name=name):self.assertIsNotNone(caught,'hidden physical source/mode change accepted')
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None : hidden physical source/mode change accepted
+
+======================================================================
+FAIL: test_physical_source_bytes_and_modes_cannot_hide_behind_git_flags (__main__.IndependentProcessControls.test_physical_source_bytes_and_modes_cannot_hide_behind_git_flags) (name='imported-native-log-byte')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/objective-perception-math-independent-20261024/docs/reports/gauntlet/objective-perception-math-independent-20261024/process-source-r2/independent_controls.py", line 117, in test_physical_source_bytes_and_modes_cannot_hide_behind_git_flags
+    with self.subTest(name=name):self.assertIsNotNone(caught,'hidden physical source/mode change accepted')
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None : hidden physical source/mode change accepted
+
+======================================================================
+FAIL: test_queued_owned_parent_reuse_cannot_import_unrelated_descendants (__main__.IndependentProcessControls.test_queued_owned_parent_reuse_cannot_import_unrelated_descendants)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/objective-perception-math-independent-20261024/docs/reports/gauntlet/objective-perception-math-independent-20261024/process-source-r2/independent_controls.py", line 65, in test_queued_owned_parent_reuse_cannot_import_unrelated_descendants
+    self.assertNotIn(300,[r['pid'] for r in seen])
+AssertionError: 300 unexpectedly found in [100, 200, 300]
+
+======================================================================
+FAIL: test_stale_children_pid_with_unrelated_parent_is_never_owned_or_signaled (__main__.IndependentProcessControls.test_stale_children_pid_with_unrelated_parent_is_never_owned_or_signaled)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/objective-perception-math-independent-20261024/docs/reports/gauntlet/objective-perception-math-independent-20261024/process-source-r2/independent_controls.py", line 43, in test_stale_children_pid_with_unrelated_parent_is_never_owned_or_signaled
+    self.assertNotIn(200,[r['pid'] for r in seen])
+AssertionError: 200 unexpectedly found in [100, 200]
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.487s
+
+FAILED (failures=5)
