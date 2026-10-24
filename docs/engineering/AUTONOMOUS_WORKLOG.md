@@ -617,3 +617,12 @@ all route guards. Root release e587392d starts one exact f242a2f Linux controlle
 measurement after actual precriteria 4e97721b; heavy local work is held. Touch
 108d1cdc is source-ready, no new native; Mac AX component source implementation
 continues. Mission remains ACTIVE; continue exact NEXT_SESSION queue.
+
+## 2026-10-24 independent reopened verbosity source review
+
+Exact7101350e versus collector c3241514: ACCEPT SOURCE ONLY after prereg1285a984.
+Both source views pass182 maintained methods/three old skips, shell syntax and
+six independent methods,13 meaningful mutation rejections. Full508path union
+and exact erasure protect all game source and original gates. Largest gap is
+actual reopened verbose evidence; original Windows40080238905 remains FAILED.
+No native/CI authorization. See windows-reopened-verbose-independent-source-20261024/REVIEW.md.

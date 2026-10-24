@@ -1,0 +1,71 @@
+{
+  "base": "c32415148db1f110bbc7eadfca3793d4693429ff",
+  "candidate": "7101350e5d0a2f6e4afb9a913b5b1bcf2107857a",
+  "base_non_doc_count": 507,
+  "candidate_non_doc_count": 508,
+  "union_count": 508,
+  "changed": {
+    ".github/workflows/desktop-alpha.yml": {
+      "base": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "246f63a1bb01c3cb5db4c02765139511ae476fba"
+      },
+      "candidate": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "1f73834f190fce1e925c16084d7a33f072a13ff0"
+      }
+    },
+    "scripts/test_reopened_shutdown_diagnostic.py": {
+      "base": null,
+      "candidate": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "4899454904b706e6b3f2f7a50c540828fb27d4c0"
+      }
+    },
+    "scripts/validate.sh": {
+      "base": {
+        "mode": "100755",
+        "type": "blob",
+        "oid": "5e9f4038ccef31f598ff5fb5d94ca8049edc7ece"
+      },
+      "candidate": {
+        "mode": "100755",
+        "type": "blob",
+        "oid": "b52e6697f51f2c49a8a1b36710a48cc12e2447d2"
+      }
+    },
+    "scripts/verify_offline_export.py": {
+      "base": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "928de21452f10b906ee2da16ffd251f4e9fd0c63"
+      },
+      "candidate": {
+        "mode": "100644",
+        "type": "blob",
+        "oid": "772442f0393f8acf86e6596efe68b7510a4ea97d"
+      }
+    }
+  },
+  "erasure": {
+    "scripts/verify_offline_export.py": true,
+    ".github/workflows/desktop-alpha.yml": true,
+    "scripts/validate.sh": true
+  },
+  "new_test_absent_in_base": true,
+  "protected_game_tree_equal": true,
+  "materialized_non_doc_count": 500,
+  "missing": [
+    ".claude/agents/gameplay-builder.md",
+    ".claude/agents/harsh-critic.md",
+    ".claude/agents/integration-reviewer.md",
+    ".claude/agents/qa-regression.md",
+    ".claude/agents/visual-ux-builder.md",
+    "server/result_outbox.py",
+    "server/tests/test_result_outbox.py",
+    "server/tests/test_supervision.py"
+  ]
+}

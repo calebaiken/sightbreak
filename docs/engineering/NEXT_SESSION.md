@@ -1,3 +1,19 @@
+## Independent reopened verbosity source review — 2026-10-24
+
+Own branch codex/critic-windows-reopened-verbose-source-20261024 accepts exact
+7101350e5d0a2f6e4afb9a913b5b1bcf2107857a SOURCE ONLY after prereg1285a984.
+Report docs/reports/gauntlet/windows-reopened-verbose-independent-source-20261024/REVIEW.md.
+Both own/initialized exact one-commit views pass182 methods (179pass/3old skips),
+shell syntax and six independent methods with13meaningful mutation rejections.
+Full508path union, three exact existing-file erasures and all508materialized
+blob/mode checks pass; game/protocol/privacy/economy/strict gates are unchanged.
+Shared-object alternate and initial CPU/sparse/glob setup deviations are retained.
+Original Windows40080238905 remains FAIL; leak types/owners/cause are unknown.
+No Godot/native game, API, export, OS input or CI ran; no actual release follows.
+The unchanged server supervision method uses temporary shell/Python sleep stubs.
+Next action belongs to root: separate source-bound actual preregistration/admission
+and one release before any verbose Windows diagnostic. No Mac blocked review resumes.
+
 # Next session
 
 Updated 2026-10-23, 12:05 UTC. Continue **SIGHTBREAK — Steam-Ready v1.0**,
