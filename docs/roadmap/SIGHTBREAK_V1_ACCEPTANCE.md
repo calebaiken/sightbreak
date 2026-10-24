@@ -20,13 +20,14 @@ signing, credentials and unavailable hosts stay explicitly blocked until observe
 A script, simulated match, software render or successful export cannot silently
 satisfy a different gate. No deployment, Steam publication or paid action is implied.
 
-At18:27UTC, implemented R6 code6ef / handoffb5a3 is independently reviewed next.
-The three retained ACK/queue contradictions reject while the original staysUNKNOWN;
-nine new methods/49 cases/3060 expectations pass. Literal158 is still45failures/
-1error; old assertions/helpers remain exact. Receipt7ef is independently REVISE09b.
-Linux lifetime12c is a proposal under separate pre-edit review, not API permission.
-Binder0ff and mathf43 remain narrow acceptances. Shutdown study/capability owner
-approval is pending. No whole gate or release standard changes.
+At18:52UTC, original R6 is independently REVISE65cb. Implemented local-pop repair
+f89/6d24 fixes its two additional misses and preserves the earlier5/49/3060 cases;
+all11 new methods pass. Literal160 remains45failures/1error; no whole-reader pass.
+The different critic registered0018 before code inspection and is reviewing it.
+Exact legacy first-groupbcf and Linux interface/zombie amendment need separate
+adjudication; no old test/helper/assertion is relaxed. Receipt V3 is unfrozen and
+must answer09b. Shutdown study/capability owner approval remains pending. Binder0ff
+and mathf43 stay narrow source acceptances; no whole release gate changes.
 
 At 17:51 UTC, Windows math finalization/audit repair ab864/bede has independent
 component-only acceptance f43e756f: both views, 96 selected passes, 15 source cases and

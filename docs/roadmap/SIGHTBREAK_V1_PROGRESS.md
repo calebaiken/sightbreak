@@ -4,85 +4,85 @@ Last updated: 2026-10-24 (continuing recovered execution). Permanent tracker: [i
 
 Statuses: `NOT STARTED`, `IN PROGRESS`, `FAILED`, `VERIFIED`, `BLOCKED EXTERNALLY`. **Verified by** says who ran it. "Reported" means a source document says so and nobody on this line has re-run it. Reported results are not promoted to `VERIFIED` until someone re-runs them.
 
-## Current checkpoint — 2026-10-24 18:27 UTC
+## Current checkpoint — 2026-10-24 18:52 UTC
 
-SIGHTBREAK — Steam-Ready v1.0 remains IN PROGRESS / PRIMARY in issue25.
-Root: `/workspace/sightbreak-v1-recovered`, branch
-`codex/v1-executor-recovery-20261023`, previous pushed checkpoint `32d46164`.
-Draft PR31 remains over PR27 at `ad6cdc20`; main remains `4d8cdb33`.
-Automatic pure CI `40119457943` passes at32d. Root runtime source is still
-exact `4cf6ac8e` across508 non-doc paths. G1–G19 remain open; G20 is persistence
-only. No native goal creation/lookup or goal ID is exposed.
+SIGHTBREAK — Steam-Ready v1.0 remains IN PROGRESS / PRIMARY, issue25. Root is
+`/workspace/sightbreak-v1-recovered`, branch `codex/v1-executor-recovery-20261023`,
+previous pushed checkpoint `03befeaa`. Draft PR31 remains over PR27/ad6cdc20;
+main stays4d8cdb33. Root runtime remains exact4cf6ac8e across508 non-doc paths.
+G1–G19 remain open; G20 verifies persistence only. No native goal ID is exposed.
 
-**R6 is implemented and under independent review.** Root owns NEW separate
-`/workspace/sightbreak-input-foundation-r6-root-20261024`, branch
-`codex/windows-input-foundation-r6-root-20261024`, code
-`6ef4d145ab70ed943c54ec26865e0c884b64b1a9`, clean pushed handoff
-`b5a3ea334e5a2b02fe6600683823c4f21e56b23e`. Reader SHA256:
-`fab0711b9f239654a31cac745d4778eed8691d617eccea39c7fccabc6593fdf0`.
-New deterministic stream intervals reject the three later ACK/queue
-contradictions after earlier UNKNOWN, preserving the original UNKNOWN witness.
-Sealed necessity cases improve2/5→5/5; nine new methods,49 cases and3,060 bounded
-expectations pass. Literal158 remains45 assertion failures/one error/zero skips:
-NOTPASS. All46 failure identities match R5. Every old149 method/helper byte and
-331 assertions stays exact; the23-leaf constructor permit is UNAPPLIED.
-All522 physical files/modes and520 protected paths verify. Full182-member evidence
-is sealed at the handoff; root retains selected checkpoints. SAME different
-Windows critic registeredf84cd7bd before R6 inspection and now reviews it.
-Root cannot approve its own code. Old R5/43a rejection remains unchanged.
+**Implemented local-pop repair is now under independent review.** Root owns
+NEW `/workspace/sightbreak-input-foundation-r6-local-pop-bounds-20261024`, branch
+`codex/windows-input-foundation-r6-local-pop-bounds-20261024`, code
+`f89bef89fb484ff2aed4051b03ecca499161d7c3`, clean pushed handoff
+`6d24da530b7c7c8341d5cd7c53b070d8f517f2f4`. Reader SHA256:
+`b381fb2da957102debd7247b15be244e4a76023ede7c72c9fdc690d03152f30d`.
+The named last pop now supplies conservative local consumed/skipped bounds,
+strict ACK progress and both queue bounds. Both new contradictions reject while
+their positives stay UNKNOWN: preserved query2/4→4/4. Earlier five-case regression,
+49 cases and3,060 expectations match; all11 new methods pass in literal160.
+The full suite remains NOTPASS:45 assertion failures,one error,zero skips,
+3,238 captured calls, raw SHA fdef5b3c26fbebee3160c19e00f36f74069f3b2649144148260a4a5dcd5a95e4.
+All46 failure identities match R5; old149 methods/helpers/331 assertions remain
+exact. Constructor23-leaf permit is UNAPPLIED. All522 physical files/modes and
+520 protected paths verify. Full189-member builder evidence is sealed; root
+retains selected checkpoints. SAME different Windows critic registered0018257d
+before inspecting f89 and is the sole reviewer. Root cannot approve its own code.
 
-**Receipt proposal is REVISE09bafb7b.** Unexecuted7ef staged consumer advances
-four source waits with false file/log predicates and overwrites a replacement
-action pathname. Static notification/log coupling is missing. Corrected route
-harness passes six pulses/15 reads; original harness failure is retained.
-Only two explicit monitor literal casts are newly permitted; prior3f30 remains
-clock-only. Builder continues a source-derived stage/predicate/byte-ownership
-repair proposal, with no application approval. Three sibling original/publication
-links are separately registered87ce9b1c; original-stream completeness is unproved.
-Original receipt0f/99a remains REJECT67a, its205MiB evidence preserved in the
-original branch rather than duplicated.
+Original R6 code6ef/handoffb5 and additive82d counterexamples stay preserved in
+`/workspace/sightbreak-input-foundation-r6-root-20261024`, old branch unchanged.
+Independent final65cbca20 is REVISE: both views confirm the two owner-bound misses,
+despite247 other expectations/five meaningful mutations passing. The complete
+158-method failed result and all original182-member evidence remain unchanged.
+Do not promote either candidate to whole-reader/readiness or actual207 replay.
 
-**Linux lifetime12c07612 is a proposal, not implementation.** It specifies
-retained descriptor records, explicit exit/reap debt, exclusive root Popen wait,
-two additive Kernel methods and exact select/errno imports. All old Kernel
-methods/protection JSON remain protected. NO_CHILD/empty/external reap stay
-unresolved. Different receipt critic registered89934ea5 and is the sole pre-edit
-reviewer; Windows reservation was cancelled before activation. Python waitid
-source mapping is a prerequisite. No new API/proc/poll/wait/native/capability or
-Linux retry occurred. Objective now prepares a bounded read-only first-group
-legacy-failure construction/target-binding proposal; no old tests are edited.
+**Legacy failures have an exact first-group proposal.** Objective's docs-only
+bcf65cdd individually indexes all46 events:10 intentional pre-edit events,two
+expiry binding conflicts,one permitted-but-unapplied constructor,one message
+priority mismatch and32 independently identified timer-impossible constructions.
+That classification does not certify intended packet behavior or waive failures.
+The first group changes only two exact reference/target bindings, preserving
+current-reader coverage and adding a current companion pair. Different receipt
+critic registered504067c2 before reviewing it. No test/helper/assertion is edited;
+32 invalid seeds and existing18-method historical adapter remain untouched.
 
-Physical binder71b/b5 retains different Root acceptance0ff67211: both82 methods,
-527 files/modes,522 protected, all3 hidden-source regressions reject and all5
-current timing assertions execute. Presence normalization is not execution proof.
-Lifetime8cc remains REJECT85c. Windows math cleanup/audit ab864/bede retains
-acceptancef43: both96 selected methods,15 independent/three coupled cases;
-public preflight stays BLOCKED. These are narrow source acceptances only.
+**Linux lifetime proposal remains REVISEaccaa122.** Descriptor debt/root-role
+architecture and narrow two-method/select+errno shape are supported, but the
+interface must acknowledge CPython internal EINTR handling and raw siginfo
+fields/status, including valid exit0. Old zombie-positive construction lacks
+prior observed ownership. Objective is preparing an exact additive interface and
+named-constructor amendment; genuine adoption needs a dying known parent, not an
+unexplained PPID change. No Linux implementation/API/proc/poll/wait/capability is
+approved. Pinned v6.6 poll has no HUP branch; different variants stay unqualified.
+All old Kernel methods/protection JSON and original failed550 evidence are retained.
 
-**Owner decision is pending.** Shutdown contract3698b545/96d85c93 is presented
-to Caleb. No changed study OR capability run until approval is forwarded.
-Proposed193MiB storage/160MiB retrieved ZIP limits, fixed cutoffs and explicit
-incomplete evidence remain; hard routing/enforcement/Windows capability/transport
-envelope/exact admission are still prerequisites. Reuse the registered workflow
-on an immutable own ref; no main/workflow-registration change or duplicate run.
+**Receipt stage repair continues.** Original7ef proposal remains unapplied and
+independently REVISE09b for false wait predicates and overwritten replacement
+evidence. Builder source is unfrozen atf916dcd7, with only independently permitted
+fixture literal changes. V3 stage/predicate/byte-ownership proposal is being written
+under6084cc92; same critic must adjudicate it before application. The three sibling
+original/publication links remain a separate87ce group. No original-stream-
+completeness or full69/source-ready claim. Original0f/99a/67a evidence remains.
 
-Windows40089125575 stays strict-warning FAIL/leak NONREPRODUCTION; original
-three-object leak unresolved. Sole Linux550 attempt remains consumed/REJECTED:
-root identity,18 input-bit mismatches and unavailable child-list interface.
-Linux readiness/software warning, ordinary Mac gameplay/OCR and touch numeric/
-strict/owned-child cleanup remain failed or unverified. Physical desktop/mobile,
-Intel, human CS2/8.5-category evaluation, signing/Steam credentials and release
-sign-off remain external. Automatic Mac cybersecurity-risk review stop stays
-recorded with no retry/bypass. Preserve authority, economy, privacy and default-off
-tracing; no shared merge, release, paid action or access bypass is authorized.
+Binder0ff and Windows mathf43 retain component-only acceptance. Shutdown contract
+3698b545/96d85c93 still awaits Caleb's decision: do not execute changed study OR
+capability runs until approval is forwarded. Hard routing/storage/transport/Windows
+prerequisites remain. No new workflow registration, main merge or duplicate run.
 
-Continue: obtain R6 independent verdict and revise supported findings; repair the
-receipt stage model and use the same critic; adjudicate lifetime scope before
-implementation, then use a different implementation critic. Review the first
-legacy repair proposal before any old-constructor/target-binding edit. Retain
-failures, update gates, commit/push and begin the next dependency after each
-increment. No actual207 replay/native approval follows from this checkpoint.
+Windows400891 remains strict-warning FAIL/leak NONREPRODUCTION; original three-object
+leak is unresolved. Sole Linux550 attempt is consumed/REJECTED; missing child-list
+interface, root identity and18 bit mismatches stay blockers. Linux readiness/software
+warning, Mac ordinary gameplay/OCR, touch numeric/strict/owned-child cleanup, physical
+desktop/mobile/Intel, human CS2/8.5-category evaluation, signing/Steam credentials and
+release sign-off remain open or external. Automatic Mac review rejection remains
+recorded without retry/bypass. Keep authority,economy,privacy and default-off tracing.
 
+Continue the independent local-pop review, exact legacy first-group adjudication,
+receipt V3 proposal and Linux amendment. Apply only supported scopes, then test,
+use a different implementation critic, retain failures, update gates and commit/push.
+Disk was338MiB free at18:49: avoid corpus copies; preserve all originals/checkouts.
+No whole gate or release standard changes. No actual207/native/study run is active.
 
 ## Historical checkpoint — 2026-10-24 17:51 UTC
 
