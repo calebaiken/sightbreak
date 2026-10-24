@@ -155,6 +155,10 @@ class IntervalNecessities(unittest.TestCase):
         bad[-1]['queue_count'] = 0
         self.assertEqual(self.analyze(bad), 'INVALID')
 
+        bad = deepcopy(model.rows)
+        bad[-1]['queue_count'] = 2
+        self.assertEqual(self.analyze(bad), 'INVALID')
+
     def test_observed_disconnect_reset_and_new_generation_can_restart_sequence(self):
         model = uncertain_history()
         model.disconnect(9, 16200)
