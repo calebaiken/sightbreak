@@ -27,6 +27,7 @@ class Owner:
         if self.survivor and self.survivor in label:row.update(active_processes=2,process_ids=[99,100])
         return row
     def baseline_only(self,row):return row.get('verified') and row.get('active_processes')==1 and row.get('process_ids')==[99]
+    def capture(self,pid):return dict(pid=pid,creation_filetime=pid+1000,handle_value=pid+2000,member_of_outer_job=True)
     def safety_cleanup(self):self.cleaned+=1;return dict(passed=True,failure_only=True,never_normal_close=True)
 
 
@@ -52,6 +53,7 @@ class StudyTests(unittest.TestCase):
             self.assertEqual(args[args.index('--timeout')+1],'300')
             self.assertNotIn('--quit-after',args);self.assertFalse(any('seed' in arg for arg in args))
         self.assertEqual(owner.cleaned,0)
+        self.assertEqual([t['observations'][0]['native_root_identity']['pid'] for t in result['trials']],[101,102,103,104])
 
     def test_every_failure_subset_consumes_fixed_arm_no_replacement(self):
         for mask in range(16):
@@ -91,6 +93,15 @@ class StudyTests(unittest.TestCase):
             self.assertEqual(len(calls),count);self.assertEqual(owner.cleaned,1)
             self.assertTrue(result['trials'][-1]['failure_safety_cleanup']['never_normal_close'])
             self.assertFalse(result['passed'])
+
+    def test_native_launch_birth_readback_failure_stops_and_audits(self):
+        owner=Owner()
+        def unknown(pid):raise RuntimeError('native root birth unknown')
+        owner.capture=unknown
+        result,calls,owner,_=self.run_generated(owner=owner,observe=True)
+        self.assertEqual(len(calls),1);self.assertFalse(result['passed']);self.assertEqual(owner.cleaned,1)
+        self.assertTrue(any(q['label']=='trial1/after' for q in owner.queries))
+        self.assertIn('native root birth unknown',result['trials'][0]['observations'][0]['ownership_error'])
 
     def test_identity_changes_stop_source_exe_pck_or_host(self):
         for field in ('source','exe','pck','host'):

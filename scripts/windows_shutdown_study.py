@@ -210,7 +210,13 @@ def collect_trials(output,identity,owner,driver,*,identity_reader,load_evidence=
             fatal=[]
             def observe(event,**details):
                 row=dict(event=event,monotonic=time.monotonic(),wall_unix_ns=time.time_ns(),**details)
-                try:row['job']=owner.query(f'trial{index}/{event}')
+                try:
+                    row['job']=owner.query(f'trial{index}/{event}')
+                    if event=='native_launch':
+                        # Popen still retains this actual root's OS handle even
+                        # after a very early exit; do not lose its birth merely
+                        # because it vanished from the active job-ID list.
+                        row['native_root_identity']=owner.capture(details['pid'])
                 except BaseException as error:row['ownership_error']=str(error);fatal.append(str(error))
                 trial.setdefault('observations',[]).append(row)
                 write(output/'study.json',report)
