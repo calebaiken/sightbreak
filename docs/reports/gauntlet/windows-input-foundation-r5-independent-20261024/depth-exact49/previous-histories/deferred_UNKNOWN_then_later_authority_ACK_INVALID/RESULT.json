@@ -1,0 +1,116 @@
+{
+  "group": "previous-histories",
+  "name": "deferred_UNKNOWN_then_later_authority_ACK_INVALID",
+  "expected": "INVALID",
+  "actual": "INVALID",
+  "matched": true,
+  "result": {
+    "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+    "diagnostic_complete": false,
+    "transition_status": "INVALID",
+    "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+    "roles": {
+      "client": {
+        "records": 7,
+        "coverage": [
+          "client_attempt",
+          "client_connected",
+          "client_tick",
+          "input_send_called",
+          "ready",
+          "snapshot_applied",
+          "welcome_received"
+        ],
+        "counters": {
+          "ready": 1,
+          "client_attempt": 1,
+          "client_connected": 1,
+          "welcome_received": 1,
+          "client_tick": 2,
+          "snapshot_applied": 1,
+          "input_send_called": 1
+        },
+        "max_observation_gap_msec": 1000,
+        "max_snapshot_age_msec": 3000,
+        "pending_saturation_indices": [],
+        "accepted_events": [],
+        "consumed_events": [],
+        "expiry_events": [],
+        "disconnect_events": [],
+        "welcome_events": [
+          {
+            "transport_id": 9,
+            "local_attempt": 1,
+            "local_id": 1,
+            "wall_unix_msec": 113000
+          }
+        ],
+        "binding_events": [],
+        "local_attempts": 1
+      }
+    },
+    "errors": [
+      "authority: stream ACK is neither absent nor a popped positive sequence"
+    ]
+  },
+  "original_result": {
+    "name": "deferred_UNKNOWN_then_later_authority_ACK_INVALID",
+    "prior_expected": "INVALID",
+    "prior_actual": "INVALID",
+    "expected": "INVALID",
+    "actual": "INVALID",
+    "matched": true,
+    "versioned_policy_adjudication": false,
+    "result": {
+      "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+      "diagnostic_complete": false,
+      "transition_status": "INVALID",
+      "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+      "roles": {
+        "client": {
+          "records": 7,
+          "coverage": [
+            "client_attempt",
+            "client_connected",
+            "client_tick",
+            "input_send_called",
+            "ready",
+            "snapshot_applied",
+            "welcome_received"
+          ],
+          "counters": {
+            "ready": 1,
+            "client_attempt": 1,
+            "client_connected": 1,
+            "welcome_received": 1,
+            "client_tick": 2,
+            "snapshot_applied": 1,
+            "input_send_called": 1
+          },
+          "max_observation_gap_msec": 1000,
+          "max_snapshot_age_msec": 3000,
+          "pending_saturation_indices": [],
+          "accepted_events": [],
+          "consumed_events": [],
+          "expiry_events": [],
+          "disconnect_events": [],
+          "welcome_events": [
+            {
+              "transport_id": 9,
+              "local_attempt": 1,
+              "local_id": 1,
+              "wall_unix_msec": 113000
+            }
+          ],
+          "binding_events": [],
+          "local_attempts": 1
+        }
+      },
+      "errors": [
+        "authority: stream ACK is neither absent nor a popped positive sequence"
+      ]
+    }
+  },
+  "client_sha256": "985bd1a9d2dab2b61aa4cd6f0fe8e77ab769d0a10aa3861f024b918d00966abe",
+  "authority_sha256": "6c34000f24f5e01abe581f05641f5399bb4c8f91fbb28b02e99a1ee4aa7dc389"
+}

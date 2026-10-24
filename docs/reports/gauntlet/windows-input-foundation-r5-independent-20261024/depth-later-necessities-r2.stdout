@@ -1,0 +1,36 @@
+{
+  "outcomes": [
+    {
+      "name": "source-positive",
+      "expected": "UNKNOWN",
+      "actual": "UNKNOWN",
+      "matched": true
+    },
+    {
+      "name": "ack-cleared",
+      "expected": "INVALID",
+      "actual": "UNKNOWN",
+      "matched": false
+    },
+    {
+      "name": "ack-regressed",
+      "expected": "INVALID",
+      "actual": "UNKNOWN",
+      "matched": false
+    },
+    {
+      "name": "queue-grown",
+      "expected": "INVALID",
+      "actual": "UNKNOWN",
+      "matched": false
+    },
+    {
+      "name": "frame-sanity",
+      "expected": "INVALID",
+      "actual": "INVALID",
+      "matched": true
+    }
+  ],
+  "matches": 2,
+  "count": 5
+}

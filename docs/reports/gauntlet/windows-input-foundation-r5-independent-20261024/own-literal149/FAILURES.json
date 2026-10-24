@@ -1,0 +1,465 @@
+[
+  {
+    "kind": "failure",
+    "test": "test_input_consumption_expiry.ExpiryHistoryControls.test_missing_legacy_connected_foundation_stays_unknown_then_later_invalid",
+    "calls": [
+      2042,
+      2043,
+      2044,
+      2045
+    ],
+    "traceback": "Traceback (most recent call last):\n  File \"/workspace/reviews/windows-input-foundation-r5-candidate-8b52601c-20261024/scripts/test_input_consumption_expiry.py\", line 380, in test_missing_legacy_connected_foundation_stays_unknown_then_later_invalid\n    report=full_report(rows);self.assertEqual(report['transition_status'],'UNKNOWN',report['errors'])\n                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 'INVALID' != 'UNKNOWN'\n- INVALID\n+ UNKNOWN\n : ['authority: successful connection has an impossible initial lifecycle projection']\n"
+  },
+  {
+    "kind": "failure",
+    "test": "test_input_consumption_expiry.FullExpiryReaderControls.test_new_positive_lifecycle_projection_and_old_helper_unchanged",
+    "calls": [],
+    "traceback": "Traceback (most recent call last):\n  File \"/workspace/reviews/windows-input-foundation-r5-candidate-8b52601c-20261024/scripts/test_input_consumption_expiry.py\", line 234, in test_new_positive_lifecycle_projection_and_old_helper_unchanged\n    self.assertEqual(original[1]['input_age_msec'],-1);self.assertEqual(original[1]['deadline_remaining_msec'],-1)\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 0 != -1\n"
+  },
+  {
+    "kind": "failure",
+    "test": "test_input_consumption_foundation_enforcement.AuthorityFoundationEnforcement.test_definite_prefix_faults_are_not_hidden_by_unknown_lifecycle",
+    "calls": [
+      2191,
+      2192,
+      2193,
+      2194
+    ],
+    "traceback": "Traceback (most recent call last):\n  File \"/workspace/reviews/windows-input-foundation-r5-candidate-8b52601c-20261024/scripts/test_input_consumption_foundation_enforcement.py\", line 150, in test_definite_prefix_faults_are_not_hidden_by_unknown_lifecycle\n    self.assertEqual(control['transition_status'], 'UNKNOWN', control)\nAssertionError: 'INVALID' != 'UNKNOWN'\n- INVALID\n+ UNKNOWN\n : {'scope': 'Debug read-only stage observations; no qualification, physical latency or unobserved cause claim', 'diagnostic_complete': False, 'transition_status': 'INVALID', 'cause_status': 'UNRESOLVED; observations identify executed stages and gaps only', 'roles': {'client': {'records': 7, 'coverage': ['client_attempt', 'client_connected', 'client_tick', 'input_send_called', 'ready', 'snapshot_applied', 'welcome_received'], 'counters': {'ready': 1, 'client_attempt': 1, 'client_connected': 1, 'welcome_received': 1, 'client_tick': 2, 'snapshot_applied': 1, 'input_send_called': 1}, 'max_observation_gap_msec': 1000, 'max_snapshot_age_msec': 3000, 'pending_saturation_indices': [], 'accepted_events': [], 'consumed_events': [], 'expiry_events': [], 'disconnect_events': [], 'welcome_events': [{'transport_id': 9, 'local_attempt': 1, 'local_id': 1, 'wall_unix_msec': 104000}], 'binding_events': [], 'local_attempts': 1}}, 'errors': ['authority: accepted packet has no valid ACK context for its input window/fresh intent']}\n"
+  },
+  {
+    "kind": "failure",
+    "test": "test_input_consumption_foundation_model.VersionedPreEditConstructionControls.test_known_schema_valid_source_negatives_are_frozen_as_preedit_false_completes (id='connected/missing-age')",
+    "calls": [],
+    "traceback": "Traceback (most recent call last):\n  File \"/workspace/reviews/windows-input-foundation-r5-candidate-8b52601c-20261024/scripts/test_input_consumption_foundation_model.py\", line 159, in test_known_schema_valid_source_negatives_are_frozen_as_preedit_false_completes\n    with self.subTest(id=case['id']):self.assertTrue(result['diagnostic_complete'],result['errors'])\n                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: False is not true : ['authority: successful connection has an impossible initial lifecycle projection']\n"
+  },
+  {
+    "kind": "failure",
+    "test": "test_input_consumption_foundation_model.VersionedPreEditConstructionControls.test_known_schema_valid_source_negatives_are_frozen_as_preedit_false_completes (id='connected/wrong-sum')",
+    "calls": [],
+    "traceback": "Traceback (most recent call last):\n  File \"/workspace/reviews/windows-input-foundation-r5-candidate-8b52601c-20261024/scripts/test_input_consumption_foundation_model.py\", line 159, in test_known_schema_valid_source_negatives_are_frozen_as_preedit_false_completes\n    with self.subTest(id=case['id']):self.assertTrue(result['diagnostic_complete'],result['errors'])\n                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: False is not true : ['authority: successful connection has an impossible initial lifecycle projection']\n"
+  },
+  {
+    "kind": "failure",
+    "test": "test_input_consumption_foundation_model.VersionedPreEditConstructionControls.test_known_schema_valid_source_negatives_are_frozen_as_preedit_false_completes (id='connected/joined-before-admission')",
+    "calls": [],
+    "traceback": "Traceback (most recent call last):\n  File \"/workspace/reviews/windows-input-foundation-r5-candidate-8b52601c-20261024/scripts/test_input_consumption_foundation_model.py\", line 159, in test_known_schema_valid_source_negatives_are_frozen_as_preedit_false_completes\n    with self.subTest(id=case['id']):self.assertTrue(result['diagnostic_complete'],result['errors'])\n                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: False is not true : ['authority: successful connection has an impossible initial lifecycle projection']\n"
+  },
+  {
+    "kind": "failure",
+    "test": "test_input_consumption_foundation_model.VersionedPreEditConstructionControls.test_known_schema_valid_source_negatives_are_frozen_as_preedit_false_completes (id='generation/skipped-first')",
+    "calls": [],
+    "traceback": "Traceback (most recent call last):\n  File \"/workspace/reviews/windows-input-foundation-r5-candidate-8b52601c-20261024/scripts/test_input_consumption_foundation_model.py\", line 159, in test_known_schema_valid_source_negatives_are_frozen_as_preedit_false_completes\n    with self.subTest(id=case['id']):self.assertTrue(result['diagnostic_complete'],result['errors'])\n                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: False is not true : ['authority: successful connection skipped or reused the global generation']\n"
+  },
+  {
+    "kind": "failure",
+    "test": "test_input_consumption_foundation_model.VersionedPreEditConstructionControls.test_known_schema_valid_source_negatives_are_frozen_as_preedit_false_completes (id='bound/future-last')",
+    "calls": [],
+    "traceback": "Traceback (most recent call last):\n  File \"/workspace/reviews/windows-input-foundation-r5-candidate-8b52601c-20261024/scripts/test_input_consumption_foundation_model.py\", line 159, in test_known_schema_valid_source_negatives_are_frozen_as_preedit_false_completes\n    with self.subTest(id=case['id']):self.assertTrue(result['diagnostic_complete'],result['errors'])\n                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: False is not true : ['authority: authority lifecycle history is impossible: invalid/missing lifecycle time projection']\n"
+  },
+  {
+    "kind": "failure",
+    "test": "test_input_consumption_foundation_model.VersionedPreEditConstructionControls.test_known_schema_valid_source_negatives_are_frozen_as_preedit_false_completes (id='received/invented-active')",
+    "calls": [],
+    "traceback": "Traceback (most recent call last):\n  File \"/workspace/reviews/windows-input-foundation-r5-candidate-8b52601c-20261024/scripts/test_input_consumption_foundation_model.py\", line 159, in test_known_schema_valid_source_negatives_are_frozen_as_preedit_false_completes\n    with self.subTest(id=case['id']):self.assertTrue(result['diagnostic_complete'],result['errors'])\n                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: False is not true : ['authority: authority lifecycle history is impossible: ']\n"
+  },
+  {
+    "kind": "failure",
+    "test": "test_input_consumption_foundation_model.VersionedPreEditConstructionControls.test_known_schema_valid_source_negatives_are_frozen_as_preedit_false_completes (id='tick/future-rejection')",
+    "calls": [],
+    "traceback": "Traceback (most recent call last):\n  File \"/workspace/reviews/windows-input-foundation-r5-candidate-8b52601c-20261024/scripts/test_input_consumption_foundation_model.py\", line 159, in test_known_schema_valid_source_negatives_are_frozen_as_preedit_false_completes\n    with self.subTest(id=case['id']):self.assertTrue(result['diagnostic_complete'],result['errors'])\n                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: False is not true : ['authority: authority lifecycle history is impossible: ']\n"
+  },
+  {
+    "kind": "failure",
+    "test": "test_input_consumption_foundation_model.VersionedPreEditConstructionControls.test_known_schema_valid_source_negatives_are_frozen_as_preedit_false_completes (id='tick/joined-lost')",
+    "calls": [],
+    "traceback": "Traceback (most recent call last):\n  File \"/workspace/reviews/windows-input-foundation-r5-candidate-8b52601c-20261024/scripts/test_input_consumption_foundation_model.py\", line 159, in test_known_schema_valid_source_negatives_are_frozen_as_preedit_false_completes\n    with self.subTest(id=case['id']):self.assertTrue(result['diagnostic_complete'],result['errors'])\n                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: False is not true : ['authority: authority lifecycle history is impossible: joined/actor binding changed before disconnect']\n"
+  },
+  {
+    "kind": "failure",
+    "test": "test_input_consumption_foundation_model.VersionedPreEditConstructionControls.test_minimal_authority_delta_preserves_original_whole_rows_and_other_fields",
+    "calls": [],
+    "traceback": "Traceback (most recent call last):\n  File \"/workspace/reviews/windows-input-foundation-r5-candidate-8b52601c-20261024/scripts/test_input_consumption_foundation_model.py\", line 141, in test_minimal_authority_delta_preserves_original_whole_rows_and_other_fields\n    self.assertEqual(original,before);self.assertEqual(original[1]['input_age_msec'],-1);self.assertEqual(original[1]['deadline_remaining_msec'],-1)\n                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 0 != -1\n"
+  },
+  {
+    "kind": "failure",
+    "test": "test_input_consumption_foundation_model.VersionedPreEditConstructionControls.test_preedit_reader_false_complete_baseline_and_versioned_positive_are_separate",
+    "calls": [
+      2302,
+      2303,
+      2304,
+      2305,
+      2306,
+      2307,
+      2308,
+      2309
+    ],
+    "traceback": "Traceback (most recent call last):\n  File \"/workspace/reviews/windows-input-foundation-r5-candidate-8b52601c-20261024/scripts/test_input_consumption_foundation_model.py\", line 153, in test_preedit_reader_false_complete_baseline_and_versioned_positive_are_separate\n    self.assertFalse(model.source_successful_connection(declared_rows('authority')[1]));self.assertTrue(model.source_successful_connection(versioned_rows()[1]))\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: True is not false\n"
+  },
+  {
+    "kind": "failure",
+    "test": "test_input_consumption_observation.InputConsumptionControls.test_old_generation_or_actor_alias_cannot_qualify_current_consumption",
+    "calls": [
+      2454,
+      2455,
+      2456
+    ],
+    "traceback": "Traceback (most recent call last):\n  File \"/workspace/reviews/windows-input-foundation-r5-candidate-8b52601c-20261024/scripts/test_input_consumption_observation.py\", line 149, in test_old_generation_or_actor_alias_cannot_qualify_current_consumption\n    self.assertIn('consumed identity', str(self.report(authority=rows)['errors']))\nAssertionError: 'consumed identity' not found in \"['authority: latest metadata changed without a stage counter increment']\"\n"
+  },
+  {
+    "kind": "failure",
+    "test": "test_input_consumption_state.InputObservationStateControls.test_fresh_peer_needs_acceptance_progress_but_not_a_direct_accept_row",
+    "calls": [
+      2572,
+      2573,
+      2574,
+      2575,
+      2576,
+      2577,
+      2578
+    ],
+    "traceback": "Traceback (most recent call last):\n  File \"/workspace/reviews/windows-input-foundation-r5-candidate-8b52601c-20261024/scripts/test_input_consumption_state.py\", line 139, in test_fresh_peer_needs_acceptance_progress_but_not_a_direct_accept_row\n    self.assertTrue(positive['diagnostic_complete'], positive['errors'])\nAssertionError: False is not true : ['authority: successful connection has an impossible initial lifecycle projection']\n"
+  },
+  {
+    "kind": "failure",
+    "test": "test_input_consumption_state.InputObservationStateControls.test_queued_duplicate_accepts_without_queue_growth_or_command_replacement",
+    "calls": [
+      2597,
+      2598,
+      2599,
+      2600
+    ],
+    "traceback": "Traceback (most recent call last):\n  File \"/workspace/reviews/windows-input-foundation-r5-candidate-8b52601c-20261024/scripts/test_input_consumption_state.py\", line 160, in test_queued_duplicate_accepts_without_queue_growth_or_command_replacement\n    self.assertTrue(report['diagnostic_complete'], report['errors'])\nAssertionError: False is not true : ['authority: authority lifecycle history is impossible: ']\n"
+  },
+  {
+    "kind": "failure",
+    "test": "test_input_consumption_stream.InputObservationStreamControls.test_empty_array_has_no_endpoints_but_nondictionaries_are_observable (count=0, first=-1, last=-1)",
+    "calls": [
+      2610,
+      2611,
+      2612,
+      2613
+    ],
+    "traceback": "Traceback (most recent call last):\n  File \"/workspace/reviews/windows-input-foundation-r5-candidate-8b52601c-20261024/scripts/test_input_consumption_stream.py\", line 128, in test_empty_array_has_no_endpoints_but_nondictionaries_are_observable\n    self.assertEqual(result['diagnostic_complete'], expected, result['errors'])\nAssertionError: False != True : ['authority: authority lifecycle history is impossible: ']\n"
+  },
+  {
+    "kind": "failure",
+    "test": "test_input_consumption_stream.InputObservationStreamControls.test_empty_array_has_no_endpoints_but_nondictionaries_are_observable (count=2, first=-1, last=-1)",
+    "calls": [
+      2620,
+      2621,
+      2622,
+      2623
+    ],
+    "traceback": "Traceback (most recent call last):\n  File \"/workspace/reviews/windows-input-foundation-r5-candidate-8b52601c-20261024/scripts/test_input_consumption_stream.py\", line 128, in test_empty_array_has_no_endpoints_but_nondictionaries_are_observable\n    self.assertEqual(result['diagnostic_complete'], expected, result['errors'])\nAssertionError: False != True : ['authority: authority lifecycle history is impossible: ']\n"
+  },
+  {
+    "kind": "failure",
+    "test": "test_input_consumption_stream.InputObservationStreamControls.test_hidden_metadata_calls_stay_inside_observed_time_interval (offset=0)",
+    "calls": [
+      2627,
+      2628,
+      2629,
+      2630
+    ],
+    "traceback": "Traceback (most recent call last):\n  File \"/workspace/reviews/windows-input-foundation-r5-candidate-8b52601c-20261024/scripts/test_input_consumption_stream.py\", line 188, in test_hidden_metadata_calls_stay_inside_observed_time_interval\n    self.assertEqual(result['diagnostic_complete'], expected, result['errors'])\nAssertionError: False != True : ['authority: authority lifecycle history is impossible: ']\n"
+  },
+  {
+    "kind": "failure",
+    "test": "test_input_consumption_stream.InputObservationStreamControls.test_hidden_metadata_calls_stay_inside_observed_time_interval (offset=500)",
+    "calls": [
+      2631,
+      2632,
+      2633,
+      2634
+    ],
+    "traceback": "Traceback (most recent call last):\n  File \"/workspace/reviews/windows-input-foundation-r5-candidate-8b52601c-20261024/scripts/test_input_consumption_stream.py\", line 188, in test_hidden_metadata_calls_stay_inside_observed_time_interval\n    self.assertEqual(result['diagnostic_complete'], expected, result['errors'])\nAssertionError: False != True : ['authority: authority lifecycle history is impossible: ']\n"
+  },
+  {
+    "kind": "failure",
+    "test": "test_input_consumption_stream.InputObservationStreamControls.test_hidden_metadata_calls_stay_inside_observed_time_interval (offset=1000)",
+    "calls": [
+      2635,
+      2636,
+      2637,
+      2638
+    ],
+    "traceback": "Traceback (most recent call last):\n  File \"/workspace/reviews/windows-input-foundation-r5-candidate-8b52601c-20261024/scripts/test_input_consumption_stream.py\", line 188, in test_hidden_metadata_calls_stay_inside_observed_time_interval\n    self.assertEqual(result['diagnostic_complete'], expected, result['errors'])\nAssertionError: False != True : ['authority: authority lifecycle history is impossible: ']\n"
+  },
+  {
+    "kind": "failure",
+    "test": "test_input_consumption_stream.InputObservationStreamControls.test_live_binding_round_epoch_change_keeps_rejection_state",
+    "calls": [
+      2639,
+      2640,
+      2641,
+      2642
+    ],
+    "traceback": "Traceback (most recent call last):\n  File \"/workspace/reviews/windows-input-foundation-r5-candidate-8b52601c-20261024/scripts/test_input_consumption_stream.py\", line 169, in test_live_binding_round_epoch_change_keeps_rejection_state\n    self.assertTrue(result['diagnostic_complete'], result['errors'])\nAssertionError: False is not true : ['authority: authority lifecycle history is impossible: ']\n"
+  },
+  {
+    "kind": "failure",
+    "test": "test_input_consumption_stream.InputObservationStreamControls.test_only_fully_exposed_batches_need_a_fresh_endpoint (first=2, last=1, count=2)",
+    "calls": [
+      2646,
+      2647,
+      2648,
+      2649
+    ],
+    "traceback": "Traceback (most recent call last):\n  File \"/workspace/reviews/windows-input-foundation-r5-candidate-8b52601c-20261024/scripts/test_input_consumption_stream.py\", line 110, in test_only_fully_exposed_batches_need_a_fresh_endpoint\n    self.assertEqual(result['diagnostic_complete'], expected, result['errors'])\nAssertionError: False != True : ['authority: authority lifecycle history is impossible: ']\n"
+  },
+  {
+    "kind": "failure",
+    "test": "test_input_consumption_stream.InputObservationStreamControls.test_only_fully_exposed_batches_need_a_fresh_endpoint (first=2, last=2, count=2)",
+    "calls": [
+      2650,
+      2651,
+      2652,
+      2653
+    ],
+    "traceback": "Traceback (most recent call last):\n  File \"/workspace/reviews/windows-input-foundation-r5-candidate-8b52601c-20261024/scripts/test_input_consumption_stream.py\", line 110, in test_only_fully_exposed_batches_need_a_fresh_endpoint\n    self.assertEqual(result['diagnostic_complete'], expected, result['errors'])\nAssertionError: False != True : ['authority: authority lifecycle history is impossible: ']\n"
+  },
+  {
+    "kind": "failure",
+    "test": "test_input_consumption_stream.InputObservationStreamControls.test_only_fully_exposed_batches_need_a_fresh_endpoint (first=1, last=1, count=3)",
+    "calls": [
+      2654,
+      2655,
+      2656,
+      2657
+    ],
+    "traceback": "Traceback (most recent call last):\n  File \"/workspace/reviews/windows-input-foundation-r5-candidate-8b52601c-20261024/scripts/test_input_consumption_stream.py\", line 110, in test_only_fully_exposed_batches_need_a_fresh_endpoint\n    self.assertEqual(result['diagnostic_complete'], expected, result['errors'])\nAssertionError: False != True : ['authority: authority lifecycle history is impossible: ']\n"
+  },
+  {
+    "kind": "failure",
+    "test": "test_input_consumption_stream.InputObservationStreamControls.test_queue_window_bound_includes_valid_full_queue_and_later_ticks",
+    "calls": [
+      2658,
+      2659,
+      2660,
+      2661
+    ],
+    "traceback": "Traceback (most recent call last):\n  File \"/workspace/reviews/windows-input-foundation-r5-candidate-8b52601c-20261024/scripts/test_input_consumption_stream.py\", line 115, in test_queue_window_bound_includes_valid_full_queue_and_later_ticks\n    self.assertTrue(result['diagnostic_complete'], result['errors'])\nAssertionError: False is not true : ['authority: authority lifecycle history is impossible: ']\n"
+  },
+  {
+    "kind": "failure",
+    "test": "test_input_consumption_stream.InputObservationStreamControls.test_rejection_state_and_calls_agree_in_both_directions",
+    "calls": [
+      2662,
+      2663,
+      2664,
+      2665,
+      2666,
+      2667,
+      2668
+    ],
+    "traceback": "Traceback (most recent call last):\n  File \"/workspace/reviews/windows-input-foundation-r5-candidate-8b52601c-20261024/scripts/test_input_consumption_stream.py\", line 135, in test_rejection_state_and_calls_agree_in_both_directions\n    self.assertTrue(self.report(rows)['diagnostic_complete'])\nAssertionError: False is not true\n"
+  },
+  {
+    "kind": "failure",
+    "test": "test_input_consumption_stream.InputObservationStreamControls.test_single_command_is_fresh_and_inside_ack_window (sequence=2)",
+    "calls": [
+      2672,
+      2673,
+      2674,
+      2675
+    ],
+    "traceback": "Traceback (most recent call last):\n  File \"/workspace/reviews/windows-input-foundation-r5-candidate-8b52601c-20261024/scripts/test_input_consumption_stream.py\", line 101, in test_single_command_is_fresh_and_inside_ack_window\n    self.assertEqual(result['diagnostic_complete'], expected, result['errors'])\nAssertionError: False != True : ['authority: authority lifecycle history is impossible: ']\n"
+  },
+  {
+    "kind": "failure",
+    "test": "test_input_consumption_stream.InputObservationStreamControls.test_single_command_is_fresh_and_inside_ack_window (sequence=121)",
+    "calls": [
+      2676,
+      2677,
+      2678,
+      2679
+    ],
+    "traceback": "Traceback (most recent call last):\n  File \"/workspace/reviews/windows-input-foundation-r5-candidate-8b52601c-20261024/scripts/test_input_consumption_stream.py\", line 101, in test_single_command_is_fresh_and_inside_ack_window\n    self.assertEqual(result['diagnostic_complete'], expected, result['errors'])\nAssertionError: False != True : ['authority: authority lifecycle history is impossible: ']\n"
+  },
+  {
+    "kind": "failure",
+    "test": "test_input_consumption_stream.InputObservationStreamControls.test_unchanged_metadata_can_remain_older_than_current_interval",
+    "calls": [
+      2683,
+      2684,
+      2685,
+      2686
+    ],
+    "traceback": "Traceback (most recent call last):\n  File \"/workspace/reviews/windows-input-foundation-r5-candidate-8b52601c-20261024/scripts/test_input_consumption_stream.py\", line 196, in test_unchanged_metadata_can_remain_older_than_current_interval\n    self.assertTrue(result['diagnostic_complete'], result['errors'])\nAssertionError: False is not true : ['authority: authority lifecycle history is impossible: ']\n"
+  },
+  {
+    "kind": "failure",
+    "test": "test_input_consumption_stream.InputObservationStreamControls.test_zero_peer_lobby_reset_retains_history_and_allows_new_rejections",
+    "calls": [
+      2687,
+      2688,
+      2689,
+      2690
+    ],
+    "traceback": "Traceback (most recent call last):\n  File \"/workspace/reviews/windows-input-foundation-r5-candidate-8b52601c-20261024/scripts/test_input_consumption_stream.py\", line 143, in test_zero_peer_lobby_reset_retains_history_and_allows_new_rejections\n    self.assertTrue(result['diagnostic_complete'], result['errors'])\nAssertionError: False is not true : ['authority: authority lifecycle history is impossible: ']\n"
+  },
+  {
+    "kind": "failure",
+    "test": "test_input_consumption_transitions.InputObservationTransitionControls.test_delayed_selected_stream_uses_its_owned_header_not_global_latest",
+    "calls": [
+      2702,
+      2703,
+      2704,
+      2705
+    ],
+    "traceback": "Traceback (most recent call last):\n  File \"/workspace/reviews/windows-input-foundation-r5-candidate-8b52601c-20261024/scripts/test_input_consumption_transitions.py\", line 299, in test_delayed_selected_stream_uses_its_owned_header_not_global_latest\n    self.assertTrue(result['diagnostic_complete'],result['errors'])\nAssertionError: False is not true : ['authority: successful connection has an impossible initial lifecycle projection']\n"
+  },
+  {
+    "kind": "failure",
+    "test": "test_input_consumption_transitions.InputObservationTransitionControls.test_epoch_boundary_uses_acceptance_epoch_and_preserves_new_receipts (accepted_epoch=1, queued=0)",
+    "calls": [
+      2706,
+      2707,
+      2708,
+      2709
+    ],
+    "traceback": "Traceback (most recent call last):\n  File \"/workspace/reviews/windows-input-foundation-r5-candidate-8b52601c-20261024/scripts/test_input_consumption_transitions.py\", line 273, in test_epoch_boundary_uses_acceptance_epoch_and_preserves_new_receipts\n    self.assertEqual(result['diagnostic_complete'], expected, result['errors'])\nAssertionError: False != True : ['authority: authority lifecycle history is impossible: ']\n"
+  },
+  {
+    "kind": "failure",
+    "test": "test_input_consumption_transitions.InputObservationTransitionControls.test_epoch_boundary_uses_acceptance_epoch_and_preserves_new_receipts (accepted_epoch=2, queued=1)",
+    "calls": [
+      2714,
+      2715,
+      2716,
+      2717
+    ],
+    "traceback": "Traceback (most recent call last):\n  File \"/workspace/reviews/windows-input-foundation-r5-candidate-8b52601c-20261024/scripts/test_input_consumption_transitions.py\", line 273, in test_epoch_boundary_uses_acceptance_epoch_and_preserves_new_receipts\n    self.assertEqual(result['diagnostic_complete'], expected, result['errors'])\nAssertionError: False != True : ['authority: authority lifecycle history is impossible: ']\n"
+  },
+  {
+    "kind": "failure",
+    "test": "test_input_consumption_transitions.InputObservationTransitionControls.test_explicit_unselected_pop_is_inferred_when_prior_state_proves_it",
+    "calls": [
+      2725,
+      2726,
+      2727,
+      2728
+    ],
+    "traceback": "Traceback (most recent call last):\n  File \"/workspace/reviews/windows-input-foundation-r5-candidate-8b52601c-20261024/scripts/test_input_consumption_transitions.py\", line 246, in test_explicit_unselected_pop_is_inferred_when_prior_state_proves_it\n    self.assertTrue(result['diagnostic_complete'], result['errors'])\nAssertionError: False is not true : ['authority: authority lifecycle history is impossible: ']\n"
+  },
+  {
+    "kind": "failure",
+    "test": "test_input_consumption_transitions.InputObservationTransitionControls.test_exposed_queue_pops_oldest_instead_of_latest_accepted_packet",
+    "calls": [
+      2729,
+      2730,
+      2731,
+      2732
+    ],
+    "traceback": "Traceback (most recent call last):\n  File \"/workspace/reviews/windows-input-foundation-r5-candidate-8b52601c-20261024/scripts/test_input_consumption_transitions.py\", line 161, in test_exposed_queue_pops_oldest_instead_of_latest_accepted_packet\n    self.assertTrue(result['diagnostic_complete'], result['errors'])\nAssertionError: False is not true : ['authority: authority lifecycle history is impossible: ']\n"
+  },
+  {
+    "kind": "failure",
+    "test": "test_input_consumption_transitions.InputObservationTransitionControls.test_hidden_accept_before_hidden_pop_uses_pre_pop_ack_interval",
+    "calls": [
+      2733,
+      2734,
+      2735,
+      2736
+    ],
+    "traceback": "Traceback (most recent call last):\n  File \"/workspace/reviews/windows-input-foundation-r5-candidate-8b52601c-20261024/scripts/test_input_consumption_transitions.py\", line 129, in test_hidden_accept_before_hidden_pop_uses_pre_pop_ack_interval\n    self.assertTrue(result['diagnostic_complete'], result['errors'])\nAssertionError: False is not true : ['authority: authority lifecycle history is impossible: ']\n"
+  },
+  {
+    "kind": "failure",
+    "test": "test_input_consumption_transitions.InputObservationTransitionControls.test_large_duplicate_batch_cannot_erase_earlier_immutable_intent",
+    "calls": [
+      2737,
+      2738,
+      2739,
+      2740
+    ],
+    "traceback": "Traceback (most recent call last):\n  File \"/workspace/reviews/windows-input-foundation-r5-candidate-8b52601c-20261024/scripts/test_input_consumption_transitions.py\", line 209, in test_large_duplicate_batch_cannot_erase_earlier_immutable_intent\n    self.assertTrue(self.report(authority=rows)['diagnostic_complete'])\nAssertionError: False is not true\n"
+  },
+  {
+    "kind": "failure",
+    "test": "test_input_consumption_transitions.InputObservationTransitionControls.test_multi_peer_forced_flow_passes_but_ambiguous_header_is_unknown",
+    "calls": [
+      2741,
+      2742,
+      2743,
+      2744
+    ],
+    "traceback": "Traceback (most recent call last):\n  File \"/workspace/reviews/windows-input-foundation-r5-candidate-8b52601c-20261024/scripts/test_input_consumption_transitions.py\", line 175, in test_multi_peer_forced_flow_passes_but_ambiguous_header_is_unknown\n    self.assertTrue(self.report(authority=rows)['diagnostic_complete'])\nAssertionError: False is not true\n"
+  },
+  {
+    "kind": "failure",
+    "test": "test_input_consumption_transitions.InputObservationTransitionControls.test_receipt_aggregate_retains_one_joint_payload_history_across_pops (total=1, first=False, second=True, hidden=False)",
+    "calls": [
+      2772,
+      2773,
+      2774,
+      2775
+    ],
+    "traceback": "Traceback (most recent call last):\n  File \"/workspace/reviews/windows-input-foundation-r5-candidate-8b52601c-20261024/scripts/test_input_consumption_transitions.py\", line 256, in test_receipt_aggregate_retains_one_joint_payload_history_across_pops\n    self.assertEqual(result['diagnostic_complete'], expected, result['errors'])\nAssertionError: False != True : ['authority: authority lifecycle history is impossible: ']\n"
+  },
+  {
+    "kind": "failure",
+    "test": "test_input_consumption_transitions.InputObservationTransitionControls.test_receipt_aggregate_retains_one_joint_payload_history_across_pops (total=0, first=False, second=False, hidden=True)",
+    "calls": [
+      2792,
+      2793,
+      2794,
+      2795
+    ],
+    "traceback": "Traceback (most recent call last):\n  File \"/workspace/reviews/windows-input-foundation-r5-candidate-8b52601c-20261024/scripts/test_input_consumption_transitions.py\", line 256, in test_receipt_aggregate_retains_one_joint_payload_history_across_pops\n    self.assertEqual(result['diagnostic_complete'], expected, result['errors'])\nAssertionError: False != True : ['authority: authority lifecycle history is impossible: ']\n"
+  },
+  {
+    "kind": "failure",
+    "test": "test_input_consumption_transitions.InputObservationTransitionControls.test_receipt_aggregate_retains_one_joint_payload_history_across_pops (total=2, first=True, second=True, hidden=True)",
+    "calls": [
+      2796,
+      2797,
+      2798,
+      2799
+    ],
+    "traceback": "Traceback (most recent call last):\n  File \"/workspace/reviews/windows-input-foundation-r5-candidate-8b52601c-20261024/scripts/test_input_consumption_transitions.py\", line 256, in test_receipt_aggregate_retains_one_joint_payload_history_across_pops\n    self.assertEqual(result['diagnostic_complete'], expected, result['errors'])\nAssertionError: False != True : ['authority: authority lifecycle history is impossible: ']\n"
+  },
+  {
+    "kind": "failure",
+    "test": "test_input_consumption_transitions.InputObservationTransitionControls.test_same_stream_ack_and_queue_need_corresponding_calls",
+    "calls": [
+      2815,
+      2816,
+      2817,
+      2818
+    ],
+    "traceback": "Traceback (most recent call last):\n  File \"/workspace/reviews/windows-input-foundation-r5-candidate-8b52601c-20261024/scripts/test_input_consumption_transitions.py\", line 150, in test_same_stream_ack_and_queue_need_corresponding_calls\n    self.assertTrue(self.report(authority=rows)['diagnostic_complete'])\nAssertionError: False is not true\n"
+  },
+  {
+    "kind": "failure",
+    "test": "test_input_consumption_transitions.InputObservationTransitionControls.test_shared_accepted_validation_covers_hidden_calls (sequence=2, count=1, epoch=1)",
+    "calls": [
+      2819,
+      2820,
+      2821,
+      2822
+    ],
+    "traceback": "Traceback (most recent call last):\n  File \"/workspace/reviews/windows-input-foundation-r5-candidate-8b52601c-20261024/scripts/test_input_consumption_transitions.py\", line 125, in test_shared_accepted_validation_covers_hidden_calls\n    self.assertEqual(result['diagnostic_complete'], expected, result['errors'])\nAssertionError: False != True : ['authority: authority lifecycle history is impossible: ']\n"
+  },
+  {
+    "kind": "failure",
+    "test": "test_input_consumption_transitions.InputObservationTransitionControls.test_shared_accepted_validation_covers_hidden_calls (sequence=1, count=3, epoch=1)",
+    "calls": [
+      2837,
+      2838,
+      2839,
+      2840
+    ],
+    "traceback": "Traceback (most recent call last):\n  File \"/workspace/reviews/windows-input-foundation-r5-candidate-8b52601c-20261024/scripts/test_input_consumption_transitions.py\", line 125, in test_shared_accepted_validation_covers_hidden_calls\n    self.assertEqual(result['diagnostic_complete'], expected, result['errors'])\nAssertionError: False != True : ['authority: authority lifecycle history is impossible: ']\n"
+  },
+  {
+    "kind": "error",
+    "test": "test_input_consumption_lifecycle.InputObservationLifecycleControls.test_fresh_generation_after_retirement_can_reuse_peer_and_actor",
+    "calls": [
+      2407,
+      2408
+    ],
+    "traceback": "Traceback (most recent call last):\n  File \"/workspace/reviews/windows-input-foundation-r5-candidate-8b52601c-20261024/scripts/test_input_consumption_lifecycle.py\", line 83, in test_fresh_generation_after_retirement_can_reuse_peer_and_actor\n    report = analyze_role(restamp(rows), 'authority')\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/reviews/windows-input-foundation-r5-candidate-8b52601c-20261024/scripts/analyze_input_consumption.py\", line 1146, in analyze_role\n    authority_lifecycle_foundation(rows)\n  File \"/workspace/reviews/windows-input-foundation-r5-candidate-8b52601c-20261024/scripts/analyze_input_consumption.py\", line 960, in authority_lifecycle_foundation\n    need(not history.errors and bool(history.states),\n  File \"/workspace/reviews/windows-input-foundation-r5-candidate-8b52601c-20261024/scripts/analyze_input_consumption.py\", line 33, in need\n    raise ValueError(message)\nValueError: authority lifecycle history is impossible: \n"
+  }
+]
