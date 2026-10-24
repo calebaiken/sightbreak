@@ -1,0 +1,8 @@
+{
+  "initial_seal": "54629d4a84c4528ca2c1b31dcb4530273e883094",
+  "initial_inventory_sha256": "f5395fe7cda19edda8021fa10b495a20292c06be1693826108a7b6cc30e97cc9",
+  "initial_count": 401,
+  "issue": "Initial basename-only MANIFEST exclusion also omitted the nested frozen-builder/MANIFEST.json from the inventory. That nested file was already committed and unchanged; no raw evidence was omitted from Git.",
+  "correction": "Exclude only this report root MANIFEST.json; include nested original manifest plus preserved initial inventory and this note.",
+  "source_test_results_and_review_bytes_changed": false
+}
