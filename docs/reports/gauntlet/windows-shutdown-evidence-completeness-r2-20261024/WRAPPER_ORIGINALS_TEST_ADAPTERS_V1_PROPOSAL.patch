@@ -1,0 +1,45 @@
+--- a/scripts/test_shutdown_study_evidence.py
++++ b/scripts/test_shutdown_study_evidence.py
+@@ -27,18 +27,33 @@
+         cls.verbose_trial=copy.deepcopy(report['trials'][1]);cls.identity=copy.deepcopy(report['identity'])
+         trial=report['trials'][0];cls.root=Path(trial['output'])
+         cls.original={p.relative_to(cls.root).as_posix():p.read_bytes() for p in cls.root.rglob('*') if p.is_file()}
++        cls.capture_root=cls.root.with_name(cls.root.name+'.controller-capture')
++        cls.original_capture={p.relative_to(cls.capture_root).as_posix():p.read_bytes() for p in cls.capture_root.rglob('*') if p.is_file()}
+         cls.original_context=dict(identity=copy.deepcopy(report['identity']),trial=copy.deepcopy({k:v for k,v in trial.items() if k not in ('evidence','evidence_error','strict_passed')}))
+     def setUp(self):
+         for p in self.root.rglob('*'):
+             if p.is_file() or p.is_symlink():p.unlink()
+         for name,data in self.original.items():
+             p=self.root/name;p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(data)
++        for p in self.capture_root.rglob('*'):
++            if p.is_file() or p.is_symlink():p.unlink()
++        for name,data in self.original_capture.items():
++            p=self.capture_root/name;p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(data)
+         self.context=copy.deepcopy(self.original_context)
+     def load(self):return study.trial_evidence(self.root,context=self.context)
+     def result(self):return json.loads((self.root/'results.json').read_text())
+     def put_result(self,row):
+         (self.root/'results.json').write_text(json.dumps(row,indent=2)+'\n')
+         (self.root/'controller-stdout.log').write_text('\n'.join(evidence.CAPTURES)+'\n'+json.dumps(row,indent=2)+'\n')
++        self.mirror_stdout_original()
++    def mirror_stdout_original(self):
++        # Explicit coherent-model edit only; one-sided negatives never call this.
++        raw=(self.root/'controller-stdout.log').read_bytes()
++        (self.capture_root/'controller-stdout.log').write_bytes(raw)
++        path=self.capture_root/'publication.json';receipt=json.loads(path.read_bytes())
++        row=next(row for row in receipt['files'] if row['path']=='controller-stdout.log')
++        row.update(bytes=len(raw),sha256=hashlib.sha256(raw).hexdigest())
++        path.write_text(json.dumps(receipt,indent=2)+'\n',encoding='utf-8')
+     def reject(self):
+         result=self.load();self.assertFalse(result['strict_passed']);return result
+     def test_ordinary_complete_envelope_is_unreviewed_not_native_approval(self):
+@@ -196,7 +211,7 @@
+         row=self.result();row['elapsed_seconds']=10**400;self.put_result(row)
+         result=self.reject();self.assertTrue(result['evidence_errors'])
+     def test_exact_windows_controller_crlf_form_is_retained(self):
+-        p=self.root/'controller-stdout.log';p.write_bytes(p.read_bytes().replace(b'\n',b'\r\n'));self.assertTrue(self.load()['strict_passed'])
++        p=self.root/'controller-stdout.log';p.write_bytes(p.read_bytes().replace(b'\n',b'\r\n'));self.mirror_stdout_original();self.assertTrue(self.load()['strict_passed'])
+ 
+ 
+ class WrapperTests(unittest.TestCase):
