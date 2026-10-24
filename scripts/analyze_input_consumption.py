@@ -802,7 +802,7 @@ def observation_prefix_invariants(rows, role):
         prior = row
 
 
-def deterministic_stream_constraints(row, prior, owners_before, bindings):
+def deterministic_stream_constraints(row, prior, owners_before, bindings, *, connection_succeeded=True):
     """Necessary stream observations independent of receipt-origin inference."""
     if row['role'] != 'authority':
         return
@@ -834,7 +834,8 @@ def deterministic_stream_constraints(row, prior, owners_before, bindings):
              'new consumed metadata disagrees with its bound stream identity')
     need(row['stream_ack'] == -1 or row['stream_ack'] > 0,
          'stream ACK is neither absent nor a popped positive sequence')
-    if row['generation'] <= 0 or row['reason'] in {'peer_connected', 'peer_bound'}:
+    if (row['generation'] <= 0 or row['reason'] == 'peer_bound'
+            or (row['reason'] == 'peer_connected' and connection_succeeded)):
         need(row['stream_ack'] == -1 and row['queue_count'] == 0,
              'new/absent stream has queued input or an ACK')
 
@@ -992,6 +993,7 @@ def analyze_role(rows, role):
     max_gap = 0
     transitions = InputTransitions()
     inference_rows = []
+    failed_connections = set()
     packets = PacketProjectionHistory()
     expiry_unknowns = []
     lifecycle_history = {}
@@ -1042,7 +1044,14 @@ def analyze_role(rows, role):
                  'client attempt has no matching observed attempt event')
         if role == 'client' and row['reason'] in {'client_attempt', 'client_connection_failed', 'client_disconnected'}:
             current_welcome = None
-        if row['reason'] == 'peer_connected':
+        failed_connection = (row['reason'] == 'peer_connected'
+                             and (row['peer'] in live_peers or len(live_peers) >= 10))
+        if failed_connection:
+            # Match observes this callback even when connected() returns false.
+            # Its old generation/stream remains; no successful reset is proved.
+            failed_connections.add(row['index'])
+            expiry_unknowns.append('failed duplicate/capacity connection callback is outside the proved caller scope')
+        if row['reason'] == 'peer_connected' and not failed_connection:
             need(role == 'authority' and row['generation'] > highest_generation, 'connection generation reused or regressed')
             need(row['peer'] not in live_peers, 'peer gained a second live generation without disconnect')
             highest_generation = row['generation']
@@ -1112,7 +1121,8 @@ def analyze_role(rows, role):
                 received.append({'index': row['index'], **value})
         if row['pending_count'] == 120:
             saturations.append(row['index'])
-        deterministic_stream_constraints(row, prior, owners_before, bindings)
+        deterministic_stream_constraints(row, prior, owners_before, bindings,
+                                         connection_succeeded=not failed_connection)
         packets.observe(row)
         inference_rows.append((row, owners_before))
         if role == 'authority' and reason == 'input_accepted':
@@ -1137,6 +1147,8 @@ def analyze_role(rows, role):
         except UnknownTransition as error:
             expiry_unknowns.append(str(error))
     for row, owners_before in inference_rows:
+        if row['index'] in failed_connections:
+            break  # The queue model assumes successful connection callbacks.
         try:
             transitions.observe(row, owners_before)
         except UnknownTransition as error:
