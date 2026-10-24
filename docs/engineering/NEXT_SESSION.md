@@ -43,7 +43,9 @@ ONE dispatch. Active run40083894472, job120842796227, attempt1, created
 observe_windows_input=true and verbose_reopened_shutdown=true. Exact tool and
 release receipts are in this component's ROOT_DISPATCH_RECEIPTS.json. The critic
 is reactivated for this same run. Dispatch receipts and active-run state were
-committed/pushed as707d6e54. At09:59:47UTC its native regressions were active;
+committed/pushed as `707d6e54`. Literal release commit/push output was
+also recovered from the original `/workspace/root-verbose-actual-release-*.log`
+files and retained with byte identities in ROOT_RELEASE_TOOL_OUTPUTS.json. At09:59:47UTC its native regressions were active;
 no complete diagnostic raw or leak-type finding had been acquired. No redispatch, rerun or manual continuation. Original300-second flow,20-second close and every
 other original schedule/gate stay binding. No arbitrary drain/sleep/owner fix.
 Verbose output can identify classes/IDs/refcounts and some paths, not an allocation
