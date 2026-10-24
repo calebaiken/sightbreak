@@ -13,7 +13,7 @@ args=parser.parse_args();assert os.sched_getaffinity(0)=={4}
 args.output.mkdir(parents=True,exist_ok=False)
 source=args.source.resolve();sys.path.insert(0,str(source/'scripts'))
 summary=[]
-with patch('subprocess.Popen',side_effect=AssertionError('real process forbidden')),patch('os.kill',side_effect=AssertionError('real signal forbidden')),patch('ctypes.CDLL',side_effect=AssertionError('native library forbidden')):
+with patch('subprocess.Popen',side_effect=AssertionError('real process forbidden')),patch('os.kill',side_effect=AssertionError('real signal forbidden')),patch('os.pidfd_open',side_effect=AssertionError('real pidfd forbidden')),patch('signal.pidfd_send_signal',side_effect=AssertionError('real signal forbidden')),patch('ctypes.CDLL',side_effect=AssertionError('native library forbidden')):
     for name,pattern in [('math-codec','test_fov*.py'),('strict-log','test_native_log.py')]:
         suite=unittest.defaultTestLoader.discover(str(source/'scripts'),pattern=pattern)
         with (args.output/(name+'.stderr')).open('w') as stream:
