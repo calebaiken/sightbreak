@@ -18,3 +18,11 @@ must reject for their own supported errors. Remaining eight gaps stay blocking.
 
 Add meaningful maintained regressions for the four violations and the valid
 nearest-defuser plan inside/outside2.6m. No production/probe/AI/source changes.
+
+Independent static critique also found a claimed-role bypass: choosing a legal
+anchor role could skip a conditional defuser check. Derive nearest from protected
+state and require source defuser role/device plan for that actor. The source
+pursue-memory override expressly excludes planted objectives (bot_ai749). Add a
+forged legal-role negative and valid near/far nearest-defender decisions. The tiny
+all-bot fixed probe does not establish generic human-priority or approximate-tie
+behavior; existing nearest selection limits remain explicit and unqualified.
