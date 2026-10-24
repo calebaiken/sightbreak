@@ -1,0 +1,307 @@
+{
+  "report": {
+    "schema": 1,
+    "order": [
+      "ordinary",
+      "verbose",
+      "verbose",
+      "ordinary"
+    ],
+    "identity": {},
+    "trials": [
+      {
+        "index": 1,
+        "arm": "ordinary",
+        "verbose": false,
+        "attempted": true,
+        "job_queries": [
+          {
+            "label": "trial1/before",
+            "verified": true,
+            "active_processes": 1,
+            "process_ids": [
+              99
+            ]
+          },
+          {
+            "label": "trial1/after",
+            "verified": true,
+            "active_processes": 1,
+            "process_ids": [
+              99
+            ]
+          }
+        ],
+        "output": "/tmp/tmpbq5lfeae/out/01-ordinary",
+        "profile": "new isolated driver-owned state",
+        "flow_seconds": 300,
+        "close_seconds": 20,
+        "driver_arguments": [
+          "scripts/verify_offline_export.py",
+          "--target",
+          "windows",
+          "--hosted-render-priority",
+          "below-normal",
+          "--display",
+          ":102",
+          "--timeout",
+          "300",
+          "--output",
+          "/tmp/tmpbq5lfeae/out/01-ordinary"
+        ],
+        "started_monotonic": 34715.114391277,
+        "started_wall_unix_ns": 1792848942948648807,
+        "driver_error": "RuntimeError: independent original flow failure",
+        "driver_exception_traceback": "Traceback (most recent call last):\n  File \"/workspace/reviews/windows-shutdown-study-independent-source-20261024/scripts/windows_shutdown_study.py\", line 233, in collect_trials\n    try:driver(trial['driver_arguments'],observe,Path(trial['output']))\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/reviews/windows-shutdown-study-independent-20261024/docs/reports/gauntlet/windows-shutdown-study-independent-20261024/fresh_controls.py\", line 87, in driver\n    def driver(args,callback,path):calls.append(args);path.mkdir();raise RuntimeError('independent original flow failure')\n                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: independent original flow failure\n",
+        "finished_monotonic": 34715.114565305,
+        "finished_wall_unix_ns": 1792848942948822260,
+        "evidence": {
+          "strict_passed": true
+        },
+        "strict_passed": false
+      },
+      {
+        "index": 2,
+        "arm": "verbose",
+        "verbose": true,
+        "attempted": true,
+        "job_queries": [
+          {
+            "label": "trial2/before",
+            "verified": true,
+            "active_processes": 1,
+            "process_ids": [
+              99
+            ]
+          },
+          {
+            "label": "trial2/after",
+            "verified": true,
+            "active_processes": 1,
+            "process_ids": [
+              99
+            ]
+          }
+        ],
+        "output": "/tmp/tmpbq5lfeae/out/02-verbose",
+        "profile": "new isolated driver-owned state",
+        "flow_seconds": 300,
+        "close_seconds": 20,
+        "driver_arguments": [
+          "scripts/verify_offline_export.py",
+          "--target",
+          "windows",
+          "--hosted-render-priority",
+          "below-normal",
+          "--display",
+          ":102",
+          "--timeout",
+          "300",
+          "--output",
+          "/tmp/tmpbq5lfeae/out/02-verbose",
+          "--reopened-verbose"
+        ],
+        "started_monotonic": 34715.114798887,
+        "started_wall_unix_ns": 1792848942949056224,
+        "driver_error": "RuntimeError: independent original flow failure",
+        "driver_exception_traceback": "Traceback (most recent call last):\n  File \"/workspace/reviews/windows-shutdown-study-independent-source-20261024/scripts/windows_shutdown_study.py\", line 233, in collect_trials\n    try:driver(trial['driver_arguments'],observe,Path(trial['output']))\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/reviews/windows-shutdown-study-independent-20261024/docs/reports/gauntlet/windows-shutdown-study-independent-20261024/fresh_controls.py\", line 87, in driver\n    def driver(args,callback,path):calls.append(args);path.mkdir();raise RuntimeError('independent original flow failure')\n                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: independent original flow failure\n",
+        "finished_monotonic": 34715.114937829,
+        "finished_wall_unix_ns": 1792848942949194778,
+        "evidence": {
+          "strict_passed": true
+        },
+        "strict_passed": false
+      },
+      {
+        "index": 3,
+        "arm": "verbose",
+        "verbose": true,
+        "attempted": true,
+        "job_queries": [
+          {
+            "label": "trial3/before",
+            "verified": true,
+            "active_processes": 1,
+            "process_ids": [
+              99
+            ]
+          },
+          {
+            "label": "trial3/after",
+            "verified": true,
+            "active_processes": 1,
+            "process_ids": [
+              99
+            ]
+          }
+        ],
+        "output": "/tmp/tmpbq5lfeae/out/03-verbose",
+        "profile": "new isolated driver-owned state",
+        "flow_seconds": 300,
+        "close_seconds": 20,
+        "driver_arguments": [
+          "scripts/verify_offline_export.py",
+          "--target",
+          "windows",
+          "--hosted-render-priority",
+          "below-normal",
+          "--display",
+          ":102",
+          "--timeout",
+          "300",
+          "--output",
+          "/tmp/tmpbq5lfeae/out/03-verbose",
+          "--reopened-verbose"
+        ],
+        "started_monotonic": 34715.115157861,
+        "started_wall_unix_ns": 1792848942949415104,
+        "driver_error": "RuntimeError: independent original flow failure",
+        "driver_exception_traceback": "Traceback (most recent call last):\n  File \"/workspace/reviews/windows-shutdown-study-independent-source-20261024/scripts/windows_shutdown_study.py\", line 233, in collect_trials\n    try:driver(trial['driver_arguments'],observe,Path(trial['output']))\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/reviews/windows-shutdown-study-independent-20261024/docs/reports/gauntlet/windows-shutdown-study-independent-20261024/fresh_controls.py\", line 87, in driver\n    def driver(args,callback,path):calls.append(args);path.mkdir();raise RuntimeError('independent original flow failure')\n                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: independent original flow failure\n",
+        "finished_monotonic": 34715.115285512,
+        "finished_wall_unix_ns": 1792848942949542426,
+        "evidence": {
+          "strict_passed": true
+        },
+        "strict_passed": false
+      },
+      {
+        "index": 4,
+        "arm": "ordinary",
+        "verbose": false,
+        "attempted": true,
+        "job_queries": [
+          {
+            "label": "trial4/before",
+            "verified": true,
+            "active_processes": 1,
+            "process_ids": [
+              99
+            ]
+          },
+          {
+            "label": "trial4/after",
+            "verified": true,
+            "active_processes": 1,
+            "process_ids": [
+              99
+            ]
+          }
+        ],
+        "output": "/tmp/tmpbq5lfeae/out/04-ordinary",
+        "profile": "new isolated driver-owned state",
+        "flow_seconds": 300,
+        "close_seconds": 20,
+        "driver_arguments": [
+          "scripts/verify_offline_export.py",
+          "--target",
+          "windows",
+          "--hosted-render-priority",
+          "below-normal",
+          "--display",
+          ":102",
+          "--timeout",
+          "300",
+          "--output",
+          "/tmp/tmpbq5lfeae/out/04-ordinary"
+        ],
+        "started_monotonic": 34715.115589533,
+        "started_wall_unix_ns": 1792848942949846761,
+        "driver_error": "RuntimeError: independent original flow failure",
+        "driver_exception_traceback": "Traceback (most recent call last):\n  File \"/workspace/reviews/windows-shutdown-study-independent-source-20261024/scripts/windows_shutdown_study.py\", line 233, in collect_trials\n    try:driver(trial['driver_arguments'],observe,Path(trial['output']))\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/reviews/windows-shutdown-study-independent-20261024/docs/reports/gauntlet/windows-shutdown-study-independent-20261024/fresh_controls.py\", line 87, in driver\n    def driver(args,callback,path):calls.append(args);path.mkdir();raise RuntimeError('independent original flow failure')\n                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: independent original flow failure\n",
+        "finished_monotonic": 34715.115760109,
+        "finished_wall_unix_ns": 1792848942950017049,
+        "evidence": {
+          "strict_passed": true
+        },
+        "strict_passed": false
+      }
+    ],
+    "attempts": 4,
+    "passed": false,
+    "scope": "Four diagnostic trials only; original defect remains open",
+    "observer": "existing offline trace in both arms; not observer-free shipping",
+    "completed_all_four": true,
+    "final_ownership_error": "independent final unknown",
+    "failure_safety_used": true,
+    "final_failure_safety_cleanup": {
+      "passed": true,
+      "failure_only": true
+    },
+    "job_queries": [
+      {
+        "label": "trial1/before",
+        "verified": true,
+        "active_processes": 1,
+        "process_ids": [
+          99
+        ]
+      },
+      {
+        "label": "trial1/after",
+        "verified": true,
+        "active_processes": 1,
+        "process_ids": [
+          99
+        ]
+      },
+      {
+        "label": "trial2/before",
+        "verified": true,
+        "active_processes": 1,
+        "process_ids": [
+          99
+        ]
+      },
+      {
+        "label": "trial2/after",
+        "verified": true,
+        "active_processes": 1,
+        "process_ids": [
+          99
+        ]
+      },
+      {
+        "label": "trial3/before",
+        "verified": true,
+        "active_processes": 1,
+        "process_ids": [
+          99
+        ]
+      },
+      {
+        "label": "trial3/after",
+        "verified": true,
+        "active_processes": 1,
+        "process_ids": [
+          99
+        ]
+      },
+      {
+        "label": "trial4/before",
+        "verified": true,
+        "active_processes": 1,
+        "process_ids": [
+          99
+        ]
+      },
+      {
+        "label": "trial4/after",
+        "verified": true,
+        "active_processes": 1,
+        "process_ids": [
+          99
+        ]
+      },
+      {
+        "label": "study/final",
+        "verified": true,
+        "active_processes": 1,
+        "process_ids": [
+          99
+        ]
+      }
+    ]
+  },
+  "cleanup_calls": 1,
+  "matched": true
+}

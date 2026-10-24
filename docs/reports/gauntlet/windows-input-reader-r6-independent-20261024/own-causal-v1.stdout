@@ -1,0 +1,1693 @@
+{
+  "scope": "Independent complete-reader causal source witnesses; no native approval",
+  "source": ".",
+  "analyzer_sha256": "c53b1ced5743c7440d0530874115d474da2a70f2416c7515e098109837182be8",
+  "cases": 26,
+  "matches": 14,
+  "unexpected": [
+    {
+      "name": "owned_A_header_survives_global_B",
+      "expected": "CONSISTENT",
+      "actual": "INVALID",
+      "result": {
+        "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+        "diagnostic_complete": false,
+        "transition_status": "INVALID",
+        "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+        "roles": {
+          "client": {
+            "records": 7,
+            "coverage": [
+              "client_attempt",
+              "client_connected",
+              "client_tick",
+              "input_send_called",
+              "ready",
+              "snapshot_applied",
+              "welcome_received"
+            ],
+            "counters": {
+              "ready": 1,
+              "client_attempt": 1,
+              "client_connected": 1,
+              "welcome_received": 1,
+              "client_tick": 2,
+              "snapshot_applied": 1,
+              "input_send_called": 1
+            },
+            "max_observation_gap_msec": 1000,
+            "max_snapshot_age_msec": 3000,
+            "pending_saturation_indices": [],
+            "accepted_events": [],
+            "consumed_events": [],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [
+              {
+                "transport_id": 9,
+                "local_attempt": 1,
+                "local_id": 1,
+                "wall_unix_msec": 104000
+              }
+            ],
+            "binding_events": [],
+            "local_attempts": 1
+          },
+          "authority": {
+            "records": 12,
+            "coverage": [
+              "authority_tick",
+              "input_accepted",
+              "input_consumed",
+              "input_decode_rejected",
+              "input_received",
+              "peer_bound",
+              "peer_connected",
+              "ready"
+            ],
+            "counters": {
+              "ready": 1,
+              "peer_connected": 2,
+              "peer_bound": 2,
+              "input_received": 3,
+              "input_accepted": 3,
+              "authority_tick": 3,
+              "input_consumed": 1,
+              "input_decode_rejected": 1
+            },
+            "max_observation_gap_msec": 1001,
+            "max_snapshot_age_msec": -1,
+            "pending_saturation_indices": [],
+            "accepted_events": [
+              {
+                "index": 5,
+                "epoch": 1,
+                "count": 1,
+                "first": 1,
+                "last": 1,
+                "fire": 1,
+                "reload": 0,
+                "moving": 0,
+                "wall_msec": 12005
+              },
+              {
+                "index": 11,
+                "epoch": 1,
+                "count": 1,
+                "first": 1,
+                "last": 1,
+                "fire": 0,
+                "reload": 0,
+                "moving": 0,
+                "wall_msec": 13014
+              }
+            ],
+            "consumed_events": [
+              {
+                "index": 6,
+                "sequence": 1,
+                "fire": true,
+                "reload": false,
+                "move": [
+                  0.0,
+                  0.0
+                ],
+                "peer": 9,
+                "actor": 1,
+                "generation": 1,
+                "wall_msec": 12007
+              }
+            ],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [],
+            "binding_events": [
+              {
+                "peer": 9,
+                "generation": 1,
+                "bound_actor": 1,
+                "wall_unix_msec": 112003
+              },
+              {
+                "peer": 10,
+                "generation": 2,
+                "bound_actor": 2,
+                "wall_unix_msec": 113012
+              }
+            ],
+            "local_attempts": 0
+          }
+        },
+        "errors": [
+          "welcome cannot bind uniquely to an observed live authority peer generation"
+        ],
+        "attempt_generation_links": []
+      }
+    },
+    {
+      "name": "cached_call_not_replayed_on_zero_local_delta",
+      "expected": "CONSISTENT",
+      "actual": "INVALID",
+      "result": {
+        "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+        "diagnostic_complete": false,
+        "transition_status": "INVALID",
+        "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+        "roles": {
+          "client": {
+            "records": 7,
+            "coverage": [
+              "client_attempt",
+              "client_connected",
+              "client_tick",
+              "input_send_called",
+              "ready",
+              "snapshot_applied",
+              "welcome_received"
+            ],
+            "counters": {
+              "ready": 1,
+              "client_attempt": 1,
+              "client_connected": 1,
+              "welcome_received": 1,
+              "client_tick": 2,
+              "snapshot_applied": 1,
+              "input_send_called": 1
+            },
+            "max_observation_gap_msec": 1000,
+            "max_snapshot_age_msec": 3000,
+            "pending_saturation_indices": [],
+            "accepted_events": [],
+            "consumed_events": [],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [
+              {
+                "transport_id": 9,
+                "local_attempt": 1,
+                "local_id": 1,
+                "wall_unix_msec": 104000
+              }
+            ],
+            "binding_events": [],
+            "local_attempts": 1
+          },
+          "authority": {
+            "records": 13,
+            "coverage": [
+              "authority_tick",
+              "input_accepted",
+              "input_consumed",
+              "input_decode_rejected",
+              "input_received",
+              "peer_bound",
+              "peer_connected",
+              "ready"
+            ],
+            "counters": {
+              "ready": 1,
+              "peer_connected": 2,
+              "peer_bound": 2,
+              "input_received": 3,
+              "input_accepted": 3,
+              "authority_tick": 4,
+              "input_consumed": 1,
+              "input_decode_rejected": 1
+            },
+            "max_observation_gap_msec": 1001,
+            "max_snapshot_age_msec": -1,
+            "pending_saturation_indices": [],
+            "accepted_events": [
+              {
+                "index": 5,
+                "epoch": 1,
+                "count": 1,
+                "first": 1,
+                "last": 1,
+                "fire": 1,
+                "reload": 0,
+                "moving": 0,
+                "wall_msec": 12005
+              },
+              {
+                "index": 11,
+                "epoch": 1,
+                "count": 1,
+                "first": 1,
+                "last": 1,
+                "fire": 0,
+                "reload": 0,
+                "moving": 0,
+                "wall_msec": 13014
+              }
+            ],
+            "consumed_events": [
+              {
+                "index": 6,
+                "sequence": 1,
+                "fire": true,
+                "reload": false,
+                "move": [
+                  0.0,
+                  0.0
+                ],
+                "peer": 9,
+                "actor": 1,
+                "generation": 1,
+                "wall_msec": 12007
+              }
+            ],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [],
+            "binding_events": [
+              {
+                "peer": 9,
+                "generation": 1,
+                "bound_actor": 1,
+                "wall_unix_msec": 112003
+              },
+              {
+                "peer": 10,
+                "generation": 2,
+                "bound_actor": 2,
+                "wall_unix_msec": 113012
+              }
+            ],
+            "local_attempts": 0
+          }
+        },
+        "errors": [
+          "welcome cannot bind uniquely to an observed live authority peer generation"
+        ],
+        "attempt_generation_links": []
+      }
+    },
+    {
+      "name": "opaque_cached_A_retains_two_unique_keys",
+      "expected": "CONSISTENT",
+      "actual": "INVALID",
+      "result": {
+        "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+        "diagnostic_complete": false,
+        "transition_status": "INVALID",
+        "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+        "roles": {
+          "client": {
+            "records": 7,
+            "coverage": [
+              "client_attempt",
+              "client_connected",
+              "client_tick",
+              "input_send_called",
+              "ready",
+              "snapshot_applied",
+              "welcome_received"
+            ],
+            "counters": {
+              "ready": 1,
+              "client_attempt": 1,
+              "client_connected": 1,
+              "welcome_received": 1,
+              "client_tick": 2,
+              "snapshot_applied": 1,
+              "input_send_called": 1
+            },
+            "max_observation_gap_msec": 1000,
+            "max_snapshot_age_msec": 3000,
+            "pending_saturation_indices": [],
+            "accepted_events": [],
+            "consumed_events": [],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [
+              {
+                "transport_id": 9,
+                "local_attempt": 1,
+                "local_id": 1,
+                "wall_unix_msec": 104000
+              }
+            ],
+            "binding_events": [],
+            "local_attempts": 1
+          },
+          "authority": {
+            "records": 12,
+            "coverage": [
+              "authority_tick",
+              "input_accepted",
+              "input_consumed",
+              "input_decode_rejected",
+              "input_received",
+              "peer_bound",
+              "peer_connected",
+              "ready"
+            ],
+            "counters": {
+              "ready": 1,
+              "peer_connected": 2,
+              "peer_bound": 2,
+              "input_received": 3,
+              "input_accepted": 3,
+              "authority_tick": 3,
+              "input_consumed": 1,
+              "input_decode_rejected": 1
+            },
+            "max_observation_gap_msec": 1001,
+            "max_snapshot_age_msec": -1,
+            "pending_saturation_indices": [],
+            "accepted_events": [
+              {
+                "index": 5,
+                "epoch": 1,
+                "count": 1,
+                "first": 1,
+                "last": 1,
+                "fire": 1,
+                "reload": 0,
+                "moving": 0,
+                "wall_msec": 12005
+              },
+              {
+                "index": 11,
+                "epoch": 1,
+                "count": 1,
+                "first": 1,
+                "last": 1,
+                "fire": 0,
+                "reload": 0,
+                "moving": 0,
+                "wall_msec": 13014
+              }
+            ],
+            "consumed_events": [
+              {
+                "index": 6,
+                "sequence": 1,
+                "fire": true,
+                "reload": false,
+                "move": [
+                  0.0,
+                  0.0
+                ],
+                "peer": 9,
+                "actor": 1,
+                "generation": 1,
+                "wall_msec": 12007
+              }
+            ],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [],
+            "binding_events": [
+              {
+                "peer": 9,
+                "generation": 1,
+                "bound_actor": 1,
+                "wall_unix_msec": 112003
+              },
+              {
+                "peer": 10,
+                "generation": 2,
+                "bound_actor": 2,
+                "wall_unix_msec": 113012
+              }
+            ],
+            "local_attempts": 0
+          }
+        },
+        "errors": [
+          "welcome cannot bind uniquely to an observed live authority peer generation"
+        ],
+        "attempt_generation_links": []
+      }
+    },
+    {
+      "name": "opaque_cached_A_pops_mandatory_endpoint2",
+      "expected": "CONSISTENT",
+      "actual": "INVALID",
+      "result": {
+        "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+        "diagnostic_complete": false,
+        "transition_status": "INVALID",
+        "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+        "roles": {
+          "client": {
+            "records": 7,
+            "coverage": [
+              "client_attempt",
+              "client_connected",
+              "client_tick",
+              "input_send_called",
+              "ready",
+              "snapshot_applied",
+              "welcome_received"
+            ],
+            "counters": {
+              "ready": 1,
+              "client_attempt": 1,
+              "client_connected": 1,
+              "welcome_received": 1,
+              "client_tick": 2,
+              "snapshot_applied": 1,
+              "input_send_called": 1
+            },
+            "max_observation_gap_msec": 1000,
+            "max_snapshot_age_msec": 3000,
+            "pending_saturation_indices": [],
+            "accepted_events": [],
+            "consumed_events": [],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [
+              {
+                "transport_id": 9,
+                "local_attempt": 1,
+                "local_id": 1,
+                "wall_unix_msec": 104000
+              }
+            ],
+            "binding_events": [],
+            "local_attempts": 1
+          },
+          "authority": {
+            "records": 14,
+            "coverage": [
+              "authority_tick",
+              "input_accepted",
+              "input_consumed",
+              "input_decode_rejected",
+              "input_received",
+              "peer_bound",
+              "peer_connected",
+              "ready"
+            ],
+            "counters": {
+              "ready": 1,
+              "peer_connected": 2,
+              "peer_bound": 2,
+              "input_received": 3,
+              "input_accepted": 3,
+              "authority_tick": 5,
+              "input_consumed": 2,
+              "input_decode_rejected": 1
+            },
+            "max_observation_gap_msec": 1001,
+            "max_snapshot_age_msec": -1,
+            "pending_saturation_indices": [],
+            "accepted_events": [
+              {
+                "index": 5,
+                "epoch": 1,
+                "count": 1,
+                "first": 1,
+                "last": 1,
+                "fire": 1,
+                "reload": 0,
+                "moving": 0,
+                "wall_msec": 12005
+              },
+              {
+                "index": 11,
+                "epoch": 1,
+                "count": 1,
+                "first": 1,
+                "last": 1,
+                "fire": 0,
+                "reload": 0,
+                "moving": 0,
+                "wall_msec": 13014
+              }
+            ],
+            "consumed_events": [
+              {
+                "index": 6,
+                "sequence": 1,
+                "fire": true,
+                "reload": false,
+                "move": [
+                  0.0,
+                  0.0
+                ],
+                "peer": 9,
+                "actor": 1,
+                "generation": 1,
+                "wall_msec": 12007
+              },
+              {
+                "index": 13,
+                "sequence": 2,
+                "fire": false,
+                "reload": false,
+                "move": [
+                  0.0,
+                  0.0
+                ],
+                "peer": 9,
+                "actor": 1,
+                "generation": 1,
+                "wall_msec": 14017
+              }
+            ],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [],
+            "binding_events": [
+              {
+                "peer": 9,
+                "generation": 1,
+                "bound_actor": 1,
+                "wall_unix_msec": 112003
+              },
+              {
+                "peer": 10,
+                "generation": 2,
+                "bound_actor": 2,
+                "wall_unix_msec": 113012
+              }
+            ],
+            "local_attempts": 0
+          }
+        },
+        "errors": [
+          "welcome cannot bind uniquely to an observed live authority peer generation"
+        ],
+        "attempt_generation_links": []
+      }
+    },
+    {
+      "name": "old_receipt_cleared_by_later_reset",
+      "expected": "CONSISTENT",
+      "actual": "INVALID",
+      "result": {
+        "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+        "diagnostic_complete": false,
+        "transition_status": "INVALID",
+        "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+        "roles": {
+          "client": {
+            "records": 7,
+            "coverage": [
+              "client_attempt",
+              "client_connected",
+              "client_tick",
+              "input_send_called",
+              "ready",
+              "snapshot_applied",
+              "welcome_received"
+            ],
+            "counters": {
+              "ready": 1,
+              "client_attempt": 1,
+              "client_connected": 1,
+              "welcome_received": 1,
+              "client_tick": 2,
+              "snapshot_applied": 1,
+              "input_send_called": 1
+            },
+            "max_observation_gap_msec": 1000,
+            "max_snapshot_age_msec": 3000,
+            "pending_saturation_indices": [],
+            "accepted_events": [],
+            "consumed_events": [],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [
+              {
+                "transport_id": 9,
+                "local_attempt": 1,
+                "local_id": 1,
+                "wall_unix_msec": 104000
+              }
+            ],
+            "binding_events": [],
+            "local_attempts": 1
+          },
+          "authority": {
+            "records": 12,
+            "coverage": [
+              "authority_tick",
+              "input_accepted",
+              "input_consumed",
+              "input_decode_rejected",
+              "input_received",
+              "peer_bound",
+              "peer_connected",
+              "ready"
+            ],
+            "counters": {
+              "ready": 1,
+              "peer_connected": 2,
+              "peer_bound": 2,
+              "input_received": 3,
+              "input_accepted": 3,
+              "authority_tick": 3,
+              "input_consumed": 1,
+              "input_decode_rejected": 1
+            },
+            "max_observation_gap_msec": 1001,
+            "max_snapshot_age_msec": -1,
+            "pending_saturation_indices": [],
+            "accepted_events": [
+              {
+                "index": 5,
+                "epoch": 1,
+                "count": 1,
+                "first": 1,
+                "last": 1,
+                "fire": 1,
+                "reload": 0,
+                "moving": 0,
+                "wall_msec": 12005
+              },
+              {
+                "index": 11,
+                "epoch": 2,
+                "count": 1,
+                "first": 1,
+                "last": 1,
+                "fire": 0,
+                "reload": 0,
+                "moving": 0,
+                "wall_msec": 13014
+              }
+            ],
+            "consumed_events": [
+              {
+                "index": 6,
+                "sequence": 1,
+                "fire": true,
+                "reload": false,
+                "move": [
+                  0.0,
+                  0.0
+                ],
+                "peer": 9,
+                "actor": 1,
+                "generation": 1,
+                "wall_msec": 12007
+              }
+            ],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [],
+            "binding_events": [
+              {
+                "peer": 9,
+                "generation": 1,
+                "bound_actor": 1,
+                "wall_unix_msec": 112003
+              },
+              {
+                "peer": 10,
+                "generation": 2,
+                "bound_actor": 2,
+                "wall_unix_msec": 113012
+              }
+            ],
+            "local_attempts": 0
+          }
+        },
+        "errors": [
+          "welcome cannot bind uniquely to an observed live authority peer generation"
+        ],
+        "attempt_generation_links": []
+      }
+    },
+    {
+      "name": "new_receipt_after_reset",
+      "expected": "CONSISTENT",
+      "actual": "INVALID",
+      "result": {
+        "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+        "diagnostic_complete": false,
+        "transition_status": "INVALID",
+        "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+        "roles": {
+          "client": {
+            "records": 7,
+            "coverage": [
+              "client_attempt",
+              "client_connected",
+              "client_tick",
+              "input_send_called",
+              "ready",
+              "snapshot_applied",
+              "welcome_received"
+            ],
+            "counters": {
+              "ready": 1,
+              "client_attempt": 1,
+              "client_connected": 1,
+              "welcome_received": 1,
+              "client_tick": 2,
+              "snapshot_applied": 1,
+              "input_send_called": 1
+            },
+            "max_observation_gap_msec": 1000,
+            "max_snapshot_age_msec": 3000,
+            "pending_saturation_indices": [],
+            "accepted_events": [],
+            "consumed_events": [],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [
+              {
+                "transport_id": 9,
+                "local_attempt": 1,
+                "local_id": 1,
+                "wall_unix_msec": 104000
+              }
+            ],
+            "binding_events": [],
+            "local_attempts": 1
+          },
+          "authority": {
+            "records": 12,
+            "coverage": [
+              "authority_tick",
+              "input_accepted",
+              "input_consumed",
+              "input_decode_rejected",
+              "input_received",
+              "peer_bound",
+              "peer_connected",
+              "ready"
+            ],
+            "counters": {
+              "ready": 1,
+              "peer_connected": 2,
+              "peer_bound": 2,
+              "input_received": 3,
+              "input_accepted": 3,
+              "authority_tick": 3,
+              "input_consumed": 1,
+              "input_decode_rejected": 1
+            },
+            "max_observation_gap_msec": 1001,
+            "max_snapshot_age_msec": -1,
+            "pending_saturation_indices": [],
+            "accepted_events": [
+              {
+                "index": 5,
+                "epoch": 1,
+                "count": 1,
+                "first": 1,
+                "last": 1,
+                "fire": 1,
+                "reload": 0,
+                "moving": 0,
+                "wall_msec": 12005
+              },
+              {
+                "index": 11,
+                "epoch": 2,
+                "count": 1,
+                "first": 1,
+                "last": 1,
+                "fire": 0,
+                "reload": 0,
+                "moving": 0,
+                "wall_msec": 13014
+              }
+            ],
+            "consumed_events": [
+              {
+                "index": 6,
+                "sequence": 1,
+                "fire": true,
+                "reload": false,
+                "move": [
+                  0.0,
+                  0.0
+                ],
+                "peer": 9,
+                "actor": 1,
+                "generation": 1,
+                "wall_msec": 12007
+              }
+            ],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [],
+            "binding_events": [
+              {
+                "peer": 9,
+                "generation": 1,
+                "bound_actor": 1,
+                "wall_unix_msec": 112003
+              },
+              {
+                "peer": 10,
+                "generation": 2,
+                "bound_actor": 2,
+                "wall_unix_msec": 113012
+              }
+            ],
+            "local_attempts": 0
+          }
+        },
+        "errors": [
+          "welcome cannot bind uniquely to an observed live authority peer generation"
+        ],
+        "attempt_generation_links": []
+      }
+    },
+    {
+      "name": "same_peer_new_generation_has_fresh_queue",
+      "expected": "CONSISTENT",
+      "actual": "INVALID",
+      "result": {
+        "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+        "diagnostic_complete": false,
+        "transition_status": "INVALID",
+        "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+        "roles": {
+          "client": {
+            "records": 7,
+            "coverage": [
+              "client_attempt",
+              "client_connected",
+              "client_tick",
+              "input_send_called",
+              "ready",
+              "snapshot_applied",
+              "welcome_received"
+            ],
+            "counters": {
+              "ready": 1,
+              "client_attempt": 1,
+              "client_connected": 1,
+              "welcome_received": 1,
+              "client_tick": 2,
+              "snapshot_applied": 1,
+              "input_send_called": 1
+            },
+            "max_observation_gap_msec": 1000,
+            "max_snapshot_age_msec": 3000,
+            "pending_saturation_indices": [],
+            "accepted_events": [],
+            "consumed_events": [],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [
+              {
+                "transport_id": 9,
+                "local_attempt": 1,
+                "local_id": 1,
+                "wall_unix_msec": 104000
+              }
+            ],
+            "binding_events": [],
+            "local_attempts": 1
+          },
+          "authority": {
+            "records": 15,
+            "coverage": [
+              "authority_tick",
+              "input_accepted",
+              "input_consumed",
+              "input_received",
+              "peer_bound",
+              "peer_connected",
+              "peer_disconnected",
+              "ready"
+            ],
+            "counters": {
+              "ready": 1,
+              "peer_connected": 3,
+              "peer_bound": 3,
+              "input_received": 3,
+              "input_accepted": 3,
+              "authority_tick": 3,
+              "input_consumed": 1,
+              "peer_disconnected": 1
+            },
+            "max_observation_gap_msec": 1001,
+            "max_snapshot_age_msec": -1,
+            "pending_saturation_indices": [],
+            "accepted_events": [
+              {
+                "index": 5,
+                "epoch": 1,
+                "count": 1,
+                "first": 1,
+                "last": 1,
+                "fire": 1,
+                "reload": 0,
+                "moving": 0,
+                "wall_msec": 12005
+              },
+              {
+                "index": 11,
+                "epoch": 1,
+                "count": 1,
+                "first": 1,
+                "last": 1,
+                "fire": 0,
+                "reload": 0,
+                "moving": 0,
+                "wall_msec": 13014
+              }
+            ],
+            "consumed_events": [
+              {
+                "index": 6,
+                "sequence": 1,
+                "fire": true,
+                "reload": false,
+                "move": [
+                  0.0,
+                  0.0
+                ],
+                "peer": 9,
+                "actor": 1,
+                "generation": 1,
+                "wall_msec": 12007
+              }
+            ],
+            "expiry_events": [],
+            "disconnect_events": [
+              {
+                "index": 12,
+                "peer": 9,
+                "generation": 1,
+                "wall_msec": 13015,
+                "wall_unix_msec": 113015,
+                "input_age_msec": 0
+              }
+            ],
+            "welcome_events": [],
+            "binding_events": [
+              {
+                "peer": 9,
+                "generation": 1,
+                "bound_actor": 1,
+                "wall_unix_msec": 112003
+              },
+              {
+                "peer": 10,
+                "generation": 2,
+                "bound_actor": 2,
+                "wall_unix_msec": 113012
+              },
+              {
+                "peer": 9,
+                "generation": 3,
+                "bound_actor": 1,
+                "wall_unix_msec": 113017
+              }
+            ],
+            "local_attempts": 0
+          }
+        },
+        "errors": [
+          "welcome cannot bind uniquely to an observed live authority peer generation"
+        ],
+        "attempt_generation_links": []
+      }
+    },
+    {
+      "name": "expiry_then_disconnect_rebind_preserves_old_history_only",
+      "expected": "CONSISTENT",
+      "actual": "INVALID",
+      "result": {
+        "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+        "diagnostic_complete": false,
+        "transition_status": "INVALID",
+        "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+        "roles": {
+          "client": {
+            "records": 7,
+            "coverage": [
+              "client_attempt",
+              "client_connected",
+              "client_tick",
+              "input_send_called",
+              "ready",
+              "snapshot_applied",
+              "welcome_received"
+            ],
+            "counters": {
+              "ready": 1,
+              "client_attempt": 1,
+              "client_connected": 1,
+              "welcome_received": 1,
+              "client_tick": 2,
+              "snapshot_applied": 1,
+              "input_send_called": 1
+            },
+            "max_observation_gap_msec": 1000,
+            "max_snapshot_age_msec": 3000,
+            "pending_saturation_indices": [],
+            "accepted_events": [],
+            "consumed_events": [],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [
+              {
+                "transport_id": 9,
+                "local_attempt": 1,
+                "local_id": 1,
+                "wall_unix_msec": 104000
+              }
+            ],
+            "binding_events": [],
+            "local_attempts": 1
+          },
+          "authority": {
+            "records": 12,
+            "coverage": [
+              "authority_tick",
+              "input_accepted",
+              "input_consumed",
+              "input_received",
+              "peer_bound",
+              "peer_connected",
+              "peer_disconnected",
+              "peer_expired",
+              "ready"
+            ],
+            "counters": {
+              "ready": 1,
+              "peer_connected": 2,
+              "peer_bound": 2,
+              "input_received": 2,
+              "input_accepted": 2,
+              "authority_tick": 3,
+              "input_consumed": 1,
+              "peer_expired": 1,
+              "peer_disconnected": 1
+            },
+            "max_observation_gap_msec": 1001,
+            "max_snapshot_age_msec": -1,
+            "pending_saturation_indices": [],
+            "accepted_events": [
+              {
+                "index": 5,
+                "epoch": 1,
+                "count": 1,
+                "first": 1,
+                "last": 1,
+                "fire": 1,
+                "reload": 0,
+                "moving": 0,
+                "wall_msec": 12005
+              }
+            ],
+            "consumed_events": [
+              {
+                "index": 6,
+                "sequence": 1,
+                "fire": true,
+                "reload": false,
+                "move": [
+                  0.0,
+                  0.0
+                ],
+                "peer": 9,
+                "actor": 1,
+                "generation": 1,
+                "wall_msec": 12007
+              }
+            ],
+            "expiry_events": [
+              {
+                "index": 8,
+                "peer": 9,
+                "generation": 1,
+                "wall_msec": 13011,
+                "wall_unix_msec": 113011,
+                "input_age_msec": 0
+              }
+            ],
+            "disconnect_events": [
+              {
+                "index": 9,
+                "peer": 9,
+                "generation": 1,
+                "wall_msec": 13012,
+                "wall_unix_msec": 113012,
+                "input_age_msec": 0
+              }
+            ],
+            "welcome_events": [],
+            "binding_events": [
+              {
+                "peer": 9,
+                "generation": 1,
+                "bound_actor": 1,
+                "wall_unix_msec": 112003
+              },
+              {
+                "peer": 9,
+                "generation": 2,
+                "bound_actor": 1,
+                "wall_unix_msec": 113014
+              }
+            ],
+            "local_attempts": 0
+          }
+        },
+        "errors": [
+          "welcome cannot bind uniquely to an observed live authority peer generation"
+        ],
+        "attempt_generation_links": []
+      }
+    },
+    {
+      "name": "foreign_lifecycle_exposes_A_pop_before_global_B_pop",
+      "expected": "CONSISTENT",
+      "actual": "INVALID",
+      "result": {
+        "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+        "diagnostic_complete": false,
+        "transition_status": "INVALID",
+        "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+        "roles": {
+          "client": {
+            "records": 7,
+            "coverage": [
+              "client_attempt",
+              "client_connected",
+              "client_tick",
+              "input_send_called",
+              "ready",
+              "snapshot_applied",
+              "welcome_received"
+            ],
+            "counters": {
+              "ready": 1,
+              "client_attempt": 1,
+              "client_connected": 1,
+              "welcome_received": 1,
+              "client_tick": 2,
+              "snapshot_applied": 1,
+              "input_send_called": 1
+            },
+            "max_observation_gap_msec": 1000,
+            "max_snapshot_age_msec": 3000,
+            "pending_saturation_indices": [],
+            "accepted_events": [],
+            "consumed_events": [],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [
+              {
+                "transport_id": 9,
+                "local_attempt": 1,
+                "local_id": 1,
+                "wall_unix_msec": 104000
+              }
+            ],
+            "binding_events": [],
+            "local_attempts": 1
+          },
+          "authority": {
+            "records": 19,
+            "coverage": [
+              "authority_tick",
+              "input_accepted",
+              "input_consumed",
+              "input_decode_rejected",
+              "input_received",
+              "peer_bound",
+              "peer_connected",
+              "ready"
+            ],
+            "counters": {
+              "ready": 1,
+              "peer_connected": 3,
+              "peer_bound": 3,
+              "input_received": 3,
+              "input_accepted": 3,
+              "authority_tick": 7,
+              "input_consumed": 3,
+              "input_decode_rejected": 2
+            },
+            "max_observation_gap_msec": 1001,
+            "max_snapshot_age_msec": -1,
+            "pending_saturation_indices": [],
+            "accepted_events": [
+              {
+                "index": 5,
+                "epoch": 1,
+                "count": 1,
+                "first": 1,
+                "last": 1,
+                "fire": 1,
+                "reload": 0,
+                "moving": 0,
+                "wall_msec": 12005
+              },
+              {
+                "index": 11,
+                "epoch": 1,
+                "count": 1,
+                "first": 1,
+                "last": 1,
+                "fire": 0,
+                "reload": 0,
+                "moving": 0,
+                "wall_msec": 13012
+              },
+              {
+                "index": 14,
+                "epoch": 1,
+                "count": 1,
+                "first": 2,
+                "last": 2,
+                "fire": 1,
+                "reload": 0,
+                "moving": 0,
+                "wall_msec": 14015
+              }
+            ],
+            "consumed_events": [
+              {
+                "index": 6,
+                "sequence": 1,
+                "fire": true,
+                "reload": false,
+                "move": [
+                  0.0,
+                  0.0
+                ],
+                "peer": 9,
+                "actor": 1,
+                "generation": 1,
+                "wall_msec": 12007
+              },
+              {
+                "index": 18,
+                "sequence": 1,
+                "fire": false,
+                "reload": false,
+                "move": [
+                  0.0,
+                  0.0
+                ],
+                "peer": 10,
+                "actor": 2,
+                "generation": 2,
+                "wall_msec": 15022
+              }
+            ],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [],
+            "binding_events": [
+              {
+                "peer": 9,
+                "generation": 1,
+                "bound_actor": 1,
+                "wall_unix_msec": 112003
+              },
+              {
+                "peer": 10,
+                "generation": 2,
+                "bound_actor": 2,
+                "wall_unix_msec": 113010
+              },
+              {
+                "peer": 11,
+                "generation": 3,
+                "bound_actor": 3,
+                "wall_unix_msec": 115020
+              }
+            ],
+            "local_attempts": 0
+          }
+        },
+        "errors": [
+          "welcome cannot bind uniquely to an observed live authority peer generation"
+        ],
+        "attempt_generation_links": []
+      }
+    },
+    {
+      "name": "fresh_epoch_2_acceptance_uses_zero_ACK",
+      "expected": "CONSISTENT",
+      "actual": "INVALID",
+      "result": {
+        "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+        "diagnostic_complete": false,
+        "transition_status": "INVALID",
+        "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+        "roles": {
+          "client": {
+            "records": 7,
+            "coverage": [
+              "client_attempt",
+              "client_connected",
+              "client_tick",
+              "input_send_called",
+              "ready",
+              "snapshot_applied",
+              "welcome_received"
+            ],
+            "counters": {
+              "ready": 1,
+              "client_attempt": 1,
+              "client_connected": 1,
+              "welcome_received": 1,
+              "client_tick": 2,
+              "snapshot_applied": 1,
+              "input_send_called": 1
+            },
+            "max_observation_gap_msec": 1000,
+            "max_snapshot_age_msec": 3000,
+            "pending_saturation_indices": [],
+            "accepted_events": [],
+            "consumed_events": [],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [
+              {
+                "transport_id": 9,
+                "local_attempt": 1,
+                "local_id": 1,
+                "wall_unix_msec": 104000
+              }
+            ],
+            "binding_events": [],
+            "local_attempts": 1
+          },
+          "authority": {
+            "records": 8,
+            "coverage": [
+              "authority_tick",
+              "input_accepted",
+              "input_consumed",
+              "input_received",
+              "peer_bound",
+              "peer_connected",
+              "ready"
+            ],
+            "counters": {
+              "ready": 1,
+              "peer_connected": 1,
+              "peer_bound": 1,
+              "input_received": 2,
+              "input_accepted": 2,
+              "authority_tick": 3,
+              "input_consumed": 1
+            },
+            "max_observation_gap_msec": 1001,
+            "max_snapshot_age_msec": -1,
+            "pending_saturation_indices": [],
+            "accepted_events": [
+              {
+                "index": 5,
+                "epoch": 1,
+                "count": 1,
+                "first": 1,
+                "last": 1,
+                "fire": 1,
+                "reload": 0,
+                "moving": 0,
+                "wall_msec": 12005
+              }
+            ],
+            "consumed_events": [
+              {
+                "index": 6,
+                "sequence": 1,
+                "fire": true,
+                "reload": false,
+                "move": [
+                  0.0,
+                  0.0
+                ],
+                "peer": 9,
+                "actor": 1,
+                "generation": 1,
+                "wall_msec": 12007
+              }
+            ],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [],
+            "binding_events": [
+              {
+                "peer": 9,
+                "generation": 1,
+                "bound_actor": 1,
+                "wall_unix_msec": 112003
+              }
+            ],
+            "local_attempts": 0
+          }
+        },
+        "errors": [
+          "welcome cannot bind uniquely to an observed live authority peer generation"
+        ],
+        "attempt_generation_links": []
+      }
+    },
+    {
+      "name": "fresh_epoch_3_acceptance_uses_zero_ACK",
+      "expected": "CONSISTENT",
+      "actual": "INVALID",
+      "result": {
+        "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+        "diagnostic_complete": false,
+        "transition_status": "INVALID",
+        "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+        "roles": {
+          "client": {
+            "records": 7,
+            "coverage": [
+              "client_attempt",
+              "client_connected",
+              "client_tick",
+              "input_send_called",
+              "ready",
+              "snapshot_applied",
+              "welcome_received"
+            ],
+            "counters": {
+              "ready": 1,
+              "client_attempt": 1,
+              "client_connected": 1,
+              "welcome_received": 1,
+              "client_tick": 2,
+              "snapshot_applied": 1,
+              "input_send_called": 1
+            },
+            "max_observation_gap_msec": 1000,
+            "max_snapshot_age_msec": 3000,
+            "pending_saturation_indices": [],
+            "accepted_events": [],
+            "consumed_events": [],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [
+              {
+                "transport_id": 9,
+                "local_attempt": 1,
+                "local_id": 1,
+                "wall_unix_msec": 104000
+              }
+            ],
+            "binding_events": [],
+            "local_attempts": 1
+          },
+          "authority": {
+            "records": 8,
+            "coverage": [
+              "authority_tick",
+              "input_accepted",
+              "input_consumed",
+              "input_received",
+              "peer_bound",
+              "peer_connected",
+              "ready"
+            ],
+            "counters": {
+              "ready": 1,
+              "peer_connected": 1,
+              "peer_bound": 1,
+              "input_received": 2,
+              "input_accepted": 2,
+              "authority_tick": 3,
+              "input_consumed": 1
+            },
+            "max_observation_gap_msec": 1001,
+            "max_snapshot_age_msec": -1,
+            "pending_saturation_indices": [],
+            "accepted_events": [
+              {
+                "index": 5,
+                "epoch": 1,
+                "count": 1,
+                "first": 1,
+                "last": 1,
+                "fire": 1,
+                "reload": 0,
+                "moving": 0,
+                "wall_msec": 12005
+              }
+            ],
+            "consumed_events": [
+              {
+                "index": 6,
+                "sequence": 1,
+                "fire": true,
+                "reload": false,
+                "move": [
+                  0.0,
+                  0.0
+                ],
+                "peer": 9,
+                "actor": 1,
+                "generation": 1,
+                "wall_msec": 12007
+              }
+            ],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [],
+            "binding_events": [
+              {
+                "peer": 9,
+                "generation": 1,
+                "bound_actor": 1,
+                "wall_unix_msec": 112003
+              }
+            ],
+            "local_attempts": 0
+          }
+        },
+        "errors": [
+          "welcome cannot bind uniquely to an observed live authority peer generation"
+        ],
+        "attempt_generation_links": []
+      }
+    },
+    {
+      "name": "old_epoch_call_cleared_across_larger_jump",
+      "expected": "CONSISTENT",
+      "actual": "INVALID",
+      "result": {
+        "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+        "diagnostic_complete": false,
+        "transition_status": "INVALID",
+        "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+        "roles": {
+          "client": {
+            "records": 7,
+            "coverage": [
+              "client_attempt",
+              "client_connected",
+              "client_tick",
+              "input_send_called",
+              "ready",
+              "snapshot_applied",
+              "welcome_received"
+            ],
+            "counters": {
+              "ready": 1,
+              "client_attempt": 1,
+              "client_connected": 1,
+              "welcome_received": 1,
+              "client_tick": 2,
+              "snapshot_applied": 1,
+              "input_send_called": 1
+            },
+            "max_observation_gap_msec": 1000,
+            "max_snapshot_age_msec": 3000,
+            "pending_saturation_indices": [],
+            "accepted_events": [],
+            "consumed_events": [],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [
+              {
+                "transport_id": 9,
+                "local_attempt": 1,
+                "local_id": 1,
+                "wall_unix_msec": 104000
+              }
+            ],
+            "binding_events": [],
+            "local_attempts": 1
+          },
+          "authority": {
+            "records": 8,
+            "coverage": [
+              "authority_tick",
+              "input_accepted",
+              "input_consumed",
+              "input_received",
+              "peer_bound",
+              "peer_connected",
+              "ready"
+            ],
+            "counters": {
+              "ready": 1,
+              "peer_connected": 1,
+              "peer_bound": 1,
+              "input_received": 2,
+              "input_accepted": 2,
+              "authority_tick": 3,
+              "input_consumed": 1
+            },
+            "max_observation_gap_msec": 1001,
+            "max_snapshot_age_msec": -1,
+            "pending_saturation_indices": [],
+            "accepted_events": [
+              {
+                "index": 5,
+                "epoch": 1,
+                "count": 1,
+                "first": 1,
+                "last": 1,
+                "fire": 1,
+                "reload": 0,
+                "moving": 0,
+                "wall_msec": 12005
+              }
+            ],
+            "consumed_events": [
+              {
+                "index": 6,
+                "sequence": 1,
+                "fire": true,
+                "reload": false,
+                "move": [
+                  0.0,
+                  0.0
+                ],
+                "peer": 9,
+                "actor": 1,
+                "generation": 1,
+                "wall_msec": 12007
+              }
+            ],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [],
+            "binding_events": [
+              {
+                "peer": 9,
+                "generation": 1,
+                "bound_actor": 1,
+                "wall_unix_msec": 112003
+              }
+            ],
+            "local_attempts": 0
+          }
+        },
+        "errors": [
+          "welcome cannot bind uniquely to an observed live authority peer generation"
+        ],
+        "attempt_generation_links": []
+      }
+    }
+  ],
+  "cpu_affinity": [
+    4
+  ],
+  "native_executed": false
+}

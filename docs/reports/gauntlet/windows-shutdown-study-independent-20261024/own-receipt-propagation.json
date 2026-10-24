@@ -1,0 +1,393 @@
+{
+  "source": "c90fedfd56a09bd0ba13cce5565ccd160891c3fb",
+  "cpu": [
+    4
+  ],
+  "native_invocations": 0,
+  "input": {
+    "each_trial_files": {
+      "results.json": "{\"passed\":true}\n"
+    },
+    "all_other_receipts_absent": true,
+    "owner": "synthetic controller-only rows",
+    "identity": {}
+  },
+  "expected_passed": false,
+  "actual_passed": true,
+  "calls": 4,
+  "cleanup_calls": 0,
+  "report": {
+    "schema": 1,
+    "order": [
+      "ordinary",
+      "verbose",
+      "verbose",
+      "ordinary"
+    ],
+    "identity": {},
+    "trials": [
+      {
+        "index": 1,
+        "arm": "ordinary",
+        "verbose": false,
+        "attempted": true,
+        "job_queries": [
+          {
+            "label": "trial1/before",
+            "verified": true,
+            "active_processes": 1,
+            "process_ids": [
+              99
+            ]
+          },
+          {
+            "label": "trial1/after",
+            "verified": true,
+            "active_processes": 1,
+            "process_ids": [
+              99
+            ]
+          }
+        ],
+        "output": "/tmp/tmpih6tiy0z/out/01-ordinary",
+        "profile": "new isolated driver-owned state",
+        "flow_seconds": 300,
+        "close_seconds": 20,
+        "driver_arguments": [
+          "scripts/verify_offline_export.py",
+          "--target",
+          "windows",
+          "--hosted-render-priority",
+          "below-normal",
+          "--display",
+          ":102",
+          "--timeout",
+          "300",
+          "--output",
+          "/tmp/tmpih6tiy0z/out/01-ordinary"
+        ],
+        "started_monotonic": 34926.919679668,
+        "started_wall_unix_ns": 1792849154753938732,
+        "finished_monotonic": 34926.919714604,
+        "finished_wall_unix_ns": 1792849154753971700,
+        "evidence": {
+          "result": {
+            "passed": true
+          },
+          "process_seed_initial_events": [
+            {
+              "process_trace": "initial-offline-trace",
+              "initial_event": null,
+              "provenance": "UNREACHED_OR_UNRESOLVED"
+            },
+            {
+              "process_trace": "restart-profile-trace",
+              "initial_event": null,
+              "provenance": "UNREACHED_OR_UNRESOLVED"
+            }
+          ],
+          "native_logs": [],
+          "typed_leak_observations": [],
+          "original_stream_retention_complete": true,
+          "close_observations": [],
+          "strict_passed": true
+        },
+        "strict_passed": true
+      },
+      {
+        "index": 2,
+        "arm": "verbose",
+        "verbose": true,
+        "attempted": true,
+        "job_queries": [
+          {
+            "label": "trial2/before",
+            "verified": true,
+            "active_processes": 1,
+            "process_ids": [
+              99
+            ]
+          },
+          {
+            "label": "trial2/after",
+            "verified": true,
+            "active_processes": 1,
+            "process_ids": [
+              99
+            ]
+          }
+        ],
+        "output": "/tmp/tmpih6tiy0z/out/02-verbose",
+        "profile": "new isolated driver-owned state",
+        "flow_seconds": 300,
+        "close_seconds": 20,
+        "driver_arguments": [
+          "scripts/verify_offline_export.py",
+          "--target",
+          "windows",
+          "--hosted-render-priority",
+          "below-normal",
+          "--display",
+          ":102",
+          "--timeout",
+          "300",
+          "--output",
+          "/tmp/tmpih6tiy0z/out/02-verbose",
+          "--reopened-verbose"
+        ],
+        "started_monotonic": 34926.9202109,
+        "started_wall_unix_ns": 1792849154754468183,
+        "finished_monotonic": 34926.920244564,
+        "finished_wall_unix_ns": 1792849154754501566,
+        "evidence": {
+          "result": {
+            "passed": true
+          },
+          "process_seed_initial_events": [
+            {
+              "process_trace": "initial-offline-trace",
+              "initial_event": null,
+              "provenance": "UNREACHED_OR_UNRESOLVED"
+            },
+            {
+              "process_trace": "restart-profile-trace",
+              "initial_event": null,
+              "provenance": "UNREACHED_OR_UNRESOLVED"
+            }
+          ],
+          "native_logs": [],
+          "typed_leak_observations": [],
+          "original_stream_retention_complete": true,
+          "close_observations": [],
+          "strict_passed": true
+        },
+        "strict_passed": true
+      },
+      {
+        "index": 3,
+        "arm": "verbose",
+        "verbose": true,
+        "attempted": true,
+        "job_queries": [
+          {
+            "label": "trial3/before",
+            "verified": true,
+            "active_processes": 1,
+            "process_ids": [
+              99
+            ]
+          },
+          {
+            "label": "trial3/after",
+            "verified": true,
+            "active_processes": 1,
+            "process_ids": [
+              99
+            ]
+          }
+        ],
+        "output": "/tmp/tmpih6tiy0z/out/03-verbose",
+        "profile": "new isolated driver-owned state",
+        "flow_seconds": 300,
+        "close_seconds": 20,
+        "driver_arguments": [
+          "scripts/verify_offline_export.py",
+          "--target",
+          "windows",
+          "--hosted-render-priority",
+          "below-normal",
+          "--display",
+          ":102",
+          "--timeout",
+          "300",
+          "--output",
+          "/tmp/tmpih6tiy0z/out/03-verbose",
+          "--reopened-verbose"
+        ],
+        "started_monotonic": 34926.92059174,
+        "started_wall_unix_ns": 1792849154754849168,
+        "finished_monotonic": 34926.920732995,
+        "finished_wall_unix_ns": 1792849154754990087,
+        "evidence": {
+          "result": {
+            "passed": true
+          },
+          "process_seed_initial_events": [
+            {
+              "process_trace": "initial-offline-trace",
+              "initial_event": null,
+              "provenance": "UNREACHED_OR_UNRESOLVED"
+            },
+            {
+              "process_trace": "restart-profile-trace",
+              "initial_event": null,
+              "provenance": "UNREACHED_OR_UNRESOLVED"
+            }
+          ],
+          "native_logs": [],
+          "typed_leak_observations": [],
+          "original_stream_retention_complete": true,
+          "close_observations": [],
+          "strict_passed": true
+        },
+        "strict_passed": true
+      },
+      {
+        "index": 4,
+        "arm": "ordinary",
+        "verbose": false,
+        "attempted": true,
+        "job_queries": [
+          {
+            "label": "trial4/before",
+            "verified": true,
+            "active_processes": 1,
+            "process_ids": [
+              99
+            ]
+          },
+          {
+            "label": "trial4/after",
+            "verified": true,
+            "active_processes": 1,
+            "process_ids": [
+              99
+            ]
+          }
+        ],
+        "output": "/tmp/tmpih6tiy0z/out/04-ordinary",
+        "profile": "new isolated driver-owned state",
+        "flow_seconds": 300,
+        "close_seconds": 20,
+        "driver_arguments": [
+          "scripts/verify_offline_export.py",
+          "--target",
+          "windows",
+          "--hosted-render-priority",
+          "below-normal",
+          "--display",
+          ":102",
+          "--timeout",
+          "300",
+          "--output",
+          "/tmp/tmpih6tiy0z/out/04-ordinary"
+        ],
+        "started_monotonic": 34926.921133354,
+        "started_wall_unix_ns": 1792849154755390600,
+        "finished_monotonic": 34926.92116343,
+        "finished_wall_unix_ns": 1792849154755420375,
+        "evidence": {
+          "result": {
+            "passed": true
+          },
+          "process_seed_initial_events": [
+            {
+              "process_trace": "initial-offline-trace",
+              "initial_event": null,
+              "provenance": "UNREACHED_OR_UNRESOLVED"
+            },
+            {
+              "process_trace": "restart-profile-trace",
+              "initial_event": null,
+              "provenance": "UNREACHED_OR_UNRESOLVED"
+            }
+          ],
+          "native_logs": [],
+          "typed_leak_observations": [],
+          "original_stream_retention_complete": true,
+          "close_observations": [],
+          "strict_passed": true
+        },
+        "strict_passed": true
+      }
+    ],
+    "attempts": 4,
+    "passed": true,
+    "scope": "Four diagnostic trials only; original defect remains open",
+    "observer": "existing offline trace in both arms; not observer-free shipping",
+    "completed_all_four": true,
+    "final_job": {
+      "label": "study/final",
+      "verified": true,
+      "active_processes": 1,
+      "process_ids": [
+        99
+      ]
+    },
+    "job_queries": [
+      {
+        "label": "trial1/before",
+        "verified": true,
+        "active_processes": 1,
+        "process_ids": [
+          99
+        ]
+      },
+      {
+        "label": "trial1/after",
+        "verified": true,
+        "active_processes": 1,
+        "process_ids": [
+          99
+        ]
+      },
+      {
+        "label": "trial2/before",
+        "verified": true,
+        "active_processes": 1,
+        "process_ids": [
+          99
+        ]
+      },
+      {
+        "label": "trial2/after",
+        "verified": true,
+        "active_processes": 1,
+        "process_ids": [
+          99
+        ]
+      },
+      {
+        "label": "trial3/before",
+        "verified": true,
+        "active_processes": 1,
+        "process_ids": [
+          99
+        ]
+      },
+      {
+        "label": "trial3/after",
+        "verified": true,
+        "active_processes": 1,
+        "process_ids": [
+          99
+        ]
+      },
+      {
+        "label": "trial4/before",
+        "verified": true,
+        "active_processes": 1,
+        "process_ids": [
+          99
+        ]
+      },
+      {
+        "label": "trial4/after",
+        "verified": true,
+        "active_processes": 1,
+        "process_ids": [
+          99
+        ]
+      },
+      {
+        "label": "study/final",
+        "verified": true,
+        "active_processes": 1,
+        "process_ids": [
+          99
+        ]
+      }
+    ]
+  },
+  "interpretation": "Synthetic missing-receipt trust-boundary false success; no source-emitted/native outcome claim"
+}

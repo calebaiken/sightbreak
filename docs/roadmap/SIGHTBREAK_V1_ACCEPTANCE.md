@@ -173,3 +173,12 @@ Shutdown sourcec90/239fa222 passes28 dedicated controls, but real preflightBLOCK
 complete retention has no finite proof under two32MiB limits. No study launch.
 All whole-release, strict warning, physical/human/Steam and Mac review-stop gates
 remain unchanged. See current NEXT_SESSION for exact branches/source and actions.
+
+At 2026-10-24 14:03 UTC, math actual6e6d7159 and reader R6 source62ad3890 are
+REJECTED. Process fixb6 has new independent ancestry/binding blockers; no activation.
+Codec329/64af has49 pure passes but no native/independent acceptance. R7 initial
+isolated model passes but caller92868e6b has4 false completes; revised history model
+is held/unfrozen under assessment. Actual-log replay remains unexecuted. Shutdown
+75ddeb26 rejects binding and incomplete receipts; narrow physical fixb6da/b692 has
+36 pure passes and source-only preflightBLOCKED, with independent review pending.
+Whole gates/external requirements/strict warnings/Mac review-stop remain unchanged.

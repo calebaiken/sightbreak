@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/workspace/reviews/objective-perception-math-independent-20261024/docs/reports/gauntlet/objective-perception-math-independent-20261024/actual-r1/analyze_raw.py", line 55, in <module>
+    maintained=reference.parse_output(stdout,payload,cases_sha256=cases_sha,program_sha256=program_sha)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/reviews/objective-perception-math-independent-20261024/scripts/fov_math_reference.py", line 209, in parse_output
+    require(row['bits64'][name]==bits64(expected[name]),'input scalar roundtrip')
+  File "/workspace/reviews/objective-perception-math-independent-20261024/scripts/fov_math_reference.py", line 25, in require
+    raise ValueError(text)
+ValueError: input scalar roundtrip

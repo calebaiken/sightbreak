@@ -1,0 +1,43 @@
+{
+  "actual": {
+    "result": {
+      "passed": true
+    },
+    "process_seed_initial_events": [
+      {
+        "process_trace": "initial-offline-trace",
+        "initial_event": null,
+        "provenance": "UNREACHED_OR_UNRESOLVED"
+      },
+      {
+        "process_trace": "restart-profile-trace",
+        "initial_event": null,
+        "provenance": "UNREACHED_OR_UNRESOLVED"
+      }
+    ],
+    "native_logs": [
+      {
+        "path": "reopened.log",
+        "bytes": 43,
+        "sha256": "d939001990fd80fd86635d9765def3accb5c76991319b495501dc833dbc978cc",
+        "strict_failure": true,
+        "stream": "original combined stdout/stderr, unmodified"
+      }
+    ],
+    "typed_leak_observations": [
+      {
+        "path": "reopened.log",
+        "instances": [],
+        "unparsed_instance_rows": [],
+        "resource_cache_rows": [],
+        "retaining_owner": "UNRESOLVED",
+        "allocation_stack": "UNAVAILABLE",
+        "old_failure_identity": "NOT_ATTRIBUTED"
+      }
+    ],
+    "original_stream_retention_complete": true,
+    "close_observations": [],
+    "strict_passed": false
+  },
+  "matched": true
+}
