@@ -1,0 +1,70 @@
+{
+  "scope": "INTERIM MODEL/COVERAGE assessment, not final R6 source verdict",
+  "review_base": "4f0a190610bd7a9840c9f14dc06a30102fdc5ba1",
+  "own_product_source_unchanged_from": "7d8ec7dda37764e0f45fd2ea1e8d330f84bc2508",
+  "first_prototype": {
+    "scope": "Isolated UNAPPROVED UNFROZEN InputTransitions model assessment; not whole-reader or final candidate qualification",
+    "prototype_sha256": "9248707cf88d6777c7f6a77b53e43ceec0d46e33d3f4ec005ddf4bd0177fa5aa",
+    "cases": 13,
+    "matches": 8,
+    "invalid_accepted": [
+      "opaque_batch_cannot_pop_past_mandatory1",
+      "opaque_batch_cannot_erase_old_signature",
+      "empty_resynchronization_cannot_be_lost",
+      "opaque_backlog_cannot_pop_rank2"
+    ],
+    "coverage_unknown": [
+      "explicit_B_pop_can_be_seen_in_A_row"
+    ],
+    "valid_rejected": [],
+    "cpu_affinity": [
+      4
+    ],
+    "native_executed": false
+  },
+  "revised_prototype": {
+    "scope": "Isolated UNAPPROVED UNFROZEN InputTransitions model assessment; not whole-reader or final candidate qualification",
+    "prototype_sha256": "0ac7310b5367cef781fdbb97fa840b3c8f8b10d01e1be2d367d7c6b65ca31ed3",
+    "cases": 13,
+    "matches": 12,
+    "invalid_accepted": [],
+    "coverage_unknown": [],
+    "valid_rejected": [
+      "explicit_B_pop_can_be_seen_in_A_row"
+    ],
+    "cpu_affinity": [
+      4
+    ],
+    "native_executed": false
+  },
+  "aggregate_relation": {
+    "prototype_sha256": "0ac7310b5367cef781fdbb97fa840b3c8f8b10d01e1be2d367d7c6b65ca31ed3",
+    "scope": "Independent aggregate feasibility assessment of UNAPPROVED UNFROZEN InputTransitions; not final source review",
+    "cases": 5,
+    "matches": 1,
+    "invalid_accepted": [
+      "both_false_pops_direct",
+      "both_false_pops_coalesced",
+      "both_true_pops_direct",
+      "both_true_pops_coalesced"
+    ],
+    "native_executed": false,
+    "cpu_affinity": [
+      4
+    ]
+  },
+  "fixture_adjudications": {
+    "historical_consumption_outside_accepted_batch": "source-inconsistent positive; retain old and add a distinct valid queued21/latest22 version",
+    "duplicate_queue_positive": "receive queue1 before restamp; preserve acceptedqueue1 and immutablefireTrue"
+  },
+  "r5_branch_and_depth_unchanged": true,
+  "final_candidate_frozen": false,
+  "source_approval": false,
+  "native_release": false,
+  "thread_reuse": true,
+  "new_thread": false,
+  "cpu_affinity": [
+    4
+  ],
+  "native_executed": false
+}
