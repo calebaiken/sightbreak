@@ -74,6 +74,7 @@ func load_pending() -> Dictionary:
 	return record.transaction
 
 func stage(pending: Dictionary) -> Error:
+	var already_owned := owner_guard != null and owner_guard.is_listening()
 	if acquire() != OK:
 		return ERR_ALREADY_IN_USE
 	var existing := load_pending()
@@ -81,13 +82,13 @@ func stage(pending: Dictionary) -> Error:
 		return ERR_ALREADY_IN_USE
 	if not valid(pending):
 		error = "The receipt could not be saved safely. Nothing was sent."
-		return ERR_INVALID_DATA
+		return _stage_failure(ERR_INVALID_DATA, already_owned)
 	var text := JSON.stringify({"schema": 1, "transaction": pending})
 	if text.to_utf8_buffer().size() > MAX_BYTES:
-		return ERR_INVALID_DATA
+		return _stage_failure(ERR_INVALID_DATA, already_owned)
 	var file := FileAccess.open(path + ".tmp", FileAccess.WRITE)
 	if file == null:
-		return FileAccess.get_open_error()
+		return _stage_failure(FileAccess.get_open_error(), already_owned)
 	var stored := file.store_string(text)
 	file.flush()
 	var result := file.get_error()
@@ -95,11 +96,19 @@ func stage(pending: Dictionary) -> Error:
 	# Godot's Windows flush ignores fflush's return value. Reopen after close and
 	# verify actual bytes, both before and after publishing, rather than trusting it.
 	if not stored or result != OK or not _matches_bytes(path + ".tmp", text):
-		return ERR_FILE_CANT_WRITE
+		return _stage_failure(ERR_FILE_CANT_WRITE, already_owned)
 	result = DirAccess.rename_absolute(path + ".tmp", path)
 	if result != OK:
-		return result
+		# A missing/changed source could mean publication happened despite the error.
+		return _stage_failure(result, already_owned) if _matches_bytes(path + ".tmp", text) else result
 	return OK if _matches_bytes(path, text) else ERR_FILE_CANT_WRITE
+
+func _stage_failure(result: Error, already_owned: bool) -> Error:
+	# Inspect canonical storage while still holding its guard. Only this call's
+	# unpublished claim may be released; existing ownership/evidence stays protected.
+	if not already_owned and not FileAccess.file_exists(path) and not DirAccess.dir_exists_absolute(path):
+		_release()
+	return result
 
 func _matches_bytes(file_path: String, expected: String) -> bool:
 	var file := FileAccess.open(file_path, FileAccess.READ)
