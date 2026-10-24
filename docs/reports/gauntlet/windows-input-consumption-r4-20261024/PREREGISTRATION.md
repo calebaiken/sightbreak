@@ -70,3 +70,23 @@ construction in existing pure test files and a new pure state-consistency suite.
 No runtime, transport, RPC, privacy, economy, controller or canonical documents
 change. Commit and push frozen source, then builder evidence for a different
 fresh independent critic. The builder cannot approve the source gate.
+
+## Fixture call-order expansion before edits
+
+The existing positive malformed-receive method in the identity suite changes
+the first direct receive's epoch/endpoints while expecting later valid acceptance.
+Keep that malformed direct record and mutation, then explicitly construct the
+real intervening calls: stream rejection of that malformed packet, followed by
+a valid receive and acceptance. Match 1066–1078 calls those synchronously.
+The first rejection does not print: Match 1298–1300 excludes
+`input_stream_rejected` from both lifecycle and control events. A later valid
+receive with the same fire/reload/moving controls may coalesce because Match
+1295 excludes packet epoch/endpoints from its per-reason edge. The later accepted
+row must therefore retain rejection counter/latest, receive counter2 and valid
+latest receive metadata. This adds no direct rejection row and invents no packet
+identity. Independent source adjudication is required before this edit.
+
+Old pure suites ran unchanged before implementation: 32 methods passed on CPU4,
+with stdout/stderr retained under `historical-source/`. That result measures the
+old suite, including its contradictory positive fixture. The identity source is
+also retained byte-for-byte before its minimum fixture correction.
