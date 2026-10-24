@@ -49,3 +49,56 @@ view. Seal a scoped independent verdict with winner/why and largest gap. Support
 source false success/finalization loss requires REJECT; scoped source acceptance
 never constitutes acquisition/native/release admission. Commit/push only own
 small review report artifacts and send supported findings to root/builder.
+
+## Concrete controls registered before execution
+
+Static source inspect confirms execute_prepared514–523 leaves streams.state/close
+unguarded; supervise334–349 creates a local Audit exported only on success; and
+cleanup_unreturned408/417–418 does not update identity coverage from final total.
+These are hypotheses until the controls below run.
+
+All fresh lifecycle models use DISTINCT controller, root, unexpected child, job,
+stream owner, two sink and two pipe objects/identities. The clock is fake; no
+real PID/HANDLE/API/process/pipe action occurs. Job samples are fresh immutable
+snapshots with cumulative total>=active, controller presence and coherent live
+IDs. CapturedAudit is the actual source class with construction observation only,
+not a replacement verdict. A modeled exit does not infer stream EOF.
+
+Register normal completion and paired: sink close error, stream state error,
+flush error, late final close, noEOF and pipe overflow. Require a structured failed
+return, final timing and attempts at later owned closure even when a finalizer
+fails. Independently call actual PipeRetention.close with four distinct close
+witnesses and WindowsJob.close_held with two distinct owned handles/fake Kernel;
+first-close failure must not skip later close attempts. An error may be retained,
+but must not erase subsequent cleanup/receipt opportunities.
+
+Register supervision failure after coherent audit samples (later pipe error and
+later job-query error), plus an observed active unexpected child held by distinct
+birth/HANDLE then absent from later cleanup samples. Capture the actual Audit
+object to establish the prefix/last facts existed; compare the returned result
+with those facts and with distinct cleanup observations. All earlier observations
+and acquired ownership facts must remain inspectable after failure. Do not count
+a failed math status as proof that its failure audit was preserved.
+
+The no-returned-root total1→final2 coverage check is API-OBSERVATION ROBUSTNESS ONLY.
+A full single-controller creation/exit history after a coherent no-child sample
+has NOT been established. Root explicitly agreed this cannot be a native/source
+counterexample absent that witness. Record stale coverage if observed and pair
+with unchanged1→1 and prior2→final2. Distinguish cleanup live absence from full
+historical identity coverage; this model alone cannot drive REJECT.
+
+Under strict noSDK/proc scope omit maintained synthetic sdk_member extraction
+method and ProcInterfaceControls (even though they use generated archives/mapped
+paths). Keep builder's full85 results exact/labeled builder. Independently run the
+other selected source/pure methods only: Windows tests excluding that one SDK
+method, unchanged reference tests except ProcInterfaceControls, binary codec and
+strict-log tests. Record exact selected method list/count and exclusions; never
+call it a full85 replay. No SDK/PE extraction function, LinuxKernel constructor,
+actual proc/pidfd or WindowsJob constructor may run.
+
+Real public collect uses the exact detached sealed runtime25603855 view and its
+externally hashed runtime-component manifest. Assertion sentinels forbid SDK,
+WindowsJob and Popen entry. Validate retained BLOCKED output and source copies
+without reading any SDK archive. Full526 source/protected523 proof and all sealed
+builder manifest files are checked directly. Repeat fresh/selected controls in
+an initialized depth-one source view with disclosed shared objects, separate raw.
