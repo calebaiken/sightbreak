@@ -1,0 +1,12 @@
+{
+  "scope": "source checkpoint setup only; no native action",
+  "partial_checkpoint": "ff8f3031",
+  "issue": "git add refused the two new code/fixture paths outside the inherited non-cone sparse definition; shell continued to commit already-staged source and report files",
+  "paths": [
+    "scripts/test_fov_physical_binding.py",
+    "scripts/fixtures/fov_source_binding_timing_baseline.json"
+  ],
+  "source_bytes_unchanged": true,
+  "tests_used_registered_physical_files_not_partial_commit": true,
+  "recovery": "explicitly add both paths to sparse selection, stage them, seal complete source; later initialized-source repeat must pass"
+}

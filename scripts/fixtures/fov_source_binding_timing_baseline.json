@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "source": "8cc38cdcd7dfff37056782149e513c08037e4e77",
+  "owner_class": "SupervisorControls",
+  "method": "test_source_git_children_receive_only_remaining_whole_deadline",
+  "text": "    def test_source_git_children_receive_only_remaining_whole_deadline(self):\n        clock=FakeClock();timeouts=[]\n        def output(command,**options):\n            timeouts.append(options['timeout']);clock.sleep(.1)\n            return 'a'*40 if options.get('text') else b''\n        def run(command,**options):\n            timeouts.append(options['timeout']);clock.sleep(.1);return SimpleNamespace(returncode=0)\n        with patch.object(acquisition.subprocess,'check_output',side_effect=output),patch.object(acquisition.subprocess,'run',side_effect=run),patch.object(acquisition,'digest',return_value='b'*64):\n            binding=acquisition.source_binding('a'*40,deadline=101.,clock=clock)\n        self.assertEqual(binding['commit'],'a'*40);self.assertEqual(len(timeouts),4)\n        self.assertTrue(all(0<t<=1 for t in timeouts));self.assertEqual(timeouts,sorted(timeouts,reverse=True))\n        clock.now=101.\n        with patch.object(acquisition.subprocess,'check_output',side_effect=AssertionError('must not spawn late')),self.assertRaises(RuntimeError):\n            acquisition.source_binding('a'*40,deadline=101.,clock=clock)\n",
+  "sha256": "8c33308f610f09a3710106eaf0392fdad9fa9918c00d573f8796d305167e1e31"
+}
