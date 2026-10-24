@@ -1,0 +1,2756 @@
+{
+  "payloads_hashed": 122,
+  "cases": [
+    {
+      "label": "Set-673EECBC/case-01",
+      "price": 400,
+      "receipt": "dcc30c2f-0ada-4814-82c9-36afb3e2fdaa",
+      "ids": {
+        "owner": "b045224d-5943-4050-9476-14ec12eb313b",
+        "seller": "48655e44-187a-4c43-8497-4bdd2d002462",
+        "item": "504d51d6-a33a-4dce-b1f2-c473d941a8b7",
+        "listing": "dcbabbfa-1c9f-42ef-a7e7-e0bff7812c5b"
+      },
+      "buyer_balances_B_C_K_R_S": [
+        2000,
+        1600,
+        1600,
+        1600,
+        1600
+      ],
+      "seller_balances_B_C_K_R_S": [
+        2000,
+        2388,
+        2388,
+        2388,
+        2388
+      ],
+      "all_player_credits_B_C_K_R_S": [
+        10011601,
+        10011589,
+        10011589,
+        10011589,
+        10011589
+      ],
+      "fee": 12,
+      "table_counts": {
+        "01-before.json": {
+          "players": 6,
+          "items": 3,
+          "listings": 1,
+          "operations": 0,
+          "ledger": 6,
+          "audit": 4,
+          "loadouts": 0,
+          "rewards": 0,
+          "trades": 0
+        },
+        "02-committed-before-kill.json": {
+          "players": 6,
+          "items": 3,
+          "listings": 1,
+          "operations": 1,
+          "ledger": 8,
+          "audit": 5,
+          "loadouts": 0,
+          "rewards": 0,
+          "trades": 0
+        },
+        "03-after-kill.json": {
+          "players": 6,
+          "items": 3,
+          "listings": 1,
+          "operations": 1,
+          "ledger": 8,
+          "audit": 5,
+          "loadouts": 0,
+          "rewards": 0,
+          "trades": 0
+        },
+        "04-after-recovery.json": {
+          "players": 6,
+          "items": 3,
+          "listings": 1,
+          "operations": 1,
+          "ledger": 8,
+          "audit": 5,
+          "loadouts": 0,
+          "rewards": 0,
+          "trades": 0
+        },
+        "05-after-second-restart.json": {
+          "players": 6,
+          "items": 3,
+          "listings": 1,
+          "operations": 1,
+          "ledger": 8,
+          "audit": 5,
+          "loadouts": 0,
+          "rewards": 0,
+          "trades": 0
+        }
+      },
+      "session_counts_B_C_K_R_S": [
+        6,
+        7,
+        7,
+        8,
+        9
+      ],
+      "item_ownership_counts_B_C_K_R_S": {
+        "owner": [
+          0,
+          1,
+          1,
+          1,
+          1
+        ],
+        "seller": [
+          1,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "added_operation": {
+        "id": "b045224d-5943-4050-9476-14ec12eb313b:buy:dcbabbfa-1c9f-42ef-a7e7-e0bff7812c5b:dcc30c2f-0ada-4814-82c9-36afb3e2fdaa",
+        "request_hash": "701d171c6395bfd6f5de7a84a0f8febbca5ee009d4a3e18263fa1525d6d3293a",
+        "response": {
+          "credits": 1600,
+          "fee": 12,
+          "item": {
+            "acquired_at": "2026-10-19T16:14:56.635526-04:00",
+            "collection": "Obsidian",
+            "definition_id": "obsidian_rare",
+            "id": "504d51d6-a33a-4dce-b1f2-c473d941a8b7",
+            "kind": "weapon_skin",
+            "marketplace_eligible": true,
+            "name": "Obsidian / Carbon",
+            "pattern_seed": 1622206857,
+            "rarity": "Rare",
+            "reserved": false,
+            "trade_eligible": true,
+            "variant": "standard",
+            "wear": 0.985
+          }
+        }
+      },
+      "added_ledger": [
+        {
+          "amount": -400,
+          "balance_after": 1600,
+          "created_at": "2026-10-19 16:15:02.562546-04:00",
+          "id": "57c71857-c201-48f4-89cb-bb0165df3a16",
+          "player_id": "b045224d-5943-4050-9476-14ec12eb313b",
+          "reason": "market_purchase",
+          "reference": "dcbabbfa-1c9f-42ef-a7e7-e0bff7812c5b"
+        },
+        {
+          "amount": 388,
+          "balance_after": 2388,
+          "created_at": "2026-10-19 16:15:02.562546-04:00",
+          "id": "e132cc58-bd43-43e3-9dd8-1bb2328f4469",
+          "player_id": "48655e44-187a-4c43-8497-4bdd2d002462",
+          "reason": "market_sale",
+          "reference": "dcbabbfa-1c9f-42ef-a7e7-e0bff7812c5b"
+        }
+      ],
+      "added_audit": {
+        "action": "market_settled",
+        "actor": "b045224d-5943-4050-9476-14ec12eb313b",
+        "created_at": "2026-10-19 16:15:02.572597-04:00",
+        "details": {
+          "fee": 12,
+          "from_player": "48655e44-187a-4c43-8497-4bdd2d002462",
+          "item_id": "504d51d6-a33a-4dce-b1f2-c473d941a8b7",
+          "listing_id": "dcbabbfa-1c9f-42ef-a7e7-e0bff7812c5b",
+          "to_player": "b045224d-5943-4050-9476-14ec12eb313b"
+        },
+        "id": "ad16fbc0-6a0a-4cdd-a80d-65eedc7c2c57"
+      },
+      "purchase_counts_send_recovery_second": [
+        1,
+        0,
+        0
+      ],
+      "fresh_logins": [
+        {
+          "phase": "send",
+          "pid": 11516,
+          "token_sha256": "12f77c9586f00cf9a20cb0d96c33dadab3a32b7f854bdcf29dbbebd6251e04bc",
+          "player_id": "b045224d-5943-4050-9476-14ec12eb313b"
+        },
+        {
+          "phase": "recovery",
+          "pid": 16844,
+          "token_sha256": "40230775d9638f50a89b114aa0f23e03ba40be8821c7e8987b4a321dc27fb2f9",
+          "player_id": "b045224d-5943-4050-9476-14ec12eb313b"
+        },
+        {
+          "phase": "second-restart",
+          "pid": 14204,
+          "token_sha256": "dd9a4c40ca5bfc59fb0bb8c9a4bb70ba885b8f97c0c3cd453c814d356a7a40a7",
+          "player_id": "b045224d-5943-4050-9476-14ec12eb313b"
+        }
+      ],
+      "recorded_server": "http://127.0.0.1:60031",
+      "sql_clocks_B_C_K_R_S": [
+        {
+          "clock_timestamp": "2026-10-19 16:15:00.550684-04:00",
+          "current_database": "sightbreak_receipt_b567be9ef48b1a6f_test",
+          "inet_server_port": 55439,
+          "pg_backend_pid": 4180,
+          "txid_current_snapshot": "2340:2340:",
+          "version": "PostgreSQL 17.11 on x86_64-windows, compiled by msvc-19.44.35229, 64-bit"
+        },
+        {
+          "clock_timestamp": "2026-10-19 16:15:02.632906-04:00",
+          "current_database": "sightbreak_receipt_b567be9ef48b1a6f_test",
+          "inet_server_port": 55439,
+          "pg_backend_pid": 19876,
+          "txid_current_snapshot": "2344:2344:",
+          "version": "PostgreSQL 17.11 on x86_64-windows, compiled by msvc-19.44.35229, 64-bit"
+        },
+        {
+          "clock_timestamp": "2026-10-19 16:15:02.751272-04:00",
+          "current_database": "sightbreak_receipt_b567be9ef48b1a6f_test",
+          "inet_server_port": 55439,
+          "pg_backend_pid": 9160,
+          "txid_current_snapshot": "2344:2344:",
+          "version": "PostgreSQL 17.11 on x86_64-windows, compiled by msvc-19.44.35229, 64-bit"
+        },
+        {
+          "clock_timestamp": "2026-10-19 16:15:04.186595-04:00",
+          "current_database": "sightbreak_receipt_b567be9ef48b1a6f_test",
+          "inet_server_port": 55439,
+          "pg_backend_pid": 9708,
+          "txid_current_snapshot": "2346:2346:",
+          "version": "PostgreSQL 17.11 on x86_64-windows, compiled by msvc-19.44.35229, 64-bit"
+        },
+        {
+          "clock_timestamp": "2026-10-19 16:15:05.533435-04:00",
+          "current_database": "sightbreak_receipt_b567be9ef48b1a6f_test",
+          "inet_server_port": 55439,
+          "pg_backend_pid": 18688,
+          "txid_current_snapshot": "2348:2348:",
+          "version": "PostgreSQL 17.11 on x86_64-windows, compiled by msvc-19.44.35229, 64-bit"
+        }
+      ],
+      "key_timeline": [
+        {
+          "event": "proxy_request",
+          "wall_ns": 1792440902528503200,
+          "monotonic_ns": 259184234000000,
+          "harness_pid": 21388,
+          "phase": "send",
+          "method": "POST",
+          "path": "/market/dcbabbfa-1c9f-42ef-a7e7-e0bff7812c5b/buy",
+          "body": {
+            "expected_price": 400,
+            "idempotency_key": "dcc30c2f-0ada-4814-82c9-36afb3e2fdaa"
+          },
+          "raw_utf8": "{\"expected_price\":400,\"idempotency_key\":\"dcc30c2f-0ada-4814-82c9-36afb3e2fdaa\"}",
+          "token_sha256": "12f77c9586f00cf9a20cb0d96c33dadab3a32b7f854bdcf29dbbebd6251e04bc",
+          "line": 18
+        },
+        {
+          "event": "proxy_upstream_response",
+          "wall_ns": 1792440902582482600,
+          "monotonic_ns": 259184281000000,
+          "harness_pid": 21388,
+          "phase": "send",
+          "path": "/market/dcbabbfa-1c9f-42ef-a7e7-e0bff7812c5b/buy",
+          "status": 200,
+          "response": {
+            "item": {
+              "id": "504d51d6-a33a-4dce-b1f2-c473d941a8b7",
+              "definition_id": "obsidian_rare",
+              "rarity": "Rare",
+              "pattern_seed": 1622206857,
+              "wear": 0.985,
+              "variant": "standard",
+              "collection": "Obsidian",
+              "kind": "weapon_skin",
+              "name": "Obsidian / Carbon",
+              "reserved": false,
+              "trade_eligible": true,
+              "marketplace_eligible": true,
+              "acquired_at": "2026-10-19T16:14:56.635526-04:00"
+            },
+            "credits": 1600,
+            "fee": 12
+          },
+          "raw_utf8": "{\"item\":{\"id\":\"504d51d6-a33a-4dce-b1f2-c473d941a8b7\",\"definition_id\":\"obsidian_rare\",\"rarity\":\"Rare\",\"pattern_seed\":1622206857,\"wear\":0.985,\"variant\":\"standard\",\"collection\":\"Obsidian\",\"kind\":\"weapon_skin\",\"name\":\"Obsidian / Carbon\",\"reserved\":false,\"trade_eligible\":true,\"marketplace_eligible\":true,\"acquired_at\":\"2026-10-19T16:14:56.635526-04:00\"},\"credits\":1600,\"fee\":12}",
+          "line": 19
+        },
+        {
+          "event": "response_held_before_any_client_headers",
+          "wall_ns": 1792440902582482600,
+          "monotonic_ns": 259184281000000,
+          "harness_pid": 21388,
+          "phase": "send",
+          "status": 200,
+          "sent_bytes": 0,
+          "line": 20
+        },
+        {
+          "event": "postgresql_snapshot",
+          "wall_ns": 1792440902672990800,
+          "monotonic_ns": 259184375000000,
+          "harness_pid": 21388,
+          "name": "02-committed-before-kill",
+          "database": "sightbreak_receipt_b567be9ef48b1a6f_test",
+          "connection_pid": 19876,
+          "state_sha256": "ebbb40490584e91529fba57d680bba6c5ae36bc2c3ea4bbb3db985bc403a6844",
+          "line": 21
+        },
+        {
+          "event": "kill_requested",
+          "wall_ns": 1792440902675316300,
+          "monotonic_ns": 259184375000000,
+          "harness_pid": 21388,
+          "pid": 11516,
+          "upstream_committed": true,
+          "client_response_bytes": 0,
+          "line": 22
+        },
+        {
+          "event": "native_finished",
+          "wall_ns": 1792440902696441700,
+          "monotonic_ns": 259184390000000,
+          "harness_pid": 21388,
+          "phase": "killed-client",
+          "pid": 11516,
+          "returncode": 1,
+          "line": 23
+        },
+        {
+          "event": "kill_confirmed",
+          "wall_ns": 1792440902700649300,
+          "monotonic_ns": 259184406000000,
+          "harness_pid": 21388,
+          "pid": 11516,
+          "returncode": 1,
+          "line": 24
+        },
+        {
+          "event": "postgresql_snapshot",
+          "wall_ns": 1792440902795256500,
+          "monotonic_ns": 259184500000000,
+          "harness_pid": 21388,
+          "name": "03-after-kill",
+          "database": "sightbreak_receipt_b567be9ef48b1a6f_test",
+          "connection_pid": 9160,
+          "state_sha256": "ebbb40490584e91529fba57d680bba6c5ae36bc2c3ea4bbb3db985bc403a6844",
+          "line": 25
+        },
+        {
+          "event": "held_response_discarded",
+          "wall_ns": 1792440902796256800,
+          "monotonic_ns": 259184500000000,
+          "harness_pid": 21388,
+          "phase": "send",
+          "sent_bytes": 0,
+          "line": 26
+        },
+        {
+          "event": "native_started",
+          "wall_ns": 1792440903003810500,
+          "monotonic_ns": 259184703000000,
+          "harness_pid": 21388,
+          "phase": "recovery",
+          "pid": 16844,
+          "command": [
+            "[EXECUTABLE]/native-client",
+            "--headless",
+            "--verbose",
+            "--path",
+            "[PROJECT_ROOT]",
+            "--script",
+            "[EXTERNAL_PROBE]/driver.gd"
+          ],
+          "other_native_pids": [],
+          "line": 27
+        },
+        {
+          "event": "native_finished",
+          "wall_ns": 1792440904135174100,
+          "monotonic_ns": 259185828000000,
+          "harness_pid": 21388,
+          "phase": "recovery",
+          "pid": 16844,
+          "returncode": 0,
+          "line": 43
+        },
+        {
+          "event": "postgresql_snapshot",
+          "wall_ns": 1792440904227427300,
+          "monotonic_ns": 259185921000000,
+          "harness_pid": 21388,
+          "name": "04-after-recovery",
+          "database": "sightbreak_receipt_b567be9ef48b1a6f_test",
+          "connection_pid": 9708,
+          "state_sha256": "ebbb40490584e91529fba57d680bba6c5ae36bc2c3ea4bbb3db985bc403a6844",
+          "line": 44
+        },
+        {
+          "event": "native_started",
+          "wall_ns": 1792440904405311500,
+          "monotonic_ns": 259186109000000,
+          "harness_pid": 21388,
+          "phase": "second-restart",
+          "pid": 14204,
+          "command": [
+            "[EXECUTABLE]/native-client",
+            "--headless",
+            "--verbose",
+            "--path",
+            "[PROJECT_ROOT]",
+            "--script",
+            "[EXTERNAL_PROBE]/driver.gd"
+          ],
+          "other_native_pids": [],
+          "line": 45
+        },
+        {
+          "event": "native_finished",
+          "wall_ns": 1792440905488270600,
+          "monotonic_ns": 259187187000000,
+          "harness_pid": 21388,
+          "phase": "second-restart",
+          "pid": 14204,
+          "returncode": 0,
+          "line": 61
+        },
+        {
+          "event": "postgresql_snapshot",
+          "wall_ns": 1792440905571176500,
+          "monotonic_ns": 259187265000000,
+          "harness_pid": 21388,
+          "name": "05-after-second-restart",
+          "database": "sightbreak_receipt_b567be9ef48b1a6f_test",
+          "connection_pid": 18688,
+          "state_sha256": "ebbb40490584e91529fba57d680bba6c5ae36bc2c3ea4bbb3db985bc403a6844",
+          "line": 62
+        }
+      ],
+      "journal_bytes_before_after": [
+        0,
+        0
+      ],
+      "journal_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "recovery_result": {},
+      "exact_recovered": false,
+      "status": "failed",
+      "producer_flags": {
+        "authoritative_pass": true,
+        "complete_result": true,
+        "stable_journal_at_kill": true,
+        "recovered": false
+      }
+    },
+    {
+      "label": "Set-673EECBC/case-02",
+      "price": 401,
+      "receipt": "2bd715ad-1347-43ae-80da-45a520755248",
+      "ids": {
+        "owner": "e2bb1ed2-fb2c-4a7a-abbc-f125dd0dffed",
+        "seller": "dedce819-a174-4824-9cc9-656ec8dc1864",
+        "item": "3b88f033-4e0a-4ca6-801b-8db2904c6481",
+        "listing": "89f8d7cc-7889-453c-be4f-a4e1b7f0fe70"
+      },
+      "buyer_balances_B_C_K_R_S": [
+        2001,
+        1600,
+        1600,
+        1600,
+        1600
+      ],
+      "seller_balances_B_C_K_R_S": [
+        2000,
+        2389,
+        2389,
+        2389,
+        2389
+      ],
+      "all_player_credits_B_C_K_R_S": [
+        10011589,
+        10011577,
+        10011577,
+        10011577,
+        10011577
+      ],
+      "fee": 12,
+      "table_counts": {
+        "01-before.json": {
+          "players": 6,
+          "items": 3,
+          "listings": 2,
+          "operations": 1,
+          "ledger": 8,
+          "audit": 6,
+          "loadouts": 0,
+          "rewards": 0,
+          "trades": 0
+        },
+        "02-committed-before-kill.json": {
+          "players": 6,
+          "items": 3,
+          "listings": 2,
+          "operations": 2,
+          "ledger": 10,
+          "audit": 7,
+          "loadouts": 0,
+          "rewards": 0,
+          "trades": 0
+        },
+        "03-after-kill.json": {
+          "players": 6,
+          "items": 3,
+          "listings": 2,
+          "operations": 2,
+          "ledger": 10,
+          "audit": 7,
+          "loadouts": 0,
+          "rewards": 0,
+          "trades": 0
+        },
+        "04-after-recovery.json": {
+          "players": 6,
+          "items": 3,
+          "listings": 2,
+          "operations": 2,
+          "ledger": 10,
+          "audit": 7,
+          "loadouts": 0,
+          "rewards": 0,
+          "trades": 0
+        },
+        "05-after-second-restart.json": {
+          "players": 6,
+          "items": 3,
+          "listings": 2,
+          "operations": 2,
+          "ledger": 10,
+          "audit": 7,
+          "loadouts": 0,
+          "rewards": 0,
+          "trades": 0
+        }
+      },
+      "session_counts_B_C_K_R_S": [
+        9,
+        10,
+        10,
+        11,
+        12
+      ],
+      "item_ownership_counts_B_C_K_R_S": {
+        "owner": [
+          0,
+          1,
+          1,
+          1,
+          1
+        ],
+        "seller": [
+          1,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "added_operation": {
+        "id": "e2bb1ed2-fb2c-4a7a-abbc-f125dd0dffed:buy:89f8d7cc-7889-453c-be4f-a4e1b7f0fe70:2bd715ad-1347-43ae-80da-45a520755248",
+        "request_hash": "3bbb70ae187787eba7855128a7e67948a7e7af315f6b61191ec3bf90dd2978a8",
+        "response": {
+          "credits": 1600,
+          "fee": 12,
+          "item": {
+            "acquired_at": "2026-10-19T16:14:56.846507-04:00",
+            "collection": "Obsidian",
+            "definition_id": "obsidian_rare",
+            "id": "3b88f033-4e0a-4ca6-801b-8db2904c6481",
+            "kind": "weapon_skin",
+            "marketplace_eligible": true,
+            "name": "Obsidian / Carbon",
+            "pattern_seed": 1508437719,
+            "rarity": "Rare",
+            "reserved": false,
+            "trade_eligible": true,
+            "variant": "standard",
+            "wear": 0.0935
+          }
+        }
+      },
+      "added_ledger": [
+        {
+          "amount": -401,
+          "balance_after": 1600,
+          "created_at": "2026-10-19 16:15:07.117796-04:00",
+          "id": "b9376b19-8e40-4451-af35-8213fcdfad6c",
+          "player_id": "e2bb1ed2-fb2c-4a7a-abbc-f125dd0dffed",
+          "reason": "market_purchase",
+          "reference": "89f8d7cc-7889-453c-be4f-a4e1b7f0fe70"
+        },
+        {
+          "amount": 389,
+          "balance_after": 2389,
+          "created_at": "2026-10-19 16:15:07.117796-04:00",
+          "id": "bceff4da-fce2-475b-84f5-8742afbf66e9",
+          "player_id": "dedce819-a174-4824-9cc9-656ec8dc1864",
+          "reason": "market_sale",
+          "reference": "89f8d7cc-7889-453c-be4f-a4e1b7f0fe70"
+        }
+      ],
+      "added_audit": {
+        "action": "market_settled",
+        "actor": "e2bb1ed2-fb2c-4a7a-abbc-f125dd0dffed",
+        "created_at": "2026-10-19 16:15:07.122792-04:00",
+        "details": {
+          "fee": 12,
+          "from_player": "dedce819-a174-4824-9cc9-656ec8dc1864",
+          "item_id": "3b88f033-4e0a-4ca6-801b-8db2904c6481",
+          "listing_id": "89f8d7cc-7889-453c-be4f-a4e1b7f0fe70",
+          "to_player": "e2bb1ed2-fb2c-4a7a-abbc-f125dd0dffed"
+        },
+        "id": "735d97c6-ed36-4783-8760-d188863f5bb3"
+      },
+      "purchase_counts_send_recovery_second": [
+        1,
+        0,
+        0
+      ],
+      "fresh_logins": [
+        {
+          "phase": "send",
+          "pid": 22392,
+          "token_sha256": "d86bc502dac8302c9bd372b77004e693e34f31ad72e491b640a792a52a7124d7",
+          "player_id": "e2bb1ed2-fb2c-4a7a-abbc-f125dd0dffed"
+        },
+        {
+          "phase": "recovery",
+          "pid": 8528,
+          "token_sha256": "524a43eef286b4cab9c7ec7dd05dec6246bcee79184338515a03e360467e2d97",
+          "player_id": "e2bb1ed2-fb2c-4a7a-abbc-f125dd0dffed"
+        },
+        {
+          "phase": "second-restart",
+          "pid": 23872,
+          "token_sha256": "eeef7f239419e234fd586f7dd0101b2babb81a12a7a20641d9ac685edc7126d4",
+          "player_id": "e2bb1ed2-fb2c-4a7a-abbc-f125dd0dffed"
+        }
+      ],
+      "recorded_server": "http://127.0.0.1:60072",
+      "sql_clocks_B_C_K_R_S": [
+        {
+          "clock_timestamp": "2026-10-19 16:15:05.867196-04:00",
+          "current_database": "sightbreak_receipt_b567be9ef48b1a6f_test",
+          "inet_server_port": 55439,
+          "pg_backend_pid": 23312,
+          "txid_current_snapshot": "2350:2350:",
+          "version": "PostgreSQL 17.11 on x86_64-windows, compiled by msvc-19.44.35229, 64-bit"
+        },
+        {
+          "clock_timestamp": "2026-10-19 16:15:07.176508-04:00",
+          "current_database": "sightbreak_receipt_b567be9ef48b1a6f_test",
+          "inet_server_port": 55439,
+          "pg_backend_pid": 12708,
+          "txid_current_snapshot": "2354:2354:",
+          "version": "PostgreSQL 17.11 on x86_64-windows, compiled by msvc-19.44.35229, 64-bit"
+        },
+        {
+          "clock_timestamp": "2026-10-19 16:15:07.280803-04:00",
+          "current_database": "sightbreak_receipt_b567be9ef48b1a6f_test",
+          "inet_server_port": 55439,
+          "pg_backend_pid": 1600,
+          "txid_current_snapshot": "2354:2354:",
+          "version": "PostgreSQL 17.11 on x86_64-windows, compiled by msvc-19.44.35229, 64-bit"
+        },
+        {
+          "clock_timestamp": "2026-10-19 16:15:08.841888-04:00",
+          "current_database": "sightbreak_receipt_b567be9ef48b1a6f_test",
+          "inet_server_port": 55439,
+          "pg_backend_pid": 3672,
+          "txid_current_snapshot": "2356:2356:",
+          "version": "PostgreSQL 17.11 on x86_64-windows, compiled by msvc-19.44.35229, 64-bit"
+        },
+        {
+          "clock_timestamp": "2026-10-19 16:15:10.193769-04:00",
+          "current_database": "sightbreak_receipt_b567be9ef48b1a6f_test",
+          "inet_server_port": 55439,
+          "pg_backend_pid": 4964,
+          "txid_current_snapshot": "2358:2358:",
+          "version": "PostgreSQL 17.11 on x86_64-windows, compiled by msvc-19.44.35229, 64-bit"
+        }
+      ],
+      "key_timeline": [
+        {
+          "event": "proxy_request",
+          "wall_ns": 1792440907086416600,
+          "monotonic_ns": 259188781000000,
+          "harness_pid": 21388,
+          "phase": "send",
+          "method": "POST",
+          "path": "/market/89f8d7cc-7889-453c-be4f-a4e1b7f0fe70/buy",
+          "body": {
+            "expected_price": 401,
+            "idempotency_key": "2bd715ad-1347-43ae-80da-45a520755248"
+          },
+          "raw_utf8": "{\"expected_price\":401,\"idempotency_key\":\"2bd715ad-1347-43ae-80da-45a520755248\"}",
+          "token_sha256": "d86bc502dac8302c9bd372b77004e693e34f31ad72e491b640a792a52a7124d7",
+          "line": 18
+        },
+        {
+          "event": "proxy_upstream_response",
+          "wall_ns": 1792440907130019400,
+          "monotonic_ns": 259188828000000,
+          "harness_pid": 21388,
+          "phase": "send",
+          "path": "/market/89f8d7cc-7889-453c-be4f-a4e1b7f0fe70/buy",
+          "status": 200,
+          "response": {
+            "item": {
+              "id": "3b88f033-4e0a-4ca6-801b-8db2904c6481",
+              "definition_id": "obsidian_rare",
+              "rarity": "Rare",
+              "pattern_seed": 1508437719,
+              "wear": 0.0935,
+              "variant": "standard",
+              "collection": "Obsidian",
+              "kind": "weapon_skin",
+              "name": "Obsidian / Carbon",
+              "reserved": false,
+              "trade_eligible": true,
+              "marketplace_eligible": true,
+              "acquired_at": "2026-10-19T16:14:56.846507-04:00"
+            },
+            "credits": 1600,
+            "fee": 12
+          },
+          "raw_utf8": "{\"item\":{\"id\":\"3b88f033-4e0a-4ca6-801b-8db2904c6481\",\"definition_id\":\"obsidian_rare\",\"rarity\":\"Rare\",\"pattern_seed\":1508437719,\"wear\":0.0935,\"variant\":\"standard\",\"collection\":\"Obsidian\",\"kind\":\"weapon_skin\",\"name\":\"Obsidian / Carbon\",\"reserved\":false,\"trade_eligible\":true,\"marketplace_eligible\":true,\"acquired_at\":\"2026-10-19T16:14:56.846507-04:00\"},\"credits\":1600,\"fee\":12}",
+          "line": 19
+        },
+        {
+          "event": "response_held_before_any_client_headers",
+          "wall_ns": 1792440907131026600,
+          "monotonic_ns": 259188828000000,
+          "harness_pid": 21388,
+          "phase": "send",
+          "status": 200,
+          "sent_bytes": 0,
+          "line": 20
+        },
+        {
+          "event": "postgresql_snapshot",
+          "wall_ns": 1792440907213350400,
+          "monotonic_ns": 259188906000000,
+          "harness_pid": 21388,
+          "name": "02-committed-before-kill",
+          "database": "sightbreak_receipt_b567be9ef48b1a6f_test",
+          "connection_pid": 12708,
+          "state_sha256": "983f7811221593baaea2bf24de4d5c9be02d65ca258a2c8e0f10de8b69f5f74e",
+          "line": 21
+        },
+        {
+          "event": "kill_requested",
+          "wall_ns": 1792440907215324100,
+          "monotonic_ns": 259188906000000,
+          "harness_pid": 21388,
+          "pid": 22392,
+          "upstream_committed": true,
+          "client_response_bytes": 0,
+          "line": 22
+        },
+        {
+          "event": "native_finished",
+          "wall_ns": 1792440907233891800,
+          "monotonic_ns": 259188937000000,
+          "harness_pid": 21388,
+          "phase": "killed-client",
+          "pid": 22392,
+          "returncode": 1,
+          "line": 23
+        },
+        {
+          "event": "kill_confirmed",
+          "wall_ns": 1792440907235886300,
+          "monotonic_ns": 259188937000000,
+          "harness_pid": 21388,
+          "pid": 22392,
+          "returncode": 1,
+          "line": 24
+        },
+        {
+          "event": "postgresql_snapshot",
+          "wall_ns": 1792440907319695100,
+          "monotonic_ns": 259189015000000,
+          "harness_pid": 21388,
+          "name": "03-after-kill",
+          "database": "sightbreak_receipt_b567be9ef48b1a6f_test",
+          "connection_pid": 1600,
+          "state_sha256": "983f7811221593baaea2bf24de4d5c9be02d65ca258a2c8e0f10de8b69f5f74e",
+          "line": 25
+        },
+        {
+          "event": "held_response_discarded",
+          "wall_ns": 1792440907320704200,
+          "monotonic_ns": 259189015000000,
+          "harness_pid": 21388,
+          "phase": "send",
+          "sent_bytes": 0,
+          "line": 26
+        },
+        {
+          "event": "native_started",
+          "wall_ns": 1792440907523528600,
+          "monotonic_ns": 259189218000000,
+          "harness_pid": 21388,
+          "phase": "recovery",
+          "pid": 8528,
+          "command": [
+            "[EXECUTABLE]/native-client",
+            "--headless",
+            "--verbose",
+            "--path",
+            "[PROJECT_ROOT]",
+            "--script",
+            "[EXTERNAL_PROBE]/driver.gd"
+          ],
+          "other_native_pids": [],
+          "line": 27
+        },
+        {
+          "event": "native_finished",
+          "wall_ns": 1792440908688468200,
+          "monotonic_ns": 259190390000000,
+          "harness_pid": 21388,
+          "phase": "recovery",
+          "pid": 8528,
+          "returncode": 0,
+          "line": 43
+        },
+        {
+          "event": "postgresql_snapshot",
+          "wall_ns": 1792440908881535400,
+          "monotonic_ns": 259190578000000,
+          "harness_pid": 21388,
+          "name": "04-after-recovery",
+          "database": "sightbreak_receipt_b567be9ef48b1a6f_test",
+          "connection_pid": 3672,
+          "state_sha256": "983f7811221593baaea2bf24de4d5c9be02d65ca258a2c8e0f10de8b69f5f74e",
+          "line": 44
+        },
+        {
+          "event": "native_started",
+          "wall_ns": 1792440909049258600,
+          "monotonic_ns": 259190750000000,
+          "harness_pid": 21388,
+          "phase": "second-restart",
+          "pid": 23872,
+          "command": [
+            "[EXECUTABLE]/native-client",
+            "--headless",
+            "--verbose",
+            "--path",
+            "[PROJECT_ROOT]",
+            "--script",
+            "[EXTERNAL_PROBE]/driver.gd"
+          ],
+          "other_native_pids": [],
+          "line": 45
+        },
+        {
+          "event": "native_finished",
+          "wall_ns": 1792440910035395100,
+          "monotonic_ns": 259191734000000,
+          "harness_pid": 21388,
+          "phase": "second-restart",
+          "pid": 23872,
+          "returncode": 0,
+          "line": 61
+        },
+        {
+          "event": "postgresql_snapshot",
+          "wall_ns": 1792440910244949100,
+          "monotonic_ns": 259191937000000,
+          "harness_pid": 21388,
+          "name": "05-after-second-restart",
+          "database": "sightbreak_receipt_b567be9ef48b1a6f_test",
+          "connection_pid": 4964,
+          "state_sha256": "983f7811221593baaea2bf24de4d5c9be02d65ca258a2c8e0f10de8b69f5f74e",
+          "line": 62
+        }
+      ],
+      "journal_bytes_before_after": [
+        0,
+        0
+      ],
+      "journal_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "recovery_result": {},
+      "exact_recovered": false,
+      "status": "failed",
+      "producer_flags": {
+        "authoritative_pass": true,
+        "complete_result": true,
+        "stable_journal_at_kill": true,
+        "recovered": false
+      }
+    },
+    {
+      "label": "Set-673EECBC/case-03",
+      "price": 10000000,
+      "receipt": "5790bbdf-d686-4496-8b98-43008b31abaf",
+      "ids": {
+        "owner": "cca6e34c-9e4e-4b57-be63-01a5a8c966b4",
+        "seller": "92bf2c1d-1b24-46f4-893b-f9160397c386",
+        "item": "84c005fd-f073-42b2-835b-1973c91f70f8",
+        "listing": "d7b85a0b-cf52-4b0e-83c6-62620ea0287b"
+      },
+      "buyer_balances_B_C_K_R_S": [
+        10001600,
+        1600,
+        1600,
+        1600,
+        1600
+      ],
+      "seller_balances_B_C_K_R_S": [
+        2000,
+        9702000,
+        9702000,
+        9702000,
+        9702000
+      ],
+      "all_player_credits_B_C_K_R_S": [
+        10011577,
+        9711577,
+        9711577,
+        9711577,
+        9711577
+      ],
+      "fee": 300000,
+      "table_counts": {
+        "01-before.json": {
+          "players": 6,
+          "items": 3,
+          "listings": 3,
+          "operations": 2,
+          "ledger": 10,
+          "audit": 8,
+          "loadouts": 0,
+          "rewards": 0,
+          "trades": 0
+        },
+        "02-committed-before-kill.json": {
+          "players": 6,
+          "items": 3,
+          "listings": 3,
+          "operations": 3,
+          "ledger": 12,
+          "audit": 9,
+          "loadouts": 0,
+          "rewards": 0,
+          "trades": 0
+        },
+        "03-after-kill.json": {
+          "players": 6,
+          "items": 3,
+          "listings": 3,
+          "operations": 3,
+          "ledger": 12,
+          "audit": 9,
+          "loadouts": 0,
+          "rewards": 0,
+          "trades": 0
+        },
+        "04-after-recovery.json": {
+          "players": 6,
+          "items": 3,
+          "listings": 3,
+          "operations": 3,
+          "ledger": 12,
+          "audit": 9,
+          "loadouts": 0,
+          "rewards": 0,
+          "trades": 0
+        },
+        "05-after-second-restart.json": {
+          "players": 6,
+          "items": 3,
+          "listings": 3,
+          "operations": 3,
+          "ledger": 12,
+          "audit": 9,
+          "loadouts": 0,
+          "rewards": 0,
+          "trades": 0
+        }
+      },
+      "session_counts_B_C_K_R_S": [
+        12,
+        13,
+        13,
+        14,
+        15
+      ],
+      "item_ownership_counts_B_C_K_R_S": {
+        "owner": [
+          0,
+          1,
+          1,
+          1,
+          1
+        ],
+        "seller": [
+          1,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "added_operation": {
+        "id": "cca6e34c-9e4e-4b57-be63-01a5a8c966b4:buy:d7b85a0b-cf52-4b0e-83c6-62620ea0287b:5790bbdf-d686-4496-8b98-43008b31abaf",
+        "request_hash": "4050e9169692cf054ab64fe3506aa649dc57d4ad9a298021f89bbc5603baf1ce",
+        "response": {
+          "credits": 1600,
+          "fee": 300000,
+          "item": {
+            "acquired_at": "2026-10-19T16:14:57.068471-04:00",
+            "collection": "Obsidian",
+            "definition_id": "obsidian_rare",
+            "id": "84c005fd-f073-42b2-835b-1973c91f70f8",
+            "kind": "weapon_skin",
+            "marketplace_eligible": true,
+            "name": "Obsidian / Carbon",
+            "pattern_seed": 1905491825,
+            "rarity": "Rare",
+            "reserved": false,
+            "trade_eligible": true,
+            "variant": "standard",
+            "wear": 0.9772
+          }
+        }
+      },
+      "added_ledger": [
+        {
+          "amount": -10000000,
+          "balance_after": 1600,
+          "created_at": "2026-10-19 16:15:12.262612-04:00",
+          "id": "753022a6-26e8-4871-a573-4dd919fedadd",
+          "player_id": "cca6e34c-9e4e-4b57-be63-01a5a8c966b4",
+          "reason": "market_purchase",
+          "reference": "d7b85a0b-cf52-4b0e-83c6-62620ea0287b"
+        },
+        {
+          "amount": 9700000,
+          "balance_after": 9702000,
+          "created_at": "2026-10-19 16:15:12.262612-04:00",
+          "id": "ce1b23b0-00b2-42c1-926b-57d13e191bfe",
+          "player_id": "92bf2c1d-1b24-46f4-893b-f9160397c386",
+          "reason": "market_sale",
+          "reference": "d7b85a0b-cf52-4b0e-83c6-62620ea0287b"
+        }
+      ],
+      "added_audit": {
+        "action": "market_settled",
+        "actor": "cca6e34c-9e4e-4b57-be63-01a5a8c966b4",
+        "created_at": "2026-10-19 16:15:12.265956-04:00",
+        "details": {
+          "fee": 300000,
+          "from_player": "92bf2c1d-1b24-46f4-893b-f9160397c386",
+          "item_id": "84c005fd-f073-42b2-835b-1973c91f70f8",
+          "listing_id": "d7b85a0b-cf52-4b0e-83c6-62620ea0287b",
+          "to_player": "cca6e34c-9e4e-4b57-be63-01a5a8c966b4"
+        },
+        "id": "8f928102-af2e-4b17-86d9-b0999095b798"
+      },
+      "purchase_counts_send_recovery_second": [
+        1,
+        0,
+        0
+      ],
+      "fresh_logins": [
+        {
+          "phase": "send",
+          "pid": 21492,
+          "token_sha256": "ae0ee138933b49fd88c7b72da614c1b4c6cf5c86de42ca0965569a3ad24d2e85",
+          "player_id": "cca6e34c-9e4e-4b57-be63-01a5a8c966b4"
+        },
+        {
+          "phase": "recovery",
+          "pid": 21856,
+          "token_sha256": "65b49d42a7ae8206cc0e359cb9c3a5fbdac09278338f3dab4df077efe7015a89",
+          "player_id": "cca6e34c-9e4e-4b57-be63-01a5a8c966b4"
+        },
+        {
+          "phase": "second-restart",
+          "pid": 20904,
+          "token_sha256": "901c660e88e0c6a875f98028476edd56ca6f7ad4454601a157637d5ee5533aec",
+          "player_id": "cca6e34c-9e4e-4b57-be63-01a5a8c966b4"
+        }
+      ],
+      "recorded_server": "http://127.0.0.1:60113",
+      "sql_clocks_B_C_K_R_S": [
+        {
+          "clock_timestamp": "2026-10-19 16:15:11.075229-04:00",
+          "current_database": "sightbreak_receipt_b567be9ef48b1a6f_test",
+          "inet_server_port": 55439,
+          "pg_backend_pid": 8560,
+          "txid_current_snapshot": "2360:2360:",
+          "version": "PostgreSQL 17.11 on x86_64-windows, compiled by msvc-19.44.35229, 64-bit"
+        },
+        {
+          "clock_timestamp": "2026-10-19 16:15:12.318155-04:00",
+          "current_database": "sightbreak_receipt_b567be9ef48b1a6f_test",
+          "inet_server_port": 55439,
+          "pg_backend_pid": 8244,
+          "txid_current_snapshot": "2364:2364:",
+          "version": "PostgreSQL 17.11 on x86_64-windows, compiled by msvc-19.44.35229, 64-bit"
+        },
+        {
+          "clock_timestamp": "2026-10-19 16:15:12.425979-04:00",
+          "current_database": "sightbreak_receipt_b567be9ef48b1a6f_test",
+          "inet_server_port": 55439,
+          "pg_backend_pid": 16088,
+          "txid_current_snapshot": "2364:2364:",
+          "version": "PostgreSQL 17.11 on x86_64-windows, compiled by msvc-19.44.35229, 64-bit"
+        },
+        {
+          "clock_timestamp": "2026-10-19 16:15:13.793261-04:00",
+          "current_database": "sightbreak_receipt_b567be9ef48b1a6f_test",
+          "inet_server_port": 55439,
+          "pg_backend_pid": 6708,
+          "txid_current_snapshot": "2366:2366:",
+          "version": "PostgreSQL 17.11 on x86_64-windows, compiled by msvc-19.44.35229, 64-bit"
+        },
+        {
+          "clock_timestamp": "2026-10-19 16:15:15.017387-04:00",
+          "current_database": "sightbreak_receipt_b567be9ef48b1a6f_test",
+          "inet_server_port": 55439,
+          "pg_backend_pid": 21444,
+          "txid_current_snapshot": "2368:2368:",
+          "version": "PostgreSQL 17.11 on x86_64-windows, compiled by msvc-19.44.35229, 64-bit"
+        }
+      ],
+      "key_timeline": [
+        {
+          "event": "proxy_request",
+          "wall_ns": 1792440912249600600,
+          "monotonic_ns": 259193953000000,
+          "harness_pid": 21388,
+          "phase": "send",
+          "method": "POST",
+          "path": "/market/d7b85a0b-cf52-4b0e-83c6-62620ea0287b/buy",
+          "body": {
+            "expected_price": 10000000,
+            "idempotency_key": "5790bbdf-d686-4496-8b98-43008b31abaf"
+          },
+          "raw_utf8": "{\"expected_price\":10000000,\"idempotency_key\":\"5790bbdf-d686-4496-8b98-43008b31abaf\"}",
+          "token_sha256": "ae0ee138933b49fd88c7b72da614c1b4c6cf5c86de42ca0965569a3ad24d2e85",
+          "line": 18
+        },
+        {
+          "event": "proxy_upstream_response",
+          "wall_ns": 1792440912271988900,
+          "monotonic_ns": 259193968000000,
+          "harness_pid": 21388,
+          "phase": "send",
+          "path": "/market/d7b85a0b-cf52-4b0e-83c6-62620ea0287b/buy",
+          "status": 200,
+          "response": {
+            "item": {
+              "id": "84c005fd-f073-42b2-835b-1973c91f70f8",
+              "definition_id": "obsidian_rare",
+              "rarity": "Rare",
+              "pattern_seed": 1905491825,
+              "wear": 0.9772,
+              "variant": "standard",
+              "collection": "Obsidian",
+              "kind": "weapon_skin",
+              "name": "Obsidian / Carbon",
+              "reserved": false,
+              "trade_eligible": true,
+              "marketplace_eligible": true,
+              "acquired_at": "2026-10-19T16:14:57.068471-04:00"
+            },
+            "credits": 1600,
+            "fee": 300000
+          },
+          "raw_utf8": "{\"item\":{\"id\":\"84c005fd-f073-42b2-835b-1973c91f70f8\",\"definition_id\":\"obsidian_rare\",\"rarity\":\"Rare\",\"pattern_seed\":1905491825,\"wear\":0.9772,\"variant\":\"standard\",\"collection\":\"Obsidian\",\"kind\":\"weapon_skin\",\"name\":\"Obsidian / Carbon\",\"reserved\":false,\"trade_eligible\":true,\"marketplace_eligible\":true,\"acquired_at\":\"2026-10-19T16:14:57.068471-04:00\"},\"credits\":1600,\"fee\":300000}",
+          "line": 19
+        },
+        {
+          "event": "response_held_before_any_client_headers",
+          "wall_ns": 1792440912273017600,
+          "monotonic_ns": 259193968000000,
+          "harness_pid": 21388,
+          "phase": "send",
+          "status": 200,
+          "sent_bytes": 0,
+          "line": 20
+        },
+        {
+          "event": "postgresql_snapshot",
+          "wall_ns": 1792440912354202300,
+          "monotonic_ns": 259194046000000,
+          "harness_pid": 21388,
+          "name": "02-committed-before-kill",
+          "database": "sightbreak_receipt_b567be9ef48b1a6f_test",
+          "connection_pid": 8244,
+          "state_sha256": "2057d94c58dd6eb3665bb56d157702a854517f4fb719ac38123e8e3a633dd8fa",
+          "line": 21
+        },
+        {
+          "event": "kill_requested",
+          "wall_ns": 1792440912356231100,
+          "monotonic_ns": 259194062000000,
+          "harness_pid": 21388,
+          "pid": 21492,
+          "upstream_committed": true,
+          "client_response_bytes": 0,
+          "line": 22
+        },
+        {
+          "event": "native_finished",
+          "wall_ns": 1792440912378070000,
+          "monotonic_ns": 259194078000000,
+          "harness_pid": 21388,
+          "phase": "killed-client",
+          "pid": 21492,
+          "returncode": 1,
+          "line": 23
+        },
+        {
+          "event": "kill_confirmed",
+          "wall_ns": 1792440912380070100,
+          "monotonic_ns": 259194078000000,
+          "harness_pid": 21388,
+          "pid": 21492,
+          "returncode": 1,
+          "line": 24
+        },
+        {
+          "event": "postgresql_snapshot",
+          "wall_ns": 1792440912463495800,
+          "monotonic_ns": 259194156000000,
+          "harness_pid": 21388,
+          "name": "03-after-kill",
+          "database": "sightbreak_receipt_b567be9ef48b1a6f_test",
+          "connection_pid": 16088,
+          "state_sha256": "2057d94c58dd6eb3665bb56d157702a854517f4fb719ac38123e8e3a633dd8fa",
+          "line": 25
+        },
+        {
+          "event": "held_response_discarded",
+          "wall_ns": 1792440912463495800,
+          "monotonic_ns": 259194156000000,
+          "harness_pid": 21388,
+          "phase": "send",
+          "sent_bytes": 0,
+          "line": 26
+        },
+        {
+          "event": "native_started",
+          "wall_ns": 1792440912628983800,
+          "monotonic_ns": 259194328000000,
+          "harness_pid": 21388,
+          "phase": "recovery",
+          "pid": 21856,
+          "command": [
+            "[EXECUTABLE]/native-client",
+            "--headless",
+            "--verbose",
+            "--path",
+            "[PROJECT_ROOT]",
+            "--script",
+            "[EXTERNAL_PROBE]/driver.gd"
+          ],
+          "other_native_pids": [],
+          "line": 27
+        },
+        {
+          "event": "native_finished",
+          "wall_ns": 1792440913635222100,
+          "monotonic_ns": 259195328000000,
+          "harness_pid": 21388,
+          "phase": "recovery",
+          "pid": 21856,
+          "returncode": 0,
+          "line": 43
+        },
+        {
+          "event": "postgresql_snapshot",
+          "wall_ns": 1792440913828630400,
+          "monotonic_ns": 259195531000000,
+          "harness_pid": 21388,
+          "name": "04-after-recovery",
+          "database": "sightbreak_receipt_b567be9ef48b1a6f_test",
+          "connection_pid": 6708,
+          "state_sha256": "2057d94c58dd6eb3665bb56d157702a854517f4fb719ac38123e8e3a633dd8fa",
+          "line": 44
+        },
+        {
+          "event": "native_started",
+          "wall_ns": 1792440913996496100,
+          "monotonic_ns": 259195687000000,
+          "harness_pid": 21388,
+          "phase": "second-restart",
+          "pid": 20904,
+          "command": [
+            "[EXECUTABLE]/native-client",
+            "--headless",
+            "--verbose",
+            "--path",
+            "[PROJECT_ROOT]",
+            "--script",
+            "[EXTERNAL_PROBE]/driver.gd"
+          ],
+          "other_native_pids": [],
+          "line": 45
+        },
+        {
+          "event": "native_finished",
+          "wall_ns": 1792440914973509800,
+          "monotonic_ns": 259196671000000,
+          "harness_pid": 21388,
+          "phase": "second-restart",
+          "pid": 20904,
+          "returncode": 0,
+          "line": 61
+        },
+        {
+          "event": "postgresql_snapshot",
+          "wall_ns": 1792440915055430500,
+          "monotonic_ns": 259196750000000,
+          "harness_pid": 21388,
+          "name": "05-after-second-restart",
+          "database": "sightbreak_receipt_b567be9ef48b1a6f_test",
+          "connection_pid": 21444,
+          "state_sha256": "2057d94c58dd6eb3665bb56d157702a854517f4fb719ac38123e8e3a633dd8fa",
+          "line": 62
+        }
+      ],
+      "journal_bytes_before_after": [
+        0,
+        0
+      ],
+      "journal_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "recovery_result": {},
+      "exact_recovered": false,
+      "status": "failed",
+      "producer_flags": {
+        "authoritative_pass": true,
+        "complete_result": true,
+        "stable_journal_at_kill": true,
+        "recovered": false
+      }
+    },
+    {
+      "label": "Set-8F5F7604/case-01",
+      "price": 400,
+      "receipt": "5b738b74-378c-4b9e-a419-73572c984d86",
+      "ids": {
+        "owner": "f6d4a418-cc68-4701-87af-199cdfeea3d8",
+        "seller": "111bcc66-337b-4a0e-8f4f-29278ddda77d",
+        "item": "ccd04d87-a385-4cea-8a3f-7957969dca9b",
+        "listing": "b63cfa1d-10a8-4200-85e9-14498e68fc72"
+      },
+      "buyer_balances_B_C_K_R_S": [
+        2000,
+        1600,
+        1600,
+        1600,
+        1600
+      ],
+      "seller_balances_B_C_K_R_S": [
+        2000,
+        2388,
+        2388,
+        2388,
+        2388
+      ],
+      "all_player_credits_B_C_K_R_S": [
+        10019601,
+        10019589,
+        10019589,
+        10019589,
+        10019589
+      ],
+      "fee": 12,
+      "table_counts": {
+        "01-before.json": {
+          "players": 10,
+          "items": 9,
+          "listings": 1,
+          "operations": 0,
+          "ledger": 10,
+          "audit": 10,
+          "loadouts": 0,
+          "rewards": 0,
+          "trades": 0
+        },
+        "02-committed-before-kill.json": {
+          "players": 10,
+          "items": 9,
+          "listings": 1,
+          "operations": 1,
+          "ledger": 12,
+          "audit": 11,
+          "loadouts": 0,
+          "rewards": 0,
+          "trades": 0
+        },
+        "03-after-kill.json": {
+          "players": 10,
+          "items": 9,
+          "listings": 1,
+          "operations": 1,
+          "ledger": 12,
+          "audit": 11,
+          "loadouts": 0,
+          "rewards": 0,
+          "trades": 0
+        },
+        "04-after-recovery.json": {
+          "players": 10,
+          "items": 9,
+          "listings": 1,
+          "operations": 1,
+          "ledger": 12,
+          "audit": 11,
+          "loadouts": 0,
+          "rewards": 0,
+          "trades": 0
+        },
+        "05-after-second-restart.json": {
+          "players": 10,
+          "items": 9,
+          "listings": 1,
+          "operations": 1,
+          "ledger": 12,
+          "audit": 11,
+          "loadouts": 0,
+          "rewards": 0,
+          "trades": 0
+        }
+      },
+      "session_counts_B_C_K_R_S": [
+        10,
+        11,
+        11,
+        12,
+        13
+      ],
+      "item_ownership_counts_B_C_K_R_S": {
+        "owner": [
+          0,
+          1,
+          1,
+          1,
+          1
+        ],
+        "seller": [
+          1,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "added_operation": {
+        "id": "f6d4a418-cc68-4701-87af-199cdfeea3d8:buy:b63cfa1d-10a8-4200-85e9-14498e68fc72:5b738b74-378c-4b9e-a419-73572c984d86",
+        "request_hash": "80aac389a7cd89d019fa9691a030a836142f8b9be7948a5e2198e41a36f14bc6",
+        "response": {
+          "credits": 1600,
+          "fee": 12,
+          "item": {
+            "acquired_at": "2026-10-22T20:37:34.513327-04:00",
+            "collection": "Obsidian",
+            "definition_id": "obsidian_rare",
+            "id": "ccd04d87-a385-4cea-8a3f-7957969dca9b",
+            "kind": "weapon_skin",
+            "marketplace_eligible": true,
+            "name": "Obsidian / Carbon",
+            "pattern_seed": 732686202,
+            "rarity": "Rare",
+            "reserved": false,
+            "trade_eligible": true,
+            "variant": "standard",
+            "wear": 0.2769
+          }
+        }
+      },
+      "added_ledger": [
+        {
+          "amount": -400,
+          "balance_after": 1600,
+          "created_at": "2026-10-22 20:37:43.019868-04:00",
+          "id": "3d1f01ae-05cd-4e19-a527-da714363bdd8",
+          "player_id": "f6d4a418-cc68-4701-87af-199cdfeea3d8",
+          "reason": "market_purchase",
+          "reference": "b63cfa1d-10a8-4200-85e9-14498e68fc72"
+        },
+        {
+          "amount": 388,
+          "balance_after": 2388,
+          "created_at": "2026-10-22 20:37:43.019868-04:00",
+          "id": "e122debe-4791-4fd6-870c-5d01fe3d0f92",
+          "player_id": "111bcc66-337b-4a0e-8f4f-29278ddda77d",
+          "reason": "market_sale",
+          "reference": "b63cfa1d-10a8-4200-85e9-14498e68fc72"
+        }
+      ],
+      "added_audit": {
+        "action": "market_settled",
+        "actor": "f6d4a418-cc68-4701-87af-199cdfeea3d8",
+        "created_at": "2026-10-22 20:37:43.032111-04:00",
+        "details": {
+          "fee": 12,
+          "from_player": "111bcc66-337b-4a0e-8f4f-29278ddda77d",
+          "item_id": "ccd04d87-a385-4cea-8a3f-7957969dca9b",
+          "listing_id": "b63cfa1d-10a8-4200-85e9-14498e68fc72",
+          "to_player": "f6d4a418-cc68-4701-87af-199cdfeea3d8"
+        },
+        "id": "dc53484d-dcf4-47d5-8863-44f1803b86c9"
+      },
+      "purchase_counts_send_recovery_second": [
+        1,
+        1,
+        0
+      ],
+      "fresh_logins": [
+        {
+          "phase": "send",
+          "pid": 22304,
+          "token_sha256": "c45a28488bdf23a30f35a5aba54dacbd35a9a9caa8b2608e86b849ad0d7cc5cf",
+          "player_id": "f6d4a418-cc68-4701-87af-199cdfeea3d8"
+        },
+        {
+          "phase": "recovery",
+          "pid": 24420,
+          "token_sha256": "6809aadc2ff9a7a644f54e31901dd425210433f360e2bf86a4d9330962f05e59",
+          "player_id": "f6d4a418-cc68-4701-87af-199cdfeea3d8"
+        },
+        {
+          "phase": "second-restart",
+          "pid": 22552,
+          "token_sha256": "c31601770efd7c33dcee770e224a3aa6ff0c180e31d641dc6eb00082b5c91801",
+          "player_id": "f6d4a418-cc68-4701-87af-199cdfeea3d8"
+        }
+      ],
+      "recorded_server": "http://127.0.0.1:58017",
+      "sql_clocks_B_C_K_R_S": [
+        {
+          "clock_timestamp": "2026-10-22 20:37:40.972586-04:00",
+          "current_database": "sightbreak_receipt_e6adb9395b08029b_test",
+          "inet_server_port": 55439,
+          "pg_backend_pid": 19656,
+          "txid_current_snapshot": "2389:2389:",
+          "version": "PostgreSQL 17.11 on x86_64-windows, compiled by msvc-19.44.35229, 64-bit"
+        },
+        {
+          "clock_timestamp": "2026-10-22 20:37:43.153954-04:00",
+          "current_database": "sightbreak_receipt_e6adb9395b08029b_test",
+          "inet_server_port": 55439,
+          "pg_backend_pid": 19404,
+          "txid_current_snapshot": "2393:2393:",
+          "version": "PostgreSQL 17.11 on x86_64-windows, compiled by msvc-19.44.35229, 64-bit"
+        },
+        {
+          "clock_timestamp": "2026-10-22 20:37:43.387075-04:00",
+          "current_database": "sightbreak_receipt_e6adb9395b08029b_test",
+          "inet_server_port": 55439,
+          "pg_backend_pid": 11284,
+          "txid_current_snapshot": "2393:2393:",
+          "version": "PostgreSQL 17.11 on x86_64-windows, compiled by msvc-19.44.35229, 64-bit"
+        },
+        {
+          "clock_timestamp": "2026-10-22 20:37:45.912563-04:00",
+          "current_database": "sightbreak_receipt_e6adb9395b08029b_test",
+          "inet_server_port": 55439,
+          "pg_backend_pid": 6460,
+          "txid_current_snapshot": "2396:2396:",
+          "version": "PostgreSQL 17.11 on x86_64-windows, compiled by msvc-19.44.35229, 64-bit"
+        },
+        {
+          "clock_timestamp": "2026-10-22 20:37:48.092986-04:00",
+          "current_database": "sightbreak_receipt_e6adb9395b08029b_test",
+          "inet_server_port": 55439,
+          "pg_backend_pid": 21420,
+          "txid_current_snapshot": "2398:2398:",
+          "version": "PostgreSQL 17.11 on x86_64-windows, compiled by msvc-19.44.35229, 64-bit"
+        }
+      ],
+      "key_timeline": [
+        {
+          "event": "proxy_request",
+          "wall_ns": 1792715862985496600,
+          "monotonic_ns": 253619328000000,
+          "harness_pid": 16820,
+          "phase": "send",
+          "method": "POST",
+          "path": "/market/b63cfa1d-10a8-4200-85e9-14498e68fc72/buy",
+          "body": {
+            "expected_price": 400,
+            "idempotency_key": "5b738b74-378c-4b9e-a419-73572c984d86"
+          },
+          "raw_utf8": "{\"expected_price\":400,\"idempotency_key\":\"5b738b74-378c-4b9e-a419-73572c984d86\"}",
+          "token_sha256": "c45a28488bdf23a30f35a5aba54dacbd35a9a9caa8b2608e86b849ad0d7cc5cf",
+          "line": 18
+        },
+        {
+          "event": "proxy_upstream_response",
+          "wall_ns": 1792715863045126800,
+          "monotonic_ns": 253619375000000,
+          "harness_pid": 16820,
+          "phase": "send",
+          "path": "/market/b63cfa1d-10a8-4200-85e9-14498e68fc72/buy",
+          "status": 200,
+          "response": {
+            "item": {
+              "id": "ccd04d87-a385-4cea-8a3f-7957969dca9b",
+              "definition_id": "obsidian_rare",
+              "rarity": "Rare",
+              "pattern_seed": 732686202,
+              "wear": 0.2769,
+              "variant": "standard",
+              "collection": "Obsidian",
+              "kind": "weapon_skin",
+              "name": "Obsidian / Carbon",
+              "reserved": false,
+              "trade_eligible": true,
+              "marketplace_eligible": true,
+              "acquired_at": "2026-10-22T20:37:34.513327-04:00"
+            },
+            "credits": 1600,
+            "fee": 12
+          },
+          "raw_utf8": "{\"item\":{\"id\":\"ccd04d87-a385-4cea-8a3f-7957969dca9b\",\"definition_id\":\"obsidian_rare\",\"rarity\":\"Rare\",\"pattern_seed\":732686202,\"wear\":0.2769,\"variant\":\"standard\",\"collection\":\"Obsidian\",\"kind\":\"weapon_skin\",\"name\":\"Obsidian / Carbon\",\"reserved\":false,\"trade_eligible\":true,\"marketplace_eligible\":true,\"acquired_at\":\"2026-10-22T20:37:34.513327-04:00\"},\"credits\":1600,\"fee\":12}",
+          "line": 19
+        },
+        {
+          "event": "response_held_before_any_client_headers",
+          "wall_ns": 1792715863047789400,
+          "monotonic_ns": 253619390000000,
+          "harness_pid": 16820,
+          "phase": "send",
+          "status": 200,
+          "sent_bytes": 0,
+          "line": 20
+        },
+        {
+          "event": "postgresql_snapshot",
+          "wall_ns": 1792715863215748300,
+          "monotonic_ns": 253619546000000,
+          "harness_pid": 16820,
+          "name": "02-committed-before-kill",
+          "database": "sightbreak_receipt_e6adb9395b08029b_test",
+          "connection_pid": 19404,
+          "state_sha256": "3ee9a04399542fb7e1c3d273777ea55ecc6f58838a21ae559e601a8494673a8d",
+          "line": 21
+        },
+        {
+          "event": "kill_requested",
+          "wall_ns": 1792715863220625200,
+          "monotonic_ns": 253619562000000,
+          "harness_pid": 16820,
+          "pid": 22304,
+          "upstream_committed": true,
+          "client_response_bytes": 0,
+          "line": 22
+        },
+        {
+          "event": "native_finished",
+          "wall_ns": 1792715863278176000,
+          "monotonic_ns": 253619609000000,
+          "harness_pid": 16820,
+          "phase": "killed-client",
+          "pid": 22304,
+          "returncode": 1,
+          "line": 23
+        },
+        {
+          "event": "kill_confirmed",
+          "wall_ns": 1792715863282637900,
+          "monotonic_ns": 253619625000000,
+          "harness_pid": 16820,
+          "pid": 22304,
+          "returncode": 1,
+          "line": 24
+        },
+        {
+          "event": "postgresql_snapshot",
+          "wall_ns": 1792715863444689000,
+          "monotonic_ns": 253619781000000,
+          "harness_pid": 16820,
+          "name": "03-after-kill",
+          "database": "sightbreak_receipt_e6adb9395b08029b_test",
+          "connection_pid": 11284,
+          "state_sha256": "3ee9a04399542fb7e1c3d273777ea55ecc6f58838a21ae559e601a8494673a8d",
+          "line": 25
+        },
+        {
+          "event": "held_response_discarded",
+          "wall_ns": 1792715863446702500,
+          "monotonic_ns": 253619781000000,
+          "harness_pid": 16820,
+          "phase": "send",
+          "sent_bytes": 0,
+          "line": 26
+        },
+        {
+          "event": "native_started",
+          "wall_ns": 1792715863662415700,
+          "monotonic_ns": 253620000000000,
+          "harness_pid": 16820,
+          "phase": "recovery",
+          "pid": 24420,
+          "command": [
+            "[EXECUTABLE]/native-client",
+            "--headless",
+            "--verbose",
+            "--path",
+            "[PROJECT_ROOT]",
+            "--script",
+            "[EXTERNAL_PROBE]/driver.gd"
+          ],
+          "other_native_pids": [],
+          "line": 27
+        },
+        {
+          "event": "native_finished",
+          "wall_ns": 1792715865802344500,
+          "monotonic_ns": 253622140000000,
+          "harness_pid": 16820,
+          "phase": "recovery",
+          "pid": 24420,
+          "returncode": 0,
+          "line": 58
+        },
+        {
+          "event": "postgresql_snapshot",
+          "wall_ns": 1792715865979142000,
+          "monotonic_ns": 253622312000000,
+          "harness_pid": 16820,
+          "name": "04-after-recovery",
+          "database": "sightbreak_receipt_e6adb9395b08029b_test",
+          "connection_pid": 6460,
+          "state_sha256": "3ee9a04399542fb7e1c3d273777ea55ecc6f58838a21ae559e601a8494673a8d",
+          "line": 59
+        },
+        {
+          "event": "native_started",
+          "wall_ns": 1792715866200854500,
+          "monotonic_ns": 253622531000000,
+          "harness_pid": 16820,
+          "phase": "second-restart",
+          "pid": 22552,
+          "command": [
+            "[EXECUTABLE]/native-client",
+            "--headless",
+            "--verbose",
+            "--path",
+            "[PROJECT_ROOT]",
+            "--script",
+            "[EXTERNAL_PROBE]/driver.gd"
+          ],
+          "other_native_pids": [],
+          "line": 60
+        },
+        {
+          "event": "native_finished",
+          "wall_ns": 1792715867953406700,
+          "monotonic_ns": 253624281000000,
+          "harness_pid": 16820,
+          "phase": "second-restart",
+          "pid": 22552,
+          "returncode": 0,
+          "line": 76
+        },
+        {
+          "event": "postgresql_snapshot",
+          "wall_ns": 1792715868150115400,
+          "monotonic_ns": 253624484000000,
+          "harness_pid": 16820,
+          "name": "05-after-second-restart",
+          "database": "sightbreak_receipt_e6adb9395b08029b_test",
+          "connection_pid": 21420,
+          "state_sha256": "3ee9a04399542fb7e1c3d273777ea55ecc6f58838a21ae559e601a8494673a8d",
+          "line": 77
+        }
+      ],
+      "journal_bytes_before_after": [
+        303,
+        303
+      ],
+      "journal_sha256": "78b1a4744ee59b77bce1ca78673df5fb81b2ed60dc0c7168406961207287db2b",
+      "recovery_result": {
+        "credits": 1600.0,
+        "fee": 12.0,
+        "item": {
+          "acquired_at": "2026-10-22T20:37:34.513327-04:00",
+          "collection": "Obsidian",
+          "definition_id": "obsidian_rare",
+          "id": "ccd04d87-a385-4cea-8a3f-7957969dca9b",
+          "kind": "weapon_skin",
+          "marketplace_eligible": true,
+          "name": "Obsidian / Carbon",
+          "pattern_seed": 732686202.0,
+          "rarity": "Rare",
+          "reserved": false,
+          "trade_eligible": true,
+          "variant": "standard",
+          "wear": 0.2769
+        }
+      },
+      "exact_recovered": true,
+      "status": "supported",
+      "producer_flags": {
+        "authoritative_pass": true,
+        "complete_result": true,
+        "stable_journal_at_kill": true,
+        "recovered": true
+      }
+    },
+    {
+      "label": "Set-8F5F7604/case-02",
+      "price": 401,
+      "receipt": "507c37e7-7de4-499d-b03e-4b60d5d1e206",
+      "ids": {
+        "owner": "1a40efcb-9ab5-46b5-ac8c-88ebd7c2b9cf",
+        "seller": "c45c1fb7-33af-46dc-9080-ef32e0a98081",
+        "item": "c7f3d941-90fe-479c-b10c-dbc60bf83f81",
+        "listing": "60ddae4f-ea23-44df-b821-af2a951abc34"
+      },
+      "buyer_balances_B_C_K_R_S": [
+        2001,
+        1600,
+        1600,
+        1600,
+        1600
+      ],
+      "seller_balances_B_C_K_R_S": [
+        2000,
+        2389,
+        2389,
+        2389,
+        2389
+      ],
+      "all_player_credits_B_C_K_R_S": [
+        10019589,
+        10019577,
+        10019577,
+        10019577,
+        10019577
+      ],
+      "fee": 12,
+      "table_counts": {
+        "01-before.json": {
+          "players": 10,
+          "items": 9,
+          "listings": 2,
+          "operations": 1,
+          "ledger": 12,
+          "audit": 12,
+          "loadouts": 0,
+          "rewards": 0,
+          "trades": 0
+        },
+        "02-committed-before-kill.json": {
+          "players": 10,
+          "items": 9,
+          "listings": 2,
+          "operations": 2,
+          "ledger": 14,
+          "audit": 13,
+          "loadouts": 0,
+          "rewards": 0,
+          "trades": 0
+        },
+        "03-after-kill.json": {
+          "players": 10,
+          "items": 9,
+          "listings": 2,
+          "operations": 2,
+          "ledger": 14,
+          "audit": 13,
+          "loadouts": 0,
+          "rewards": 0,
+          "trades": 0
+        },
+        "04-after-recovery.json": {
+          "players": 10,
+          "items": 9,
+          "listings": 2,
+          "operations": 2,
+          "ledger": 14,
+          "audit": 13,
+          "loadouts": 0,
+          "rewards": 0,
+          "trades": 0
+        },
+        "05-after-second-restart.json": {
+          "players": 10,
+          "items": 9,
+          "listings": 2,
+          "operations": 2,
+          "ledger": 14,
+          "audit": 13,
+          "loadouts": 0,
+          "rewards": 0,
+          "trades": 0
+        }
+      },
+      "session_counts_B_C_K_R_S": [
+        13,
+        14,
+        14,
+        15,
+        16
+      ],
+      "item_ownership_counts_B_C_K_R_S": {
+        "owner": [
+          0,
+          1,
+          1,
+          1,
+          1
+        ],
+        "seller": [
+          1,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "added_operation": {
+        "id": "1a40efcb-9ab5-46b5-ac8c-88ebd7c2b9cf:buy:60ddae4f-ea23-44df-b821-af2a951abc34:507c37e7-7de4-499d-b03e-4b60d5d1e206",
+        "request_hash": "c749521a7c851acbd26cb012475245cf14c339715f27e57d76cf48b045767170",
+        "response": {
+          "credits": 1600,
+          "fee": 12,
+          "item": {
+            "acquired_at": "2026-10-22T20:37:34.792270-04:00",
+            "collection": "Obsidian",
+            "definition_id": "obsidian_rare",
+            "id": "c7f3d941-90fe-479c-b10c-dbc60bf83f81",
+            "kind": "weapon_skin",
+            "marketplace_eligible": true,
+            "name": "Obsidian / Carbon",
+            "pattern_seed": 488346275,
+            "rarity": "Rare",
+            "reserved": false,
+            "trade_eligible": true,
+            "variant": "standard",
+            "wear": 0.5619
+          }
+        }
+      },
+      "added_ledger": [
+        {
+          "amount": 389,
+          "balance_after": 2389,
+          "created_at": "2026-10-22 20:37:50.784778-04:00",
+          "id": "401336e0-3a6a-4ac2-9eb8-a475062c4d59",
+          "player_id": "c45c1fb7-33af-46dc-9080-ef32e0a98081",
+          "reason": "market_sale",
+          "reference": "60ddae4f-ea23-44df-b821-af2a951abc34"
+        },
+        {
+          "amount": -401,
+          "balance_after": 1600,
+          "created_at": "2026-10-22 20:37:50.784778-04:00",
+          "id": "815f6cf2-60bc-445f-9fb5-0097506cb20f",
+          "player_id": "1a40efcb-9ab5-46b5-ac8c-88ebd7c2b9cf",
+          "reason": "market_purchase",
+          "reference": "60ddae4f-ea23-44df-b821-af2a951abc34"
+        }
+      ],
+      "added_audit": {
+        "action": "market_settled",
+        "actor": "1a40efcb-9ab5-46b5-ac8c-88ebd7c2b9cf",
+        "created_at": "2026-10-22 20:37:50.789974-04:00",
+        "details": {
+          "fee": 12,
+          "from_player": "c45c1fb7-33af-46dc-9080-ef32e0a98081",
+          "item_id": "c7f3d941-90fe-479c-b10c-dbc60bf83f81",
+          "listing_id": "60ddae4f-ea23-44df-b821-af2a951abc34",
+          "to_player": "1a40efcb-9ab5-46b5-ac8c-88ebd7c2b9cf"
+        },
+        "id": "bea48340-c630-4e51-8b30-faded8a00646"
+      },
+      "purchase_counts_send_recovery_second": [
+        1,
+        1,
+        0
+      ],
+      "fresh_logins": [
+        {
+          "phase": "send",
+          "pid": 14060,
+          "token_sha256": "22784da5da62e553e84a8baba8557b916d3e4bfd0b0d526afa3bf47848e9a014",
+          "player_id": "1a40efcb-9ab5-46b5-ac8c-88ebd7c2b9cf"
+        },
+        {
+          "phase": "recovery",
+          "pid": 2368,
+          "token_sha256": "80d36c812424dd9be8488c99ec1c4246316bdd3ba474a42af5ba273264c02d8a",
+          "player_id": "1a40efcb-9ab5-46b5-ac8c-88ebd7c2b9cf"
+        },
+        {
+          "phase": "second-restart",
+          "pid": 21868,
+          "token_sha256": "204b6ddd5cc19c0951438ef4ca6da54ed7c23212ae4d2aebd51fc6815d056820",
+          "player_id": "1a40efcb-9ab5-46b5-ac8c-88ebd7c2b9cf"
+        }
+      ],
+      "recorded_server": "http://127.0.0.1:58072",
+      "sql_clocks_B_C_K_R_S": [
+        {
+          "clock_timestamp": "2026-10-22 20:37:48.835824-04:00",
+          "current_database": "sightbreak_receipt_e6adb9395b08029b_test",
+          "inet_server_port": 55439,
+          "pg_backend_pid": 23148,
+          "txid_current_snapshot": "2400:2400:",
+          "version": "PostgreSQL 17.11 on x86_64-windows, compiled by msvc-19.44.35229, 64-bit"
+        },
+        {
+          "clock_timestamp": "2026-10-22 20:37:50.906674-04:00",
+          "current_database": "sightbreak_receipt_e6adb9395b08029b_test",
+          "inet_server_port": 55439,
+          "pg_backend_pid": 2492,
+          "txid_current_snapshot": "2404:2404:",
+          "version": "PostgreSQL 17.11 on x86_64-windows, compiled by msvc-19.44.35229, 64-bit"
+        },
+        {
+          "clock_timestamp": "2026-10-22 20:37:51.132960-04:00",
+          "current_database": "sightbreak_receipt_e6adb9395b08029b_test",
+          "inet_server_port": 55439,
+          "pg_backend_pid": 24172,
+          "txid_current_snapshot": "2404:2404:",
+          "version": "PostgreSQL 17.11 on x86_64-windows, compiled by msvc-19.44.35229, 64-bit"
+        },
+        {
+          "clock_timestamp": "2026-10-22 20:37:53.663743-04:00",
+          "current_database": "sightbreak_receipt_e6adb9395b08029b_test",
+          "inet_server_port": 55439,
+          "pg_backend_pid": 12620,
+          "txid_current_snapshot": "2407:2407:",
+          "version": "PostgreSQL 17.11 on x86_64-windows, compiled by msvc-19.44.35229, 64-bit"
+        },
+        {
+          "clock_timestamp": "2026-10-22 20:37:55.986777-04:00",
+          "current_database": "sightbreak_receipt_e6adb9395b08029b_test",
+          "inet_server_port": 55439,
+          "pg_backend_pid": 8208,
+          "txid_current_snapshot": "2409:2409:",
+          "version": "PostgreSQL 17.11 on x86_64-windows, compiled by msvc-19.44.35229, 64-bit"
+        }
+      ],
+      "key_timeline": [
+        {
+          "event": "proxy_request",
+          "wall_ns": 1792715870741413100,
+          "monotonic_ns": 253627078000000,
+          "harness_pid": 16820,
+          "phase": "send",
+          "method": "POST",
+          "path": "/market/60ddae4f-ea23-44df-b821-af2a951abc34/buy",
+          "body": {
+            "expected_price": 401,
+            "idempotency_key": "507c37e7-7de4-499d-b03e-4b60d5d1e206"
+          },
+          "raw_utf8": "{\"expected_price\":401,\"idempotency_key\":\"507c37e7-7de4-499d-b03e-4b60d5d1e206\"}",
+          "token_sha256": "22784da5da62e553e84a8baba8557b916d3e4bfd0b0d526afa3bf47848e9a014",
+          "line": 18
+        },
+        {
+          "event": "proxy_upstream_response",
+          "wall_ns": 1792715870799174400,
+          "monotonic_ns": 253627140000000,
+          "harness_pid": 16820,
+          "phase": "send",
+          "path": "/market/60ddae4f-ea23-44df-b821-af2a951abc34/buy",
+          "status": 200,
+          "response": {
+            "item": {
+              "id": "c7f3d941-90fe-479c-b10c-dbc60bf83f81",
+              "definition_id": "obsidian_rare",
+              "rarity": "Rare",
+              "pattern_seed": 488346275,
+              "wear": 0.5619,
+              "variant": "standard",
+              "collection": "Obsidian",
+              "kind": "weapon_skin",
+              "name": "Obsidian / Carbon",
+              "reserved": false,
+              "trade_eligible": true,
+              "marketplace_eligible": true,
+              "acquired_at": "2026-10-22T20:37:34.792270-04:00"
+            },
+            "credits": 1600,
+            "fee": 12
+          },
+          "raw_utf8": "{\"item\":{\"id\":\"c7f3d941-90fe-479c-b10c-dbc60bf83f81\",\"definition_id\":\"obsidian_rare\",\"rarity\":\"Rare\",\"pattern_seed\":488346275,\"wear\":0.5619,\"variant\":\"standard\",\"collection\":\"Obsidian\",\"kind\":\"weapon_skin\",\"name\":\"Obsidian / Carbon\",\"reserved\":false,\"trade_eligible\":true,\"marketplace_eligible\":true,\"acquired_at\":\"2026-10-22T20:37:34.792270-04:00\"},\"credits\":1600,\"fee\":12}",
+          "line": 19
+        },
+        {
+          "event": "response_held_before_any_client_headers",
+          "wall_ns": 1792715870799174400,
+          "monotonic_ns": 253627140000000,
+          "harness_pid": 16820,
+          "phase": "send",
+          "status": 200,
+          "sent_bytes": 0,
+          "line": 20
+        },
+        {
+          "event": "postgresql_snapshot",
+          "wall_ns": 1792715870961878400,
+          "monotonic_ns": 253627296000000,
+          "harness_pid": 16820,
+          "name": "02-committed-before-kill",
+          "database": "sightbreak_receipt_e6adb9395b08029b_test",
+          "connection_pid": 2492,
+          "state_sha256": "b00820fab3386c12a54f01c31dc2037414d80b1c620e49cee4e3e590d228f6f1",
+          "line": 21
+        },
+        {
+          "event": "kill_requested",
+          "wall_ns": 1792715870967491900,
+          "monotonic_ns": 253627296000000,
+          "harness_pid": 16820,
+          "pid": 14060,
+          "upstream_committed": true,
+          "client_response_bytes": 0,
+          "line": 22
+        },
+        {
+          "event": "native_finished",
+          "wall_ns": 1792715871023740100,
+          "monotonic_ns": 253627359000000,
+          "harness_pid": 16820,
+          "phase": "killed-client",
+          "pid": 14060,
+          "returncode": 1,
+          "line": 23
+        },
+        {
+          "event": "kill_confirmed",
+          "wall_ns": 1792715871027315400,
+          "monotonic_ns": 253627359000000,
+          "harness_pid": 16820,
+          "pid": 14060,
+          "returncode": 1,
+          "line": 24
+        },
+        {
+          "event": "postgresql_snapshot",
+          "wall_ns": 1792715871191079300,
+          "monotonic_ns": 253627531000000,
+          "harness_pid": 16820,
+          "name": "03-after-kill",
+          "database": "sightbreak_receipt_e6adb9395b08029b_test",
+          "connection_pid": 24172,
+          "state_sha256": "b00820fab3386c12a54f01c31dc2037414d80b1c620e49cee4e3e590d228f6f1",
+          "line": 25
+        },
+        {
+          "event": "held_response_discarded",
+          "wall_ns": 1792715871192207300,
+          "monotonic_ns": 253627531000000,
+          "harness_pid": 16820,
+          "phase": "send",
+          "sent_bytes": 0,
+          "line": 26
+        },
+        {
+          "event": "native_started",
+          "wall_ns": 1792715871440931200,
+          "monotonic_ns": 253627781000000,
+          "harness_pid": 16820,
+          "phase": "recovery",
+          "pid": 2368,
+          "command": [
+            "[EXECUTABLE]/native-client",
+            "--headless",
+            "--verbose",
+            "--path",
+            "[PROJECT_ROOT]",
+            "--script",
+            "[EXTERNAL_PROBE]/driver.gd"
+          ],
+          "other_native_pids": [],
+          "line": 27
+        },
+        {
+          "event": "native_finished",
+          "wall_ns": 1792715873562270100,
+          "monotonic_ns": 253629890000000,
+          "harness_pid": 16820,
+          "phase": "recovery",
+          "pid": 2368,
+          "returncode": 0,
+          "line": 58
+        },
+        {
+          "event": "postgresql_snapshot",
+          "wall_ns": 1792715873727899100,
+          "monotonic_ns": 253630062000000,
+          "harness_pid": 16820,
+          "name": "04-after-recovery",
+          "database": "sightbreak_receipt_e6adb9395b08029b_test",
+          "connection_pid": 12620,
+          "state_sha256": "b00820fab3386c12a54f01c31dc2037414d80b1c620e49cee4e3e590d228f6f1",
+          "line": 59
+        },
+        {
+          "event": "native_started",
+          "wall_ns": 1792715873987451400,
+          "monotonic_ns": 253630328000000,
+          "harness_pid": 16820,
+          "phase": "second-restart",
+          "pid": 21868,
+          "command": [
+            "[EXECUTABLE]/native-client",
+            "--headless",
+            "--verbose",
+            "--path",
+            "[PROJECT_ROOT]",
+            "--script",
+            "[EXTERNAL_PROBE]/driver.gd"
+          ],
+          "other_native_pids": [],
+          "line": 60
+        },
+        {
+          "event": "native_finished",
+          "wall_ns": 1792715875878535400,
+          "monotonic_ns": 253632218000000,
+          "harness_pid": 16820,
+          "phase": "second-restart",
+          "pid": 21868,
+          "returncode": 0,
+          "line": 76
+        },
+        {
+          "event": "postgresql_snapshot",
+          "wall_ns": 1792715876045962000,
+          "monotonic_ns": 253632375000000,
+          "harness_pid": 16820,
+          "name": "05-after-second-restart",
+          "database": "sightbreak_receipt_e6adb9395b08029b_test",
+          "connection_pid": 8208,
+          "state_sha256": "b00820fab3386c12a54f01c31dc2037414d80b1c620e49cee4e3e590d228f6f1",
+          "line": 77
+        }
+      ],
+      "journal_bytes_before_after": [
+        303,
+        303
+      ],
+      "journal_sha256": "b484bab5027f69f01f92aee578b2238cbd96d8cbba28a480eb1f9ea50fd572d6",
+      "recovery_result": {
+        "credits": 1600.0,
+        "fee": 12.0,
+        "item": {
+          "acquired_at": "2026-10-22T20:37:34.792270-04:00",
+          "collection": "Obsidian",
+          "definition_id": "obsidian_rare",
+          "id": "c7f3d941-90fe-479c-b10c-dbc60bf83f81",
+          "kind": "weapon_skin",
+          "marketplace_eligible": true,
+          "name": "Obsidian / Carbon",
+          "pattern_seed": 488346275.0,
+          "rarity": "Rare",
+          "reserved": false,
+          "trade_eligible": true,
+          "variant": "standard",
+          "wear": 0.5619
+        }
+      },
+      "exact_recovered": true,
+      "status": "supported",
+      "producer_flags": {
+        "authoritative_pass": true,
+        "complete_result": true,
+        "stable_journal_at_kill": true,
+        "recovered": true
+      }
+    },
+    {
+      "label": "Set-8F5F7604/case-03",
+      "price": 10000000,
+      "receipt": "3ea73f56-634f-4436-be82-2eaa8075e58c",
+      "ids": {
+        "owner": "f87d72ae-2943-408e-82e8-7cadd001a0d6",
+        "seller": "a76f7990-cb6a-4075-9aaf-443a2bbdccdc",
+        "item": "c5fef93f-d11d-4740-87b6-aff42a9be6c1",
+        "listing": "e03d5af6-82e6-4255-8216-5db58bac9217"
+      },
+      "buyer_balances_B_C_K_R_S": [
+        10001600,
+        1600,
+        1600,
+        1600,
+        1600
+      ],
+      "seller_balances_B_C_K_R_S": [
+        2000,
+        9702000,
+        9702000,
+        9702000,
+        9702000
+      ],
+      "all_player_credits_B_C_K_R_S": [
+        10019577,
+        9719577,
+        9719577,
+        9719577,
+        9719577
+      ],
+      "fee": 300000,
+      "table_counts": {
+        "01-before.json": {
+          "players": 10,
+          "items": 9,
+          "listings": 3,
+          "operations": 2,
+          "ledger": 14,
+          "audit": 14,
+          "loadouts": 0,
+          "rewards": 0,
+          "trades": 0
+        },
+        "02-committed-before-kill.json": {
+          "players": 10,
+          "items": 9,
+          "listings": 3,
+          "operations": 3,
+          "ledger": 16,
+          "audit": 15,
+          "loadouts": 0,
+          "rewards": 0,
+          "trades": 0
+        },
+        "03-after-kill.json": {
+          "players": 10,
+          "items": 9,
+          "listings": 3,
+          "operations": 3,
+          "ledger": 16,
+          "audit": 15,
+          "loadouts": 0,
+          "rewards": 0,
+          "trades": 0
+        },
+        "04-after-recovery.json": {
+          "players": 10,
+          "items": 9,
+          "listings": 3,
+          "operations": 3,
+          "ledger": 16,
+          "audit": 15,
+          "loadouts": 0,
+          "rewards": 0,
+          "trades": 0
+        },
+        "05-after-second-restart.json": {
+          "players": 10,
+          "items": 9,
+          "listings": 3,
+          "operations": 3,
+          "ledger": 16,
+          "audit": 15,
+          "loadouts": 0,
+          "rewards": 0,
+          "trades": 0
+        }
+      },
+      "session_counts_B_C_K_R_S": [
+        16,
+        17,
+        17,
+        18,
+        19
+      ],
+      "item_ownership_counts_B_C_K_R_S": {
+        "owner": [
+          0,
+          1,
+          1,
+          1,
+          1
+        ],
+        "seller": [
+          1,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "added_operation": {
+        "id": "f87d72ae-2943-408e-82e8-7cadd001a0d6:buy:e03d5af6-82e6-4255-8216-5db58bac9217:3ea73f56-634f-4436-be82-2eaa8075e58c",
+        "request_hash": "80896a1c6f18070938f0c67474265087467d33c36ef7d565b5c93b1f9794c9ab",
+        "response": {
+          "credits": 1600,
+          "fee": 300000,
+          "item": {
+            "acquired_at": "2026-10-22T20:37:35.094724-04:00",
+            "collection": "Obsidian",
+            "definition_id": "obsidian_rare",
+            "id": "c5fef93f-d11d-4740-87b6-aff42a9be6c1",
+            "kind": "weapon_skin",
+            "marketplace_eligible": true,
+            "name": "Obsidian / Carbon",
+            "pattern_seed": 1408394567,
+            "rarity": "Rare",
+            "reserved": false,
+            "trade_eligible": true,
+            "variant": "standard",
+            "wear": 0.7798
+          }
+        }
+      },
+      "added_ledger": [
+        {
+          "amount": 9700000,
+          "balance_after": 9702000,
+          "created_at": "2026-10-22 20:37:58.803430-04:00",
+          "id": "7a880e25-943c-4dbd-bc67-9c65c1e8482e",
+          "player_id": "a76f7990-cb6a-4075-9aaf-443a2bbdccdc",
+          "reason": "market_sale",
+          "reference": "e03d5af6-82e6-4255-8216-5db58bac9217"
+        },
+        {
+          "amount": -10000000,
+          "balance_after": 1600,
+          "created_at": "2026-10-22 20:37:58.803430-04:00",
+          "id": "f9c56c1c-b0c3-4ef1-9b03-2cadd780d2c0",
+          "player_id": "f87d72ae-2943-408e-82e8-7cadd001a0d6",
+          "reason": "market_purchase",
+          "reference": "e03d5af6-82e6-4255-8216-5db58bac9217"
+        }
+      ],
+      "added_audit": {
+        "action": "market_settled",
+        "actor": "f87d72ae-2943-408e-82e8-7cadd001a0d6",
+        "created_at": "2026-10-22 20:37:58.809885-04:00",
+        "details": {
+          "fee": 300000,
+          "from_player": "a76f7990-cb6a-4075-9aaf-443a2bbdccdc",
+          "item_id": "c5fef93f-d11d-4740-87b6-aff42a9be6c1",
+          "listing_id": "e03d5af6-82e6-4255-8216-5db58bac9217",
+          "to_player": "f87d72ae-2943-408e-82e8-7cadd001a0d6"
+        },
+        "id": "47ec0771-c344-472f-a15d-eda99de210b8"
+      },
+      "purchase_counts_send_recovery_second": [
+        1,
+        1,
+        0
+      ],
+      "fresh_logins": [
+        {
+          "phase": "send",
+          "pid": 16160,
+          "token_sha256": "9ff62428b56f4fc027ddc4de4e30353a618e92123c396adf456c39a6596f86f4",
+          "player_id": "f87d72ae-2943-408e-82e8-7cadd001a0d6"
+        },
+        {
+          "phase": "recovery",
+          "pid": 19404,
+          "token_sha256": "0669f16f7280789cd4e8fa167bc45f7d43e65dadc16e9b634354108f01b18396",
+          "player_id": "f87d72ae-2943-408e-82e8-7cadd001a0d6"
+        },
+        {
+          "phase": "second-restart",
+          "pid": 21184,
+          "token_sha256": "ad3624dd96f709b883c5e926bd005a9df6cadcabc417e0cc976cbe94e59d7573",
+          "player_id": "f87d72ae-2943-408e-82e8-7cadd001a0d6"
+        }
+      ],
+      "recorded_server": "http://127.0.0.1:58122",
+      "sql_clocks_B_C_K_R_S": [
+        {
+          "clock_timestamp": "2026-10-22 20:37:56.802650-04:00",
+          "current_database": "sightbreak_receipt_e6adb9395b08029b_test",
+          "inet_server_port": 55439,
+          "pg_backend_pid": 22952,
+          "txid_current_snapshot": "2411:2411:",
+          "version": "PostgreSQL 17.11 on x86_64-windows, compiled by msvc-19.44.35229, 64-bit"
+        },
+        {
+          "clock_timestamp": "2026-10-22 20:37:58.920635-04:00",
+          "current_database": "sightbreak_receipt_e6adb9395b08029b_test",
+          "inet_server_port": 55439,
+          "pg_backend_pid": 23424,
+          "txid_current_snapshot": "2415:2415:",
+          "version": "PostgreSQL 17.11 on x86_64-windows, compiled by msvc-19.44.35229, 64-bit"
+        },
+        {
+          "clock_timestamp": "2026-10-22 20:37:59.185149-04:00",
+          "current_database": "sightbreak_receipt_e6adb9395b08029b_test",
+          "inet_server_port": 55439,
+          "pg_backend_pid": 21192,
+          "txid_current_snapshot": "2415:2415:",
+          "version": "PostgreSQL 17.11 on x86_64-windows, compiled by msvc-19.44.35229, 64-bit"
+        },
+        {
+          "clock_timestamp": "2026-10-22 20:38:01.645341-04:00",
+          "current_database": "sightbreak_receipt_e6adb9395b08029b_test",
+          "inet_server_port": 55439,
+          "pg_backend_pid": 4920,
+          "txid_current_snapshot": "2418:2418:",
+          "version": "PostgreSQL 17.11 on x86_64-windows, compiled by msvc-19.44.35229, 64-bit"
+        },
+        {
+          "clock_timestamp": "2026-10-22 20:38:03.856339-04:00",
+          "current_database": "sightbreak_receipt_e6adb9395b08029b_test",
+          "inet_server_port": 55439,
+          "pg_backend_pid": 8088,
+          "txid_current_snapshot": "2420:2420:",
+          "version": "PostgreSQL 17.11 on x86_64-windows, compiled by msvc-19.44.35229, 64-bit"
+        }
+      ],
+      "key_timeline": [
+        {
+          "event": "proxy_request",
+          "wall_ns": 1792715878782311600,
+          "monotonic_ns": 253635125000000,
+          "harness_pid": 16820,
+          "phase": "send",
+          "method": "POST",
+          "path": "/market/e03d5af6-82e6-4255-8216-5db58bac9217/buy",
+          "body": {
+            "expected_price": 10000000,
+            "idempotency_key": "3ea73f56-634f-4436-be82-2eaa8075e58c"
+          },
+          "raw_utf8": "{\"expected_price\":10000000,\"idempotency_key\":\"3ea73f56-634f-4436-be82-2eaa8075e58c\"}",
+          "token_sha256": "9ff62428b56f4fc027ddc4de4e30353a618e92123c396adf456c39a6596f86f4",
+          "line": 18
+        },
+        {
+          "event": "proxy_upstream_response",
+          "wall_ns": 1792715878818605600,
+          "monotonic_ns": 253635156000000,
+          "harness_pid": 16820,
+          "phase": "send",
+          "path": "/market/e03d5af6-82e6-4255-8216-5db58bac9217/buy",
+          "status": 200,
+          "response": {
+            "item": {
+              "id": "c5fef93f-d11d-4740-87b6-aff42a9be6c1",
+              "definition_id": "obsidian_rare",
+              "rarity": "Rare",
+              "pattern_seed": 1408394567,
+              "wear": 0.7798,
+              "variant": "standard",
+              "collection": "Obsidian",
+              "kind": "weapon_skin",
+              "name": "Obsidian / Carbon",
+              "reserved": false,
+              "trade_eligible": true,
+              "marketplace_eligible": true,
+              "acquired_at": "2026-10-22T20:37:35.094724-04:00"
+            },
+            "credits": 1600,
+            "fee": 300000
+          },
+          "raw_utf8": "{\"item\":{\"id\":\"c5fef93f-d11d-4740-87b6-aff42a9be6c1\",\"definition_id\":\"obsidian_rare\",\"rarity\":\"Rare\",\"pattern_seed\":1408394567,\"wear\":0.7798,\"variant\":\"standard\",\"collection\":\"Obsidian\",\"kind\":\"weapon_skin\",\"name\":\"Obsidian / Carbon\",\"reserved\":false,\"trade_eligible\":true,\"marketplace_eligible\":true,\"acquired_at\":\"2026-10-22T20:37:35.094724-04:00\"},\"credits\":1600,\"fee\":300000}",
+          "line": 19
+        },
+        {
+          "event": "response_held_before_any_client_headers",
+          "wall_ns": 1792715878819608300,
+          "monotonic_ns": 253635156000000,
+          "harness_pid": 16820,
+          "phase": "send",
+          "status": 200,
+          "sent_bytes": 0,
+          "line": 20
+        },
+        {
+          "event": "postgresql_snapshot",
+          "wall_ns": 1792715878975980100,
+          "monotonic_ns": 253635312000000,
+          "harness_pid": 16820,
+          "name": "02-committed-before-kill",
+          "database": "sightbreak_receipt_e6adb9395b08029b_test",
+          "connection_pid": 23424,
+          "state_sha256": "aca1167b497b96df2c322c90b46dbba913478faef36aca216c1520e7ba0b0a9f",
+          "line": 21
+        },
+        {
+          "event": "kill_requested",
+          "wall_ns": 1792715878981484000,
+          "monotonic_ns": 253635312000000,
+          "harness_pid": 16820,
+          "pid": 16160,
+          "upstream_committed": true,
+          "client_response_bytes": 0,
+          "line": 22
+        },
+        {
+          "event": "native_finished",
+          "wall_ns": 1792715879075307700,
+          "monotonic_ns": 253635406000000,
+          "harness_pid": 16820,
+          "phase": "killed-client",
+          "pid": 16160,
+          "returncode": 1,
+          "line": 23
+        },
+        {
+          "event": "kill_confirmed",
+          "wall_ns": 1792715879077654200,
+          "monotonic_ns": 253635406000000,
+          "harness_pid": 16820,
+          "pid": 16160,
+          "returncode": 1,
+          "line": 24
+        },
+        {
+          "event": "postgresql_snapshot",
+          "wall_ns": 1792715879241916600,
+          "monotonic_ns": 253635578000000,
+          "harness_pid": 16820,
+          "name": "03-after-kill",
+          "database": "sightbreak_receipt_e6adb9395b08029b_test",
+          "connection_pid": 21192,
+          "state_sha256": "aca1167b497b96df2c322c90b46dbba913478faef36aca216c1520e7ba0b0a9f",
+          "line": 25
+        },
+        {
+          "event": "held_response_discarded",
+          "wall_ns": 1792715879241916600,
+          "monotonic_ns": 253635578000000,
+          "harness_pid": 16820,
+          "phase": "send",
+          "sent_bytes": 0,
+          "line": 26
+        },
+        {
+          "event": "native_started",
+          "wall_ns": 1792715879464647700,
+          "monotonic_ns": 253635796000000,
+          "harness_pid": 16820,
+          "phase": "recovery",
+          "pid": 19404,
+          "command": [
+            "[EXECUTABLE]/native-client",
+            "--headless",
+            "--verbose",
+            "--path",
+            "[PROJECT_ROOT]",
+            "--script",
+            "[EXTERNAL_PROBE]/driver.gd"
+          ],
+          "other_native_pids": [],
+          "line": 27
+        },
+        {
+          "event": "native_finished",
+          "wall_ns": 1792715881540687700,
+          "monotonic_ns": 253637875000000,
+          "harness_pid": 16820,
+          "phase": "recovery",
+          "pid": 19404,
+          "returncode": 0,
+          "line": 58
+        },
+        {
+          "event": "postgresql_snapshot",
+          "wall_ns": 1792715881703394700,
+          "monotonic_ns": 253638031000000,
+          "harness_pid": 16820,
+          "name": "04-after-recovery",
+          "database": "sightbreak_receipt_e6adb9395b08029b_test",
+          "connection_pid": 4920,
+          "state_sha256": "aca1167b497b96df2c322c90b46dbba913478faef36aca216c1520e7ba0b0a9f",
+          "line": 59
+        },
+        {
+          "event": "native_started",
+          "wall_ns": 1792715881949649600,
+          "monotonic_ns": 253638281000000,
+          "harness_pid": 16820,
+          "phase": "second-restart",
+          "pid": 21184,
+          "command": [
+            "[EXECUTABLE]/native-client",
+            "--headless",
+            "--verbose",
+            "--path",
+            "[PROJECT_ROOT]",
+            "--script",
+            "[EXTERNAL_PROBE]/driver.gd"
+          ],
+          "other_native_pids": [],
+          "line": 60
+        },
+        {
+          "event": "native_finished",
+          "wall_ns": 1792715883744458700,
+          "monotonic_ns": 253640078000000,
+          "harness_pid": 16820,
+          "phase": "second-restart",
+          "pid": 21184,
+          "returncode": 0,
+          "line": 76
+        },
+        {
+          "event": "postgresql_snapshot",
+          "wall_ns": 1792715883911185500,
+          "monotonic_ns": 253640250000000,
+          "harness_pid": 16820,
+          "name": "05-after-second-restart",
+          "database": "sightbreak_receipt_e6adb9395b08029b_test",
+          "connection_pid": 8088,
+          "state_sha256": "aca1167b497b96df2c322c90b46dbba913478faef36aca216c1520e7ba0b0a9f",
+          "line": 77
+        }
+      ],
+      "journal_bytes_before_after": [
+        308,
+        308
+      ],
+      "journal_sha256": "a7c1ba3d15fa3c648b5cd630c75cd5ca33d5c949351cacb9c1777f70093e15d7",
+      "recovery_result": {
+        "credits": 1600.0,
+        "fee": 300000.0,
+        "item": {
+          "acquired_at": "2026-10-22T20:37:35.094724-04:00",
+          "collection": "Obsidian",
+          "definition_id": "obsidian_rare",
+          "id": "c5fef93f-d11d-4740-87b6-aff42a9be6c1",
+          "kind": "weapon_skin",
+          "marketplace_eligible": true,
+          "name": "Obsidian / Carbon",
+          "pattern_seed": 1408394567.0,
+          "rarity": "Rare",
+          "reserved": false,
+          "trade_eligible": true,
+          "variant": "standard",
+          "wear": 0.7798
+        }
+      },
+      "exact_recovered": true,
+      "status": "supported",
+      "producer_flags": {
+        "authoritative_pass": true,
+        "complete_result": true,
+        "stable_journal_at_kill": true,
+        "recovered": true
+      }
+    }
+  ],
+  "integrity_or_consistency_failures": [],
+  "checks_evaluated": 2078,
+  "scope": "Observed stable postcommit withheld-response native-process termination and exact fresh-session receipt recovery; no source provenance, arbitrary instruction-window, power-loss, or manual-UI qualification."
+}

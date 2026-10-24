@@ -7,6 +7,7 @@ signal loadout_changed(slots: Dictionary)
 signal account_changed
 
 const API = preload("res://scripts/ui/economy_api.gd")
+const JOURNAL = preload("res://scripts/ui/transaction_journal.gd")
 const INSPECTOR = preload("res://scripts/ui/item_inspector.gd")
 const REVEAL = preload("res://scripts/ui/case_reveal.gd")
 const SAFE_AREA = preload("res://scripts/ui/safe_area.gd")
@@ -45,6 +46,8 @@ var inventory_available_only := false
 var market_sort := 0
 var market_mine_only := false
 var pending_transaction: Dictionary = {}
+var transaction_journal := JOURNAL.new()
+var transaction_storage_error := ""
 var retry_button: Button
 var safe_margin: MarginContainer
 var tab_buttons: Dictionary = {}
@@ -64,7 +67,14 @@ func _ready() -> void:
 	api = API.new()
 	add_child(api)
 	_build_shell()
+	pending_transaction = transaction_journal.load_pending()
+	transaction_storage_error = transaction_journal.error
+	retry_button.visible = not pending_transaction.is_empty()
 	_render()
+	if not transaction_storage_error.is_empty():
+		_message(transaction_storage_error, true)
+	elif not pending_transaction.is_empty():
+		_message("An unfinished transaction was recovered. Sign in to its original account and server, then retry its saved receipt.")
 
 func open_tab(tab: String) -> void:
 	active_tab = tab if tab in ["inventory", "cases", "market", "trades", "profile"] else "inventory"
@@ -377,8 +387,7 @@ func _logout() -> void:
 	busy = true
 	var result := await api.request("/auth/logout", HTTPClient.METHOD_POST)
 	api.logout()
-	pending_transaction = {}
-	retry_button.hide()
+	retry_button.visible = not pending_transaction.is_empty()
 	account = {}
 	inventory = []
 	selected = {}
@@ -477,7 +486,7 @@ func _failed(result: Dictionary) -> bool:
 			loadout_changed.emit({})
 			_render()
 			_announce_account()
-			_message("Your session ended (the server did not accept it). Sign in again under PROFILE. Nothing was changed.", true)
+			_message("Your session ended (the server did not accept it). Sign in again under PROFILE." + (" The earlier transaction remains unresolved; its receipt is saved." if not pending_transaction.is_empty() else " Nothing was changed."), true)
 			return true
 		_message(str(result["_error"]), true)
 		return true
@@ -499,8 +508,19 @@ func _retry_pending() -> Dictionary:
 	if pending.owner != api.player_id or pending.server != api.base_url:
 		_message("Sign in to the original account and server to recover this transaction.", true)
 		return {"_error": "Account mismatch"}
-	pending_transaction = {}
-	var result := await _perform(pending.path, pending.payload, pending.message, pending.method)
+	if api.token.is_empty():
+		return {"_error": "Sign in to recover the saved receipt."}
+	var claimed := transaction_journal.claim(pending)
+	if claimed != OK:
+		var failure := transaction_journal.error
+		if claimed == ERR_INVALID_DATA:
+			pending_transaction = transaction_journal.load_pending()
+			transaction_storage_error = transaction_journal.error
+			retry_button.visible = not pending_transaction.is_empty()
+			failure = transaction_storage_error if not transaction_storage_error.is_empty() else "Another instance resolved or replaced this receipt. Its current state is loaded; refresh the account before continuing."
+		_message(failure, true)
+		return {"_error": failure, "_outcome": "not_sent"}
+	var result := await _send_transaction(pending.path, pending.payload, pending.message, pending.method, true)
 	if not result.has("_error") and pending.path == "/cases/open":
 		selected = result.get("item", {})
 		_show_committed_reveal(selected)
@@ -509,26 +529,164 @@ func _retry_pending() -> Dictionary:
 func _perform(path: String, payload := {}, message := "Transaction confirmed.", method := HTTPClient.METHOD_POST) -> Dictionary:
 	if busy:
 		return {"_error": "A request is already pending."}
+	if not transaction_storage_error.is_empty():
+		pending_transaction = transaction_journal.load_pending()
+		transaction_storage_error = transaction_journal.error
+	if not transaction_storage_error.is_empty():
+		_message(transaction_storage_error, true)
+		return {"_error": transaction_storage_error, "_outcome": "not_sent"}
 	if not pending_transaction.is_empty():
 		_message("Recover the pending transaction before starting another. Retry uses its original receipt identifier.", true)
 		return {"_error": "An unresolved transaction is pending."}
+	if payload.has("idempotency_key"):
+		var pending := {"path": path, "payload": payload.duplicate(true), "message": message, "method": method, "owner": api.player_id, "server": api.base_url}
+		if transaction_journal.stage(pending) != OK:
+			var storage_error := transaction_journal.error
+			pending_transaction = transaction_journal.load_pending()
+			transaction_storage_error = transaction_journal.error if not transaction_journal.error.is_empty() else storage_error
+			retry_button.visible = not pending_transaction.is_empty()
+			var failure := "The receipt could not be saved. Nothing was sent. Recover any saved receipt or check local storage before retrying."
+			_message(failure, true)
+			return {"_error": failure, "_outcome": "not_sent"}
+		pending_transaction = pending
+	return await _send_transaction(path, payload, message, method, false)
+
+func _send_transaction(path: String, payload: Dictionary, message: String, method: int, recovering: bool) -> Dictionary:
 	busy = true
 	_message("Waiting for server confirmation…")
+	# Capture any known item identity before awaiting HTTP: a concurrent refresh can
+	# remove a sold listing or consumed case. These are checks, never API payload fields.
+	var receipt_context := _receipt_context(path, payload)
 	var result := await api.request(path, method, payload)
 	busy = false
-	if result.get("_uncertain", false) and payload.has("idempotency_key"):
-		pending_transaction = {"path": path, "payload": payload.duplicate(true), "message": message, "method": method, "owner": api.player_id, "server": api.base_url}
+	if not pending_transaction.is_empty() and not result.has("_error") and not _valid_receipt_result(path, payload, result, receipt_context):
+		result = {"_error": "The server's transaction confirmation was incomplete. Its original receipt is saved.", "_outcome": "unknown", "_uncertain": true}
+	if not pending_transaction.is_empty() and _receipt_resolved(result, recovering):
+		if transaction_journal.clear(pending_transaction) == OK:
+			pending_transaction = {}
+			transaction_storage_error = ""
+		else:
+			transaction_storage_error = "The result arrived, but its saved receipt could not be cleared. Retry the same receipt after checking local storage."
 	retry_button.visible = not pending_transaction.is_empty()
 	if _failed(result):
 		if result.has("_error") and int(result.get("_status", 0)) != 401:
-			_message(failure_text(result, not pending_transaction.is_empty()), true)
+			var text := failure_text(result, not pending_transaction.is_empty())
+			if recovering and not pending_transaction.is_empty():
+				text = str(result.get("_error", "Retry failed.")) + " The earlier attempt remains unresolved. Its original receipt is saved; retry after signing in to the original account/server."
+			_message(text, true)
 		return result
 	var refreshed := await _refresh()
-	if refreshed:
+	if not transaction_storage_error.is_empty():
+		_message(transaction_storage_error, true)
+	elif refreshed:
 		_message(message)
 	else:
 		_message("Transaction confirmed, but account refresh failed. Refresh before making another transaction.", true)
 	return result
+
+func _receipt_resolved(result: Dictionary, recovering: bool) -> bool:
+	if not result.has("_error"):
+		return true
+	var outcome := str(result.get("_outcome", "unknown"))
+	var code := int(result.get("_status", 0))
+	# Auth, throttling and validation can reject a retry before the receipt is looked up.
+	# A failed connection now says nothing about an earlier, possibly committed attempt.
+	if recovering:
+		# A rejection does not fence an older in-flight attempt. Only successful
+		# replay resolves it under the current backend contract, including 409.
+		return false
+	return outcome in ["not_sent", "not_reached", "rejected"] and code not in [401, 403, 429]
+
+func _receipt_context(path: String, payload: Dictionary) -> Dictionary:
+	if path == "/cases/open":
+		for item in inventory:
+			if item is Dictionary and item.get("id") == payload.get("case_id"):
+				return {"case_definition": item.get("definition_id"), "collection": item.get("collection")}
+	elif path.begins_with("/market/") and path.ends_with("/buy"):
+		for listing in listings:
+			if listing is Dictionary and listing.get("id") == path.get_slice("/", 2) and listing.get("item") is Dictionary:
+				return {"item_id": listing.item.get("id")}
+	return {}
+
+## backend/app.py's item_json + the three remember() response contracts. A plausible
+## item ID alone is not confirmation. Old receipts do not echo listing/receipt IDs,
+## so restart validation cannot invent that association when no item context exists.
+func _valid_receipt_result(path: String, payload: Dictionary, result: Dictionary, context: Dictionary = {}) -> bool:
+	var item: Variant = result.get("item")
+	if not item is Dictionary or not _valid_receipt_item(item):
+		return false
+	if path == "/cases/open":
+		if item.kind != "weapon_skin" or item.id in [payload.get("case_id"), payload.get("key_id")]:
+			return false
+		if context.has("case_definition"):
+			if not context.case_definition is String or not context.case_definition.ends_with("_case"):
+				return false
+			if item.definition_id != context.case_definition.trim_suffix("_case") + "_" + item.rarity.to_lower() or item.collection != context.collection:
+				return false
+		return _receipt_integer(result.get("roll"), 0, 9999) and _receipt_text(result.get("table_version"))
+	if not _receipt_integer(result.get("credits"), 0, 9007199254740991):
+		return false
+	if path == "/store/buy":
+		return item.definition_id == payload.get("definition_id") and item.kind == ("key" if item.definition_id == "key" else "case")
+	var parts := path.split("/")
+	if parts.size() != 4 or parts[1] != "market" or parts[2].is_empty() or parts[3] != "buy":
+		return false
+	if context.has("item_id") and item.id != context.item_id:
+		return false
+	var price: Variant = payload.get("expected_price")
+	return _receipt_integer(result.get("fee"), 0, int(price) if price != null else 10000000)
+
+func _valid_receipt_item(item: Dictionary) -> bool:
+	if not _receipt_uuid(item.get("id")):
+		return false
+	for field in ["definition_id", "rarity", "variant", "collection", "kind", "name"]:
+		if not _receipt_text(item.get(field)):
+			return false
+	if item.definition_id.length() > 100 or item.rarity.length() > 24 or item.variant.length() > 24:
+		return false
+	if item.kind not in ["key", "case", "weapon_skin"] or not _receipt_integer(item.get("pattern_seed"), 0, 2147483647):
+		return false
+	var wear: Variant = item.get("wear")
+	if not (wear is int or wear is float) or not is_finite(float(wear)) or float(wear) < 0.0 or float(wear) > 1.0:
+		return false
+	# Every successful purchase/mint is serialized after clearing reservations and
+	# before consumption. Replays return that original snapshot, not current inventory.
+	for field in ["reserved", "trade_eligible", "marketplace_eligible"]:
+		if not item.get(field) is bool or item[field] != (field != "reserved"):
+			return false
+	return _receipt_timestamp(item.get("acquired_at"))
+
+func _receipt_text(value: Variant) -> bool:
+	return value is String and not value.strip_edges().is_empty()
+
+func _receipt_uuid(value: Variant) -> bool:
+	if not value is String or value.length() != 36:
+		return false
+	for index in value.length():
+		if index in [8, 13, 18, 23]:
+			if value[index] != "-":
+				return false
+		elif value[index].to_lower() not in "0123456789abcdef":
+			return false
+	return true
+
+func _receipt_timestamp(value: Variant) -> bool:
+	if not value is String:
+		return false
+	# item_json emits datetime.isoformat() with a timezone; reject malformed dates
+	# without invoking Time's error-logging parser on untrusted response data.
+	# PCRE2's $ also matches before a final newline; receipts require the true end.
+	var pattern := RegEx.create_from_string("^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\\.[0-9]{1,6})?(Z|[+-]([01][0-9]|2[0-3]):[0-5][0-9])\\z")
+	if pattern.search(value) == null:
+		return false
+	var year := int(value.substr(0, 4))
+	var month := int(value.substr(5, 2))
+	var day := int(value.substr(8, 2))
+	var days := [31, 29 if year % 4 == 0 and (year % 100 != 0 or year % 400 == 0) else 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+	return year > 0 and day <= days[month - 1]
+
+func _receipt_integer(value: Variant, minimum: int, maximum: int) -> bool:
+	return (value is int or value is float) and is_finite(float(value)) and float(value) == floor(float(value)) and float(value) >= minimum and float(value) <= maximum
 
 ## What a failed request means for the player, by what is known (EconomyAPI.request's
 ## "_outcome"). Only an unknown outcome of a transaction that holds a receipt identifier

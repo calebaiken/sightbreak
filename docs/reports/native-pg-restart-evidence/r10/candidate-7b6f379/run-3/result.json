@@ -1,0 +1,238 @@
+{
+  "authoritative_pass": true,
+  "checks": {
+    "buyer_debit": true,
+    "complete_result": true,
+    "economic_state_unchanged": true,
+    "exact_audit": true,
+    "exact_ledger": true,
+    "exact_operation": true,
+    "fee_burn": true,
+    "integer_body": true,
+    "item_transfer": true,
+    "no_pending_after_recovery": true,
+    "no_second_restart_request": true,
+    "original_body": true,
+    "real_http_200": true,
+    "second_restart_no_pending": true,
+    "seller_credit": true,
+    "sold_listing": true,
+    "stable_journal_at_kill": true,
+    "state_unchanged_at_kill": true,
+    "three_fresh_native_logins": true
+  },
+  "logins": [
+    {
+      "phase": "send",
+      "player_id": "f87d72ae-2943-408e-82e8-7cadd001a0d6",
+      "token_sha256": "9ff62428b56f4fc027ddc4de4e30353a618e92123c396adf456c39a6596f86f4"
+    },
+    {
+      "phase": "recovery",
+      "player_id": "f87d72ae-2943-408e-82e8-7cadd001a0d6",
+      "token_sha256": "0669f16f7280789cd4e8fa167bc45f7d43e65dadc16e9b634354108f01b18396"
+    },
+    {
+      "phase": "second-restart",
+      "player_id": "f87d72ae-2943-408e-82e8-7cadd001a0d6",
+      "token_sha256": "ad3624dd96f709b883c5e926bd005a9df6cadcabc417e0cc976cbe94e59d7573"
+    }
+  ],
+  "phases": [
+    {
+      "completed": {
+        "account": {
+          "credits": 1600.0,
+          "display_name": "receipt_3719ded5c9a623b4",
+          "level": 1.0,
+          "player_id": "f87d72ae-2943-408e-82e8-7cadd001a0d6",
+          "xp": 0.0
+        },
+        "event": "completed",
+        "inventory": [
+          {
+            "acquired_at": "2026-10-22T20:37:35.094724-04:00",
+            "collection": "Obsidian",
+            "definition_id": "obsidian_rare",
+            "id": "c5fef93f-d11d-4740-87b6-aff42a9be6c1",
+            "kind": "weapon_skin",
+            "marketplace_eligible": true,
+            "name": "Obsidian / Carbon",
+            "pattern_seed": 1408394567.0,
+            "rarity": "Rare",
+            "reserved": false,
+            "trade_eligible": true,
+            "variant": "standard",
+            "wear": 0.7798
+          }
+        ],
+        "mode": "retry",
+        "pending_after": {},
+        "pending_on_start": {
+          "message": "Transaction confirmed.",
+          "method": 2,
+          "owner": "f87d72ae-2943-408e-82e8-7cadd001a0d6",
+          "path": "/market/e03d5af6-82e6-4255-8216-5db58bac9217/buy",
+          "payload": {
+            "expected_price": 10000000,
+            "idempotency_key": "3ea73f56-634f-4436-be82-2eaa8075e58c"
+          },
+          "server": "http://127.0.0.1:58122"
+        },
+        "pid": 19404,
+        "result": {
+          "credits": 1600.0,
+          "fee": 300000.0,
+          "item": {
+            "acquired_at": "2026-10-22T20:37:35.094724-04:00",
+            "collection": "Obsidian",
+            "definition_id": "obsidian_rare",
+            "id": "c5fef93f-d11d-4740-87b6-aff42a9be6c1",
+            "kind": "weapon_skin",
+            "marketplace_eligible": true,
+            "name": "Obsidian / Carbon",
+            "pattern_seed": 1408394567.0,
+            "rarity": "Rare",
+            "reserved": false,
+            "trade_eligible": true,
+            "variant": "standard",
+            "wear": 0.7798
+          }
+        },
+        "unix_seconds": 1792715881.417
+      },
+      "economic_state_unchanged": true,
+      "journal": {
+        "bytes": 0,
+        "exists": false,
+        "no_credentials": true,
+        "record": null,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "phase": "recovery"
+    },
+    {
+      "completed": {
+        "account": {
+          "credits": 1600.0,
+          "display_name": "receipt_3719ded5c9a623b4",
+          "level": 1.0,
+          "player_id": "f87d72ae-2943-408e-82e8-7cadd001a0d6",
+          "xp": 0.0
+        },
+        "event": "completed",
+        "inventory": [
+          {
+            "acquired_at": "2026-10-22T20:37:35.094724-04:00",
+            "collection": "Obsidian",
+            "definition_id": "obsidian_rare",
+            "id": "c5fef93f-d11d-4740-87b6-aff42a9be6c1",
+            "kind": "weapon_skin",
+            "marketplace_eligible": true,
+            "name": "Obsidian / Carbon",
+            "pattern_seed": 1408394567.0,
+            "rarity": "Rare",
+            "reserved": false,
+            "trade_eligible": true,
+            "variant": "standard",
+            "wear": 0.7798
+          }
+        ],
+        "mode": "retry",
+        "pending_after": {},
+        "pending_on_start": {},
+        "pid": 21184,
+        "result": {},
+        "unix_seconds": 1792715883.568
+      },
+      "economic_state_unchanged": true,
+      "journal": {
+        "bytes": 0,
+        "exists": false,
+        "no_credentials": true,
+        "record": null,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "phase": "second-restart"
+    }
+  ],
+  "price": 10000000,
+  "purchases": [
+    {
+      "barrier": {
+        "event": "response_held_before_any_client_headers",
+        "harness_pid": 16820,
+        "monotonic_ns": 253635156000000,
+        "phase": "send",
+        "sent_bytes": 0,
+        "status": 200,
+        "wall_ns": 1792715878819608300
+      },
+      "body": {
+        "expected_price": 10000000,
+        "idempotency_key": "3ea73f56-634f-4436-be82-2eaa8075e58c"
+      },
+      "phase": "send",
+      "raw_utf8": "{\"expected_price\":10000000,\"idempotency_key\":\"3ea73f56-634f-4436-be82-2eaa8075e58c\"}",
+      "response": {
+        "credits": 1600,
+        "fee": 300000,
+        "item": {
+          "acquired_at": "2026-10-22T20:37:35.094724-04:00",
+          "collection": "Obsidian",
+          "definition_id": "obsidian_rare",
+          "id": "c5fef93f-d11d-4740-87b6-aff42a9be6c1",
+          "kind": "weapon_skin",
+          "marketplace_eligible": true,
+          "name": "Obsidian / Carbon",
+          "pattern_seed": 1408394567,
+          "rarity": "Rare",
+          "reserved": false,
+          "trade_eligible": true,
+          "variant": "standard",
+          "wear": 0.7798
+        }
+      },
+      "response_raw_utf8": "{\"item\":{\"id\":\"c5fef93f-d11d-4740-87b6-aff42a9be6c1\",\"definition_id\":\"obsidian_rare\",\"rarity\":\"Rare\",\"pattern_seed\":1408394567,\"wear\":0.7798,\"variant\":\"standard\",\"collection\":\"Obsidian\",\"kind\":\"weapon_skin\",\"name\":\"Obsidian / Carbon\",\"reserved\":false,\"trade_eligible\":true,\"marketplace_eligible\":true,\"acquired_at\":\"2026-10-22T20:37:35.094724-04:00\"},\"credits\":1600,\"fee\":300000}",
+      "status": 200,
+      "token_sha256": "9ff62428b56f4fc027ddc4de4e30353a618e92123c396adf456c39a6596f86f4"
+    },
+    {
+      "body": {
+        "expected_price": 10000000,
+        "idempotency_key": "3ea73f56-634f-4436-be82-2eaa8075e58c"
+      },
+      "phase": "recovery",
+      "raw_utf8": "{\"expected_price\":10000000,\"idempotency_key\":\"3ea73f56-634f-4436-be82-2eaa8075e58c\"}",
+      "response": {
+        "credits": 1600,
+        "fee": 300000,
+        "item": {
+          "acquired_at": "2026-10-22T20:37:35.094724-04:00",
+          "collection": "Obsidian",
+          "definition_id": "obsidian_rare",
+          "id": "c5fef93f-d11d-4740-87b6-aff42a9be6c1",
+          "kind": "weapon_skin",
+          "marketplace_eligible": true,
+          "name": "Obsidian / Carbon",
+          "pattern_seed": 1408394567,
+          "rarity": "Rare",
+          "reserved": false,
+          "trade_eligible": true,
+          "variant": "standard",
+          "wear": 0.7798
+        }
+      },
+      "response_raw_utf8": "{\"fee\":300000,\"item\":{\"id\":\"c5fef93f-d11d-4740-87b6-aff42a9be6c1\",\"kind\":\"weapon_skin\",\"name\":\"Obsidian / Carbon\",\"wear\":0.7798,\"rarity\":\"Rare\",\"variant\":\"standard\",\"reserved\":false,\"collection\":\"Obsidian\",\"acquired_at\":\"2026-10-22T20:37:35.094724-04:00\",\"pattern_seed\":1408394567,\"definition_id\":\"obsidian_rare\",\"trade_eligible\":true,\"marketplace_eligible\":true},\"credits\":1600}",
+      "status": 200,
+      "token_sha256": "0669f16f7280789cd4e8fa167bc45f7d43e65dadc16e9b634354108f01b18396"
+    }
+  ],
+  "recovered": true,
+  "recovery_checks": {
+    "exact_receipt": true,
+    "journal_survived": true,
+    "original_request_replayed": true,
+    "pending_restored": true
+  }
+}

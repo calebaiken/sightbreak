@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-pr18-native-restart\scripts\validate_native_transaction_restart.py", line 557, in <module>
+    main()
+  File "C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-pr18-native-restart\scripts\validate_native_transaction_restart.py", line 519, in main
+    result = run_case(args, root, private, service, database, port, args.out / f"run-{index + 1}", price)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-pr18-native-restart\scripts\validate_native_transaction_restart.py", line 333, in run_case
+    raise RuntimeError("Native request did not reach upstream response barrier")
+RuntimeError: Native request did not reach upstream response barrier

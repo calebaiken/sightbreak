@@ -1,0 +1,14 @@
+{"event": "client_started", "wall_ns": 1792439629101026100, "monotonic_ns": 257910804471500, "pid": 10292}
+{"event": "request_received", "wall_ns": 1792439629564126800, "monotonic_ns": 257911267580100, "body": {"expected_price": 10000000, "idempotency_key": "9c8efee6-14fb-5d77-b1fd-826edd524658"}}
+{"event": "before_commit_barrier", "wall_ns": 1792439629564701400, "monotonic_ns": 257911268154400}
+{"event": "kill_requested", "wall_ns": 1792439629565361500, "monotonic_ns": 257911268814000, "pid": 10292}
+{"event": "kill_confirmed", "wall_ns": 1792439629585042400, "monotonic_ns": 257911288495500, "pid": 10292, "returncode": 1}
+{"event": "recovery_started", "wall_ns": 1792439629596278100, "monotonic_ns": 257911299732000, "pid": 4420, "phase": "restarted-client"}
+{"event": "recovery_observation_before_kill", "wall_ns": 1792439630062861600, "monotonic_ns": 257911766323500, "pid": 4420, "phase": "restarted-client", "observation": {"reason": "no pending receipt after process restart", "recovered": false}}
+{"event": "recovery_kill_requested", "wall_ns": 1792439630063464400, "monotonic_ns": 257911766926000, "pid": 4420, "phase": "restarted-client"}
+{"event": "recovery_kill_confirmed", "wall_ns": 1792439630083381600, "monotonic_ns": 257911786843700, "pid": 4420, "phase": "restarted-client", "returncode": 1}
+{"event": "recovery_finished", "wall_ns": 1792439630084166500, "monotonic_ns": 257911787628000, "pid": 4420, "returncode": 1, "phase": "restarted-client"}
+{"event": "original_commit_released_after_retry", "wall_ns": 1792439630086815000, "monotonic_ns": 257911790277300, "retained_rejection": false}
+{"event": "transaction_committed_or_replayed", "wall_ns": 1792439630106597900, "monotonic_ns": 257911810060500, "first": true}
+{"event": "recovery_started", "wall_ns": 1792439630118571500, "monotonic_ns": 257911822034200, "pid": 8816, "phase": "after-late-commit"}
+{"event": "recovery_finished", "wall_ns": 1792439630710622800, "monotonic_ns": 257912414095900, "pid": 8816, "returncode": 0, "phase": "after-late-commit"}

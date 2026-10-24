@@ -1,0 +1,72 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+CONFIRM_SHEET 1 item(s) a side, 960x720, 85% text, insets none: panel 680x393, scrolls=false
+CONFIRM_SHEET 1 item(s) a side, 960x720, 85% text, insets 96/21: panel 680x393, scrolls=false
+CONFIRM_SHEET 1 item(s) a side, 960x720, 100% text, insets none: panel 680x432, scrolls=false
+CONFIRM_SHEET 1 item(s) a side, 960x720, 100% text, insets 96/21: panel 680x432, scrolls=false
+CONFIRM_SHEET 1 item(s) a side, 960x720, 130% text, insets none: panel 680x618, scrolls=false
+CONFIRM_SHEET 1 item(s) a side, 960x720, 130% text, insets 96/21: panel 680x618, scrolls=false
+CONFIRM_SHEET 1 item(s) a side, 1560x720, 85% text, insets none: panel 680x393, scrolls=false
+CONFIRM_SHEET 1 item(s) a side, 1560x720, 85% text, insets 96/21: panel 680x393, scrolls=false
+CONFIRM_SHEET 1 item(s) a side, 1560x720, 100% text, insets none: panel 680x432, scrolls=false
+CONFIRM_SHEET 1 item(s) a side, 1560x720, 100% text, insets 96/21: panel 680x432, scrolls=false
+CONFIRM_SHEET 1 item(s) a side, 1560x720, 130% text, insets none: panel 680x618, scrolls=false
+CONFIRM_SHEET 1 item(s) a side, 1560x720, 130% text, insets 96/21: panel 680x618, scrolls=false
+CONFIRM_SHEET 5 item(s) a side, 960x720, 85% text, insets none: panel 680x577, scrolls=false
+CONFIRM_SHEET 5 item(s) a side, 960x720, 85% text, insets 96/21: panel 680x577, scrolls=false
+CONFIRM_SHEET 5 item(s) a side, 960x720, 100% text, insets none: panel 680x640, scrolls=false
+CONFIRM_SHEET 5 item(s) a side, 960x720, 100% text, insets 96/21: panel 680x640, scrolls=false
+CONFIRM_SHEET 5 item(s) a side, 960x720, 130% text, insets none: panel 680x688, scrolls=true
+CONFIRM_SHEET 5 item(s) a side, 960x720, 130% text, insets 96/21: panel 680x667, scrolls=true
+CONFIRM_SHEET 5 item(s) a side, 1560x720, 85% text, insets none: panel 680x577, scrolls=false
+CONFIRM_SHEET 5 item(s) a side, 1560x720, 85% text, insets 96/21: panel 680x577, scrolls=false
+CONFIRM_SHEET 5 item(s) a side, 1560x720, 100% text, insets none: panel 680x640, scrolls=false
+CONFIRM_SHEET 5 item(s) a side, 1560x720, 100% text, insets 96/21: panel 680x640, scrolls=false
+CONFIRM_SHEET 5 item(s) a side, 1560x720, 130% text, insets none: panel 680x688, scrolls=true
+CONFIRM_SHEET 5 item(s) a side, 1560x720, 130% text, insets 96/21: panel 680x667, scrolls=true
+CONFIRM_SHEET 20 item(s) a side, 960x720, 85% text, insets none: panel 680x688, scrolls=true
+CONFIRM_SHEET 20 item(s) a side, 960x720, 85% text, insets 96/21: panel 680x667, scrolls=true
+CONFIRM_SHEET 20 item(s) a side, 960x720, 100% text, insets none: panel 680x688, scrolls=true
+CONFIRM_SHEET 20 item(s) a side, 960x720, 100% text, insets 96/21: panel 680x667, scrolls=true
+CONFIRM_SHEET 20 item(s) a side, 960x720, 130% text, insets none: panel 680x688, scrolls=true
+CONFIRM_SHEET 20 item(s) a side, 960x720, 130% text, insets 96/21: panel 680x667, scrolls=true
+CONFIRM_SHEET 20 item(s) a side, 1560x720, 85% text, insets none: panel 680x688, scrolls=true
+CONFIRM_SHEET 20 item(s) a side, 1560x720, 85% text, insets 96/21: panel 680x667, scrolls=true
+CONFIRM_SHEET 20 item(s) a side, 1560x720, 100% text, insets none: panel 680x688, scrolls=true
+CONFIRM_SHEET 20 item(s) a side, 1560x720, 100% text, insets 96/21: panel 680x667, scrolls=true
+CONFIRM_SHEET 20 item(s) a side, 1560x720, 130% text, insets none: panel 680x688, scrolls=true
+CONFIRM_SHEET 20 item(s) a side, 1560x720, 130% text, insets 96/21: panel 680x667, scrolls=true
+CONFIRM_SHEET 36 configurations through the real button
+FAIL: 4 of 748 armory-state checks
+  - A refused connection is 'not reached' and not uncertain: The connection dropped or timed out after the request may have reached the server. Whether it was carried out is not known.
+  - The not-reached message says nothing was sent
+  - A request that never left is told so, with no retry
+  - A purchase that never reached the server keeps no receipt: The connection dropped or timed out after the request may have reached the server. Whether it was carried out is not known. Nothing is shown as done. Press RETRY PENDING TRANSACTION to find out safely: it reuses this transaction's receipt identifier, so it cannot be applied twice.
+ERROR: A refused connection is 'not reached' and not uncertain: The connection dropped or timed out after the request may have reached the server. Whether it was carried out is not known.
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/armory_state_test.gd:75)
+       [1] transport_outcomes (res://tests/armory_state_test.gd:427)
+       [2] real_outcome (res://tests/armory_state_test.gd:422)
+       [3] request (res://scripts/ui/economy_api.gd:66)
+ERROR: The not-reached message says nothing was sent
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/armory_state_test.gd:75)
+       [1] transport_outcomes (res://tests/armory_state_test.gd:428)
+       [2] real_outcome (res://tests/armory_state_test.gd:422)
+       [3] request (res://scripts/ui/economy_api.gd:66)
+ERROR: A request that never left is told so, with no retry
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/armory_state_test.gd:75)
+       [1] transport_outcomes (res://tests/armory_state_test.gd:452)
+       [2] make_ui (res://tests/armory_state_test.gd:134)
+       [3] frames (res://tests/armory_state_test.gd:88)
+ERROR: A purchase that never reached the server keeps no receipt: The connection dropped or timed out after the request may have reached the server. Whether it was carried out is not known. Nothing is shown as done. Press RETRY PENDING TRANSACTION to find out safely: it reuses this transaction's receipt identifier, so it cannot be applied twice.
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/armory_state_test.gd:75)
+       [1] transport_outcomes (res://tests/armory_state_test.gd:471)
+       [2] make_ui (res://tests/armory_state_test.gd:134)
+       [3] frames (res://tests/armory_state_test.gd:88)

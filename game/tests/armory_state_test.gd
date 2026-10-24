@@ -15,6 +15,7 @@ extends SceneTree
 const UI = preload("res://scripts/ui/economy_ui.gd")
 const DESIGN = preload("res://scripts/ui/design_tokens.gd")
 const SAFE_AREA = preload("res://scripts/ui/safe_area.gd")
+const RECEIPTS = preload("res://tests/economy_receipt_fixtures.gd")
 const SCALES := [0.85, 1.0, 1.15, 1.3, 1.4]
 var failures: Array[String] = []
 var checks := 0
@@ -57,7 +58,18 @@ class FakeAPI extends EconomyAPI:
 			if path == "/store/buy" or path.ends_with("/buy"):
 				charges += 1
 				credits -= 150
-			result = {"ok": true, "credits": credits}
+			var bought := RECEIPTS.item(str(payload.get("definition_id", "key")))
+			if path == "/cases/open":
+				for owned in world.get("inventory", {}).get("items", []):
+					if owned.id == payload.get("case_id"):
+						bought = RECEIPTS.item(str(owned.definition_id).trim_suffix("_case") + "_common")
+						bought.collection = owned.collection
+			elif path.begins_with("/market/"):
+				for listing in world.get("market", {}).get("listings", []):
+					if listing.id == path.get_slice("/", 2):
+						bought = listing.item.duplicate(true)
+						bought.merge({"reserved": false, "trade_eligible": true, "marketplace_eligible": true}, true)
+			result = {"item": bought, "credits": credits, "fee": 4, "roll": 0, "table_version": "1"}
 			if not key.is_empty():
 				applied[key] = result
 		if lose_response_once:
@@ -109,6 +121,9 @@ func make_ui(size: Vector2i, scale: float, signed_in := true) -> void:
 	root.content_scale_size = size
 	root.size = size
 	ui = UI.new()
+	ui.transaction_journal.path = "user://armory_state_test_%d.json" % OS.get_process_id()
+	if FileAccess.file_exists(ui.transaction_journal.path):
+		DirAccess.remove_absolute(ui.transaction_journal.path)
 	ui.configure({"xp": 430, "credits": 900000, "settings": {"reduced_motion": true, "ui_text_scale": scale}})
 	root.add_child(ui)
 	await frames(1)
@@ -404,17 +419,29 @@ func real_outcome(mode: String, status := 200, body := "{}") -> Dictionary:
 	var api := EconomyAPI.new()
 	root.add_child(api)
 	api.base_url = "http://127.0.0.1:%d" % server.get_local_port() if server.is_listening() else "http://127.0.0.1:9"
+	if mode == "closed":
+		# Fixed service ports can be filtered rather than refused on Windows. Obtain
+		# an unused loopback endpoint from the OS, then close the listener explicitly.
+		var closed_server := TCPServer.new()
+		check(closed_server.listen(0, "127.0.0.1") == OK, "Reserve a disposable closed-port fixture")
+		api.base_url = "http://127.0.0.1:%d" % closed_server.get_local_port()
+		closed_server.stop()
+	elif mode == "unresolvable":
+		api.base_url = "http://sightbreak-armory-fixture.invalid"
 	api.token = "fixture-only"
-	if mode != "closed":
+	if mode not in ["closed", "unresolvable"]:
 		serve_once(mode, status, body)
 	var result: Dictionary = await api.request("/store/buy", HTTPClient.METHOD_POST, {"definition_id": "key", "idempotency_key": api.key()})
 	api.queue_free()
 	return result
 
 func transport_outcomes() -> void:
-	# Nothing listens on port 9: the connection is refused and no request can have been acted on.
-	var closed := await real_outcome("closed")
-	check(closed.get("_outcome") == "not_reached" and not closed.get("_uncertain", true), "A refused connection is 'not reached' and not uncertain: " + str(closed.get("_error")))
+	# Windows can report a generic connection error for an explicitly closed port;
+	# it is correct to keep that result uncertain. DNS failure is unambiguously unsent.
+	var refused_connection := await real_outcome("closed")
+	check((refused_connection.get("_outcome") == "not_reached" and not refused_connection.get("_uncertain", true)) or (refused_connection.get("_outcome") == "unknown" and refused_connection.get("_uncertain", false)), "A closed endpoint is either proven unreachable or conservatively uncertain")
+	var closed := await real_outcome("unresolvable")
+	check(closed.get("_outcome") == "not_reached" and not closed.get("_uncertain", true), "An unresolvable reserved .invalid host is 'not reached' and not uncertain: " + str(closed.get("_error")))
 	check("nothing was sent" in str(closed._error), "The not-reached message says nothing was sent")
 	check("Retry pending" not in str(closed._error) and "RETRY" not in str(closed._error).to_upper(), "A request that never reached the server does not talk about retrying")
 	check(server.listen(0, "127.0.0.1") == OK, "A loopback test server starts")
@@ -446,6 +473,7 @@ func transport_outcomes() -> void:
 	var result: Dictionary = await ui._perform("/store/buy", {"definition_id": "key", "idempotency_key": fake.key()}, "Supply added.")
 	check(result.has("_error") and not ui.pending_transaction.is_empty() and ui.retry_button.visible, "A lost answer to a purchase keeps the receipt and shows RETRY PENDING TRANSACTION")
 	check("RETRY PENDING TRANSACTION" in ui.status.text, "The status line explains the retry: " + ui.status.text)
+	check(ui.transaction_journal.clear(ui.pending_transaction) == OK, "The simulated unresolved receipt is cleared for the next independent fixture")
 	ui.pending_transaction = {}
 	ui.retry_button.hide()
 	fake.script_results = [unknown]
