@@ -1,0 +1,139 @@
+{
+  "source": "0f478a078277fdb0d711837bef67cf14262d9d8f",
+  "handoff": "99a864a8e1ab05d25ba0f0db92552326377e2a00",
+  "non_doc_paths": 516,
+  "changed_or_added": 5,
+  "protected": 511,
+  "views": {
+    "/workspace/reviews/shutdown-study-evidence-independent-20261024": {
+      "materialized": 354,
+      "omitted": 162,
+      "bytes_modes_equal": true
+    },
+    "/workspace/reviews/shutdown-study-evidence-independent-depth1-20261024": {
+      "materialized": 354,
+      "omitted": 162,
+      "bytes_modes_equal": true
+    },
+    "/workspace/sightbreak-windows-shutdown-evidence-completeness-frozen": {
+      "materialized": 516,
+      "omitted": 0,
+      "bytes_modes_equal": true
+    }
+  },
+  "depth": [
+    {
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exit": 0,
+      "stdout": "0f478a078277fdb0d711837bef67cf14262d9d8f\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "rev-list",
+        "--count",
+        "HEAD"
+      ],
+      "exit": 0,
+      "stdout": "1\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "rev-parse",
+        "--verify",
+        "HEAD^"
+      ],
+      "exit": 128,
+      "stdout": "",
+      "stderr": "fatal: Needed a single revision\n"
+    },
+    {
+      "command": [
+        "git",
+        "status",
+        "--porcelain=v1"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "depth_index_count": 16262,
+  "shared_objects": "/workspace/sightbreak/.git/objects",
+  "self_contained": false,
+  "protected_study_AST": [
+    "require",
+    "write",
+    "WindowsOwner",
+    "driver_arguments",
+    "typed_leak_rows",
+    "embedded_pck_identity",
+    "runtime_identity",
+    "main"
+  ],
+  "old28_methods_and_113_assertions_and_Owner_AST_unchanged": true,
+  "run_generated_exact_adjudicated_V3_AST": true,
+  "fixture_exact_e902_bytes": true,
+  "preserved_manifests": [
+    {
+      "path": "/workspace/reviews/shutdown-study-evidence-independent-20261024/docs/reports/gauntlet/shutdown-study-evidence-independent-20261024/phase-a-fixture-adjudication/MANIFEST.json",
+      "members": 12,
+      "bytes": 186169,
+      "all_bytes_hashes_equal": true
+    },
+    {
+      "path": "/workspace/reviews/shutdown-study-evidence-independent-20261024/docs/reports/gauntlet/shutdown-study-evidence-independent-20261024/phase-a-v3/MANIFEST.json",
+      "members": 7,
+      "bytes": 46112,
+      "all_bytes_hashes_equal": true
+    },
+    {
+      "path": "/workspace/reviews/shutdown-study-evidence-independent-20261024/docs/reports/gauntlet/shutdown-study-evidence-independent-20261024/phase-a-construction-verdict/MANIFEST.json",
+      "members": 4,
+      "bytes": 39133,
+      "all_bytes_hashes_equal": true
+    },
+    {
+      "path": "/workspace/reviews/shutdown-study-evidence-independent-20261024/docs/reports/gauntlet/shutdown-study-evidence-independent-20261024/ARCHIVED_AVAILABILITY_MANIFEST.json",
+      "members": 8,
+      "bytes": 41494,
+      "all_bytes_hashes_equal": true
+    },
+    {
+      "path": "/workspace/reviews/shutdown-study-evidence-independent-20261024/docs/reports/gauntlet/shutdown-study-evidence-independent-20261024/final-source-r1/INTERIM_MANIFEST.json",
+      "members": 849,
+      "bytes": 205366615,
+      "all_bytes_hashes_equal": true
+    }
+  ],
+  "builder_manifest": {
+    "path": "/workspace/reviews/shutdown-study-evidence-independent-20261024/docs/reports/gauntlet/shutdown-study-evidence-independent-20261024/final-source-r1/builder-handoff/MANIFEST.json",
+    "members": 97,
+    "bytes": 1907014,
+    "all_bytes_hashes_equal": true
+  },
+  "builder_tracked_files_equal": 98,
+  "separate_binding_originals": [
+    {
+      "view": "frozen-own",
+      "original_exit": 0,
+      "original_methods": 11,
+      "repeated": false
+    },
+    {
+      "view": "frozen-depth",
+      "original_exit": 0,
+      "original_methods": 11,
+      "repeated": false
+    }
+  ],
+  "candidate_tests_rerun_in_this_audit": 0,
+  "native_or_API_or_real_process_trials": 0
+}

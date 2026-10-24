@@ -1,0 +1,59 @@
+{
+  "full": {
+    "command": [
+      "git",
+      "diff",
+      "--cached",
+      "--check",
+      "b17d05e96d24c51554810a1f7ab400ec549c3584",
+      "--",
+      "docs/reports/gauntlet/shutdown-study-evidence-independent-20261024/final-source-r1"
+    ],
+    "exit": 2,
+    "stdout": "docs/reports/gauntlet/shutdown-study-evidence-independent-20261024/final-source-r1/builder-handoff/pure-r1-old28.stderr:12: trailing whitespace.\n+test_every_failure_subset_consumes_fixed_arm_no_replacement (test_windows_shutdown_study.StudyTests.test_every_failure_subset_consumes_fixed_arm_no_replacement) ... \ndocs/reports/gauntlet/shutdown-study-evidence-independent-20261024/final-source-r1/depth-independent/original.stderr:1: trailing whitespace.\n+test_01_coherent_positive_variants_and_relative_caller_path (__main__.ReceiptControls.test_01_coherent_positive_variants_and_relative_caller_path) ... \ndocs/reports/gauntlet/shutdown-study-evidence-independent-20261024/final-source-r1/depth-independent/original.stderr:4: trailing whitespace.\n+test_03_named_capture_context_and_two_frame_relationships (__main__.ReceiptControls.test_03_named_capture_context_and_two_frame_relationships) ... \ndocs/reports/gauntlet/shutdown-study-evidence-independent-20261024/final-source-r1/depth-independent/original.stderr:9: trailing whitespace.\n+test_04_pause_and_source_constant_receipts (__main__.ReceiptControls.test_04_pause_and_source_constant_receipts) ... \ndocs/reports/gauntlet/shutdown-study-evidence-independent-20261024/final-source-r1/depth-independent/original.stderr:15: trailing whitespace.\n+test_05_callback_job_relationships_and_x64_boundaries (__main__.ReceiptControls.test_05_callback_job_relationships_and_x64_boundaries) ... \ndocs/reports/gauntlet/shutdown-study-evidence-independent-20261024/final-source-r1/depth-independent/original.stderr:23: trailing whitespace.\n+test_08_wrapper_originals_and_publication_receipt_collision (__main__.ReceiptControls.test_08_wrapper_originals_and_publication_receipt_collision) ... \ndocs/reports/gauntlet/shutdown-study-evidence-independent-20261024/final-source-r1/own-independent/original.stderr:1: trailing whitespace.\n+test_01_coherent_positive_variants_and_relative_caller_path (__main__.ReceiptControls.test_01_coherent_positive_variants_and_relative_caller_path) ... \ndocs/reports/gauntlet/shutdown-study-evidence-independent-20261024/final-source-r1/own-independent/original.stderr:4: trailing whitespace.\n+test_03_named_capture_context_and_two_frame_relationships (__main__.ReceiptControls.test_03_named_capture_context_and_two_frame_relationships) ... \ndocs/reports/gauntlet/shutdown-study-evidence-independent-20261024/final-source-r1/own-independent/original.stderr:9: trailing whitespace.\n+test_04_pause_and_source_constant_receipts (__main__.ReceiptControls.test_04_pause_and_source_constant_receipts) ... \ndocs/reports/gauntlet/shutdown-study-evidence-independent-20261024/final-source-r1/own-independent/original.stderr:15: trailing whitespace.\n+test_05_callback_job_relationships_and_x64_boundaries (__main__.ReceiptControls.test_05_callback_job_relationships_and_x64_boundaries) ... \ndocs/reports/gauntlet/shutdown-study-evidence-independent-20261024/final-source-r1/own-independent/original.stderr:23: trailing whitespace.\n+test_08_wrapper_originals_and_publication_receipt_collision (__main__.ReceiptControls.test_08_wrapper_originals_and_publication_receipt_collision) ... \n",
+    "stderr": ""
+  },
+  "raw_only_exact_paths": [
+    "docs/reports/gauntlet/shutdown-study-evidence-independent-20261024/final-source-r1/builder-handoff/pure-r1-old28.stderr",
+    "docs/reports/gauntlet/shutdown-study-evidence-independent-20261024/final-source-r1/depth-independent/original.stderr",
+    "docs/reports/gauntlet/shutdown-study-evidence-independent-20261024/final-source-r1/own-independent/original.stderr"
+  ],
+  "scoped": {
+    "command": [
+      "git",
+      "diff",
+      "--cached",
+      "--check",
+      "b17d05e96d24c51554810a1f7ab400ec549c3584",
+      "--",
+      "docs/reports/gauntlet/shutdown-study-evidence-independent-20261024/final-source-r1",
+      ":(exclude)docs/reports/gauntlet/shutdown-study-evidence-independent-20261024/final-source-r1/builder-handoff/pure-r1-old28.stderr",
+      ":(exclude)docs/reports/gauntlet/shutdown-study-evidence-independent-20261024/final-source-r1/depth-independent/original.stderr",
+      ":(exclude)docs/reports/gauntlet/shutdown-study-evidence-independent-20261024/final-source-r1/own-independent/original.stderr"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "source": {
+    "command": [
+      "git",
+      "diff",
+      "--check",
+      "1add0f828b26b86b9bc2ec9e02c4208e31bb2e5a",
+      "--",
+      "scripts"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "note": "Original raw unittest whitespace retained byte-exact. No source or authored-text waiver.",
+  "packaging_assertion_history": {
+    "first_expected_raw_paths": 2,
+    "actual_raw_paths": 3,
+    "result": "Packaging assertion failed after all substantive checks passed; full historical range also contains retained builder first-failure stderr",
+    "correction": "Adjudicate the exact third raw path; preserve every byte; no candidate/test/fixture change or replay",
+    "first_record": "FIRST_FINAL_WHITESPACE_CHECK.json"
+  }
+}

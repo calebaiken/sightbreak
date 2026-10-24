@@ -1,0 +1,198 @@
+{
+  "source": "0f478a078277fdb0d711837bef67cf14262d9d8f",
+  "default_driver_sha256": "b744b9bb8d594d2018f3ca71c89a22ca03fc0966570e5e1bf7658725aea90edd",
+  "source_function_lines": {
+    "require_living_capture_phase": 93,
+    "capture_living_phase": 114
+  },
+  "local_fence_oracles": {
+    "accepted-format-baseline": {
+      "error": null,
+      "predicate_checks": [
+        {
+          "field": "acknowledged",
+          "label": "Named living buy phase: 06c-next-round",
+          "predicate": true
+        },
+        {
+          "field": "ready",
+          "label": "Two drawn frames before named capture: 06c-next-round",
+          "predicate": true
+        },
+        {
+          "field": "before_capture",
+          "label": "Fresh named context immediately before capture: 06c-next-round",
+          "predicate": true
+        },
+        {
+          "field": "after_capture_barrier",
+          "label": "Observation barrier after raw capture: 06c-next-round",
+          "predicate": true
+        },
+        {
+          "field": "after_capture",
+          "label": "Fresh named context beyond post-capture barrier: 06c-next-round",
+          "predicate": true
+        }
+      ],
+      "fake_capture_calls": [
+        "06c-next-round"
+      ],
+      "scope": "local source predicates only; no physical history or native/UI action"
+    },
+    "capture-wrong-phase": {
+      "error": "Named capture lost its living buy-phase actor/round/focus context",
+      "predicate_checks": [
+        {
+          "field": "acknowledged",
+          "label": "Named living buy phase: 06c-next-round",
+          "predicate": true
+        },
+        {
+          "field": "ready",
+          "label": "Two drawn frames before named capture: 06c-next-round",
+          "predicate": true
+        },
+        {
+          "field": "before_capture",
+          "label": "Fresh named context immediately before capture: 06c-next-round",
+          "predicate": true
+        },
+        {
+          "field": "after_capture_barrier",
+          "label": "Observation barrier after raw capture: 06c-next-round",
+          "predicate": true
+        },
+        {
+          "field": "after_capture",
+          "label": "Fresh named context beyond post-capture barrier: 06c-next-round",
+          "error": "Named capture lost its living buy-phase actor/round/focus context"
+        }
+      ],
+      "fake_capture_calls": [
+        "06c-next-round"
+      ],
+      "scope": "local source predicates only; no physical history or native/UI action",
+      "candidate_strict_passed": true,
+      "input_sha256": "46c817c0daafd2637847492b937717ab6cb26220e0ea63506b2a36266cd3235d"
+    },
+    "capture-wrong-actor": {
+      "error": "Named capture lost its living buy-phase actor/round/focus context",
+      "predicate_checks": [
+        {
+          "field": "acknowledged",
+          "label": "Named living buy phase: 06c-next-round",
+          "predicate": true
+        },
+        {
+          "field": "ready",
+          "label": "Two drawn frames before named capture: 06c-next-round",
+          "predicate": true
+        },
+        {
+          "field": "before_capture",
+          "label": "Fresh named context immediately before capture: 06c-next-round",
+          "predicate": true
+        },
+        {
+          "field": "after_capture_barrier",
+          "label": "Observation barrier after raw capture: 06c-next-round",
+          "predicate": true
+        },
+        {
+          "field": "after_capture",
+          "label": "Fresh named context beyond post-capture barrier: 06c-next-round",
+          "error": "Named capture lost its living buy-phase actor/round/focus context"
+        }
+      ],
+      "fake_capture_calls": [
+        "06c-next-round"
+      ],
+      "scope": "local source predicates only; no physical history or native/UI action",
+      "candidate_strict_passed": true,
+      "input_sha256": "25cfc84509990d8075f1974b55a71803ef05021361d2793bcc3abc3f33b9a4b9"
+    },
+    "capture-missing-two-frames": {
+      "error": "false source wait predicate cannot populate returned ready",
+      "predicate_checks": [
+        {
+          "field": "acknowledged",
+          "label": "Named living buy phase: 06c-next-round",
+          "predicate": true
+        },
+        {
+          "field": "ready",
+          "label": "Two drawn frames before named capture: 06c-next-round",
+          "predicate": false,
+          "error": "false source wait predicate cannot populate returned ready"
+        }
+      ],
+      "fake_capture_calls": [],
+      "scope": "local source predicates only; no physical history or native/UI action",
+      "candidate_strict_passed": true,
+      "input_sha256": "239d3ae5d75232070acd3e53f1727c875f0c80bb454fedc774f2c5a2fe4f3e86"
+    },
+    "capture-dead-after-capture": {
+      "error": "Named capture lost its living buy-phase actor/round/focus context",
+      "predicate_checks": [
+        {
+          "field": "acknowledged",
+          "label": "Named living buy phase: 06c-next-round",
+          "predicate": true
+        },
+        {
+          "field": "ready",
+          "label": "Two drawn frames before named capture: 06c-next-round",
+          "predicate": true
+        },
+        {
+          "field": "before_capture",
+          "label": "Fresh named context immediately before capture: 06c-next-round",
+          "predicate": true
+        },
+        {
+          "field": "after_capture_barrier",
+          "label": "Observation barrier after raw capture: 06c-next-round",
+          "predicate": true
+        },
+        {
+          "field": "after_capture",
+          "label": "Fresh named context beyond post-capture barrier: 06c-next-round",
+          "error": "Named capture lost its living buy-phase actor/round/focus context"
+        }
+      ],
+      "fake_capture_calls": [
+        "06c-next-round"
+      ],
+      "scope": "local source predicates only; no physical history or native/UI action",
+      "candidate_strict_passed": true,
+      "input_sha256": "43583f817b5d0e020370e17c5bdfe140c092b0f92f85e9458aa1513a1b6b2ae9"
+    }
+  },
+  "source_constants": {
+    "completion_watchdog_seconds": [
+      {
+        "line": 729,
+        "value": 15,
+        "kind": "int"
+      }
+    ],
+    "whole_flow_deadline_unchanged": [
+      {
+        "line": 729,
+        "value": true,
+        "kind": "bool"
+      }
+    ],
+    "same_living_player_required": [
+      {
+        "line": 868,
+        "value": true,
+        "kind": "bool"
+      }
+    ]
+  },
+  "target_reader_rerun": false,
+  "native_invocations": 0,
+  "qualification": "UNREVIEWED; local pure-source corroboration only"
+}
