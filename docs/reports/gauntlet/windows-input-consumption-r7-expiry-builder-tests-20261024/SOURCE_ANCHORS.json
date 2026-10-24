@@ -1,0 +1,18 @@
+{
+  "registration_utc": "2026-10-24T13:45:50.640458+00:00",
+  "head": "e5f8ac42cdd3d27d57f5014cc9a5fba063b3cc13",
+  "peer_source": "game/scripts/network/peer_lifecycle.gd",
+  "peer_sha256": "8a57cc07bdc007fe143a5e8c51c99238732fcc4acf9f209fd4718af937f22078",
+  "peer_lines": {
+    "constants": "4-6",
+    "connected": "11-16",
+    "admitted": "27-32",
+    "reject": "34-37",
+    "active": "49-51",
+    "expired": "53-62"
+  },
+  "match_pre_forget": "game/scripts/gameplay/match.gd:883-889",
+  "scope": "Read-only source registration before tests; initial wrong path corrected via exact Git and physical source reads; no sparse omission.",
+  "setup_correction": "Initial rg used wrong path game/scripts/peer_lifecycle.gd (without network). Actual physical game/scripts/network/peer_lifecycle.gd exists and matches exact Git source. No sparse omission occurred; prior sparsepathabsent wording was mistaken.",
+  "physical_peer_source_exact": true
+}
