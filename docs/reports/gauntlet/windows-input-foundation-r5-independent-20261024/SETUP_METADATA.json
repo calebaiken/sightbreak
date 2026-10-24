@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "scope": "prospective registration only; no candidate implementation/test inspection",
+  "base": "d84e8d80c6b71ef9d109b26c16e2a73a9da8b635",
+  "checkout": "/workspace/reviews/windows-input-foundation-r5-independent-20261024",
+  "branch": "codex/critic-windows-input-foundation-r5-20261024",
+  "preserved_setup_observations": [
+    {"command": "git rev-parse d84", "exit": 128, "result": "three-character abbreviation not resolved; no source or test read"},
+    {"command": "git log --all --format='%H %s' --max-count=100", "exit": 0, "result": "metadata only used to resolve full historical base; no implementation inspected"},
+    {"command": "git worktree add --no-checkout; git read-tree HEAD; sparse-checkout set", "exit": 0, "result": "new owned worktree initialized before sparse selection; AGENTS.md initially needed explicit restore"},
+    {"command": "git restore --source=HEAD --worktree -- AGENTS.md", "exit": 0, "result": "exact instruction file restored/read; working tree clean before registration"}
+  ],
+  "candidate": null,
+  "candidate_checks_executed": 0
+}
