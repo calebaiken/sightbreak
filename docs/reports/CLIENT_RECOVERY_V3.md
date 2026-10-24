@@ -85,7 +85,15 @@ Set-8F5F7604 with 3/3 exact recoveries versus 0/3, after checking all 122 payloa
 30 SQL stages and 2,078 consistency conditions. The subsequent independent
 [source/API binding review](native-pg-restart-evidence/source-binding/README.md)
 passes: recovery dispatches the journal's receipt, without fixture payload arguments.
-A focused recovery-input absence control adds empirical corroboration.
+The [focused recovery-input absence control](NATIVE_JOURNAL_ONLY_RESTART_RESULTS.md)
+also completed: **V2 recovered 0/1; the candidate recovered 1/1** at price400.
+All four restart launches read exactly `{url, journal, mode, username, password, owner}`;
+prelaunch and native-read hashes, lengths and keys match. No original purchase
+identifier was supplied through configuration, environment or argv. Each purchase
+settled once, and the second restart sent no purchase request or changed economic
+rows. This uses frozen harness `7be70f73`, with 101 raw-evidence Git blobs and the
+separate neutral ZIP reverified after incorporation. A fresh two-case blind review
+is pending; the original three-case review and source closure remain distinct.
 The original maintained native
 economy regression's 36/37 Windows port-9 failure is retained; a one-literal reserved
 DNS calibration passed 37/37 and is now adopted by the maintained test in `5da86b28`.
