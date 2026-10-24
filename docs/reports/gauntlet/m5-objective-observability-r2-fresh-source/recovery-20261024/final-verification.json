@@ -1,0 +1,56 @@
+{
+  "head": {
+    "args": [
+      "rev-parse",
+      "HEAD"
+    ],
+    "exit_code": 0,
+    "stdout": "30a8da5375d7f14eaec446cd4cb7fe094d855a26\n",
+    "stderr": ""
+  },
+  "local_tracking_ref_lookup": {
+    "args": [
+      "rev-parse",
+      "--verify",
+      "refs/remotes/origin/codex/critic-m5-objective-r2-fresh-source-20261023"
+    ],
+    "exit_code": 128,
+    "stdout": "",
+    "stderr": "fatal: Needed a single revision\n"
+  },
+  "remote_branch_lookup": {
+    "args": [
+      "ls-remote",
+      "--heads",
+      "origin",
+      "refs/heads/codex/critic-m5-objective-r2-fresh-source-20261023"
+    ],
+    "exit_code": 0,
+    "stdout": "30a8da5375d7f14eaec446cd4cb7fe094d855a26\trefs/heads/codex/critic-m5-objective-r2-fresh-source-20261023\n",
+    "stderr": ""
+  },
+  "source_diff": {
+    "args": [
+      "diff",
+      "--exit-code",
+      "dce89495",
+      "--",
+      "game",
+      "scripts"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "status_before_final_receipt": {
+    "args": [
+      "status",
+      "--short"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "note": "Local remote-tracking ref is absent in this checkout; push was independently verified against ls-remote. This lookup limitation is unrelated to source or receipt acceptance.",
+  "native_executed": false
+}
