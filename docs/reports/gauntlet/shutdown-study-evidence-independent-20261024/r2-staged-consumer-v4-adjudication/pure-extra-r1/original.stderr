@@ -1,0 +1,27 @@
+test_01_false_and_missing_predicates_cannot_complete (__main__.GuardControls.test_01_false_and_missing_predicates_cannot_complete) ... ok
+test_02_same_inode_change_and_preimage_collision_preserve_bytes (__main__.GuardControls.test_02_same_inode_change_and_preimage_collision_preserve_bytes) ... ok
+test_03_namespace_identity_is_checked_before_successful_return (__main__.GuardControls.test_03_namespace_identity_is_checked_before_successful_return) ... ERROR
+test_04_opened_file_is_closed_when_initial_identity_read_fails (__main__.GuardControls.test_04_opened_file_is_closed_when_initial_identity_read_fails) ... ok
+test_05_all_closes_attempted_and_primary_cause_retained (__main__.GuardControls.test_05_all_closes_attempted_and_primary_cause_retained) ... ok
+
+======================================================================
+ERROR: test_03_namespace_identity_is_checked_before_successful_return (__main__.GuardControls.test_03_namespace_identity_is_checked_before_successful_return)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<frozen staged proposal>", line 150, in put
+  File "<frozen staged proposal>", line 105, in verify_namespace
+ValueError: fixture root identity changed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/workspace/reviews/shutdown-study-evidence-independent-20261024/docs/reports/gauntlet/shutdown-study-evidence-independent-20261024/r2-staged-consumer-v4-adjudication/extra_controls.py", line 68, in test_03_namespace_identity_is_checked_before_successful_return
+    with patch.object(os,'fstat',fstat):p.put('actions.json',b'new')
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen staged proposal>", line 158, in put
+RuntimeError: Synthetic preimage retention incomplete: ValueError: fixture root identity changed
+
+----------------------------------------------------------------------
+Ran 5 tests in 1.052s
+
+FAILED (errors=1)

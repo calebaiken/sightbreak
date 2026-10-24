@@ -1,0 +1,179 @@
+01-menu
+{
+  "offline_input_failure": {
+    "passed": false,
+    "target": "windows",
+    "host": "Windows-synthetic-data-format-fixture",
+    "controller_command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "scripts/verify_offline_export.py",
+      "--target",
+      "windows",
+      "--hosted-render-priority",
+      "below-normal",
+      "--display",
+      ":102",
+      "--timeout",
+      "300",
+      "--output",
+      "/workspace/reviews/shutdown-study-evidence-independent-20261024/docs/reports/gauntlet/shutdown-study-evidence-independent-20261024/r2-staged-consumer-v4-adjudication/pure-r1/owned-replacement"
+    ],
+    "captures": [
+      {
+        "name": "01-menu",
+        "dimensions": [
+          640,
+          360
+        ]
+      }
+    ],
+    "shutdown_study_observations": [],
+    "error": "ValueError: owned output changed/replaced: actions.json",
+    "commands": [
+      {
+        "name": "client",
+        "command": [
+          "C:/synthetic-export/windows/SIGHTBREAK.exe",
+          "--audio-driver",
+          "Dummy",
+          "--position",
+          "0,0",
+          "--resolution",
+          "640x360",
+          "--",
+          "--offline-validation",
+          "--offline-trace-dir=/workspace/reviews/shutdown-study-evidence-independent-20261024/docs/reports/gauntlet/shutdown-study-evidence-independent-20261024/r2-staged-consumer-v4-adjudication/pure-r1/owned-replacement/initial-offline-trace"
+        ],
+        "pid": 101,
+        "started_seconds": 0.0
+      }
+    ],
+    "ocr_commands": [],
+    "events": [
+      "01-menu"
+    ],
+    "elapsed_seconds": 1.330000000000041
+  },
+  "recent_actions": [
+    {
+      "event": "wait_begin",
+      "seconds": 0.0,
+      "wall_unix_msec": 1792800000000,
+      "held_keys": [],
+      "native_state": {
+        "target_window": 1001,
+        "foreground_window": 1001,
+        "target_focused": true,
+        "lmb_down": false,
+        "keys_down": {
+          "r": false,
+          "d": false,
+          "w": false
+        },
+        "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+      },
+      "label": "Native export window",
+      "budget_seconds": 30
+    },
+    {
+      "event": "wait_completed",
+      "seconds": 1.2000000000000455,
+      "wall_unix_msec": 1792800001200,
+      "held_keys": [],
+      "native_state": {
+        "target_window": 1001,
+        "foreground_window": 1001,
+        "target_focused": true,
+        "lmb_down": false,
+        "keys_down": {
+          "r": false,
+          "d": false,
+          "w": false
+        },
+        "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+      },
+      "label": "Native export window"
+    },
+    {
+      "event": "wait_begin",
+      "seconds": 1.2000000000000455,
+      "wall_unix_msec": 1792800001200,
+      "held_keys": [],
+      "native_state": {
+        "target_window": 1001,
+        "foreground_window": 1001,
+        "target_focused": true,
+        "lmb_down": false,
+        "keys_down": {
+          "r": false,
+          "d": false,
+          "w": false
+        },
+        "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+      },
+      "label": "Native menu",
+      "budget_seconds": 60
+    },
+    {
+      "event": "wait_completed",
+      "seconds": 1.3099999999999454,
+      "wall_unix_msec": 1792800001310,
+      "held_keys": [],
+      "native_state": {
+        "target_window": 1001,
+        "foreground_window": 1001,
+        "target_focused": true,
+        "lmb_down": false,
+        "keys_down": {
+          "r": false,
+          "d": false,
+          "w": false
+        },
+        "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+      },
+      "label": "Native menu"
+    },
+    {
+      "event": "capture_begin",
+      "seconds": 1.3099999999999454,
+      "wall_unix_msec": 1792800001310,
+      "held_keys": [],
+      "native_state": {
+        "target_window": 1001,
+        "foreground_window": 1001,
+        "target_focused": true,
+        "lmb_down": false,
+        "keys_down": {
+          "r": false,
+          "d": false,
+          "w": false
+        },
+        "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+      },
+      "capture": "01-menu"
+    },
+    {
+      "event": "capture_end",
+      "seconds": 1.330000000000041,
+      "wall_unix_msec": 1792800001330,
+      "held_keys": [],
+      "native_state": {
+        "target_window": 1001,
+        "foreground_window": 1001,
+        "target_focused": true,
+        "lmb_down": false,
+        "keys_down": {
+          "r": false,
+          "d": false,
+          "w": false
+        },
+        "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+      },
+      "capture": "01-menu",
+      "dimensions": [
+        640,
+        360
+      ]
+    }
+  ]
+}

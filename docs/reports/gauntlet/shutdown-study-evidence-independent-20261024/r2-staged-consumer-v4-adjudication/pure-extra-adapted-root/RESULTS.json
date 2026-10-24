@@ -1,0 +1,17 @@
+{
+  "methods": 1,
+  "failures": 0,
+  "errors": 0,
+  "skips": 0,
+  "safe_error_events": [
+    {
+      "original_error": "RuntimeError: Synthetic preimage retention incomplete: ValueError: fixture root identity changed",
+      "cause": "ValueError: fixture root identity changed",
+      "traceback": "Traceback (most recent call last):\n  File \"<frozen staged proposal>\", line 150, in put\n  File \"<frozen staged proposal>\", line 105, in verify_namespace\nValueError: fixture root identity changed\n\nThe above exception was the direct cause of the following exception:\n\nTraceback (most recent call last):\n  File \"/workspace/reviews/shutdown-study-evidence-independent-20261024/docs/reports/gauntlet/shutdown-study-evidence-independent-20261024/r2-staged-consumer-v4-adjudication/root_error_adapter.py\", line 22, in put\n    try:return original(producer,name,raw)\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<frozen staged proposal>\", line 158, in put\nRuntimeError: Synthetic preimage retention incomplete: ValueError: fixture root identity changed\n",
+      "changed_root_verified": true,
+      "foreign_marker_preserved": true
+    }
+  ],
+  "original_assertions_unchanged": true,
+  "literal_error_not_relabelled": true
+}

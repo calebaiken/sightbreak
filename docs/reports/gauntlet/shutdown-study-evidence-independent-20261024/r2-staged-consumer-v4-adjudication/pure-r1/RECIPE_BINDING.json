@@ -1,0 +1,28 @@
+{
+  "original_fixture_sha256": "c0d98d6d94cf9bc5875a919d56ebc734536fa88f1d82c9e8d1c5cef7f13a6f3b",
+  "private_recipe_sha256": "767f4bbae8d6ebf99d509ff719c47c86aab42e8af9b21e841ed405b199fc3b02",
+  "literal_changes": [
+    {
+      "before": "reload_before = _snapshot(20500,",
+      "after": "reload_before = _snapshot(20000,"
+    },
+    {
+      "before": "'draw_calls_last_rendered_frame': 100,",
+      "after": "'draw_calls_last_rendered_frame': 100.0,"
+    },
+    {
+      "before": "'primitives_last_rendered_frame': 1000,",
+      "after": "'primitives_last_rendered_frame': 1000.0,"
+    },
+    {
+      "before": "def write_complete_trial(",
+      "after": "def _write_format_trial_v1("
+    }
+  ],
+  "source_hashes": {
+    "scripts/verify_offline_export.py": "b744b9bb8d594d2018f3ca71c89a22ca03fc0966570e5e1bf7658725aea90edd",
+    "scripts/native_approach.py": "6b7ce3418b396fffb544e0938954b16d239fbd4a426ec882ba9c287d0b1e7728",
+    "scripts/native_settings_route.py": "7ca33fde40a35e7383d8225abc23dbb8d9e2b59c0d16d6c90572c6110c85a102",
+    "scripts/verify_integration_export.py": "2b2a67d99e723caabc52d6ded00927280921694985d0b99ffeb22f05fee21963"
+  }
+}
