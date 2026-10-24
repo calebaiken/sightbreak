@@ -16,7 +16,7 @@ from macos_ax_contract import (CAPS, LABEL, PRUNED_ROLES, normalized_title, numb
 from probe_macos_input import digest
 from macos_ordinary_input import no_symlinks
 from macos_native_input import same_bounds
-from macos_ax_live import LIVE_SCHEMA, LIVE_SOURCE, GUARD_BYTES, start_live
+from macos_ax_live import LIVE_SCHEMA, LIVE_SOURCE, GUARD_BYTES, CALL_CAP, start_live
 
 AX_SOURCE = Path(__file__).with_name('probe_macos_ax.py')
 SOURCES = (Path(__file__), AX_SOURCE, Path(__file__).with_name('macos_ax_contract.py'),
@@ -124,6 +124,18 @@ def decode_public_json(data):
 def read_public_json(path):
     data, _seal = read_regular(path, CAPS['receipt_bytes'])
     return decode_public_json(data)
+
+
+def retain_response(path, raw, limit, directories):
+    if not isinstance(raw, bytes) or len(raw) > limit:
+        raise RuntimeError('Original live AX response exceeds its fixed byte cap')
+    with Path(path).open('xb') as stream:
+        stream.write(raw); stream.flush()
+        written_identity = file_identity(os.fstat(stream.fileno()))
+    data, seal = read_regular(path, limit)
+    if data != raw or seal.identity != written_identity or seal.directories != directories:
+        raise RuntimeError('Original live AX response file or ancestors changed before sealing')
+    return data, seal
 
 
 def seal_native_capture(png, native, capture):
@@ -285,17 +297,11 @@ class SemanticDeployTarget:
         from macos_ax_contract import READ_APIS
         previous = self.live_records[-1]['response']['api_call_counts'] if self.live_records else self.receipt['api_call_counts']
         if (not isinstance(calls,dict) or set(calls)-set(READ_APIS)
-                or any(type(value) is not int or not 0 <= value <= 32768 for value in calls.values())
-                or sum(calls.values()) > 32768 or any(calls.get(key,0) < value for key,value in previous.items())):
+                or any(type(value) is not int or not 0 <= value <= CALL_CAP for value in calls.values())
+                or sum(calls.values()) > CALL_CAP or any(calls.get(key,0) < value for key,value in previous.items())):
             raise RuntimeError('Retained AX cumulative read-only call cap failed')
         path = Path(self.files[-1].path).with_name('semantic-live-'+str(response['sequence'])+'.json')
-        with path.open('xb') as stream:
-            stream.write(raw); stream.flush()
-            written_identity = file_identity(os.fstat(stream.fileno()))
-        data, seal = read_regular(path, GUARD_BYTES)
-        if (data != raw or seal.identity != written_identity
-                or seal.directories != self.files[-1].directories):
-            raise RuntimeError('Original live AX response file was replaced or changed before sealing')
+        _data, seal = retain_response(path, raw, GUARD_BYTES, self.files[-1].directories)
         self.live_records.append({'response': response, 'file_seal': seal.metadata(),
                                   'request_started': started, 'request_finished': finished})
 
@@ -338,9 +344,7 @@ def acquire_target(ui, capture, output, command, remaining, menu_deadline, resul
         ui.require_target()
         finished = time.monotonic()
         remaining(expires)
-        raw_ax, ax_seal = read_regular(ax_file, CAPS['receipt_bytes'])
-        if raw_ax != raw_response:
-            raise RuntimeError('Retained AX initial pipe/file evidence disagrees')
+        raw_ax, ax_seal = retain_response(ax_file, raw_response, CAPS['receipt_bytes'], native_files[-1].directories)
         receipt = decode_public_json(raw_ax)
     except BaseException:
         channel.close()

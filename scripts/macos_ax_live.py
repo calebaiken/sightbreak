@@ -15,6 +15,7 @@ from probe_macos_ax import BoundedObserver, NativeAX
 LIVE_SCHEMA = 'macos-retained-deploy-live-v1'
 COMMAND_BYTES = 256
 GUARD_BYTES = 8192
+CALL_CAP = 32768
 LIVE_SOURCE = Path(__file__).with_name('probe_macos_ax_live.py')
 
 
@@ -77,6 +78,12 @@ class RetainedAX(NativeAX):
         super().__init__(*arguments)
         self.collecting, self.candidates, self.containers = True, [], {}
 
+    def call(self, name, *arguments, **keywords):
+        # Initial traversal and both live checks spend the SAME allowance.
+        if sum(self.calls.values()) >= CALL_CAP:
+            raise RuntimeError('Original shared AX API call cap exhausted')
+        return super().call(name, *arguments, **keywords)
+
     def title(self, element):
         value = super().title(element)
         if self.collecting and normalized_title(value) == LABEL and self.role(element) == 'AXButton':
@@ -104,7 +111,7 @@ def current_properties(backend, element, original_window, expected_frame):
             or not same_bounds(frame, expected_frame) or not inside(frame, backend.bounds)
             or not backend.same(window, original_window)
             or window_role != 'AXWindow' or not same_bounds(window_frame, backend.bounds)
-            or sum(backend.calls.values()) > 32768):
+            or sum(backend.calls.values()) > CALL_CAP):
         raise RuntimeError('Original retained AX Deploy element changed current identity or properties')
     return {'pid': backend.pid, 'role': role, 'title': title, 'normalized_title': normalized_title(title),
             'enabled': enabled, 'frame_points': frame, 'window_frame_points': window_frame}, rows
@@ -142,7 +149,9 @@ def serve(pid, window, bounds, nonce, budget, deadline, report, *, backend_type=
                       last_owned_layer_zero_rows=backend.latest_rows)
         remaining(deadline)
         data = encode(result, CAPS['receipt_bytes'])
-        with Path(report).open('xb') as stream: stream.write(data)
+        # The parent creates the original success receipt from these exact pipe
+        # bytes and seals its own writing descriptor before any target binding.
+        # Only failures below create a helper-side partial report.
         write_frame(output_fd, data, deadline)
         for sequence, kind in ((1, 'pointer_move'), (2, 'lmb_down')):
             command = decode(read_frame(input_fd, COMMAND_BYTES, deadline))

@@ -239,7 +239,9 @@ class SemanticController(SyntheticController):
                         channel.closed = True
                         if process.returncode is None: process.returncode = 0
                 channel = Channel();channel.process = process
-                return channel, Path(report).read_bytes()
+                raw = Path(report).read_bytes()
+                Path(report).unlink()  # Success is retained by the parent's writing descriptor.
+                return channel, raw
             with patch.object(driver, 'digest', file_digest), patch.object(semantic, 'start_live', start_live):
                 return run(output, preflight, deploy_target='owned-ax')
         with patch.object(driver, 'run', semantic_run):
@@ -355,6 +357,27 @@ class SemanticControls(unittest.TestCase):
             with patch.object(semantic.os, 'read', grow):
                 with self.assertRaises(RuntimeError): semantic.read_public_json(path)
             self.assertLessEqual(sum(lengths), semantic.CAPS['receipt_bytes']+1)
+
+    def test_initial_and_live_response_descriptor_identity_cannot_be_replaced_before_sealing(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary).resolve()
+            seed = root/'seed'; seed.write_bytes(b'{}\n')
+            _, original = semantic.read_regular(seed, semantic.GUARD_BYTES)
+            read = semantic.read_regular
+            for name in ('semantic-deploy-ax.json','semantic-live-1.json'):
+                path = root/name
+                def substituted(current, *arguments):
+                    current = Path(current)
+                    current.rename(current.with_suffix('.retained'))
+                    current.write_bytes(b'{}\n')
+                    return read(current,*arguments)
+                with patch.object(semantic,'read_regular',substituted):
+                    with self.assertRaisesRegex(RuntimeError,'changed before sealing'):
+                        semantic.retain_response(path,b'{}\n',semantic.GUARD_BYTES,original.directories)
+            # A regular-file copy in a different ancestor is also rejected.
+            child = root/'replacement'; child.mkdir()
+            with self.assertRaisesRegex(RuntimeError,'changed before sealing'):
+                semantic.retain_response(child/'ax.json',b'{}\n',semantic.GUARD_BYTES,original.directories)
 
     def test_target_replay_or_foreign_capture_controller_and_json_spoof_fail(self):
         code, _, harness = self.execute()

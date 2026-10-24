@@ -1,0 +1,42 @@
+{
+  "scope": "Pure source/synthetic controls only; no native host, compilation, capture, OCR or gameplay",
+  "cpu_affinity": [
+    4
+  ],
+  "commands": [
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "scripts",
+        "-p",
+        "test_macos*.py",
+        "-v"
+      ],
+      "exit": 0,
+      "seconds": 5.232208695000736
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "scripts/test_probe_macos_input.py",
+        "-v"
+      ],
+      "exit": 0,
+      "seconds": 0.2162134420032089
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "scripts/test_native_log.py",
+        "-v"
+      ],
+      "exit": 0,
+      "seconds": 0.16759228599767084
+    }
+  ],
+  "passed": true
+}

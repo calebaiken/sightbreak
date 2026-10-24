@@ -82,6 +82,8 @@ class LiveControls(unittest.TestCase):
                             elif fault=='frame':backend.objects[1]['frame'][0]+=1
                             elif fault=='window':backend.objects[1]['window']=3
                             elif fault=='pid':backend.objects[1]['pid']=99
+                            elif fault=='expired':backend.deadline=time.monotonic()-1
+                            elif fault=='cap':backend.calls['AXUIElementGetPid']=live.CALL_CAP
                             elif fault=='replacement':
                                 backend.objects[1]['title']='OLD'
                                 backend.objects[99]={'role':'AXButton','title':live.LABEL,'enabled':True,
@@ -93,14 +95,17 @@ class LiveControls(unittest.TestCase):
                         live.write_frame(request_write,live.encode(command,live.COMMAND_BYTES),deadline)
                         responses.append(live.decode(live.read_frame(response_read,live.GUARD_BYTES,deadline)))
                     live.write_frame(request_write,live.encode({'kind':'stop','nonce':nonce},live.COMMAND_BYTES),deadline)
-                except RuntimeError:
+                except (RuntimeError,TimeoutError):
                     if fault is None: raise
                 finally:
                     os.close(request_write);os.close(response_read)
                     thread.join(timeout=5)
             self.assertFalse(thread.is_alive())
             self.assertEqual(backend.closed,1)
-            self.assertEqual(report.read_bytes(),live.encode(initial,live.CAPS['receipt_bytes']))
+            if result == [0]:
+                self.assertFalse(report.exists())  # Parent owns the original success receipt.
+            else:
+                self.assertFalse(live.decode(report.read_bytes())['complete'])
             return result,responses,backend
 
     def test_two_live_checks_use_same_retained_reference_then_close_exactly_once(self):
@@ -113,7 +118,7 @@ class LiveControls(unittest.TestCase):
         self.assertTrue(all(row['input_events_posted']==0 and row['permission_requests_made']==0 for row in responses))
 
     def test_current_change_foreign_identity_and_replacement_never_reacquire(self):
-        for fault in ('disabled','title','role','frame','window','pid','replacement','nonce','order','bool_sequence'):
+        for fault in ('disabled','title','role','frame','window','pid','replacement','nonce','order','bool_sequence','expired','cap'):
             with self.subTest(fault=fault):
                 result,responses,backend=self.exchange(fault)
                 self.assertEqual(result,[1])
@@ -149,6 +154,58 @@ class LiveControls(unittest.TestCase):
         self.assertTrue(stream_in.closed and stream_out.closed)
         self.assertEqual(process.waited,1)
         channel.close();self.assertEqual(process.waited,1)
+
+    def test_cumulative_native_call_cap_rejects_before_one_more_native_call(self):
+        backend = live.RetainedAX.__new__(live.RetainedAX)
+        backend.calls = {'AXUIElementGetPid':live.CALL_CAP-1}
+        def called(_backend, name):
+            _backend.calls[name] = _backend.calls.get(name,0)+1
+            return 17
+        with patch.object(live.NativeAX,'call',called):
+            self.assertEqual(backend.call('AXUIElementGetPid'),17)
+            with self.assertRaisesRegex(RuntimeError,'shared AX API call cap'):
+                backend.call('AXUIElementGetPid')
+        self.assertEqual(sum(backend.calls.values()),live.CALL_CAP)
+
+    def test_channel_shares_one_absolute_deadline_and_cannot_run_third_query(self):
+        read,write=os.pipe()
+        stream_in,stream_out=os.fdopen(write,'wb',buffering=0),os.fdopen(read,'rb',buffering=0)
+        class Process:
+            stdin,stdout=stream_in,stream_out
+            returncode=None
+            def poll(self):return self.returncode
+            def wait(self,timeout):self.returncode=0;return 0
+        process=Process();deadline=time.monotonic()+5
+        channel=live.LiveChannel(process,'a'*32,deadline)
+        with patch.object(live,'write_frame') as writer, patch.object(live,'read_frame',return_value=b'{}\n') as reader:
+            channel.initial()
+            with self.assertRaises(RuntimeError):channel.query('lmb_down')
+            channel.query('pointer_move');channel.query('lmb_down')
+            with self.assertRaises(RuntimeError):channel.query('pointer_move')
+            channel.close()
+            self.assertTrue(all(call.args[-1]==deadline for call in reader.call_args_list+writer.call_args_list))
+            self.assertEqual([call.args[1] for call in reader.call_args_list],
+                             [live.CAPS['receipt_bytes'],live.GUARD_BYTES,live.GUARD_BYTES])
+        self.assertTrue(stream_in.closed and stream_out.closed)
+
+    def test_retained_cf_references_release_once_on_repeated_close(self):
+        backend=live.RetainedAX.__new__(live.RetainedAX)
+        released=[]
+        class CF:
+            def CFRelease(self,pointer):released.append(pointer)
+        backend.cf,backend.refs=CF(),[101,102,101]
+        backend.close();backend.close()
+        self.assertEqual(released,[101,102,101])  # Each original ownership is released once.
+
+    def test_early_pipe_eof_never_returns_partial_response(self):
+        read,write=os.pipe()
+        try:
+            os.write(write,b'{"schema":');os.close(write);write=None
+            with self.assertRaisesRegex(RuntimeError,'ended before'):
+                live.read_frame(read,live.GUARD_BYTES,time.monotonic()+1)
+        finally:
+            os.close(read)
+            if write is not None:os.close(write)
 
 
 if __name__=='__main__':unittest.main()

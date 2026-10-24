@@ -1,0 +1,25 @@
+test_delivered_down_exception_releases_recorded_owned_button (__main__.IndependentBoundaries.test_delivered_down_exception_releases_recorded_owned_button) ... ok
+test_fifo_is_rejected_without_reading (__main__.IndependentBoundaries.test_fifo_is_rejected_without_reading) ... ok
+test_growth_after_stat_cannot_exceed_receipt_byte_bound (__main__.IndependentBoundaries.test_growth_after_stat_cannot_exceed_receipt_byte_bound) ... FAIL
+test_native_identity_count_and_zero_event_types_fail_closed (__main__.IndependentBoundaries.test_native_identity_count_and_zero_event_types_fail_closed) ... ok
+test_same_byte_original_file_replacement_after_move_never_posts_down (__main__.IndependentBoundaries.test_same_byte_original_file_replacement_after_move_never_posts_down) ... ok
+test_trace_delay_after_semantic_check_cannot_post_expired_move_or_down (__main__.IndependentBoundaries.test_trace_delay_after_semantic_check_cannot_post_expired_move_or_down) ... ok
+
+======================================================================
+FAIL: test_growth_after_stat_cannot_exceed_receipt_byte_bound (__main__.IndependentBoundaries.test_growth_after_stat_cannot_exceed_receipt_byte_bound)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-mac-semantic-deploy/docs/reports/gauntlet/m2-mac-semantic-deploy/recovery-20261024/original-critic-packet/test_independent_boundaries.py", line 106, in test_growth_after_stat_cannot_exceed_receipt_byte_bound
+    with self.assertRaises(RuntimeError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: RuntimeError not raised
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.198s
+
+FAILED (failures=1)
+{"attack": "01-focused-menu.png", "code": 1, "posts": [5], "inode_before_after": [[39088, 39092]], "passed": false}
+{"attack": "01-focused-menu.json", "code": 1, "posts": [5], "inode_before_after": [[39106, 39111]], "passed": false}
+{"attack": "semantic-deploy-ax.json", "code": 1, "posts": [5], "inode_before_after": [[39128, 39130]], "passed": false}
+{"delay_before": "pointer_move", "code": 1, "post_times_kind_now_expires": []}
+{"delay_before": "lmb_down", "code": 1, "post_times_kind_now_expires": [[5, 0.21000000000000002, 5.0]]}

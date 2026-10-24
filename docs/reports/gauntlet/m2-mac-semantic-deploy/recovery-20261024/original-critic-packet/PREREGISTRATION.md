@@ -1,0 +1,16 @@
+# Independent owned-AX Deploy source review criteria
+
+Registered 2026-10-23 before reading the candidate implementation, handoff, test output or source diff. Candidate identity has been supplied as d370774c, but its content has not been opened. Reviewer is a separate fresh agent from the builder. Review branch starts at root base db9d305f.
+
+The fetchable source bar is the exact accepted d5277180 read-only owned AX probe/contract/helper runtime, plus root db9d305f's existing ordinary Mac journey and unchanged c838907 raw/fixed-2x OCR confidence 0.5 rejection against 0.8. Native d4e25303 evidence establishes only a read-only 36-node tree and one enabled Deploy target; it establishes no click or gameplay success. Source comparison is disclosed, not a blind visual comparison.
+
+Acceptance requires all of the following:
+
+1. Exact frozen source and its full non-document Git path/mode/blob union are independently bound to db9d305f plus an explicit bounded allowed delta. Exact reused d5277180 files must match; original workflows, game/wire/privacy/authority/economy, other platforms, default OCR path, confidence 0.8 and all existing budgets must remain unchanged.
+2. Semantic targeting requires explicit --deploy-target owned-ax. A single immutable enabled exact Deploy target is admitted only from the current owned PID/window/title/geometry/focus contract. Ambiguity, malformed schema/numbers, privacy-invalid/search/secure nodes, absent/disabled/replaced/moved targets, ownership/title/geometry changes and untrusted state must fail closed.
+3. Freshness is bounded by the same monotonic AX request start plus five seconds, checked before movement and before down; renewed/replayed/mutated files cannot reset this age. Real ownership and target identity must be revalidated after movement. No stale coordinates may produce movement/down. All input remains genuine original OS events, without AX actions, trust prompts, game hooks or changed gameplay acceptance.
+4. Evidence reads are bounded and tied to immutable ordinary-file identities/content. Symlink/FIFO/oversize/special-file, replacement, mutation, replay and changed identity attacks must fail at the appropriate boundary. File and state exceptions must not leave owned presses held; releases must be attempted when a down is attempted or succeeds, preserving original cleanup.
+5. Supplied pure methods are rerun only after source inspection confirms no native/engine/CI side effects. Independent CPU-only controls attack boundaries rather than duplicate happy-path assertions. Original OCR failure remains rejected. No history assumptions: independently initialize an exact depth-one checkout and replay the relevant pure methods/source checks there.
+6. All source checks and pure work stay on CPU4. No Godot, native input, import/export, render, CI, observer, hidden budget expansion, or qualification run is authorized by this review.
+
+The verdict will state winner and reason, the largest remaining gap, any correctness/regression failure and limits. Any source failure is returned to the builder with a retained counterexample before a new frozen revision. A source acceptance can authorize only later ordinary-Mac actual qualification planning; it proves no actual input/gameplay/Intel/iOS or full release gate. No canonical mission files are edited by this critic.
