@@ -1,0 +1,84 @@
+{
+  "group": "fresh-r4-critic",
+  "name": "inserted_client_tick_counter_only_falsifier",
+  "expected_complete": false,
+  "actual_complete": false,
+  "expectation_met": true,
+  "source_basis": "Only client_tick counter is changed relative to the paired current fresh event. No stale snapshot confound.",
+  "prior_expectation": null,
+  "result": {
+    "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+    "diagnostic_complete": false,
+    "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+    "roles": {
+      "authority": {
+        "records": 7,
+        "coverage": [
+          "authority_tick",
+          "input_accepted",
+          "input_consumed",
+          "input_received",
+          "peer_bound",
+          "peer_connected",
+          "ready"
+        ],
+        "counters": {
+          "authority_tick": 1,
+          "input_accepted": 1,
+          "input_consumed": 1,
+          "input_received": 1,
+          "peer_bound": 1,
+          "peer_connected": 1,
+          "ready": 1
+        },
+        "max_observation_gap_msec": 5000,
+        "max_snapshot_age_msec": -1,
+        "pending_saturation_indices": [],
+        "accepted_events": [
+          {
+            "index": 5,
+            "count": 1,
+            "epoch": 1,
+            "fire": 1,
+            "first": 1,
+            "last": 1,
+            "moving": 0,
+            "reload": 0,
+            "wall_msec": 9000
+          }
+        ],
+        "consumed_events": [
+          {
+            "index": 6,
+            "actor": 1,
+            "fire": true,
+            "generation": 1,
+            "move": [
+              0.0,
+              0.0
+            ],
+            "peer": 9,
+            "reload": false,
+            "sequence": 1,
+            "wall_msec": 10000
+          }
+        ],
+        "expiry_events": [],
+        "disconnect_events": [],
+        "welcome_events": [],
+        "binding_events": [
+          {
+            "peer": 9,
+            "generation": 1,
+            "bound_actor": 1,
+            "wall_unix_msec": 103000
+          }
+        ],
+        "local_attempts": 0
+      }
+    },
+    "errors": [
+      "client: emitted reason did not increment its stage counter"
+    ]
+  }
+}
