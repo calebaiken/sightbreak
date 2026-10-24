@@ -12,7 +12,8 @@ from pathlib import Path
 import unittest
 
 import analyze_input_consumption as candidate
-from test_input_consumption_expiry import SourcePeer,admit,JOIN,IDLE,REJECT
+from test_input_consumption_expiry import SourcePeer,admit,JOIN,IDLE,REJECT,expiry_rows,full_report
+from test_input_consumption_state import append_event
 
 ROOT=Path(__file__).resolve().parents[1]
 REPORT=ROOT/'docs/reports/gauntlet/windows-input-consumption-r7-absorbing-lifecycle-20261024'
@@ -229,6 +230,15 @@ class AbsorbingLifecycleControls(unittest.TestCase):
             source.reject(200);model.observe(row(source,'authority_tick',201),1)
             if known_other:model.other_accepted()
             self.assertEqual(model.expiry(row(source,'peer_expired',40000,1),1),want)
+
+    def test_pre_forget_disconnect_cannot_restore_timer_after_valid_expiry(self):
+        for restore,want in [(False,'CONSISTENT'),(True,'INVALID')]:
+            rows,expiry=expiry_rows('rejected');last=expiry['wall_msec']-expiry['input_age_msec']
+            disconnected=append_event(rows,'peer_disconnected')
+            disconnected.update(input_age_msec=disconnected['wall_msec']-last,
+                                deadline_remaining_msec=(22000 if restore else 24000)-disconnected['wall_msec'])
+            result=full_report(rows)
+            self.assertEqual(result['transition_status'],want,result['errors'])
 
 
 if __name__=='__main__':unittest.main()
