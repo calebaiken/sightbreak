@@ -102,3 +102,16 @@ Source-union verification additionally enumerates all original protected paths,
 all512 non-doc path/mode/blob entries, direct physical bytes of materialized files,
 and exact default-driver erasure. Review uses a separate exact-source view so
 review-document commits cannot be substituted for the source HEAD requirement.
+
+## Additive source-binding flag control after retained r1
+
+The first skip-worktree attempt did NOT falsify binding: Git status in this cone
+checkout noticed the materialized file and preflight rejected it as dirty. The
+harness stopped at that unexpected rejection before later cases. Preserve its
+script/raw outputs and original/altered bytes under r1; it is not a false accept.
+Before further execution register a paired assume-unchanged index control, with
+identical source-file bytes and exact HEAD. That flag is another Git-status trust
+boundary; source_binding must directly hash materialized model bytes to establish
+its advertised physical-source agreement rather than relying on this flag.
+Keep the plain skip-worktree case as a valid rejection and retain any flag-specific
+limitation in the verdict. Restore exact bytes and all flags after each case.

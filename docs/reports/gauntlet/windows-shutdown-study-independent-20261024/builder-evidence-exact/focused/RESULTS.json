@@ -1,0 +1,118 @@
+{
+  "groups": [
+    {
+      "name": "native_log",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_native_log.py",
+        "-v"
+      ],
+      "exit": 0,
+      "methods": 5,
+      "bytes": 785,
+      "sha256": "d274f83c3031f51d109326efc77994debc38233bce55bfc325aaf1631eab5d78"
+    },
+    {
+      "name": "reopened_shutdown_diagnostic",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_reopened_shutdown_diagnostic.py",
+        "-v"
+      ],
+      "exit": 0,
+      "methods": 4,
+      "bytes": 798,
+      "sha256": "c599f1067e0d57dc7b0d51b75204a27d527962f7d21f5c09c5c14c08d18e76c9"
+    },
+    {
+      "name": "offline_capture_fences",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_offline_capture_fences.py",
+        "-v"
+      ],
+      "exit": 0,
+      "methods": 15,
+      "bytes": 2431,
+      "sha256": "d28f0b1a82fab109047a169869d3bf199050fba5987460d996ff72d973938c15"
+    },
+    {
+      "name": "offline_export_ocr",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_offline_export_ocr.py",
+        "-v"
+      ],
+      "exit": 0,
+      "methods": 5,
+      "bytes": 820,
+      "sha256": "443b17ed4368e81e365588ffa2a19e95c7f3bb42a96ef7304fab231b02b698dd"
+    },
+    {
+      "name": "native_focus_fence",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_native_focus_fence.py",
+        "-v"
+      ],
+      "exit": 0,
+      "methods": 16,
+      "bytes": 2841,
+      "sha256": "e6a717ecc9c5413730a387f6bd72c869419d4e2b755d3a41195622eb034a7a07"
+    },
+    {
+      "name": "focus_resume_timing",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_focus_resume_timing.py",
+        "-v"
+      ],
+      "exit": 0,
+      "methods": 8,
+      "bytes": 1356,
+      "sha256": "0902728a33e9765bc0b5ce273921e27da67545a443d62ca69ec1c538579e3088"
+    },
+    {
+      "name": "native_settings_route",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_native_settings_route.py",
+        "-v"
+      ],
+      "exit": 0,
+      "methods": 8,
+      "bytes": 1464,
+      "sha256": "1498b73ee90632b79e10f73eec572fccbff5677d423a304d026444263b9e5966"
+    },
+    {
+      "name": "native_route_pulse",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_native_route_pulse.py",
+        "-v"
+      ],
+      "exit": 0,
+      "methods": 41,
+      "bytes": 7228,
+      "sha256": "3e8727392f71fb7d4381e4884d03bbbae6f37ffae8989e06e394335d82ed44df"
+    },
+    {
+      "name": "package_qa_receipts",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_package_qa_receipts.py",
+        "-v"
+      ],
+      "exit": 0,
+      "methods": 8,
+      "bytes": 1170,
+      "sha256": "0979595e3cc4ae89641492957372f4734be13e51a0f14e173431678a2229901a"
+    }
+  ],
+  "total_methods": 110,
+  "passed": true,
+  "native_invocations": 0,
+  "cpu_affinity": [
+    4
+  ]
+}
