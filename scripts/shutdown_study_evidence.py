@@ -486,6 +486,176 @@ class Evidence:
         capture_context=self.result_data['native_focus_recovery']['capture_context']
         for name in ('11a-restored-focus-still-paused','11b-resumed-held-input-neutral','11c-fresh-press-movement'):
             for field in ('before','after'):snapshot_shape(capture_context[name][field])
+    def producer_links(self):
+        model=ProducerLinks(self)
+        for name in ('named_captures','hud_pauses','reload','settings','focus'):
+            self.check('producer '+name,getattr(model,name))
+
+
+class ProducerLinks:
+    """Source-emitted receipt predicates and operation links, without native IO.
+
+    A matching envelope is not an independent gameplay/quality qualification.
+    Direct untraced status reads are not invented as observed-return actions.
+    """
+    def __init__(self,evidence):
+        self.e=evidence;self.result=evidence.result_data;self.actions=evidence.actions
+    def observed(self,label,state,budget=None,cap=None):
+        rows=[(index,row) for index,row in enumerate(self.actions)
+              if row.get('event')=='offline_observation' and row.get('label')==label]
+        need(len(rows)==1 and same(rows[0][1].get('state'),state),'missing/mismatched observed return: '+label)
+        index,row=rows[0]
+        need(index>=2,'observed return lacks wait actions: '+label)
+        begin,completed=self.actions[index-2:index]
+        need(begin.get('event')=='wait_begin' and completed.get('event')=='wait_completed' and begin.get('label')==completed.get('label')==label,'observed wait/action order differs: '+label)
+        value=begin.get('budget_seconds');need(number(value,0) and value>0,'observed wait budget invalid: '+label)
+        if budget is not None:need(type(value) is int and value==budget,'observed source wait budget differs: '+label)
+        if cap is not None:need(value<=cap,'observed transition budget exceeds source cap: '+label)
+        return index,row
+    def capture(self,name,event):
+        rows=[(index,row) for index,row in enumerate(self.actions) if row.get('event')==event and row.get('capture')==name]
+        need(len(rows)==1,'capture action missing: '+name+'/'+event);return rows[0]
+    @staticmethod
+    def context(state,baseline,*,phase=None,fields=('id',),ui=False):
+        snapshot_shape(state)
+        actor=state['local_actor'];original=baseline['local_actor']
+        need(state['time_scale']==1 and state['phase']==(baseline['phase'] if phase is None else phase) and
+             state['round_number']==baseline['round_number'] and actor['alive'] is True and
+             all(same(actor[field],original[field]) for field in fields),'living actor/phase context changed')
+        if ui:need(state['ui']['screen']=='game' and state['ui']['focused'] is True,'living UI context changed')
+    @staticmethod
+    def counters(states,*,fresh_wall=False):
+        for before,after in zip(states,states[1:]):
+            need(all(after[field]>=before[field] for field in ('wall_msec','simulation_tick','drawn_frames')),'producer snapshot counter regressed')
+            if fresh_wall:need(after['wall_msec']>before['wall_msec'],'producer observed return is not fresh')
+    def named_captures(self):
+        fences=self.result['phase_capture_fences']
+        need(type(fences) is dict and set(fences)=={'06c-next-round','10-reopened-loaded-settings'},'named capture transactions missing')
+        fields=('acknowledged','ready','before_capture','after_capture_barrier','after_capture')
+        labels=('Named living buy phase','Two drawn frames before named capture','Fresh named context immediately before capture','Observation barrier after raw capture','Fresh named context beyond post-capture barrier')
+        for name,fence in fences.items():
+            need(name in ('06c-next-round','10-reopened-loaded-settings'),'unexpected named capture transaction')
+            need(not any(key in fence for key in ('counter_regression','rejected_binding')),'named capture retained failure')
+            watchdog=160 if name=='06c-next-round' else 30
+            need(type(fence.get('transition_watchdog_seconds')) is int and fence['transition_watchdog_seconds']==watchdog,'named source watchdog differs')
+            states=[fence[field] for field in fields];origin=states[0]
+            indices=[]
+            for state,label in zip(states,labels):
+                self.context(state,origin,phase='buy',ui=True)
+                need(state['round_number']==fence['expected_round'] and state['local_actor']['id']==fence['expected_actor_id'] and
+                     0<state['local_actor']['health']<=100 and state['ui']['paused'] is False and state['ui']['scoreboard_visible'] is False,'named capture lost required living context')
+                indices.append(self.observed(label+': '+name,state,cap=watchdog)[0])
+            self.counters(states,fresh_wall=True)
+            need(all(state['drawn_frames']>=origin['drawn_frames']+2 for state in states[1:]),'named capture lacks two additional drawn frames')
+            begin,_=self.capture(name,'capture_begin');end,_=self.capture(name,'capture_end')
+            need(indices==sorted(indices) and indices[2]<begin<end<indices[3],'named observation/capture order differs')
+    def hud_pauses(self):
+        for receipt in self.result['hud_analysis_pauses']:
+            name=receipt['capture'];before=receipt['before'];paused=receipt['paused'];after=receipt['after_analysis']
+            need(receipt.get('scope')=='ordinary native pause for saved-pixel OCR' and before['ui']['paused'] is False,'HUD pause source transaction differs')
+            self.context(before,before,ui=True)
+            for state in (paused,after):
+                self.context(state,before,fields=('id','weapon','ammo','reserve'))
+                need(state['ui']['paused'] is True,'HUD analysis was not paused')
+            need(paused['elapsed']==after['elapsed'] and paused['local_actor']['health']==after['local_actor']['health'],'paused HUD gameplay advanced')
+            self.counters((before,paused,after))
+            need(after['wall_msec']>paused['wall_msec']>before['wall_msec'],'HUD pause observations are stale')
+            first,first_action=self.observed('Native pause before saved-HUD OCR: '+name,paused,budget=10)
+            last,last_action=self.observed('Fresh paused observation after saved-HUD OCR: '+name,after,budget=5)
+            capture_end,_=self.capture(name,'capture_end')
+            ocr=[row for row in self.e.ocr if row['label'].startswith(name+':')]
+            need(len(ocr)==2 and capture_end<first<last and first_action['seconds']<=ocr[0]['started_seconds']<=ocr[-1]['finished_seconds']<=last_action['seconds'],'HUD OCR does not bind its paused transaction')
+            expected=name not in ('06g-switched-primary','07d-explicit-resume')
+            need(receipt['resume_after_analysis'] is expected,'HUD resume policy differs from source call')
+            if expected:
+                resumed=receipt['resumed'];self.context(resumed,before,fields=('id','weapon','ammo','reserve'))
+                need(resumed['ui']['paused'] is False,'HUD analysis did not resume')
+                self.counters((after,resumed));index,_=self.observed('Explicit native resume after saved-HUD OCR: '+name,resumed,budget=10)
+                need(last<index,'HUD resume precedes analysis')
+        # The source can read an already-paused HUD without appending a receipt.
+        # Only the conditional require_context branch emits its extra fresh read.
+    def reload(self):
+        receipt=self.result['native_reload'];before=receipt['before'];started=receipt['started'];completed=receipt['completed'];ready=receipt['capture_ready'];after=receipt['after_capture']
+        for state in (before,started,completed,ready,after):
+            self.context(state,before,phase='live')
+            need(state['local_actor']['weapon']=='sidearm','reload weapon differs')
+        actor=before['local_actor'];need(0<actor['ammo']<15 and actor['reserve']==60 and actor['reload']==0,'fire acknowledgement differs')
+        need(started['local_actor']['reload']>0 and all(started['local_actor'][field]==actor[field] for field in ('ammo','reserve')),'reload start changed ammunition')
+        amount=15-actor['ammo']
+        for state in (completed,ready,after):
+            current=state['local_actor'];need(current['reload']<=0 and current['ammo']==15 and current['reserve']==actor['reserve']-amount,'reload transfer differs')
+            need(state['elapsed']-started['elapsed']>=started['local_actor']['reload']-1/60,'reload completed before its countdown')
+        need(ready['drawn_frames']>=completed['drawn_frames']+2,'reload capture lacks two rendered frames')
+        self.counters((before,started,completed,ready,after))
+        need(started['wall_msec']>before['wall_msec'] and completed['wall_msec']>started['wall_msec'] and ready['wall_msec']>completed['wall_msec'],'reload observed return is stale')
+        need(type(receipt.get('completion_watchdog_seconds')) is int and receipt['completion_watchdog_seconds']==15 and receipt.get('whole_flow_deadline_unchanged') is True,'reload source constants differ')
+        need(same(receipt.get('observed_simulation_seconds'),completed['elapsed']-started['elapsed']) and number(receipt.get('input_seconds')) and number(receipt.get('wall_seconds_after_input')),'reload duration receipt differs')
+        labels=('Authoritative depleted sidearm and two drawn frames','Real R input starts authoritative offline reload','Authoritative offline reload completion','Two rendered frames after authoritative reload transfer')
+        rows=[self.observed(label,state,budget=budget) for label,state,budget in zip(labels,(before,started,completed,ready),(5,5,15,5))]
+        begin05,_=self.capture('05-after-fire','capture_begin');begin06,begin_action=self.capture('06-after-reload','capture_begin')
+        need(rows[0][0]<begin05<rows[1][0]<rows[2][0]<rows[3][0]<begin06,'reload operation/capture order differs')
+        pause=next((row for row in self.result['hud_analysis_pauses'] if row['capture']=='05-after-fire'),None)
+        if pause:self.counters((before,pause['before'],pause.get('resumed',pause['after_analysis']),started))
+        need(self.result['fired_hud']['ammo']==actor['ammo'] and self.result['fired_hud']['reserve']==actor['reserve'],'fired HUD differs from authoritative acknowledgement')
+        need(self.result['reloaded_hud']['ammo']==15 and self.result['reloaded_hud']['reserve']<self.result['fired_hud']['reserve'] and sum(self.result['reloaded_hud'][key] for key in ('ammo','reserve'))==sum(self.result['fired_hud'][key] for key in ('ammo','reserve')),'rendered reload did not conserve ammunition')
+        need(receipt['input_seconds']<=rows[1][1]['seconds'] and rows[3][1]['seconds']<=begin_action['seconds'],'reload relative clock order differs')
+    def settings(self):
+        receipt=self.result['native_settings_resume'];before=receipt['paused_before_settings'];changed=receipt['paused_after_settings'];resumed=receipt['resumed'];ready=receipt['capture_ready'];after=receipt['after_capture']
+        pauses=[row for row in self.result['hud_analysis_pauses'] if CAPTURES.index(row['capture'])<CAPTURES.index('07-field-menu')]
+        need(bool(pauses) and same(before,pauses[-1]['after_analysis']),'settings did not inherit the retained paused transaction')
+        for state in (before,changed,resumed,ready,after):self.context(state,before,fields=('id','weapon','ammo','reserve'),ui=True)
+        need(before['ui']['paused'] is True and changed['ui']['paused'] is True and resumed['ui']['paused'] is False and ready['ui']['paused'] is False,'settings pause/resume transaction differs')
+        need(before['elapsed']==changed['elapsed'] and before['local_actor']['health']==changed['local_actor']['health'],'settings pause advanced gameplay')
+        self.counters((before,changed,resumed,ready,after))
+        need(changed['wall_msec']>before['wall_msec'] and resumed['wall_msec']>changed['wall_msec'] and ready['wall_msec']>resumed['wall_msec'] and ready['drawn_frames']>=resumed['drawn_frames']+2,'settings resume observations are stale')
+        need(type(receipt.get('transition_watchdog_seconds')) is int and receipt['transition_watchdog_seconds']==10 and receipt.get('same_living_player_required') is True,'settings source constants differ')
+        a,_=self.observed('Fresh paused player after native settings change',changed,budget=5)
+        b,_=self.observed('Actual living player explicitly resumes after field settings',resumed,cap=10)
+        c,_=self.observed('Two drawn frames after explicit native settings resume',ready,cap=10)
+        end,_=self.capture('07c-settings-changed','capture_end');begin,_=self.capture('07d-explicit-resume','capture_begin')
+        need(end<a<b<c<begin,'settings source operation order differs')
+        # after_capture deliberately has no universal pausedFalse requirement.
+    def focus(self):
+        from native_focus_fence import FocusContextFence
+        receipt=self.result['native_focus_recovery'];context=receipt['context_fence'];capture=receipt['capture_context']
+        need(not any(key in context for key in ('precondition_loss',)) and context.get('status')=='LIVING_CONTEXT_PRESERVED_THROUGH_CAPTURE','focus precondition failed')
+        try:
+            snapshot_shape(context['baseline'])
+            fence=FocusContextFence(context['baseline'],{})
+            held=receipt['held_input_acknowledged'];lost=receipt['lost'];restored=receipt['restored_paused']
+            for state,focused,paused in ((held,True,False),(lost,False,True),(restored,True,True)):
+                snapshot_shape(state);fence.require(state,'retained producer link',focused=focused,paused=paused)
+            need(held['local_input']['fire'] is True and held['local_input']['move']!=[0,0] and restored['ui']['mouse_mode']==0,'focus held input/restored pointer differs')
+            need(same(capture['11a-restored-focus-still-paused']['before'],restored),'restored capture copy differs')
+            fence.require(capture['11a-restored-focus-still-paused']['after'],'restored capture',focused=True,paused=True)
+            neutral=receipt['held_neutral_samples'];original=restored['local_actor']
+            for state in neutral:
+                snapshot_shape(state);fence.require(state,'held-neutral sample',focused=True,paused=False)
+                actor=state['local_actor'];inputs=state['local_input']
+                need(inputs['move']==[0,0] and all(inputs[field] is False for field in ('fire','interact','reload')) and all(actor[field]==original[field] for field in ('ammo','weapon')) and abs(actor['yaw']-original['yaw'])<=.000001 and abs(actor['pitch']-original['pitch'])<=.000001,'held input altered living player')
+            need(all(abs(neutral[-3]['local_actor']['velocity'][axis])<=.01 for axis in (0,2)) and all(row['local_actor']['position']==neutral[-3]['local_actor']['position'] for row in neutral[-2:]),'held-input endpoint did not settle')
+            need(neutral[-3]['elapsed']-neutral[0]['elapsed']<=1,'held-input inertia exceeded source bound')
+            need(same(capture['11b-resumed-held-input-neutral']['before'],neutral[-1]),'neutral capture copy differs')
+            fence.require(capture['11b-resumed-held-input-neutral']['after'],'neutral capture',focused=True,paused=False)
+            released=receipt['released'];fresh=receipt['fresh_press']
+            fence.require(released,'released controls',focused=True,paused=False)
+            need(released['ui']['waiting_for_input_release'] is False and released['local_input']['move']==[0,0] and released['local_input']['fire'] is False,'focus controls not released')
+            need(same(fresh.get('released'),released) and fresh.get('key_down_dispatched') is True and fresh.get('status')=='LIVING_MOVEMENT_OBSERVED','fresh press source receipt differs')
+            before=fresh['before_key'];moved=fresh['moved'];snapshot_shape(before);snapshot_shape(moved)
+            fence.require(before,'before fresh key',focused=True,paused=False,released=True);fence.require(moved,'fresh movement',focused=True,paused=False)
+            need(moved['local_input']['move']!=[0,0] and moved['simulation_tick']>before['simulation_tick'] and moved['local_actor']['position']!=before['local_actor']['position'],'fresh press movement absent')
+            need(same(fresh.get('last_after_key'),moved) and same(receipt['fresh_press_movement'],moved) and same(capture['11c-fresh-press-movement']['before'],moved),'fresh movement copies differ')
+            after=capture['11c-fresh-press-movement']['after'];fence.require(after,'fresh movement capture',focused=True,paused=False)
+            need(same(context.get('last_valid_state'),after),'final focus context differs')
+        except RuntimeError as error:raise ValueError('focus source context: '+str(error)) from error
+        labels=[('Fresh stock match reaches a living active player before native focus loss',context['baseline'],60),('Game consumed physical W and LMB before native focus loss',held,10),('Native focus loss pauses actual offline match',lost,10),('Actual game observes restored focus',restored,10)]
+        for label,state,budget in labels:self.observed(label,state,budget=budget)
+        self.observed('Explicit resume with W and LMB still physically held',neutral[0],budget=10)
+        for index,state in enumerate(neutral[1:]):
+            label=('Neutral held input while ordinary inertia settles' if index<len(neutral)-3 else 'Fresh held-input guard sample '+str(index-(len(neutral)-3)+1))
+            self.observed(label,state,budget=10)
+        self.observed('Released held focus-test controls',released,budget=10)
+        self.observed('Fresh W press moves actual player after focus recovery',moved,budget=10)
 
 
 def same(left,right):
@@ -499,7 +669,7 @@ def validate_trial(directory,*,context=None,leak_parser=None):
     evidence=Evidence(directory,context)
     evidence.result_data={};evidence.commands=[];evidence.actions=[];evidence.ocr=[];evidence.identity={};evidence.trial={};evidence.pids={}
     evidence.check('inventory',evidence.files)
-    for name in ('result','captures','ocr_records','source_and_commands','traces_and_profile','process_and_closes','logs','hud_and_subreceipts'):
+    for name in ('result','captures','ocr_records','source_and_commands','traces_and_profile','process_and_closes','logs','hud_and_subreceipts','producer_links'):
         evidence.check(name,getattr(evidence,name))
     if leak_parser is not None:
         evidence.details['typed_leak_observations']=[]
