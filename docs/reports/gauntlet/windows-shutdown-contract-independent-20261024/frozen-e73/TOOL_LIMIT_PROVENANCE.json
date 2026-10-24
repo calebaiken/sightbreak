@@ -1,0 +1,10 @@
+{
+  "download_file": {
+    "description": "Download a Sediment-backed uploaded file into the current execution workspace. Only use this tool for Sediment file IDs. Do not use it for File Service IDs or files that already have a workspace_path; read those local files directly. For sediment://file_... references, pass just the file ID. Returns a local path and byte count; use shell commands to read or search the file. Downloads do not add the file contents to context. Maximum file size is 32 MiB. If the workspace is replaced or the file is missing, download it again.",
+    "source": "Current developer-provided tools.download_file description; observed 2026-10-24"
+  },
+  "githubArtifact": {
+    "name": "mcp__codex_apps__github_download_workflow_artifact",
+    "description": "Access repositories, issues, and pull requests. Required for some features such as Codex\n\nDownload a GitHub Actions workflow artifact ZIP archive. GitHub serves this endpoint through a temporary redirect; the underlying client follows that redirect before returning a reusable file reference for the ZIP bytes. Docs: https://docs.github.com/en/rest/actions/artifacts?apiVersion=2022-11-28#download-an-artifact. This tool is part of plugin `GitHub`.\n\nexec tool declaration:\n```ts\ndeclare const tools: { mcp__codex_apps__github_download_workflow_artifact(args: {\n  // GitHub Actions workflow artifact ID.\n  artifact_id: number;\n  // Optional ZIP file name for the returned file reference.\n  file_name?: string | null;\n  // Repository in `owner/name` form, such as `openai/openai`. This maps to GitHub REST `owner` and `repo` path parameters: https://docs.github.com/en/rest/repos/repos#get-a-repository\n  repo_full_name: string;\n}): Promise<CallToolResult>; };\n```"
+  }
+}
