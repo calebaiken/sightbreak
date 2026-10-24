@@ -1,11 +1,8 @@
-# Actual review active
+# Final actual status
 
-Only released run 40089125575 / attempt 1 / job 120858007351 is under review.
-Supported metadata matches exact 4cf6ac8e, fixed qualifier/default workflow and
-admission 90d68181. Root release e5ff0c23 preserves the six exact admission
-snapshots. Original request/push receipts are pending root retention.
-
-At 11:15:38 UTC, Windows OCR dependency step 5 was active and no failure was
-reported. No actual producer, route, physical timing, shutdown or product result
-is accepted from this status. The forward Windows checksum remains fixed, and
-both historical failures remain binding. No new local/native action or rerun.
+Run 40089125575 / attempt 1 / job 120858007351 completed SUCCESS at
+2026-10-24T11:35:30Z. Complete bounded raw reconstructs the original functional
+controls. Strict qualification remains FAIL on retained ANGLE warnings; reopened
+leak diagnosis is INCONCLUSIVE because the original leak did not reproduce.
+Both older failures remain binding. No further native action or rerun is admitted.
+See REVIEW.md and exact retained evidence.

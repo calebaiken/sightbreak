@@ -1,0 +1,36 @@
+{
+  "scope": "Repository whitespace check only; native raw bytes and qualification warning gates unchanged",
+  "full_staged_check": {
+    "command": [
+      "git",
+      "diff",
+      "--cached",
+      "--check"
+    ],
+    "exit_code": 2,
+    "stdout_bytes": 24860199,
+    "stdout_sha256": "f97f6cc468e47901862950a725321fa3c2e0f32a45b47e68ecc46b52641b787c",
+    "lossless_full_stdout": "analysis-output/staged-original-whitespace.stdout.gz",
+    "gzip_bytes": 1609001,
+    "gzip_sha256": "1f6df17fe81aedba1330ec5adbf76eefb367becc5dbd6d128b47515140e8c103",
+    "stderr": "",
+    "sample": [
+      "docs/reports/gauntlet/windows-route-clock-actual-20261024/originals/decoded-job.log:1: trailing whitespace.",
+      "+\ufeff2026-10-24T11:14:56.3564117Z Current runner version: '2.338.0'",
+      "docs/reports/gauntlet/windows-route-clock-actual-20261024/originals/decoded-job.log:2: trailing whitespace.",
+      "+2026-10-24T11:14:56.3590378Z ##[group]Runner Image Provisioner"
+    ]
+  },
+  "source_report_check": {
+    "excludes_only": [
+      "originals/**",
+      "partial/**",
+      "archives/**"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "no_raw_line_normalization": true,
+  "no_QA_artifact_repackaging_or_transfer_bypass": true
+}
