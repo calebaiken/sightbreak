@@ -1,0 +1,22 @@
+--- scripts/test_windows_shutdown_study.py at exact0f478 (unchanged through d7aba)
++++ proposed construction-only helper; no method/assertion/Owner changes
+@@
+-        import time
+-        from shutdown_evidence_fixtures import fixture_identity,write_complete_trial
++        from shutdown_evidence_fixtures import DeclaredClock,fixture_identity,write_complete_trial
+@@
+-        owner=owner or Owner();identity=fixture_identity()
++        owner=owner or Owner();identity=fixture_identity();clock=DeclaredClock()
+@@
+-                row.update(monotonic=time.monotonic(),wall_unix_ns=time.time_ns(),job_handle=7,baseline_pid=99,
++                row.update(monotonic=clock.monotonic(),wall_unix_ns=clock.time_ns(),job_handle=7,baseline_pid=99,
+@@
+                 write_complete_trial(directory,identity,verbose='--reopened-verbose' in args,
+-                                     client_pid=100+index,reopened_pid=200+index,observer=emit)
++                                     client_pid=100+index,reopened_pid=200+index,observer=emit,clock=clock)
+@@
+-        result=study.collect_trials(root,identity,owner,driver,identity_reader=read_identity,
+-                                    load_evidence=lambda _:dict(strict_passed=evidence))
++        with patch.object(study,'time',clock):
++            result=study.collect_trials(root,identity,owner,driver,identity_reader=read_identity,
++                                        load_evidence=lambda _:dict(strict_passed=evidence))
