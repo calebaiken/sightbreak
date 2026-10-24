@@ -93,3 +93,11 @@ Branch `claude/fair-actor-order-v1` off `codex/desktop-playability-p1` (`db3981e
 **Mistakes.** I first described the arena as lacking contact grounding; it already has authored contact skirts (`_build_contact_occlusion`), which is why SSAO added little. A test I wrote asserted metal throws no dust and failed validation after I tuned the table; the full run was repeated. I looked for the Godot binary in the wrong place (the tools directory is `/home/user/tools`, not `../tools`).
 
 **Not done.** No GPU, motion, sound or human judgement. The post-tuning impact render was inspected, not re-judged blind. The other graphics defects (skyline, sun disc, crane cable, moiré, materials) are ranked in `docs/art/GRAPHICS_BACKLOG.md`. Weapon art (G5) not advanced this session.
+
+## 2026-10-24 - Session 2, later: environment readability and the Kestrel 9 pistol
+
+**Environment (PR #37, stacked on #36).** Far skyline behind the attacker-end wall (a const table of buildings with darkened colours; lit faces render about three times brighter than their albedo, so the first colours clipped 5-6% of pixels), crate lids with a calmer albedo, crane cables widened to 7.5 cm. Evidence in `docs/reports/gauntlet/environment-m9/`.
+
+**Kestrel 9 (PR #38, off the Codex base).** Original 9 mm sidearm (6,954 triangles, 19 parts) and a static gloved hands pair (9,800 triangles), built with the Relay AR tools and wired into `weapon_model.gd` (`_build_authored_pistol`, procedural fallback kept via `use_authored`). Two blind rounds, authored chosen 6 of 6 both times; critic 29.5 then 35 of 60 against about 24. Bugs found on the way: front bead at the lathe centre, magazine 81% occluded (rebaked to 0.8%), rifle grip darkening turning the frame black, the shared muzzle flash covering the pistol sights (flash scale 0.62). First full validate failed in `integration_actor_lifecycle_test` (it expected the sidearm to be procedural); assertion updated, whole suite rerun: exit 0. I pushed before reading that first exit code; no PR existed yet.
+
+**Not done.** G5 stays FAILED (about 5.8/10 against 8.5): no pistol reload hand animation, hands lumpy and static, no GPU, sound, motion or human judgement. The final lower and brighter placement was inspected, not re-judged blind. Vectorline and Longwatch remain procedural.
