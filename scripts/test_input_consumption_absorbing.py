@@ -12,8 +12,9 @@ from pathlib import Path
 import unittest
 
 import analyze_input_consumption as candidate
-from test_input_consumption_expiry import SourcePeer,admit,JOIN,IDLE,REJECT,expiry_rows,full_report
+from test_input_consumption_expiry import SourcePeer,admit,JOIN,IDLE,REJECT,expiry_rows,full_report,faithful_authority_rows
 from test_input_consumption_state import append_event
+from test_input_consumption_stream import packet
 
 ROOT=Path(__file__).resolve().parents[1]
 REPORT=ROOT/'docs/reports/gauntlet/windows-input-consumption-r7-absorbing-lifecycle-20261024'
@@ -139,6 +140,29 @@ def candidate_status(rows):
     return model.expiry(rows[-1],int(rows[-1]['joined']))
 
 
+def other_peer_activity_pair(forge_local):
+    rows,local=faithful_authority_rows();other=SourcePeer();other.generation=1;other.connected(12000)
+    value=append_event(rows,'peer_connected',peer=10,generation=2,bound_actor=0,peer_bound=False,
+                       stream_ack=-1,queue_count=0,**other.projection(12000))
+    admit(other,13000)
+    value=append_event(rows,'peer_bound',bound_actor=2,peer_bound=True,last_bound_actor=2,**other.projection(13000))
+    value['actor'].update(id=2,input=dict(sequence=-1,fire=False,reload=False,move=[0.,0.]))
+    value=append_event(rows,'input_received',**other.projection(14000));value['wall_unix_msec']=114000
+    value['latest']['input_received']=packet(14000,1,1,1,0)
+    other.active(15000)
+    value=append_event(rows,'input_accepted',queue_count=1,**other.projection(15000));value['wall_unix_msec']=115000
+    value['latest']['input_accepted']=packet(15000,1,1,1,0)
+    value=append_event(rows,'input_consumed',stream_ack=1,queue_count=0,**other.projection(16000));value['wall_unix_msec']=116000
+    command=dict(sequence=1,fire=False,reload=False,move=[0.,0.]);value['actor']['input']=deepcopy(command)
+    value['latest']['input_consumed']=dict(command,peer=10,generation=2,actor=2,wall_msec=16000)
+    value=append_event(rows,'authority_tick',**other.projection(17000));value['wall_unix_msec']=117000
+    value=append_event(rows,'peer_expired',peer=9,generation=1,bound_actor=1,peer_bound=True,last_bound_actor=1,
+                       stream_ack=1,queue_count=0,**local.projection(50000));value['wall_unix_msec']=150000
+    value['actor'].update(id=1,input=dict(sequence=1,fire=True,reload=False,move=[0.,0.]))
+    if forge_local:value['input_age_msec']=30000
+    return rows
+
+
 class AbsorbingLifecycleControls(unittest.TestCase):
     def test_exact40_copied_deadline_pairs_and_literal_oracle(self):
         cases=exact_cases();self.assertEqual(len(cases),40);self.assertEqual(sum(x['expected']=='INVALID' for x in cases),32)
@@ -239,6 +263,12 @@ class AbsorbingLifecycleControls(unittest.TestCase):
                                 deadline_remaining_msec=(22000 if restore else 24000)-disconnected['wall_msec'])
             result=full_report(rows)
             self.assertEqual(result['transition_status'],want,result['errors'])
+
+    def test_explicit_other_peer_accepted_call_cannot_pay_local_advance(self):
+        for forge_local,want in [(False,'CONSISTENT'),(True,'INVALID')]:
+            result=full_report(other_peer_activity_pair(forge_local))
+            self.assertEqual(result['transition_status'],want,result['errors'])
+            self.assertEqual(result['diagnostic_complete'],not forge_local)
 
 
 if __name__=='__main__':unittest.main()
