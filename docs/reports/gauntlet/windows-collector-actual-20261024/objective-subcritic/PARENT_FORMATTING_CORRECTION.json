@@ -1,0 +1,54 @@
+{
+  "tool_chunk": "d6a0b3",
+  "first_authored_whitespace_check": "FAIL: ATTEMPTS.md line7 trailing space after slash",
+  "original_authored_markdown": "# Retained audit attempts\n\nThese are Python read-only evidence reconstructions on CPU 4. No game/native run\nwas repeated or changed.\n\n1. `audit-attempt-1.json` was generated from the official selected receipts.\n   Its objective currency block encountered `KeyError: attack_score` / \n   `KeyError: defend_score`: notifications and consumed-input events have slim\n   schemas. The error is retained in each scenario's facts. Earlier satisfied-row\n   totals therefore omitted the currency row and were incomplete. They are not\n   qualification results.\n2. The auditor was corrected to select full raw snapshots containing both score\n   fields before and after the objective transition. It also records the six\n   actual OpenGL-to-ANGLE warnings and separates the original error/leak regex\n   from the preregistered zero-warning failure. `audit-attempt-2.json` retains the\n   corrected currency reconstruction and each warning failure.\n3. `audit-final.json` adds explicit source/manifest/hash-receipt agreement,\n   controller/raw summary equality, and final original/reopened completion-status\n   checks. It reports plant 26 / defuse 25 / full-match 25 satisfied enumerated rows,\n   plus one unsatisfied zero-warning row per scenario and no unavailable rows.\n4. Twelve original PNGs were inspected directly. Their byte hashes and observations\n   are retained in `visual-observations.json`; thirty official selected/full-copy\n   comparisons are retained in `official-copy-comparison.json`.\n\nThe preparation method reviewer had already ended. A proposed additional actual\ncross-check agent could not start because the team thread limit was reached.\nNo additional independent actual subcritic is claimed. The parent performs its\nseparate final review and overall qualification.\n",
+  "original_subcritic_manifest": {
+    "ATTEMPTS.md": {
+      "bytes": 1770,
+      "sha256": "df56d5af4fb043c1586cbe6f792f0206564e4a848ed5763e0d9859d8bf872619"
+    },
+    "METHOD.md": {
+      "bytes": 2694,
+      "sha256": "6f0a6c1830843a572b1e5dde64c3d661cc52958771779d2f97da7429b23a5d4f"
+    },
+    "METHOD_REVIEW.md": {
+      "bytes": 3170,
+      "sha256": "d3fd0d370cbcec5ad0a79138b8df1b66658916a8e152b6b681dd4ba27acd215b"
+    },
+    "REPORT.md": {
+      "bytes": 6709,
+      "sha256": "f03cbad7e6e5b72abd5be4b86f70c448fc32bc2de1842e0a9a88dbc25789b6e9"
+    },
+    "audit-attempt-1.json": {
+      "bytes": 153666,
+      "sha256": "e3ebfd4e9d69699c761d119df3263e82373ba035d04c5449eea7938cdaa18535"
+    },
+    "audit-attempt-2.json": {
+      "bytes": 217472,
+      "sha256": "571ed1d0d72c13cc5aa346ea1de7d74f4dd5e253d2491cfd8b6fc358c03c7104"
+    },
+    "audit-final.json": {
+      "bytes": 218616,
+      "sha256": "2c2de11364daf05dca33a581715de31865573ad944abd9ac3f3befe1b7c769ee"
+    },
+    "audit_objectives.py": {
+      "bytes": 27324,
+      "sha256": "515eab152adb5e4755a13fdca5c3cc773314e1e23ce717aa2491b441dbff0c51"
+    },
+    "full-profile-file-inventory.json": {
+      "bytes": 129,
+      "sha256": "09cda396c6a2c126f14c9dc2f1130e1d0a7ec7c6150e33444bed439d134165c4"
+    },
+    "official-copy-comparison.json": {
+      "bytes": 9462,
+      "sha256": "f8c2e46c84d13f900c59a84b30db9e186b74dac8d72102a905932f42d5177df0"
+    },
+    "visual-observations.json": {
+      "bytes": 5738,
+      "sha256": "baa79beee466f09b010311435e34eed80ca9d79962f2a21d963619b94a76dee9"
+    }
+  },
+  "original_markdown_sha256": "df56d5af4fb043c1586cbe6f792f0206564e4a848ed5763e0d9859d8bf872619",
+  "corrected_markdown_sha256": "92e5188f7128177d32ef65336cebde365d22ca9722364f8e01902f17c97ebc3b",
+  "correction": "Parent removes one authored trailing ASCII space and updates only that authored-file manifest record. No raw/audit-data/native/source bytes change."
+}

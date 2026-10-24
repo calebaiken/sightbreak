@@ -1,0 +1,818 @@
+{
+  "checks": {
+    "at_least_one_actual_pulse": true,
+    "complete_before_after_publications": true,
+    "every_actual_pulse_API_OS_predicate_passes": false
+  },
+  "all_pulse_checks_passed": false,
+  "rows": [
+    {
+      "pulse": 0,
+      "checks": {
+        "actual_completed_API_status": true,
+        "valid_request": true,
+        "same_original_absolute_deadline": true,
+        "original_published_request_and_receipt": true,
+        "all_requested_downs_and_releases": true,
+        "every_native_edge_has_ordered_API_brackets": true,
+        "every_down_has_fresh_same_owner_check": true,
+        "all_OS_reads_same_visible_focused_owned_window": true,
+        "initial_and_final_OS_controls_neutral": true,
+        "single_fixed_hold_inside_deadline_and_release_boundary": true
+      },
+      "all_passed": true,
+      "original": {
+        "status": "API_RETURNED_WITH_OS_RELEASE",
+        "keys": [
+          "d"
+        ],
+        "requested_seconds": 0.125,
+        "absolute_deadline": 624.468,
+        "edges": [
+          {
+            "key": "d",
+            "down": true,
+            "before_monotonic": 597.75,
+            "after_monotonic": 597.75
+          },
+          {
+            "key": "d",
+            "down": false,
+            "before_monotonic": 597.89,
+            "after_monotonic": 597.89
+          }
+        ],
+        "os_states": [
+          {
+            "label": "before_down",
+            "read_begin_monotonic": 597.75,
+            "read_end_monotonic": 597.75,
+            "target_window": 5046676,
+            "expected_pid": 9080,
+            "window_pid": 9080,
+            "window_thread": 3716,
+            "visible": true,
+            "foreground_window": 5046676,
+            "keys_down": {
+              "w": false,
+              "a": false,
+              "s": false,
+              "d": false
+            },
+            "lmb_down": false
+          },
+          {
+            "label": "after_down",
+            "read_begin_monotonic": 597.75,
+            "read_end_monotonic": 597.75,
+            "target_window": 5046676,
+            "expected_pid": 9080,
+            "window_pid": 9080,
+            "window_thread": 3716,
+            "visible": true,
+            "foreground_window": 5046676,
+            "keys_down": {
+              "w": false,
+              "a": false,
+              "s": false,
+              "d": true
+            },
+            "lmb_down": false
+          },
+          {
+            "label": "after_release",
+            "read_begin_monotonic": 597.89,
+            "read_end_monotonic": 597.89,
+            "target_window": 5046676,
+            "expected_pid": 9080,
+            "window_pid": 9080,
+            "window_thread": 3716,
+            "visible": true,
+            "foreground_window": 5046676,
+            "keys_down": {
+              "w": false,
+              "a": false,
+              "s": false,
+              "d": false
+            },
+            "lmb_down": false
+          }
+        ],
+        "down_checks": [
+          {
+            "key": "d",
+            "owned_keys": [],
+            "os_states": [
+              {
+                "label": "before_key_down",
+                "read_begin_monotonic": 597.75,
+                "read_end_monotonic": 597.75,
+                "target_window": 5046676,
+                "expected_pid": 9080,
+                "window_pid": 9080,
+                "window_thread": 3716,
+                "visible": true,
+                "foreground_window": 5046676,
+                "keys_down": {
+                  "w": false,
+                  "a": false,
+                  "s": false,
+                  "d": false
+                },
+                "lmb_down": false
+              }
+            ],
+            "read_begin_monotonic": 597.75,
+            "status": "CHECKED",
+            "read_end_monotonic": 597.75
+          }
+        ],
+        "attempted_keys": [
+          "d"
+        ],
+        "released_keys": [
+          "d"
+        ],
+        "release_errors": [],
+        "release_complete": true,
+        "scope": "in-process SendInput API brackets and GetAsyncKeyState; gameplay unverified",
+        "hold_until_monotonic": 597.875,
+        "finished_monotonic": 597.89
+      }
+    },
+    {
+      "pulse": 1,
+      "checks": {
+        "actual_completed_API_status": true,
+        "valid_request": true,
+        "same_original_absolute_deadline": true,
+        "original_published_request_and_receipt": true,
+        "all_requested_downs_and_releases": true,
+        "every_native_edge_has_ordered_API_brackets": true,
+        "every_down_has_fresh_same_owner_check": true,
+        "all_OS_reads_same_visible_focused_owned_window": true,
+        "initial_and_final_OS_controls_neutral": true,
+        "single_fixed_hold_inside_deadline_and_release_boundary": true
+      },
+      "all_passed": true,
+      "original": {
+        "status": "API_RETURNED_WITH_OS_RELEASE",
+        "keys": [
+          "d"
+        ],
+        "requested_seconds": 0.125,
+        "absolute_deadline": 624.468,
+        "edges": [
+          {
+            "key": "d",
+            "down": true,
+            "before_monotonic": 598.437,
+            "after_monotonic": 598.437
+          },
+          {
+            "key": "d",
+            "down": false,
+            "before_monotonic": 598.562,
+            "after_monotonic": 598.562
+          }
+        ],
+        "os_states": [
+          {
+            "label": "before_down",
+            "read_begin_monotonic": 598.437,
+            "read_end_monotonic": 598.437,
+            "target_window": 5046676,
+            "expected_pid": 9080,
+            "window_pid": 9080,
+            "window_thread": 3716,
+            "visible": true,
+            "foreground_window": 5046676,
+            "keys_down": {
+              "w": false,
+              "a": false,
+              "s": false,
+              "d": false
+            },
+            "lmb_down": false
+          },
+          {
+            "label": "after_down",
+            "read_begin_monotonic": 598.437,
+            "read_end_monotonic": 598.437,
+            "target_window": 5046676,
+            "expected_pid": 9080,
+            "window_pid": 9080,
+            "window_thread": 3716,
+            "visible": true,
+            "foreground_window": 5046676,
+            "keys_down": {
+              "w": false,
+              "a": false,
+              "s": false,
+              "d": true
+            },
+            "lmb_down": false
+          },
+          {
+            "label": "after_release",
+            "read_begin_monotonic": 598.562,
+            "read_end_monotonic": 598.562,
+            "target_window": 5046676,
+            "expected_pid": 9080,
+            "window_pid": 9080,
+            "window_thread": 3716,
+            "visible": true,
+            "foreground_window": 5046676,
+            "keys_down": {
+              "w": false,
+              "a": false,
+              "s": false,
+              "d": false
+            },
+            "lmb_down": false
+          }
+        ],
+        "down_checks": [
+          {
+            "key": "d",
+            "owned_keys": [],
+            "os_states": [
+              {
+                "label": "before_key_down",
+                "read_begin_monotonic": 598.437,
+                "read_end_monotonic": 598.437,
+                "target_window": 5046676,
+                "expected_pid": 9080,
+                "window_pid": 9080,
+                "window_thread": 3716,
+                "visible": true,
+                "foreground_window": 5046676,
+                "keys_down": {
+                  "w": false,
+                  "a": false,
+                  "s": false,
+                  "d": false
+                },
+                "lmb_down": false
+              }
+            ],
+            "read_begin_monotonic": 598.437,
+            "status": "CHECKED",
+            "read_end_monotonic": 598.437
+          }
+        ],
+        "attempted_keys": [
+          "d"
+        ],
+        "released_keys": [
+          "d"
+        ],
+        "release_errors": [],
+        "release_complete": true,
+        "scope": "in-process SendInput API brackets and GetAsyncKeyState; gameplay unverified",
+        "hold_until_monotonic": 598.562,
+        "finished_monotonic": 598.562
+      }
+    },
+    {
+      "pulse": 2,
+      "checks": {
+        "actual_completed_API_status": true,
+        "valid_request": true,
+        "same_original_absolute_deadline": true,
+        "original_published_request_and_receipt": true,
+        "all_requested_downs_and_releases": true,
+        "every_native_edge_has_ordered_API_brackets": true,
+        "every_down_has_fresh_same_owner_check": true,
+        "all_OS_reads_same_visible_focused_owned_window": true,
+        "initial_and_final_OS_controls_neutral": true,
+        "single_fixed_hold_inside_deadline_and_release_boundary": true
+      },
+      "all_passed": true,
+      "original": {
+        "status": "API_RETURNED_WITH_OS_RELEASE",
+        "keys": [
+          "d"
+        ],
+        "requested_seconds": 0.125,
+        "absolute_deadline": 624.468,
+        "edges": [
+          {
+            "key": "d",
+            "down": true,
+            "before_monotonic": 599.171,
+            "after_monotonic": 599.171
+          },
+          {
+            "key": "d",
+            "down": false,
+            "before_monotonic": 599.312,
+            "after_monotonic": 599.312
+          }
+        ],
+        "os_states": [
+          {
+            "label": "before_down",
+            "read_begin_monotonic": 599.171,
+            "read_end_monotonic": 599.171,
+            "target_window": 5046676,
+            "expected_pid": 9080,
+            "window_pid": 9080,
+            "window_thread": 3716,
+            "visible": true,
+            "foreground_window": 5046676,
+            "keys_down": {
+              "w": false,
+              "a": false,
+              "s": false,
+              "d": false
+            },
+            "lmb_down": false
+          },
+          {
+            "label": "after_down",
+            "read_begin_monotonic": 599.171,
+            "read_end_monotonic": 599.171,
+            "target_window": 5046676,
+            "expected_pid": 9080,
+            "window_pid": 9080,
+            "window_thread": 3716,
+            "visible": true,
+            "foreground_window": 5046676,
+            "keys_down": {
+              "w": false,
+              "a": false,
+              "s": false,
+              "d": true
+            },
+            "lmb_down": false
+          },
+          {
+            "label": "after_release",
+            "read_begin_monotonic": 599.312,
+            "read_end_monotonic": 599.312,
+            "target_window": 5046676,
+            "expected_pid": 9080,
+            "window_pid": 9080,
+            "window_thread": 3716,
+            "visible": true,
+            "foreground_window": 5046676,
+            "keys_down": {
+              "w": false,
+              "a": false,
+              "s": false,
+              "d": false
+            },
+            "lmb_down": false
+          }
+        ],
+        "down_checks": [
+          {
+            "key": "d",
+            "owned_keys": [],
+            "os_states": [
+              {
+                "label": "before_key_down",
+                "read_begin_monotonic": 599.171,
+                "read_end_monotonic": 599.171,
+                "target_window": 5046676,
+                "expected_pid": 9080,
+                "window_pid": 9080,
+                "window_thread": 3716,
+                "visible": true,
+                "foreground_window": 5046676,
+                "keys_down": {
+                  "w": false,
+                  "a": false,
+                  "s": false,
+                  "d": false
+                },
+                "lmb_down": false
+              }
+            ],
+            "read_begin_monotonic": 599.171,
+            "status": "CHECKED",
+            "read_end_monotonic": 599.171
+          }
+        ],
+        "attempted_keys": [
+          "d"
+        ],
+        "released_keys": [
+          "d"
+        ],
+        "release_errors": [],
+        "release_complete": true,
+        "scope": "in-process SendInput API brackets and GetAsyncKeyState; gameplay unverified",
+        "hold_until_monotonic": 599.296,
+        "finished_monotonic": 599.312
+      }
+    },
+    {
+      "pulse": 3,
+      "checks": {
+        "actual_completed_API_status": true,
+        "valid_request": true,
+        "same_original_absolute_deadline": true,
+        "original_published_request_and_receipt": true,
+        "all_requested_downs_and_releases": true,
+        "every_native_edge_has_ordered_API_brackets": true,
+        "every_down_has_fresh_same_owner_check": true,
+        "all_OS_reads_same_visible_focused_owned_window": true,
+        "initial_and_final_OS_controls_neutral": true,
+        "single_fixed_hold_inside_deadline_and_release_boundary": false
+      },
+      "all_passed": false,
+      "original": {
+        "status": "API_RETURNED_WITH_OS_RELEASE",
+        "keys": [
+          "d"
+        ],
+        "requested_seconds": 0.12576923076924834,
+        "absolute_deadline": 624.468,
+        "edges": [
+          {
+            "key": "d",
+            "down": true,
+            "before_monotonic": 599.796,
+            "after_monotonic": 599.796
+          },
+          {
+            "key": "d",
+            "down": false,
+            "before_monotonic": 599.937,
+            "after_monotonic": 599.937
+          }
+        ],
+        "os_states": [
+          {
+            "label": "before_down",
+            "read_begin_monotonic": 599.796,
+            "read_end_monotonic": 599.796,
+            "target_window": 5046676,
+            "expected_pid": 9080,
+            "window_pid": 9080,
+            "window_thread": 3716,
+            "visible": true,
+            "foreground_window": 5046676,
+            "keys_down": {
+              "w": false,
+              "a": false,
+              "s": false,
+              "d": false
+            },
+            "lmb_down": false
+          },
+          {
+            "label": "after_down",
+            "read_begin_monotonic": 599.796,
+            "read_end_monotonic": 599.796,
+            "target_window": 5046676,
+            "expected_pid": 9080,
+            "window_pid": 9080,
+            "window_thread": 3716,
+            "visible": true,
+            "foreground_window": 5046676,
+            "keys_down": {
+              "w": false,
+              "a": false,
+              "s": false,
+              "d": true
+            },
+            "lmb_down": false
+          },
+          {
+            "label": "after_release",
+            "read_begin_monotonic": 599.937,
+            "read_end_monotonic": 599.937,
+            "target_window": 5046676,
+            "expected_pid": 9080,
+            "window_pid": 9080,
+            "window_thread": 3716,
+            "visible": true,
+            "foreground_window": 5046676,
+            "keys_down": {
+              "w": false,
+              "a": false,
+              "s": false,
+              "d": false
+            },
+            "lmb_down": false
+          }
+        ],
+        "down_checks": [
+          {
+            "key": "d",
+            "owned_keys": [],
+            "os_states": [
+              {
+                "label": "before_key_down",
+                "read_begin_monotonic": 599.796,
+                "read_end_monotonic": 599.796,
+                "target_window": 5046676,
+                "expected_pid": 9080,
+                "window_pid": 9080,
+                "window_thread": 3716,
+                "visible": true,
+                "foreground_window": 5046676,
+                "keys_down": {
+                  "w": false,
+                  "a": false,
+                  "s": false,
+                  "d": false
+                },
+                "lmb_down": false
+              }
+            ],
+            "read_begin_monotonic": 599.796,
+            "status": "CHECKED",
+            "read_end_monotonic": 599.796
+          }
+        ],
+        "attempted_keys": [
+          "d"
+        ],
+        "released_keys": [
+          "d"
+        ],
+        "release_errors": [],
+        "release_complete": true,
+        "scope": "in-process SendInput API brackets and GetAsyncKeyState; gameplay unverified",
+        "hold_until_monotonic": 599.9217692307693,
+        "finished_monotonic": 599.937
+      }
+    },
+    {
+      "pulse": 4,
+      "checks": {
+        "actual_completed_API_status": true,
+        "valid_request": true,
+        "same_original_absolute_deadline": true,
+        "original_published_request_and_receipt": true,
+        "all_requested_downs_and_releases": true,
+        "every_native_edge_has_ordered_API_brackets": true,
+        "every_down_has_fresh_same_owner_check": true,
+        "all_OS_reads_same_visible_focused_owned_window": true,
+        "initial_and_final_OS_controls_neutral": true,
+        "single_fixed_hold_inside_deadline_and_release_boundary": true
+      },
+      "all_passed": true,
+      "original": {
+        "status": "API_RETURNED_WITH_OS_RELEASE",
+        "keys": [
+          "d"
+        ],
+        "requested_seconds": 0.15346153846149546,
+        "absolute_deadline": 624.468,
+        "edges": [
+          {
+            "key": "d",
+            "down": true,
+            "before_monotonic": 600.453,
+            "after_monotonic": 600.453
+          },
+          {
+            "key": "d",
+            "down": false,
+            "before_monotonic": 600.625,
+            "after_monotonic": 600.625
+          }
+        ],
+        "os_states": [
+          {
+            "label": "before_down",
+            "read_begin_monotonic": 600.453,
+            "read_end_monotonic": 600.453,
+            "target_window": 5046676,
+            "expected_pid": 9080,
+            "window_pid": 9080,
+            "window_thread": 3716,
+            "visible": true,
+            "foreground_window": 5046676,
+            "keys_down": {
+              "w": false,
+              "a": false,
+              "s": false,
+              "d": false
+            },
+            "lmb_down": false
+          },
+          {
+            "label": "after_down",
+            "read_begin_monotonic": 600.453,
+            "read_end_monotonic": 600.453,
+            "target_window": 5046676,
+            "expected_pid": 9080,
+            "window_pid": 9080,
+            "window_thread": 3716,
+            "visible": true,
+            "foreground_window": 5046676,
+            "keys_down": {
+              "w": false,
+              "a": false,
+              "s": false,
+              "d": true
+            },
+            "lmb_down": false
+          },
+          {
+            "label": "after_release",
+            "read_begin_monotonic": 600.625,
+            "read_end_monotonic": 600.625,
+            "target_window": 5046676,
+            "expected_pid": 9080,
+            "window_pid": 9080,
+            "window_thread": 3716,
+            "visible": true,
+            "foreground_window": 5046676,
+            "keys_down": {
+              "w": false,
+              "a": false,
+              "s": false,
+              "d": false
+            },
+            "lmb_down": false
+          }
+        ],
+        "down_checks": [
+          {
+            "key": "d",
+            "owned_keys": [],
+            "os_states": [
+              {
+                "label": "before_key_down",
+                "read_begin_monotonic": 600.453,
+                "read_end_monotonic": 600.453,
+                "target_window": 5046676,
+                "expected_pid": 9080,
+                "window_pid": 9080,
+                "window_thread": 3716,
+                "visible": true,
+                "foreground_window": 5046676,
+                "keys_down": {
+                  "w": false,
+                  "a": false,
+                  "s": false,
+                  "d": false
+                },
+                "lmb_down": false
+              }
+            ],
+            "read_begin_monotonic": 600.453,
+            "status": "CHECKED",
+            "read_end_monotonic": 600.453
+          }
+        ],
+        "attempted_keys": [
+          "d"
+        ],
+        "released_keys": [
+          "d"
+        ],
+        "release_errors": [],
+        "release_complete": true,
+        "scope": "in-process SendInput API brackets and GetAsyncKeyState; gameplay unverified",
+        "hold_until_monotonic": 600.6064615384614,
+        "finished_monotonic": 600.625
+      }
+    },
+    {
+      "pulse": 5,
+      "checks": {
+        "actual_completed_API_status": true,
+        "valid_request": true,
+        "same_original_absolute_deadline": true,
+        "original_published_request_and_receipt": true,
+        "all_requested_downs_and_releases": true,
+        "every_native_edge_has_ordered_API_brackets": true,
+        "every_down_has_fresh_same_owner_check": true,
+        "all_OS_reads_same_visible_focused_owned_window": true,
+        "initial_and_final_OS_controls_neutral": true,
+        "single_fixed_hold_inside_deadline_and_release_boundary": true
+      },
+      "all_passed": true,
+      "original": {
+        "status": "API_RETURNED_WITH_OS_RELEASE",
+        "keys": [
+          "d"
+        ],
+        "requested_seconds": 0.14444970290162754,
+        "absolute_deadline": 624.468,
+        "edges": [
+          {
+            "key": "d",
+            "down": true,
+            "before_monotonic": 601.312,
+            "after_monotonic": 601.312
+          },
+          {
+            "key": "d",
+            "down": false,
+            "before_monotonic": 601.468,
+            "after_monotonic": 601.468
+          }
+        ],
+        "os_states": [
+          {
+            "label": "before_down",
+            "read_begin_monotonic": 601.312,
+            "read_end_monotonic": 601.312,
+            "target_window": 5046676,
+            "expected_pid": 9080,
+            "window_pid": 9080,
+            "window_thread": 3716,
+            "visible": true,
+            "foreground_window": 5046676,
+            "keys_down": {
+              "w": false,
+              "a": false,
+              "s": false,
+              "d": false
+            },
+            "lmb_down": false
+          },
+          {
+            "label": "after_down",
+            "read_begin_monotonic": 601.312,
+            "read_end_monotonic": 601.312,
+            "target_window": 5046676,
+            "expected_pid": 9080,
+            "window_pid": 9080,
+            "window_thread": 3716,
+            "visible": true,
+            "foreground_window": 5046676,
+            "keys_down": {
+              "w": false,
+              "a": false,
+              "s": false,
+              "d": true
+            },
+            "lmb_down": false
+          },
+          {
+            "label": "after_release",
+            "read_begin_monotonic": 601.468,
+            "read_end_monotonic": 601.468,
+            "target_window": 5046676,
+            "expected_pid": 9080,
+            "window_pid": 9080,
+            "window_thread": 3716,
+            "visible": true,
+            "foreground_window": 5046676,
+            "keys_down": {
+              "w": false,
+              "a": false,
+              "s": false,
+              "d": false
+            },
+            "lmb_down": false
+          }
+        ],
+        "down_checks": [
+          {
+            "key": "d",
+            "owned_keys": [],
+            "os_states": [
+              {
+                "label": "before_key_down",
+                "read_begin_monotonic": 601.312,
+                "read_end_monotonic": 601.312,
+                "target_window": 5046676,
+                "expected_pid": 9080,
+                "window_pid": 9080,
+                "window_thread": 3716,
+                "visible": true,
+                "foreground_window": 5046676,
+                "keys_down": {
+                  "w": false,
+                  "a": false,
+                  "s": false,
+                  "d": false
+                },
+                "lmb_down": false
+              }
+            ],
+            "read_begin_monotonic": 601.312,
+            "status": "CHECKED",
+            "read_end_monotonic": 601.312
+          }
+        ],
+        "attempted_keys": [
+          "d"
+        ],
+        "released_keys": [
+          "d"
+        ],
+        "release_errors": [],
+        "release_complete": true,
+        "scope": "in-process SendInput API brackets and GetAsyncKeyState; gameplay unverified",
+        "hold_until_monotonic": 601.4564497029016,
+        "finished_monotonic": 601.468
+      }
+    }
+  ],
+  "original_route_status": "FIXED_ROUTE_REACHED",
+  "original_journey_passed": false,
+  "actions_sha256": "16f3b1231eaadcb8bdedb9a0fc4c3e675d8b06ccf3747600d23fbb10a0d2c3a6",
+  "scope": "Actual API-return and OS-state bracket validation only. Route gameplay consumption, stopped endpoint, life/context and timing gates remain separate. No physical hold interval or causal improvement inferred."
+}
