@@ -1,0 +1,88 @@
+{
+  "name": "first_snapshot_time_3999",
+  "expected": false,
+  "actual": false,
+  "met_expectation": true,
+  "paired_control": "admitted_declared_pipeline",
+  "source_basis": "Welcome4000 precedes apply_snapshot; first counted call lies within[4000,5000], then its cache persists.",
+  "inputs": {
+    "client_sha256": "26498ffc969c8dd8065fb649a905f9f77040403e7d668c826b299d48d29dacb8",
+    "authority_sha256": "f72de48f96e1f21f9055651cab25d99959de26b1c4df99e336941c0a3f0b6b42"
+  },
+  "result": {
+    "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+    "diagnostic_complete": false,
+    "transition_status": "INVALID",
+    "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+    "roles": {
+      "authority": {
+        "records": 7,
+        "coverage": [
+          "authority_tick",
+          "input_accepted",
+          "input_consumed",
+          "input_received",
+          "peer_bound",
+          "peer_connected",
+          "ready"
+        ],
+        "counters": {
+          "ready": 1,
+          "peer_connected": 1,
+          "peer_bound": 1,
+          "input_received": 1,
+          "input_accepted": 1,
+          "input_consumed": 1,
+          "authority_tick": 1
+        },
+        "max_observation_gap_msec": 5000,
+        "max_snapshot_age_msec": -1,
+        "pending_saturation_indices": [],
+        "accepted_events": [
+          {
+            "index": 5,
+            "epoch": 1,
+            "count": 1,
+            "first": 1,
+            "last": 1,
+            "fire": 1,
+            "reload": 0,
+            "moving": 0,
+            "wall_msec": 9000
+          }
+        ],
+        "consumed_events": [
+          {
+            "index": 6,
+            "sequence": 1,
+            "fire": true,
+            "reload": false,
+            "move": [
+              0.0,
+              0.0
+            ],
+            "peer": 9,
+            "actor": 1,
+            "generation": 1,
+            "wall_msec": 10000
+          }
+        ],
+        "expiry_events": [],
+        "disconnect_events": [],
+        "welcome_events": [],
+        "binding_events": [
+          {
+            "peer": 9,
+            "generation": 1,
+            "bound_actor": 1,
+            "wall_unix_msec": 103000
+          }
+        ],
+        "local_attempts": 0
+      }
+    },
+    "errors": [
+      "client: latest stage call predates the preceding observation"
+    ]
+  }
+}

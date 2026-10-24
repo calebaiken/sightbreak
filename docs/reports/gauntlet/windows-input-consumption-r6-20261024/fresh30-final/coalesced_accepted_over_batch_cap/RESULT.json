@@ -1,0 +1,61 @@
+{
+  "name": "coalesced_accepted_over_batch_cap",
+  "expected": false,
+  "actual": false,
+  "met_expectation": true,
+  "paired_control": "coalesced_single_fresh",
+  "source_basis": "InputStream14-47 requires correct epoch, count<=12, every sequence<=ACK+120 and at least one sequence>ACK, including hidden accept calls.",
+  "inputs": {
+    "client_sha256": "751af7160625104ac7f7b182e677477f8dd075a87a270b04423d028856c24526",
+    "authority_sha256": "d4e3b645ed27a4e79021ad5dc4994bdfc119a1e6e1e4db9c4beef012c8b1ae1c"
+  },
+  "result": {
+    "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+    "diagnostic_complete": false,
+    "transition_status": "INVALID",
+    "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+    "roles": {
+      "client": {
+        "records": 7,
+        "coverage": [
+          "client_attempt",
+          "client_connected",
+          "client_tick",
+          "input_send_called",
+          "ready",
+          "snapshot_applied",
+          "welcome_received"
+        ],
+        "counters": {
+          "ready": 1,
+          "client_attempt": 1,
+          "client_connected": 1,
+          "welcome_received": 1,
+          "client_tick": 2,
+          "snapshot_applied": 1,
+          "input_send_called": 1
+        },
+        "max_observation_gap_msec": 1000,
+        "max_snapshot_age_msec": 3000,
+        "pending_saturation_indices": [],
+        "accepted_events": [],
+        "consumed_events": [],
+        "expiry_events": [],
+        "disconnect_events": [],
+        "welcome_events": [
+          {
+            "transport_id": 9,
+            "local_attempt": 1,
+            "local_id": 1,
+            "wall_unix_msec": 104000
+          }
+        ],
+        "binding_events": [],
+        "local_attempts": 1
+      }
+    },
+    "errors": [
+      "authority: accepted packet has wrong epoch or count"
+    ]
+  }
+}

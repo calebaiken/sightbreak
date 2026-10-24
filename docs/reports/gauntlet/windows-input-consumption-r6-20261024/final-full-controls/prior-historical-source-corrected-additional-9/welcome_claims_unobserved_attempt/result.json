@@ -1,0 +1,92 @@
+{
+  "group": "prior-historical-source-corrected-additional-9",
+  "name": "welcome_claims_unobserved_attempt",
+  "expected_complete": false,
+  "actual_complete": false,
+  "expected_status": "INVALID",
+  "actual_status": "INVALID",
+  "legacy_status_inferred": false,
+  "expectation_met": true,
+  "source_basis": "Exact prior108 bytes/outcomes retained. Prior registered source requirement unchanged.",
+  "prior_expectation": {
+    "r5_expected_complete": false,
+    "r5_actual_complete": false,
+    "r6_newly_obsolete": false
+  },
+  "result": {
+    "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+    "diagnostic_complete": false,
+    "transition_status": "INVALID",
+    "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+    "roles": {
+      "authority": {
+        "records": 7,
+        "coverage": [
+          "authority_tick",
+          "input_accepted",
+          "input_consumed",
+          "input_received",
+          "peer_bound",
+          "peer_connected",
+          "ready"
+        ],
+        "counters": {
+          "ready": 1,
+          "peer_connected": 1,
+          "peer_bound": 1,
+          "input_received": 1,
+          "input_accepted": 1,
+          "input_consumed": 1,
+          "authority_tick": 1
+        },
+        "max_observation_gap_msec": 5000,
+        "max_snapshot_age_msec": -1,
+        "pending_saturation_indices": [],
+        "accepted_events": [
+          {
+            "index": 5,
+            "epoch": 7,
+            "count": 1,
+            "first": 21,
+            "last": 21,
+            "fire": 1,
+            "reload": 0,
+            "moving": 0,
+            "wall_msec": 8500
+          }
+        ],
+        "consumed_events": [
+          {
+            "index": 6,
+            "sequence": 21,
+            "fire": true,
+            "reload": false,
+            "move": [
+              0.0,
+              0.0
+            ],
+            "peer": 71,
+            "actor": 4,
+            "generation": 1,
+            "wall_msec": 9000
+          }
+        ],
+        "expiry_events": [],
+        "disconnect_events": [],
+        "welcome_events": [],
+        "binding_events": [
+          {
+            "peer": 71,
+            "generation": 1,
+            "bound_actor": 4,
+            "wall_unix_msec": 103000
+          }
+        ],
+        "local_attempts": 0
+      }
+    },
+    "errors": [
+      "client: client attempt has no matching observed attempt event"
+    ]
+  }
+}

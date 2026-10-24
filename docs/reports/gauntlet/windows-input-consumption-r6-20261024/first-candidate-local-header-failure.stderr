@@ -1,0 +1,14 @@
+test_delayed_selected_stream_uses_its_owned_header_not_global_latest (__main__.InputObservationTransitionControls.test_delayed_selected_stream_uses_its_owned_header_not_global_latest) ... FAIL
+
+======================================================================
+FAIL: test_delayed_selected_stream_uses_its_owned_header_not_global_latest (__main__.InputObservationTransitionControls.test_delayed_selected_stream_uses_its_owned_header_not_global_latest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-r6/.local/first-r6-draft/scripts/test_input_consumption_transitions.py", line 299, in test_delayed_selected_stream_uses_its_owned_header_not_global_latest
+    self.assertTrue(result['diagnostic_complete'],result['errors'])
+AssertionError: False is not true : ['authority: stream transition contradicts definite immutable commands']
+
+----------------------------------------------------------------------
+Ran 1 test in 0.005s
+
+FAILED (failures=1)

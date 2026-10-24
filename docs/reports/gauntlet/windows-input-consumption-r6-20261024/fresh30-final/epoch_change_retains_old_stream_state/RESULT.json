@@ -1,0 +1,146 @@
+{
+  "name": "epoch_change_retains_old_stream_state",
+  "expected": true,
+  "actual": true,
+  "met_expectation": true,
+  "paired_control": "full_stream_replacement_reset",
+  "source_basis": "Without new rejects, old rejected2 either survives no replacement or a new SBInputStream resets it to0; no source operation decrements2 to1.",
+  "inputs": {
+    "client_sha256": "751af7160625104ac7f7b182e677477f8dd075a87a270b04423d028856c24526",
+    "authority_sha256": "3344b48917630a936fde143660bda7de65aa1b061cdfda4131b44787d0285cda"
+  },
+  "result": {
+    "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+    "diagnostic_complete": true,
+    "transition_status": "CONSISTENT",
+    "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+    "roles": {
+      "client": {
+        "records": 7,
+        "coverage": [
+          "client_attempt",
+          "client_connected",
+          "client_tick",
+          "input_send_called",
+          "ready",
+          "snapshot_applied",
+          "welcome_received"
+        ],
+        "counters": {
+          "ready": 1,
+          "client_attempt": 1,
+          "client_connected": 1,
+          "welcome_received": 1,
+          "client_tick": 2,
+          "snapshot_applied": 1,
+          "input_send_called": 1
+        },
+        "max_observation_gap_msec": 1000,
+        "max_snapshot_age_msec": 3000,
+        "pending_saturation_indices": [],
+        "accepted_events": [],
+        "consumed_events": [],
+        "expiry_events": [],
+        "disconnect_events": [],
+        "welcome_events": [
+          {
+            "transport_id": 9,
+            "local_attempt": 1,
+            "local_id": 1,
+            "wall_unix_msec": 104000
+          }
+        ],
+        "binding_events": [],
+        "local_attempts": 1
+      },
+      "authority": {
+        "records": 10,
+        "coverage": [
+          "authority_tick",
+          "input_accepted",
+          "input_consumed",
+          "input_received",
+          "input_stream_rejected",
+          "peer_bound",
+          "peer_connected",
+          "peer_disconnected",
+          "ready"
+        ],
+        "counters": {
+          "ready": 1,
+          "peer_connected": 1,
+          "peer_bound": 1,
+          "input_received": 3,
+          "input_accepted": 1,
+          "input_consumed": 1,
+          "authority_tick": 3,
+          "input_stream_rejected": 2,
+          "peer_disconnected": 1
+        },
+        "max_observation_gap_msec": 5000,
+        "max_snapshot_age_msec": -1,
+        "pending_saturation_indices": [],
+        "accepted_events": [
+          {
+            "index": 5,
+            "epoch": 1,
+            "count": 1,
+            "first": 1,
+            "last": 1,
+            "fire": 1,
+            "reload": 0,
+            "moving": 0,
+            "wall_msec": 9000
+          }
+        ],
+        "consumed_events": [
+          {
+            "index": 6,
+            "sequence": 1,
+            "fire": true,
+            "reload": false,
+            "move": [
+              0.0,
+              0.0
+            ],
+            "peer": 9,
+            "actor": 1,
+            "generation": 1,
+            "wall_msec": 10000
+          }
+        ],
+        "expiry_events": [],
+        "disconnect_events": [
+          {
+            "index": 9,
+            "peer": 9,
+            "generation": 1,
+            "wall_msec": 13000,
+            "wall_unix_msec": 113000,
+            "input_age_msec": 0
+          }
+        ],
+        "welcome_events": [],
+        "binding_events": [
+          {
+            "peer": 9,
+            "generation": 1,
+            "bound_actor": 1,
+            "wall_unix_msec": 103000
+          }
+        ],
+        "local_attempts": 0
+      }
+    },
+    "errors": [],
+    "attempt_generation_links": [
+      {
+        "client_local_attempt": 1,
+        "peer": 9,
+        "generation": 1,
+        "bound_actor": 1,
+        "wall_unix_msec": 103000
+      }
+    ]
+  }
+}

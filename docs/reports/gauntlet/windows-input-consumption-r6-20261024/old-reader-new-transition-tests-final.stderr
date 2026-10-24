@@ -1,0 +1,255 @@
+test_backlog_order_statistics_hold_without_middle_command_bodies (__main__.InputObservationTransitionControls.test_backlog_order_statistics_hold_without_middle_command_bodies) ... FAIL
+test_explicit_unselected_pop_is_inferred_when_prior_state_proves_it (__main__.InputObservationTransitionControls.test_explicit_unselected_pop_is_inferred_when_prior_state_proves_it) ... ok
+test_exposed_queue_pops_oldest_instead_of_latest_accepted_packet (__main__.InputObservationTransitionControls.test_exposed_queue_pops_oldest_instead_of_latest_accepted_packet) ... FAIL
+test_hidden_accept_before_hidden_pop_uses_pre_pop_ack_interval (__main__.InputObservationTransitionControls.test_hidden_accept_before_hidden_pop_uses_pre_pop_ack_interval) ... FAIL
+test_large_duplicate_batch_cannot_erase_earlier_immutable_intent (__main__.InputObservationTransitionControls.test_large_duplicate_batch_cannot_erase_earlier_immutable_intent) ... FAIL
+test_multi_peer_forced_flow_passes_but_ambiguous_header_is_unknown (__main__.InputObservationTransitionControls.test_multi_peer_forced_flow_passes_but_ambiguous_header_is_unknown) ... FAIL
+test_new_coalesced_consumed_metadata_needs_its_explicit_live_identity (__main__.InputObservationTransitionControls.test_new_coalesced_consumed_metadata_needs_its_explicit_live_identity) ... FAIL
+test_new_counted_snapshot_updates_cache_and_latest_together (__main__.InputObservationTransitionControls.test_new_counted_snapshot_updates_cache_and_latest_together) ... ok
+test_observed_empty_queue_recovers_exactness_after_unknown_middle (__main__.InputObservationTransitionControls.test_observed_empty_queue_recovers_exactness_after_unknown_middle) ... FAIL
+test_one_exposed_command_cannot_inflate_local_queue (__main__.InputObservationTransitionControls.test_one_exposed_command_cannot_inflate_local_queue) ... 
+  test_one_exposed_command_cannot_inflate_local_queue (__main__.InputObservationTransitionControls.test_one_exposed_command_cannot_inflate_local_queue) (queue=2) ... FAIL
+  test_one_exposed_command_cannot_inflate_local_queue (__main__.InputObservationTransitionControls.test_one_exposed_command_cannot_inflate_local_queue) (queue=120) ... FAIL
+test_queued_control_intent_is_immutable_when_its_signature_is_exposed (__main__.InputObservationTransitionControls.test_queued_control_intent_is_immutable_when_its_signature_is_exposed) ... FAIL
+test_receipt_aggregate_retains_one_joint_payload_history_across_pops (__main__.InputObservationTransitionControls.test_receipt_aggregate_retains_one_joint_payload_history_across_pops) ... 
+  test_receipt_aggregate_retains_one_joint_payload_history_across_pops (__main__.InputObservationTransitionControls.test_receipt_aggregate_retains_one_joint_payload_history_across_pops) (total=1, first=False, second=False, hidden=False) ... FAIL
+  test_receipt_aggregate_retains_one_joint_payload_history_across_pops (__main__.InputObservationTransitionControls.test_receipt_aggregate_retains_one_joint_payload_history_across_pops) (total=1, first=True, second=True, hidden=False) ... FAIL
+  test_receipt_aggregate_retains_one_joint_payload_history_across_pops (__main__.InputObservationTransitionControls.test_receipt_aggregate_retains_one_joint_payload_history_across_pops) (total=1, first=False, second=False, hidden=True) ... FAIL
+  test_receipt_aggregate_retains_one_joint_payload_history_across_pops (__main__.InputObservationTransitionControls.test_receipt_aggregate_retains_one_joint_payload_history_across_pops) (total=1, first=True, second=True, hidden=True) ... FAIL
+test_same_stream_ack_and_queue_need_corresponding_calls (__main__.InputObservationTransitionControls.test_same_stream_ack_and_queue_need_corresponding_calls) ... 
+  test_same_stream_ack_and_queue_need_corresponding_calls (__main__.InputObservationTransitionControls.test_same_stream_ack_and_queue_need_corresponding_calls) (changes={'stream_ack': 2}) ... FAIL
+  test_same_stream_ack_and_queue_need_corresponding_calls (__main__.InputObservationTransitionControls.test_same_stream_ack_and_queue_need_corresponding_calls) (changes={'stream_ack': 0}) ... FAIL
+  test_same_stream_ack_and_queue_need_corresponding_calls (__main__.InputObservationTransitionControls.test_same_stream_ack_and_queue_need_corresponding_calls) (changes={'stream_ack': -1}) ... FAIL
+  test_same_stream_ack_and_queue_need_corresponding_calls (__main__.InputObservationTransitionControls.test_same_stream_ack_and_queue_need_corresponding_calls) (changes={'queue_count': 1}) ... FAIL
+test_shared_accepted_validation_covers_hidden_calls (__main__.InputObservationTransitionControls.test_shared_accepted_validation_covers_hidden_calls) ... 
+  test_shared_accepted_validation_covers_hidden_calls (__main__.InputObservationTransitionControls.test_shared_accepted_validation_covers_hidden_calls) (sequence=1, count=1, epoch=1) ... FAIL
+  test_shared_accepted_validation_covers_hidden_calls (__main__.InputObservationTransitionControls.test_shared_accepted_validation_covers_hidden_calls) (sequence=122, count=1, epoch=1) ... FAIL
+  test_shared_accepted_validation_covers_hidden_calls (__main__.InputObservationTransitionControls.test_shared_accepted_validation_covers_hidden_calls) (sequence=2, count=1, epoch=2) ... FAIL
+  test_shared_accepted_validation_covers_hidden_calls (__main__.InputObservationTransitionControls.test_shared_accepted_validation_covers_hidden_calls) (sequence=2, count=13, epoch=1) ... FAIL
+test_snapshot_cache_aliases_counted_latest_and_survives_reconnect (__main__.InputObservationTransitionControls.test_snapshot_cache_aliases_counted_latest_and_survives_reconnect) ... 
+  test_snapshot_cache_aliases_counted_latest_and_survives_reconnect (__main__.InputObservationTransitionControls.test_snapshot_cache_aliases_counted_latest_and_survives_reconnect) (change='empty') ... FAIL
+  test_snapshot_cache_aliases_counted_latest_and_survives_reconnect (__main__.InputObservationTransitionControls.test_snapshot_cache_aliases_counted_latest_and_survives_reconnect) (change='time') ... FAIL
+  test_snapshot_cache_aliases_counted_latest_and_survives_reconnect (__main__.InputObservationTransitionControls.test_snapshot_cache_aliases_counted_latest_and_survives_reconnect) (change='header') ... FAIL
+  test_snapshot_cache_aliases_counted_latest_and_survives_reconnect (__main__.InputObservationTransitionControls.test_snapshot_cache_aliases_counted_latest_and_survives_reconnect) (change='before_first_count') ... FAIL
+test_unknown_middle_does_not_erase_definite_endpoint_order (__main__.InputObservationTransitionControls.test_unknown_middle_does_not_erase_definite_endpoint_order) ... FAIL
+
+======================================================================
+FAIL: test_backlog_order_statistics_hold_without_middle_command_bodies (__main__.InputObservationTransitionControls.test_backlog_order_statistics_hold_without_middle_command_bodies)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-r6/.local/old-reader/scripts/test_input_consumption_transitions.py", line 232, in test_backlog_order_statistics_hold_without_middle_command_bodies
+    self.assertFalse(self.report(authority=partially_known_queue(7, 7, 7, 5, 5))['diagnostic_complete'])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_exposed_queue_pops_oldest_instead_of_latest_accepted_packet (__main__.InputObservationTransitionControls.test_exposed_queue_pops_oldest_instead_of_latest_accepted_packet)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-r6/.local/old-reader/scripts/test_input_consumption_transitions.py", line 163, in test_exposed_queue_pops_oldest_instead_of_latest_accepted_packet
+    self.assertFalse(self.report(authority=two_queued_commands(2))['diagnostic_complete'])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_hidden_accept_before_hidden_pop_uses_pre_pop_ack_interval (__main__.InputObservationTransitionControls.test_hidden_accept_before_hidden_pop_uses_pre_pop_ack_interval)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-r6/.local/old-reader/scripts/test_input_consumption_transitions.py", line 132, in test_hidden_accept_before_hidden_pop_uses_pre_pop_ack_interval
+    self.assertFalse(self.report(authority=hidden_accept(sequence=1, pop=True))['diagnostic_complete'])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_large_duplicate_batch_cannot_erase_earlier_immutable_intent (__main__.InputObservationTransitionControls.test_large_duplicate_batch_cannot_erase_earlier_immutable_intent)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-r6/.local/old-reader/scripts/test_input_consumption_transitions.py", line 213, in test_large_duplicate_batch_cannot_erase_earlier_immutable_intent
+    self.assertFalse(self.report(authority=rows)['diagnostic_complete'])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_multi_peer_forced_flow_passes_but_ambiguous_header_is_unknown (__main__.InputObservationTransitionControls.test_multi_peer_forced_flow_passes_but_ambiguous_header_is_unknown)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-r6/.local/old-reader/scripts/test_input_consumption_transitions.py", line 181, in test_multi_peer_forced_flow_passes_but_ambiguous_header_is_unknown
+    self.assertFalse(result['diagnostic_complete'])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_new_coalesced_consumed_metadata_needs_its_explicit_live_identity (__main__.InputObservationTransitionControls.test_new_coalesced_consumed_metadata_needs_its_explicit_live_identity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-r6/.local/old-reader/scripts/test_input_consumption_transitions.py", line 190, in test_new_coalesced_consumed_metadata_needs_its_explicit_live_identity
+    self.assertFalse(self.report(authority=rows)['diagnostic_complete'])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_observed_empty_queue_recovers_exactness_after_unknown_middle (__main__.InputObservationTransitionControls.test_observed_empty_queue_recovers_exactness_after_unknown_middle)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-r6/.local/old-reader/scripts/test_input_consumption_transitions.py", line 227, in test_observed_empty_queue_recovers_exactness_after_unknown_middle
+    self.assertFalse(self.report(authority=rows)['diagnostic_complete'])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_one_exposed_command_cannot_inflate_local_queue (__main__.InputObservationTransitionControls.test_one_exposed_command_cannot_inflate_local_queue) (queue=2)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-r6/.local/old-reader/scripts/test_input_consumption_transitions.py", line 157, in test_one_exposed_command_cannot_inflate_local_queue
+    self.assertFalse(self.report(authority=rows)['diagnostic_complete'])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_one_exposed_command_cannot_inflate_local_queue (__main__.InputObservationTransitionControls.test_one_exposed_command_cannot_inflate_local_queue) (queue=120)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-r6/.local/old-reader/scripts/test_input_consumption_transitions.py", line 157, in test_one_exposed_command_cannot_inflate_local_queue
+    self.assertFalse(self.report(authority=rows)['diagnostic_complete'])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_queued_control_intent_is_immutable_when_its_signature_is_exposed (__main__.InputObservationTransitionControls.test_queued_control_intent_is_immutable_when_its_signature_is_exposed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-r6/.local/old-reader/scripts/test_input_consumption_transitions.py", line 171, in test_queued_control_intent_is_immutable_when_its_signature_is_exposed
+    self.assertFalse(self.report(authority=rows)['diagnostic_complete'])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_receipt_aggregate_retains_one_joint_payload_history_across_pops (__main__.InputObservationTransitionControls.test_receipt_aggregate_retains_one_joint_payload_history_across_pops) (total=1, first=False, second=False, hidden=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-r6/.local/old-reader/scripts/test_input_consumption_transitions.py", line 256, in test_receipt_aggregate_retains_one_joint_payload_history_across_pops
+    self.assertEqual(result['diagnostic_complete'], expected, result['errors'])
+AssertionError: True != False : []
+
+======================================================================
+FAIL: test_receipt_aggregate_retains_one_joint_payload_history_across_pops (__main__.InputObservationTransitionControls.test_receipt_aggregate_retains_one_joint_payload_history_across_pops) (total=1, first=True, second=True, hidden=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-r6/.local/old-reader/scripts/test_input_consumption_transitions.py", line 256, in test_receipt_aggregate_retains_one_joint_payload_history_across_pops
+    self.assertEqual(result['diagnostic_complete'], expected, result['errors'])
+AssertionError: True != False : []
+
+======================================================================
+FAIL: test_receipt_aggregate_retains_one_joint_payload_history_across_pops (__main__.InputObservationTransitionControls.test_receipt_aggregate_retains_one_joint_payload_history_across_pops) (total=1, first=False, second=False, hidden=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-r6/.local/old-reader/scripts/test_input_consumption_transitions.py", line 256, in test_receipt_aggregate_retains_one_joint_payload_history_across_pops
+    self.assertEqual(result['diagnostic_complete'], expected, result['errors'])
+AssertionError: True != False : []
+
+======================================================================
+FAIL: test_receipt_aggregate_retains_one_joint_payload_history_across_pops (__main__.InputObservationTransitionControls.test_receipt_aggregate_retains_one_joint_payload_history_across_pops) (total=1, first=True, second=True, hidden=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-r6/.local/old-reader/scripts/test_input_consumption_transitions.py", line 256, in test_receipt_aggregate_retains_one_joint_payload_history_across_pops
+    self.assertEqual(result['diagnostic_complete'], expected, result['errors'])
+AssertionError: True != False : []
+
+======================================================================
+FAIL: test_same_stream_ack_and_queue_need_corresponding_calls (__main__.InputObservationTransitionControls.test_same_stream_ack_and_queue_need_corresponding_calls) (changes={'stream_ack': 2})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-r6/.local/old-reader/scripts/test_input_consumption_transitions.py", line 147, in test_same_stream_ack_and_queue_need_corresponding_calls
+    self.assertFalse(self.report(authority=rows)['diagnostic_complete'])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_same_stream_ack_and_queue_need_corresponding_calls (__main__.InputObservationTransitionControls.test_same_stream_ack_and_queue_need_corresponding_calls) (changes={'stream_ack': 0})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-r6/.local/old-reader/scripts/test_input_consumption_transitions.py", line 147, in test_same_stream_ack_and_queue_need_corresponding_calls
+    self.assertFalse(self.report(authority=rows)['diagnostic_complete'])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_same_stream_ack_and_queue_need_corresponding_calls (__main__.InputObservationTransitionControls.test_same_stream_ack_and_queue_need_corresponding_calls) (changes={'stream_ack': -1})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-r6/.local/old-reader/scripts/test_input_consumption_transitions.py", line 147, in test_same_stream_ack_and_queue_need_corresponding_calls
+    self.assertFalse(self.report(authority=rows)['diagnostic_complete'])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_same_stream_ack_and_queue_need_corresponding_calls (__main__.InputObservationTransitionControls.test_same_stream_ack_and_queue_need_corresponding_calls) (changes={'queue_count': 1})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-r6/.local/old-reader/scripts/test_input_consumption_transitions.py", line 147, in test_same_stream_ack_and_queue_need_corresponding_calls
+    self.assertFalse(self.report(authority=rows)['diagnostic_complete'])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_shared_accepted_validation_covers_hidden_calls (__main__.InputObservationTransitionControls.test_shared_accepted_validation_covers_hidden_calls) (sequence=1, count=1, epoch=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-r6/.local/old-reader/scripts/test_input_consumption_transitions.py", line 125, in test_shared_accepted_validation_covers_hidden_calls
+    self.assertEqual(result['diagnostic_complete'], expected, result['errors'])
+AssertionError: True != False : []
+
+======================================================================
+FAIL: test_shared_accepted_validation_covers_hidden_calls (__main__.InputObservationTransitionControls.test_shared_accepted_validation_covers_hidden_calls) (sequence=122, count=1, epoch=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-r6/.local/old-reader/scripts/test_input_consumption_transitions.py", line 125, in test_shared_accepted_validation_covers_hidden_calls
+    self.assertEqual(result['diagnostic_complete'], expected, result['errors'])
+AssertionError: True != False : []
+
+======================================================================
+FAIL: test_shared_accepted_validation_covers_hidden_calls (__main__.InputObservationTransitionControls.test_shared_accepted_validation_covers_hidden_calls) (sequence=2, count=1, epoch=2)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-r6/.local/old-reader/scripts/test_input_consumption_transitions.py", line 125, in test_shared_accepted_validation_covers_hidden_calls
+    self.assertEqual(result['diagnostic_complete'], expected, result['errors'])
+AssertionError: True != False : []
+
+======================================================================
+FAIL: test_shared_accepted_validation_covers_hidden_calls (__main__.InputObservationTransitionControls.test_shared_accepted_validation_covers_hidden_calls) (sequence=2, count=13, epoch=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-r6/.local/old-reader/scripts/test_input_consumption_transitions.py", line 125, in test_shared_accepted_validation_covers_hidden_calls
+    self.assertEqual(result['diagnostic_complete'], expected, result['errors'])
+AssertionError: True != False : []
+
+======================================================================
+FAIL: test_snapshot_cache_aliases_counted_latest_and_survives_reconnect (__main__.InputObservationTransitionControls.test_snapshot_cache_aliases_counted_latest_and_survives_reconnect) (change='empty')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-r6/.local/old-reader/scripts/test_input_consumption_transitions.py", line 104, in test_snapshot_cache_aliases_counted_latest_and_survives_reconnect
+    self.assertFalse(self.report(client=rows)['diagnostic_complete'])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_snapshot_cache_aliases_counted_latest_and_survives_reconnect (__main__.InputObservationTransitionControls.test_snapshot_cache_aliases_counted_latest_and_survives_reconnect) (change='time')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-r6/.local/old-reader/scripts/test_input_consumption_transitions.py", line 104, in test_snapshot_cache_aliases_counted_latest_and_survives_reconnect
+    self.assertFalse(self.report(client=rows)['diagnostic_complete'])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_snapshot_cache_aliases_counted_latest_and_survives_reconnect (__main__.InputObservationTransitionControls.test_snapshot_cache_aliases_counted_latest_and_survives_reconnect) (change='header')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-r6/.local/old-reader/scripts/test_input_consumption_transitions.py", line 104, in test_snapshot_cache_aliases_counted_latest_and_survives_reconnect
+    self.assertFalse(self.report(client=rows)['diagnostic_complete'])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_snapshot_cache_aliases_counted_latest_and_survives_reconnect (__main__.InputObservationTransitionControls.test_snapshot_cache_aliases_counted_latest_and_survives_reconnect) (change='before_first_count')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-r6/.local/old-reader/scripts/test_input_consumption_transitions.py", line 104, in test_snapshot_cache_aliases_counted_latest_and_survives_reconnect
+    self.assertFalse(self.report(client=rows)['diagnostic_complete'])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_unknown_middle_does_not_erase_definite_endpoint_order (__main__.InputObservationTransitionControls.test_unknown_middle_does_not_erase_definite_endpoint_order)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-r6/.local/old-reader/scripts/test_input_consumption_transitions.py", line 194, in test_unknown_middle_does_not_erase_definite_endpoint_order
+    self.assertFalse(self.report(authority=partially_known_queue(popped=2))['diagnostic_complete'])
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 16 tests in 0.083s
+
+FAILED (failures=27)
