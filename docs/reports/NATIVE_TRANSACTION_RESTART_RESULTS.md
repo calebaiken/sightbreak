@@ -174,7 +174,12 @@ exact receipt/request/result equality and zero purchases on second restart.
 The verdict was frozen before identity/source access in
 [PR18 comment 6355013968](https://github.com/calebaiken/sightbreak/pull/18#issuecomment-6355013968).
 
-Source/API binding and a focused minimal-recovery-input control address its remaining
-fixture-assistance concern. The original packet, result flags and raw observations
-remain retained. In particular, baseline flags about the original committed result
-or stable journal absence do not establish successful receipt recovery.
+The subsequent [source/API binding audit](native-pg-restart-evidence/source-binding/README.md)
+passes. It verifies all114 observation mappings, the measured source archives and
+the production journal-to-HTTP recovery dataflow. The exact existing key is released:
+Set-673EECBC is701ce2c; Set-8F5F7604 is7b6f379. A focused minimal-recovery-input control
+is additional corroboration, not a remaining source-dataflow blocker. The original
+packet, result flags and raw observations remain retained. In particular, baseline
+flags about the original committed result or stable journal absence do not establish
+successful receipt recovery. Historical cache bytes and independently attested
+execution/process lineage remain unavailable.

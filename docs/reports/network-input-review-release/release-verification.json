@@ -1,0 +1,1738 @@
+{
+  "schema": 1,
+  "verified_utc": "2026-10-24T08:43:07.334763+00:00",
+  "mapping_sha256": "1d5b1cbed67c7fb94c2afe72c64b52b44c1b0915720cd0ddbc21151833709709",
+  "mapping_bytes": 212748,
+  "outcome_frozen_before_release": "https://github.com/calebaiken/sightbreak/pull/20#issuecomment-6354437453",
+  "source_review": "https://github.com/calebaiken/sightbreak/pull/20#issuecomment-6276000222",
+  "runtime_commit": "f3ceaad98e089aa393c7f5fa650a52695094d979",
+  "samples": {
+    "sample-H": {
+      "run": "candidate-r2",
+      "commit": "77f204083ab5bea4dc9149d3179daf540a994de4",
+      "resume_label": "candidate"
+    },
+    "sample-T": {
+      "run": "baseline-r3",
+      "commit": "701ce2c4d7f8b2872cf1fefa64cb6edd0cd1a3fd",
+      "resume_label": "baseline"
+    }
+  },
+  "original_counterpart_git_checks": [
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/resume-gates/summary.json",
+      "git_blob": "91b9387ce4232218be30e0ced4f83f3e266ff4ec",
+      "sha256": "612e29bd7e3554dff03db7b1c30d491fb2dcc6b3c276fa79f49fc8a9b5160376"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/summary.json",
+      "git_blob": "00039964f97f743b12f05b21bce3c1e6527c3fb3",
+      "sha256": "9a23e2086f4bcab526f3807c9bc4c15728449f829f4a1464ec938aa6471c7ff8"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/matched-run-r2-receipt.json",
+      "git_blob": "48651c9c4117c5b679f1839c0927cbdbf58e7afd",
+      "sha256": "2f1cab0e29539cd645d4b5b65ee3b1a59b35c8fadbd6cd6448a4e3cfd1fce9d3"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-steady-prediction-off/barrier/start.json",
+      "git_blob": "3fb16d5abd645c919b88245bbbb9368e7f24d6f7",
+      "sha256": "e36601cd3488f3393b1cd7c062d1fe64f7fa638ba07bf76f33d0fec1414842af"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-steady-prediction-off/barrier/stop",
+      "git_blob": "7fd2792f9f88d52a1dab6e7e5f6384d438c28aaa",
+      "sha256": "6a47549065877e56660f8db101d9176145460eae4bba59ec5fe5b78a1f579e08"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-steady-prediction-off/client.json",
+      "git_blob": "97fc6fb0b499720121001d41d35a7c1eda413e3d",
+      "sha256": "ff606de90e21e2187ab080525c69269f19edc63b578511f5bb7c0996deb33f51"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-steady-prediction-off/client.json.ready",
+      "git_blob": "ad50b53407197828b2a130a6ba58b9a4a4a62617",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-steady-prediction-off/client.log",
+      "git_blob": "00700f07c57f53ac8183664d1870acc8a5223ab1",
+      "sha256": "12570ce6d1ffbe0c12aad9860db09070748b236a42b551c9c7b46e7d73b7adea"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-steady-prediction-off/server.json",
+      "git_blob": "3272fd1825d56900596da50068b7e29dedaf08a1",
+      "sha256": "6d33c2cf3df6b318d288ebbecaab88d323bd4f95e4f734428f646b79eb1e7ffb"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-steady-prediction-off/server.json.ready",
+      "git_blob": "ad50b53407197828b2a130a6ba58b9a4a4a62617",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-steady-prediction-off/server.log",
+      "git_blob": "5048e19172f52a5670014a02093c28a0993a2e97",
+      "sha256": "bf363d461c125e3fd85af1de41a8603299ce71ccbf21f978b9080340a9ee3526"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-steady-prediction-off/metrics.json",
+      "git_blob": "0825c77e8822fb68d0ea65f6d356e6e3c004c3d0",
+      "sha256": "6ec4ecbdae9d6b629d708dfce16cdebd595e286e276308eb75883f89c9563d86"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-steady-prediction-on/barrier/start.json",
+      "git_blob": "7f1391367179ac26490150b0ee1a6e4a1e4c90e1",
+      "sha256": "4d771f5c6be9e11e6d7f7d01d506cd643e831b731cbb94974614ebc97f723163"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-steady-prediction-on/barrier/stop",
+      "git_blob": "7fd2792f9f88d52a1dab6e7e5f6384d438c28aaa",
+      "sha256": "6a47549065877e56660f8db101d9176145460eae4bba59ec5fe5b78a1f579e08"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-steady-prediction-on/client.json",
+      "git_blob": "2b67c46d0918a08b45d114d77bbf8848be8c2cdd",
+      "sha256": "1e145169ff001dbe08d896b1c8784d17d6901861f50e9f99a8cd130a00695dc2"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-steady-prediction-on/client.json.ready",
+      "git_blob": "ad50b53407197828b2a130a6ba58b9a4a4a62617",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-steady-prediction-on/client.log",
+      "git_blob": "00700f07c57f53ac8183664d1870acc8a5223ab1",
+      "sha256": "12570ce6d1ffbe0c12aad9860db09070748b236a42b551c9c7b46e7d73b7adea"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-steady-prediction-on/server.json",
+      "git_blob": "de9c568698a1a635ca740c6e9881fff1c39d99ff",
+      "sha256": "0f0fc9e8975224068b9fe564169a113959e078cd74f5da95e7eaad825eebd511"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-steady-prediction-on/server.json.ready",
+      "git_blob": "ad50b53407197828b2a130a6ba58b9a4a4a62617",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-steady-prediction-on/server.log",
+      "git_blob": "8b22c1df2817ec4866dae8753993fb61dfa1b973",
+      "sha256": "3d817a10b090c944959d4a1e4348f11a734c0ed39b21f995254606dcd171183e"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-steady-prediction-on/metrics.json",
+      "git_blob": "6974727beabc02505d8f780374ea9d43ff0bd911",
+      "sha256": "ccd59cea65875cf1fb6458d2cf0e5d5eee77e4b1a98209616cbd4c173f343ea6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-input-gap-prediction-off/barrier/start.json",
+      "git_blob": "6d5c966027dec6f339639a442a7a4e4117234d39",
+      "sha256": "c2ceb300e158dd9d9546fb31a3f0a677378eebcc50098b0a3d655de1c9b0852d"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-input-gap-prediction-off/barrier/stop",
+      "git_blob": "7fd2792f9f88d52a1dab6e7e5f6384d438c28aaa",
+      "sha256": "6a47549065877e56660f8db101d9176145460eae4bba59ec5fe5b78a1f579e08"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-input-gap-prediction-off/client.json",
+      "git_blob": "7b9cf71ccf80f1fe0bc804e63cc8e7826b9f2ebf",
+      "sha256": "1a532be3c1cb8e1baa440838577e14b4ad68de20d8143ef705be04029af0e3d6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-input-gap-prediction-off/client.json.ready",
+      "git_blob": "ad50b53407197828b2a130a6ba58b9a4a4a62617",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-input-gap-prediction-off/client.log",
+      "git_blob": "67504dcfe1709f7b35268aacc94126a9e9356771",
+      "sha256": "747edfc1fa95026122cc7500614f26290756f3b0d4e451d4c1e6404cb0a97193"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-input-gap-prediction-off/server.json",
+      "git_blob": "3b3e6d2d4d3b58df17864215039f453d6e9dab64",
+      "sha256": "ab417f02fc6a725b2daef92092ec46250eb0a7934dc7592ee0252da804c63128"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-input-gap-prediction-off/server.json.ready",
+      "git_blob": "ad50b53407197828b2a130a6ba58b9a4a4a62617",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-input-gap-prediction-off/server.log",
+      "git_blob": "74c2ac603955e08322f7a968e166a2c324894045",
+      "sha256": "e8cba414cf95846173551526431c19e7863672f1a65361458ebaaba9c3c1c6b6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-input-gap-prediction-off/metrics.json",
+      "git_blob": "a607ba19300e4a7b3f54fc5aa50ad6e62453429f",
+      "sha256": "a746e91c5f9ee1a1630a88715c036ec5ec0c09a0ea79d97c27c84f590c6c7d01"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-input-gap-prediction-on/barrier/start.json",
+      "git_blob": "2d1cb9f69461dd949d3afb609a59795612820ae6",
+      "sha256": "504d382fc8c32caf79e2925044a599c32b73832534f50170e7a7a9b2f247270d"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-input-gap-prediction-on/barrier/stop",
+      "git_blob": "7fd2792f9f88d52a1dab6e7e5f6384d438c28aaa",
+      "sha256": "6a47549065877e56660f8db101d9176145460eae4bba59ec5fe5b78a1f579e08"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-input-gap-prediction-on/client.json",
+      "git_blob": "b937c8d0348710f41f19dfbbd8858c1cb938633a",
+      "sha256": "5d43747e331d05a31c2c9513d8639be3185a3f93b4b8c5571adce0b990f4f8f0"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-input-gap-prediction-on/client.json.ready",
+      "git_blob": "ad50b53407197828b2a130a6ba58b9a4a4a62617",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-input-gap-prediction-on/client.log",
+      "git_blob": "67504dcfe1709f7b35268aacc94126a9e9356771",
+      "sha256": "747edfc1fa95026122cc7500614f26290756f3b0d4e451d4c1e6404cb0a97193"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-input-gap-prediction-on/server.json",
+      "git_blob": "67746b7b5222fdbc068b48fd4114de7b5e3faaaa",
+      "sha256": "0462905da12e22d4bcfacf80ec5dfcb20531e6c2a4705edb9db93097211f1d8d"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-input-gap-prediction-on/server.json.ready",
+      "git_blob": "ad50b53407197828b2a130a6ba58b9a4a4a62617",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-input-gap-prediction-on/server.log",
+      "git_blob": "97be22661484167636fc0ec2358b150f5617610d",
+      "sha256": "b4ef645cb5a6319a496e06971c1e6662b2019a2a28bed4ae2a1277558b148d6a"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-input-gap-prediction-on/metrics.json",
+      "git_blob": "147693dbe9bce7253bd833543fd0516e1bdc9be4",
+      "sha256": "bd35bc70a1ec85f709d80a375f76fa79f623b91321c048241fb274fc8841d115"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-snapshot-gap-prediction-off/barrier/start.json",
+      "git_blob": "409395e344a92ddd9b050b22c559634ce769069f",
+      "sha256": "c3e9a71805c6b540c7ce274ae7c03b044d6d85b4f8a8b05033e78908f04cfada"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-snapshot-gap-prediction-off/barrier/stop",
+      "git_blob": "7fd2792f9f88d52a1dab6e7e5f6384d438c28aaa",
+      "sha256": "6a47549065877e56660f8db101d9176145460eae4bba59ec5fe5b78a1f579e08"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-snapshot-gap-prediction-off/client.json",
+      "git_blob": "d1d4006b6c13188ffee418cc41395dc339e6db95",
+      "sha256": "707180674ad06ae84b82cba4f7195b8b7975b5147bc6ae1078d0842b20948761"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-snapshot-gap-prediction-off/client.json.ready",
+      "git_blob": "ad50b53407197828b2a130a6ba58b9a4a4a62617",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-snapshot-gap-prediction-off/client.log",
+      "git_blob": "14f1ea3912e31a9463060d5e53cf1d798251c532",
+      "sha256": "e12f389ec151a6211aa32afdba686dbae5335a2686838b15bd6beb9e6c5ae592"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-snapshot-gap-prediction-off/server.json",
+      "git_blob": "f161e64925e5d187061b75569059b317a0960fec",
+      "sha256": "3d29d1bf2d81b3a1ab219847d0fe24c555f7bfbc081d08f1a43e98d7536dc907"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-snapshot-gap-prediction-off/server.json.ready",
+      "git_blob": "ad50b53407197828b2a130a6ba58b9a4a4a62617",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-snapshot-gap-prediction-off/server.log",
+      "git_blob": "ca8de2b3f377e5dc39f215827d913455a4128ef2",
+      "sha256": "650a820e90a8a1b5ccc1181486764fbd10f6b72463e46f1a2626a0d6360b4b0a"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-snapshot-gap-prediction-off/metrics.json",
+      "git_blob": "f135f0dbd39a53c9f39f35da098552274d1e45a1",
+      "sha256": "6a34f04f892001eb7c858c587df98475708ed4a6f3c1624bce888ca17f5bdfdf"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-snapshot-gap-prediction-on/barrier/start.json",
+      "git_blob": "6102f0a65e8627fe83636c7a54641befec6b23dd",
+      "sha256": "b8b4252452e41c2a6ac418997b1c5723f4654c75a28553b50bc25580f7390f08"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-snapshot-gap-prediction-on/barrier/stop",
+      "git_blob": "7fd2792f9f88d52a1dab6e7e5f6384d438c28aaa",
+      "sha256": "6a47549065877e56660f8db101d9176145460eae4bba59ec5fe5b78a1f579e08"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-snapshot-gap-prediction-on/client.json",
+      "git_blob": "cd0c6fd3e65b9f8125b7c0e4fd193cb27038d7b8",
+      "sha256": "782c6cb3b8640bb379308ed9f7a0b66a4fb4eaeb6b8067f13e03dd9130a09bf0"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-snapshot-gap-prediction-on/client.json.ready",
+      "git_blob": "ad50b53407197828b2a130a6ba58b9a4a4a62617",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-snapshot-gap-prediction-on/client.log",
+      "git_blob": "14f1ea3912e31a9463060d5e53cf1d798251c532",
+      "sha256": "e12f389ec151a6211aa32afdba686dbae5335a2686838b15bd6beb9e6c5ae592"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-snapshot-gap-prediction-on/server.json",
+      "git_blob": "c568ce3384ab21a6fccab3fc484e691489fabdc5",
+      "sha256": "c1c105e024066bc5d7dfc42f7f1d205049acef62272eeb962c5a86b5cdb8259e"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-snapshot-gap-prediction-on/server.json.ready",
+      "git_blob": "ad50b53407197828b2a130a6ba58b9a4a4a62617",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-snapshot-gap-prediction-on/server.log",
+      "git_blob": "61ca80cb80f577b7b1b2a26722cf002b0f437df3",
+      "sha256": "0f30a039f576cb27b82fbfba30177990534fae940cb59361949b962ee768dede"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-snapshot-gap-prediction-on/metrics.json",
+      "git_blob": "2189638836dd89afb0cd48a80f4d6cf66d3736d9",
+      "sha256": "435f5a6db35d6227a12404d679323d274128df435acc68b90513e8d92f569dbb"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-stale-replay-prediction-off/barrier/start.json",
+      "git_blob": "770f87ceb995c0de84ff63d7c93f18ad2f37524b",
+      "sha256": "e42b3dfd9bf4c27d59fe4e950d7727a93d2172229a419742ef9f26b55679274e"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-stale-replay-prediction-off/barrier/stop",
+      "git_blob": "7fd2792f9f88d52a1dab6e7e5f6384d438c28aaa",
+      "sha256": "6a47549065877e56660f8db101d9176145460eae4bba59ec5fe5b78a1f579e08"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-stale-replay-prediction-off/client.json",
+      "git_blob": "d77b6108e3ec01797c6e910d06c145a90f112c60",
+      "sha256": "664d735ba8f3771b2c123f4f931d8eb6f508bf981ef6c26f0ee4afeec1faee3d"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-stale-replay-prediction-off/client.json.ready",
+      "git_blob": "ad50b53407197828b2a130a6ba58b9a4a4a62617",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-stale-replay-prediction-off/client.log",
+      "git_blob": "e829acab75a18edc9939e69ee251f0e1f04bc5ad",
+      "sha256": "dc496764e380565a0bea4c0aca361bacad6aac03925abb0b93d2142dc35a0ed6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-stale-replay-prediction-off/server.json",
+      "git_blob": "d9ef3be215541cce4e0eaf65213f2df4be750394",
+      "sha256": "edeb983df6aa130f03fb8acdda032e8994521df90a9ae417b9ab30234cc67181"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-stale-replay-prediction-off/server.json.ready",
+      "git_blob": "ad50b53407197828b2a130a6ba58b9a4a4a62617",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-stale-replay-prediction-off/server.log",
+      "git_blob": "4346bc972ecce4e201b3c60abd771245ab99ecac",
+      "sha256": "672e8471c80fdb80de540a6fbb514ecb5a8102af857c8bb8a7e08cb0131cb8e3"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-stale-replay-prediction-off/metrics.json",
+      "git_blob": "bb5b3fec4ba09f9608b913ca7185e821a7d75451",
+      "sha256": "08e85a58d8fcf3203dd76c6de06d46eff3802b4958ce5a173ba04c472c1d1b13"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-stale-replay-prediction-on/barrier/start.json",
+      "git_blob": "414a5bc2a89320851b0b326a99038cac1f9aa420",
+      "sha256": "36ad378a81bd63b6634fd4db6f5876d41763af58d48c124b4d93fb716ad64077"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-stale-replay-prediction-on/barrier/stop",
+      "git_blob": "7fd2792f9f88d52a1dab6e7e5f6384d438c28aaa",
+      "sha256": "6a47549065877e56660f8db101d9176145460eae4bba59ec5fe5b78a1f579e08"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-stale-replay-prediction-on/client.json",
+      "git_blob": "0578982e9e68e269a6a0c2af637fc79b1dd85272",
+      "sha256": "b6655f50c87cc78aae3510375e90a466e172610db8ec84c62b5e77c33dac877f"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-stale-replay-prediction-on/client.json.ready",
+      "git_blob": "ad50b53407197828b2a130a6ba58b9a4a4a62617",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-stale-replay-prediction-on/client.log",
+      "git_blob": "e829acab75a18edc9939e69ee251f0e1f04bc5ad",
+      "sha256": "dc496764e380565a0bea4c0aca361bacad6aac03925abb0b93d2142dc35a0ed6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-stale-replay-prediction-on/server.json",
+      "git_blob": "6389ee39378e8b4324da96b839f46c73f95faaf0",
+      "sha256": "fa35d30ce7ec7bc9a6ffa9e4f1976bd400f39d205b23c94696241aab848c5bff"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-stale-replay-prediction-on/server.json.ready",
+      "git_blob": "ad50b53407197828b2a130a6ba58b9a4a4a62617",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-stale-replay-prediction-on/server.log",
+      "git_blob": "65b214b75661a0fb31813ae85e875866198a9e90",
+      "sha256": "c6a6586badd6f7ef4501c8016446deb6d0269601f5d9b7e825303098c81ddf49"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/1-stale-replay-prediction-on/metrics.json",
+      "git_blob": "f7beb8f9a1b8153185201f473f912871e3337d78",
+      "sha256": "17c2d2cfe2400fbf776e5a4c983e75b383405772bc8e2cadde7701e683b8df35"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-steady-prediction-off/barrier/start.json",
+      "git_blob": "5a387294cc9b406e8126ca4e47127a88c4325ef2",
+      "sha256": "6d628c3e89d3686f66f773131a2d2b3f65bb478cda028875d23fc9cab4ac0994"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-steady-prediction-off/barrier/stop",
+      "git_blob": "7fd2792f9f88d52a1dab6e7e5f6384d438c28aaa",
+      "sha256": "6a47549065877e56660f8db101d9176145460eae4bba59ec5fe5b78a1f579e08"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-steady-prediction-off/client.json",
+      "git_blob": "16f4cf442f20194dbe78ff498bec1e5c42b97304",
+      "sha256": "f1140ef778628519b04a2efef5a7feb071a675b1308f1cec2f90cb0251acaa8b"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-steady-prediction-off/client.json.ready",
+      "git_blob": "ad50b53407197828b2a130a6ba58b9a4a4a62617",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-steady-prediction-off/client.log",
+      "git_blob": "00700f07c57f53ac8183664d1870acc8a5223ab1",
+      "sha256": "12570ce6d1ffbe0c12aad9860db09070748b236a42b551c9c7b46e7d73b7adea"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-steady-prediction-off/server.json",
+      "git_blob": "146db9b8239ae9b78dbdca9cde48740edc9326d5",
+      "sha256": "1cc918a931fbd2c93af3f81de37e87cae596affde607a7dee23081895a33900c"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-steady-prediction-off/server.json.ready",
+      "git_blob": "ad50b53407197828b2a130a6ba58b9a4a4a62617",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-steady-prediction-off/server.log",
+      "git_blob": "5dd360d2d469273428ff01bbd3550198573a1774",
+      "sha256": "acb069eb152609986cadbb723f938d2623df77dbda34b53478beff243a2948ca"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-steady-prediction-off/metrics.json",
+      "git_blob": "c4e74be0bc59d094635cc8e93c47703c5babcf27",
+      "sha256": "cc1809ce9975b7ef50347b2dd371aeaf1d8a6311ec783e41a75899866958af86"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-steady-prediction-on/barrier/start.json",
+      "git_blob": "b796f167a241fba96dac6a577da9eb608550c954",
+      "sha256": "dfceede2cf69c43f95c7655a8610cec2e2754ac78d45e1ea7f9811f1d2d4b951"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-steady-prediction-on/barrier/stop",
+      "git_blob": "7fd2792f9f88d52a1dab6e7e5f6384d438c28aaa",
+      "sha256": "6a47549065877e56660f8db101d9176145460eae4bba59ec5fe5b78a1f579e08"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-steady-prediction-on/client.json",
+      "git_blob": "b66728657ec95f07b3aec86a0743c70e198fd4a3",
+      "sha256": "c36d33ff244d8922f802663ec5a0d448c1b4b9529f26edfa463be143ecf16103"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-steady-prediction-on/client.json.ready",
+      "git_blob": "ad50b53407197828b2a130a6ba58b9a4a4a62617",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-steady-prediction-on/client.log",
+      "git_blob": "00700f07c57f53ac8183664d1870acc8a5223ab1",
+      "sha256": "12570ce6d1ffbe0c12aad9860db09070748b236a42b551c9c7b46e7d73b7adea"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-steady-prediction-on/server.json",
+      "git_blob": "d5e70f19241feb5f259938379e6f2ae1b15c3bdc",
+      "sha256": "5e22b4eb318038a2f67cb91ec6fb7c25a424b9a598805c18f0a49ac9d444ee9b"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-steady-prediction-on/server.json.ready",
+      "git_blob": "ad50b53407197828b2a130a6ba58b9a4a4a62617",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-steady-prediction-on/server.log",
+      "git_blob": "99f92ae8d12b1dec76e2710d962cdb2498c31af9",
+      "sha256": "0d7e7a1eb492c616163726196ab13fd110657a068adab8a2e062f828710a7643"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-steady-prediction-on/metrics.json",
+      "git_blob": "c7394e5dbb96a1ac03a9a552ed5adf318736a65f",
+      "sha256": "2453f72c940438531fe8fe3e2d278315be73e0394b7b7225b370c4f1f2c29078"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-input-gap-prediction-off/barrier/start.json",
+      "git_blob": "541e38ff4aaebe98d11c124969a45ee63d13e027",
+      "sha256": "ec3fa70736ac6e12f8e297874a4de30d2c36953242ea607facde0644d59f307e"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-input-gap-prediction-off/barrier/stop",
+      "git_blob": "7fd2792f9f88d52a1dab6e7e5f6384d438c28aaa",
+      "sha256": "6a47549065877e56660f8db101d9176145460eae4bba59ec5fe5b78a1f579e08"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-input-gap-prediction-off/client.json",
+      "git_blob": "2db47cb0456c1ac8afc6c384810a85e03e6dcdee",
+      "sha256": "22d80d0fea738933ba0c2111f61da112b25668365746302ea6bd6d221be2da7a"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-input-gap-prediction-off/client.json.ready",
+      "git_blob": "ad50b53407197828b2a130a6ba58b9a4a4a62617",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-input-gap-prediction-off/client.log",
+      "git_blob": "67504dcfe1709f7b35268aacc94126a9e9356771",
+      "sha256": "747edfc1fa95026122cc7500614f26290756f3b0d4e451d4c1e6404cb0a97193"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-input-gap-prediction-off/server.json",
+      "git_blob": "42f2d4e57bf60763496ff3e2912ba33f09ed2d68",
+      "sha256": "54ea4428b2d5f7319ad3966a8235188f0162846635565d8a22f6d67291c5c6f4"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-input-gap-prediction-off/server.json.ready",
+      "git_blob": "ad50b53407197828b2a130a6ba58b9a4a4a62617",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-input-gap-prediction-off/server.log",
+      "git_blob": "9084f37fe81e0954f8f2269b76aca25ec32d2e30",
+      "sha256": "d6c7606b36c60448769ec067e29e7087a341a7369e6c757f41d45068ac4b41d0"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-input-gap-prediction-off/metrics.json",
+      "git_blob": "ed0ae4e246990bfe8ccef796249b7b451f053dd1",
+      "sha256": "11f1831775c5fde5bb264bc572c6019333acdb69043eb8723f3f5a62a51d2fb7"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-input-gap-prediction-on/barrier/start.json",
+      "git_blob": "c02fbbaabb8bec3cdcc71bc76d9563a660f70152",
+      "sha256": "898c3ae98b771fde0ce4d6b5ac574cc628f3aeb6d4144d8ddffc0ce6ff614b23"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-input-gap-prediction-on/barrier/stop",
+      "git_blob": "7fd2792f9f88d52a1dab6e7e5f6384d438c28aaa",
+      "sha256": "6a47549065877e56660f8db101d9176145460eae4bba59ec5fe5b78a1f579e08"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-input-gap-prediction-on/client.json",
+      "git_blob": "1180425a8ee8cec21cebb00b147555eb2a3bf5d6",
+      "sha256": "21b5fa6bf3d92f0bc64a94e15d4af33b331fcaa35091f96457d4f36a7e27988e"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-input-gap-prediction-on/client.json.ready",
+      "git_blob": "ad50b53407197828b2a130a6ba58b9a4a4a62617",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-input-gap-prediction-on/client.log",
+      "git_blob": "67504dcfe1709f7b35268aacc94126a9e9356771",
+      "sha256": "747edfc1fa95026122cc7500614f26290756f3b0d4e451d4c1e6404cb0a97193"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-input-gap-prediction-on/server.json",
+      "git_blob": "65e6db4272b0205922689bf4d353883ce57ec80e",
+      "sha256": "bd293cc2283f8c5a0c9c848408393f8bf13da86adebf4362df0cf6d7b3402c96"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-input-gap-prediction-on/server.json.ready",
+      "git_blob": "ad50b53407197828b2a130a6ba58b9a4a4a62617",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-input-gap-prediction-on/server.log",
+      "git_blob": "c494be5e9bc9b3a84b5c3b51e3e45bbdc8c62f8b",
+      "sha256": "cb9707e336f5cb869717aa02dfaaef836df8bdd4647bf30fb37789e953446c45"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-input-gap-prediction-on/metrics.json",
+      "git_blob": "cdf404ae2491b47b59fbe3acc9168b7ed29c66dc",
+      "sha256": "2c0989f2b12365dd4715cd4f48929949c29ba71b09c154aaeb4670eaa39da83c"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-snapshot-gap-prediction-off/barrier/start.json",
+      "git_blob": "8f5a4b83fd21b9440e16e2063d05b833783e4c7f",
+      "sha256": "74e80b5fe7e0593f1fdce390348398f0df1aa16ae2a2e53e7f6e383e8af47965"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-snapshot-gap-prediction-off/barrier/stop",
+      "git_blob": "7fd2792f9f88d52a1dab6e7e5f6384d438c28aaa",
+      "sha256": "6a47549065877e56660f8db101d9176145460eae4bba59ec5fe5b78a1f579e08"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-snapshot-gap-prediction-off/client.json",
+      "git_blob": "f48e358b5d7ced7adc5e5e3b578dd2cca7dc6fec",
+      "sha256": "8817b3fc60d3533c4c69895ea803616c83b24fccd96ba126e7f6493b3f8916ed"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-snapshot-gap-prediction-off/client.json.ready",
+      "git_blob": "ad50b53407197828b2a130a6ba58b9a4a4a62617",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-snapshot-gap-prediction-off/client.log",
+      "git_blob": "14f1ea3912e31a9463060d5e53cf1d798251c532",
+      "sha256": "e12f389ec151a6211aa32afdba686dbae5335a2686838b15bd6beb9e6c5ae592"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-snapshot-gap-prediction-off/server.json",
+      "git_blob": "e452a7321509587c6368122336070f308acab829",
+      "sha256": "f39c25a3a03f1f21e7fd53e7354910120a3bf6d344ed311d350bafc98c18c334"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-snapshot-gap-prediction-off/server.json.ready",
+      "git_blob": "ad50b53407197828b2a130a6ba58b9a4a4a62617",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-snapshot-gap-prediction-off/server.log",
+      "git_blob": "fe5880e1315264d430532ea08bfb2ea7a2106494",
+      "sha256": "c9cb0cc4bbc4b042ec12d4ccc08324265d7fa1aff9a64d3a1716afeda9ca2940"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-snapshot-gap-prediction-off/metrics.json",
+      "git_blob": "f668d6e1ae6cd064fbfa1478a027b54d68fc8e17",
+      "sha256": "8c8308be15ad7aa978b9abb4b53a8e35d01d2137ede0f418269688de444061ea"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-snapshot-gap-prediction-on/barrier/start.json",
+      "git_blob": "bfc4e8bfc8e5cc66d7c82203d38c406df720d55b",
+      "sha256": "46c814c9b4549178fa064a5b108c013d3260289fae5e663d22289a08efe86843"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-snapshot-gap-prediction-on/barrier/stop",
+      "git_blob": "7fd2792f9f88d52a1dab6e7e5f6384d438c28aaa",
+      "sha256": "6a47549065877e56660f8db101d9176145460eae4bba59ec5fe5b78a1f579e08"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-snapshot-gap-prediction-on/client.json",
+      "git_blob": "c79f700245148e409b72456c95d7fec9326105f0",
+      "sha256": "de400a572ce2bcb2943f094620d0fd06c92699036317b157ae7fe7c78dcbd12f"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-snapshot-gap-prediction-on/client.json.ready",
+      "git_blob": "ad50b53407197828b2a130a6ba58b9a4a4a62617",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-snapshot-gap-prediction-on/client.log",
+      "git_blob": "14f1ea3912e31a9463060d5e53cf1d798251c532",
+      "sha256": "e12f389ec151a6211aa32afdba686dbae5335a2686838b15bd6beb9e6c5ae592"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-snapshot-gap-prediction-on/server.json",
+      "git_blob": "fd4f140166068498305a3c5dec7c64f7111b9a63",
+      "sha256": "2cecf9173c895aa628a4386cb3a525c37fa440ee44302f0173ed038bf9502288"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-snapshot-gap-prediction-on/server.json.ready",
+      "git_blob": "ad50b53407197828b2a130a6ba58b9a4a4a62617",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-snapshot-gap-prediction-on/server.log",
+      "git_blob": "ad9421466bb691f24766c11bcc020b4aa2d6a75f",
+      "sha256": "54f5596c1a2328f43fff92575b0f85603594f141a9d792350092b13ed8d74bb4"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-snapshot-gap-prediction-on/metrics.json",
+      "git_blob": "5ca77136f216324d763560504ada054a6a8c1af3",
+      "sha256": "46fb1d1b22eb711b0f11ef47fca515e0762465b4afb1d75d3256ae318abfa805"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-stale-replay-prediction-off/barrier/start.json",
+      "git_blob": "474db78f686d4f5b34c1c125346555f27334c7b2",
+      "sha256": "fe9200c5f3127ad0b13784eba16cba8905f45bd20a504b4a27114f63172e7622"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-stale-replay-prediction-off/barrier/stop",
+      "git_blob": "7fd2792f9f88d52a1dab6e7e5f6384d438c28aaa",
+      "sha256": "6a47549065877e56660f8db101d9176145460eae4bba59ec5fe5b78a1f579e08"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-stale-replay-prediction-off/client.json",
+      "git_blob": "fcea0b887f7d4f22a3a71a326d89f9667e643985",
+      "sha256": "2f45c4058054655473e547ae7fef66faac64020dd558ad77039f897bd3a349e8"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-stale-replay-prediction-off/client.json.ready",
+      "git_blob": "ad50b53407197828b2a130a6ba58b9a4a4a62617",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-stale-replay-prediction-off/client.log",
+      "git_blob": "e829acab75a18edc9939e69ee251f0e1f04bc5ad",
+      "sha256": "dc496764e380565a0bea4c0aca361bacad6aac03925abb0b93d2142dc35a0ed6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-stale-replay-prediction-off/server.json",
+      "git_blob": "7b48421281ee6201a6e32c3b8e002d6684fca246",
+      "sha256": "03fcdc1c572418617d8c0e444d67e556d067e11a6937aabc47a98313a2921645"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-stale-replay-prediction-off/server.json.ready",
+      "git_blob": "ad50b53407197828b2a130a6ba58b9a4a4a62617",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-stale-replay-prediction-off/server.log",
+      "git_blob": "2a896ea586df2fe8001e34bb2919671bfe7156c2",
+      "sha256": "01a6b14c8de95888873fdfa99aa75803abbada639a2610709e8ad9cd9baa23d1"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-stale-replay-prediction-off/metrics.json",
+      "git_blob": "5dd33b812cad14562cc6ea075b481ddaa8d9abdb",
+      "sha256": "2d0e5f67b7f10b9b88e98063d520a68947682da1dfea4d9490de67796bd6b80a"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-stale-replay-prediction-on/barrier/start.json",
+      "git_blob": "f63ca1995fe67896694d2728f2d611a53de29f04",
+      "sha256": "71129b8803130030e9f21545d9c1bcbc6461576e2bf9a14f351365c0a76cbd00"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-stale-replay-prediction-on/barrier/stop",
+      "git_blob": "7fd2792f9f88d52a1dab6e7e5f6384d438c28aaa",
+      "sha256": "6a47549065877e56660f8db101d9176145460eae4bba59ec5fe5b78a1f579e08"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-stale-replay-prediction-on/client.json",
+      "git_blob": "161f9f107355667cc8728d49b00dd632186a2d3a",
+      "sha256": "987fa5a675a2756778b59fa9bd41321ce7865fd90f8c2cbfbb16d0c8369c4b7b"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-stale-replay-prediction-on/client.json.ready",
+      "git_blob": "ad50b53407197828b2a130a6ba58b9a4a4a62617",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-stale-replay-prediction-on/client.log",
+      "git_blob": "e829acab75a18edc9939e69ee251f0e1f04bc5ad",
+      "sha256": "dc496764e380565a0bea4c0aca361bacad6aac03925abb0b93d2142dc35a0ed6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-stale-replay-prediction-on/server.json",
+      "git_blob": "c1da92e5966a850118afb004bd62502451742d22",
+      "sha256": "3006054527707fef6254bd7e275d32559875fd759fb1a7ff777e6ddc1b5e999a"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-stale-replay-prediction-on/server.json.ready",
+      "git_blob": "ad50b53407197828b2a130a6ba58b9a4a4a62617",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-stale-replay-prediction-on/server.log",
+      "git_blob": "075c630a6283b691c6ffb0aa79a65a617d051e49",
+      "sha256": "0980da9b555cb432c1c6f3919735eb78e64f81a8ed7094190853f8afe7bbfe13"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/2-stale-replay-prediction-on/metrics.json",
+      "git_blob": "14a9b5559e5765215bb51315b3d6e55eae6c3db7",
+      "sha256": "bdea1ecbc8e18cb75fcefc8d8e351e236aedaa03832ead206af16f8e99c8ffa0"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/input_stream_test.log",
+      "git_blob": "b405168361b94ba05868fc1b08475d5367ce5736",
+      "sha256": "21887e80be562ec31162930487b1a0aaa1484ec94d7874cf0de8b6021b575239"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/input_lifecycle_test.log",
+      "git_blob": "c135d093864429710ecd22eb1e9da9526bf16287",
+      "sha256": "63c1b06356ce798fc081809199ba429e64613758bae9e345fc79c67c13dc7f0f"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/peer_lifecycle_test.log",
+      "git_blob": "20979a6e58ebacc54fd81f6558b6248213698473",
+      "sha256": "c80bcc74f7610d31e8b5259f46bf154fec85209761fd20a3c351b9e5a39308b7"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/reconnect_policy_test.log",
+      "git_blob": "383e7dcb845bc0951a1459d76204fb52ea6f8971",
+      "sha256": "c0fa8ce86170e226ebfc27478bac7488c5d96663dd0df6f2fa7c67bdcc177071"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/snapshot_buffer_test.log",
+      "git_blob": "2c59879cd22a47da88fe71aa6139730b81eff439",
+      "sha256": "25745989ae341792d00f54900353f78c561819ac0ef65bf2a2ec4f7169d5cec4"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/movement_prediction_test.log",
+      "git_blob": "125e2a84979ce7f0f6c65ed363ab733176fec95b",
+      "sha256": "92ca6ded08d9d0fc5ed2972e2ef5a1dfae9c45bc6b0205d3609cc0b9e0383c73"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/state_privacy_test.log",
+      "git_blob": "b2c0ee196f15402b7ce9286c8047b1b73c7d37cb",
+      "sha256": "fc8683297ef17193297e4f08d73436fd664469ea848b6abe2928f7567e66058b"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/integration_actor_lifecycle_test.log",
+      "git_blob": "14afb4d7187aa95f439d50cb792b2c8e8ac2f57a",
+      "sha256": "01e0ddc9bfa475a822eb9f3094df81499768fa671cc5e2b3ec523c47604ff9b4"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/candidate-r2/hit_history_test.log",
+      "git_blob": "7c98b3bcf84d03842f88cd2d517f4de0467b2d89",
+      "sha256": "380ffeece21c83e896fde572a7c4ca65256c9e95da15565a93d62a2f2dd62c4a"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/resume-gates/candidate-independent_resume_alias_test.log",
+      "git_blob": "7fc4f817d959f152f17d0b63d07ccf25487dcca5",
+      "sha256": "14ff9ca40bd4346b8c2da226e038ff22e56c3341086c0d0cd254bd4e7885ae66"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/resume-gates/candidate-lost_welcome_test.log",
+      "git_blob": "ca56e3d53223b75f2938903d81de6c5b5c5c125f",
+      "sha256": "71a0a7e00e7a432447ec2f5726d14f60b456574d7e50b27c1669c5a613b52b7e"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/summary.json",
+      "git_blob": "4438f30a7ed0e8c2e0f610fc995cf74659af4f12",
+      "sha256": "50f17deeaf7156a734192bd79617617534a00829c0e0c6bad24b284c14879a8e"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3-receipt.json",
+      "git_blob": "3d8b7e3a52a79198312e138bbeb4c9457166787d",
+      "sha256": "e1569dc44a941f7efb50c786f6e796a2ed7083d05139d7481d4b490b90d4f252"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-steady-prediction-off/barrier/start.json",
+      "git_blob": "7ce077e7f6c4c2b5f5574ff856b9bc2ba83ebe90",
+      "sha256": "9d10cdab72fac338d1c3244bb88584b588b3043f455014190158881eef2e85c0"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-steady-prediction-off/barrier/stop",
+      "git_blob": "7fd2792f9f88d52a1dab6e7e5f6384d438c28aaa",
+      "sha256": "6a47549065877e56660f8db101d9176145460eae4bba59ec5fe5b78a1f579e08"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-steady-prediction-off/client.json",
+      "git_blob": "45448145356bbd346d7f0eb2ee50e6079a03a592",
+      "sha256": "0096844ecfcde4429387066dbc584433c29adc4eb3af610cccb7ba78c4940072"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-steady-prediction-off/client.json.ready",
+      "git_blob": "ad50b53407197828b2a130a6ba58b9a4a4a62617",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-steady-prediction-off/client.log",
+      "git_blob": "00700f07c57f53ac8183664d1870acc8a5223ab1",
+      "sha256": "12570ce6d1ffbe0c12aad9860db09070748b236a42b551c9c7b46e7d73b7adea"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-steady-prediction-off/server.json",
+      "git_blob": "76ad82f41e60c43d3f4f5651b2f0bf5b04524b32",
+      "sha256": "6e3eeef87345f69e51789644f66efa0852d3f0e3b7da36dade67b00686b74145"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-steady-prediction-off/server.json.ready",
+      "git_blob": "ad50b53407197828b2a130a6ba58b9a4a4a62617",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-steady-prediction-off/server.log",
+      "git_blob": "802db28892698b0e306490109f069c1ddb978e0f",
+      "sha256": "4e6aba09391e5d3bd2da64fb17ce3af35ccfd5b8e7da0e8091971b214e14097c"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-steady-prediction-off/metrics.json",
+      "git_blob": "97983c1547f2ca6430a24730c3e6ff7080b23f73",
+      "sha256": "066bc2a6879946086b1ed32b98604553b2b10f5adfb6624a619edafc04fb4e01"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-steady-prediction-on/barrier/start.json",
+      "git_blob": "c2d01df49fae8ec574683928e1334f3b36ceb273",
+      "sha256": "87f398945ac19c9f2656ee0a761f0e591bfe9dcf8e27c3d7d35dfe06e3a03dfa"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-steady-prediction-on/barrier/stop",
+      "git_blob": "7fd2792f9f88d52a1dab6e7e5f6384d438c28aaa",
+      "sha256": "6a47549065877e56660f8db101d9176145460eae4bba59ec5fe5b78a1f579e08"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-steady-prediction-on/client.json",
+      "git_blob": "891b07869209956b112516edc98fa6d1add24290",
+      "sha256": "e11125c3834a911b0062a9021b802b6d79fc6e3c60e2a6642f1c9efb4fbceba3"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-steady-prediction-on/client.json.ready",
+      "git_blob": "ad50b53407197828b2a130a6ba58b9a4a4a62617",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-steady-prediction-on/client.log",
+      "git_blob": "00700f07c57f53ac8183664d1870acc8a5223ab1",
+      "sha256": "12570ce6d1ffbe0c12aad9860db09070748b236a42b551c9c7b46e7d73b7adea"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-steady-prediction-on/server.json",
+      "git_blob": "2436d384e57659b5674cb116317249f4dd08dbc2",
+      "sha256": "9fcdb441d0e39e9bcb1620d801e3bdb8ea949887b5dfc09f80aa39aaf2b9378f"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-steady-prediction-on/server.json.ready",
+      "git_blob": "ad50b53407197828b2a130a6ba58b9a4a4a62617",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-steady-prediction-on/server.log",
+      "git_blob": "3446377edf4f9a408119c0c857f7665411bf0095",
+      "sha256": "af87fc3640ba59e2af85a0c2553f9897b7262c93c9f4260b109a5015b24dd744"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-steady-prediction-on/metrics.json",
+      "git_blob": "95fce3cd5400ca926ad01a7d81d14d8dab2cc386",
+      "sha256": "fb497e146261d56e691bf515d76593acb52b5599e13c839789df5062964fc28c"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-input-gap-prediction-off/barrier/start.json",
+      "git_blob": "503127dca0183e014fa4bc35dc3c51c8620caad9",
+      "sha256": "8f5c53529dc623a2635433806342a5e05726cb5663407c07bb6359bd5a643ded"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-input-gap-prediction-off/barrier/stop",
+      "git_blob": "7fd2792f9f88d52a1dab6e7e5f6384d438c28aaa",
+      "sha256": "6a47549065877e56660f8db101d9176145460eae4bba59ec5fe5b78a1f579e08"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-input-gap-prediction-off/client.json",
+      "git_blob": "8edc702b6dab8dee8df8a320f0e94c68c5d63c48",
+      "sha256": "a7ae6ae650764c50ea1f055d4dbf2393bbc98eaf5bff26dd1902f084209b5a44"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-input-gap-prediction-off/client.json.ready",
+      "git_blob": "ad50b53407197828b2a130a6ba58b9a4a4a62617",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-input-gap-prediction-off/client.log",
+      "git_blob": "67504dcfe1709f7b35268aacc94126a9e9356771",
+      "sha256": "747edfc1fa95026122cc7500614f26290756f3b0d4e451d4c1e6404cb0a97193"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-input-gap-prediction-off/server.json",
+      "git_blob": "9e5f108bbb43975acb4ed5caa9ac652bd6871722",
+      "sha256": "438489d9db7fd8d4a25448b8ff7c61df6a57e4e5312f29969e408ea9a8c2f676"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-input-gap-prediction-off/server.json.ready",
+      "git_blob": "ad50b53407197828b2a130a6ba58b9a4a4a62617",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-input-gap-prediction-off/server.log",
+      "git_blob": "5d8b48ec1e91feeabe59ff5e6512cd1dd31c4a7c",
+      "sha256": "5d4263e9b9bd9bfad1d4179ccd8b805b5c7143a194c19a189f0a0673821a0ed8"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-input-gap-prediction-off/metrics.json",
+      "git_blob": "f49c14b618fdf9c75889c660091b38e3fd24a643",
+      "sha256": "751050d40d7879b534baa81ea19c3fe459f3e60ad683c98ea71590af65e79a2b"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-input-gap-prediction-on/barrier/start.json",
+      "git_blob": "72438a44180e1089c1a0a027c50849e7d54d03e4",
+      "sha256": "dccfb8f9b7b9513531a06e78d0418fee4d9851b38ed1496436a7399930446ec3"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-input-gap-prediction-on/barrier/stop",
+      "git_blob": "7fd2792f9f88d52a1dab6e7e5f6384d438c28aaa",
+      "sha256": "6a47549065877e56660f8db101d9176145460eae4bba59ec5fe5b78a1f579e08"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-input-gap-prediction-on/client.json",
+      "git_blob": "4d35183ae4b55a57fe1122aa046600235a0131c8",
+      "sha256": "064b08887de9ba1b142ea352e2b87fccad7ae01655ca0b410d0e91f752b31a24"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-input-gap-prediction-on/client.json.ready",
+      "git_blob": "ad50b53407197828b2a130a6ba58b9a4a4a62617",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-input-gap-prediction-on/client.log",
+      "git_blob": "67504dcfe1709f7b35268aacc94126a9e9356771",
+      "sha256": "747edfc1fa95026122cc7500614f26290756f3b0d4e451d4c1e6404cb0a97193"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-input-gap-prediction-on/server.json",
+      "git_blob": "e6bda223c96001b8fb54e06f43aff3935dad7c19",
+      "sha256": "7281bb87bfef0b191ee2bece28fce3f6f40e12c1a9c590840fc75cd6ffd73698"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-input-gap-prediction-on/server.json.ready",
+      "git_blob": "ad50b53407197828b2a130a6ba58b9a4a4a62617",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-input-gap-prediction-on/server.log",
+      "git_blob": "1ef7efc04ca4f9ceac8d2912e4104d4cce63492f",
+      "sha256": "7ebaa9dd419c38640cbef6f5386a143865f8ef2baae344971547dc39d7ca416c"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-input-gap-prediction-on/metrics.json",
+      "git_blob": "24ef49d96b9c64a1ab79e0db4a74b4b2bb47a313",
+      "sha256": "48645e50578d721d0b49a0287e2c0a76def990ee05025b1dcd531b7e3e2099f4"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-snapshot-gap-prediction-off/barrier/start.json",
+      "git_blob": "ac4116dd72fe5ba12e34e94736e8be25f752e9b4",
+      "sha256": "34d73841a5659886a14e721d18d6be6962ad0673a84bf5d24d0bde639647f3a1"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-snapshot-gap-prediction-off/barrier/stop",
+      "git_blob": "7fd2792f9f88d52a1dab6e7e5f6384d438c28aaa",
+      "sha256": "6a47549065877e56660f8db101d9176145460eae4bba59ec5fe5b78a1f579e08"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-snapshot-gap-prediction-off/client.json",
+      "git_blob": "f601c16adea53c0308094617bc93d12230e9433a",
+      "sha256": "0ee2ed92b065f85a4f113654c2838dab1ea5f9ac5beb6b35d7fd111cdba02970"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-snapshot-gap-prediction-off/client.json.ready",
+      "git_blob": "ad50b53407197828b2a130a6ba58b9a4a4a62617",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-snapshot-gap-prediction-off/client.log",
+      "git_blob": "14f1ea3912e31a9463060d5e53cf1d798251c532",
+      "sha256": "e12f389ec151a6211aa32afdba686dbae5335a2686838b15bd6beb9e6c5ae592"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-snapshot-gap-prediction-off/server.json",
+      "git_blob": "453efd23544e1191ea32c7b189e879588f42f89e",
+      "sha256": "4b09d10e57554cd25244cf74ce2ad96b783addabe2540a729e470be24f97252e"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-snapshot-gap-prediction-off/server.json.ready",
+      "git_blob": "ad50b53407197828b2a130a6ba58b9a4a4a62617",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-snapshot-gap-prediction-off/server.log",
+      "git_blob": "c89c6d5f8eebff9235c58346b90e856e09159885",
+      "sha256": "677720bc56681c1d76dc72410fae6cd4bdab20ce591ab45ae2b1627bb7b59742"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-snapshot-gap-prediction-off/metrics.json",
+      "git_blob": "2a02e0219def104164ea8c5877e97bb0ae94e5eb",
+      "sha256": "d886f837dfd07bbde19110cf4e7064bf731b4294eba126f176d4f4b0a7eb6ee4"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-snapshot-gap-prediction-on/barrier/start.json",
+      "git_blob": "8bfb517194a0a436784c65c45501eaa0637745a5",
+      "sha256": "451751381ceeb5f25545f13be0cf2210898ab785b5190cc7488a7a15c3df93c9"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-snapshot-gap-prediction-on/barrier/stop",
+      "git_blob": "7fd2792f9f88d52a1dab6e7e5f6384d438c28aaa",
+      "sha256": "6a47549065877e56660f8db101d9176145460eae4bba59ec5fe5b78a1f579e08"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-snapshot-gap-prediction-on/client.json",
+      "git_blob": "e0cacd7f9d8adc14d46348038a8c6051b37e9492",
+      "sha256": "2258d536b82789bb63bf040dddcdda3701f485e988f6b65a6d95cf0b1291dd30"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-snapshot-gap-prediction-on/client.json.ready",
+      "git_blob": "ad50b53407197828b2a130a6ba58b9a4a4a62617",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-snapshot-gap-prediction-on/client.log",
+      "git_blob": "14f1ea3912e31a9463060d5e53cf1d798251c532",
+      "sha256": "e12f389ec151a6211aa32afdba686dbae5335a2686838b15bd6beb9e6c5ae592"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-snapshot-gap-prediction-on/server.json",
+      "git_blob": "bf27aa3ec19985783b791724f6ea85eae7778d2a",
+      "sha256": "e250c79b854d0880f980406dc8f123075828e10547fb74c34386feedf191e7ab"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-snapshot-gap-prediction-on/server.json.ready",
+      "git_blob": "ad50b53407197828b2a130a6ba58b9a4a4a62617",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-snapshot-gap-prediction-on/server.log",
+      "git_blob": "b14f1006fa808dd85cd59b4ac92f8b138f37a05b",
+      "sha256": "18e9ba433de76de20706dad43e013cfb2872b3cf0b65502511484928547ae128"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-snapshot-gap-prediction-on/metrics.json",
+      "git_blob": "1f8a5f12443901c31c57ab690c85859f3cd20700",
+      "sha256": "873908f1b3b497b3f455a4e82d25ef089b8623130270e77524f6bd8ac51bc34f"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-stale-replay-prediction-off/barrier/start.json",
+      "git_blob": "1eb7f364ce232b7bdb46ada1248865e77e6f53a7",
+      "sha256": "1d6ce8d6e80bed3bb5460ab76c9f84d22b15276584c2bf7e634eaef5c116d4a8"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-stale-replay-prediction-off/barrier/stop",
+      "git_blob": "7fd2792f9f88d52a1dab6e7e5f6384d438c28aaa",
+      "sha256": "6a47549065877e56660f8db101d9176145460eae4bba59ec5fe5b78a1f579e08"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-stale-replay-prediction-off/client.json",
+      "git_blob": "261e93d11823a95e91a32a4a0d22c4fa95c75f20",
+      "sha256": "5a766a582c2e21d01d96ba7ac7e8cf58f6ae9b35798afdc472ad5ce34170de6b"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-stale-replay-prediction-off/client.json.ready",
+      "git_blob": "ad50b53407197828b2a130a6ba58b9a4a4a62617",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-stale-replay-prediction-off/client.log",
+      "git_blob": "e829acab75a18edc9939e69ee251f0e1f04bc5ad",
+      "sha256": "dc496764e380565a0bea4c0aca361bacad6aac03925abb0b93d2142dc35a0ed6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-stale-replay-prediction-off/server.json",
+      "git_blob": "f7ae12db39a69e8eb3a387b47365cc5062185246",
+      "sha256": "bd8b20639e9830c704f8f0a532f9015e4ee776bd2b67be219f7e4790995ad9bc"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-stale-replay-prediction-off/server.json.ready",
+      "git_blob": "ad50b53407197828b2a130a6ba58b9a4a4a62617",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-stale-replay-prediction-off/server.log",
+      "git_blob": "d5c3ab6c6547b3d7e27a304e11ab1791558302e6",
+      "sha256": "5655bc09b6029385347e5ff3e2f15712f2b0133aba1666e6666a14b421c19712"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-stale-replay-prediction-off/metrics.json",
+      "git_blob": "96e4de45180598de5f8b2346e96ecd7829101b9c",
+      "sha256": "82dfa20a39b6c5d0a74172b70c2240ef6f23035c318ab00367b6e0f4cb5132e1"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-stale-replay-prediction-on/barrier/start.json",
+      "git_blob": "634c9147c5ec83252a65c8216595242bb76eb90e",
+      "sha256": "29b1f27708327149338314fa9d25b5a65468b215fa92239f36455d531bd4f40b"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-stale-replay-prediction-on/barrier/stop",
+      "git_blob": "7fd2792f9f88d52a1dab6e7e5f6384d438c28aaa",
+      "sha256": "6a47549065877e56660f8db101d9176145460eae4bba59ec5fe5b78a1f579e08"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-stale-replay-prediction-on/client.json",
+      "git_blob": "4e7a2a5293b7706486de4b925fd05098f6e1aac9",
+      "sha256": "d0741fa1916ea87a165d2562d3aea977a335b01b6c9269b9fe270e9fd3dcf14a"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-stale-replay-prediction-on/client.json.ready",
+      "git_blob": "ad50b53407197828b2a130a6ba58b9a4a4a62617",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-stale-replay-prediction-on/client.log",
+      "git_blob": "e829acab75a18edc9939e69ee251f0e1f04bc5ad",
+      "sha256": "dc496764e380565a0bea4c0aca361bacad6aac03925abb0b93d2142dc35a0ed6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-stale-replay-prediction-on/server.json",
+      "git_blob": "fb9c5a6819e9270d031bcfd481fef5444eceee85",
+      "sha256": "1b897b93e9b77c80292c7c199433688821a7a4a6e2a0d2c35f290dd6b077117f"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-stale-replay-prediction-on/server.json.ready",
+      "git_blob": "ad50b53407197828b2a130a6ba58b9a4a4a62617",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-stale-replay-prediction-on/server.log",
+      "git_blob": "4052778249dd8bb5eb430412afc096c059ecfe3f",
+      "sha256": "3f6f3efa8e95b2f4d17819098558f4ae85742d53a2d596b9b79e4c0e9ec649bb"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/1-stale-replay-prediction-on/metrics.json",
+      "git_blob": "445034c27b417870ea5995c6646d0adb2ec17086",
+      "sha256": "b45cb81e706b780a77f7e49eb39a41e5846bd5ee95c746c35437071f01e9802d"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-steady-prediction-off/barrier/start.json",
+      "git_blob": "c0886152ab4affa65559ad7cd22bfcbad39284c1",
+      "sha256": "d5efd0d0eb3564ba7393d95f450a1d034c9f1244fd47be49b55fc1c8e085ae26"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-steady-prediction-off/barrier/stop",
+      "git_blob": "7fd2792f9f88d52a1dab6e7e5f6384d438c28aaa",
+      "sha256": "6a47549065877e56660f8db101d9176145460eae4bba59ec5fe5b78a1f579e08"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-steady-prediction-off/client.json",
+      "git_blob": "b91c03aa07514ef7dbe1ef912da7b1b2b8fc4c99",
+      "sha256": "c8bf1948b6489b949e9fe18e73ab351df5f6701f64cee88937f35fc97fccb3e5"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-steady-prediction-off/client.json.ready",
+      "git_blob": "ad50b53407197828b2a130a6ba58b9a4a4a62617",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-steady-prediction-off/client.log",
+      "git_blob": "00700f07c57f53ac8183664d1870acc8a5223ab1",
+      "sha256": "12570ce6d1ffbe0c12aad9860db09070748b236a42b551c9c7b46e7d73b7adea"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-steady-prediction-off/server.json",
+      "git_blob": "cafe9f8fcd7c425c5a5f832a2c95c2a6e73ce896",
+      "sha256": "57043037a0b85e10fd077ce6c7e44c3953cb07603761d6b88dddf281b2f7a30f"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-steady-prediction-off/server.json.ready",
+      "git_blob": "ad50b53407197828b2a130a6ba58b9a4a4a62617",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-steady-prediction-off/server.log",
+      "git_blob": "2d8b785ae489751dfc15e56728a7bc7502e27ee4",
+      "sha256": "f4419d7779ec54d822e5667a66ed6a23b58aed7824878b7e874b3e443da7bde9"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-steady-prediction-off/metrics.json",
+      "git_blob": "629a2aee2c8fd8f83e0908ba490a23e9f8a1cc49",
+      "sha256": "ed4ab45271836a7677fce5f945e94ec28914a51368db0ee6ad080c32bcce438e"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-steady-prediction-on/barrier/start.json",
+      "git_blob": "55929d268551a507c0ec4c161006bc5f50eea8de",
+      "sha256": "826e890aeb72a5781c55de1ee3da82aeadd485aeaaf062f9f7325ec6342b0ddc"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-steady-prediction-on/barrier/stop",
+      "git_blob": "7fd2792f9f88d52a1dab6e7e5f6384d438c28aaa",
+      "sha256": "6a47549065877e56660f8db101d9176145460eae4bba59ec5fe5b78a1f579e08"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-steady-prediction-on/client.json",
+      "git_blob": "d9b1dceddd05cdbb3e1b3b3d3e2da5d7a2dd6328",
+      "sha256": "280fd272f6565185f0a7c6ca5b32f763fc24043f8becdb956ee2bd40b875ce85"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-steady-prediction-on/client.json.ready",
+      "git_blob": "ad50b53407197828b2a130a6ba58b9a4a4a62617",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-steady-prediction-on/client.log",
+      "git_blob": "00700f07c57f53ac8183664d1870acc8a5223ab1",
+      "sha256": "12570ce6d1ffbe0c12aad9860db09070748b236a42b551c9c7b46e7d73b7adea"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-steady-prediction-on/server.json",
+      "git_blob": "ead1736aa3c305b92dbba5e47decb94d960740a2",
+      "sha256": "2ef5828ae5fe2f7a83245e3c1874957f0461409e76c29a8bd032ea53cd3a44a1"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-steady-prediction-on/server.json.ready",
+      "git_blob": "ad50b53407197828b2a130a6ba58b9a4a4a62617",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-steady-prediction-on/server.log",
+      "git_blob": "bbea865e9242a1ab39ce00e2d0385272c32c9bc7",
+      "sha256": "005242177977c29ca4424cb6a77979f635215e571294b412c3cbb771bca2c50b"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-steady-prediction-on/metrics.json",
+      "git_blob": "0e092d5b99f7f328caae08e398e5e0452478cb70",
+      "sha256": "2f63d3c447be119684cbf7776cc54c1949d3ecf886d592dca63be80b5884cf67"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-input-gap-prediction-off/barrier/start.json",
+      "git_blob": "5e970e0e6f74de6c48a7f419c38e8fafae775e23",
+      "sha256": "81498923c2d323f3f11a03b4d5a6e47c011b13c5cde774906f8497918062cab9"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-input-gap-prediction-off/barrier/stop",
+      "git_blob": "7fd2792f9f88d52a1dab6e7e5f6384d438c28aaa",
+      "sha256": "6a47549065877e56660f8db101d9176145460eae4bba59ec5fe5b78a1f579e08"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-input-gap-prediction-off/client.json",
+      "git_blob": "8c0dd7163aec6f98a5b053a2d17538cafbe57746",
+      "sha256": "bd69ead35ce2c1caf21373aaa1b06d39fd820e9aed1702bc63901417d8cb8ded"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-input-gap-prediction-off/client.json.ready",
+      "git_blob": "ad50b53407197828b2a130a6ba58b9a4a4a62617",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-input-gap-prediction-off/client.log",
+      "git_blob": "67504dcfe1709f7b35268aacc94126a9e9356771",
+      "sha256": "747edfc1fa95026122cc7500614f26290756f3b0d4e451d4c1e6404cb0a97193"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-input-gap-prediction-off/server.json",
+      "git_blob": "969f289f24f0c619f5965c12749d737ac5833481",
+      "sha256": "d7a4a3593911c3e871994c682be791f48186bb8a81661193e6110d89a06da144"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-input-gap-prediction-off/server.json.ready",
+      "git_blob": "ad50b53407197828b2a130a6ba58b9a4a4a62617",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-input-gap-prediction-off/server.log",
+      "git_blob": "4c1ef06fec02e437f233ebf31e6d4cebd6cb98bd",
+      "sha256": "ab0e4e718c791ebea535e10a4e69fe492f86c94a2440891383daf5e8d78075e5"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-input-gap-prediction-off/metrics.json",
+      "git_blob": "9ea3e8c70231fb21846dafdbade00d9d24ee9468",
+      "sha256": "76c920634974bbfedafe13c1072663eb3035753bb3d6b5e25ba391eb51b3944a"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-input-gap-prediction-on/barrier/start.json",
+      "git_blob": "a7eede0e1bc03aff7fcdfd918a01957c1857dd9a",
+      "sha256": "c0961ebcd2bb5b30ebafcef53f7ef48c790aa7f0de7d6ee92f7d98362e034442"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-input-gap-prediction-on/barrier/stop",
+      "git_blob": "7fd2792f9f88d52a1dab6e7e5f6384d438c28aaa",
+      "sha256": "6a47549065877e56660f8db101d9176145460eae4bba59ec5fe5b78a1f579e08"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-input-gap-prediction-on/client.json",
+      "git_blob": "a418019909a1da32c807b39d37ac2f07ca8c4d1c",
+      "sha256": "cc2b7a818b38c6c34c663874e78267fc119c0f24f75e77505148d9258b46450a"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-input-gap-prediction-on/client.json.ready",
+      "git_blob": "ad50b53407197828b2a130a6ba58b9a4a4a62617",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-input-gap-prediction-on/client.log",
+      "git_blob": "67504dcfe1709f7b35268aacc94126a9e9356771",
+      "sha256": "747edfc1fa95026122cc7500614f26290756f3b0d4e451d4c1e6404cb0a97193"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-input-gap-prediction-on/server.json",
+      "git_blob": "e9be993413633db59bbf435f61164488faea955f",
+      "sha256": "558e26e5aea450df749c974b27a56d13023aa893e266ef2ac0f69933d677007b"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-input-gap-prediction-on/server.json.ready",
+      "git_blob": "ad50b53407197828b2a130a6ba58b9a4a4a62617",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-input-gap-prediction-on/server.log",
+      "git_blob": "a2910933219c5c2608058664fc8093bc9551a817",
+      "sha256": "9fcef2429688a0bd45746a304ecbe13dc6bfec8fadd7dcdaf34309f3ce38022d"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-input-gap-prediction-on/metrics.json",
+      "git_blob": "fbc00ea728715d60f97ae99131d429a1b5ead342",
+      "sha256": "2ff48d98acfd16297416f747bcea12324f02487263248617c41312410bbda687"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-snapshot-gap-prediction-off/barrier/start.json",
+      "git_blob": "9ab0f15cc8d8ef168c3b071f244d630c5c2fedd8",
+      "sha256": "62be3bff89b03b7118a87479b32d281e96a98703058665799c14687be20a05e5"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-snapshot-gap-prediction-off/barrier/stop",
+      "git_blob": "7fd2792f9f88d52a1dab6e7e5f6384d438c28aaa",
+      "sha256": "6a47549065877e56660f8db101d9176145460eae4bba59ec5fe5b78a1f579e08"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-snapshot-gap-prediction-off/client.json",
+      "git_blob": "58babc5ba6bea0a2ee59ce8c788b14aab95bd68b",
+      "sha256": "623603878bf706781c2ce54c30ba2160fa0a61a1bafac33484a9f42b645c4423"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-snapshot-gap-prediction-off/client.json.ready",
+      "git_blob": "ad50b53407197828b2a130a6ba58b9a4a4a62617",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-snapshot-gap-prediction-off/client.log",
+      "git_blob": "14f1ea3912e31a9463060d5e53cf1d798251c532",
+      "sha256": "e12f389ec151a6211aa32afdba686dbae5335a2686838b15bd6beb9e6c5ae592"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-snapshot-gap-prediction-off/server.json",
+      "git_blob": "27bfb142be6018696cf5c08f13815d5febc3958a",
+      "sha256": "28444f03b23eb3bd77123ed6177de30d67c5883351c7f155603300ae6f7593d9"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-snapshot-gap-prediction-off/server.json.ready",
+      "git_blob": "ad50b53407197828b2a130a6ba58b9a4a4a62617",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-snapshot-gap-prediction-off/server.log",
+      "git_blob": "19b1c3b64b32718a26903c62a1d3d3ede3a7c3d4",
+      "sha256": "bd0f49af9a621422370c8ffee2488c4aa470864d301f320b01344d2a4b1b452a"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-snapshot-gap-prediction-off/metrics.json",
+      "git_blob": "bbff709f65e88a41fb1c935f508841ce29adbc9b",
+      "sha256": "112de3837f7b11c82c1bfbbf9069174be89d3d577d3d993a827beb55d3754188"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-snapshot-gap-prediction-on/barrier/start.json",
+      "git_blob": "8d9e0a955774867442bc04050f721dd715fe112c",
+      "sha256": "efe82ec142dd239c76c1d55e6073ad9dcf1ed566afa85b2438c834df8aa4a717"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-snapshot-gap-prediction-on/barrier/stop",
+      "git_blob": "7fd2792f9f88d52a1dab6e7e5f6384d438c28aaa",
+      "sha256": "6a47549065877e56660f8db101d9176145460eae4bba59ec5fe5b78a1f579e08"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-snapshot-gap-prediction-on/client.json",
+      "git_blob": "9d39cd7e7f1503e8263f88f168526b770ef451cc",
+      "sha256": "556cad5e58c6652847dab84800af25f83ea118d4e64e29fd215fe818306e2135"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-snapshot-gap-prediction-on/client.json.ready",
+      "git_blob": "ad50b53407197828b2a130a6ba58b9a4a4a62617",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-snapshot-gap-prediction-on/client.log",
+      "git_blob": "14f1ea3912e31a9463060d5e53cf1d798251c532",
+      "sha256": "e12f389ec151a6211aa32afdba686dbae5335a2686838b15bd6beb9e6c5ae592"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-snapshot-gap-prediction-on/server.json",
+      "git_blob": "a8793e55788ad511994b035491586a866dd40d67",
+      "sha256": "3dbb4fd57ee1d54633da85d6434f4459e0f2e26ec72ba873a98ad97994f0db1b"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-snapshot-gap-prediction-on/server.json.ready",
+      "git_blob": "ad50b53407197828b2a130a6ba58b9a4a4a62617",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-snapshot-gap-prediction-on/server.log",
+      "git_blob": "1ac67029d611be8527a730311380a83d293c780c",
+      "sha256": "ea77298cebf57656fac25cd7155c08a51ef896673b0f7531edd6120884a4eeec"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-snapshot-gap-prediction-on/metrics.json",
+      "git_blob": "97f1d608d541080ac835a1ff3e913f60d9287280",
+      "sha256": "59323b2899ba04799c90d850b3435b2790d8db486045ab3666839b25673c34a0"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-stale-replay-prediction-off/barrier/start.json",
+      "git_blob": "dee9558b82ccc014a8d288999b03838a64a117cb",
+      "sha256": "b6e2afd4d889b52c4a6822738d8b4c03fd8005da0e0444e86bc05a71c3122b2a"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-stale-replay-prediction-off/barrier/stop",
+      "git_blob": "7fd2792f9f88d52a1dab6e7e5f6384d438c28aaa",
+      "sha256": "6a47549065877e56660f8db101d9176145460eae4bba59ec5fe5b78a1f579e08"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-stale-replay-prediction-off/client.json",
+      "git_blob": "33c43f9c494862550ebf843a31bba5873214ae04",
+      "sha256": "3fae5e7aa89e5a91cbb2babc50fa5e064272a652edb54166b5068ebb90a33530"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-stale-replay-prediction-off/client.json.ready",
+      "git_blob": "ad50b53407197828b2a130a6ba58b9a4a4a62617",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-stale-replay-prediction-off/client.log",
+      "git_blob": "e829acab75a18edc9939e69ee251f0e1f04bc5ad",
+      "sha256": "dc496764e380565a0bea4c0aca361bacad6aac03925abb0b93d2142dc35a0ed6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-stale-replay-prediction-off/server.json",
+      "git_blob": "31716a401c10e94986a23e4484c39867e09a2f8e",
+      "sha256": "811d219fecd8e961fef09207d6d1f5950b93ad285fa0ec4a82965112352555d0"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-stale-replay-prediction-off/server.json.ready",
+      "git_blob": "ad50b53407197828b2a130a6ba58b9a4a4a62617",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-stale-replay-prediction-off/server.log",
+      "git_blob": "45a7518d4be7ed8a02a89b66663c38ad3dc703af",
+      "sha256": "0f5a6f96af7986d2f10c2c3481759d7e237e65790d1665b5021aefda5d39968f"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-stale-replay-prediction-off/metrics.json",
+      "git_blob": "d3ecc39e4e37e697a515212511bb042437a150cf",
+      "sha256": "9d5cf7853579b828e69d344a4d123c0e8068ec917742ba665ba67185612e458f"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-stale-replay-prediction-on/barrier/start.json",
+      "git_blob": "b424f898cd5db0d80a7ee95c47add3be112d14a4",
+      "sha256": "1521083ba81115a3bb05b64ced5434fd7ead9d8ec09418d727c009e74ffad7b7"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-stale-replay-prediction-on/barrier/stop",
+      "git_blob": "7fd2792f9f88d52a1dab6e7e5f6384d438c28aaa",
+      "sha256": "6a47549065877e56660f8db101d9176145460eae4bba59ec5fe5b78a1f579e08"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-stale-replay-prediction-on/client.json",
+      "git_blob": "9a6328724430796372319920c2efe59ce24daf58",
+      "sha256": "381997373ce9dc06ac7ddda150c941519ecb995383a9e19051000d29d2960caa"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-stale-replay-prediction-on/client.json.ready",
+      "git_blob": "ad50b53407197828b2a130a6ba58b9a4a4a62617",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-stale-replay-prediction-on/client.log",
+      "git_blob": "e829acab75a18edc9939e69ee251f0e1f04bc5ad",
+      "sha256": "dc496764e380565a0bea4c0aca361bacad6aac03925abb0b93d2142dc35a0ed6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-stale-replay-prediction-on/server.json",
+      "git_blob": "a27323becd4b5aefe9bee7095c87c9a22dbd4671",
+      "sha256": "bdc227dbbe29ea81d6b8ffe03c9f937974b03b5c4f34ef8c4426ed689751ec5c"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-stale-replay-prediction-on/server.json.ready",
+      "git_blob": "ad50b53407197828b2a130a6ba58b9a4a4a62617",
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-stale-replay-prediction-on/server.log",
+      "git_blob": "20b15cf622a2aeb31d21fd28bf818fb41ee180a4",
+      "sha256": "efcf8e77a6f8f23041d2f4661afac079ae146eae79ea1b362a9f94f6feb1e94f"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/2-stale-replay-prediction-on/metrics.json",
+      "git_blob": "2b5f473868c41952a1c873d1753d965a02609c37",
+      "sha256": "15281cd88732c9b2a3bcadff4df74118b67687538e786eef40181d0285d7d435"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/input_stream_test.log",
+      "git_blob": "6df370954bfb6683473511f14c697c4f2550e5db",
+      "sha256": "c6a43431b2f319332a51faa92530b0bd6a9ec90594169df288f4d375de2576e5"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/input_lifecycle_test.log",
+      "git_blob": "c135d093864429710ecd22eb1e9da9526bf16287",
+      "sha256": "63c1b06356ce798fc081809199ba429e64613758bae9e345fc79c67c13dc7f0f"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/peer_lifecycle_test.log",
+      "git_blob": "20979a6e58ebacc54fd81f6558b6248213698473",
+      "sha256": "c80bcc74f7610d31e8b5259f46bf154fec85209761fd20a3c351b9e5a39308b7"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/reconnect_policy_test.log",
+      "git_blob": "383e7dcb845bc0951a1459d76204fb52ea6f8971",
+      "sha256": "c0fa8ce86170e226ebfc27478bac7488c5d96663dd0df6f2fa7c67bdcc177071"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/snapshot_buffer_test.log",
+      "git_blob": "2c59879cd22a47da88fe71aa6139730b81eff439",
+      "sha256": "25745989ae341792d00f54900353f78c561819ac0ef65bf2a2ec4f7169d5cec4"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/movement_prediction_test.log",
+      "git_blob": "125e2a84979ce7f0f6c65ed363ab733176fec95b",
+      "sha256": "92ca6ded08d9d0fc5ed2972e2ef5a1dfae9c45bc6b0205d3609cc0b9e0383c73"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/state_privacy_test.log",
+      "git_blob": "b2c0ee196f15402b7ce9286c8047b1b73c7d37cb",
+      "sha256": "fc8683297ef17193297e4f08d73436fd664469ea848b6abe2928f7567e66058b"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/integration_actor_lifecycle_test.log",
+      "git_blob": "14afb4d7187aa95f439d50cb792b2c8e8ac2f57a",
+      "sha256": "01e0ddc9bfa475a822eb9f3094df81499768fa671cc5e2b3ec523c47604ff9b4"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/baseline-r3/hit_history_test.log",
+      "git_blob": "7c98b3bcf84d03842f88cd2d517f4de0467b2d89",
+      "sha256": "380ffeece21c83e896fde572a7c4ca65256c9e95da15565a93d62a2f2dd62c4a"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/resume-gates/baseline-independent_resume_alias_test.log",
+      "git_blob": "7fc4f817d959f152f17d0b63d07ccf25487dcca5",
+      "sha256": "14ff9ca40bd4346b8c2da226e038ff22e56c3341086c0d0cd254bd4e7885ae66"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/resume-gates/baseline-lost_welcome_test.log",
+      "git_blob": "ca56e3d53223b75f2938903d81de6c5b5c5c125f",
+      "sha256": "71a0a7e00e7a432447ec2f5726d14f60b456574d7e50b27c1669c5a613b52b7e"
+    },
+    {
+      "git_spec": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/ATTEMPTS.md",
+      "git_blob": "753ea2d14ba355a1040fbc4cde03931fe4b481e3",
+      "sha256": "1e59f504c1817bab23ea0d888318329e8ded6a00b3c91cb1c73fe7e045d83a5d"
+    }
+  ],
+  "source_artifact_git_checks": [
+    {
+      "id": "S001",
+      "git_spec": "77f204083ab5bea4dc9149d3179daf540a994de4:game/tests/input_freshness_probe.gd",
+      "git_blob": "273bc998ef6370f698bba71b7a9e3f27add785fc",
+      "git_sha256": "ec6ed6a056d8a50c1b6554d0a741742802ec42fb26c056711be5790e2dbf9f97",
+      "counterpart_sha256": "ec6ed6a056d8a50c1b6554d0a741742802ec42fb26c056711be5790e2dbf9f97",
+      "counterpart_equals_git_blob": true,
+      "recorded_disk_sha256": "ec6ed6a056d8a50c1b6554d0a741742802ec42fb26c056711be5790e2dbf9f97",
+      "recorded_disk_equals_git_blob": true,
+      "recorded_disk_reproduced_by_crlf_conversion": false,
+      "also_identical_at": null
+    },
+    {
+      "id": "S002",
+      "git_spec": "77f204083ab5bea4dc9149d3179daf540a994de4:scripts/test_input_freshness.py",
+      "git_blob": "83a7ba2c2038873bff46389f3a45b8a16d96aa4d",
+      "git_sha256": "5c84f2a8cdd58832f2087cebaafbe183a39808cfbc3fb2cfb2cb8dfe7c556317",
+      "counterpart_sha256": "5c84f2a8cdd58832f2087cebaafbe183a39808cfbc3fb2cfb2cb8dfe7c556317",
+      "counterpart_equals_git_blob": true,
+      "recorded_disk_sha256": "5c84f2a8cdd58832f2087cebaafbe183a39808cfbc3fb2cfb2cb8dfe7c556317",
+      "recorded_disk_equals_git_blob": true,
+      "recorded_disk_reproduced_by_crlf_conversion": false,
+      "also_identical_at": null
+    },
+    {
+      "id": "S003",
+      "git_spec": "77f204083ab5bea4dc9149d3179daf540a994de4:game/scripts/gameplay/match.gd",
+      "git_blob": "c06f7b4177a40819fa44eee6ee678c3958fce752",
+      "git_sha256": "b03479bca8ae99845572978f836fdaa13b8c13074db383ed06be0c0157470850",
+      "counterpart_sha256": "b03479bca8ae99845572978f836fdaa13b8c13074db383ed06be0c0157470850",
+      "counterpart_equals_git_blob": true,
+      "recorded_disk_sha256": "e18814f932ea7b75d0e52c569770dbffc59276e46f419e305b072d7b92cbe8d3",
+      "recorded_disk_equals_git_blob": false,
+      "recorded_disk_reproduced_by_crlf_conversion": true,
+      "also_identical_at": "701ce2c4d7f8b2872cf1fefa64cb6edd0cd1a3fd"
+    },
+    {
+      "id": "S004",
+      "git_spec": "77f204083ab5bea4dc9149d3179daf540a994de4:game/scripts/gameplay/actor.gd",
+      "git_blob": "5abbdaf0dd6f7bdbc2ea7b40cfa2214c3c4740f3",
+      "git_sha256": "7904d351c5da8574f060fa823c6bcd8840a42e98bb121c9c84cf92e814383c13",
+      "counterpart_sha256": "7904d351c5da8574f060fa823c6bcd8840a42e98bb121c9c84cf92e814383c13",
+      "counterpart_equals_git_blob": true,
+      "recorded_disk_sha256": "59a47ef1a97d911d70bdfa15dde82d925488903e21b2529e2e0cb266853b5304",
+      "recorded_disk_equals_git_blob": false,
+      "recorded_disk_reproduced_by_crlf_conversion": true,
+      "also_identical_at": "701ce2c4d7f8b2872cf1fefa64cb6edd0cd1a3fd"
+    },
+    {
+      "id": "S005",
+      "git_spec": "77f204083ab5bea4dc9149d3179daf540a994de4:game/scripts/network/movement_step.gd",
+      "git_blob": "8350095e0096ab97c6098e9b982c596102af8ee5",
+      "git_sha256": "b87767729428b3b8af30bcf07c429094460f3b9a64f9087c9edcf40f0bb1e769",
+      "counterpart_sha256": "b87767729428b3b8af30bcf07c429094460f3b9a64f9087c9edcf40f0bb1e769",
+      "counterpart_equals_git_blob": true,
+      "recorded_disk_sha256": "9fd3f0a0857b02534d66efd6efd71643d24c301296b5eade0dec1b48424d8e6d",
+      "recorded_disk_equals_git_blob": false,
+      "recorded_disk_reproduced_by_crlf_conversion": true,
+      "also_identical_at": "701ce2c4d7f8b2872cf1fefa64cb6edd0cd1a3fd"
+    },
+    {
+      "id": "S006",
+      "git_spec": "77f204083ab5bea4dc9149d3179daf540a994de4:game/scripts/network/peer_lifecycle.gd",
+      "git_blob": "2ccaf99bc18f1f76ad94089190e4d31ece4a90eb",
+      "git_sha256": "8a57cc07bdc007fe143a5e8c51c99238732fcc4acf9f209fd4718af937f22078",
+      "counterpart_sha256": "8a57cc07bdc007fe143a5e8c51c99238732fcc4acf9f209fd4718af937f22078",
+      "counterpart_equals_git_blob": true,
+      "recorded_disk_sha256": "c713f69b7cb1cddd980277bc96efb53a19b6cfe6ea2e61e5494ef0e8f51fcda9",
+      "recorded_disk_equals_git_blob": false,
+      "recorded_disk_reproduced_by_crlf_conversion": true,
+      "also_identical_at": "701ce2c4d7f8b2872cf1fefa64cb6edd0cd1a3fd"
+    },
+    {
+      "id": "S007",
+      "git_spec": "77f204083ab5bea4dc9149d3179daf540a994de4:game/scripts/network/movement_prediction.gd",
+      "git_blob": "f83dc4514c6c2f64f582b1860f0c3fd65ccd66cf",
+      "git_sha256": "3d3da91d04e4430d0d2f51675caf00b33596eecb9d187672eb0a8a793d4ceee3",
+      "counterpart_sha256": "3d3da91d04e4430d0d2f51675caf00b33596eecb9d187672eb0a8a793d4ceee3",
+      "counterpart_equals_git_blob": true,
+      "recorded_disk_sha256": "f3a7f92570a6a57574f5af8bdecaf6f6ddccd39d72227d80f3424e94b8bd6d8f",
+      "recorded_disk_equals_git_blob": false,
+      "recorded_disk_reproduced_by_crlf_conversion": true,
+      "also_identical_at": "701ce2c4d7f8b2872cf1fefa64cb6edd0cd1a3fd"
+    },
+    {
+      "id": "S008",
+      "git_spec": "77f204083ab5bea4dc9149d3179daf540a994de4:game/tests/independent_resume_alias_test.gd",
+      "git_blob": "3a7119c9612ca51f5546456912bdb81fc003b9b9",
+      "git_sha256": "e69c019036c4a56ec86a1f7d9ce7f21a1ca7525f5334969f1bbb4e2090a7e8e4",
+      "counterpart_sha256": "e69c019036c4a56ec86a1f7d9ce7f21a1ca7525f5334969f1bbb4e2090a7e8e4",
+      "counterpart_equals_git_blob": true,
+      "recorded_disk_sha256": "1f58643406fe7af59d7ec4f32172265647ed38e30cd7a2e0c27a68abc640d82c",
+      "recorded_disk_equals_git_blob": false,
+      "recorded_disk_reproduced_by_crlf_conversion": true,
+      "also_identical_at": "701ce2c4d7f8b2872cf1fefa64cb6edd0cd1a3fd"
+    },
+    {
+      "id": "S009",
+      "git_spec": "77f204083ab5bea4dc9149d3179daf540a994de4:game/tests/lost_welcome_test.gd",
+      "git_blob": "25a10368524115aa8d4870a845ef50a04f3f8c19",
+      "git_sha256": "1b873f5376f054f854e0ef57e6481c034c22627bec25af4c648a974681e6bd60",
+      "counterpart_sha256": "1b873f5376f054f854e0ef57e6481c034c22627bec25af4c648a974681e6bd60",
+      "counterpart_equals_git_blob": true,
+      "recorded_disk_sha256": "bb63dc750505f715fc384a52c2b76c475e9fe31350ff484112d654404e2c124e",
+      "recorded_disk_equals_git_blob": false,
+      "recorded_disk_reproduced_by_crlf_conversion": true,
+      "also_identical_at": "701ce2c4d7f8b2872cf1fefa64cb6edd0cd1a3fd"
+    },
+    {
+      "id": "S010",
+      "git_spec": "77f204083ab5bea4dc9149d3179daf540a994de4:game/tests/input_lifecycle_test.gd",
+      "git_blob": "b8767fbafe114a9b9b3bbb8f8e04fefca23c50a4",
+      "git_sha256": "ab35db57f1627d0261c3df062d325225afa884e8435c2148831d1caade3ad6a0",
+      "counterpart_sha256": "ab35db57f1627d0261c3df062d325225afa884e8435c2148831d1caade3ad6a0",
+      "counterpart_equals_git_blob": true,
+      "recorded_disk_sha256": "1009fc15f3a27963b267b9358d43031f56794e530b299c325e0d90958ce82350",
+      "recorded_disk_equals_git_blob": false,
+      "recorded_disk_reproduced_by_crlf_conversion": true,
+      "also_identical_at": "701ce2c4d7f8b2872cf1fefa64cb6edd0cd1a3fd"
+    },
+    {
+      "id": "S011",
+      "git_spec": "77f204083ab5bea4dc9149d3179daf540a994de4:game/tests/state_privacy_test.gd",
+      "git_blob": "d1fda5b44bf71ad2c178db477df24eb40eb78637",
+      "git_sha256": "a6bd9fcafc3b375691dacfeb60ad319a126ece72ebe77b2b800df1dc26604575",
+      "counterpart_sha256": "a6bd9fcafc3b375691dacfeb60ad319a126ece72ebe77b2b800df1dc26604575",
+      "counterpart_equals_git_blob": true,
+      "recorded_disk_sha256": "b44050e3515ad2d8378da02ee5c7ede7dc2b3e75ff77787dd47cd6b12467a8ee",
+      "recorded_disk_equals_git_blob": false,
+      "recorded_disk_reproduced_by_crlf_conversion": true,
+      "also_identical_at": "701ce2c4d7f8b2872cf1fefa64cb6edd0cd1a3fd"
+    }
+  ],
+  "scope": "Offline byte/source verification of existing artifacts; no new native execution or capture attestation."
+}

@@ -82,8 +82,10 @@ for both arms. The completed V2 run was retained across the host interruption;
 these are matching crash workloads, not a latency comparison. The fresh independent
 [blind review](native-pg-restart-evidence/blind-review/_FROZEN_VERDICT.md) selected
 Set-8F5F7604 with 3/3 exact recoveries versus 0/3, after checking all 122 payloads,
-30 SQL stages and 2,078 consistency conditions. Source/API binding and a focused
-recovery-input absence control address its remaining fixture-assistance concern.
+30 SQL stages and 2,078 consistency conditions. The subsequent independent
+[source/API binding review](native-pg-restart-evidence/source-binding/README.md)
+passes: recovery dispatches the journal's receipt, without fixture payload arguments.
+A focused recovery-input absence control adds empirical corroboration.
 The original maintained native
 economy regression's 36/37 Windows port-9 failure is retained; a one-literal reserved
 DNS calibration passed 37/37 and is now adopted by the maintained test in `5da86b28`.
@@ -201,8 +203,9 @@ terminates at a stable post-response boundary.
 
 The largest evidence gap from the first blind review was real PostgreSQL market
 settlement through a lost response, fresh authentication, recovery and a second
-restart. Its exact-source result and passing blind outcome review are now published;
-source/API binding and a narrow recovery-input absence control remain in progress.
+restart. Its exact-source result, blind outcome and source/API binding reviews now
+pass. A narrow recovery-input absence control remains in progress as corroboration;
+the critic found no remaining source-dataflow or transformation blocker.
 The original backend does not durably fence terminal rejected receipts, so a
 permanently rejected uncertain intent can remain blocked. Forgetting it would be
 unsafe while an earlier request may still commit. Port collisions fail closed;
