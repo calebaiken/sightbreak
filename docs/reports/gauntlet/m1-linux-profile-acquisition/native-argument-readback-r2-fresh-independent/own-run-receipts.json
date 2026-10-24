@@ -1,0 +1,99 @@
+[
+  {
+    "name": "acquisition",
+    "argv": [
+      "python3",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "scripts",
+      "-p",
+      "test_linux_profile_acquire*.py",
+      "-v"
+    ],
+    "cwd": "/workspace/reviews/linux-native-fingerprint-types-fresh-critic",
+    "started_utc": "2026-10-24T08:29:22.526586+00:00",
+    "ended_utc": "2026-10-24T08:29:37.058683+00:00",
+    "exit_code": 0,
+    "affinity": [
+      4
+    ]
+  },
+  {
+    "name": "fixture",
+    "argv": [
+      "python3",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "scripts",
+      "-p",
+      "test_linux_profile_overhead.py",
+      "-v"
+    ],
+    "cwd": "/workspace/reviews/linux-native-fingerprint-types-fresh-critic",
+    "started_utc": "2026-10-24T08:29:37.058756+00:00",
+    "ended_utc": "2026-10-24T08:29:37.665401+00:00",
+    "exit_code": 0,
+    "affinity": [
+      4
+    ]
+  },
+  {
+    "name": "readback",
+    "argv": [
+      "python3",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "scripts",
+      "-p",
+      "test_linux_profile_thread_readback.py",
+      "-v"
+    ],
+    "cwd": "/workspace/reviews/linux-native-fingerprint-types-fresh-critic",
+    "started_utc": "2026-10-24T08:29:37.665448+00:00",
+    "ended_utc": "2026-10-24T08:29:38.054662+00:00",
+    "exit_code": 0,
+    "affinity": [
+      4
+    ]
+  },
+  {
+    "name": "original-independent",
+    "argv": [
+      "python3",
+      "-B",
+      "docs/reports/gauntlet/m1-linux-profile-acquisition/native-argument-readback-independent/test_independent_controls.py",
+      "-v"
+    ],
+    "cwd": "/workspace/reviews/linux-native-fingerprint-types-fresh-critic",
+    "started_utc": "2026-10-24T08:29:38.054704+00:00",
+    "ended_utc": "2026-10-24T08:29:38.423389+00:00",
+    "exit_code": 0,
+    "affinity": [
+      4
+    ]
+  },
+  {
+    "name": "fresh-adversarial",
+    "argv": [
+      "python3",
+      "-B",
+      "/workspace/reviews/linux-native-fingerprint-types-fresh-critic/docs/reports/gauntlet/m1-linux-profile-acquisition/native-argument-readback-r2-fresh-independent/test_fingerprint_types.py"
+    ],
+    "cwd": "/workspace/reviews/linux-native-fingerprint-types-fresh-critic",
+    "started_utc": "2026-10-24T08:29:38.423480+00:00",
+    "ended_utc": "2026-10-24T08:29:38.731203+00:00",
+    "exit_code": 0,
+    "affinity": [
+      4
+    ]
+  }
+]
