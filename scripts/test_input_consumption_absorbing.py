@@ -222,5 +222,13 @@ class AbsorbingLifecycleControls(unittest.TestCase):
         replacement=candidate.LifecycleHypotheses(row(fresh,'peer_connected',100000))
         self.assertEqual(replacement.expiry(row(fresh,'peer_expired',120000),0),'CONSISTENT')
 
+    def test_rejected_state_never_uses_unallocated_global_calls_as_local_proof(self):
+        for known_other,want in [(False,'UNKNOWN'),(True,'CONSISTENT')]:
+            source=SourcePeer();source.connected(0);model=candidate.LifecycleHypotheses(row(source,'peer_connected',0))
+            admit(source,1);model.observe(row(source,'peer_bound',1),1)
+            source.reject(200);model.observe(row(source,'authority_tick',201),1)
+            if known_other:model.other_accepted()
+            self.assertEqual(model.expiry(row(source,'peer_expired',40000,1),1),want)
+
 
 if __name__=='__main__':unittest.main()
