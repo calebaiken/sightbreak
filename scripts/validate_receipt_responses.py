@@ -135,6 +135,10 @@ def cases(world):
     for label, value in [("blank", "  "), ("null", None), ("number", 1)]:
         add("case_table_version_" + label, "case", transform=lambda r, v=value: r.update(table_version=v))
     add("case_missing_table_version", "case", transform=lambda r: r.pop("table_version"))
+    for route in templates:
+        for label, suffix in [("final_lf", "\n"), ("final_crlf", "\r\n"), ("trailing_text", " extra")]:
+            add(route + "_timestamp_" + label, route,
+                transform=lambda r, s=suffix: r["item"].update(acquired_at="2026-10-24T08:00:00+00:00" + s))
     expanded = []
     for row in result:
         for mode in ("initial", "recovery"):
