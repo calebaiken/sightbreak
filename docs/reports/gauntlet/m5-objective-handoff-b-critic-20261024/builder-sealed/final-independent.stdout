@@ -1,0 +1,215 @@
+{"name": "complete_synthetic_positive", "expected_rejection": false, "accepted": true, "met_expectation": true, "input_sha256": "9743880e32bedb307065d7a213da0b45e174e8a85261700d1786d6b3d58111d9", "baseline_sha256": "9743880e32bedb307065d7a213da0b45e174e8a85261700d1786d6b3d58111d9", "changed": false, "wall_seconds": 7.38483125899802, "detail": {"observable_contract_passed": true, "decision_rows": 202, "interaction_rows": 605, "movement_modes": {"navigate": 139, "interact": 63}, "perception_results": {"range": 37, "visibility": 740}, "scope": "current_source_reconstruction_not_historical_cause_or_G2_acceptance"}}
+{"name": "freshness_complete_decision_for_wrong_actor", "expected_rejection": true, "accepted": false, "met_expectation": true, "input_sha256": "1988618844c44fd8a61b32172bcc5589024fe2ad4351a0182bafca83f51e3a87", "baseline_sha256": "9743880e32bedb307065d7a213da0b45e174e8a85261700d1786d6b3d58111d9", "changed": true, "wall_seconds": 2.2611425960021734, "detail": "ValueError: freshness call describes another actor"}
+{"name": "direct_perception_selects_target_without_candidates", "expected_rejection": true, "accepted": false, "met_expectation": true, "input_sha256": "03894bc233c06b8ae89455b735c68aee02e66b99a42795865651667a8eb4b86c", "baseline_sha256": "9743880e32bedb307065d7a213da0b45e174e8a85261700d1786d6b3d58111d9", "changed": true, "wall_seconds": 1.5369353010028135, "detail": "ValueError: direct perception selected an unperceived target"}
+{"name": "nearest_defuser_ignores_device_destination", "expected_rejection": true, "accepted": false, "met_expectation": true, "input_sha256": "f89895afe9ba16ee7764ee8c8d05385a4b62687afc3bae384479e96b82da5d34", "baseline_sha256": "9743880e32bedb307065d7a213da0b45e174e8a85261700d1786d6b3d58111d9", "changed": true, "wall_seconds": 4.8573314959976415, "detail": "ValueError: defuser destination contradicts device"}
+{"name": "decision_role_not_produced_by_source", "expected_rejection": true, "accepted": false, "met_expectation": true, "input_sha256": "1706d451fc170d05d0779701b251c01ca9c2cc4ea4eb47490ca1845aa37c47ae", "baseline_sha256": "9743880e32bedb307065d7a213da0b45e174e8a85261700d1786d6b3d58111d9", "changed": true, "wall_seconds": 1.9633617510007753, "detail": "ValueError: typed decision roles"}
+{"name": "fabricated_target_score_navigation_and_bot_memory", "expected_rejection": true, "accepted": true, "met_expectation": false, "input_sha256": "c8c5fed358c1891a01b24ebac82aa02f25fae4cac8e4d93cdb4e6ab377e4f8e5", "baseline_sha256": "9743880e32bedb307065d7a213da0b45e174e8a85261700d1786d6b3d58111d9", "changed": true, "wall_seconds": 3.358804046998557, "detail": {"observable_contract_passed": true, "decision_rows": 202, "interaction_rows": 605, "movement_modes": {"navigate": 139, "interact": 63}, "perception_results": {"range": 37, "eligible": 1, "visibility": 739}, "scope": "current_source_reconstruction_not_historical_cause_or_G2_acceptance"}}
+{"name": "in_range_in_fov_candidate_falsely_rejected_by_fov", "expected_rejection": true, "accepted": true, "met_expectation": false, "input_sha256": "e3320200d5468f414a5e678077d4276f25b5d57ba8f2b0f87342190738b495ef", "baseline_sha256": "9743880e32bedb307065d7a213da0b45e174e8a85261700d1786d6b3d58111d9", "changed": true, "wall_seconds": 3.4337552719989617, "detail": {"observable_contract_passed": true, "decision_rows": 202, "interaction_rows": 605, "movement_modes": {"navigate": 139, "interact": 63}, "perception_results": {"range": 37, "fov": 1, "visibility": 739}, "scope": "current_source_reconstruction_not_historical_cause_or_G2_acceptance"}}
+{"name": "forward_credits_added_without_kill_or_reward", "expected_rejection": true, "accepted": false, "met_expectation": true, "input_sha256": "af50c535bd32abffe09d20ba1e688fff013041d644e77a90c4da33cbdc936d32", "baseline_sha256": "9743880e32bedb307065d7a213da0b45e174e8a85261700d1786d6b3d58111d9", "changed": true, "wall_seconds": 2.972365137000452, "detail": "ValueError: action credits do not bind kill awards"}
+{"name": "forward_objective_plants_before_consumer_without_progress", "expected_rejection": true, "accepted": false, "met_expectation": true, "input_sha256": "72f47d8c427d014b79e16fdea23984d48e9d0cbc857898bf3eca84f8ea28f93a", "baseline_sha256": "9743880e32bedb307065d7a213da0b45e174e8a85261700d1786d6b3d58111d9", "changed": true, "wall_seconds": 2.9613553369999863, "detail": "ValueError: action phase changed protected match/objective state"}
+{"name": "forward_progress_injected_then_correctly_cleared", "expected_rejection": true, "accepted": false, "met_expectation": true, "input_sha256": "262187781257f410c5e4dcf71d24edcef180a7ba69ad5bad0ea96538a9b28937", "baseline_sha256": "9743880e32bedb307065d7a213da0b45e174e8a85261700d1786d6b3d58111d9", "changed": true, "wall_seconds": 3.0412293800000043, "detail": "ValueError: action phase changed protected match/objective state"}
+{"name": "isolated_control_stationary_actor_teleports", "expected_rejection": true, "accepted": false, "met_expectation": true, "input_sha256": "e715c2aa1171db43e50b0ab905a813967c08732be5e002f3d9fce68f64b0a1d2", "baseline_sha256": "9743880e32bedb307065d7a213da0b45e174e8a85261700d1786d6b3d58111d9", "changed": true, "wall_seconds": 3.04102513700127, "detail": "ValueError: isolated control moved a non-subject actor"}
+{"name": "isolated_control_match_rng_changes_without_bot_call", "expected_rejection": true, "accepted": false, "met_expectation": true, "input_sha256": "17adc6f9ed6d2708f284ed8bafa62e5a86b77471622096632861ea279e8b2d48", "baseline_sha256": "9743880e32bedb307065d7a213da0b45e174e8a85261700d1786d6b3d58111d9", "changed": true, "wall_seconds": 3.0353368169999158, "detail": "ValueError: action phase changed protected match/objective state"}
+{"name": "forward_action_phase_reassigns_actor_team", "expected_rejection": true, "accepted": false, "met_expectation": true, "input_sha256": "135874f39a2616ba3ee754878fa4c29a1da1af93598fedd29e7836fc2089bfcf", "baseline_sha256": "9743880e32bedb307065d7a213da0b45e174e8a85261700d1786d6b3d58111d9", "changed": true, "wall_seconds": 3.0092005299993616, "detail": "ValueError: action phase reassigned actor team"}
+{
+  "source": "dce89495d04c9d3fefece0f8c7929e2e01b8e7df",
+  "fixture": "/workspace/sightbreak-objective-observability-r4",
+  "cpu_affinity": [
+    4
+  ],
+  "native_executed": false,
+  "distinct_inputs": 13,
+  "positive_accepted": true,
+  "real_mutations": 12,
+  "mutations_rejected": 10,
+  "false_passes": [
+    "fabricated_target_score_navigation_and_bot_memory",
+    "in_range_in_fov_candidate_falsely_rejected_by_fov"
+  ],
+  "results": [
+    {
+      "name": "complete_synthetic_positive",
+      "expected_rejection": false,
+      "accepted": true,
+      "met_expectation": true,
+      "input_sha256": "9743880e32bedb307065d7a213da0b45e174e8a85261700d1786d6b3d58111d9",
+      "baseline_sha256": "9743880e32bedb307065d7a213da0b45e174e8a85261700d1786d6b3d58111d9",
+      "changed": false,
+      "wall_seconds": 7.38483125899802,
+      "detail": {
+        "observable_contract_passed": true,
+        "decision_rows": 202,
+        "interaction_rows": 605,
+        "movement_modes": {
+          "navigate": 139,
+          "interact": 63
+        },
+        "perception_results": {
+          "range": 37,
+          "visibility": 740
+        },
+        "scope": "current_source_reconstruction_not_historical_cause_or_G2_acceptance"
+      }
+    },
+    {
+      "name": "freshness_complete_decision_for_wrong_actor",
+      "expected_rejection": true,
+      "accepted": false,
+      "met_expectation": true,
+      "input_sha256": "1988618844c44fd8a61b32172bcc5589024fe2ad4351a0182bafca83f51e3a87",
+      "baseline_sha256": "9743880e32bedb307065d7a213da0b45e174e8a85261700d1786d6b3d58111d9",
+      "changed": true,
+      "wall_seconds": 2.2611425960021734,
+      "detail": "ValueError: freshness call describes another actor"
+    },
+    {
+      "name": "direct_perception_selects_target_without_candidates",
+      "expected_rejection": true,
+      "accepted": false,
+      "met_expectation": true,
+      "input_sha256": "03894bc233c06b8ae89455b735c68aee02e66b99a42795865651667a8eb4b86c",
+      "baseline_sha256": "9743880e32bedb307065d7a213da0b45e174e8a85261700d1786d6b3d58111d9",
+      "changed": true,
+      "wall_seconds": 1.5369353010028135,
+      "detail": "ValueError: direct perception selected an unperceived target"
+    },
+    {
+      "name": "nearest_defuser_ignores_device_destination",
+      "expected_rejection": true,
+      "accepted": false,
+      "met_expectation": true,
+      "input_sha256": "f89895afe9ba16ee7764ee8c8d05385a4b62687afc3bae384479e96b82da5d34",
+      "baseline_sha256": "9743880e32bedb307065d7a213da0b45e174e8a85261700d1786d6b3d58111d9",
+      "changed": true,
+      "wall_seconds": 4.8573314959976415,
+      "detail": "ValueError: defuser destination contradicts device"
+    },
+    {
+      "name": "decision_role_not_produced_by_source",
+      "expected_rejection": true,
+      "accepted": false,
+      "met_expectation": true,
+      "input_sha256": "1706d451fc170d05d0779701b251c01ca9c2cc4ea4eb47490ca1845aa37c47ae",
+      "baseline_sha256": "9743880e32bedb307065d7a213da0b45e174e8a85261700d1786d6b3d58111d9",
+      "changed": true,
+      "wall_seconds": 1.9633617510007753,
+      "detail": "ValueError: typed decision roles"
+    },
+    {
+      "name": "fabricated_target_score_navigation_and_bot_memory",
+      "expected_rejection": true,
+      "accepted": true,
+      "met_expectation": false,
+      "input_sha256": "c8c5fed358c1891a01b24ebac82aa02f25fae4cac8e4d93cdb4e6ab377e4f8e5",
+      "baseline_sha256": "9743880e32bedb307065d7a213da0b45e174e8a85261700d1786d6b3d58111d9",
+      "changed": true,
+      "wall_seconds": 3.358804046998557,
+      "detail": {
+        "observable_contract_passed": true,
+        "decision_rows": 202,
+        "interaction_rows": 605,
+        "movement_modes": {
+          "navigate": 139,
+          "interact": 63
+        },
+        "perception_results": {
+          "range": 37,
+          "eligible": 1,
+          "visibility": 739
+        },
+        "scope": "current_source_reconstruction_not_historical_cause_or_G2_acceptance"
+      }
+    },
+    {
+      "name": "in_range_in_fov_candidate_falsely_rejected_by_fov",
+      "expected_rejection": true,
+      "accepted": true,
+      "met_expectation": false,
+      "input_sha256": "e3320200d5468f414a5e678077d4276f25b5d57ba8f2b0f87342190738b495ef",
+      "baseline_sha256": "9743880e32bedb307065d7a213da0b45e174e8a85261700d1786d6b3d58111d9",
+      "changed": true,
+      "wall_seconds": 3.4337552719989617,
+      "detail": {
+        "observable_contract_passed": true,
+        "decision_rows": 202,
+        "interaction_rows": 605,
+        "movement_modes": {
+          "navigate": 139,
+          "interact": 63
+        },
+        "perception_results": {
+          "range": 37,
+          "fov": 1,
+          "visibility": 739
+        },
+        "scope": "current_source_reconstruction_not_historical_cause_or_G2_acceptance"
+      }
+    },
+    {
+      "name": "forward_credits_added_without_kill_or_reward",
+      "expected_rejection": true,
+      "accepted": false,
+      "met_expectation": true,
+      "input_sha256": "af50c535bd32abffe09d20ba1e688fff013041d644e77a90c4da33cbdc936d32",
+      "baseline_sha256": "9743880e32bedb307065d7a213da0b45e174e8a85261700d1786d6b3d58111d9",
+      "changed": true,
+      "wall_seconds": 2.972365137000452,
+      "detail": "ValueError: action credits do not bind kill awards"
+    },
+    {
+      "name": "forward_objective_plants_before_consumer_without_progress",
+      "expected_rejection": true,
+      "accepted": false,
+      "met_expectation": true,
+      "input_sha256": "72f47d8c427d014b79e16fdea23984d48e9d0cbc857898bf3eca84f8ea28f93a",
+      "baseline_sha256": "9743880e32bedb307065d7a213da0b45e174e8a85261700d1786d6b3d58111d9",
+      "changed": true,
+      "wall_seconds": 2.9613553369999863,
+      "detail": "ValueError: action phase changed protected match/objective state"
+    },
+    {
+      "name": "forward_progress_injected_then_correctly_cleared",
+      "expected_rejection": true,
+      "accepted": false,
+      "met_expectation": true,
+      "input_sha256": "262187781257f410c5e4dcf71d24edcef180a7ba69ad5bad0ea96538a9b28937",
+      "baseline_sha256": "9743880e32bedb307065d7a213da0b45e174e8a85261700d1786d6b3d58111d9",
+      "changed": true,
+      "wall_seconds": 3.0412293800000043,
+      "detail": "ValueError: action phase changed protected match/objective state"
+    },
+    {
+      "name": "isolated_control_stationary_actor_teleports",
+      "expected_rejection": true,
+      "accepted": false,
+      "met_expectation": true,
+      "input_sha256": "e715c2aa1171db43e50b0ab905a813967c08732be5e002f3d9fce68f64b0a1d2",
+      "baseline_sha256": "9743880e32bedb307065d7a213da0b45e174e8a85261700d1786d6b3d58111d9",
+      "changed": true,
+      "wall_seconds": 3.04102513700127,
+      "detail": "ValueError: isolated control moved a non-subject actor"
+    },
+    {
+      "name": "isolated_control_match_rng_changes_without_bot_call",
+      "expected_rejection": true,
+      "accepted": false,
+      "met_expectation": true,
+      "input_sha256": "17adc6f9ed6d2708f284ed8bafa62e5a86b77471622096632861ea279e8b2d48",
+      "baseline_sha256": "9743880e32bedb307065d7a213da0b45e174e8a85261700d1786d6b3d58111d9",
+      "changed": true,
+      "wall_seconds": 3.0353368169999158,
+      "detail": "ValueError: action phase changed protected match/objective state"
+    },
+    {
+      "name": "forward_action_phase_reassigns_actor_team",
+      "expected_rejection": true,
+      "accepted": false,
+      "met_expectation": true,
+      "input_sha256": "135874f39a2616ba3ee754878fa4c29a1da1af93598fedd29e7836fc2089bfcf",
+      "baseline_sha256": "9743880e32bedb307065d7a213da0b45e174e8a85261700d1786d6b3d58111d9",
+      "changed": true,
+      "wall_seconds": 3.0092005299993616,
+      "detail": "ValueError: action phase reassigned actor team"
+    }
+  ]
+}
