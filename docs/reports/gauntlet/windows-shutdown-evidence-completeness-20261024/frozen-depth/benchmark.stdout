@@ -1,0 +1,51 @@
+[
+  {
+    "run": "40080238905",
+    "availability": {
+      "required_files": 53,
+      "present_required_files": 51,
+      "baseline_files": 51
+    },
+    "strict_passed": false,
+    "evidence_errors": [
+      "missing required file: controller-stdout.log",
+      "missing required file: controller-stderr.log",
+      "result: ValueError: driver result is failed/incomplete",
+      "source_and_commands: ValueError: trusted collection context missing",
+      "traces_and_profile: ValueError: frame counter absent: draw_calls_last_rendered_frame",
+      "process_and_closes: ValueError: two result close receipts missing",
+      "logs: ValueError: required controller stdout missing",
+      "hud_and_subreceipts: ValueError: HUD result differs from raw OCR: fired_hud"
+    ],
+    "strict_errors": [
+      "strict study warning: client.log",
+      "native/controller error or leak: reopened.log",
+      "strict study warning: reopened.log"
+    ],
+    "bytes_unchanged": true
+  },
+  {
+    "run": "40089125575",
+    "availability": {
+      "required_files": 53,
+      "present_required_files": 51,
+      "baseline_files": 51
+    },
+    "strict_passed": false,
+    "evidence_errors": [
+      "missing required file: controller-stdout.log",
+      "missing required file: controller-stderr.log",
+      "result: ValueError: stale/default driver source hash",
+      "source_and_commands: ValueError: trusted collection context missing",
+      "traces_and_profile: ValueError: frame counter absent: draw_calls_last_rendered_frame",
+      "process_and_closes: ValueError: two result close receipts missing",
+      "logs: ValueError: required controller stdout missing",
+      "hud_and_subreceipts: ValueError: frame counter absent: draw_calls_last_rendered_frame"
+    ],
+    "strict_errors": [
+      "strict study warning: client.log",
+      "strict study warning: reopened.log"
+    ],
+    "bytes_unchanged": true
+  }
+]

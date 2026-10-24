@@ -1,0 +1,74 @@
+{
+  "source": "0f478a078277fdb0d711837bef67cf14262d9d8f",
+  "scope": "Builder pure/source evidence only; independent critic required; public collect BLOCKED",
+  "cpu": [
+    4
+  ],
+  "native_invocations": 0,
+  "results": [
+    {
+      "name": "binding",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "scripts",
+        "-p",
+        "test_shutdown_source_binding.py",
+        "-v"
+      ],
+      "exit": 0,
+      "seconds": 1.144823444999929
+    },
+    {
+      "name": "old28",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "scripts",
+        "-p",
+        "test_windows_shutdown_study.py",
+        "-v"
+      ],
+      "exit": 0,
+      "seconds": 33.935849892994156
+    },
+    {
+      "name": "evidence",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "scripts",
+        "-p",
+        "test_shutdown_study_evidence.py",
+        "-v"
+      ],
+      "exit": 0,
+      "seconds": 23.851943218003726
+    },
+    {
+      "name": "preflight",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "scripts/windows_shutdown_study.py",
+        "preflight",
+        "--expected-source",
+        "0f478a078277fdb0d711837bef67cf14262d9d8f",
+        "--output",
+        "/workspace/reviews/windows-shutdown-evidence-completeness-depth1-20261024/.local/frozen-evidence-completeness/preflight.json"
+      ],
+      "exit": 2,
+      "status": "BLOCKED",
+      "physical": 516
+    }
+  ],
+  "source_clean": true
+}
