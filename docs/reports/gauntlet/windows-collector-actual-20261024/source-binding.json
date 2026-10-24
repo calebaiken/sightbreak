@@ -1,7 +1,7 @@
 {
   "scope": "Read-only exact source/workflow preparation; no native acceptance",
   "source": "c32415148db1f110bbc7eadfca3793d4693429ff",
-  "head": "728906f9d44b6946008c5b2b84f9e8a7d8f39ec9",
+  "head": "06a6edb8828ec23a7cdce289e3dbfc85def3a0f7",
   "qualifier": "qualifier/windows-collector-c324-20261024",
   "actual_remote_readback": "c32415148db1f110bbc7eadfca3793d4693429ff\trefs/heads/qualifier/windows-collector-c324-20261024\n",
   "workflow": {
@@ -3688,5 +3688,57 @@
   "expected_native_total": 29567,
   "expected_movement": 742,
   "expectations_are_not_execution": true,
+  "root_integration": {
+    "commit": "b436a641bf87f2f6ca2b6952aeda2b31c92af8e4",
+    "all_non_doc_objects_equal": true
+  },
+  "root_qualifier_receipt": {
+    "commit": "817f7a831aa7b36f8181c8fcf8a64fb87a9d403b",
+    "sha256": "560cbdc3649f1bed9d843a82aeb4706da4c8827a5a59d1740691dcbaa07f3fce",
+    "data": {
+      "source": "c32415148db1f110bbc7eadfca3793d4693429ff",
+      "branch": "qualifier/windows-collector-c324-20261024",
+      "repository": "calebaiken/sightbreak",
+      "absence": {
+        "tool_chunk": "c0f5d8",
+        "command": "git ls-remote --heads origin refs/heads/qualifier/windows-collector-c324-20261024",
+        "exit_code": 0,
+        "output": ""
+      },
+      "creation": {
+        "tool": "github_create_branch",
+        "arguments": {
+          "repository_full_name": "calebaiken/sightbreak",
+          "branch_name": "qualifier/windows-collector-c324-20261024",
+          "sha": "c32415148db1f110bbc7eadfca3793d4693429ff"
+        },
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "Action completed."
+            }
+          ],
+          "structuredContent": {
+            "branch": "qualifier/windows-collector-c324-20261024"
+          },
+          "isError": false
+        }
+      },
+      "readback": {
+        "tool_chunk": "620c1e",
+        "exit_code": 0,
+        "output": "c32415148db1f110bbc7eadfca3793d4693429ff\trefs/heads/qualifier/windows-collector-c324-20261024\n"
+      },
+      "workflow_readback": {
+        "tool_chunk": "1ef11e",
+        "bytes": 18531,
+        "sha256": "5f59b1e2eb4d1b945c0bf3958d403d3d0166ae7ce8e01a5488e29e9171b62c7a",
+        "byte_equal_to_candidate": true,
+        "git_blob": "246f63a1bb01c3cb5db4c02765139511ae476fba"
+      },
+      "semantics": "Branch absent before creation, then exact source read back. No branch update, workflow dispatch or native release occurred in these actions."
+    }
+  },
   "baseline": "49ae54b0e4f5d880bdf06e4eb783a616b2dff684"
 }
