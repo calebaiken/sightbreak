@@ -25,5 +25,8 @@ to be ancestors of root release and asserted before writing a result. Root had
 retained the report snapshots with different commits. Corrected proof compares
 six exact admission files against the release snapshot and records the original
 preregistration09:50:00, admission09:52:44 and release09:55:23 UTC commit times.
-The source/runtime and earlier admission were unchanged. The missing literal
-push-tool copy is explicit; root reports its push preceded the sole request.
+The source/runtime and earlier admission were unchanged. Root subsequently
+supplied exact original commit/push output files; these are copied byte-exactly
+and hashed. Push stdout has no embedded UTC. Its prior execution sequence is
+root-reported and compared with immutable commit times and the dispatch clock;
+filesystem timestamps provide no chronology proof.

@@ -3,7 +3,7 @@
 The sole released run40083894472/attempt1/job120842796227 is active. Exact source,
 ref/workflow, all three dispatch inputs and root release/dispatch receipts match
 admission78e972bc. Initial status and later step summaries are retained separately
-from actual raw. At10:04:00UTC, step29 was active and living step30 was pending.
+from actual raw. At10:07:07UTC, living/settings/restart step30 was active with no failed summary.
 
 Complete official raw is pending; no leak/type, clean shutdown, HUD, progression
 or whole-product acceptance is claimed. Original40080238905 remains FAIL. The
