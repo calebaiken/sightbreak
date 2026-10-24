@@ -118,11 +118,11 @@ def generated_timer_queries():
         for d1 in sorted(prefix_deadlines):
             prefix=dict(reason='authority_tick',wall_msec=t,input_age_msec=t-last,deadline_remaining_msec=d1-t,
                         joined=joined,counters={},peer=9,generation=1,peer_bound=joined,bound_actor=int(joined))
-            finish=c+40000
-            deadlines={original,d1-1,d1,d1+1,c+499,c+500,c+501,t+499,t+500,t+501,finish+499,finish+500}
-            for d2 in sorted(deadlines):
-                end=dict(prefix,reason='peer_expired',wall_msec=finish,input_age_msec=finish-last,deadline_remaining_msec=d2-finish)
-                rows=base+[prefix,end];cases.append((f'C{c}/J{int(joined)}/T{offset}/D{d1}/E{d2}',rows,oracle_status(rows)))
+            for finish in sorted({max(t+1,c+20001),max(t+1,c+30000),max(t+1,c+30001),c+40000}):
+                deadlines={original,d1-1,d1,d1+1,c+499,c+500,c+501,t+499,t+500,t+501,finish+499,finish+500}
+                for d2 in sorted(deadlines):
+                    end=dict(prefix,reason='peer_expired',wall_msec=finish,input_age_msec=finish-last,deadline_remaining_msec=d2-finish)
+                    rows=base+[prefix,end];cases.append((f'C{c}/J{int(joined)}/T{offset}/D{d1}/N{finish}/E{d2}',rows,oracle_status(rows)))
     return cases
 
 
