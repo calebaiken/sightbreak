@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-pr18-native-restart\scripts\validate_native_transaction_restart.py", line 664, in <module>
+    main()
+  File "C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-pr18-native-restart\scripts\validate_native_transaction_restart.py", line 593, in main
+    with psycopg.connect(**CONNECT, dbname="postgres", autocommit=True) as db:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-backend-trade-env\venv312\Lib\site-packages\psycopg\connection.py", line 126, in connect
+    raise last_ex.with_traceback(None)
+psycopg.errors.ConnectionTimeout: connection timeout expired

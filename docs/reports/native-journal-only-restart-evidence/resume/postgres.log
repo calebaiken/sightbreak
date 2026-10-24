@@ -1,0 +1,20 @@
+2026-10-24 04:38:22.457 EDT [23148] LOG:  starting PostgreSQL 17.11 on x86_64-windows, compiled by msvc-19.44.35229, 64-bit
+2026-10-24 04:38:22.459 EDT [23148] LOG:  listening on IPv4 address "127.0.0.1", port 55439
+2026-10-24 04:38:22.549 EDT [24784] LOG:  database system was interrupted; last known up at 2026-10-22 21:26:04 EDT
+2026-10-24 04:38:27.891 EDT [24784] LOG:  database system was not properly shut down; automatic recovery in progress
+2026-10-24 04:38:27.903 EDT [24784] LOG:  redo starts at 0/82FE350
+2026-10-24 04:38:27.903 EDT [24784] LOG:  invalid record length at 0/82FE388: expected at least 24, got 0
+2026-10-24 04:38:27.904 EDT [24784] LOG:  redo done at 0/82FE350 system usage: CPU: user: 0.00 s, system: 0.00 s, elapsed: 0.00 s
+2026-10-24 04:38:27.922 EDT [25804] LOG:  checkpoint starting: end-of-recovery immediate wait
+2026-10-24 04:38:27.995 EDT [25804] LOG:  checkpoint complete: wrote 3 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.005 s, sync=0.011 s, total=0.084 s; sync files=2, longest=0.006 s, average=0.006 s; distance=0 kB, estimate=0 kB; lsn=0/82FE388, redo lsn=0/82FE388
+2026-10-24 04:38:28.042 EDT [23148] LOG:  database system is ready to accept connections
+2026-10-24 04:40:50.480 EDT [11088] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-10-24 04:40:51.131 EDT [25804] LOG:  checkpoint starting: immediate force wait
+2026-10-24 04:40:51.188 EDT [25804] LOG:  checkpoint complete: wrote 4 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.007 s, sync=0.020 s, total=0.058 s; sync files=4, longest=0.006 s, average=0.005 s; distance=4834 kB, estimate=4834 kB; lsn=0/87B6CB0, redo lsn=0/87B6C58
+2026-10-24 04:41:06.810 EDT [17224] LOG:  could not receive data from client: An existing connection was forcibly closed by the remote host.
+	
+2026-10-24 04:41:07.472 EDT [25804] LOG:  checkpoint starting: immediate force wait
+2026-10-24 04:41:07.533 EDT [25804] LOG:  checkpoint complete: wrote 4 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.007 s, sync=0.025 s, total=0.062 s; sync files=4, longest=0.011 s, average=0.007 s; distance=4834 kB, estimate=4834 kB; lsn=0/8C6F788, redo lsn=0/8C6F730
+2026-10-24 04:46:07.542 EDT [25804] LOG:  checkpoint starting: time
+2026-10-24 04:46:07.700 EDT [25804] LOG:  checkpoint complete: wrote 2 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.118 s, sync=0.011 s, total=0.159 s; sync files=2, longest=0.006 s, average=0.006 s; distance=0 kB, estimate=4351 kB; lsn=0/8C6F920, redo lsn=0/8C6F8C8

@@ -1,0 +1,675 @@
+{
+  "kind": "Offline reconstruction from retained raw observations, not a new execution or critic verdict",
+  "arms": {
+    "baseline-701": {
+      "revision": "701ce2c4d7f8b2872cf1fefa64cb6edd0cd1a3fd",
+      "harness_commit": "7be70f73ec6a065849d902e7075d2b76e78bdd21",
+      "recovered": false,
+      "price": 400,
+      "actual_inputs": [
+        {
+          "phase": "send",
+          "pid": 23852,
+          "keys": [
+            "item",
+            "journal",
+            "listing",
+            "mode",
+            "owner",
+            "password",
+            "path",
+            "payload",
+            "seller",
+            "url",
+            "username"
+          ],
+          "fixture_sha256": "6c88e6d480005952c917e3fd7dee0cdaeaa7bcaf8c3cfc215d09c4aa9f6b3ecb",
+          "bytes": 670,
+          "native_read_matches_prelaunch": true,
+          "source_file_hashes_match_exact_git": true,
+          "original_purchase_absent": false
+        },
+        {
+          "phase": "recovery",
+          "pid": 28396,
+          "keys": [
+            "journal",
+            "mode",
+            "owner",
+            "password",
+            "url",
+            "username"
+          ],
+          "fixture_sha256": "baf7f9d638e37be2fe5581a9f3c98afc8aad8c8e874570be3f857d287e1bd1b2",
+          "bytes": 337,
+          "native_read_matches_prelaunch": true,
+          "source_file_hashes_match_exact_git": true,
+          "original_purchase_absent": true
+        },
+        {
+          "phase": "second-restart",
+          "pid": 13500,
+          "keys": [
+            "journal",
+            "mode",
+            "owner",
+            "password",
+            "url",
+            "username"
+          ],
+          "fixture_sha256": "baf7f9d638e37be2fe5581a9f3c98afc8aad8c8e874570be3f857d287e1bd1b2",
+          "bytes": 337,
+          "native_read_matches_prelaunch": true,
+          "source_file_hashes_match_exact_git": true,
+          "original_purchase_absent": true
+        }
+      ],
+      "actual_purchase_count_by_phase": {
+        "send": 1,
+        "recovery": 0,
+        "second-restart": 0
+      },
+      "database": "sightbreak_receipt_e1b13d8620281b05_test",
+      "database_dropped": true,
+      "actual_row_changes": {
+        "audit": {
+          "added": [
+            {
+              "action": "market_settled",
+              "actor": "69106eca-e517-4e7c-8ea9-e011d813edd6",
+              "created_at": "2026-10-24 04:40:47.375592-04:00",
+              "details": {
+                "fee": 12,
+                "from_player": "c1bf9ae6-de8e-44ef-bf4b-1f5e470e2f2b",
+                "item_id": "94831ba4-33ac-410f-b5d8-d37a66145da7",
+                "listing_id": "bcd963c4-9bba-434d-9731-998a2f9e53d1",
+                "to_player": "69106eca-e517-4e7c-8ea9-e011d813edd6"
+              },
+              "id": "0d61ce85-04fa-4910-bd1a-9bc8e31e3aa2"
+            }
+          ],
+          "removed": [],
+          "changed": []
+        },
+        "items": {
+          "added": [],
+          "removed": [],
+          "changed": [
+            {
+              "before": {
+                "acquired_at": "2026-10-24 04:40:42.222527-04:00",
+                "consumed": false,
+                "definition_id": "obsidian_rare",
+                "id": "94831ba4-33ac-410f-b5d8-d37a66145da7",
+                "owner_id": "c1bf9ae6-de8e-44ef-bf4b-1f5e470e2f2b",
+                "pattern_seed": 1866701475,
+                "rarity": "Rare",
+                "reservation": "market:bcd963c4-9bba-434d-9731-998a2f9e53d1",
+                "variant": "standard",
+                "wear": 4024
+              },
+              "after": {
+                "acquired_at": "2026-10-24 04:40:42.222527-04:00",
+                "consumed": false,
+                "definition_id": "obsidian_rare",
+                "id": "94831ba4-33ac-410f-b5d8-d37a66145da7",
+                "owner_id": "69106eca-e517-4e7c-8ea9-e011d813edd6",
+                "pattern_seed": 1866701475,
+                "rarity": "Rare",
+                "reservation": null,
+                "variant": "standard",
+                "wear": 4024
+              }
+            }
+          ]
+        },
+        "ledger": {
+          "added": [
+            {
+              "amount": -400,
+              "balance_after": 1600,
+              "created_at": "2026-10-24 04:40:47.365574-04:00",
+              "id": "44fb0f23-ea27-41d6-b5e4-6ce65fee3fc5",
+              "player_id": "69106eca-e517-4e7c-8ea9-e011d813edd6",
+              "reason": "market_purchase",
+              "reference": "bcd963c4-9bba-434d-9731-998a2f9e53d1"
+            },
+            {
+              "amount": 388,
+              "balance_after": 2388,
+              "created_at": "2026-10-24 04:40:47.365574-04:00",
+              "id": "57838988-c951-4842-a351-f7e063aeb610",
+              "player_id": "c1bf9ae6-de8e-44ef-bf4b-1f5e470e2f2b",
+              "reason": "market_sale",
+              "reference": "bcd963c4-9bba-434d-9731-998a2f9e53d1"
+            }
+          ],
+          "removed": [],
+          "changed": []
+        },
+        "listings": {
+          "added": [],
+          "removed": [],
+          "changed": [
+            {
+              "before": {
+                "buyer_id": null,
+                "id": "bcd963c4-9bba-434d-9731-998a2f9e53d1",
+                "item_id": "94831ba4-33ac-410f-b5d8-d37a66145da7",
+                "price": 400,
+                "seller_id": "c1bf9ae6-de8e-44ef-bf4b-1f5e470e2f2b",
+                "state": "active"
+              },
+              "after": {
+                "buyer_id": "69106eca-e517-4e7c-8ea9-e011d813edd6",
+                "id": "bcd963c4-9bba-434d-9731-998a2f9e53d1",
+                "item_id": "94831ba4-33ac-410f-b5d8-d37a66145da7",
+                "price": 400,
+                "seller_id": "c1bf9ae6-de8e-44ef-bf4b-1f5e470e2f2b",
+                "state": "sold"
+              }
+            }
+          ]
+        },
+        "loadouts": {
+          "added": [],
+          "removed": [],
+          "changed": []
+        },
+        "operations": {
+          "added": [
+            {
+              "id": "69106eca-e517-4e7c-8ea9-e011d813edd6:buy:bcd963c4-9bba-434d-9731-998a2f9e53d1:7fe3e901-a046-4f33-b048-6a353e36b910",
+              "request_hash": "b1f1399e9931cd12aa72f9ff43558550cb68bfffeda7ac7f9fc5b86928e43df1",
+              "response": {
+                "credits": 1600,
+                "fee": 12,
+                "item": {
+                  "acquired_at": "2026-10-24T04:40:42.222527-04:00",
+                  "collection": "Obsidian",
+                  "definition_id": "obsidian_rare",
+                  "id": "94831ba4-33ac-410f-b5d8-d37a66145da7",
+                  "kind": "weapon_skin",
+                  "marketplace_eligible": true,
+                  "name": "Obsidian / Carbon",
+                  "pattern_seed": 1866701475,
+                  "rarity": "Rare",
+                  "reserved": false,
+                  "trade_eligible": true,
+                  "variant": "standard",
+                  "wear": 0.4024
+                }
+              }
+            }
+          ],
+          "removed": [],
+          "changed": []
+        },
+        "players": {
+          "added": [],
+          "removed": [],
+          "changed": [
+            {
+              "before": {
+                "active": true,
+                "credits": 2000,
+                "display_name": "receipt_21dc07cc79ccdc64",
+                "id": "69106eca-e517-4e7c-8ea9-e011d813edd6",
+                "last_trade": null,
+                "username": "receipt_21dc07cc79ccdc64",
+                "xp": 0
+              },
+              "after": {
+                "active": true,
+                "credits": 1600,
+                "display_name": "receipt_21dc07cc79ccdc64",
+                "id": "69106eca-e517-4e7c-8ea9-e011d813edd6",
+                "last_trade": null,
+                "username": "receipt_21dc07cc79ccdc64",
+                "xp": 0
+              }
+            },
+            {
+              "before": {
+                "active": true,
+                "credits": 2000,
+                "display_name": "receipt_ed1757c15040c7a8",
+                "id": "c1bf9ae6-de8e-44ef-bf4b-1f5e470e2f2b",
+                "last_trade": null,
+                "username": "receipt_ed1757c15040c7a8",
+                "xp": 0
+              },
+              "after": {
+                "active": true,
+                "credits": 2388,
+                "display_name": "receipt_ed1757c15040c7a8",
+                "id": "c1bf9ae6-de8e-44ef-bf4b-1f5e470e2f2b",
+                "last_trade": null,
+                "username": "receipt_ed1757c15040c7a8",
+                "xp": 0
+              }
+            }
+          ]
+        },
+        "rewards": {
+          "added": [],
+          "removed": [],
+          "changed": []
+        },
+        "trades": {
+          "added": [],
+          "removed": [],
+          "changed": []
+        }
+      },
+      "complete_economic_state_equal_after_commit": true,
+      "session_digests": [
+        "c24de32edd2b2225df3870db6cdb4eb538f8b26f26baa67b89cf8c682e2a9c56",
+        "e896e1da3ae6866978273b4cc109e6f8857204d2eba3346d4aeae01f9832b6d1",
+        "ab881d3ad6744c3b9d2acf1b9acc8e8ae2cf525798a02e987f68c3b7dca5076b"
+      ],
+      "ordering_events": [
+        {
+          "event": "response_held_before_any_client_headers",
+          "wall_ns": 1792831247385585500,
+          "monotonic_ns": 112317218000000,
+          "harness_pid": 20728,
+          "phase": "send",
+          "status": 200,
+          "sent_bytes": 0
+        },
+        {
+          "event": "postgresql_snapshot",
+          "wall_ns": 1792831247459686600,
+          "monotonic_ns": 112317296000000,
+          "harness_pid": 20728,
+          "name": "02-committed-before-kill",
+          "database": "sightbreak_receipt_e1b13d8620281b05_test",
+          "connection_pid": 8216,
+          "state_sha256": "1f48ec829fa1adac731438bcd33d0bfe7012a71b277ed7e2706cb03ab91228f9"
+        },
+        {
+          "event": "kill_requested",
+          "wall_ns": 1792831247461695400,
+          "monotonic_ns": 112317296000000,
+          "harness_pid": 20728,
+          "pid": 23852,
+          "upstream_committed": true,
+          "client_response_bytes": 0
+        },
+        {
+          "event": "kill_confirmed",
+          "wall_ns": 1792831247494773600,
+          "monotonic_ns": 112317328000000,
+          "harness_pid": 20728,
+          "pid": 23852,
+          "returncode": 1
+        },
+        {
+          "event": "held_response_discarded",
+          "wall_ns": 1792831247576513300,
+          "monotonic_ns": 112317406000000,
+          "harness_pid": 20728,
+          "phase": "send",
+          "sent_bytes": 0
+        },
+        {
+          "event": "native_started",
+          "wall_ns": 1792831247709753200,
+          "monotonic_ns": 112317546000000,
+          "harness_pid": 20728,
+          "phase": "recovery",
+          "pid": 28396,
+          "command": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--verbose",
+            "--path",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-receipt-7y9bqtyb\\source\\game",
+            "--script",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-pr18-native-restart\\scripts\\native_transaction_restart_probe.gd"
+          ],
+          "cwd": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-receipt-7y9bqtyb\\source\\game",
+          "other_native_pids": []
+        }
+      ],
+      "journal_survived": false,
+      "original_request_bytes_equal_on_recovery": null
+    },
+    "candidate-7b6f379": {
+      "revision": "7b6f379a3f8c809d0985a64e883cbadfdd78d135",
+      "harness_commit": "7be70f73ec6a065849d902e7075d2b76e78bdd21",
+      "recovered": true,
+      "price": 400,
+      "actual_inputs": [
+        {
+          "phase": "send",
+          "pid": 20004,
+          "keys": [
+            "item",
+            "journal",
+            "listing",
+            "mode",
+            "owner",
+            "password",
+            "path",
+            "payload",
+            "seller",
+            "url",
+            "username"
+          ],
+          "fixture_sha256": "0e86dec47b7f98ce4ac373eb14b167d9dc9a97fff4468358dce253ecf89d61af",
+          "bytes": 670,
+          "native_read_matches_prelaunch": true,
+          "source_file_hashes_match_exact_git": true,
+          "original_purchase_absent": false
+        },
+        {
+          "phase": "recovery",
+          "pid": 1700,
+          "keys": [
+            "journal",
+            "mode",
+            "owner",
+            "password",
+            "url",
+            "username"
+          ],
+          "fixture_sha256": "b579890c1d7cbf7ddf30fe9485b32d70372583c68d1424ba73ef0ed8c4e78c33",
+          "bytes": 337,
+          "native_read_matches_prelaunch": true,
+          "source_file_hashes_match_exact_git": true,
+          "original_purchase_absent": true
+        },
+        {
+          "phase": "second-restart",
+          "pid": 22640,
+          "keys": [
+            "journal",
+            "mode",
+            "owner",
+            "password",
+            "url",
+            "username"
+          ],
+          "fixture_sha256": "b579890c1d7cbf7ddf30fe9485b32d70372583c68d1424ba73ef0ed8c4e78c33",
+          "bytes": 337,
+          "native_read_matches_prelaunch": true,
+          "source_file_hashes_match_exact_git": true,
+          "original_purchase_absent": true
+        }
+      ],
+      "actual_purchase_count_by_phase": {
+        "send": 1,
+        "recovery": 1,
+        "second-restart": 0
+      },
+      "database": "sightbreak_receipt_85b3fcb05611aa0a_test",
+      "database_dropped": true,
+      "actual_row_changes": {
+        "audit": {
+          "added": [
+            {
+              "action": "market_settled",
+              "actor": "03cb151e-511a-451b-93ca-2543276833c7",
+              "created_at": "2026-10-24 04:41:03.318433-04:00",
+              "details": {
+                "fee": 12,
+                "from_player": "8c98b9bd-2cd4-4e17-9d97-d80419172ad2",
+                "item_id": "f6f87dbd-2e0c-491a-a829-9e36c6d93979",
+                "listing_id": "e056813c-4926-4000-8daa-eac8d6f2d48f",
+                "to_player": "03cb151e-511a-451b-93ca-2543276833c7"
+              },
+              "id": "35704f1b-2205-452d-9e11-d65d68631596"
+            }
+          ],
+          "removed": [],
+          "changed": []
+        },
+        "items": {
+          "added": [],
+          "removed": [],
+          "changed": [
+            {
+              "before": {
+                "acquired_at": "2026-10-24 04:40:59.556679-04:00",
+                "consumed": false,
+                "definition_id": "obsidian_rare",
+                "id": "f6f87dbd-2e0c-491a-a829-9e36c6d93979",
+                "owner_id": "8c98b9bd-2cd4-4e17-9d97-d80419172ad2",
+                "pattern_seed": 684732845,
+                "rarity": "Rare",
+                "reservation": "market:e056813c-4926-4000-8daa-eac8d6f2d48f",
+                "variant": "standard",
+                "wear": 9322
+              },
+              "after": {
+                "acquired_at": "2026-10-24 04:40:59.556679-04:00",
+                "consumed": false,
+                "definition_id": "obsidian_rare",
+                "id": "f6f87dbd-2e0c-491a-a829-9e36c6d93979",
+                "owner_id": "03cb151e-511a-451b-93ca-2543276833c7",
+                "pattern_seed": 684732845,
+                "rarity": "Rare",
+                "reservation": null,
+                "variant": "standard",
+                "wear": 9322
+              }
+            }
+          ]
+        },
+        "ledger": {
+          "added": [
+            {
+              "amount": 388,
+              "balance_after": 2388,
+              "created_at": "2026-10-24 04:41:03.312428-04:00",
+              "id": "d9c4c26f-8154-498a-8453-116c404a2793",
+              "player_id": "8c98b9bd-2cd4-4e17-9d97-d80419172ad2",
+              "reason": "market_sale",
+              "reference": "e056813c-4926-4000-8daa-eac8d6f2d48f"
+            },
+            {
+              "amount": -400,
+              "balance_after": 1600,
+              "created_at": "2026-10-24 04:41:03.312428-04:00",
+              "id": "f18cb6e5-c6d8-44df-9021-eb9dcac9c371",
+              "player_id": "03cb151e-511a-451b-93ca-2543276833c7",
+              "reason": "market_purchase",
+              "reference": "e056813c-4926-4000-8daa-eac8d6f2d48f"
+            }
+          ],
+          "removed": [],
+          "changed": []
+        },
+        "listings": {
+          "added": [],
+          "removed": [],
+          "changed": [
+            {
+              "before": {
+                "buyer_id": null,
+                "id": "e056813c-4926-4000-8daa-eac8d6f2d48f",
+                "item_id": "f6f87dbd-2e0c-491a-a829-9e36c6d93979",
+                "price": 400,
+                "seller_id": "8c98b9bd-2cd4-4e17-9d97-d80419172ad2",
+                "state": "active"
+              },
+              "after": {
+                "buyer_id": "03cb151e-511a-451b-93ca-2543276833c7",
+                "id": "e056813c-4926-4000-8daa-eac8d6f2d48f",
+                "item_id": "f6f87dbd-2e0c-491a-a829-9e36c6d93979",
+                "price": 400,
+                "seller_id": "8c98b9bd-2cd4-4e17-9d97-d80419172ad2",
+                "state": "sold"
+              }
+            }
+          ]
+        },
+        "loadouts": {
+          "added": [],
+          "removed": [],
+          "changed": []
+        },
+        "operations": {
+          "added": [
+            {
+              "id": "03cb151e-511a-451b-93ca-2543276833c7:buy:e056813c-4926-4000-8daa-eac8d6f2d48f:5738ac06-1b84-446c-9f72-77215c6e5809",
+              "request_hash": "9f5ead2d6a450eff27899d6118ce0ee972bbe29137ef8e5c4ea6090c50458908",
+              "response": {
+                "credits": 1600,
+                "fee": 12,
+                "item": {
+                  "acquired_at": "2026-10-24T04:40:59.556679-04:00",
+                  "collection": "Obsidian",
+                  "definition_id": "obsidian_rare",
+                  "id": "f6f87dbd-2e0c-491a-a829-9e36c6d93979",
+                  "kind": "weapon_skin",
+                  "marketplace_eligible": true,
+                  "name": "Obsidian / Carbon",
+                  "pattern_seed": 684732845,
+                  "rarity": "Rare",
+                  "reserved": false,
+                  "trade_eligible": true,
+                  "variant": "standard",
+                  "wear": 0.9322
+                }
+              }
+            }
+          ],
+          "removed": [],
+          "changed": []
+        },
+        "players": {
+          "added": [],
+          "removed": [],
+          "changed": [
+            {
+              "before": {
+                "active": true,
+                "credits": 2000,
+                "display_name": "receipt_93115cecfdc41fd8",
+                "id": "03cb151e-511a-451b-93ca-2543276833c7",
+                "last_trade": null,
+                "username": "receipt_93115cecfdc41fd8",
+                "xp": 0
+              },
+              "after": {
+                "active": true,
+                "credits": 1600,
+                "display_name": "receipt_93115cecfdc41fd8",
+                "id": "03cb151e-511a-451b-93ca-2543276833c7",
+                "last_trade": null,
+                "username": "receipt_93115cecfdc41fd8",
+                "xp": 0
+              }
+            },
+            {
+              "before": {
+                "active": true,
+                "credits": 2000,
+                "display_name": "receipt_b839a603c4cf0330",
+                "id": "8c98b9bd-2cd4-4e17-9d97-d80419172ad2",
+                "last_trade": null,
+                "username": "receipt_b839a603c4cf0330",
+                "xp": 0
+              },
+              "after": {
+                "active": true,
+                "credits": 2388,
+                "display_name": "receipt_b839a603c4cf0330",
+                "id": "8c98b9bd-2cd4-4e17-9d97-d80419172ad2",
+                "last_trade": null,
+                "username": "receipt_b839a603c4cf0330",
+                "xp": 0
+              }
+            }
+          ]
+        },
+        "rewards": {
+          "added": [],
+          "removed": [],
+          "changed": []
+        },
+        "trades": {
+          "added": [],
+          "removed": [],
+          "changed": []
+        }
+      },
+      "complete_economic_state_equal_after_commit": true,
+      "session_digests": [
+        "df3e37dc1e68f21d8c3fcd2bd214d774681efbe87b56ea708a49e71fbc9c1ca9",
+        "6a8d8fe25e57a4c0379a295d3bd888412054d5dfd469d024dca0586d8edf62cc",
+        "b3f87b03bc21f14ed73b3ee8006529a46d9246dafc350661f90182987afd29f6"
+      ],
+      "ordering_events": [
+        {
+          "event": "response_held_before_any_client_headers",
+          "wall_ns": 1792831263329330100,
+          "monotonic_ns": 112333156000000,
+          "harness_pid": 23504,
+          "phase": "send",
+          "status": 200,
+          "sent_bytes": 0
+        },
+        {
+          "event": "postgresql_snapshot",
+          "wall_ns": 1792831263407664000,
+          "monotonic_ns": 112333234000000,
+          "harness_pid": 23504,
+          "name": "02-committed-before-kill",
+          "database": "sightbreak_receipt_85b3fcb05611aa0a_test",
+          "connection_pid": 8636,
+          "state_sha256": "c45eaf85963a37d8731d2ec8e3a0b8229b0b8707b2d7639e66e65059055fe13a"
+        },
+        {
+          "event": "kill_requested",
+          "wall_ns": 1792831263410836400,
+          "monotonic_ns": 112333234000000,
+          "harness_pid": 23504,
+          "pid": 20004,
+          "upstream_committed": true,
+          "client_response_bytes": 0
+        },
+        {
+          "event": "kill_confirmed",
+          "wall_ns": 1792831263443281400,
+          "monotonic_ns": 112333281000000,
+          "harness_pid": 23504,
+          "pid": 20004,
+          "returncode": 1
+        },
+        {
+          "event": "held_response_discarded",
+          "wall_ns": 1792831263514098700,
+          "monotonic_ns": 112333343000000,
+          "harness_pid": 23504,
+          "phase": "send",
+          "sent_bytes": 0
+        },
+        {
+          "event": "native_started",
+          "wall_ns": 1792831263646080300,
+          "monotonic_ns": 112333484000000,
+          "harness_pid": 23504,
+          "phase": "recovery",
+          "pid": 1700,
+          "command": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--verbose",
+            "--path",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-receipt-mbdiizus\\source\\game",
+            "--script",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-pr18-native-restart\\scripts\\native_transaction_restart_probe.gd"
+          ],
+          "cwd": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-receipt-mbdiizus\\source\\game",
+          "other_native_pids": []
+        }
+      ],
+      "journal_survived": true,
+      "original_request_bytes_equal_on_recovery": true
+    }
+  }
+}

@@ -1,0 +1,185 @@
+{
+  "economic_state": {
+    "audit": [
+      {
+        "action": "market_settled",
+        "actor": "69106eca-e517-4e7c-8ea9-e011d813edd6",
+        "created_at": "2026-10-24 04:40:47.375592-04:00",
+        "details": {
+          "fee": 12,
+          "from_player": "c1bf9ae6-de8e-44ef-bf4b-1f5e470e2f2b",
+          "item_id": "94831ba4-33ac-410f-b5d8-d37a66145da7",
+          "listing_id": "bcd963c4-9bba-434d-9731-998a2f9e53d1",
+          "to_player": "69106eca-e517-4e7c-8ea9-e011d813edd6"
+        },
+        "id": "0d61ce85-04fa-4910-bd1a-9bc8e31e3aa2"
+      },
+      {
+        "action": "listed",
+        "actor": "c1bf9ae6-de8e-44ef-bf4b-1f5e470e2f2b",
+        "created_at": "2026-10-24 04:40:45.389830-04:00",
+        "details": {
+          "item_id": "94831ba4-33ac-410f-b5d8-d37a66145da7",
+          "listing_id": "bcd963c4-9bba-434d-9731-998a2f9e53d1",
+          "price": 400
+        },
+        "id": "be8fa48e-1f2c-4571-8213-5894cf1aad47"
+      },
+      {
+        "action": "item_minted",
+        "actor": "c1bf9ae6-de8e-44ef-bf4b-1f5e470e2f2b",
+        "created_at": "2026-10-24 04:40:42.227544-04:00",
+        "details": {
+          "definition_id": "obsidian_rare",
+          "item_id": "94831ba4-33ac-410f-b5d8-d37a66145da7"
+        },
+        "id": "ecac41ff-13ca-4526-a4c6-138dfc69e602"
+      }
+    ],
+    "items": [
+      {
+        "acquired_at": "2026-10-24 04:40:42.222527-04:00",
+        "consumed": false,
+        "definition_id": "obsidian_rare",
+        "id": "94831ba4-33ac-410f-b5d8-d37a66145da7",
+        "owner_id": "69106eca-e517-4e7c-8ea9-e011d813edd6",
+        "pattern_seed": 1866701475,
+        "rarity": "Rare",
+        "reservation": null,
+        "variant": "standard",
+        "wear": 4024
+      }
+    ],
+    "ledger": [
+      {
+        "amount": -400,
+        "balance_after": 1600,
+        "created_at": "2026-10-24 04:40:47.365574-04:00",
+        "id": "44fb0f23-ea27-41d6-b5e4-6ce65fee3fc5",
+        "player_id": "69106eca-e517-4e7c-8ea9-e011d813edd6",
+        "reason": "market_purchase",
+        "reference": "bcd963c4-9bba-434d-9731-998a2f9e53d1"
+      },
+      {
+        "amount": 388,
+        "balance_after": 2388,
+        "created_at": "2026-10-24 04:40:47.365574-04:00",
+        "id": "57838988-c951-4842-a351-f7e063aeb610",
+        "player_id": "c1bf9ae6-de8e-44ef-bf4b-1f5e470e2f2b",
+        "reason": "market_sale",
+        "reference": "bcd963c4-9bba-434d-9731-998a2f9e53d1"
+      },
+      {
+        "amount": 2000,
+        "balance_after": 2000,
+        "created_at": "2026-10-24 04:40:42.216771-04:00",
+        "id": "a0503db1-d7c6-4d22-a1d4-618c3321cac4",
+        "player_id": "c1bf9ae6-de8e-44ef-bf4b-1f5e470e2f2b",
+        "reason": "fictional_test_fixture",
+        "reference": "receipt_ed1757c15040c7a8"
+      },
+      {
+        "amount": 2000,
+        "balance_after": 2000,
+        "created_at": "2026-10-24 04:40:42.126671-04:00",
+        "id": "db2ed9fd-7a70-4c31-8a4f-729d4e1301e2",
+        "player_id": "69106eca-e517-4e7c-8ea9-e011d813edd6",
+        "reason": "fictional_test_fixture",
+        "reference": "receipt_21dc07cc79ccdc64"
+      }
+    ],
+    "listings": [
+      {
+        "buyer_id": "69106eca-e517-4e7c-8ea9-e011d813edd6",
+        "id": "bcd963c4-9bba-434d-9731-998a2f9e53d1",
+        "item_id": "94831ba4-33ac-410f-b5d8-d37a66145da7",
+        "price": 400,
+        "seller_id": "c1bf9ae6-de8e-44ef-bf4b-1f5e470e2f2b",
+        "state": "sold"
+      }
+    ],
+    "loadouts": [],
+    "operations": [
+      {
+        "id": "69106eca-e517-4e7c-8ea9-e011d813edd6:buy:bcd963c4-9bba-434d-9731-998a2f9e53d1:7fe3e901-a046-4f33-b048-6a353e36b910",
+        "request_hash": "b1f1399e9931cd12aa72f9ff43558550cb68bfffeda7ac7f9fc5b86928e43df1",
+        "response": {
+          "credits": 1600,
+          "fee": 12,
+          "item": {
+            "acquired_at": "2026-10-24T04:40:42.222527-04:00",
+            "collection": "Obsidian",
+            "definition_id": "obsidian_rare",
+            "id": "94831ba4-33ac-410f-b5d8-d37a66145da7",
+            "kind": "weapon_skin",
+            "marketplace_eligible": true,
+            "name": "Obsidian / Carbon",
+            "pattern_seed": 1866701475,
+            "rarity": "Rare",
+            "reserved": false,
+            "trade_eligible": true,
+            "variant": "standard",
+            "wear": 0.4024
+          }
+        }
+      }
+    ],
+    "players": [
+      {
+        "active": true,
+        "credits": 1600,
+        "display_name": "receipt_21dc07cc79ccdc64",
+        "id": "69106eca-e517-4e7c-8ea9-e011d813edd6",
+        "last_trade": null,
+        "username": "receipt_21dc07cc79ccdc64",
+        "xp": 0
+      },
+      {
+        "active": true,
+        "credits": 2388,
+        "display_name": "receipt_ed1757c15040c7a8",
+        "id": "c1bf9ae6-de8e-44ef-bf4b-1f5e470e2f2b",
+        "last_trade": null,
+        "username": "receipt_ed1757c15040c7a8",
+        "xp": 0
+      }
+    ],
+    "rewards": [],
+    "trades": []
+  },
+  "postgresql": {
+    "clock_timestamp": "2026-10-24 04:40:50.125607-04:00",
+    "current_database": "sightbreak_receipt_e1b13d8620281b05_test",
+    "inet_server_port": 55439,
+    "pg_backend_pid": 18396,
+    "txid_current_snapshot": "2485:2485:",
+    "version": "PostgreSQL 17.11 on x86_64-windows, compiled by msvc-19.44.35229, 64-bit"
+  },
+  "sessions": [
+    {
+      "expires_at": "2026-10-25 04:40:42.216771-04:00",
+      "player_id": "c1bf9ae6-de8e-44ef-bf4b-1f5e470e2f2b",
+      "token_hash": "09e4a7eb09bcd01e57fdeb79b06d87539076b7c63a467978d00e9c8a8069d2e6"
+    },
+    {
+      "expires_at": "2026-10-25 04:40:42.125657-04:00",
+      "player_id": "69106eca-e517-4e7c-8ea9-e011d813edd6",
+      "token_hash": "5bf655cccb5ab543568d8d04f330776a46641109ef82c65fc5bc3d0e63d9abfe"
+    },
+    {
+      "expires_at": "2026-10-25 04:40:49.689675-04:00",
+      "player_id": "69106eca-e517-4e7c-8ea9-e011d813edd6",
+      "token_hash": "ab881d3ad6744c3b9d2acf1b9acc8e8ae2cf525798a02e987f68c3b7dca5076b"
+    },
+    {
+      "expires_at": "2026-10-25 04:40:47.093628-04:00",
+      "player_id": "69106eca-e517-4e7c-8ea9-e011d813edd6",
+      "token_hash": "c24de32edd2b2225df3870db6cdb4eb538f8b26f26baa67b89cf8c682e2a9c56"
+    },
+    {
+      "expires_at": "2026-10-25 04:40:48.430988-04:00",
+      "player_id": "69106eca-e517-4e7c-8ea9-e011d813edd6",
+      "token_hash": "e896e1da3ae6866978273b4cc109e6f8857204d2eba3346d4aeae01f9832b6d1"
+    }
+  ]
+}
