@@ -99,7 +99,7 @@ for name,change,basis in [
     before=deepcopy(template);after=deepcopy(before);change(after);run(name,before,after,False,basis)
 before=deepcopy(template);after=deepcopy(before);after['actors'][ally].update(alive=False,health=0)
 run('elimination_without_death_counter',before,after,False,'apply_damage emits one elimination, which increments victim deaths once.')
-before=deepcopy(template);before['actors'][ally].update(alive=False,health=0);after=deepcopy(before);after['actors'][ally].update(alive=True,health=100)
+before=deepcopy(template);before['actors'][ally].update(alive=False,health=0,deaths=1,velocity=[0,0,0]);after=deepcopy(before);after['actors'][ally].update(alive=True,health=100)
 run('action_revives_dead_actor',before,after,False,'No action in this interval revives an actor.')
 before=deepcopy(template);before['actors'][opponent]['credits']=8900;after=deepcopy(before);elimination(before,after,ally,opponent);after['actors'][opponent]['credits']=9200
 run('kill_credit_ignores_cap',before,after,False,'Repeated or single opposing awards use mini(9000, credits+300).')
