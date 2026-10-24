@@ -104,6 +104,7 @@ def main():
  sys.path.insert(0,str(a.source/'scripts'));from test_input_consumption_observation import declared_rows,text
  # Complete source witnesses and expectations are fixed before candidate import.
  cases=corpus(declared_rows('authority')[0]);client=declared_rows('client')
+ for row in client:row['wall_unix_msec']+=9000
  spec=importlib.util.spec_from_file_location('final_reader',a.source/'scripts/analyze_input_consumption.py');m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
  results=[]
  for case in cases:
