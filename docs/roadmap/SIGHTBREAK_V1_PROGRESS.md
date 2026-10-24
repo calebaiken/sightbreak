@@ -4,7 +4,7 @@ Last updated: 2026-10-24 (continuing recovered execution). Permanent tracker: [i
 
 Statuses: `NOT STARTED`, `IN PROGRESS`, `FAILED`, `VERIFIED`, `BLOCKED EXTERNALLY`. **Verified by** says who ran it. "Reported" means a source document says so and nobody on this line has re-run it. Reported results are not promoted to `VERIFIED` until someone re-runs them.
 
-## Current checkpoint — 2026-10-24 15:50 UTC
+## Current checkpoint — 2026-10-24 16:00 UTC
 
 The mission remains IN PROGRESS / PRIMARY in [issue25](https://github.com/calebaiken/sightbreak/issues/25).
 Root branch `codex/v1-executor-recovery-20261023`, draft PR31 over PR27; preserve
@@ -17,12 +17,16 @@ PR27→24→23→22→16 and contributor ownership. Runtime source remains exact
   with three inherited skips. All 32 old impossible completions reject and eight
   feasible siblings remain consistent. Whole-reader lifecycle foundation remains
   BLOCKED; the old connected fixture is source-inconsistent. Builder continues
-  emitter-derived foundation work. The 207-row replay is UNEXECUTED.
+  emitter-derived foundation work under prereg `2ac54432` on the same R7 branch.
+  Original constructors and twelve source snapshots are retained before edits.
+  Old-helper construction amendments need separate independent adjudication.
+  The 207-row replay is UNEXECUTED.
 - Ancestry source `8cc38cdc` / handoff `9807106c` is independently REJECTED
   `85cba435`: coarse birth ticks alias a reused PID, importing a foreign child in
   two pure schedules. Sixty-two maintained passes do not override that result.
-  Held-lifetime/API protection amendment `7b98abd8` is preregistered before code;
-  no guard change or native retry is released.
+  Held-lifetime/API protection amendment `7b98abd8` and zombie-accounting issue
+  `bc91e973` are recorded before code. Do not filter exited handles out of cleanup
+  and silently miss zombies. No guard change or native retry is released.
 - Shutdown receipt source `0f478a07` / handoff `99a864a8` is sealed for the existing
   independent critic. Builder reports 69 unique pure passes in each source view,
   source-derived receipt checks and corrected empty-directory wrapper staging.
@@ -31,18 +35,27 @@ PR27→24→23→22→16 and contributor ownership. Runtime source remains exact
 - Physical binding `ebc1a941` / critic `f05741f8` remains accepted only for its
   POSIX source slice. Binary codec `329d3ff5` / critic `9fa673ab` remains accepted
   only for exact transport. Neither qualifies native execution or the whole study.
-- Revised shutdown evidence contract is frozen/pushed in root `e73a5a2b`:
+- Revised shutdown evidence contract R2 is frozen/pushed in root `3698b545`:
   [decision](../reports/gauntlet/windows-shutdown-revised-contract-20261024/APPROVAL_SUMMARY.md).
-  It proposes a fixed evidence volume, quota-abort/inconclusive semantics and up
-  to ten sub-32 MiB artifacts / 160 MiB total. Independent feasibility review and
-  owner approval are pending. The old two-artifact count was our admission rule;
+  It proposes fixed storage (129 MiB backing plus 64 MiB outside staging/control,
+  193 MiB peak), quota-abort/inconclusive semantics and up to ten sub-32 MiB
+  artifacts / 160 MiB retrieved ZIP bytes. Preservation ends within 120 seconds
+  of collection cutoff even if stop/detach fails. Partial/unavailable failure
+  evidence is explicitly inconclusive. Original R1 `e73a5a2b` stays preserved;
+  its supported independent REVISE findings drive R2. Independent proposal review `96d85c93` accepts R2 as an honest bounded option
+  for owner decision; R1 remains REVISE. The coordinator has presented R2 to Caleb.
+  Owner approval is pending; no changed study or capability run may start. The old two-artifact count was our admission rule;
   32 MiB comes from the Sediment download tool, not an established GitHub quota.
   No changed study or capability run is authorized. Existing workflow390221868
   previously dispatched a feature ref; prepare that same registered path, never
   merge/register through main. Any rejected exact route blocks execution.
 - Windows math `b16b012d` / handoff `25603855` is SOURCE/BLOCKED: 85 builder pure
   passes per view, no native/capability/SDK/CI calls. Retention, service envelope,
-  source review and execution admission remain open.
+  source review and execution admission remain open. Existing independent reviewer
+  `/root/input_reader_r4_builder_20261024` has preregistered `e9b4f00e` before
+  tests in `/workspace/reviews/windows-fov-math-acquisition-independent-20261024`.
+  It did not implement this math component; receipt source review uses a different
+  critic. No fresh-thread or builder self-approval claim.
 
 Windows run40089125575 remains strict FAIL_WARNINGS / leak NONREPRODUCTION
 (critic `e88d2cb9`), despite successful workflow, player objectives, stock rounds

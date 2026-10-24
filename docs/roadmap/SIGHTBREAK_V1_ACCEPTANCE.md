@@ -20,11 +20,11 @@ signing, credentials and unavailable hosts stay explicitly blocked until observe
 A script, simulated match, software render or successful export cannot silently
 satisfy a different gate. No deployment, Steam publication or paid action is implied.
 
-Current source-only status at 15:50 UTC: R7 expiry component independently
+Current source-only status at 16:00 UTC: R7 expiry component independently
 accepts `09b2a1f7`; whole-reader foundation and actual replay remain blocked.
 Ancestry `8cc38cdc` independently fails `85cba435`. Receipt candidate `0f478a07`
-awaits the separate critic. The revised bounded capture contract `e73a5a2b` awaits
-feasibility review and owner approval; no changed study/capability execution is
+awaits the separate critic. Revised bounded capture R2 `3698b545` incorporates supported R1 findings and
+is accepted for owner decision by critic `96d85c93`; approval remains pending; no changed study/capability execution is
 released. These statuses close no whole release gate. Read the current checkpoint
 in the canonical progress record for exact branches, evidence and continuation.
 
