@@ -537,6 +537,12 @@ class ProducerLinks:
                 if event=='key_after':
                     if row.get('scope') in direct:
                         need(name=='Escape','unexpected scoped direct key')
+                        scope=row['scope']
+                        if scope=='saved_hud_analysis_cleanup':
+                            need(down is True and name not in held,'invalid HUD cleanup down')
+                            following=self.actions[index+1] if index+1<len(self.actions) else {}
+                            need(following.get('event')=='key_after' and following.get('key')=='Escape' and following.get('down') is False and following.get('scope')=='saved_hud_analysis','HUD cleanup down lacks direct release')
+                        else:need(down is False and name in held,'direct Escape release was not held')
                     else:
                         previous=self.actions[index-1] if index else {}
                         need(previous.get('event')=='key_before' and previous.get('key')==name and previous.get('down') is down,'normal key edge lacks its before action')
