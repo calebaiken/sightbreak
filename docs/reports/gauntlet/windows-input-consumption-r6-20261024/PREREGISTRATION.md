@@ -90,3 +90,23 @@ and physical bytes including sparse omissions. Disclose initialized-depth object
 storage and preserve setup failures. Freeze/push source then sealed builder
 evidence for a different independent critic. Builder checks cannot approve
 source readiness or any native/release gate.
+
+## Independently adjudicated fixture expansion before edits
+
+The R5 critic independently confirmed two older positive contradictions from
+exact old bytes and InputStream source. Preserve both old inputs and verdicts.
+
+The maintained queued-duplicate positive copies an original received queue0
+after its first acceptance has already queued1, without any pop/skipped change.
+Minimum correction is duplicate[0].queue_count=1 before restamp. Keep the duplicate
+acceptance queue1, immutable original fireTrue, all mutations and assertion ASTs.
+The old state test source and first failing focused output are retained here.
+
+The prior normalized consumption_outside_accepted_batch positive has known
+queue[21,22], only one pop and skipped0, but consumes22; its next tick also
+regresses ACK22 to21. Label that exact source-inconsistent positive obsolete.
+Add a distinct source-faithful version that keeps latest accepted22/A2/R2,
+consumes21 with matching actor/ACK21 and queue1 retaining22, and carries those
+consumed fields/queue through the terminal tick. This preserves the useful
+distinction between latest accepted metadata and actual popped intent without
+inventing packet identity. Do not change the historical case or expectation.
