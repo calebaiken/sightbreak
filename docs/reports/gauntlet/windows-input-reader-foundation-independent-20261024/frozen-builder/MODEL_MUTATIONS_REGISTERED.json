@@ -1,0 +1,65 @@
+{
+  "scope": "pure model mutation controls, no reader alteration",
+  "mutations": [
+    {
+      "id": "connection-deadline",
+      "old": "deadline=now+JOIN",
+      "new": "deadline=now+JOIN+1",
+      "method": "test_delayed_successful_connection_capture_is_not_forced_age_zero"
+    },
+    {
+      "id": "generation-increment",
+      "old": "self.generation+=1",
+      "new": "self.generation+=2",
+      "method": "test_failed_duplicate_hook_does_not_invent_new_generation_timer_or_forget"
+    },
+    {
+      "id": "admission-equality",
+      "old": "now<entry['deadline']",
+      "new": "now<=entry['deadline']",
+      "method": "test_begin_join_and_admission_use_strict_original_deadline"
+    },
+    {
+      "id": "idle-equality",
+      "old": "now-entry['last_input']<IDLE",
+      "new": "now-entry['last_input']<=IDLE",
+      "method": "test_active_and_allow_gate_boundaries_and_rate_window_are_literal"
+    },
+    {
+      "id": "reject-moves-again",
+      "old": "if entry and not entry['rejected']:entry.update(rejected=True,deadline=now+REJECT)",
+      "new": "if entry:entry.update(rejected=True,deadline=now+REJECT)",
+      "method": "test_rejection_is_absorbing_and_repeated_reject_does_not_move_deadline"
+    },
+    {
+      "id": "admission-no-activity",
+      "old": "if allowed:self.peers[peer].update(joined=True,last_input=now)",
+      "new": "if allowed:self.peers[peer].update(joined=True)",
+      "method": "test_begin_join_and_admission_use_strict_original_deadline"
+    },
+    {
+      "id": "sticky-actor-reset",
+      "old": "if peer in self.actors:self.last_actor=self.actors[peer]",
+      "new": "self.last_actor=self.actors.get(peer,0)",
+      "method": "test_selected_peer_and_sticky_last_actor_are_distinct"
+    },
+    {
+      "id": "forget-before-hook",
+      "old": "row=self.capture('peer_disconnected',capture,peer)\n        self.lifecycle.forget(peer);self.actors.pop(peer,None)",
+      "new": "self.lifecycle.forget(peer);self.actors.pop(peer,None)\n        row=self.capture('peer_disconnected',capture,peer)",
+      "method": "test_disconnect_captures_before_forget_and_reconnect_has_new_timer_generation"
+    },
+    {
+      "id": "expiry-equality",
+      "old": "now>=entry['deadline']",
+      "new": "now>entry['deadline']",
+      "method": "test_source_expired_predicate_boundaries_with_joined_rejected_priority"
+    },
+    {
+      "id": "capacity-eleventh",
+      "old": "len(self.peers)>=MAX_PEERS",
+      "new": "len(self.peers)>MAX_PEERS",
+      "method": "test_capacity_hook_has_absent_projection_and_no_generation_increment"
+    }
+  ]
+}

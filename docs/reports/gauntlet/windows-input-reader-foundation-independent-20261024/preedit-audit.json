@@ -1,0 +1,113 @@
+{
+  "scope": "Pre-edit model/constructor preservation audit only",
+  "source": "72868589eaf343f10c5df47f92de7372baec5f5b",
+  "handoff": "9e3b85db1814a7e06c1306da10cce2fcdb9e7984",
+  "base": "2d4214c4d3314df568796f0a6f3a38fc357db318",
+  "non_doc_union": 519,
+  "protected_existing_paths": 517,
+  "all_physical_bytes_Gitmodes_exact": true,
+  "reader_sha256": "d2cab3af7e441615a37caedb259b1311eb0b5b1cde46719c1000181223facba1",
+  "original_test_methods": 105,
+  "original_assertion_calls": 226,
+  "all_original_test_files_byte_exact": true,
+  "source_snapshots_exact": 12,
+  "builder_sealed_members": 36,
+  "builder_manifest_also_retained": true,
+  "original_fixtures": [
+    {
+      "role": "authority",
+      "rows": 7,
+      "original_framed_sha256": "f72de48f96e1f21f9055651cab25d99959de26b1c4df99e336941c0a3f0b6b42"
+    },
+    {
+      "role": "client",
+      "rows": 7,
+      "original_framed_sha256": "751af7160625104ac7f7b182e677477f8dd075a87a270b04423d028856c24526"
+    }
+  ],
+  "exact_six_row_proposal_matches_independent_witness": true,
+  "changed_fields": 10,
+  "delta": [
+    {
+      "index": 2,
+      "reason": "peer_connected",
+      "changes": {
+        "input_age_msec": {
+          "old": -1,
+          "proposed": 0
+        },
+        "deadline_remaining_msec": {
+          "old": -1,
+          "proposed": 20000
+        }
+      }
+    },
+    {
+      "index": 3,
+      "reason": "peer_bound",
+      "changes": {
+        "deadline_remaining_msec": {
+          "old": 20000,
+          "proposed": 19000
+        }
+      }
+    },
+    {
+      "index": 4,
+      "reason": "input_received",
+      "changes": {
+        "input_age_msec": {
+          "old": 0,
+          "proposed": 5000
+        },
+        "deadline_remaining_msec": {
+          "old": 20000,
+          "proposed": 14000
+        }
+      }
+    },
+    {
+      "index": 5,
+      "reason": "input_accepted",
+      "changes": {
+        "deadline_remaining_msec": {
+          "old": 20000,
+          "proposed": 13000
+        }
+      }
+    },
+    {
+      "index": 6,
+      "reason": "input_consumed",
+      "changes": {
+        "input_age_msec": {
+          "old": 0,
+          "proposed": 1000
+        },
+        "deadline_remaining_msec": {
+          "old": 20000,
+          "proposed": 12000
+        }
+      }
+    },
+    {
+      "index": 7,
+      "reason": "authority_tick",
+      "changes": {
+        "input_age_msec": {
+          "old": 0,
+          "proposed": 2000
+        },
+        "deadline_remaining_msec": {
+          "old": 20000,
+          "proposed": 11000
+        }
+      }
+    }
+  ],
+  "native_executed": false,
+  "new207_replay_executed": false,
+  "cpu_affinity": [
+    4
+  ]
+}
