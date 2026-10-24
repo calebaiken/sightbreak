@@ -54,3 +54,16 @@ down's next emitted action is the direct saved_hud_analysis up (the sleep emits
 no action). Preserve generic already-up key(False) pairs, and all existing valid
 direct release controls. Repeat the exact188 after that correction as a new
 iteration, with original r4 unchanged. This is a source/model failure, not native.
+
+Additional actual-format witness before schema repair: source
+offline_diagnostics.gd:160–161 obtains draw_calls_last_rendered_frame and
+primitives_last_rendered_frame from Performance.get_monitor (floating values).
+Both unchanged archived initial events have JSON floats in those fields; old0f
+and current model incorrectly require integers. Retain file hashes, exact
+primitive errors and bounded type projections before correcting only these two
+monitor fields to finite nonnegative numeric values. Engine frame counters stay
+integers. Accepting those snapshot fields is not strict study/archive approval:
+warnings and missing new receipts still forbid that. No full207-row reader runs.
+The old synthetic fixture's integer monitor samples remain historical; any new
+float-valued fixture construction belongs in the next independent proposal, not
+an unadjudicated edit to the original helper.
