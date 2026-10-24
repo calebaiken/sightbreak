@@ -41,3 +41,33 @@ actual verdict and preservation scope, root's retained qualifier-creation
 receipts and a subsequent committed/pushed root release. The local742-check
 preflight does not enable the collector. No Windows workflow was dispatched by
 this critic, and no native/engine/export/observer/signal/cleanup operation ran.
+
+The independent local preflight final `22b287296f8c7580f4bbf6afc577b9b83a6a6eb4`
+was read after initial actual preregistration `728906f9`. Its scoped ACCEPT
+contains one actual742/0 movement row, pinned engine compilation and exercised
+API subset,2668 independent predicates and all25 raw plus one outer archive
+member. Archive3,459,108B SHA256
+`f035e36afffd7f16ace853b039d06e8beae375394545071e98db989946d5c591`.
+No enabling flag ran. Enabled polling/multiplayer/serialization/cap/emission,
+the external integration fixture, Windows and overhead remain unexecuted.
+Version subprocess raw stdout/stderr were not retained. Finite process coverage
+and one empty cleanup observation cannot establish every short/escaped process.
+Its ACCEPT grants no further launch.
+
+`bind_source.py` runs read-only on CPU4 and binds all507 materialized non-doc
+paths/modes/Git blobs/SHA256 bytes,138 UIDs, unchanged HEAD/index/source and exact
+remote qualifier. Complete GitHub connector workflow content decodes to18,531
+bytes, SHA256
+`5f59b1e2eb4d1b945c0bf3958d403d3d0166ae7ce8e01a5488e29e9171b62c7a`,
+equal to exact candidate workflow bytes. The separately labeled Git blob is
+`246f63a1bb01c3cb5db4c02765139511ae476fba`; it is not a SHA256. The source game
+tree is `bca627d5dc8e4482b63e263020a6382f2d36f33c`. Report/connector raw source
+receipts contain no new workflow execution output.
+
+A narrow delegated read-only inventory independently confirms original limits
+and source suite expectations. Current documentation-only HEAD728906f9 has no
+relevant source difference from c324. Its objective helper explicitly permits
+one60Hz tick tolerance; preregistration wording is corrected before actual
+Windows output to preserve that original condition. No exact-tick assumption
+replaces the source predicate. Expected total29,567 remains an expectation,
+not an assertion-count gate invented by the original runner.
