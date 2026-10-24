@@ -128,3 +128,23 @@ changes still require the DIFFERENT critic's adjudication before old fixture/
 helper edits. Source/default driver/binding/ownership/retention gates stay exact.
 Any original-format positives rejected for newly confirmed source contradictions
 must be explicitly reported as obsolete, with their original outcomes retained.
+
+## Construction decision2904, before the permitted edits
+
+Independent decision2904c50250c7f17abc45089c4b4b276ca3ad3aa6 binds63021 exactly.
+It permits ONLY reload_before _snapshot20500→20000, the named new30 coherent301
+after-query=finish+.01, and its receipt-error Path.open adapter. Apply those exact
+three changes after this registration checkpoint, preserving original callbacks,
+all assertions/methods/old28/helper/Owner. Validate that the new fault hits actual
+exclusive receipt open after the original fake invocation. Retain r1 old-wrapper
+5pass/1obsolete-fault failure separately. This is construction-only, not source
+approval. The critic rejects the proposed compiler/call; neither may be applied
+or executed.63021 draft remains exact and unexecuted.
+
+Revision needs a complete source-derived required/conditional operation inventory
+and one persistent held-key state, including normal key edges, direct scoped
+Escape releases, focus W/button/loss/restore edges, deploy edges and the declared
+Windows route/pulse branch. Frame/clock/receipt links come from the same graph;
+do not retime callback/owner/close data to make it fit. Derive inertia iteration
+counts from declared states. Further construction deltas require a new exact
+pre-edit proposal and independent adjudication.
