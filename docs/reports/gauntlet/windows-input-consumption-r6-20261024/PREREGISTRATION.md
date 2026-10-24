@@ -129,3 +129,27 @@ the source transition, infer that unselected stream state. UNKNOWN is reserved
 for unresolved state/context, not imposed merely because the row selects a
 different peer. Add source-faithful pure controls for these abstraction cases
 before calling the implementation ready; preserve earlier outputs unchanged.
+
+## Persistent receipt constraints before relational-state edits
+
+The independent isolated model assessment `239792ce` found that per-key unknown
+flags also lose correlations. For a unique first receipt of keys1/2 with fire
+aggregate1, two later pops cannot both report false or both true. Retain one
+persistent feasible receipt history, not fresh independent body possibilities
+on each observation. Preserve the sealed prototypes and aggregate oracle.
+
+Each proved local acceptance records its number N of newly inserted unique keys.
+For raw count M and action aggregate S, authoritative new-key flags sum within
+[max(0,S-(M-N)),min(N,S)]; ignored/stale/duplicate command occurrences account for
+the remaining slots. Preserve that joint budget across observed pops. Keep all
+feasible key-origin alternatives; never pick an arbitrary packet identity.
+Sequence-origin feasibility uses each receipt's ACK window, endpoint obligations,
+unique integer keys, known first-seen origins and current live/removed cardinality.
+An internal bounded integral-flow check can validate those assignments using only
+the Python standard library. Overflow or unresolved local call decomposition is
+UNKNOWN/incomplete. No new package/runtime dependency is permitted.
+
+Record proved ownership of individual observed accept/pop counter increments so
+global progress from peer A is not attributed to B at its next selected row.
+Preserve the source-valid foreign-pop trace and all original invalid models.
+Add joint-budget direct/coalesced positives and counterfactuals before source freeze.
