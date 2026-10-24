@@ -40,7 +40,7 @@ class Sink:
 class Job:
  def __init__(self,clock,root,mode):
   self.clock,self.process,self.mode=clock,root,mode;self.pid=100;self.created=False;self.calls=0;self.closed=False;self.close_calls=0
-  self.handles={};self.owned=[];self.extra_alive='unexpected' in mode;self.extra_seen=self.extra_alive
+  self.handles={};self.owned=[];self.extra_alive=False;self.extra_seen=False
   self.extra=Handle('unexpected-child-held-handle',502);self.controller=dict(pid=100,birth=10000,exited=False,exit_code=259,exit_time=0,kernel_time=0,user_time=0)
   self.baseline=dict(total=1,active=1,terminated=0,page_faults=0,ids=[100])
  def sample(self):
@@ -69,22 +69,28 @@ class Job:
   self.closed=True
 class Streams:
  def __init__(self,out,clock,root,mode):
-  self.clock,self.process,self.mode=clock,root,mode;self.calls=0;self.position=0;self.eof=dict.fromkeys(w.LIMITS,False)
+  self.clock,self.process,self.mode=clock,root,mode;self.calls=0;self.state_calls=0;self.position=0;self.eof=dict.fromkeys(w.LIMITS,False)
+  self.input=RAW if mode!='overflow' else RAW+b'X'*(w.LIMITS['stdout']-len(RAW)+1)
   self.files={name:Sink(out/(name+'.log'),fail_close=name=='stdout' and 'close_error' in mode,fail_flush=name=='stdout' and mode=='flush_error') for name in w.LIMITS}
-  self.pipes={};self.counts=dict.fromkeys(w.LIMITS,0);self.retained=dict(self.counts);self.errors={}
- def attach(self,process):assert process is self.process;self.pipes={'stdout':process.stdout,'stderr':process.stderr}
+  self.pipes={};self.counts=dict.fromkeys(w.LIMITS,0);self.retained=dict(self.counts);self.errors={};self.nonblocking=set()
+  self.set_blocking=lambda fd,value:None
+  def read(fd,size):
+   if fd==901 and self.position<len(self.input):
+    block=self.input[self.position:self.position+size];self.position+=len(block);return block
+   if self.process.poll() is not None and self.mode!='no_eof':return b''
+   raise BlockingIOError()
+  self.read=read
+ def attach(self,process):
+  assert process is self.process;w.PipeRetention.attach(self,process)
  def poll(self,deadline,clock):
   self.calls+=1
-  if self.mode=='pipe_error' and self.calls==2:raise OSError('later modeled pipe error')
-  if self.position<len(RAW):
-   block=RAW[self.position:self.position+65536];self.position+=len(block);self.files['stdout'].write(block);self.counts['stdout']+=len(block);self.retained['stdout']+=len(block)
-  if self.process.poll() is not None and self.position==len(RAW) and self.mode!='no_eof':self.eof=dict.fromkeys(w.LIMITS,True)
-  return self.mode=='overflow' and self.calls>=3
+  if self.mode=='pipe_error' and self.calls==2:raise OSError('later modeled pipe read error')
+  return w.PipeRetention.poll(self,deadline,clock)
  def state(self):
-  if self.mode=='state_error':raise OSError('modeled stream state error')
-  return dict(eof=dict(self.eof),complete=all(self.eof.values()) and not(self.mode=='overflow' and self.calls>=3))
+  self.state_calls+=1
+  if self.mode=='state_error' and self.state_calls==2:raise MemoryError('modeled final-state allocation interruption')
+  return w.PipeRetention.state(self)
  def close(self):
-  # Execute the actual source close ordering over four DISTINCT resources.
   w.PipeRetention.close(self)
   if self.mode=='late_close':self.clock.sleep(2.)
  def force(self):
@@ -101,7 +107,10 @@ def model(mode):
   captured=[];original=w.Audit
   class CapturedAudit(original):
    def __init__(self,*args):super().__init__(*args);captured.append(self)
-  def spawn(command,**options):job.created=True;return process
+  def spawn(command,**options):
+   job.created=True
+   if 'unexpected' in mode:job.extra_alive=True;job.extra_seen=True
+   return process
   result=None;escaped=None
   try:
    with patch.object(w,'Audit',CapturedAudit):result=w.execute_prepared(out/w.MEMBER,target,out,PAYLOAD,101,clock=clock,sleep=clock.sleep,process_factory=spawn,job_factory=lambda:job,stream_factory=lambda path:streams)
@@ -111,7 +120,7 @@ def model(mode):
   expected_pass=mode=='normal';structured=isinstance(result,dict);expected_audit=mode in ('normal','pipe_error','query_error','unexpected')
   obligations=dict(structured_failed_or_success_return=structured and result['passed']==expected_pass,owned_close_attempted=job.closed,final_times_recorded=structured and 'finished' in result and 'elapsed' in result)
   if expected_audit:obligations['prefailure_audit_retained']=structured and result.get('audit')==audit
-  row=dict(name=mode,source_scope='injected source lifecycle only; no native process',input=dict(root_pid=200,root_handle=501,root_birth=20000,controller_pid=100,controller_birth=10000,extra_pid=300,extra_handle=502,extra_birth=25000,deadline=101,raw_bytes=len(RAW),raw_sha256=hashlib.sha256(RAW).hexdigest(),distinct_objects=True),expected_pass=expected_pass,result=result,escaped=escaped,actual_source_audit=audit,resources=resources,obligations=obligations,matched=all(obligations.values()))
+  row=dict(name=mode,source_scope='injected source lifecycle only; no native process',input=dict(root_pid=200,root_handle=501,root_birth=20000,controller_pid=100,controller_birth=10000,extra_pid=300,extra_handle=502,extra_birth=25000,deadline=101,raw_bytes=len(streams.input),raw_sha256=hashlib.sha256(streams.input).hexdigest(),canonical_math_raw_sha256=hashlib.sha256(RAW).hexdigest(),input_spec='canonical RAW plus ASCII X to8MiB+1' if mode=='overflow' else 'canonical RAW',distinct_objects=True),expected_pass=expected_pass,result=result,escaped=escaped,actual_source_audit=audit,resources=resources,obligations=obligations,matched=all(obligations.values()))
   streams.force();return row
 rows=[model(mode) for mode in ('normal','close_error','unexpected_close_error','state_error','flush_error','late_close','pipe_error','query_error','unexpected','no_eof','overflow')]
 # Direct actual PipeRetention.close: first error must not skip three later resources.
@@ -127,6 +136,9 @@ obj=w.PipeRetention.__new__(w.PipeRetention);obj.files=dict(zip(('stdout','stder
 try:obj.close();error=None
 except OSError as e:error=str(e)
 rows.append(dict(name='direct_pipe_close_first_error',error=error,resources=[vars(r) for r in resources],matched=all(r.attempts==1 for r in resources),scope='source finalizer objects, no OS descriptors'))
+healthy=[CloseWitness('healthy-stdout-sink'),CloseWitness('healthy-stderr-sink'),CloseWitness('healthy-stdout-pipe'),CloseWitness('healthy-stderr-pipe')]
+obj=w.PipeRetention.__new__(w.PipeRetention);obj.files=dict(zip(('stdout','stderr'),healthy[:2]));obj.pipes=dict(zip(('stdout','stderr'),healthy[2:]));obj.close()
+rows.append(dict(name='direct_pipe_close_healthy',resources=[vars(r) for r in healthy],matched=all(r.attempts==1 and r.closed for r in healthy),scope='valid direct source close pair'))
 # Actual close_held over two independent held handle IDs, fake kernel only.
 class Kernel:
  def __init__(self):self.attempts=[]
@@ -139,6 +151,11 @@ job.ok=checked
 try:job.close_held();error=None
 except OSError as e:error=str(e)
 rows.append(dict(name='direct_held_close_first_error',error=error,attempts=job.k.attempts,held_after=job.owned_handles,matched=job.k.attempts==[501,502],scope='fake CloseHandle function, no Windows API'))
+class HealthyKernel:
+ def __init__(self):self.attempts=[]
+ def CloseHandle(self,h):self.attempts.append(h);return 1
+job=w.WindowsJob.__new__(w.WindowsJob);job.k=HealthyKernel();job.owned_handles=[501,502];job.ok=checked;job.close_held()
+rows.append(dict(name='direct_held_close_healthy',attempts=job.k.attempts,held_after=job.owned_handles,matched=job.k.attempts==[501,502] and job.owned_handles==[],scope='valid fake handle source close pair'))
 # API robustness only. These snapshots lack an established single-controller
 # creation history for1->2, and cannot support a native/source verdict by themselves.
 for first,final in ((1,1),(1,2),(2,2)):

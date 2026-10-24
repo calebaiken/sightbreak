@@ -115,3 +115,10 @@ is a single final-state allocation exception after a successful body check, not
 an invented persistent IO operation in the pure state function. No candidate
 source or target changes. The unestablished final-total schedule remains model-
 only, excluded from verdict; all earlier outputs stay intact.
+
+Final corpus adds explicit healthy direct-close pairs for the two failing direct
+resource functions and records overflow's ACTUAL deterministic input bytes/hash,
+not only its canonical-math prefix reference. R1/R2 scripts/results remain exact.
+This changes no candidate target or failure oracle; it closes fixture provenance
+and demonstrates the valid direct-close controls. Source verdict still excludes
+the unestablished1→2 lifecycle case.
