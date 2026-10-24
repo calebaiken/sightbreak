@@ -99,9 +99,9 @@ const RELAY_AR_UPRIGHT_OFFSET := Vector3(0, -0.015, -0.07)
 const RELAY_AR_PIVOT := Vector3(0.0, 0.0, -0.19)
 ## The Kestrel 9's placement, fitted in the same way (a larger scale than the rifle's 1.0: a real-scale pistol is
 ## 0.195 m long and would read small beside a viewmodel field of view built for a 0.95 m rifle).
-static var kestrel_9_scale := 1.1
+static var kestrel_9_scale := 1.05
 static var kestrel_9_rotation := Vector3(0.025, 0.07, -0.03)
-static var kestrel_9_offset := Vector3(-0.085, 0.185, 0.03)
+static var kestrel_9_offset := Vector3(-0.085, 0.160, 0.03)
 ## A pistol's flash is smaller than a rifle's: the shared flash mesh is sized for the rifle and covered the pistol's sights.
 const KESTREL_9_FLASH_SCALE := 0.62
 ## The tan magazine bakes to a dark brown (mean sRGB 84, 77, 66) under the grime and contact occlusion; this gain brings it
@@ -110,6 +110,8 @@ const KESTREL_9_MAGAZINE_GAIN := 1.7
 ## The pistol's graphite frame is what the player sees between the hands, so it is darkened less than the rifle's grip
 ## (GRIP_DARKEN 0.24 drew a black column in shade and against the sun) and keeps a fill floor so it keeps its form.
 const KESTREL_9_GRIP_DARKEN := 0.55
+## Albedo gain of the slide and the small parts (the rifle uses 0.84): the slide drew as one near-black mass in shade.
+const KESTREL_9_GAIN := 1.15
 const KESTREL_9_UPRIGHT_OFFSET := Vector3(0, 0.0, -0.02)
 ## Balance point between the hands in the GLB's axes (barrel along -Z): about the middle of the grip.
 const KESTREL_9_PIVOT := Vector3(0.0, -0.02, -0.06)
@@ -659,10 +661,10 @@ func _build_authored_pistol() -> Vector3:
 	_detail_normal = KESTREL_9_NORMAL
 	_detail_albedo = KESTREL_9_ALBEDO
 	var pistol := _authored_nodes(KESTREL_9, placement)
-	var material: Material = ViewmodelShading.surface(KESTREL_9_TEXTURES, 0.84, 0.60) if _hands else load(KESTREL_9_MATERIAL)
+	var material: Material = ViewmodelShading.surface(KESTREL_9_TEXTURES, KESTREL_9_GAIN, 0.60) if _hands else load(KESTREL_9_MATERIAL)
 	var grip_material: Material = material
 	if _hands:
-		grip_material = ViewmodelShading.surface(KESTREL_9_TEXTURES, 0.84 * KESTREL_9_GRIP_DARKEN, 0.60)
+		grip_material = ViewmodelShading.surface(KESTREL_9_TEXTURES, KESTREL_9_GAIN * KESTREL_9_GRIP_DARKEN, 0.60)
 		(grip_material as ShaderMaterial).set_shader_parameter("viewmodel_lift", 0.35)
 		(grip_material as ShaderMaterial).set_shader_parameter("viewmodel_floor", 0.22)
 	else:
@@ -670,7 +672,7 @@ func _build_authored_pistol() -> Vector3:
 		(grip_material as BaseMaterial3D).albedo_color = Color(0.86 * KESTREL_9_GRIP_DARKEN, 0.86 * KESTREL_9_GRIP_DARKEN, 0.86 * KESTREL_9_GRIP_DARKEN)
 	var magazine_material: Material = material
 	if _hands:
-		magazine_material = ViewmodelShading.surface(KESTREL_9_TEXTURES, 0.84 * KESTREL_9_MAGAZINE_GAIN, 0.90)
+		magazine_material = ViewmodelShading.surface(KESTREL_9_TEXTURES, KESTREL_9_GAIN * KESTREL_9_MAGAZINE_GAIN, 0.90)
 	else:
 		magazine_material = (load(KESTREL_9_MATERIAL) as BaseMaterial3D).duplicate()
 		(magazine_material as BaseMaterial3D).albedo_color = Color(0.86, 0.86, 0.86) * KESTREL_9_MAGAZINE_GAIN
