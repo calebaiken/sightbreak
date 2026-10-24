@@ -9,6 +9,7 @@ from pathlib import Path
 import selectors
 import shutil
 import signal
+import stat
 import subprocess
 import sys
 import time
@@ -40,23 +41,86 @@ def digest(path):
         return hashlib.file_digest(stream,'sha256').hexdigest()
 
 
+def physical_source_file(path, expected, mode, *, deadline, clock):
+    """POSIX double-read/ctime invariant from ebc1a941; no atomic snapshot claim."""
+    def budget():require(deadline-clock()>0,'source binding exceeded whole deadline')
+    path=Path(path);budget();before=path.lstat();budget()
+    require(stat.S_ISREG(before.st_mode) and not path.is_symlink(),'source must be a regular physical file: '+str(path))
+    require(mode in ('100644','100755'),'unsupported source mode: '+mode)
+    actual=path.read_bytes();budget();after=path.lstat();budget()
+    def identity(value):
+        return (value.st_dev,value.st_ino,value.st_size,value.st_mtime_ns,value.st_ctime_ns,value.st_mode)
+    require(identity(before)==identity(after),'source changed during physical read: '+str(path))
+    repeated=path.read_bytes();budget();final=path.lstat();budget()
+    require(actual==repeated and identity(before)==identity(final),'source changed during physical read: '+str(path))
+    require(actual==expected,'physical source bytes differ: '+str(path))
+    measured_mode='100755' if before.st_mode & stat.S_IXUSR else '100644'
+    require(measured_mode==mode,'physical source executable mode differs: '+str(path))
+    return dict(bytes=len(actual),sha256=hashlib.sha256(actual).hexdigest(),canonical_sha256=hashlib.sha256(expected).hexdigest(),
+                canonical_mode=mode,physical_mode=measured_mode,checkout_conversion='none',read_observations=2,
+                change_metadata_scope='POSIX st_ctime_ns',mode_scope='POSIX owner executable bit')
+
+
+def source_tree(raw):
+    require(type(raw) is bytes and raw.endswith(b'\0'),'missing/truncated source tree')
+    result=[];paths=set()
+    for item in raw.split(b'\0')[:-1]:
+        require(item and b'\t' in item,'malformed source tree record')
+        header,name=item.split(b'\t',1);fields=header.split(b' ')
+        require(len(fields)==3,'malformed source tree identity')
+        mode,kind,blob=fields
+        require(name and not name.startswith(b'/') and all(part not in (b'',b'.',b'..') for part in name.split(b'/')),'unsafe source tree path')
+        if name.startswith(b'docs/'):continue
+        require(mode in (b'100644',b'100755') and kind==b'blob','unsupported non-document source object')
+        require(len(blob)==40 and all(c in b'0123456789abcdef' for c in blob),'invalid frozen source blob')
+        path=os.fsdecode(name)
+        require(path not in paths,'duplicate non-document source path')
+        paths.add(path);result.append(dict(path=path,mode=mode.decode('ascii'),blob=blob.decode('ascii')))
+    require(result and set(COMPONENT)<=paths,'frozen tree lacks required component source')
+    return result
+
+
+def source_blobs(raw, requested):
+    require(type(raw) is bytes,'binary source blob batch required')
+    result={};offset=0
+    for blob in requested:
+        end=raw.find(b'\n',offset);require(end>=offset,'truncated source blob header')
+        fields=raw[offset:end].split(b' ')
+        require(len(fields)==3 and fields[0]==blob.encode('ascii') and fields[1]==b'blob','source blob header mismatch')
+        size=fields[2];require(size and size.isdigit(),'invalid source blob length')
+        count=int(size);start=end+1;stop=start+count
+        require(stop<len(raw) and raw[stop:stop+1]==b'\n','truncated source blob bytes')
+        value=raw[start:stop]
+        require(hashlib.sha1(b'blob '+str(count).encode('ascii')+b'\0'+value).hexdigest()==blob,'source blob bytes do not match frozen identity')
+        result[blob]=value;offset=stop+1
+    require(offset==len(raw),'unexpected trailing source blob batch')
+    return result
+
+
 def source_binding(expected,*,deadline,clock=time.monotonic):
     def remaining():
         value=deadline-clock()
-        require(value>0,"source binding exceeded whole deadline")
+        require(value>0,'source binding exceeded whole deadline')
         return value
-    require(len(expected)==40 and all(c in '0123456789abcdef' for c in expected),'full frozen source required')
-    actual=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True,timeout=remaining()).strip()
+    require(type(expected) is str and len(expected)==40 and all(c in '0123456789abcdef' for c in expected),'full frozen source required')
+    require(os.name=='posix','POSIX physical source binding required')
+    def git(*args,**options):
+        return subprocess.check_output(['git',*args],cwd=ROOT,timeout=remaining(),**options)
+    actual=git('rev-parse','HEAD',text=True).strip()
     require(actual==expected,'source HEAD mismatch')
-    for staged in (False,True):
-        command=['git','diff',*(['--cached'] if staged else []),'--quiet','--','.',':!docs/']
-        require(subprocess.run(command,cwd=ROOT,timeout=remaining()).returncode==0,'source has tracked non-doc changes')
-    extras=subprocess.check_output(['git','ls-files','--others','--exclude-standard','--',*COMPONENT],cwd=ROOT,timeout=remaining())
-    require(not extras,'untracked component source')
-    files={}
-    for path in COMPONENT:
-        remaining();files[path]=digest(ROOT/path);remaining()
-    return dict(commit=actual,files=files)
+    records=source_tree(git('ls-tree','-r','-z','--full-tree',expected))
+    requested=list(dict.fromkeys(record['blob'] for record in records))
+    canonical=source_blobs(git('cat-file','--batch',input=''.join(blob+'\n' for blob in requested).encode('ascii')),requested)
+    physical={}
+    for record in records:
+        remaining()
+        physical[record['path']]=physical_source_file(ROOT/record['path'],canonical[record['blob']],record['mode'],deadline=deadline,clock=clock)
+    require(git('rev-parse','HEAD',text=True).strip()==expected,'source HEAD changed during physical binding')
+    remaining()
+    files={path:physical[path]['sha256'] for path in COMPONENT}
+    union=hashlib.sha256(json.dumps(records,sort_keys=True,separators=(',',':'),ensure_ascii=True).encode('ascii')).hexdigest()
+    return dict(commit=actual,files=files,non_doc_paths=len(records),non_doc_union_sha256=union,physical_sources=physical,
+                physical_scope='Every tracked non-document regular file; exact Git bytes/POSIX owner executable bit; two reads plus ctime observations; no atomic snapshot or loaded-bytecode proof')
 
 
 class LinuxKernel:

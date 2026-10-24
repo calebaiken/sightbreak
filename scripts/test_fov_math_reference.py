@@ -307,17 +307,33 @@ class SupervisorControls(unittest.TestCase):
 
     def test_source_git_children_receive_only_remaining_whole_deadline(self):
         clock=FakeClock();timeouts=[]
-        def output(command,**options):
-            timeouts.append(options['timeout']);clock.sleep(.1)
-            return 'a'*40 if options.get('text') else b''
-        def run(command,**options):
-            timeouts.append(options['timeout']);clock.sleep(.1);return SimpleNamespace(returncode=0)
-        with patch.object(acquisition.subprocess,'check_output',side_effect=output),patch.object(acquisition.subprocess,'run',side_effect=run),patch.object(acquisition,'digest',return_value='b'*64):
-            binding=acquisition.source_binding('a'*40,deadline=101.,clock=clock)
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory)
+            files={name:('100644',('fixture '+name).encode()) for name in acquisition.COMPONENT}
+            files['scripts/native_log.py']=('100644',b'import dependency fixture')
+            files['scripts/name with\ttab\nand newline.py']=('100755',b'NUL tree path fixture\0binary')
+            records=[];blobs={}
+            for name,(mode,data) in sorted(files.items()):
+                path=root/name;path.parent.mkdir(parents=True,exist_ok=True);path.write_bytes(data);path.chmod(0o755 if mode=='100755' else 0o644)
+                blob=acquisition.hashlib.sha1(b'blob '+str(len(data)).encode()+b'\0'+data).hexdigest()
+                records.append(mode.encode()+b' blob '+blob.encode()+b'\t'+name.encode()+b'\0');blobs.setdefault(blob,data)
+            tree=b''.join(records);batch_input=''.join(blob+'\n' for blob in blobs).encode()
+            batch=b''.join(blob.encode()+b' blob '+str(len(data)).encode()+b'\n'+data+b'\n' for blob,data in blobs.items())
+            expected_queries=[['git','rev-parse','HEAD'],['git','ls-tree','-r','-z','--full-tree','a'*40],
+                              ['git','cat-file','--batch'],['git','rev-parse','HEAD']]
+            def output(command,**options):
+                index=len(timeouts)
+                if index>=len(expected_queries) or command!=expected_queries[index]:raise AssertionError('undeclared Git query')
+                if options['cwd']!=root or not 0<options['timeout']<=101.-clock():raise AssertionError('query exceeded remaining original budget')
+                if index==2 and options.get('input')!=batch_input:raise AssertionError('wrong batch input')
+                timeouts.append(options['timeout']);clock.sleep(.1)
+                return 'a'*40 if index in (0,3) else tree if index==1 else batch
+            with patch.object(acquisition,'ROOT',root),patch.object(acquisition.subprocess,'check_output',side_effect=output),patch.object(acquisition.subprocess,'run',side_effect=AssertionError('undeclared run')),patch.object(acquisition.subprocess,'Popen',side_effect=AssertionError('undeclared Popen')):
+                binding=acquisition.source_binding('a'*40,deadline=101.,clock=clock)
         self.assertEqual(binding['commit'],'a'*40);self.assertEqual(len(timeouts),4)
         self.assertTrue(all(0<t<=1 for t in timeouts));self.assertEqual(timeouts,sorted(timeouts,reverse=True))
         clock.now=101.
-        with patch.object(acquisition.subprocess,'check_output',side_effect=AssertionError('must not spawn late')),self.assertRaises(RuntimeError):
+        with patch.object(acquisition.subprocess,'check_output',side_effect=AssertionError('must not spawn late')),patch.object(acquisition.subprocess,'run',side_effect=AssertionError('must not spawn late')),patch.object(acquisition.subprocess,'Popen',side_effect=AssertionError('must not spawn late')),self.assertRaises(RuntimeError):
             acquisition.source_binding('a'*40,deadline=101.,clock=clock)
 
     def test_real_stream_collector_caps_retained_bytes_and_closes_all_streams(self):

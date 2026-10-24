@@ -53,6 +53,56 @@ def erase_ancestry_class(source,name,donor):
     return source[:start]+donor[first:last]+source[end:]
 
 
+def timing_binding_baseline():
+    value=json.loads((ROOT/'scripts/fixtures/fov_source_binding_timing_baseline.json').read_text())
+    required={'schema','source','owner_class','method','text','sha256'}
+    if (type(value) is not dict or set(value)!=required or type(value['schema']) is not int or value['schema']!=1
+            or value['source']!='8cc38cdcd7dfff37056782149e513c08037e4e77' or value['owner_class']!='SupervisorControls'
+            or value['method']!='test_source_git_children_receive_only_remaining_whole_deadline'
+            or type(value['text']) is not str or value['sha256']!='8c33308f610f09a3710106eaf0392fdad9fa9918c00d573f8796d305167e1e31'
+            or r.sha(value['text'].encode())!=value['sha256']):
+        raise ValueError('invalid exact timing constructor donor')
+    return value
+
+
+def erase_timing_constructor(source):
+    """Normalize ONLY the independently adjudicated timing construction."""
+    if type(source) is not bytes:raise ValueError('timing source bytes required')
+    baseline=timing_binding_baseline();module=ast.parse(source)
+    classes=[n for n in module.body if isinstance(n,ast.ClassDef) and n.name==baseline['owner_class']]
+    methods=[n for n in ast.walk(module) if isinstance(n,(ast.FunctionDef,ast.AsyncFunctionDef)) and n.name==baseline['method']]
+    if len(classes)!=1 or len(methods)!=1 or methods[0] not in classes[0].body:raise ValueError('one exact timing method required')
+    node=methods[0]
+    if not isinstance(node,ast.FunctionDef) or node.decorator_list or ast.dump(node.args)!=ast.dump(ast.parse('def f(self): pass').body[0].args):
+        raise ValueError('undecorated timing method signature required')
+    donor=baseline['text'].encode();original=ast.parse(b'class Holder:\n'+donor).body[0].body[0]
+    def calls(root,owner,name=None):
+        return [n for n in ast.walk(root) if isinstance(n,ast.Call) and isinstance(n.func,ast.Attribute)
+                and isinstance(n.func.value,ast.Name) and n.func.value.id==owner and (n.func.attr==name if name else n.func.attr.startswith('assert'))]
+    def dumps(nodes):return [ast.dump(n,include_attributes=False) for n in nodes]
+    if dumps(calls(node,'self'))!=dumps(calls(original,'self')):raise ValueError('timing assertions changed')
+    if dumps(calls(node,'acquisition','source_binding'))!=dumps(calls(original,'acquisition','source_binding')):
+        raise ValueError('timing binding deadline/call changed')
+    clocks=[n for n in ast.walk(node) if isinstance(n,ast.Call) and isinstance(n.func,ast.Name) and n.func.id=='FakeClock']
+    if len(clocks)!=1 or clocks[0].args or clocks[0].keywords:raise ValueError('timing clock construction changed')
+    sleeps=calls(node,'clock','sleep')
+    if len(sleeps)!=1 or dumps(sleeps)!=dumps([ast.parse('clock.sleep(.1)').body[0].value]):raise ValueError('timing query cost changed')
+    assignments=[n for n in ast.walk(node) if isinstance(n,ast.Assign) and any(isinstance(t,ast.Attribute) and isinstance(t.value,ast.Name) and t.value.id=='clock' and t.attr=='now' for t in n.targets)]
+    if len(assignments)!=1 or ast.dump(assignments[0],include_attributes=False)!=ast.dump(ast.parse('clock.now=101.').body[0],include_attributes=False):
+        raise ValueError('timing late boundary changed')
+    def no_early_return(items):
+        for item in items:
+            if isinstance(item,(ast.FunctionDef,ast.AsyncFunctionDef,ast.Lambda)):continue
+            if isinstance(item,(ast.Return,ast.Yield,ast.YieldFrom)):raise ValueError('timing constructor skips assertions')
+            no_early_return(ast.iter_child_nodes(item))
+    no_early_return(node.body)
+    lines=source.splitlines(keepends=True)
+    if node.col_offset!=4 or not (1<=node.lineno<=node.end_lineno<=len(lines)):raise ValueError('timing method bounds')
+    if lines[node.end_lineno-1][node.end_col_offset:].strip():raise ValueError('timing trailing outside bytes')
+    start=sum(map(len,lines[:node.lineno-1]));end=sum(map(len,lines[:node.end_lineno]))
+    return source[:start]+donor+source[end:]
+
+
 def rehash(row):row['transport_sha256']=r.sha(r.canonical({k:v for k,v in row.items() if k!='transport_sha256'}))
 
 
@@ -179,6 +229,7 @@ class ProtectedSourceControls(unittest.TestCase):
         self.assertEqual(r.sha(process),protection['process_classes']['sha256'])
         self.assertEqual(r.sha(acquisition[acquisition.index(b'    finally:\n        if tree is not None:'):acquisition.index(b'\n\ndef main():')]),protection['acquisition_finally']['sha256'])
         tests=(ROOT/'scripts/test_fov_math_reference.py').read_bytes()
+        tests=erase_timing_constructor(tests)
         tests=erase_ancestry_class(tests,'FakeKernel',ancestry['fake_kernel']['text'].encode())
         start=tests.index(b'def declared_binary_records():');end=tests.index(b'class CorpusAndSchemaControls',start)
         erased=tests[:start]+tests[end:]
