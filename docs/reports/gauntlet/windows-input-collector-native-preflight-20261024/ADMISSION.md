@@ -28,7 +28,10 @@ version log or expose captured stderr. This inherited boundary is disclosed.
 The fixed wrapper has one runner launch site and exclusive output creation. Its
 CPU4 supervisor starts the original runner in a new session/group with CPUs0,1;
 Godot descendants inherit that affinity. Its 420s deadline starts before source
-and engine preparation. Normal child completion or any exception in monitoring
+and engine preparation and applies through the first observed runner completion.
+Completion observed at or after420s fails even if the return code is zero. The
+runner-exit observation time is retained separately from cleanup. Normal child
+completion or any exception in monitoring
 enters at most5s of owned group cleanup; TERM precedes KILL when needed. Final
 source manifests and report writing follow native cleanup and their elapsed time
 is reported separately in the total wall time. A reused leader PID does not
@@ -43,9 +46,13 @@ temporary roots reside beneath the fixed fresh output. Python environment
 overrides are recorded selectively; inherited secrets are not printed. DISPLAY
 is absent. No live profile path is supplied.
 
-Seven pure preparation controls pass in `preparation-controls.json`: one launch
+Ten pure preparation controls pass in `preparation-controls.json`: one launch
 site, unchanged420/5 budgets, existing-output refusal, wrong-HEAD refusal,
 TERM/KILL within5s, surviving-identity failure, and no signal to an absent group.
+Added deadline controls reject successful exits first observed at420s or later,
+admit a zero exit justbefore420 to the remaining gates, and stop a running child
+at420 while continuing before420. Root rejected the original deadline ordering;
+`DEADLINE_CORRECTION.md` and the original wrapper retain that failed iteration.
 Cleanup controls use virtual time, mocked samples and mocked signals; they prove
 those branches, not native process behavior. Source admission is a real byte read.
 No engine, real observer or native signal is part of these controls.
@@ -56,7 +63,7 @@ After root's inspection, root writes a release JSON with these exact fields:
 {
   "source": "c32415148db1f110bbc7eadfca3793d4693429ff",
   "preregistration": "15cdc599",
-  "wrapper_sha256": "6f3ac3faeb2ec2558099257b654494e988e15a3ac60e18aa8c1df6e0148ab994",
+  "wrapper_sha256": "1e3a8123a5c3adf4d3d379c3c6ff5703f514c9f7425a76e40cb2f5f52922b057",
   "root_release_commit": "ROOT_AUTHORED_40_CHARACTER_COMMIT_AFTER_INSPECTION",
   "authorized_single_invocation": true
 }
