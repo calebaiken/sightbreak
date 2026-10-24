@@ -1,0 +1,60 @@
+{
+  "scope": "Additive held UNFROZEN bounded expiry-history assessment; no final source approval",
+  "prototype_sha256": "db9120986971b5590a4db715f09acdb1137a1557be5a811683d215628a7631de",
+  "prior_sealed_commit": "92868e6b3096801cc634ebdea79f59402bb0e3bf",
+  "prior_files_byte_exact": 70,
+  "projection_cases": 3746,
+  "projection_matches": 3746,
+  "old_history_inputs_byte_exact": true,
+  "history_repeat_cases": 18,
+  "history_repeat_matches": 18,
+  "one_versioned_policy_refinement": true,
+  "generated_source_histories": 9,
+  "generated_visible_prefixes": 4,
+  "generated_cases": 40,
+  "generated_expected_consistent": 8,
+  "generated_expected_invalid": 32,
+  "generated_matches": 8,
+  "generated_false_complete": 32,
+  "examples": [
+    {
+      "positive": "prefix2-deadline14259",
+      "negative": "prefix2-deadline33009",
+      "changes": [
+        {
+          "index": 12,
+          "reason": "peer_expired",
+          "fields": {
+            "deadline_remaining_msec": [
+              -19752,
+              -1002
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "positive": "prefix1-deadline33009",
+      "negative": "prefix1-deadline13609",
+      "changes": [
+        {
+          "index": 12,
+          "reason": "peer_expired",
+          "fields": {
+            "deadline_remaining_msec": [
+              -1002,
+              -20402
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "largest_gap": "Absorbing rejection/deadline hypotheses are not intersected across prior observations",
+  "cpu_affinity": [
+    4
+  ],
+  "native_executed": false,
+  "actual_logs_replayed": false,
+  "source_approved": false
+}
