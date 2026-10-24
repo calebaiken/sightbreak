@@ -1,0 +1,28 @@
+{
+  "verdict": "REVISE_COMPILER_WITH_NARROW_CONSTRUCTION_PERMITS",
+  "proposal": "63021bac381c3f5e7119d3769131754c584f4823",
+  "preregistration": "43eeb1fe24c9b0b0e237937a15b4ed9ec50b9e4f",
+  "draft_sha256": "bcfbe2e447ffc2d25ace3bc66839e864f17066abcbcdf5d1dfe045f3fc6fbe3e",
+  "existing_thread_reused": true,
+  "independent_of_builder": true,
+  "permitted": [
+    "reload_before _snapshot wall20500 to20000 only",
+    "new30 extended-elapsed after-query monotonic=finish+.01 only",
+    "new30 actual owned publication Path.open fault adapter preserving invocation and all assertions"
+  ],
+  "withheld": [
+    "producer_action_plan and its constructor call"
+  ],
+  "reasons": [
+    "held_keys reset across waits contradicts trace serialization",
+    "mandatory source operation/observation/input nodes remain absent"
+  ],
+  "proposal_imports_or_executions": 0,
+  "R2_production_validator_inspections": 0,
+  "source_edits": 0,
+  "tests_or_assertions_edited": 0,
+  "prior_final_manifest_members_preserved": 858,
+  "prior_final_manifest_bytes_preserved": 205551297,
+  "public_collection": "BLOCKED",
+  "native_API_SDK_CI_capability_or_helper_trials": 0
+}

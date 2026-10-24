@@ -1,0 +1,122 @@
+{
+  "proposal": "63021bac381c3f5e7119d3769131754c584f4823",
+  "proposal_sha256": "bcfbe2e447ffc2d25ace3bc66839e864f17066abcbcdf5d1dfe045f3fc6fbe3e",
+  "imports": [
+    "import copy"
+  ],
+  "proposal_imports_or_execution": 0,
+  "source_sha256": "b744b9bb8d594d2018f3ca71c89a22ca03fc0966570e5e1bf7658725aea90edd",
+  "fixture_sha256": "c0d98d6d94cf9bc5875a919d56ebc734536fa88f1d82c9e8d1c5cef7f13a6f3b",
+  "source_excerpts": [
+    {
+      "first_line": 285,
+      "last_line": 339,
+      "text": "        entry = {'event': event, 'seconds': time.monotonic() - started,\n                 'wall_unix_msec': time.time_ns() // 1_000_000,\n                 'held_keys': sorted(held_keys), **details}\n        if ui is not None:\n            try:\n                entry['native_state'] = ui.diagnostics()\n            except Exception as error:\n                entry['native_state_error'] = str(error)\n        actions.append(entry)\n        (out / 'actions.json').write_text(json.dumps(actions, indent=2) + '\\n')\n\n    def launch(name, command, env=None):\n        remaining()\n        log = (out / (name + '.log')).open('w', encoding='utf-8')\n        logs.append(log)\n        process = subprocess.Popen(command, stdout=log, stderr=subprocess.STDOUT, env=env, cwd=out,\n                                   start_new_session=os.name != 'nt')\n        processes.append((name, process))\n        commands.append({'name': name, 'command': command, 'pid': process.pid,\n                         'started_seconds': time.monotonic() - started})\n        (out / 'commands.json').write_text(json.dumps(commands, indent=2) + '\\n')\n        # BEGIN SHUTDOWN STUDY LAUNCH\n        if study_observer is not None:\n            study_observer('native_launch', name=name, pid=process.pid)\n        # END SHUTDOWN STUDY LAUNCH\n        return process\n\n    def wait_for(condition, seconds, label, process=None):\n        trace('wait_begin', label=label, budget_seconds=seconds)\n        until = min(deadline, time.monotonic() + seconds)\n        while time.monotonic() < until:\n            if process is not None and process.poll() is not None:\n                raise RuntimeError(label + ': native process exited early')\n            if condition():\n                trace('wait_completed', label=label)\n                return\n            time.sleep(.1)\n        raise TimeoutError(label)\n\n    def key(name, down):\n        remaining()\n        trace('key_before', key=name, down=down)\n        ui.key(name, down)\n        (held_keys.add if down else held_keys.discard)(name)\n        trace('key_after', key=name, down=down)\n\n    def button(down):\n        remaining()\n        trace('button', down=down)\n        ui.button(down)\n\n    def tap(name):\n        key(name, True)\n        pause(.3)\n        key(name, False)\n"
+    },
+    {
+      "first_line": 590,
+      "last_line": 606,
+      "text": "            def ready():\n                nonlocal latest\n                validate = getattr(predicate, 'validate_observation', None)\n                try:\n                    latest = offline_observation()\n                except RuntimeError as error:\n                    if validate is not None and hasattr(error, 'observation_state'):\n                        validate(error.observation_state)\n                    raise\n                if validate is not None and latest != {}:\n                    validate(latest)\n                return latest.get('wall_msec', -1) > after and predicate(latest)\n            wait_for(ready, seconds, label, client)\n            trace('offline_observation', label=label, state=latest)\n            return latest\n\n        def phase_capture_binding(*, loaded_event=None):\n"
+    },
+    {
+      "first_line": 609,
+      "last_line": 620,
+      "text": "                       'trace_directory': str(initial_trace.resolve())}\n            if loaded_event is not None:\n                with (initial_trace / 'events.jsonl').open(encoding='utf-8') as stream:\n                    current['loaded_initial_event'] = json.loads(stream.readline())\n                current['stored_profile'] = json.loads(saved_path.read_text(encoding='utf-8'))\n            return current\n\n        initial_offline = observed(lambda state: state.get('ui', {}).get('screen') == 'game' and bool(state.get('local_actor')),\n                                   30, 'Real offline match readiness after one Deploy click')\n        pause(3)\n        capture('02-offline-spawn')\n        tap('b')\n"
+    },
+    {
+      "first_line": 669,
+      "last_line": 674,
+      "text": "        # Reuse the original five-second authority budget, including this frame fence.\n        before_reload = observed(rendered_fire_ready, 5, 'Authoritative depleted sidearm and two drawn frames', fire_origin['wall_msec'])\n        capture('05-after-fire')\n        fired_hud = read_hud('05-after-fire')\n        if (not 0 < fired_hud['ammo'] < 15 or fired_hud['reserve'] != 60\n                or any(fired_hud[field] != before_reload['local_actor'][field] for field in ('ammo', 'reserve'))):\n"
+    },
+    {
+      "first_line": 694,
+      "last_line": 706,
+      "text": "            return True\n\n        reload_input_seconds = time.monotonic() - started\n        key('r', True)\n        try:\n            reload_started = observed(reload_began, 5, 'Real R input starts authoritative offline reload', before_reload['wall_msec'])\n        finally:\n            key('r', False)\n\n        def reload_completed(state):\n            actor = reload_context(state)\n            if actor is None or actor.get('reload', 0) > 0:\n                return False\n"
+    },
+    {
+      "first_line": 745,
+      "last_line": 753,
+      "text": "        key('Tab', False)\n        next_round_until = min(deadline, time.monotonic() + 160)\n        wait_for(lambda: client_has('MATCH: Round 2'), transition_budget(next_round_until, 'Natural exported round completion'),\n                 'Natural exported round completion', client)\n        next_round_receipt = {'transition_watchdog_seconds': 160}\n        result.setdefault('phase_capture_fences', {})['06c-next-round'] = next_round_receipt\n        capture_living_phase('06c-next-round', actor_id=initial_offline['local_actor']['id'], round_number=2,\n                             after=initial_offline['wall_msec'], until=next_round_until,\n                             observed=observed, capture=capture, binding=phase_capture_binding,\n"
+    },
+    {
+      "first_line": 767,
+      "last_line": 792,
+      "text": "        # This fixed ordinary-control route changes the test scenario: use the\n        # existing freight container before spending time in settings captures.\n        # Readiness and walking share the original 35s cap; no new life or budget.\n        settings_route_start = observed(lambda state: state.get('phase') != 'buy',\n                                        transition_budget(second_live_until, 'Living settings route start'),\n                                        'Living second-round player before fixed settings route',\n                                        next_round_receipt['after_capture']['wall_msec'])\n        settings_route = result['settings_cover_route'] = {}\n        def settings_route_pulse(names, seconds, until):\n            remaining()\n            receipt = {}\n            settings_route.setdefault('native_pulses', []).append(receipt)\n            trace('settings_route_native_pulse_before', keys=list(names), requested_seconds=seconds)\n            held_keys.update(names)\n            try:\n                return ui.key_pulse(names, seconds, deadline=until, receipt=receipt)\n            finally:\n                if receipt.get('release_complete') or not receipt.get('attempted_keys'):\n                    held_keys.difference_update(names)\n                trace('settings_route_native_pulse_after', receipt=receipt)\n        relocate_settings_actor(settings_route_start, actor_id=initial_offline['local_actor']['id'], round_number=2,\n                                observe=offline_observation, key=key, pause=pause,\n                                record=lambda event, **data: trace('settings_route_' + event, **data),\n                                deadline=second_live_until, receipt=settings_route,\n                                pulse=settings_route_pulse if args.target == 'windows' else None)\n        transition_budget(second_live_until, 'Completed fixed settings route before weapon switching')\n"
+    },
+    {
+      "first_line": 837,
+      "last_line": 850,
+      "text": "        # native transition budget; all surrounding deadlines stay unchanged.\n        resume_until = min(deadline, time.monotonic() + 10)\n        def resume_budget():\n            value = resume_until - time.monotonic()\n            if value <= 0:\n                raise TimeoutError('Explicit native resume and rendered-frame acknowledgement')\n            return value\n        def resume_acknowledged(state):\n            if not state:\n                return False\n            require_resume_context(state)\n            return state.get('ui', {}).get('paused') is False\n        key('Escape', True)\n        try:\n"
+    },
+    {
+      "first_line": 926,
+      "last_line": 941,
+      "text": "        # focus recovery with a living player in this new, ordinary stock match.\n        focus_start = observed(lambda state: state.get('ui', {}).get('focused') is True\n                               and state.get('ui', {}).get('paused') is False\n                               and state.get('time_scale') == 1\n                               and state.get('phase') == 'live' and state.get('local_actor', {}).get('alive') is True,\n                               60, 'Fresh stock match reaches a living active player before native focus loss', loaded['wall_msec'])\n        focus_receipt = result['native_focus_recovery'] = {\n            'scope': 'fresh stock match after settings restart', 'passed': False,\n            'context_fence': {}, 'fresh_press': {}, 'capture_context': {}}\n        fence = FocusContextFence(focus_start, focus_receipt['context_fence'])\n\n        def require_focus_context(state, stage='focus_context', **context):\n            return fence.require(state, stage, **context)\n\n        def focus_raw_observation():\n            try:\n"
+    },
+    {
+      "first_line": 960,
+      "last_line": 1009,
+      "text": "                                 and state.get('local_input', {}).get('move', [0, 0]) != [0, 0],\n                                 10, 'Game consumed physical W and LMB before native focus loss', focus_start['wall_msec'])\n            require_focus_context(input_ack)\n            if (input_ack.get('local_actor', {}).get('alive') is not True\n                    or input_ack.get('ui', {}).get('focused') is not True\n                    or input_ack.get('ui', {}).get('paused') is not False):\n                raise RuntimeError('Physical input acknowledgment lost the living active focus-test context')\n            trace('native_focus_held_input_acknowledged', state=input_ack)\n            focus_receipt['held_input_acknowledged'] = input_ack\n            trace('native_focus_loss_before', method='XSetInputFocus(root)' if args.target == 'linux' else 'ShowWindow(SW_MINIMIZE)')\n            if args.target == 'linux':\n                ui.x.XSetInputFocus(ui.d, ui.x.XDefaultRootWindow(ui.d), 1, 0)\n                ui.x.XFlush(ui.d)\n            else:\n                ui.user.ShowWindow(ui.window, 6)  # SW_MINIMIZE\n            trace('native_focus_loss_after')\n            lost = focus_observed(lambda state: state.get('ui', {}).get('focused') is False\n                            and state.get('ui', {}).get('paused') is True,\n                            10, 'Native focus loss pauses actual offline match', focus_start['wall_msec'])\n            require_focus_context(lost)\n            focus_receipt['lost'] = lost\n            trace('native_focus_restore_before')\n            if args.target == 'windows':\n                ui.user.ShowWindow(ui.window, 9)  # SW_RESTORE; focus_game retains the same HWND\n            wait_for(ui.focus_game, 10, 'Restore actual native input focus', client)\n            trace('native_focus_restore_after')\n            restored = focus_observed(lambda state: state.get('ui', {}).get('focused') is True,\n                                10, 'Actual game observes restored focus', lost['wall_msec'])\n            require_focus_context(restored)\n            if restored['ui'].get('paused') is not True or restored['ui'].get('mouse_mode') != 0:\n                raise RuntimeError('Native focus restoration resumed gameplay or hid the pointer without explicit resume')\n            focus_receipt['restored_paused'] = restored\n            focus_receipt['capture_context']['11a-restored-focus-still-paused'] = {'before': restored}\n            capture('11a-restored-focus-still-paused')\n            after_capture = focus_raw_observation()\n            focus_receipt['capture_context']['11a-restored-focus-still-paused']['after'] = after_capture\n            require_focus_context(after_capture, 'after_restored_pause_capture', focused=True, paused=True)\n            key('Escape', True)\n            pause(.3)\n            key('Escape', False)\n            guarded = focus_observed(lambda state: state.get('ui', {}).get('paused') is False,\n                               10, 'Explicit resume with W and LMB still physically held', restored['wall_msec'])\n            baseline_actor = restored['local_actor']\n            guard_samples = focus_receipt['held_neutral_samples'] = []\n            def check_guard(state, stable_position=None):\n                require_focus_context(state)\n                inputs, actor = state.get('local_input', {}), state.get('local_actor', {})\n                native = ui.diagnostics()\n                if (state.get('ui', {}).get('focused') is not True or state['ui'].get('paused') is not False\n                        or inputs.get('move') != [0, 0] or inputs.get('fire') is not False\n"
+    },
+    {
+      "first_line": 1020,
+      "last_line": 1048,
+      "text": "            # Focus-out can freeze ordinary pre-existing movement velocity.\n            # Neutral input must hold throughout its bounded natural decay.\n            settle_start = guarded['elapsed']\n            while any(abs(guarded['local_actor']['velocity'][axis]) > .01 for axis in (0, 2)):\n                guarded = focus_observed(lambda state: True, 10, 'Neutral held input while ordinary inertia settles',\n                                   guarded['wall_msec'])\n                check_guard(guarded)\n                if guarded['elapsed'] - settle_start > 1.0:\n                    raise RuntimeError('Neutral movement inertia failed to settle within one simulation second')\n            stable_position = guarded['local_actor']['position'][:]\n            for index in range(2):\n                guarded = focus_observed(lambda state: True, 10, 'Fresh held-input guard sample ' + str(index + 1),\n                                   guarded['wall_msec'])\n                check_guard(guarded, stable_position)\n            focus_receipt['capture_context']['11b-resumed-held-input-neutral'] = {'before': guarded}\n            capture('11b-resumed-held-input-neutral')\n            after_capture = focus_raw_observation()\n            focus_receipt['capture_context']['11b-resumed-held-input-neutral']['after'] = after_capture\n            require_focus_context(after_capture, 'after_held_neutral_capture', focused=True, paused=False)\n        finally:\n            key('w', False)\n            button(False)\n        released = focus_observed(focus_controls_released,\n                            10, 'Released held focus-test controls', guarded['wall_msec'])\n        focus_receipt['released'] = released\n        moved = fresh_focus_movement(fence=fence, released=released, snapshot=focus_raw_observation,\n                                    observed=observed, key=key, receipt=focus_receipt['fresh_press'])\n        focus_receipt['capture_context']['11c-fresh-press-movement'] = {'before': moved}\n        capture('11c-fresh-press-movement')\n"
+    }
+  ],
+  "missing_literal_operations_not_in_original_action_stream": [
+    "Real offline match readiness after one Deploy click",
+    "Living second-round player before fixed settings route",
+    "Restore actual native input focus",
+    "native_focus_loss_before",
+    "native_focus_loss_after",
+    "native_focus_restore_before",
+    "native_focus_restore_after",
+    "deploy_click_before",
+    "deploy_click_after",
+    "reopened_deploy_click_before",
+    "reopened_deploy_click_after"
+  ],
+  "original_fixture_action_calls": [
+    {
+      "line": 337,
+      "event": "capture_begin"
+    },
+    {
+      "line": 340,
+      "event": "capture_end"
+    },
+    {
+      "line": 344,
+      "event": "click_text"
+    },
+    {
+      "line": 346,
+      "event": "click_text"
+    },
+    {
+      "line": 348,
+      "event": "settings_slider_click"
+    },
+    {
+      "line": 350,
+      "event": "click_text"
+    },
+    {
+      "line": 363,
+      "event": "capture_begin"
+    },
+    {
+      "line": 366,
+      "event": "capture_end"
+    }
+  ],
+  "held_key_reset_source": "def action(event,**fields):\n        row=copy.deepcopy(template)\n        for key in ('capture','dimensions','state','label'):row.pop(key,None)\n        row.update(event=event,held_keys=[]);row.update(fields);plan.append(('action',row))",
+  "observed_helper_source": "def observed(label,state,budget=5):\n        action('wait_begin',label=label,_budget=budget)\n        action('wait_completed',label=label)\n        action('offline_observation',label=label,state=copy.deepcopy(state))",
+  "prior_final_manifest_members_preserved": 858,
+  "prior_final_manifest_bytes_preserved": 205551297,
+  "prior_final_manifest_sha256": "feed3048872a373cbc645eb86a39d01fd038c413f6812f464a76736d353c5903",
+  "verdict_scope": "Static construction adjudication only",
+  "native_API_helper_process_or_CI_trials": 0,
+  "lookup_note": "A broad source search named nonexistent scripts/native_control.py; actual trace/key/wait/capture definitions are nested in frozen verify_offline_export.py and were read directly. No test was skipped."
+}
