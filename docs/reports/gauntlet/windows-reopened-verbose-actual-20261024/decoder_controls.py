@@ -50,6 +50,12 @@ class NormalResourceDecoderControls(unittest.TestCase):
     def test_decode_replacement_visible(self):
         self.assertTrue(self.parsed(b'bad \xff text\n')['utf8_replacement_present'])
 
+    def test_duplicate_command_json_types_stay_distinct(self):
+        self.assertFalse(decoder.same_json([{'exit_code':0}],[{'exit_code':False}]))
+        self.assertFalse(decoder.same_json([{'pid':1}],[{'pid':True}]))
+        self.assertFalse(decoder.same_json([{'exit_code':1}],[{'exit_code':1.0}]))
+        self.assertTrue(decoder.same_json([{'exit_code':0}],[{'exit_code':0}]))
+
     def test_earlier_flow_and_missing_logs_write_incomplete_evidence(self):
         with tempfile.TemporaryDirectory() as tmp:
             root=Path(tmp)

@@ -30,3 +30,9 @@ supplied exact original commit/push output files; these are copied byte-exactly
 and hashed. Push stdout has no embedded UTC. Its prior execution sequence is
 root-reported and compared with immutable commit times and the dispatch clock;
 filesystem timestamps provide no chronology proof.
+
+A second read-only check found Python equality could equate Boolean false/true in the
+duplicated results.commands with integer command fields. The consistency check
+now compares canonical JSON with types preserved. A seventh pure control verifies
+that distinction; the original six-control stdout/stderr remain unchanged. No
+future raw was read for this correction.

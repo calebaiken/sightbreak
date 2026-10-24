@@ -17,6 +17,9 @@ INSTANCE = re.compile(r'^Leaked instance: (?P<native_class>[^:]+):(?P<instance_i
 RESOURCE = re.compile(r'^Resource still in use: (?P<path>.*) \((?P<native_class>[^()]*)\)$')
 COUNT = re.compile(r'([0-9]+) ObjectDB instance(?:s were| was) leaked at exit')
 
+def same_json(left,right):
+    return json.dumps(left,sort_keys=True,separators=(',',':'),allow_nan=False)==json.dumps(right,sort_keys=True,separators=(',',':'),allow_nan=False)
+
 def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
@@ -106,7 +109,7 @@ def review(directory, out):
     good_rows = type(commands) is list and len(commands)==2 and all(type(x) is dict for x in commands)
     check('two command row objects',good_rows)
     check('two ordered uniquely named command rows',good_rows and [x.get('name') for x in commands]==['client','reopened'])
-    check('commands equal results commands', type(commands) is list and commands==result.get('commands'))
+    check('commands equal results commands', type(commands) is list and same_json(commands,result.get('commands')))
     for name in ('initial_exit','reopened_exit'):
         check(name+' literal integer', type(result.get(name)) is int)
     cleanup=result.get('cleanup_errors')
