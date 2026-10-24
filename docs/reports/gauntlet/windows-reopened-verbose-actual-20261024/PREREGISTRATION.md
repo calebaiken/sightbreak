@@ -57,7 +57,9 @@ root-released single complete Windows pipeline.
 ## Evaluated commands and identity
 
 The future raw must contain the literal evaluated controller command and the
-native commands.json arrays. Do not infer activation from YAML or from verbose
+native commands.json arrays. The offline array must contain exactly two ordered
+rows named client then reopened, unique names and distinct positive integer PIDs
+with Booleans rejected. Do not infer activation from YAML or from verbose
 looking text. EXACT_COMMAND_CONTRACT.json fixes the expected Windows controller
 suffix and native array relation. The original initial offline client and normal
 input client/server must have no new --verbose. The reopened native command must
