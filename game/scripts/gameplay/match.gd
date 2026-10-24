@@ -105,12 +105,17 @@ var _rng := RandomNumberGenerator.new()
 ## At most one hitscan contact per actor per authoritative tick (ten-actor roster).
 ## Cleared before/after each tick; never replicated or consulted by prediction.
 var _pending_hitscan_hits: Array[Dictionary] = []
+# BEGIN INPUT OBSERVATION STATE
+## Explicit debug guest-loopback diagnostics; never transmitted or used by gameplay.
+var _native_input_observation: Dictionary = {}
+# END INPUT OBSERVATION STATE
 
 func configure(settings: Dictionary) -> void:
 	options = settings.duplicate()
 	_prediction_enabled = bool(options.get("prediction", OS.get_cmdline_user_args().has("--network-prediction")))
 	_replica_buffer.delay_seconds = clampf(float(options.get("interpolation_delay", 0.10)), 0.05, 0.20)
 	reconnect_token = str(options.get("reconnect_token", ""))
+	_native_input_configure(options) # INPUT_OBSERVATION_HOOK
 
 func _ready() -> void:
 	name = "Match"
@@ -125,6 +130,7 @@ func _ready() -> void:
 	var mode: String = str(options.get("mode", "offline"))
 	_authority = mode != "client"
 	local_id = 1 if mode == "offline" else 0
+	_native_input_observe("ready") # INPUT_OBSERVATION_HOOK
 	# Only an explicitly configured debug/offline observer can declare initial
 	# objective-test conditions. Trace-only and all network runs return no fixture.
 	var initial_conditions: Dictionary = preload("res://scripts/offline_diagnostics.gd").fixture_for(options, arena)
@@ -257,6 +263,7 @@ func _process(delta: float) -> void:
 
 func _authority_tick(delta: float) -> void:
 	_simulation_tick += 1
+	_native_input_observe("authority_tick") # INPUT_OBSERVATION_HOOK
 	if options.get("mode", "offline") == "server":
 		_service_peers()
 	for peer_id: int in _peer_actors:
@@ -271,6 +278,7 @@ func _authority_tick(delta: float) -> void:
 				_last_activity[id] = _elapsed
 			actors[id].input_state = command
 			_last_input_sequence[id] = int(command.sequence)
+			_native_input_observe("input_consumed", peer_id, command) # INPUT_OBSERVATION_HOOK
 		# On a short packet gap keep held controls, as before input sequencing.
 		# Neutralizing every gap invents new semi-auto/jump rising edges. The
 		# existing 300 ms silence guard below releases controls on sustained loss.
@@ -641,6 +649,7 @@ func _connect_client() -> void:
 	if _recovery.deadline > 0 and not _recovery.take_attempt(Time.get_ticks_msec()):
 		_fail_connection("Reconnect window expired. Join again to request a fresh session.")
 		return
+	_native_input_observe("client_attempt") # INPUT_OBSERVATION_HOOK
 	_close_client()
 	_replica_buffer.clear()
 	_prediction.reset(true)
@@ -661,9 +670,11 @@ func _connect_client() -> void:
 func _connected() -> void:
 	connection_state = "joining"
 	_state_clock = 0.0
+	_native_input_observe("client_connected") # INPUT_OBSERVATION_HOOK
 	_join_rpc.rpc_id(1, str(options.get("name", "Operator")).left(24), reconnect_token, str(options.get("join_ticket", "")))
 
 func _connection_failed() -> void:
+	_native_input_observe("client_connection_failed") # INPUT_OBSERVATION_HOOK
 	# Keep a more specific reason (version mismatch, join timeout) already shown.
 	if connection_state == "failed":
 		return
@@ -805,6 +816,7 @@ func _retry_resume(message: String) -> bool:
 	return true
 
 func _server_disconnected() -> void:
+	_native_input_observe("client_disconnected") # INPUT_OBSERVATION_HOOK
 	if connection_state == "failed" or connection_state == "reconnecting":
 		return
 	if _retry_resume("Server disconnected. Attempting to reconnect…"):
@@ -818,6 +830,7 @@ func _server_disconnected() -> void:
 	_notify_connection_status("Server disconnected. Attempting to reconnect…")
 
 func _client_tick(delta: float) -> void:
+	_native_input_observe("client_tick") # INPUT_OBSERVATION_HOOK
 	for utility: SBUtility in _remote_utilities.values():
 		utility.set_replica_lifetime(utility._lifetime - delta)
 	var actor: SBActor = local_actor()
@@ -862,13 +875,16 @@ func _client_tick(delta: float) -> void:
 				packet.commands = [packet.commands.back()]
 				packed = var_to_bytes(packet).compress(FileAccess.COMPRESSION_DEFLATE)
 			_input_rpc.rpc_id(1, packed)
+			_native_input_observe("input_send_called", 0, packet) # INPUT_OBSERVATION_HOOK
 
 func _peer_connected(peer_id: int) -> void:
 	if not _peer_lifecycle.connected(peer_id, Time.get_ticks_msec()):
 		(multiplayer as SceneMultiplayer).disconnect_peer(peer_id)
+	_native_input_observe("peer_connected", peer_id) # INPUT_OBSERVATION_HOOK
 
 func _service_peers() -> void:
 	for peer_id: int in _peer_lifecycle.expired(Time.get_ticks_msec()):
+		_native_input_observe("peer_expired", peer_id) # INPUT_OBSERVATION_HOOK
 		# Server enforces release even if a hostile client ignores rejection RPCs.
 		(multiplayer as SceneMultiplayer).disconnect_peer(peer_id)
 		_peer_disconnected(peer_id)
@@ -1001,6 +1017,7 @@ func _join_rpc(player_name: String, token: String, join_ticket: String = "") -> 
 	if not account.is_empty():
 		_account_ids[id] = account
 	_last_activity[id] = _elapsed
+	_native_input_observe("peer_bound", peer_id) # INPUT_OBSERVATION_HOOK
 	var clean_name := SBDesign.plain_line(player_name, 24)
 	actors[id].display_name = clean_name if not clean_name.is_empty() else "Operator"
 	_welcome_rpc.rpc_id(peer_id, id, new_token, _snapshot(id))
@@ -1009,6 +1026,7 @@ func _join_rpc(player_name: String, token: String, join_ticket: String = "") -> 
 		_start_ranked_match()
 
 func _peer_disconnected(peer_id: int) -> void:
+	_native_input_observe("peer_disconnected", peer_id) # INPUT_OBSERVATION_HOOK
 	_peer_lifecycle.forget(peer_id)
 	_pending_joins.erase(peer_id)
 	_join_slots.erase(peer_id)
@@ -1038,12 +1056,16 @@ func _input_rpc(packed: PackedByteArray) -> void:
 		return
 	var peer_id: int = multiplayer.get_remote_sender_id()
 	if not _peer_actors.has(peer_id) or not _peer_lifecycle.allow_input(peer_id, Time.get_ticks_msec()) or packed.is_empty() or packed.size() > 1100:
+		_native_input_observe("input_gate_rejected", peer_id) # INPUT_OBSERVATION_HOOK
 		return
 	var decoded: Variant = bytes_to_var(packed.decompress_dynamic(8192, FileAccess.COMPRESSION_DEFLATE))
 	if not decoded is Dictionary:
+		_native_input_observe("input_decode_rejected", peer_id) # INPUT_OBSERVATION_HOOK
 		return
 	var data: Dictionary = decoded
+	_native_input_observe("input_received", peer_id, data) # INPUT_OBSERVATION_HOOK
 	if not _input_stream.accept(peer_id, data, _snapshot_generation, Time.get_ticks_msec()):
+		_native_input_observe("input_stream_rejected", peer_id, data) # INPUT_OBSERVATION_HOOK
 		return
 	_peer_lifecycle.active(peer_id, Time.get_ticks_msec())
 	var id: int = int(_peer_actors[peer_id])
@@ -1053,6 +1075,7 @@ func _input_rpc(packed: PackedByteArray) -> void:
 		# Retire the previous credential only after this generation proves delivery.
 		_resume_aliases.erase(id)
 	_last_peer_input[id] = _elapsed
+	_native_input_observe("input_accepted", peer_id, data) # INPUT_OBSERVATION_HOOK
 
 @rpc("any_peer", "call_remote", "reliable", 2)
 func _buy_rpc(id: String) -> void:
@@ -1073,6 +1096,7 @@ func _welcome_rpc(id: int, token: String, data: Dictionary) -> void:
 	_recovery.clear()
 	connection_state = "connected"
 	connection_notice = ""
+	_native_input_observe("welcome_received", 0, data) # INPUT_OBSERVATION_HOOK
 	_apply_snapshot(data)
 	notification.emit("Connected • account session" if reward_status != "unranked" else "Connected • LAN practice session")
 
@@ -1139,9 +1163,11 @@ func _snapshot(recipient_id: int = 0) -> Dictionary:
 
 func _apply_snapshot(data: Dictionary) -> void:
 	if not SBSnapshotSchema.valid(data):
+		_native_input_observe("snapshot_schema_rejected", 0, data) # INPUT_OBSERVATION_HOOK
 		return
 	var discontinuity := int(data.epoch) != _replica_buffer.epoch
 	if not _authority and not _replica_buffer.push(int(data.tick), float(data.elapsed), int(data.epoch), data.actors):
+		_native_input_observe("snapshot_order_rejected", 0, data) # INPUT_OBSERVATION_HOOK
 		return
 	reward_status = str(data.get("reward_status", "unranked"))
 	_connected_actor_ids = data.get("humans", [])
@@ -1201,7 +1227,99 @@ func _apply_snapshot(data: Dictionary) -> void:
 	_sync_utility_visuals(data.get("utilities", []))
 	if phase == "match_over":
 		_emit_results()
+	_native_input_observe("snapshot_applied", 0, data) # INPUT_OBSERVATION_HOOK
 
+# BEGIN INPUT OBSERVATION METHODS
+static func _native_input_allowed(settings: Dictionary, args: PackedStringArray, debug: bool) -> bool:
+	if not debug or not "--native-input-observation" in args or bool(settings.get("require_accounts", false)) or not str(settings.get("join_ticket", "")).is_empty(): return false
+	if str(settings.get("address", "127.0.0.1")) not in ["127.0.0.1", "::1"]: return false
+	return settings.get("mode", "offline") == "client" or (settings.get("mode", "offline") == "server" and settings.get("_native_input_fixture") is bool and settings._native_input_fixture)
+
+func _native_input_configure(settings: Dictionary) -> void:
+	_native_input_observation = {}
+	if _native_input_allowed(settings, OS.get_cmdline_user_args(), OS.is_debug_build()):
+		_native_input_observation = {"count": 0, "last_emit": -1000, "attempt": 0, "last_peer": 0, "last_actor": 0, "counters": {}, "latest": {}, "edges": {}, "snapshot_msec": -1, "snapshot": {}}
+
+static func _native_input_controls(data: Dictionary) -> Dictionary:
+	var move: Vector2 = data.get("move", Vector2.ZERO) if data.get("move") is Vector2 else Vector2.ZERO
+	return {"sequence": int(data.get("sequence", -1)) if data.get("sequence") is int else -1,
+		"fire": data.get("fire") is bool and data.fire, "reload": data.get("reload") is bool and data.reload,
+		"move": [move.x, move.y] if move.is_finite() else [0.0, 0.0]}
+
+static func _native_input_packet(data: Dictionary) -> Dictionary:
+	var commands: Array = data.get("commands", []) if data.get("commands") is Array else []
+	var first := -1
+	var last := -1
+	var fire := 0
+	var reload := 0
+	var moving := 0
+	for value: Variant in commands.slice(0, SBInputStream.MAX_BATCH):
+		if not value is Dictionary: continue
+		var command := _native_input_controls(value)
+		if first < 0: first = int(command.sequence)
+		last = int(command.sequence)
+		fire += int(command.fire)
+		reload += int(command.reload)
+		moving += int(command.move != [0.0, 0.0])
+	return {"epoch": int(data.epoch) if data.get("epoch") is int else -1, "count": commands.size(), "first": first, "last": last, "fire": fire, "reload": reload, "moving": moving}
+
+func _native_input_observe(reason: String, peer_id: int = 0, data: Dictionary = {}) -> void:
+	if _native_input_observation.is_empty(): return
+	var diagnostic: Dictionary = _native_input_observation
+	if int(diagnostic.count) >= 1024: return
+	var now := Time.get_ticks_msec()
+	diagnostic.counters[reason] = int(diagnostic.counters.get(reason, 0)) + 1
+	if reason == "client_attempt": diagnostic.attempt += 1
+	if peer_id > 0:
+		diagnostic.last_peer = peer_id
+		if _peer_actors.has(peer_id): diagnostic.last_actor = int(_peer_actors[peer_id])
+	if reason in ["input_send_called", "input_received", "input_accepted", "input_stream_rejected"]:
+		diagnostic.latest[reason] = _native_input_packet(data)
+	elif reason == "input_consumed":
+		diagnostic.latest[reason] = _native_input_controls(data)
+		diagnostic.latest[reason].merge({"peer": peer_id, "actor": int(_peer_actors.get(peer_id, 0)), "generation": int((_peer_lifecycle.peers.get(peer_id, {}) as Dictionary).get("generation", -1))})
+	elif reason in ["snapshot_applied", "snapshot_schema_rejected", "snapshot_order_rejected", "welcome_received"]:
+		var header := {"tick": int(data.tick) if data.get("tick") is int else -1, "epoch": int(data.epoch) if data.get("epoch") is int else -1, "own_ack": -1}
+		if reason == "snapshot_applied":
+			for value: Variant in data.get("actors", []):
+				if value is Dictionary and int(value.get("id", 0)) == local_id: header.own_ack = int(value.get("move_ack", -1))
+			diagnostic.snapshot = header
+			diagnostic.snapshot_msec = now
+		diagnostic.latest[reason] = header
+	if diagnostic.latest.has(reason): diagnostic.latest[reason]["wall_msec"] = now
+	var local_controls := _native_input_controls(_local_input)
+	var physical := {"r": Input.is_physical_key_pressed(KEY_R), "lmb": Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)}
+	var controller := get_parent()
+	if controller != null and controller.has_method("controls_released"):
+		for field: String in ["physical_mouse_fire", "application_focused", "paused", "waiting_for_input_release"]: physical[field] = controller.get(field)
+	var edge := JSON.stringify([connection_state, local_controls, physical, _prediction.pending.size() >= SBMovementPrediction.MAX_HISTORY, diagnostic.latest.get(reason, {}).get("fire", 0), diagnostic.latest.get(reason, {}).get("reload", 0), diagnostic.latest.get(reason, {}).get("move", []), diagnostic.latest.get(reason, {}).get("moving", 0)])
+	var changed: bool = edge != str(diagnostic.edges.get(reason, ""))
+	diagnostic.edges[reason] = edge
+	var lifecycle_event: bool = reason in ["ready", "client_attempt", "client_connected", "client_connection_failed", "client_disconnected", "welcome_received", "peer_connected", "peer_bound", "peer_expired", "peer_disconnected"]
+	var control_event: bool = reason in ["client_tick", "input_send_called", "input_received", "input_accepted", "input_consumed"] and changed
+	if not lifecycle_event and not control_event and (reason not in ["client_tick", "authority_tick"] or now - int(diagnostic.last_emit) < 1000): return
+	var selected_peer := int(diagnostic.last_peer)
+	var bound_actor := int(_peer_actors.get(selected_peer, 0))
+	var lifecycle: Dictionary = _peer_lifecycle.peers.get(selected_peer, {})
+	var actor: SBActor = actors.get(int(diagnostic.last_actor)) if _authority else local_actor()
+	var peer := multiplayer.multiplayer_peer
+	var transport_status: int = peer.get_connection_status() if peer != null else -1
+	var record := {"schema": 1, "scope": "debug_guest_loopback_input_observation", "role": "authority" if _authority else "client", "reason": "observation_limit" if int(diagnostic.count) == 1023 else reason,
+		"index": int(diagnostic.count) + 1, "wall_unix_msec": int(Time.get_unix_time_from_system() * 1000), "wall_msec": now,
+		"process_frames": Engine.get_process_frames(), "physics_frames": Engine.get_physics_frames(), "drawn_frames": Engine.get_frames_drawn(),
+		"connection_state": connection_state, "transport_status": transport_status, "transport_id": peer.get_unique_id() if peer != null and transport_status == MultiplayerPeer.CONNECTION_CONNECTED else 0, "local_id": local_id, "local_attempt": int(diagnostic.attempt),
+		"peer": selected_peer, "bound_actor": bound_actor, "last_bound_actor": int(diagnostic.last_actor), "peer_bound": bound_actor > 0,
+		"generation": int(lifecycle.get("generation", -1)), "joined": bool(lifecycle.get("joined", false)), "input_age_msec": now - int(lifecycle.last_input) if lifecycle.has("last_input") else -1, "deadline_remaining_msec": int(lifecycle.deadline) - now if lifecycle.has("deadline") else -1,
+		"simulation_tick": _simulation_tick, "authority_epoch": _snapshot_generation, "stream_ack": int(_input_stream.acknowledged.get(selected_peer, -1)), "queue_count": (_input_stream.queues.get(selected_peer, {}) as Dictionary).size(), "stream_rejected": _input_stream.rejected, "stream_skipped": _input_stream.skipped_commands,
+		"prediction_epoch": _prediction.epoch, "prediction_sequence": _prediction.sequence, "pending_count": _prediction.pending.size(),
+		"pending_oldest_sequence": int(_prediction.pending.front().command.sequence) if not _prediction.pending.is_empty() else -1, "pending_newest_sequence": int(_prediction.pending.back().command.sequence) if not _prediction.pending.is_empty() else -1,
+		"snapshot": diagnostic.snapshot.duplicate(), "snapshot_age_msec": now - int(diagnostic.snapshot_msec) if int(diagnostic.snapshot_msec) >= 0 else -1,
+		"local_input": local_controls, "physical": physical, "counters": diagnostic.counters.duplicate(), "latest": diagnostic.latest.duplicate(true),
+		"actor": {"id": actor.actor_id, "alive": actor.alive, "ammo": actor.ammo, "reserve": actor.reserve, "reload": actor.reload_remaining, "input": _native_input_controls(actor.input_state)} if actor != null else {}}
+	diagnostic.count += 1
+	diagnostic.last_emit = now
+	print("SIGHTBREAK_INPUT_OBSERVATION " + JSON.stringify(record))
+# END INPUT OBSERVATION METHODS
 func _sync_utility_visuals(states: Array) -> void:
 	var present: Array = []
 	for state: Dictionary in states:
