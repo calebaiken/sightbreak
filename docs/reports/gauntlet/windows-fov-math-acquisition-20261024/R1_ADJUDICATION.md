@@ -1,0 +1,5 @@
+R1 retained29 methods,28pass/1failure. The late-audit test injected failure only when pre-call job.calls>=6. Its last real sample began at5 and incremented to6, so no failure was injected. Correction changes that trigger to>=5, targeting the final audit. This is a harness boundary correction; the old result is not overwritten.
+
+Before the next run source inspection independently found an unconditional-accounting draft gap on Popen-raising startup. Added explicit cleanup_unreturned path that audits the owned job even without a returned root handle; generated no-child and hidden-child controls accompany it. Existing returned-root failure state stays failed. Added bounded user inventory rejects without truncating/deleting original userfiles, preserving public BLOCKED feasibility.
+
+Pinned uploader source now proves the client-generated one-file outer ZIP STORE bound N+114+2L. This closes only the client wrapper calculation; service/connector rewrapping and full arbitrary Godot failure logs remain unproved. No native/API/proc/helper/CI invocation occurred.
