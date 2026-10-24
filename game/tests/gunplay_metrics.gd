@@ -10,13 +10,17 @@ extends SceneTree
 ##   --trials=<int>   accuracy trials per weapon, distance and mode (default 40)
 ##   --duels=<int>    duels per weapon pair and distance (default 60)
 ##   --seed=<int>     base seed (default 7)
+##   --resolution=two_phase|sequential   how a duel tick resolves hits. two_phase (default where the actor has
+##                    tick_authority_actions) follows the match: every actor moves, then every actor acts with its hits
+##                    queued, then the queued hits are applied, so a same-tick mutual kill is a trade. sequential runs
+##                    one actor's whole tick at a time in a shuffled order, the model of the older loop.
 ##   --verbose        also print one GUNPLAY_DUEL_TRIAL line per duel (health, ammo, ticks)
 ##
 ## Fixtures, not matches: a bare floor, one standing target that does not move or shoot back (accuracy), aim at the
 ## chest from a standing start, no armour. What it measures is the weapon, not a player. Modes: hold (trigger held,
 ## recoil not countered: a beginner), comp (trigger held, the shooter pulls down by exactly the accumulated recoil: the
 ## weapon's ceiling under perfect spray control), head (the same, aimed at the centre of the head), burst3, advance
-## (walking at the target, re-aimed every tick).
+## (walking at the target, re-aimed every tick, recoil not countered), advcomp (the same with recoil countered).
 ## In a duel a tick resolves one actor at a time, so a same-tick trade cannot happen: the first actor processed fires
 ## and the dead cannot answer. The duel loop shuffles that order per tick, as the match does since the order fix.
 const Actor = preload("res://scripts/gameplay/actor.gd")
@@ -39,6 +43,7 @@ var trials := 40
 var duels := 60
 var base_seed := 7
 var verbose := false
+var resolution := ""
 var blue := {}
 var red := {}
 
@@ -57,11 +62,22 @@ func _options() -> void:
 			duels = int(argument.trim_prefix("--duels="))
 		elif argument.begins_with("--seed="):
 			base_seed = int(argument.trim_prefix("--seed="))
+		elif argument.begins_with("--resolution="):
+			resolution = argument.trim_prefix("--resolution=")
 		elif argument == "--verbose":
 			verbose = true
 
 func _run() -> void:
 	_options()
+	var probe := Actor.new()
+	var has_two_phase := probe.has_method("tick_authority_actions")
+	probe.free()
+	if resolution.is_empty():
+		resolution = "two_phase" if has_two_phase else "sequential"
+	if resolution == "two_phase" and not has_two_phase:
+		push_error("two_phase resolution needs Actor.tick_authority_actions")
+		quit(2)
+		return
 	world = Node3D.new()
 	root.add_child(world)
 	var floor_body := StaticBody3D.new()
@@ -96,10 +112,11 @@ func _run() -> void:
 				for mode in _modes(weapon):
 					_accuracy(weapon, distance, mode)
 	if only.has("duel"):
-		for index_a in range(weapons.size()):
-			for index_b in range(index_a, weapons.size()):
+		# Every ordered pair, so a weapon is measured on both seats (blue: team 0 at z = 0, red: team 1 at z = -d).
+		for weapon_a: String in weapons:
+			for weapon_b: String in weapons:
 				for distance: float in DUEL_DISTANCES:
-					_duel(weapons[index_a], weapons[index_b], distance)
+					_duel(weapon_a, weapon_b, distance)
 	world.queue_free()
 	await process_frame
 	quit(0)
@@ -139,7 +156,7 @@ func _park_all() -> void:
 
 func _modes(weapon: String) -> Array:
 	var automatic: bool = Weapons.get_weapon(weapon)["automatic"]
-	return ["hold", "comp", "head", "burst3", "advance"] if automatic else ["hold", "comp", "head", "advance"]
+	return ["hold", "comp", "head", "burst3", "advance", "advcomp"] if automatic else ["hold", "comp", "head", "advance", "advcomp"]
 
 ## A stable number per measurement cell, so two cells never reuse the same random draws.
 func _cell_salt(parts: Array) -> int:
@@ -307,11 +324,11 @@ func _accuracy(weapon: String, distance: float, mode: String) -> void:
 					burst_shots = 0
 					pause = 18
 					fire = false
-			var move := Vector2(0.0, 1.0) if mode == "advance" else Vector2.ZERO
+			var move := Vector2(0.0, 1.0) if mode == "advance" or mode == "advcomp" else Vector2.ZERO
 			# Aim at the chest from where the shooter stands now; in comp mode also pull down by the recoil carried.
 			var here := absf(target.global_position.z - shooter.global_position.z)
 			var aim := atan2(target.global_position.y + (HEAD if mode == "head" else CHEST) - (shooter.global_position.y + EYE), here)
-			if mode == "comp" or mode == "head":
+			if mode == "comp" or mode == "head" or mode == "advcomp":
 				aim -= shooter.recoil.y
 			shooter.input_state = {"look": Vector2(0.0, aim), "fire": fire, "move": move}
 			shooter.tick_authority(DT)
@@ -366,13 +383,25 @@ func _duel(weapon_a: String, weapon_b: String, distance: float) -> void:
 		var automatic_second: bool = Weapons.get_weapon(weapon_b)["automatic"]
 		var finished_at := -1
 		for tick in range(int(MAX_SECONDS / DT)):
-			var pair: Array = [first, second]
-			if order.randi() % 2 == 0:
-				pair = [second, first]
 			first.input_state = {"look": Vector2(0.0, aim_first), "fire": true if automatic_first else tick % 2 == 0}
 			second.input_state = {"look": Vector2(PI, aim_second), "fire": true if automatic_second else tick % 2 == 0}
-			for actor: SBActor in pair:
-				actor.tick_authority(DT)
+			if resolution == "two_phase":
+				# As TacticalMatch._authority_tick: everyone moves, everyone acts with hits queued, then the hits land.
+				var queued: Array = []
+				var sink := func(source: SBActor, target: SBActor, amount: float, headshot: bool) -> void:
+					queued.append([source, target, amount, headshot])
+				first.tick_authority_movement(DT)
+				second.tick_authority_movement(DT)
+				first.tick_authority_actions(DT, sink)
+				second.tick_authority_actions(DT, sink)
+				for hit: Array in queued:
+					(hit[0] as SBActor).resolve_shot_hit(hit[1], float(hit[2]), bool(hit[3]))
+			else:
+				var pair: Array = [first, second]
+				if order.randi() % 2 == 0:
+					pair = [second, first]
+				for actor: SBActor in pair:
+					actor.tick_authority(DT)
 			if not first.alive or not second.alive:
 				finished_at = tick
 				break
@@ -389,4 +418,4 @@ func _duel(weapon_a: String, weapon_b: String, distance: float) -> void:
 			trades += 1
 		else:
 			none += 1
-	_emit("DUEL", {"a": weapon_a, "b": weapon_b, "distance": distance, "duels": duels, "a_wins": a_wins, "b_wins": b_wins, "trades": trades, "unresolved": none, "a_win_time_median_s": snappedf(_median(win_times), 0.001)})
+	_emit("DUEL", {"resolution": resolution, "a": weapon_a, "b": weapon_b, "distance": distance, "duels": duels, "a_wins": a_wins, "b_wins": b_wins, "trades": trades, "unresolved": none, "a_win_time_median_s": snappedf(_median(win_times), 0.001)})

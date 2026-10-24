@@ -102,11 +102,47 @@ def floor_tenth(value):
     return math.floor(value * 10.0 + 1e-9) / 10.0
 
 
+def stability(paths):
+    """How much the same measurement cell moves between runs with different seeds."""
+    runs = [load(path) for path in paths]
+    print("Cells compared across %d runs (%s). Spread = largest minus smallest value of the cell." % (len(runs), ", ".join(paths)))
+    worst = {}
+    for kind, key_fields, value_fields in (
+        ("ACCURACY", ("weapon", "distance", "mode"), ("hit_rate", "kill_rate", "kill_time_median_s", "head_share_of_hits")),
+        ("DUEL", ("a", "b", "distance"), ("a_wins", "b_wins", "trades")),
+    ):
+        cells = defaultdict(list)
+        for rows in runs:
+            for row in rows.get(kind, []):
+                cells[tuple(row[f] for f in key_fields)].append(row)
+        for field in value_fields:
+            spreads = []
+            for key, rows in cells.items():
+                if len(rows) < 2:
+                    continue
+                values = [r[field] for r in rows]
+                if field in ("a_wins", "b_wins", "trades"):
+                    values = [v / r["duels"] for v, r in zip(values, rows)]
+                if field == "kill_time_median_s" and any(v < 0 for v in values):
+                    continue
+                spreads.append((max(values) - min(values), key, values))
+            spreads.sort(reverse=True)
+            if spreads:
+                top = spreads[0]
+                print("%-9s %-20s cells=%3d  largest spread %.3f at %s  values %s" % (kind, field, len(spreads), top[0], "/".join(str(k) for k in top[1]), ", ".join("%.3f" % v for v in top[2])))
+                worst[(kind, field)] = top[0]
+    return worst
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("log")
     parser.add_argument("--weapons", default="game/scripts/gameplay/weapons.gd")
+    parser.add_argument("--stability", nargs="+", metavar="LOG", help="print how far the same cells differ between these logs (different seeds) instead of the tables")
     arguments = parser.parse_args()
+    if arguments.stability:
+        stability([arguments.log] + arguments.stability)
+        return
     spec = read_weapons(arguments.weapons)
     rows = load(arguments.log)
     names = [w for w in ORDER if w in spec]
@@ -152,13 +188,14 @@ def main():
 
     if rows.get("ACCURACY"):
         trials = rows["ACCURACY"][0]["trials"]
-        modes = ["hold", "comp", "head", "burst3", "advance"]
+        modes = ["hold", "comp", "head", "burst3", "advance", "advcomp"]
         labels = {
             "hold": "aimed at the chest, trigger held, recoil not countered (semi-auto: clicked at its own rate)",
             "comp": "aimed at the chest, trigger held, the shooter pulls down by exactly the recoil carried (the weapon's ceiling under perfect spray control)",
             "head": "aimed at the centre of the head, recoil countered (every kill here is a headshot kill)",
             "burst3": "aimed at the chest, three-round bursts, 0.3 s apart",
-            "advance": "aimed at the chest, trigger held while walking at the target, re-aimed every tick",
+            "advance": "aimed at the chest, trigger held while walking at the target, re-aimed every tick, recoil not countered",
+            "advcomp": "aimed at the chest, trigger held while walking at the target, re-aimed every tick, recoil countered exactly",
         }
         for mode in modes:
             subset = [r for r in rows["ACCURACY"] if r["mode"] == mode]
@@ -189,17 +226,20 @@ def main():
     if rows.get("DUEL"):
         distances = sorted({r["distance"] for r in rows["DUEL"]})
         duel_count = rows["DUEL"][0]["duels"]
+        resolution = rows["DUEL"][0].get("resolution", "sequential")
+        how = {
+            "two_phase": "Hits are queued until every actor has acted, as in the match, so a same-tick mutual kill is a trade.",
+            "sequential": "One actor's whole tick runs at a time in a shuffled order, so a same-tick mutual kill is impossible and the first actor processed wins the tie.",
+        }.get(resolution, "")
         for d in distances:
-            print("\n### Duels at %g m: both fire on the same tick at the other's chest (%d duels per pair)\n" % (d, duel_count))
-            print("Each cell: row weapon wins / column weapon wins / neither dead after the magazines (a same-tick double kill cannot occur: the first actor processed in a tick fires and the dead cannot answer). The same-weapon cells are the harness's own fairness check; the 95% Wilson interval of the row weapon's wins is in brackets.\n")
+            print("\n### Duels at %g m: both fire on the same tick at the other's chest (%d duels per ordered pair, resolution %s)\n" % (d, duel_count, resolution))
+            print("%s Each cell: row weapon (blue, team 0) wins / column weapon (red, team 1) wins / both dead / neither dead after the magazines. Every ordered pair is run, so the two seat orders of a pair should mirror each other. A trade is the whole outcome when the two kill on the same tick. The 95%% Wilson interval of the row weapon's wins is in brackets.\n" % how)
             print("| Row vs column | %s |" % " | ".join(names))
             print("| --- | %s |" % " | ".join("---" for _ in names))
             lookup = {}
             for r in rows["DUEL"]:
                 if r["distance"] == d:
-                    lookup[(r["a"], r["b"])] = (r["a_wins"], r["b_wins"], r["unresolved"], r["duels"])
-                    if r["a"] != r["b"]:
-                        lookup[(r["b"], r["a"])] = (r["b_wins"], r["a_wins"], r["unresolved"], r["duels"])
+                    lookup[(r["a"], r["b"])] = (r["a_wins"], r["b_wins"], r["trades"], r["unresolved"], r["duels"])
             for a_name in names:
                 cells = []
                 for b_name in names:
@@ -207,8 +247,8 @@ def main():
                     if value is None:
                         cells.append("")
                     else:
-                        wins, losses, none, total = value
-                        cells.append("%s / %s / %s [%s]" % (pct(wins / total), pct(losses / total), pct(none / total), interval_text(wins, total)))
+                        wins, losses, trades, none, total = value
+                        cells.append("%s / %s / %s / %s [%s]" % (pct(wins / total), pct(losses / total), pct(trades / total), pct(none / total), interval_text(wins, total)))
                 print("| %s | %s |" % (a_name, " | ".join(cells)))
 
 
