@@ -72,3 +72,18 @@ and properly initialized depth-one views. Preserve failure iterations and setup
 errors. Bind the full non-document Git union/modes/bytes including sparse omissions,
 and disclose shared alternates. Freeze/push source, then builder evidence for a
 different independent critic. The builder cannot approve readiness or native work.
+
+## Timing fixture expansion before restamp edit
+
+The first implementation rejects all six final falsifiers, with13/13 fresh
+verdicts. Its focused45 methods expose one additional source-inconsistent
+positive fixture: the lifecycle failed-attempt restamp moves welcome to wall6000
+but retains a first-observed applied-snapshot timestamp4000 in a later row.
+The preceding welcome row has no snapshot counter, so a newly counted snapshot
+cannot predate it. Preserve the exact old lifecycle file and failing output.
+Minimum fixture correction is to place the first snapshot call at the preceding
+emitted row time (inclusive), retain that cached snapshot/latest on subsequent
+rows and recompute snapshot_age. All old method names, assertion ASTs and test
+mutations remain. This is construction-time normalization before assertions,
+never post-mutation parser repair. Source current-time capture and cumulative
+counter emission provide the basis; no runtime behavior changes.
