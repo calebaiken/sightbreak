@@ -90,3 +90,14 @@ Old pure suites ran unchanged before implementation: 32 methods passed on CPU4,
 with stdout/stderr retained under `historical-source/`. That result measures the
 old suite, including its contradictory positive fixture. The identity source is
 also retained byte-for-byte before its minimum fixture correction.
+
+Fresh critic independently identified a second contradiction in that old positive:
+its count1 packet has first=-1,last=-9. Match 1249–1264 reads both endpoints from
+the same sole dictionary command, so even malformed input cannot emit unequal
+endpoints at count1. Correct the intended malformed-payload mutation to
+first=last=-9, epoch=-1; retain the old unequal projection historically and label
+it impossible rather than valid prevalidation. Root separately authorized this
+minimum correction. The reader must reject unequal count1 packet endpoints in
+any current packet projection, including receive; this is projection fidelity,
+not authority validation of received payloads. Other malformed receive values
+remain allowed before stream validation.
