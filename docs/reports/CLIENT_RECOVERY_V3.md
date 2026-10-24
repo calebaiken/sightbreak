@@ -92,8 +92,14 @@ prelaunch and native-read hashes, lengths and keys match. No original purchase
 identifier was supplied through configuration, environment or argv. Each purchase
 settled once, and the second restart sent no purchase request or changed economic
 rows. This uses frozen harness `7be70f73`, with 101 raw-evidence Git blobs and the
-separate neutral ZIP reverified after incorporation. A fresh two-case blind review
-is pending; the original three-case review and source closure remain distinct.
+separate neutral ZIP reverified after incorporation. The fresh
+[two-case blind review](native-journal-only-restart-review/closure/outcome/VERDICT.md)
+selects the candidate after verifying all 54 packet payloads and ten economic
+snapshots. Its separate
+[source-binding review](native-journal-only-restart-review/closure/source-review/SOURCE_BINDING_REVIEW.md)
+also passes: all 50 observation bindings, six launch/native-read bindings and 606
+shipping-source manifest entries reproduce. The original three-case review and
+source closure remain distinct.
 The original maintained native
 economy regression's 36/37 Windows port-9 failure is retained; a one-literal reserved
 DNS calibration passed 37/37 and is now adopted by the maintained test in `5da86b28`.
@@ -212,8 +218,13 @@ terminates at a stable post-response boundary.
 The largest evidence gap from the first blind review was real PostgreSQL market
 settlement through a lost response, fresh authentication, recovery and a second
 restart. Its exact-source result, blind outcome and source/API binding reviews now
-pass. A narrow recovery-input absence control remains in progress as corroboration;
-the critic found no remaining source-dataflow or transformation blocker.
+pass. The narrow recovery-input absence control also passes its independent blind
+outcome and final source-binding reviews. Neither source review leaves a
+source-dataflow or transformation blocker for its declared scope. Historical
+machine/cache/loaded-code execution and launcher-worker ancestry remain author-run
+records rather than independent OS-level attestations; original secret-bearing
+configs and copied-cache payloads are unavailable. No further crash variation is
+required for the completed control's bounded acceptance.
 The original backend does not durably fence terminal rejected receipts, so a
 permanently rejected uncertain intent can remain blocked. Forgetting it would be
 unsafe while an earlier request may still commit. Port collisions fail closed;

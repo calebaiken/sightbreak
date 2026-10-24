@@ -11,7 +11,9 @@ including the retained [74-case matrix and impairment/PostgreSQL evidence](../re
 PR #16 changes after this reference affect documentation/export verification, not game or backend code.
 New comparisons run both sources on the same host; Windows timings are not compared as if they were the retained Linux campaign.
 
-Original stack reconciled 2026-10-19; refs and recorded handoffs refreshed after the restart on 2026-10-22.
+Original stack reconciled 2026-10-19. GitHub head/base/state metadata and recorded handoffs
+were refreshed on 2026-10-24; all requested historical PR heads are unchanged. The last
+full `git fetch --all --prune` timed out, so that attempt adds no fetch-success claim.
 `git merge-base --is-ancestor` and `git cherry` distinguish ancestry from equivalent patches:
 
 | PR | Current head | Reconciled state in #11 / frozen V2 / #16 |
@@ -35,7 +37,7 @@ B-28 lists further backend work; the bounded trade-read efficiency candidate is 
 
 | Slice | Declared failure mode / metric | State | Source and evidence |
 |---|---|---|---|
-| S1 / B-21 | Process exit around commit; exact receipt must survive restart and settle once | Source, fixture, PostgreSQL blind and capture/API reviews pass; minimal-input follow-up measured, fresh blind review pending | [PR #18](https://github.com/calebaiken/sightbreak/pull/18), runtime `7b6f379`; **0/27 → 27/27 recovered**; follow-up harness `e0cd1e4` adds kill after retry409, **0/9 → 9/9**; real PostgreSQL **0/3 → 3/3** at prices400/401/10000000, exact single settlement and unchanged second-restart state, harness `31438cbc` / evidence `49268b8`; minimal-input harness `7be70f73`: **0/1 → 1/1**; journal41/recovery12/armory749/menu51 pass; [report](../reports/CLIENT_RECOVERY_V3.md) |
+| S1 / B-21 | Process exit around commit; exact receipt must survive restart and settle once | Source, fixture, PostgreSQL blind and capture/API reviews pass; journal-only blind and final source-binding reviews pass | [PR #18](https://github.com/calebaiken/sightbreak/pull/18), runtime `7b6f379`; **0/27 → 27/27 recovered**; follow-up harness `e0cd1e4` adds kill after retry409, **0/9 → 9/9**; real PostgreSQL **0/3 → 3/3** at prices 400/401/10,000,000, exact single settlement and unchanged second-restart state, harness `31438cbc` / evidence `49268b8`; journal-only harness `7be70f73`: **0/1 → 1/1**; journal 41/recovery 12/armory 749/menu 51 pass; [report](../reports/CLIENT_RECOVERY_V3.md) |
 | S2 | Fully acknowledged stale input batches incorrectly refresh transport liveness | Source and blind critics pass the bounded native comparison; supplemental single-batch trace interrupted by agent-tool filter, no new result | [PR #20](https://github.com/calebaiken/sightbreak/pull/20), runtime `f3ceaad`, tested `77f2040`, neutral evidence `0cbc3ae`; stale-window travel **1.003–1.020m → 0m**, horizontal stop315–332ms, stale peer retired32.057–32.072s vs still bound34s;16valid native pairs and11regression groups per source |
 | S3 | Per-trade item/name hydration scales database statements with history size | Astra and Sol source/blind critics pass the bounded read slice with qualifications; targeted assurance fixes independently pass | [PR #19](https://github.com/calebaiken/sightbreak/pull/19), runtime `4a8e9ea`, measured checkout/harness `8070436`, response/state evidence `89215fb`, assurance evidence `172c900`; 40 trades × 20 items/side **1,643 → 8 SQL statements**; baseline 61/candidate 74 PostgreSQL checks pass; 168 received responses and 336 table snapshots retained; small-read timing regressions disclosed |
 | S4 | Missing repeated-ACK observations during experimental prediction/reconciliation | Source, coverage, 121-insertion boundary and capture/API critics pass; earlier TIE retained | [PR #21](https://github.com/calebaiken/sightbreak/pull/21), runtime `0fbce12`, campaign harness `1a941e8`, campaign evidence `6d2b38d`, boundary harness `b4b3db0` / evidence `d5c738d`; held-snapshot visibility **20/40 → 40/40**, all **1,224 reconciliations** observed; 121st insertion retains120, evicts1 and preserves the anchor; legacy outputs identical, six maintained gates pass; no gameplay-accuracy win claimed, default-off gate retained |
@@ -44,12 +46,18 @@ Each candidate needs an exact runtime commit, repeatable command, raw logs, matc
 baseline, separate blind critic, and a recorded Sol handoff. A passing smoke test
 does not activate a feature gate. Failed trials remain in the evidence record.
 
+The runtime IDs identify complete source snapshots, not necessarily standalone
+cherry-picks. In particular, S1 at `7b6f379` includes production changes from
+`ac48342`, `cda6372`, and `7b6f379`, in that order, on the PR16 base. Selecting only
+the last fix omits the journal implementation. Sol owns the combined integration
+commit and its checks; the individual slice results do not certify a combined tree.
+
 ## Coordination and gates
 
 - [PR16 systems handoff](https://github.com/calebaiken/sightbreak/pull/16#issuecomment-6274885599)
 - [PR12 narrow transaction-hook handoff](https://github.com/calebaiken/sightbreak/pull/12#issuecomment-6274889863); comments/reviews refreshed before editing.
 - [Sol V3 integration / QA PR #17](https://github.com/calebaiken/sightbreak/pull/17); shared harness portability belongs to Sol. Systems slices use focused separate harnesses.
-- Sol handoffs refreshed through integration head `320e0ef`. Its [source-bound PR19 findings](https://github.com/calebaiken/sightbreak/pull/19#issuecomment-6275997901)
+- Sol handoffs refreshed through integration head `2a026e6`. Its [source-bound PR19 findings](https://github.com/calebaiken/sightbreak/pull/19#issuecomment-6275997901)
   are addressed by executed SQL-parameter-bound negative controls and actual imported-fixture
   identity checks against frozen runtime `4a8e9ea`. The [independent assurance review](https://github.com/calebaiken/sightbreak/pull/19#issuecomment-6354641157)
   passes the targeted controls at `172c900`: shipping maximum500; mutated batches1600/502 fail;
@@ -85,9 +93,25 @@ does not activate a feature gate. Failed trials remain in the evidence record.
 - Sessions/credentials remain memory-only. A durable receipt is not authentication.
 - App-process restart durability is the first target; host power-loss durability is not established by a process-kill test.
 
-## Next recorded actions
+## Review closure and integration handoff
 
-1. Freeze the fresh blind verdict for S1's [completed minimal-input follow-up](../reports/NATIVE_JOURNAL_ONLY_RESTART_RESULTS.md): 1/1 versus0/1, four minimal restart configs, one settlement per purchase and no second-restart purchase. All101 raw-evidence blobs plus the neutral ZIP verify against committed Git objects. The earlier [blind outcome](https://github.com/calebaiken/sightbreak/pull/18#issuecomment-6355013968) and [source/API binding](../reports/native-pg-restart-evidence/source-binding/README.md) pass separately: 3/3 versus0/3, all2,078 consistency checks and114 observation bindings verified. Original native economy36/37 and separately calibrated37/37 remain retained; the maintained test adopts the executed calibration in `5da86b28`.
-2. Preserve S2's completed source/blind-passed campaign, failed fixture trials and isolated interrupted follow-up; claim no supplemental trace result.
-3. S4 controller/key closure is published at `37924d1531029b7429ee9289a266a497388001b4`; outcome and capture/API-binding reviews pass and all14 archive Git-blob hashes verify. [Final handoff](https://github.com/calebaiken/sightbreak/pull/21#issuecomment-6354741011). S3's second key and frozen verdict archive are also published; original packet hashes remain fixed.
-4. Refresh Sol's source-bound findings and hand off the independently judged candidates for integration. Draft status and activation gates remain in force.
+- S1's [journal-only control](../reports/NATIVE_JOURNAL_ONLY_RESTART_RESULTS.md) passes its
+  [frozen blind verdict](https://github.com/calebaiken/sightbreak/pull/18#issuecomment-6382319612)
+  and [final source-binding review](../reports/native-journal-only-restart-review/closure/source-review/SOURCE_BINDING_REVIEW.md).
+  The closure contains 35 byte-pinned review/controller/source artifacts. Original 101 raw
+  blobs and the neutral ZIP remain fixed. The earlier three-case PostgreSQL outcome and
+  source reviews pass separately. Original native economy 36/37 and separately calibrated 37/37
+  remain retained; the maintained test adopts the executed calibration in `5da86b28`.
+- S2's source/blind-passed campaign remains the acceptance basis. Failed trials and the
+  isolated interrupted follow-up are preserved, with no supplemental trace claim.
+- S3's second key and frozen verdict archive are published at `866e2e1`; S4's controller/key
+  closure is published at `37924d1531029b7429ee9289a266a497388001b4` with all 14 archive hashes
+  verified. [S4 final handoff](https://github.com/calebaiken/sightbreak/pull/21#issuecomment-6354741011).
+
+All four declared slices have independently judged wins within their stated scope.
+Sol owns combined-source integration and independent QA. The next acceptance step is
+an exact combined revision with source-bound matrix/export/network/economy results;
+the failed pre-candidate Linux run remains a separate result. Further work includes
+bounded trade-history pagination, release/turn handling when prediction history fills,
+and actual prediction accuracy under impairment. Draft status and activation gates
+remain in force.

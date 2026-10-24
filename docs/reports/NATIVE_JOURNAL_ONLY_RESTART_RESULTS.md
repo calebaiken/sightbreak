@@ -192,6 +192,30 @@ is 70,232 bytes with 55 entries. Its SHA-256 is
 MANIFEST SHA-256 is
 `26ff68587ab032c55d27cbfc56adcb8d45aa5b377d7aac947516b94a7e4fc2b4`.
 The ZIP's exact Git blob is `47c02e8c41fb4e7cb650839b3969c19013095635`.
-Give a fresh outcome critic only that ZIP and its pins. The prior verdict and
-controller mapping remain external. Every neutral transformation is reversible
-from the controller's logged substitutions and immutable-original bindings.
+The independent outcome critic received only that ZIP and its pins. Its
+[full frozen verdict](native-journal-only-restart-review/closure/outcome/VERDICT.md)
+selects **Set-829261D1, 1/1 recovered**, over Set-DB921BCA, 0/1. All 54 payload hashes,
+ten economic snapshots and four minimal restart configurations pass. Both arms
+settle once; the winner restores its journal, repeats the original integer request
+byte-for-byte and recovers the full receipt. Neither arm purchases on the second
+restart. Stable absence and refreshed account data do not make the other arm's
+empty result a recovery.
+
+The outcome was [publicly frozen before source/identity access](https://github.com/calebaiken/sightbreak/pull/18#issuecomment-6382319612).
+Its exact SHA256 is `ce31d12d3def7e7b312ce1a44e30fc654290085796b3b0a5c2bd561e59c904af`.
+The original [controller and review archive](native-journal-only-restart-review/closure/README.md)
+now bind Set-829261D1 to candidate `7b6f379` and Set-DB921BCA to V2 `701ce2c`.
+The separate
+[source/dataflow and transformation-binding review](native-journal-only-restart-review/closure/source-review/SOURCE_BINDING_REVIEW.md)
+**passes**. It reproduces 26 unchanged and 24 transformed observations, all 356
+substitution occurrences, all six launch/native-read bindings and all 606 shipping
+manifest entries. The frozen probe calls zero-argument `_retry_pending()` and the
+candidate loads, rechecks and dispatches the persisted transaction; the result is
+the backend `Operation.response`.
+
+The complete outcome and source reviews, controller and audit/source copies are
+preserved as 35 byte-pinned artifacts in the closure archive. Original secret-bearing
+configurations, copied-cache payloads and independent OS/process ancestry attestation
+are unavailable. The journal wrapper also cannot distinguish absence from a zero-byte
+file. These limitations remain explicit; no source/dataflow or transformation blocker
+remains for this scope. The critic requires no additional crash variation.
