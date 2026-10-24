@@ -1,0 +1,3689 @@
+{
+  "source": "b5a3ea334e5a2b02fe6600683823c4f21e56b23e",
+  "reader_code": "6ef4d145ab70ed943c54ec26865e0c884b64b1a9",
+  "events": 46,
+  "failure_events": 45,
+  "errors": 1,
+  "categories": {
+    "historical-expiry-target-conflict": 1,
+    "legacy-reference-current-reader-target-conflict": 1,
+    "source-impossible-control-permitted-proposal-unapplied": 1,
+    "historical-preedit-target": 10,
+    "negative-message-priority-conflict": 1,
+    "source-impossible-derived-construction": 32
+  },
+  "raw_failure_blob_sha256": "7afb9d434cd253030cf0b5df21ff45b7a8590c1177d5e025d52a8a152592da6a",
+  "raw_calls_gzip_sha256": "cc36d1937cbb24951f16497c593800cf41a53f1bc3c0d16679df158f69f00c7a",
+  "copied_original_call_corpus": false,
+  "new_reader_or_model_execution": false,
+  "events_detail": [
+    {
+      "ordinal": 0,
+      "kind": "failure",
+      "test": "test_input_consumption_expiry.ExpiryHistoryControls.test_missing_legacy_connected_foundation_stays_unknown_then_later_invalid",
+      "source": {
+        "path": "scripts/test_input_consumption_expiry.py",
+        "line": 378,
+        "method_sha256": "5191e7e877caad95b280c9dea3a4446d0c357e9a7a0f12c83817f4db91c40a57",
+        "module_sha256": "d642c4f0be7fbe2e34c08ca46f45b23eb27a787212d94504e8a6609440f505b7"
+      },
+      "original_failure_sha256": "9e86ffd0ced22fd44c7dacf48c6de443357bf20bbbf5cfe753b22c2b52532323",
+      "original_failure_reference": "b5a3ea334e5a2b02fe6600683823c4f21e56b23e:docs/reports/gauntlet/windows-input-foundation-r6-root-20261024/literal158-r1/FAILURES.json#0",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/sightbreak-input-foundation-r6-root-20261024/scripts/test_input_consumption_expiry.py\", line 380, in test_missing_legacy_connected_foundation_stays_unknown_then_later_invalid\n    report=full_report(rows);self.assertEqual(report['transition_status'],'UNKNOWN',report['errors'])\n                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 'INVALID' != 'UNKNOWN'\n- INVALID\n+ UNKNOWN\n : ['authority: successful connection has an impossible initial lifecycle projection']\n",
+      "retained_call_ids": [
+        2042,
+        2043,
+        2044,
+        2045
+      ],
+      "selected_call_id": 2045,
+      "selected_result": {
+        "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+        "diagnostic_complete": false,
+        "transition_status": "INVALID",
+        "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+        "roles": {
+          "client": {
+            "records": 7,
+            "coverage": [
+              "client_attempt",
+              "client_connected",
+              "client_tick",
+              "input_send_called",
+              "ready",
+              "snapshot_applied",
+              "welcome_received"
+            ],
+            "counters": {
+              "ready": 1,
+              "client_attempt": 1,
+              "client_connected": 1,
+              "welcome_received": 1,
+              "client_tick": 2,
+              "snapshot_applied": 1,
+              "input_send_called": 1
+            },
+            "max_observation_gap_msec": 1000,
+            "max_snapshot_age_msec": 3000,
+            "pending_saturation_indices": [],
+            "accepted_events": [],
+            "consumed_events": [],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [
+              {
+                "transport_id": 9,
+                "local_attempt": 1,
+                "local_id": 1,
+                "wall_unix_msec": 104000
+              }
+            ],
+            "binding_events": [],
+            "local_attempts": 1
+          }
+        },
+        "errors": [
+          "authority: successful connection has an impossible initial lifecycle projection"
+        ]
+      },
+      "selected_authority_input_sha256": "9c1e507ba8c67009e6bf3ba95f842ddfc030b0d45f2d3b04d3813e0a2f31bf4d",
+      "classification": "historical-expiry-target-conflict",
+      "purpose": "Method explicitly asserts expiry-only missing-foundation UNKNOWN followed by a definitive later INVALID, predating foundation enforcement.",
+      "first_repair_group": true,
+      "proposal": "Bind only this named method to immutable old d2 reader/old9f constructor, no current candidate credit; preserve current foundation INVALID controls separately. Different adjudication required."
+    },
+    {
+      "ordinal": 1,
+      "kind": "failure",
+      "test": "test_input_consumption_expiry.FullExpiryReaderControls.test_new_positive_lifecycle_projection_and_old_helper_unchanged",
+      "source": {
+        "path": "scripts/test_input_consumption_expiry.py",
+        "line": 232,
+        "method_sha256": "ebc1f2658f22b837aaad83d475151565f68f684797e21f2e8d4a004712fbc6cf",
+        "module_sha256": "d642c4f0be7fbe2e34c08ca46f45b23eb27a787212d94504e8a6609440f505b7"
+      },
+      "original_failure_sha256": "b2d21d42db8b56052eea1435b91de5d26f9c9b4d59d3b86e8053eb9776f175c3",
+      "original_failure_reference": "b5a3ea334e5a2b02fe6600683823c4f21e56b23e:docs/reports/gauntlet/windows-input-foundation-r6-root-20261024/literal158-r1/FAILURES.json#1",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/sightbreak-input-foundation-r6-root-20261024/scripts/test_input_consumption_expiry.py\", line 234, in test_new_positive_lifecycle_projection_and_old_helper_unchanged\n    self.assertEqual(original[1]['input_age_msec'],-1);self.assertEqual(original[1]['deadline_remaining_msec'],-1)\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 0 != -1\n",
+      "retained_call_ids": [],
+      "selected_call_id": null,
+      "selected_result": null,
+      "selected_authority_input_sha256": null,
+      "classification": "legacy-reference-current-reader-target-conflict",
+      "purpose": "Method compares a frozen pre-amendment helper against new source-projected rows; the new rows must still execute the CURRENT reader.",
+      "first_repair_group": true,
+      "proposal": "Bind only this method test-module declared_rows to immutable old9f constructor; keep analyze on CURRENT R6. Preserve all original assertions. Different adjudication required."
+    },
+    {
+      "ordinal": 2,
+      "kind": "failure",
+      "test": "test_input_consumption_foundation_enforcement.AuthorityFoundationEnforcement.test_definite_prefix_faults_are_not_hidden_by_unknown_lifecycle",
+      "source": {
+        "path": "scripts/test_input_consumption_foundation_enforcement.py",
+        "line": 138,
+        "method_sha256": "2a1da6dcd0839af85173af2fec962348d25333ae85ca54f7f41836e7c4f454a0",
+        "module_sha256": "d25d15b873e81f950337996d0469cf6cb43cd43d14c2257fc1774f513c27d103"
+      },
+      "original_failure_sha256": "4400b0bb4f5cc9614d60b80ed511f9a1de69f4dde69b576e5348ef38e86b8c83",
+      "original_failure_reference": "b5a3ea334e5a2b02fe6600683823c4f21e56b23e:docs/reports/gauntlet/windows-input-foundation-r6-root-20261024/literal158-r1/FAILURES.json#2",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/sightbreak-input-foundation-r6-root-20261024/scripts/test_input_consumption_foundation_enforcement.py\", line 150, in test_definite_prefix_faults_are_not_hidden_by_unknown_lifecycle\n    self.assertEqual(control['transition_status'], 'UNKNOWN', control)\nAssertionError: 'INVALID' != 'UNKNOWN'\n- INVALID\n+ UNKNOWN\n : {'scope': 'Debug read-only stage observations; no qualification, physical latency or unobserved cause claim', 'diagnostic_complete': False, 'transition_status': 'INVALID', 'cause_status': 'UNRESOLVED; observations identify executed stages and gaps only', 'roles': {'client': {'records': 7, 'coverage': ['client_attempt', 'client_connected', 'client_tick', 'input_send_called', 'ready', 'snapshot_applied', 'welcome_received'], 'counters': {'ready': 1, 'client_attempt': 1, 'client_connected': 1, 'welcome_received': 1, 'client_tick': 2, 'snapshot_applied': 1, 'input_send_called': 1}, 'max_observation_gap_msec': 1000, 'max_snapshot_age_msec': 3000, 'pending_saturation_indices': [], 'accepted_events': [], 'consumed_events': [], 'expiry_events': [], 'disconnect_events': [], 'welcome_events': [{'transport_id': 9, 'local_attempt': 1, 'local_id': 1, 'wall_unix_msec': 104000}], 'binding_events': [], 'local_attempts': 1}}, 'errors': ['authority: accepted packet has no valid ACK context for its input window/fresh intent']}\n",
+      "retained_call_ids": [
+        2191,
+        2192,
+        2193,
+        2194
+      ],
+      "selected_call_id": 2194,
+      "selected_result": {
+        "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+        "diagnostic_complete": false,
+        "transition_status": "INVALID",
+        "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+        "roles": {
+          "client": {
+            "records": 7,
+            "coverage": [
+              "client_attempt",
+              "client_connected",
+              "client_tick",
+              "input_send_called",
+              "ready",
+              "snapshot_applied",
+              "welcome_received"
+            ],
+            "counters": {
+              "ready": 1,
+              "client_attempt": 1,
+              "client_connected": 1,
+              "welcome_received": 1,
+              "client_tick": 2,
+              "snapshot_applied": 1,
+              "input_send_called": 1
+            },
+            "max_observation_gap_msec": 1000,
+            "max_snapshot_age_msec": 3000,
+            "pending_saturation_indices": [],
+            "accepted_events": [],
+            "consumed_events": [],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [
+              {
+                "transport_id": 9,
+                "local_attempt": 1,
+                "local_id": 1,
+                "wall_unix_msec": 104000
+              }
+            ],
+            "binding_events": [],
+            "local_attempts": 1
+          }
+        },
+        "errors": [
+          "authority: accepted packet has no valid ACK context for its input window/fresh intent"
+        ]
+      },
+      "selected_authority_input_sha256": "3b2f9b8664f0280401eed560a38063f1b5a4231a11d38b8de7190d36158460dd",
+      "classification": "source-impossible-control-permitted-proposal-unapplied",
+      "purpose": "An alleged UNKNOWN parent precedes structural mutations, but count1 seq1 is fully acknowledged at prior ACK1; no new accepted intent.",
+      "source_certificate": {
+        "kind": "fully-acknowledged-accept",
+        "count": 1,
+        "first": 1,
+        "last": 1,
+        "prior_ack": 1,
+        "source": "InputStream.accept25\u201339; exact23-leaf alternative already43a adjudicated"
+      },
+      "first_repair_group": false,
+      "proposal": "Only already supported exact23-leaf version may replace construction; original assertions/source/results remain unchanged until separately implemented."
+    },
+    {
+      "ordinal": 3,
+      "kind": "failure",
+      "test": "test_input_consumption_foundation_model.VersionedPreEditConstructionControls.test_known_schema_valid_source_negatives_are_frozen_as_preedit_false_completes (id='connected/missing-age')",
+      "source": {
+        "path": "scripts/test_input_consumption_foundation_model.py",
+        "line": 155,
+        "method_sha256": "81c8b73ebb0b648057da6b0563748306b9eb4a01f922341b0085aa0e05d80dcf",
+        "module_sha256": "974a272b70abc28674766401debbf26cce72faf4df46817b63ff534d3b076a8e"
+      },
+      "original_failure_sha256": "173e8bcc0a2af9ba621acbc709c1710d2ede355fa94749f62020d296e9d3d5e8",
+      "original_failure_reference": "b5a3ea334e5a2b02fe6600683823c4f21e56b23e:docs/reports/gauntlet/windows-input-foundation-r6-root-20261024/literal158-r1/FAILURES.json#3",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/sightbreak-input-foundation-r6-root-20261024/scripts/test_input_consumption_foundation_model.py\", line 159, in test_known_schema_valid_source_negatives_are_frozen_as_preedit_false_completes\n    with self.subTest(id=case['id']):self.assertTrue(result['diagnostic_complete'],result['errors'])\n                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: False is not true : ['authority: successful connection has an impossible initial lifecycle projection']\n",
+      "retained_call_ids": [],
+      "selected_call_id": 2273,
+      "selected_result": {
+        "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+        "diagnostic_complete": false,
+        "transition_status": "INVALID",
+        "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+        "roles": {
+          "client": {
+            "records": 7,
+            "coverage": [
+              "client_attempt",
+              "client_connected",
+              "client_tick",
+              "input_send_called",
+              "ready",
+              "snapshot_applied",
+              "welcome_received"
+            ],
+            "counters": {
+              "ready": 1,
+              "client_attempt": 1,
+              "client_connected": 1,
+              "welcome_received": 1,
+              "client_tick": 2,
+              "snapshot_applied": 1,
+              "input_send_called": 1
+            },
+            "max_observation_gap_msec": 1000,
+            "max_snapshot_age_msec": 3000,
+            "pending_saturation_indices": [],
+            "accepted_events": [],
+            "consumed_events": [],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [
+              {
+                "transport_id": 9,
+                "local_attempt": 1,
+                "local_id": 1,
+                "wall_unix_msec": 104000
+              }
+            ],
+            "binding_events": [],
+            "local_attempts": 1
+          }
+        },
+        "errors": [
+          "authority: successful connection has an impossible initial lifecycle projection"
+        ]
+      },
+      "selected_authority_input_sha256": "e51cd0714bf60b767e6795ba0a6eba7f9a1264847586c176d0085b209bf009dd",
+      "classification": "historical-preedit-target",
+      "purpose": "Explicit frozen old-reader/helper benchmark, not current-reader positive; existing exact18 adapter is the retained target.",
+      "first_repair_group": false,
+      "proposal": "Use existing historical18 target unchanged; never count its old false completes as current success."
+    },
+    {
+      "ordinal": 4,
+      "kind": "failure",
+      "test": "test_input_consumption_foundation_model.VersionedPreEditConstructionControls.test_known_schema_valid_source_negatives_are_frozen_as_preedit_false_completes (id='connected/wrong-sum')",
+      "source": {
+        "path": "scripts/test_input_consumption_foundation_model.py",
+        "line": 155,
+        "method_sha256": "81c8b73ebb0b648057da6b0563748306b9eb4a01f922341b0085aa0e05d80dcf",
+        "module_sha256": "974a272b70abc28674766401debbf26cce72faf4df46817b63ff534d3b076a8e"
+      },
+      "original_failure_sha256": "9f725d5b6f8bcec7141d6805b79ec0077b2cbe3aa7075f3d0494594b4a5b10b3",
+      "original_failure_reference": "b5a3ea334e5a2b02fe6600683823c4f21e56b23e:docs/reports/gauntlet/windows-input-foundation-r6-root-20261024/literal158-r1/FAILURES.json#4",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/sightbreak-input-foundation-r6-root-20261024/scripts/test_input_consumption_foundation_model.py\", line 159, in test_known_schema_valid_source_negatives_are_frozen_as_preedit_false_completes\n    with self.subTest(id=case['id']):self.assertTrue(result['diagnostic_complete'],result['errors'])\n                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: False is not true : ['authority: successful connection has an impossible initial lifecycle projection']\n",
+      "retained_call_ids": [],
+      "selected_call_id": 2277,
+      "selected_result": {
+        "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+        "diagnostic_complete": false,
+        "transition_status": "INVALID",
+        "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+        "roles": {
+          "client": {
+            "records": 7,
+            "coverage": [
+              "client_attempt",
+              "client_connected",
+              "client_tick",
+              "input_send_called",
+              "ready",
+              "snapshot_applied",
+              "welcome_received"
+            ],
+            "counters": {
+              "ready": 1,
+              "client_attempt": 1,
+              "client_connected": 1,
+              "welcome_received": 1,
+              "client_tick": 2,
+              "snapshot_applied": 1,
+              "input_send_called": 1
+            },
+            "max_observation_gap_msec": 1000,
+            "max_snapshot_age_msec": 3000,
+            "pending_saturation_indices": [],
+            "accepted_events": [],
+            "consumed_events": [],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [
+              {
+                "transport_id": 9,
+                "local_attempt": 1,
+                "local_id": 1,
+                "wall_unix_msec": 104000
+              }
+            ],
+            "binding_events": [],
+            "local_attempts": 1
+          }
+        },
+        "errors": [
+          "authority: successful connection has an impossible initial lifecycle projection"
+        ]
+      },
+      "selected_authority_input_sha256": "a2f5fcd40477dd5af24e1c3f9bf6ae7a7b957082c6957b3c28d4d211e43cd8df",
+      "classification": "historical-preedit-target",
+      "purpose": "Explicit frozen old-reader/helper benchmark, not current-reader positive; existing exact18 adapter is the retained target.",
+      "first_repair_group": false,
+      "proposal": "Use existing historical18 target unchanged; never count its old false completes as current success."
+    },
+    {
+      "ordinal": 5,
+      "kind": "failure",
+      "test": "test_input_consumption_foundation_model.VersionedPreEditConstructionControls.test_known_schema_valid_source_negatives_are_frozen_as_preedit_false_completes (id='connected/joined-before-admission')",
+      "source": {
+        "path": "scripts/test_input_consumption_foundation_model.py",
+        "line": 155,
+        "method_sha256": "81c8b73ebb0b648057da6b0563748306b9eb4a01f922341b0085aa0e05d80dcf",
+        "module_sha256": "974a272b70abc28674766401debbf26cce72faf4df46817b63ff534d3b076a8e"
+      },
+      "original_failure_sha256": "349e72b7c73aecb3f4d420bb4d7b53b4c01b9b133385c9016b7420f782ec4be4",
+      "original_failure_reference": "b5a3ea334e5a2b02fe6600683823c4f21e56b23e:docs/reports/gauntlet/windows-input-foundation-r6-root-20261024/literal158-r1/FAILURES.json#5",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/sightbreak-input-foundation-r6-root-20261024/scripts/test_input_consumption_foundation_model.py\", line 159, in test_known_schema_valid_source_negatives_are_frozen_as_preedit_false_completes\n    with self.subTest(id=case['id']):self.assertTrue(result['diagnostic_complete'],result['errors'])\n                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: False is not true : ['authority: successful connection has an impossible initial lifecycle projection']\n",
+      "retained_call_ids": [],
+      "selected_call_id": 2281,
+      "selected_result": {
+        "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+        "diagnostic_complete": false,
+        "transition_status": "INVALID",
+        "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+        "roles": {
+          "client": {
+            "records": 7,
+            "coverage": [
+              "client_attempt",
+              "client_connected",
+              "client_tick",
+              "input_send_called",
+              "ready",
+              "snapshot_applied",
+              "welcome_received"
+            ],
+            "counters": {
+              "ready": 1,
+              "client_attempt": 1,
+              "client_connected": 1,
+              "welcome_received": 1,
+              "client_tick": 2,
+              "snapshot_applied": 1,
+              "input_send_called": 1
+            },
+            "max_observation_gap_msec": 1000,
+            "max_snapshot_age_msec": 3000,
+            "pending_saturation_indices": [],
+            "accepted_events": [],
+            "consumed_events": [],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [
+              {
+                "transport_id": 9,
+                "local_attempt": 1,
+                "local_id": 1,
+                "wall_unix_msec": 104000
+              }
+            ],
+            "binding_events": [],
+            "local_attempts": 1
+          }
+        },
+        "errors": [
+          "authority: successful connection has an impossible initial lifecycle projection"
+        ]
+      },
+      "selected_authority_input_sha256": "2a6b19221977e0e9c304e2430888d4910cab4de922cac67dc46ff63152d0c4a5",
+      "classification": "historical-preedit-target",
+      "purpose": "Explicit frozen old-reader/helper benchmark, not current-reader positive; existing exact18 adapter is the retained target.",
+      "first_repair_group": false,
+      "proposal": "Use existing historical18 target unchanged; never count its old false completes as current success."
+    },
+    {
+      "ordinal": 6,
+      "kind": "failure",
+      "test": "test_input_consumption_foundation_model.VersionedPreEditConstructionControls.test_known_schema_valid_source_negatives_are_frozen_as_preedit_false_completes (id='generation/skipped-first')",
+      "source": {
+        "path": "scripts/test_input_consumption_foundation_model.py",
+        "line": 155,
+        "method_sha256": "81c8b73ebb0b648057da6b0563748306b9eb4a01f922341b0085aa0e05d80dcf",
+        "module_sha256": "974a272b70abc28674766401debbf26cce72faf4df46817b63ff534d3b076a8e"
+      },
+      "original_failure_sha256": "e7ec64d3d1de5fe76c74c69f21644439d72483b0d166be01f0bd601de18a55fb",
+      "original_failure_reference": "b5a3ea334e5a2b02fe6600683823c4f21e56b23e:docs/reports/gauntlet/windows-input-foundation-r6-root-20261024/literal158-r1/FAILURES.json#6",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/sightbreak-input-foundation-r6-root-20261024/scripts/test_input_consumption_foundation_model.py\", line 159, in test_known_schema_valid_source_negatives_are_frozen_as_preedit_false_completes\n    with self.subTest(id=case['id']):self.assertTrue(result['diagnostic_complete'],result['errors'])\n                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: False is not true : ['authority: successful connection skipped or reused the global generation']\n",
+      "retained_call_ids": [],
+      "selected_call_id": 2285,
+      "selected_result": {
+        "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+        "diagnostic_complete": false,
+        "transition_status": "INVALID",
+        "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+        "roles": {
+          "client": {
+            "records": 7,
+            "coverage": [
+              "client_attempt",
+              "client_connected",
+              "client_tick",
+              "input_send_called",
+              "ready",
+              "snapshot_applied",
+              "welcome_received"
+            ],
+            "counters": {
+              "ready": 1,
+              "client_attempt": 1,
+              "client_connected": 1,
+              "welcome_received": 1,
+              "client_tick": 2,
+              "snapshot_applied": 1,
+              "input_send_called": 1
+            },
+            "max_observation_gap_msec": 1000,
+            "max_snapshot_age_msec": 3000,
+            "pending_saturation_indices": [],
+            "accepted_events": [],
+            "consumed_events": [],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [
+              {
+                "transport_id": 9,
+                "local_attempt": 1,
+                "local_id": 1,
+                "wall_unix_msec": 104000
+              }
+            ],
+            "binding_events": [],
+            "local_attempts": 1
+          }
+        },
+        "errors": [
+          "authority: successful connection skipped or reused the global generation"
+        ]
+      },
+      "selected_authority_input_sha256": "11ba4a6aa456c16a7d99e0eb3b02513a13cd67db26ff7260489ba2883f5c6ed8",
+      "classification": "historical-preedit-target",
+      "purpose": "Explicit frozen old-reader/helper benchmark, not current-reader positive; existing exact18 adapter is the retained target.",
+      "first_repair_group": false,
+      "proposal": "Use existing historical18 target unchanged; never count its old false completes as current success."
+    },
+    {
+      "ordinal": 7,
+      "kind": "failure",
+      "test": "test_input_consumption_foundation_model.VersionedPreEditConstructionControls.test_known_schema_valid_source_negatives_are_frozen_as_preedit_false_completes (id='bound/future-last')",
+      "source": {
+        "path": "scripts/test_input_consumption_foundation_model.py",
+        "line": 155,
+        "method_sha256": "81c8b73ebb0b648057da6b0563748306b9eb4a01f922341b0085aa0e05d80dcf",
+        "module_sha256": "974a272b70abc28674766401debbf26cce72faf4df46817b63ff534d3b076a8e"
+      },
+      "original_failure_sha256": "ea3e188ce8beddc02ddf31eaa1cfe8d238db409591f7793e4b70b61b20ccfddf",
+      "original_failure_reference": "b5a3ea334e5a2b02fe6600683823c4f21e56b23e:docs/reports/gauntlet/windows-input-foundation-r6-root-20261024/literal158-r1/FAILURES.json#7",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/sightbreak-input-foundation-r6-root-20261024/scripts/test_input_consumption_foundation_model.py\", line 159, in test_known_schema_valid_source_negatives_are_frozen_as_preedit_false_completes\n    with self.subTest(id=case['id']):self.assertTrue(result['diagnostic_complete'],result['errors'])\n                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: False is not true : ['authority: authority lifecycle history is impossible: invalid/missing lifecycle time projection']\n",
+      "retained_call_ids": [],
+      "selected_call_id": 2289,
+      "selected_result": {
+        "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+        "diagnostic_complete": false,
+        "transition_status": "INVALID",
+        "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+        "roles": {
+          "client": {
+            "records": 7,
+            "coverage": [
+              "client_attempt",
+              "client_connected",
+              "client_tick",
+              "input_send_called",
+              "ready",
+              "snapshot_applied",
+              "welcome_received"
+            ],
+            "counters": {
+              "ready": 1,
+              "client_attempt": 1,
+              "client_connected": 1,
+              "welcome_received": 1,
+              "client_tick": 2,
+              "snapshot_applied": 1,
+              "input_send_called": 1
+            },
+            "max_observation_gap_msec": 1000,
+            "max_snapshot_age_msec": 3000,
+            "pending_saturation_indices": [],
+            "accepted_events": [],
+            "consumed_events": [],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [
+              {
+                "transport_id": 9,
+                "local_attempt": 1,
+                "local_id": 1,
+                "wall_unix_msec": 104000
+              }
+            ],
+            "binding_events": [],
+            "local_attempts": 1
+          }
+        },
+        "errors": [
+          "authority: authority lifecycle history is impossible: invalid/missing lifecycle time projection"
+        ]
+      },
+      "selected_authority_input_sha256": "583121cd480b81393146098f72d643b754df4f878ebcb11221027ef029070f9b",
+      "classification": "historical-preedit-target",
+      "purpose": "Explicit frozen old-reader/helper benchmark, not current-reader positive; existing exact18 adapter is the retained target.",
+      "first_repair_group": false,
+      "proposal": "Use existing historical18 target unchanged; never count its old false completes as current success."
+    },
+    {
+      "ordinal": 8,
+      "kind": "failure",
+      "test": "test_input_consumption_foundation_model.VersionedPreEditConstructionControls.test_known_schema_valid_source_negatives_are_frozen_as_preedit_false_completes (id='received/invented-active')",
+      "source": {
+        "path": "scripts/test_input_consumption_foundation_model.py",
+        "line": 155,
+        "method_sha256": "81c8b73ebb0b648057da6b0563748306b9eb4a01f922341b0085aa0e05d80dcf",
+        "module_sha256": "974a272b70abc28674766401debbf26cce72faf4df46817b63ff534d3b076a8e"
+      },
+      "original_failure_sha256": "77d563d8cb3ee5d03c7544140ed6aea32b387ac3313aa9aca948f834c7231484",
+      "original_failure_reference": "b5a3ea334e5a2b02fe6600683823c4f21e56b23e:docs/reports/gauntlet/windows-input-foundation-r6-root-20261024/literal158-r1/FAILURES.json#8",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/sightbreak-input-foundation-r6-root-20261024/scripts/test_input_consumption_foundation_model.py\", line 159, in test_known_schema_valid_source_negatives_are_frozen_as_preedit_false_completes\n    with self.subTest(id=case['id']):self.assertTrue(result['diagnostic_complete'],result['errors'])\n                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: False is not true : ['authority: authority lifecycle history is impossible: ']\n",
+      "retained_call_ids": [],
+      "selected_call_id": 2293,
+      "selected_result": {
+        "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+        "diagnostic_complete": false,
+        "transition_status": "INVALID",
+        "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+        "roles": {
+          "client": {
+            "records": 7,
+            "coverage": [
+              "client_attempt",
+              "client_connected",
+              "client_tick",
+              "input_send_called",
+              "ready",
+              "snapshot_applied",
+              "welcome_received"
+            ],
+            "counters": {
+              "ready": 1,
+              "client_attempt": 1,
+              "client_connected": 1,
+              "welcome_received": 1,
+              "client_tick": 2,
+              "snapshot_applied": 1,
+              "input_send_called": 1
+            },
+            "max_observation_gap_msec": 1000,
+            "max_snapshot_age_msec": 3000,
+            "pending_saturation_indices": [],
+            "accepted_events": [],
+            "consumed_events": [],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [
+              {
+                "transport_id": 9,
+                "local_attempt": 1,
+                "local_id": 1,
+                "wall_unix_msec": 104000
+              }
+            ],
+            "binding_events": [],
+            "local_attempts": 1
+          }
+        },
+        "errors": [
+          "authority: authority lifecycle history is impossible: "
+        ]
+      },
+      "selected_authority_input_sha256": "b68903a2ea68831d7263a1d74de7c7057d0fb4a743936d320777c2bf800ef700",
+      "classification": "historical-preedit-target",
+      "purpose": "Explicit frozen old-reader/helper benchmark, not current-reader positive; existing exact18 adapter is the retained target.",
+      "first_repair_group": false,
+      "proposal": "Use existing historical18 target unchanged; never count its old false completes as current success."
+    },
+    {
+      "ordinal": 9,
+      "kind": "failure",
+      "test": "test_input_consumption_foundation_model.VersionedPreEditConstructionControls.test_known_schema_valid_source_negatives_are_frozen_as_preedit_false_completes (id='tick/future-rejection')",
+      "source": {
+        "path": "scripts/test_input_consumption_foundation_model.py",
+        "line": 155,
+        "method_sha256": "81c8b73ebb0b648057da6b0563748306b9eb4a01f922341b0085aa0e05d80dcf",
+        "module_sha256": "974a272b70abc28674766401debbf26cce72faf4df46817b63ff534d3b076a8e"
+      },
+      "original_failure_sha256": "d72003d98e09de50dc10181a7b314c8bd2aaca5e6e7af9ce2682c62cbd7518b6",
+      "original_failure_reference": "b5a3ea334e5a2b02fe6600683823c4f21e56b23e:docs/reports/gauntlet/windows-input-foundation-r6-root-20261024/literal158-r1/FAILURES.json#9",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/sightbreak-input-foundation-r6-root-20261024/scripts/test_input_consumption_foundation_model.py\", line 159, in test_known_schema_valid_source_negatives_are_frozen_as_preedit_false_completes\n    with self.subTest(id=case['id']):self.assertTrue(result['diagnostic_complete'],result['errors'])\n                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: False is not true : ['authority: authority lifecycle history is impossible: ']\n",
+      "retained_call_ids": [],
+      "selected_call_id": 2297,
+      "selected_result": {
+        "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+        "diagnostic_complete": false,
+        "transition_status": "INVALID",
+        "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+        "roles": {
+          "client": {
+            "records": 7,
+            "coverage": [
+              "client_attempt",
+              "client_connected",
+              "client_tick",
+              "input_send_called",
+              "ready",
+              "snapshot_applied",
+              "welcome_received"
+            ],
+            "counters": {
+              "ready": 1,
+              "client_attempt": 1,
+              "client_connected": 1,
+              "welcome_received": 1,
+              "client_tick": 2,
+              "snapshot_applied": 1,
+              "input_send_called": 1
+            },
+            "max_observation_gap_msec": 1000,
+            "max_snapshot_age_msec": 3000,
+            "pending_saturation_indices": [],
+            "accepted_events": [],
+            "consumed_events": [],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [
+              {
+                "transport_id": 9,
+                "local_attempt": 1,
+                "local_id": 1,
+                "wall_unix_msec": 104000
+              }
+            ],
+            "binding_events": [],
+            "local_attempts": 1
+          }
+        },
+        "errors": [
+          "authority: authority lifecycle history is impossible: "
+        ]
+      },
+      "selected_authority_input_sha256": "937a2f6e00d0e5af5a24c0ffdc197667b2eaff20f770d97169c5fb8fe2cf0141",
+      "classification": "historical-preedit-target",
+      "purpose": "Explicit frozen old-reader/helper benchmark, not current-reader positive; existing exact18 adapter is the retained target.",
+      "first_repair_group": false,
+      "proposal": "Use existing historical18 target unchanged; never count its old false completes as current success."
+    },
+    {
+      "ordinal": 10,
+      "kind": "failure",
+      "test": "test_input_consumption_foundation_model.VersionedPreEditConstructionControls.test_known_schema_valid_source_negatives_are_frozen_as_preedit_false_completes (id='tick/joined-lost')",
+      "source": {
+        "path": "scripts/test_input_consumption_foundation_model.py",
+        "line": 155,
+        "method_sha256": "81c8b73ebb0b648057da6b0563748306b9eb4a01f922341b0085aa0e05d80dcf",
+        "module_sha256": "974a272b70abc28674766401debbf26cce72faf4df46817b63ff534d3b076a8e"
+      },
+      "original_failure_sha256": "303ce0b6c112926b8082ef78b45aac81a060e305b3b0abb493522f58a257565e",
+      "original_failure_reference": "b5a3ea334e5a2b02fe6600683823c4f21e56b23e:docs/reports/gauntlet/windows-input-foundation-r6-root-20261024/literal158-r1/FAILURES.json#10",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/sightbreak-input-foundation-r6-root-20261024/scripts/test_input_consumption_foundation_model.py\", line 159, in test_known_schema_valid_source_negatives_are_frozen_as_preedit_false_completes\n    with self.subTest(id=case['id']):self.assertTrue(result['diagnostic_complete'],result['errors'])\n                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: False is not true : ['authority: authority lifecycle history is impossible: joined/actor binding changed before disconnect']\n",
+      "retained_call_ids": [],
+      "selected_call_id": 2301,
+      "selected_result": {
+        "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+        "diagnostic_complete": false,
+        "transition_status": "INVALID",
+        "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+        "roles": {
+          "client": {
+            "records": 7,
+            "coverage": [
+              "client_attempt",
+              "client_connected",
+              "client_tick",
+              "input_send_called",
+              "ready",
+              "snapshot_applied",
+              "welcome_received"
+            ],
+            "counters": {
+              "ready": 1,
+              "client_attempt": 1,
+              "client_connected": 1,
+              "welcome_received": 1,
+              "client_tick": 2,
+              "snapshot_applied": 1,
+              "input_send_called": 1
+            },
+            "max_observation_gap_msec": 1000,
+            "max_snapshot_age_msec": 3000,
+            "pending_saturation_indices": [],
+            "accepted_events": [],
+            "consumed_events": [],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [
+              {
+                "transport_id": 9,
+                "local_attempt": 1,
+                "local_id": 1,
+                "wall_unix_msec": 104000
+              }
+            ],
+            "binding_events": [],
+            "local_attempts": 1
+          }
+        },
+        "errors": [
+          "authority: authority lifecycle history is impossible: joined/actor binding changed before disconnect"
+        ]
+      },
+      "selected_authority_input_sha256": "4bf7f4130d7565c939bb8f523a91808d1aa87291549f0f762a903116e82aba79",
+      "classification": "historical-preedit-target",
+      "purpose": "Explicit frozen old-reader/helper benchmark, not current-reader positive; existing exact18 adapter is the retained target.",
+      "first_repair_group": false,
+      "proposal": "Use existing historical18 target unchanged; never count its old false completes as current success."
+    },
+    {
+      "ordinal": 11,
+      "kind": "failure",
+      "test": "test_input_consumption_foundation_model.VersionedPreEditConstructionControls.test_minimal_authority_delta_preserves_original_whole_rows_and_other_fields",
+      "source": {
+        "path": "scripts/test_input_consumption_foundation_model.py",
+        "line": 139,
+        "method_sha256": "7600525d27518403228f056b5ebcde9c514d2dda880def0286f1bbf663a3a5f9",
+        "module_sha256": "974a272b70abc28674766401debbf26cce72faf4df46817b63ff534d3b076a8e"
+      },
+      "original_failure_sha256": "5ae7582a8a199d792d70102790da575b0d5cbc5e7821dc2720394253ef347366",
+      "original_failure_reference": "b5a3ea334e5a2b02fe6600683823c4f21e56b23e:docs/reports/gauntlet/windows-input-foundation-r6-root-20261024/literal158-r1/FAILURES.json#11",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/sightbreak-input-foundation-r6-root-20261024/scripts/test_input_consumption_foundation_model.py\", line 141, in test_minimal_authority_delta_preserves_original_whole_rows_and_other_fields\n    self.assertEqual(original,before);self.assertEqual(original[1]['input_age_msec'],-1);self.assertEqual(original[1]['deadline_remaining_msec'],-1)\n                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: 0 != -1\n",
+      "retained_call_ids": [],
+      "selected_call_id": null,
+      "selected_result": null,
+      "selected_authority_input_sha256": null,
+      "classification": "historical-preedit-target",
+      "purpose": "Explicit frozen old-reader/helper benchmark, not current-reader positive; existing exact18 adapter is the retained target.",
+      "first_repair_group": false,
+      "proposal": "Use existing historical18 target unchanged; never count its old false completes as current success."
+    },
+    {
+      "ordinal": 12,
+      "kind": "failure",
+      "test": "test_input_consumption_foundation_model.VersionedPreEditConstructionControls.test_preedit_reader_false_complete_baseline_and_versioned_positive_are_separate",
+      "source": {
+        "path": "scripts/test_input_consumption_foundation_model.py",
+        "line": 148,
+        "method_sha256": "dfe20aa7b3fe9929e78d51999b82bf1ddb67be00a5d6bc1e394173cf5e45f804",
+        "module_sha256": "974a272b70abc28674766401debbf26cce72faf4df46817b63ff534d3b076a8e"
+      },
+      "original_failure_sha256": "25d7724345757f30405d1ba3fe067c8e80d1423d22be9f8317d899ab564855e7",
+      "original_failure_reference": "b5a3ea334e5a2b02fe6600683823c4f21e56b23e:docs/reports/gauntlet/windows-input-foundation-r6-root-20261024/literal158-r1/FAILURES.json#12",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/sightbreak-input-foundation-r6-root-20261024/scripts/test_input_consumption_foundation_model.py\", line 153, in test_preedit_reader_false_complete_baseline_and_versioned_positive_are_separate\n    self.assertFalse(model.source_successful_connection(declared_rows('authority')[1]));self.assertTrue(model.source_successful_connection(versioned_rows()[1]))\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: True is not false\n",
+      "retained_call_ids": [
+        2302,
+        2303,
+        2304,
+        2305,
+        2306,
+        2307,
+        2308,
+        2309
+      ],
+      "selected_call_id": 2309,
+      "selected_result": {
+        "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+        "diagnostic_complete": true,
+        "transition_status": "CONSISTENT",
+        "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+        "roles": {
+          "client": {
+            "records": 7,
+            "coverage": [
+              "client_attempt",
+              "client_connected",
+              "client_tick",
+              "input_send_called",
+              "ready",
+              "snapshot_applied",
+              "welcome_received"
+            ],
+            "counters": {
+              "ready": 1,
+              "client_attempt": 1,
+              "client_connected": 1,
+              "welcome_received": 1,
+              "client_tick": 2,
+              "snapshot_applied": 1,
+              "input_send_called": 1
+            },
+            "max_observation_gap_msec": 1000,
+            "max_snapshot_age_msec": 3000,
+            "pending_saturation_indices": [],
+            "accepted_events": [],
+            "consumed_events": [],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [
+              {
+                "transport_id": 9,
+                "local_attempt": 1,
+                "local_id": 1,
+                "wall_unix_msec": 104000
+              }
+            ],
+            "binding_events": [],
+            "local_attempts": 1
+          },
+          "authority": {
+            "records": 7,
+            "coverage": [
+              "authority_tick",
+              "input_accepted",
+              "input_consumed",
+              "input_received",
+              "peer_bound",
+              "peer_connected",
+              "ready"
+            ],
+            "counters": {
+              "ready": 1,
+              "peer_connected": 1,
+              "peer_bound": 1,
+              "input_received": 1,
+              "input_accepted": 1,
+              "input_consumed": 1,
+              "authority_tick": 1
+            },
+            "max_observation_gap_msec": 5000,
+            "max_snapshot_age_msec": -1,
+            "pending_saturation_indices": [],
+            "accepted_events": [
+              {
+                "index": 5,
+                "epoch": 1,
+                "count": 1,
+                "first": 1,
+                "last": 1,
+                "fire": 1,
+                "reload": 0,
+                "moving": 0,
+                "wall_msec": 9000
+              }
+            ],
+            "consumed_events": [
+              {
+                "index": 6,
+                "sequence": 1,
+                "fire": true,
+                "reload": false,
+                "move": [
+                  0.0,
+                  0.0
+                ],
+                "peer": 9,
+                "actor": 1,
+                "generation": 1,
+                "wall_msec": 10000
+              }
+            ],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [],
+            "binding_events": [
+              {
+                "peer": 9,
+                "generation": 1,
+                "bound_actor": 1,
+                "wall_unix_msec": 103000
+              }
+            ],
+            "local_attempts": 0
+          }
+        },
+        "errors": [],
+        "attempt_generation_links": [
+          {
+            "client_local_attempt": 1,
+            "peer": 9,
+            "generation": 1,
+            "bound_actor": 1,
+            "wall_unix_msec": 103000
+          }
+        ]
+      },
+      "selected_authority_input_sha256": "025f76bb601d53577bb01fef1b3bb7a4df1770c4fbcd139c18a07586a2621588",
+      "classification": "historical-preedit-target",
+      "purpose": "Explicit frozen old-reader/helper benchmark, not current-reader positive; existing exact18 adapter is the retained target.",
+      "first_repair_group": false,
+      "proposal": "Use existing historical18 target unchanged; never count its old false completes as current success."
+    },
+    {
+      "ordinal": 13,
+      "kind": "failure",
+      "test": "test_input_consumption_observation.InputConsumptionControls.test_old_generation_or_actor_alias_cannot_qualify_current_consumption",
+      "source": {
+        "path": "scripts/test_input_consumption_observation.py",
+        "line": 141,
+        "method_sha256": "12573ac4c150a2310dfdceba8b922b551be0af4abf043d98cbb8ad90958f6e18",
+        "module_sha256": "af8d1f10482b9513a20f204eee8f17afb94ee4bb549df40b5cea4bd618f859cd"
+      },
+      "original_failure_sha256": "167c0b5a8ee339bd72f3d1abf1a9025bfbd87c684cceae450f226ba7e018fa1a",
+      "original_failure_reference": "b5a3ea334e5a2b02fe6600683823c4f21e56b23e:docs/reports/gauntlet/windows-input-foundation-r6-root-20261024/literal158-r1/FAILURES.json#13",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/sightbreak-input-foundation-r6-root-20261024/scripts/test_input_consumption_observation.py\", line 149, in test_old_generation_or_actor_alias_cannot_qualify_current_consumption\n    self.assertIn('consumed identity', str(self.report(authority=rows)['errors']))\nAssertionError: 'consumed identity' not found in \"['authority: latest metadata changed without a stage counter increment']\"\n",
+      "retained_call_ids": [
+        2771,
+        2772,
+        2773
+      ],
+      "selected_call_id": 2773,
+      "selected_result": {
+        "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+        "diagnostic_complete": false,
+        "transition_status": "INVALID",
+        "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+        "roles": {
+          "client": {
+            "records": 7,
+            "coverage": [
+              "client_attempt",
+              "client_connected",
+              "client_tick",
+              "input_send_called",
+              "ready",
+              "snapshot_applied",
+              "welcome_received"
+            ],
+            "counters": {
+              "ready": 1,
+              "client_attempt": 1,
+              "client_connected": 1,
+              "welcome_received": 1,
+              "client_tick": 2,
+              "snapshot_applied": 1,
+              "input_send_called": 1
+            },
+            "max_observation_gap_msec": 1000,
+            "max_snapshot_age_msec": 3000,
+            "pending_saturation_indices": [],
+            "accepted_events": [],
+            "consumed_events": [],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [
+              {
+                "transport_id": 9,
+                "local_attempt": 1,
+                "local_id": 1,
+                "wall_unix_msec": 104000
+              }
+            ],
+            "binding_events": [],
+            "local_attempts": 1
+          }
+        },
+        "errors": [
+          "authority: latest metadata changed without a stage counter increment"
+        ]
+      },
+      "selected_authority_input_sha256": "cbae5b9b8d5a75a5ead91a0cdfdccc8b36e46ffa90b336504a51fed19aabae83",
+      "classification": "negative-message-priority-conflict",
+      "purpose": "Input remains correctly INVALID; expected consumed-identity substring loses to persistent metadata mutation without a counter increment.",
+      "source_certificate": {
+        "kind": "persistent-metadata-counter-contradiction",
+        "source": "analyze_input_consumption.observation_prefix_invariants; original actual error retained"
+      },
+      "first_repair_group": false,
+      "proposal": "Future named constructor must isolate consumed-identity purpose without adding an unrelated earlier contradiction; no assertion/message weakening is approved."
+    },
+    {
+      "ordinal": 14,
+      "kind": "failure",
+      "test": "test_input_consumption_state.InputObservationStateControls.test_fresh_peer_needs_acceptance_progress_but_not_a_direct_accept_row",
+      "source": {
+        "path": "scripts/test_input_consumption_state.py",
+        "line": 136,
+        "method_sha256": "10b073f19d6f10db623e6b6dc4fa6623fae8093b921c6d70d9aa323f06b21276",
+        "module_sha256": "02f17ef1925bb030b7f0098cac0674bc2f2db919a102650004757b116940b172"
+      },
+      "original_failure_sha256": "77ab1adbc004cee182214c77c73128d9247fe1553c30acf8a18608c4145c716c",
+      "original_failure_reference": "b5a3ea334e5a2b02fe6600683823c4f21e56b23e:docs/reports/gauntlet/windows-input-foundation-r6-root-20261024/literal158-r1/FAILURES.json#14",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/sightbreak-input-foundation-r6-root-20261024/scripts/test_input_consumption_state.py\", line 139, in test_fresh_peer_needs_acceptance_progress_but_not_a_direct_accept_row\n    self.assertTrue(positive['diagnostic_complete'], positive['errors'])\nAssertionError: False is not true : ['authority: successful connection has an impossible initial lifecycle projection']\n",
+      "retained_call_ids": [
+        2889,
+        2890,
+        2891,
+        2892,
+        2893,
+        2894,
+        2895
+      ],
+      "selected_call_id": 2895,
+      "selected_result": {
+        "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+        "diagnostic_complete": false,
+        "transition_status": "INVALID",
+        "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+        "roles": {
+          "client": {
+            "records": 7,
+            "coverage": [
+              "client_attempt",
+              "client_connected",
+              "client_tick",
+              "input_send_called",
+              "ready",
+              "snapshot_applied",
+              "welcome_received"
+            ],
+            "counters": {
+              "ready": 1,
+              "client_attempt": 1,
+              "client_connected": 1,
+              "welcome_received": 1,
+              "client_tick": 2,
+              "snapshot_applied": 1,
+              "input_send_called": 1
+            },
+            "max_observation_gap_msec": 1000,
+            "max_snapshot_age_msec": 3000,
+            "pending_saturation_indices": [],
+            "accepted_events": [],
+            "consumed_events": [],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [
+              {
+                "transport_id": 9,
+                "local_attempt": 1,
+                "local_id": 1,
+                "wall_unix_msec": 104000
+              }
+            ],
+            "binding_events": [],
+            "local_attempts": 1
+          }
+        },
+        "errors": [
+          "authority: successful connection has an impossible initial lifecycle projection"
+        ]
+      },
+      "selected_authority_input_sha256": "ba747611ea1ccb205986f7fc1f251f61bc15a48e44599dd5140f0f0bd57a786f",
+      "classification": "source-impossible-derived-construction",
+      "purpose": "A new peer may consume after proven acceptance progress even when its acceptance hook coalesced.",
+      "source_certificate": {
+        "kind": "successful-connect-sum",
+        "row": 8,
+        "now": 12000,
+        "age": 2000,
+        "remaining": 11000,
+        "sum": 13000,
+        "required": 20000,
+        "source": "PeerLifecycle.connected11\u201316"
+      },
+      "first_repair_group": false,
+      "proposal": "New named source-operation constructor and full paired intended counterfactuals required; timer repair alone does not prove coalescing/physics/ownership/packet semantics."
+    },
+    {
+      "ordinal": 15,
+      "kind": "failure",
+      "test": "test_input_consumption_state.InputObservationStateControls.test_queued_duplicate_accepts_without_queue_growth_or_command_replacement",
+      "source": {
+        "path": "scripts/test_input_consumption_state.py",
+        "line": 148,
+        "method_sha256": "0f789aa6efed84c360e6166d8ff19e1aa29ca1942248ba2423effb336ec085d0",
+        "module_sha256": "02f17ef1925bb030b7f0098cac0674bc2f2db919a102650004757b116940b172"
+      },
+      "original_failure_sha256": "2c40b015de1b2597cec49c14ad1e0ce0cc4917cdc3c8253a5cff29188e905c56",
+      "original_failure_reference": "b5a3ea334e5a2b02fe6600683823c4f21e56b23e:docs/reports/gauntlet/windows-input-foundation-r6-root-20261024/literal158-r1/FAILURES.json#15",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/sightbreak-input-foundation-r6-root-20261024/scripts/test_input_consumption_state.py\", line 160, in test_queued_duplicate_accepts_without_queue_growth_or_command_replacement\n    self.assertTrue(report['diagnostic_complete'], report['errors'])\nAssertionError: False is not true : ['authority: authority lifecycle history is impossible: ']\n",
+      "retained_call_ids": [
+        2914,
+        2915,
+        2916,
+        2917
+      ],
+      "selected_call_id": 2917,
+      "selected_result": {
+        "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+        "diagnostic_complete": false,
+        "transition_status": "INVALID",
+        "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+        "roles": {
+          "client": {
+            "records": 7,
+            "coverage": [
+              "client_attempt",
+              "client_connected",
+              "client_tick",
+              "input_send_called",
+              "ready",
+              "snapshot_applied",
+              "welcome_received"
+            ],
+            "counters": {
+              "ready": 1,
+              "client_attempt": 1,
+              "client_connected": 1,
+              "welcome_received": 1,
+              "client_tick": 2,
+              "snapshot_applied": 1,
+              "input_send_called": 1
+            },
+            "max_observation_gap_msec": 1000,
+            "max_snapshot_age_msec": 3000,
+            "pending_saturation_indices": [],
+            "accepted_events": [],
+            "consumed_events": [],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [
+              {
+                "transport_id": 9,
+                "local_attempt": 1,
+                "local_id": 1,
+                "wall_unix_msec": 104000
+              }
+            ],
+            "binding_events": [],
+            "local_attempts": 1
+          }
+        },
+        "errors": [
+          "authority: authority lifecycle history is impossible: "
+        ]
+      },
+      "selected_authority_input_sha256": "821ffa927271a2e3c063bfd747c44e231166f91b7d80eedff31d88c5e11ff3d6",
+      "classification": "source-impossible-derived-construction",
+      "purpose": "A queued duplicate is accepted without growing the queue or changing first-received fire intent.",
+      "source_certificate": {
+        "kind": "impossible-deadline",
+        "row": 6,
+        "now": 10000,
+        "C": 2000,
+        "observed_D": 24000,
+        "unrejected_D": 22000,
+        "required_reject_at": 23500,
+        "source": "PeerLifecycle.connected11\u201316/reject34\u201337; proposed rejection is in future"
+      },
+      "first_repair_group": false,
+      "proposal": "New named source-operation constructor and full paired intended counterfactuals required; timer repair alone does not prove coalescing/physics/ownership/packet semantics."
+    },
+    {
+      "ordinal": 16,
+      "kind": "failure",
+      "test": "test_input_consumption_stream.InputObservationStreamControls.test_empty_array_has_no_endpoints_but_nondictionaries_are_observable (count=0, first=-1, last=-1)",
+      "source": {
+        "path": "scripts/test_input_consumption_stream.py",
+        "line": 123,
+        "method_sha256": "751937c399c25dafdd4854683956597f1ac36a9c2e752b882b2633f22cf978b6",
+        "module_sha256": "da27d8fb7b434fded3439c22d3cdbc569298263b8b0bff57f0a206577448db72"
+      },
+      "original_failure_sha256": "270632c82f2970622f693057f675a9bf1e1e635e523806fc45bcb0ce6fe91046",
+      "original_failure_reference": "b5a3ea334e5a2b02fe6600683823c4f21e56b23e:docs/reports/gauntlet/windows-input-foundation-r6-root-20261024/literal158-r1/FAILURES.json#16",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/sightbreak-input-foundation-r6-root-20261024/scripts/test_input_consumption_stream.py\", line 128, in test_empty_array_has_no_endpoints_but_nondictionaries_are_observable\n    self.assertEqual(result['diagnostic_complete'], expected, result['errors'])\nAssertionError: False != True : ['authority: authority lifecycle history is impossible: ']\n",
+      "retained_call_ids": [
+        2927,
+        2928,
+        2929,
+        2930
+      ],
+      "selected_call_id": 2930,
+      "selected_result": {
+        "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+        "diagnostic_complete": false,
+        "transition_status": "INVALID",
+        "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+        "roles": {
+          "client": {
+            "records": 7,
+            "coverage": [
+              "client_attempt",
+              "client_connected",
+              "client_tick",
+              "input_send_called",
+              "ready",
+              "snapshot_applied",
+              "welcome_received"
+            ],
+            "counters": {
+              "ready": 1,
+              "client_attempt": 1,
+              "client_connected": 1,
+              "welcome_received": 1,
+              "client_tick": 2,
+              "snapshot_applied": 1,
+              "input_send_called": 1
+            },
+            "max_observation_gap_msec": 1000,
+            "max_snapshot_age_msec": 3000,
+            "pending_saturation_indices": [],
+            "accepted_events": [],
+            "consumed_events": [],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [
+              {
+                "transport_id": 9,
+                "local_attempt": 1,
+                "local_id": 1,
+                "wall_unix_msec": 104000
+              }
+            ],
+            "binding_events": [],
+            "local_attempts": 1
+          }
+        },
+        "errors": [
+          "authority: authority lifecycle history is impossible: "
+        ]
+      },
+      "selected_authority_input_sha256": "74bd7ad9bfe361900f92c7acb370da285a6f858d8294ed33f52cadeb4d05e9d2",
+      "classification": "source-impossible-derived-construction",
+      "purpose": "Malformed received headers (empty/nondictionary arrays) can be observed and rejected before a later valid accepted packet.",
+      "source_certificate": {
+        "kind": "impossible-deadline",
+        "row": 5,
+        "now": 8500,
+        "C": 2000,
+        "observed_D": 22500,
+        "unrejected_D": 22000,
+        "required_reject_at": 22000,
+        "source": "PeerLifecycle.connected11\u201316/reject34\u201337; proposed rejection is in future"
+      },
+      "first_repair_group": false,
+      "proposal": "New named source-operation constructor and full paired intended counterfactuals required; timer repair alone does not prove coalescing/physics/ownership/packet semantics."
+    },
+    {
+      "ordinal": 17,
+      "kind": "failure",
+      "test": "test_input_consumption_stream.InputObservationStreamControls.test_empty_array_has_no_endpoints_but_nondictionaries_are_observable (count=2, first=-1, last=-1)",
+      "source": {
+        "path": "scripts/test_input_consumption_stream.py",
+        "line": 123,
+        "method_sha256": "751937c399c25dafdd4854683956597f1ac36a9c2e752b882b2633f22cf978b6",
+        "module_sha256": "da27d8fb7b434fded3439c22d3cdbc569298263b8b0bff57f0a206577448db72"
+      },
+      "original_failure_sha256": "57591e7ef0d37927c35c5d05ca89ee75d1b32215628b1e63a148e40b45d037c0",
+      "original_failure_reference": "b5a3ea334e5a2b02fe6600683823c4f21e56b23e:docs/reports/gauntlet/windows-input-foundation-r6-root-20261024/literal158-r1/FAILURES.json#17",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/sightbreak-input-foundation-r6-root-20261024/scripts/test_input_consumption_stream.py\", line 128, in test_empty_array_has_no_endpoints_but_nondictionaries_are_observable\n    self.assertEqual(result['diagnostic_complete'], expected, result['errors'])\nAssertionError: False != True : ['authority: authority lifecycle history is impossible: ']\n",
+      "retained_call_ids": [
+        2937,
+        2938,
+        2939,
+        2940
+      ],
+      "selected_call_id": 2940,
+      "selected_result": {
+        "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+        "diagnostic_complete": false,
+        "transition_status": "INVALID",
+        "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+        "roles": {
+          "client": {
+            "records": 7,
+            "coverage": [
+              "client_attempt",
+              "client_connected",
+              "client_tick",
+              "input_send_called",
+              "ready",
+              "snapshot_applied",
+              "welcome_received"
+            ],
+            "counters": {
+              "ready": 1,
+              "client_attempt": 1,
+              "client_connected": 1,
+              "welcome_received": 1,
+              "client_tick": 2,
+              "snapshot_applied": 1,
+              "input_send_called": 1
+            },
+            "max_observation_gap_msec": 1000,
+            "max_snapshot_age_msec": 3000,
+            "pending_saturation_indices": [],
+            "accepted_events": [],
+            "consumed_events": [],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [
+              {
+                "transport_id": 9,
+                "local_attempt": 1,
+                "local_id": 1,
+                "wall_unix_msec": 104000
+              }
+            ],
+            "binding_events": [],
+            "local_attempts": 1
+          }
+        },
+        "errors": [
+          "authority: authority lifecycle history is impossible: "
+        ]
+      },
+      "selected_authority_input_sha256": "61641d8d80df345161d8384970022ff795447e4380d7f0965599ad82caf992ef",
+      "classification": "source-impossible-derived-construction",
+      "purpose": "Malformed received headers (empty/nondictionary arrays) can be observed and rejected before a later valid accepted packet.",
+      "source_certificate": {
+        "kind": "impossible-deadline",
+        "row": 5,
+        "now": 8500,
+        "C": 2000,
+        "observed_D": 22500,
+        "unrejected_D": 22000,
+        "required_reject_at": 22000,
+        "source": "PeerLifecycle.connected11\u201316/reject34\u201337; proposed rejection is in future"
+      },
+      "first_repair_group": false,
+      "proposal": "New named source-operation constructor and full paired intended counterfactuals required; timer repair alone does not prove coalescing/physics/ownership/packet semantics."
+    },
+    {
+      "ordinal": 18,
+      "kind": "failure",
+      "test": "test_input_consumption_stream.InputObservationStreamControls.test_hidden_metadata_calls_stay_inside_observed_time_interval (offset=0)",
+      "source": {
+        "path": "scripts/test_input_consumption_stream.py",
+        "line": 178,
+        "method_sha256": "35e0d4489ee435ec7b9ab76abcc24cecc77d002dd8b0e03d5c3515e2bd981c72",
+        "module_sha256": "da27d8fb7b434fded3439c22d3cdbc569298263b8b0bff57f0a206577448db72"
+      },
+      "original_failure_sha256": "fad9250fc227e53811940f27abf05bf7996ed655d114d64179455a696286c3ee",
+      "original_failure_reference": "b5a3ea334e5a2b02fe6600683823c4f21e56b23e:docs/reports/gauntlet/windows-input-foundation-r6-root-20261024/literal158-r1/FAILURES.json#18",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/sightbreak-input-foundation-r6-root-20261024/scripts/test_input_consumption_stream.py\", line 188, in test_hidden_metadata_calls_stay_inside_observed_time_interval\n    self.assertEqual(result['diagnostic_complete'], expected, result['errors'])\nAssertionError: False != True : ['authority: authority lifecycle history is impossible: ']\n",
+      "retained_call_ids": [
+        2944,
+        2945,
+        2946,
+        2947
+      ],
+      "selected_call_id": 2947,
+      "selected_result": {
+        "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+        "diagnostic_complete": false,
+        "transition_status": "INVALID",
+        "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+        "roles": {
+          "client": {
+            "records": 7,
+            "coverage": [
+              "client_attempt",
+              "client_connected",
+              "client_tick",
+              "input_send_called",
+              "ready",
+              "snapshot_applied",
+              "welcome_received"
+            ],
+            "counters": {
+              "ready": 1,
+              "client_attempt": 1,
+              "client_connected": 1,
+              "welcome_received": 1,
+              "client_tick": 2,
+              "snapshot_applied": 1,
+              "input_send_called": 1
+            },
+            "max_observation_gap_msec": 1000,
+            "max_snapshot_age_msec": 3000,
+            "pending_saturation_indices": [],
+            "accepted_events": [],
+            "consumed_events": [],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [
+              {
+                "transport_id": 9,
+                "local_attempt": 1,
+                "local_id": 1,
+                "wall_unix_msec": 104000
+              }
+            ],
+            "binding_events": [],
+            "local_attempts": 1
+          }
+        },
+        "errors": [
+          "authority: authority lifecycle history is impossible: "
+        ]
+      },
+      "selected_authority_input_sha256": "a3b57d087a3e7348cc5a9c5f271d2682856594acb891c2ba34caec80346b61b7",
+      "classification": "source-impossible-derived-construction",
+      "purpose": "Newly counted hidden call timestamps lie in the preceding/current observation interval, including inclusive endpoints.",
+      "source_certificate": {
+        "kind": "impossible-deadline",
+        "row": 8,
+        "now": 12000,
+        "C": 2000,
+        "observed_D": 23000,
+        "unrejected_D": 22000,
+        "required_reject_at": 22500,
+        "source": "PeerLifecycle.connected11\u201316/reject34\u201337; proposed rejection is in future"
+      },
+      "first_repair_group": false,
+      "proposal": "New named source-operation constructor and full paired intended counterfactuals required; timer repair alone does not prove coalescing/physics/ownership/packet semantics."
+    },
+    {
+      "ordinal": 19,
+      "kind": "failure",
+      "test": "test_input_consumption_stream.InputObservationStreamControls.test_hidden_metadata_calls_stay_inside_observed_time_interval (offset=500)",
+      "source": {
+        "path": "scripts/test_input_consumption_stream.py",
+        "line": 178,
+        "method_sha256": "35e0d4489ee435ec7b9ab76abcc24cecc77d002dd8b0e03d5c3515e2bd981c72",
+        "module_sha256": "da27d8fb7b434fded3439c22d3cdbc569298263b8b0bff57f0a206577448db72"
+      },
+      "original_failure_sha256": "1f1bf5cea17d5a32b21787720e136ea98af70f26e9c48e4a3b93baabe3a45901",
+      "original_failure_reference": "b5a3ea334e5a2b02fe6600683823c4f21e56b23e:docs/reports/gauntlet/windows-input-foundation-r6-root-20261024/literal158-r1/FAILURES.json#19",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/sightbreak-input-foundation-r6-root-20261024/scripts/test_input_consumption_stream.py\", line 188, in test_hidden_metadata_calls_stay_inside_observed_time_interval\n    self.assertEqual(result['diagnostic_complete'], expected, result['errors'])\nAssertionError: False != True : ['authority: authority lifecycle history is impossible: ']\n",
+      "retained_call_ids": [
+        2948,
+        2949,
+        2950,
+        2951
+      ],
+      "selected_call_id": 2951,
+      "selected_result": {
+        "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+        "diagnostic_complete": false,
+        "transition_status": "INVALID",
+        "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+        "roles": {
+          "client": {
+            "records": 7,
+            "coverage": [
+              "client_attempt",
+              "client_connected",
+              "client_tick",
+              "input_send_called",
+              "ready",
+              "snapshot_applied",
+              "welcome_received"
+            ],
+            "counters": {
+              "ready": 1,
+              "client_attempt": 1,
+              "client_connected": 1,
+              "welcome_received": 1,
+              "client_tick": 2,
+              "snapshot_applied": 1,
+              "input_send_called": 1
+            },
+            "max_observation_gap_msec": 1000,
+            "max_snapshot_age_msec": 3000,
+            "pending_saturation_indices": [],
+            "accepted_events": [],
+            "consumed_events": [],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [
+              {
+                "transport_id": 9,
+                "local_attempt": 1,
+                "local_id": 1,
+                "wall_unix_msec": 104000
+              }
+            ],
+            "binding_events": [],
+            "local_attempts": 1
+          }
+        },
+        "errors": [
+          "authority: authority lifecycle history is impossible: "
+        ]
+      },
+      "selected_authority_input_sha256": "a1a4472e416e2ae1b3aa7cad5b53923e5384d748c9ff4103436d61c5e5967166",
+      "classification": "source-impossible-derived-construction",
+      "purpose": "Newly counted hidden call timestamps lie in the preceding/current observation interval, including inclusive endpoints.",
+      "source_certificate": {
+        "kind": "impossible-deadline",
+        "row": 8,
+        "now": 12000,
+        "C": 2000,
+        "observed_D": 23000,
+        "unrejected_D": 22000,
+        "required_reject_at": 22500,
+        "source": "PeerLifecycle.connected11\u201316/reject34\u201337; proposed rejection is in future"
+      },
+      "first_repair_group": false,
+      "proposal": "New named source-operation constructor and full paired intended counterfactuals required; timer repair alone does not prove coalescing/physics/ownership/packet semantics."
+    },
+    {
+      "ordinal": 20,
+      "kind": "failure",
+      "test": "test_input_consumption_stream.InputObservationStreamControls.test_hidden_metadata_calls_stay_inside_observed_time_interval (offset=1000)",
+      "source": {
+        "path": "scripts/test_input_consumption_stream.py",
+        "line": 178,
+        "method_sha256": "35e0d4489ee435ec7b9ab76abcc24cecc77d002dd8b0e03d5c3515e2bd981c72",
+        "module_sha256": "da27d8fb7b434fded3439c22d3cdbc569298263b8b0bff57f0a206577448db72"
+      },
+      "original_failure_sha256": "7ef2081d1868c13d17c821c44c8c8feae3fd4cd4d2d0a20b4be93dab8864a2be",
+      "original_failure_reference": "b5a3ea334e5a2b02fe6600683823c4f21e56b23e:docs/reports/gauntlet/windows-input-foundation-r6-root-20261024/literal158-r1/FAILURES.json#20",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/sightbreak-input-foundation-r6-root-20261024/scripts/test_input_consumption_stream.py\", line 188, in test_hidden_metadata_calls_stay_inside_observed_time_interval\n    self.assertEqual(result['diagnostic_complete'], expected, result['errors'])\nAssertionError: False != True : ['authority: authority lifecycle history is impossible: ']\n",
+      "retained_call_ids": [
+        2952,
+        2953,
+        2954,
+        2955
+      ],
+      "selected_call_id": 2955,
+      "selected_result": {
+        "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+        "diagnostic_complete": false,
+        "transition_status": "INVALID",
+        "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+        "roles": {
+          "client": {
+            "records": 7,
+            "coverage": [
+              "client_attempt",
+              "client_connected",
+              "client_tick",
+              "input_send_called",
+              "ready",
+              "snapshot_applied",
+              "welcome_received"
+            ],
+            "counters": {
+              "ready": 1,
+              "client_attempt": 1,
+              "client_connected": 1,
+              "welcome_received": 1,
+              "client_tick": 2,
+              "snapshot_applied": 1,
+              "input_send_called": 1
+            },
+            "max_observation_gap_msec": 1000,
+            "max_snapshot_age_msec": 3000,
+            "pending_saturation_indices": [],
+            "accepted_events": [],
+            "consumed_events": [],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [
+              {
+                "transport_id": 9,
+                "local_attempt": 1,
+                "local_id": 1,
+                "wall_unix_msec": 104000
+              }
+            ],
+            "binding_events": [],
+            "local_attempts": 1
+          }
+        },
+        "errors": [
+          "authority: authority lifecycle history is impossible: "
+        ]
+      },
+      "selected_authority_input_sha256": "eb7ebda5295a7daea4d4a03ee4ffca33af4a01e9fc7539bc5732cbe2bf6192ec",
+      "classification": "source-impossible-derived-construction",
+      "purpose": "Newly counted hidden call timestamps lie in the preceding/current observation interval, including inclusive endpoints.",
+      "source_certificate": {
+        "kind": "impossible-deadline",
+        "row": 8,
+        "now": 12000,
+        "C": 2000,
+        "observed_D": 23000,
+        "unrejected_D": 22000,
+        "required_reject_at": 22500,
+        "source": "PeerLifecycle.connected11\u201316/reject34\u201337; proposed rejection is in future"
+      },
+      "first_repair_group": false,
+      "proposal": "New named source-operation constructor and full paired intended counterfactuals required; timer repair alone does not prove coalescing/physics/ownership/packet semantics."
+    },
+    {
+      "ordinal": 21,
+      "kind": "failure",
+      "test": "test_input_consumption_stream.InputObservationStreamControls.test_live_binding_round_epoch_change_keeps_rejection_state",
+      "source": {
+        "path": "scripts/test_input_consumption_stream.py",
+        "line": 164,
+        "method_sha256": "83ed291a478f8f17e3fdd644845ee28c9eea30f6ca53d93ed62ab666027f03db",
+        "module_sha256": "da27d8fb7b434fded3439c22d3cdbc569298263b8b0bff57f0a206577448db72"
+      },
+      "original_failure_sha256": "3ca808770887783567cad121ffe568030ce362a034037e64714e6c47713c7159",
+      "original_failure_reference": "b5a3ea334e5a2b02fe6600683823c4f21e56b23e:docs/reports/gauntlet/windows-input-foundation-r6-root-20261024/literal158-r1/FAILURES.json#21",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/sightbreak-input-foundation-r6-root-20261024/scripts/test_input_consumption_stream.py\", line 169, in test_live_binding_round_epoch_change_keeps_rejection_state\n    self.assertTrue(result['diagnostic_complete'], result['errors'])\nAssertionError: False is not true : ['authority: authority lifecycle history is impossible: ']\n",
+      "retained_call_ids": [
+        2956,
+        2957,
+        2958,
+        2959
+      ],
+      "selected_call_id": 2959,
+      "selected_result": {
+        "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+        "diagnostic_complete": false,
+        "transition_status": "INVALID",
+        "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+        "roles": {
+          "client": {
+            "records": 7,
+            "coverage": [
+              "client_attempt",
+              "client_connected",
+              "client_tick",
+              "input_send_called",
+              "ready",
+              "snapshot_applied",
+              "welcome_received"
+            ],
+            "counters": {
+              "ready": 1,
+              "client_attempt": 1,
+              "client_connected": 1,
+              "welcome_received": 1,
+              "client_tick": 2,
+              "snapshot_applied": 1,
+              "input_send_called": 1
+            },
+            "max_observation_gap_msec": 1000,
+            "max_snapshot_age_msec": 3000,
+            "pending_saturation_indices": [],
+            "accepted_events": [],
+            "consumed_events": [],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [
+              {
+                "transport_id": 9,
+                "local_attempt": 1,
+                "local_id": 1,
+                "wall_unix_msec": 104000
+              }
+            ],
+            "binding_events": [],
+            "local_attempts": 1
+          }
+        },
+        "errors": [
+          "authority: authority lifecycle history is impossible: "
+        ]
+      },
+      "selected_authority_input_sha256": "909b0ab5c255ae4e4293ed1697a25ddd2c969314583b6604afad5cd95fd00ac8",
+      "classification": "source-impossible-derived-construction",
+      "purpose": "Round epoch advance with a live binding does not explain clearing the cumulative input-stream rejection state.",
+      "source_certificate": {
+        "kind": "impossible-deadline",
+        "row": 5,
+        "now": 8500,
+        "C": 2000,
+        "observed_D": 22500,
+        "unrejected_D": 22000,
+        "required_reject_at": 22000,
+        "source": "PeerLifecycle.connected11\u201316/reject34\u201337; proposed rejection is in future"
+      },
+      "first_repair_group": false,
+      "proposal": "New named source-operation constructor and full paired intended counterfactuals required; timer repair alone does not prove coalescing/physics/ownership/packet semantics."
+    },
+    {
+      "ordinal": 22,
+      "kind": "failure",
+      "test": "test_input_consumption_stream.InputObservationStreamControls.test_only_fully_exposed_batches_need_a_fresh_endpoint (first=2, last=1, count=2)",
+      "source": {
+        "path": "scripts/test_input_consumption_stream.py",
+        "line": 103,
+        "method_sha256": "997613653c98da9f88e52a747220326506de2fe01fdf926cbd9d917b031d9845",
+        "module_sha256": "da27d8fb7b434fded3439c22d3cdbc569298263b8b0bff57f0a206577448db72"
+      },
+      "original_failure_sha256": "af2ac059862d9cb072f8d4cdea92016a9deed13194d09eaa25186861f604aa47",
+      "original_failure_reference": "b5a3ea334e5a2b02fe6600683823c4f21e56b23e:docs/reports/gauntlet/windows-input-foundation-r6-root-20261024/literal158-r1/FAILURES.json#22",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/sightbreak-input-foundation-r6-root-20261024/scripts/test_input_consumption_stream.py\", line 110, in test_only_fully_exposed_batches_need_a_fresh_endpoint\n    self.assertEqual(result['diagnostic_complete'], expected, result['errors'])\nAssertionError: False != True : ['authority: authority lifecycle history is impossible: ']\n",
+      "retained_call_ids": [
+        2963,
+        2964,
+        2965,
+        2966
+      ],
+      "selected_call_id": 2966,
+      "selected_result": {
+        "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+        "diagnostic_complete": false,
+        "transition_status": "INVALID",
+        "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+        "roles": {
+          "client": {
+            "records": 7,
+            "coverage": [
+              "client_attempt",
+              "client_connected",
+              "client_tick",
+              "input_send_called",
+              "ready",
+              "snapshot_applied",
+              "welcome_received"
+            ],
+            "counters": {
+              "ready": 1,
+              "client_attempt": 1,
+              "client_connected": 1,
+              "welcome_received": 1,
+              "client_tick": 2,
+              "snapshot_applied": 1,
+              "input_send_called": 1
+            },
+            "max_observation_gap_msec": 1000,
+            "max_snapshot_age_msec": 3000,
+            "pending_saturation_indices": [],
+            "accepted_events": [],
+            "consumed_events": [],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [
+              {
+                "transport_id": 9,
+                "local_attempt": 1,
+                "local_id": 1,
+                "wall_unix_msec": 104000
+              }
+            ],
+            "binding_events": [],
+            "local_attempts": 1
+          }
+        },
+        "errors": [
+          "authority: authority lifecycle history is impossible: "
+        ]
+      },
+      "selected_authority_input_sha256": "56b4fd90d67c75dbcac70be7d20a22c0027cf90925fd0f9723b454a08e06b157",
+      "classification": "source-impossible-derived-construction",
+      "purpose": "One/two-command headers expose all endpoints; count>=3 may contain an unexposed fresh middle despite stale endpoints.",
+      "source_certificate": {
+        "kind": "impossible-deadline",
+        "row": 8,
+        "now": 12000,
+        "C": 2000,
+        "observed_D": 23000,
+        "unrejected_D": 22000,
+        "required_reject_at": 22500,
+        "source": "PeerLifecycle.connected11\u201316/reject34\u201337; proposed rejection is in future"
+      },
+      "first_repair_group": false,
+      "proposal": "New named source-operation constructor and full paired intended counterfactuals required; timer repair alone does not prove coalescing/physics/ownership/packet semantics."
+    },
+    {
+      "ordinal": 23,
+      "kind": "failure",
+      "test": "test_input_consumption_stream.InputObservationStreamControls.test_only_fully_exposed_batches_need_a_fresh_endpoint (first=2, last=2, count=2)",
+      "source": {
+        "path": "scripts/test_input_consumption_stream.py",
+        "line": 103,
+        "method_sha256": "997613653c98da9f88e52a747220326506de2fe01fdf926cbd9d917b031d9845",
+        "module_sha256": "da27d8fb7b434fded3439c22d3cdbc569298263b8b0bff57f0a206577448db72"
+      },
+      "original_failure_sha256": "9be82abd1a28de60081297c3d53cd71f6e385bd50010a3d93fc57425d2245295",
+      "original_failure_reference": "b5a3ea334e5a2b02fe6600683823c4f21e56b23e:docs/reports/gauntlet/windows-input-foundation-r6-root-20261024/literal158-r1/FAILURES.json#23",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/sightbreak-input-foundation-r6-root-20261024/scripts/test_input_consumption_stream.py\", line 110, in test_only_fully_exposed_batches_need_a_fresh_endpoint\n    self.assertEqual(result['diagnostic_complete'], expected, result['errors'])\nAssertionError: False != True : ['authority: authority lifecycle history is impossible: ']\n",
+      "retained_call_ids": [
+        2967,
+        2968,
+        2969,
+        2970
+      ],
+      "selected_call_id": 2970,
+      "selected_result": {
+        "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+        "diagnostic_complete": false,
+        "transition_status": "INVALID",
+        "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+        "roles": {
+          "client": {
+            "records": 7,
+            "coverage": [
+              "client_attempt",
+              "client_connected",
+              "client_tick",
+              "input_send_called",
+              "ready",
+              "snapshot_applied",
+              "welcome_received"
+            ],
+            "counters": {
+              "ready": 1,
+              "client_attempt": 1,
+              "client_connected": 1,
+              "welcome_received": 1,
+              "client_tick": 2,
+              "snapshot_applied": 1,
+              "input_send_called": 1
+            },
+            "max_observation_gap_msec": 1000,
+            "max_snapshot_age_msec": 3000,
+            "pending_saturation_indices": [],
+            "accepted_events": [],
+            "consumed_events": [],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [
+              {
+                "transport_id": 9,
+                "local_attempt": 1,
+                "local_id": 1,
+                "wall_unix_msec": 104000
+              }
+            ],
+            "binding_events": [],
+            "local_attempts": 1
+          }
+        },
+        "errors": [
+          "authority: authority lifecycle history is impossible: "
+        ]
+      },
+      "selected_authority_input_sha256": "3fb822c1fbfe9fa960df3566796d4f78e15ed173050af40051ffe71f26b5d16d",
+      "classification": "source-impossible-derived-construction",
+      "purpose": "One/two-command headers expose all endpoints; count>=3 may contain an unexposed fresh middle despite stale endpoints.",
+      "source_certificate": {
+        "kind": "impossible-deadline",
+        "row": 8,
+        "now": 12000,
+        "C": 2000,
+        "observed_D": 23000,
+        "unrejected_D": 22000,
+        "required_reject_at": 22500,
+        "source": "PeerLifecycle.connected11\u201316/reject34\u201337; proposed rejection is in future"
+      },
+      "first_repair_group": false,
+      "proposal": "New named source-operation constructor and full paired intended counterfactuals required; timer repair alone does not prove coalescing/physics/ownership/packet semantics."
+    },
+    {
+      "ordinal": 24,
+      "kind": "failure",
+      "test": "test_input_consumption_stream.InputObservationStreamControls.test_only_fully_exposed_batches_need_a_fresh_endpoint (first=1, last=1, count=3)",
+      "source": {
+        "path": "scripts/test_input_consumption_stream.py",
+        "line": 103,
+        "method_sha256": "997613653c98da9f88e52a747220326506de2fe01fdf926cbd9d917b031d9845",
+        "module_sha256": "da27d8fb7b434fded3439c22d3cdbc569298263b8b0bff57f0a206577448db72"
+      },
+      "original_failure_sha256": "4be0a020348da12c2334818847363f9ae2b47792322118bdf340aba0c576be3f",
+      "original_failure_reference": "b5a3ea334e5a2b02fe6600683823c4f21e56b23e:docs/reports/gauntlet/windows-input-foundation-r6-root-20261024/literal158-r1/FAILURES.json#24",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/sightbreak-input-foundation-r6-root-20261024/scripts/test_input_consumption_stream.py\", line 110, in test_only_fully_exposed_batches_need_a_fresh_endpoint\n    self.assertEqual(result['diagnostic_complete'], expected, result['errors'])\nAssertionError: False != True : ['authority: authority lifecycle history is impossible: ']\n",
+      "retained_call_ids": [
+        2971,
+        2972,
+        2973,
+        2974
+      ],
+      "selected_call_id": 2974,
+      "selected_result": {
+        "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+        "diagnostic_complete": false,
+        "transition_status": "INVALID",
+        "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+        "roles": {
+          "client": {
+            "records": 7,
+            "coverage": [
+              "client_attempt",
+              "client_connected",
+              "client_tick",
+              "input_send_called",
+              "ready",
+              "snapshot_applied",
+              "welcome_received"
+            ],
+            "counters": {
+              "ready": 1,
+              "client_attempt": 1,
+              "client_connected": 1,
+              "welcome_received": 1,
+              "client_tick": 2,
+              "snapshot_applied": 1,
+              "input_send_called": 1
+            },
+            "max_observation_gap_msec": 1000,
+            "max_snapshot_age_msec": 3000,
+            "pending_saturation_indices": [],
+            "accepted_events": [],
+            "consumed_events": [],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [
+              {
+                "transport_id": 9,
+                "local_attempt": 1,
+                "local_id": 1,
+                "wall_unix_msec": 104000
+              }
+            ],
+            "binding_events": [],
+            "local_attempts": 1
+          }
+        },
+        "errors": [
+          "authority: authority lifecycle history is impossible: "
+        ]
+      },
+      "selected_authority_input_sha256": "17ee558bfb6aae4d4fdbe5a609f1df065ac329eb8a9fa345e98d97308e0e163a",
+      "classification": "source-impossible-derived-construction",
+      "purpose": "One/two-command headers expose all endpoints; count>=3 may contain an unexposed fresh middle despite stale endpoints.",
+      "source_certificate": {
+        "kind": "impossible-deadline",
+        "row": 8,
+        "now": 12000,
+        "C": 2000,
+        "observed_D": 23000,
+        "unrejected_D": 22000,
+        "required_reject_at": 22500,
+        "source": "PeerLifecycle.connected11\u201316/reject34\u201337; proposed rejection is in future"
+      },
+      "first_repair_group": false,
+      "proposal": "New named source-operation constructor and full paired intended counterfactuals required; timer repair alone does not prove coalescing/physics/ownership/packet semantics."
+    },
+    {
+      "ordinal": 25,
+      "kind": "failure",
+      "test": "test_input_consumption_stream.InputObservationStreamControls.test_queue_window_bound_includes_valid_full_queue_and_later_ticks",
+      "source": {
+        "path": "scripts/test_input_consumption_stream.py",
+        "line": 112,
+        "method_sha256": "4e2a12fa32ff8f3bbd5d8c78182970680ccac67f9e1d665c7e3e2d94a032e64e",
+        "module_sha256": "da27d8fb7b434fded3439c22d3cdbc569298263b8b0bff57f0a206577448db72"
+      },
+      "original_failure_sha256": "6af3f45c6fbf241f6a7c784e3dc596b5e5b4c6d98b2d1c9b715785e594cef1b0",
+      "original_failure_reference": "b5a3ea334e5a2b02fe6600683823c4f21e56b23e:docs/reports/gauntlet/windows-input-foundation-r6-root-20261024/literal158-r1/FAILURES.json#25",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/sightbreak-input-foundation-r6-root-20261024/scripts/test_input_consumption_stream.py\", line 115, in test_queue_window_bound_includes_valid_full_queue_and_later_ticks\n    self.assertTrue(result['diagnostic_complete'], result['errors'])\nAssertionError: False is not true : ['authority: authority lifecycle history is impossible: ']\n",
+      "retained_call_ids": [
+        2975,
+        2976,
+        2977,
+        2978
+      ],
+      "selected_call_id": 2978,
+      "selected_result": {
+        "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+        "diagnostic_complete": false,
+        "transition_status": "INVALID",
+        "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+        "roles": {
+          "client": {
+            "records": 7,
+            "coverage": [
+              "client_attempt",
+              "client_connected",
+              "client_tick",
+              "input_send_called",
+              "ready",
+              "snapshot_applied",
+              "welcome_received"
+            ],
+            "counters": {
+              "ready": 1,
+              "client_attempt": 1,
+              "client_connected": 1,
+              "welcome_received": 1,
+              "client_tick": 2,
+              "snapshot_applied": 1,
+              "input_send_called": 1
+            },
+            "max_observation_gap_msec": 1000,
+            "max_snapshot_age_msec": 3000,
+            "pending_saturation_indices": [],
+            "accepted_events": [],
+            "consumed_events": [],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [
+              {
+                "transport_id": 9,
+                "local_attempt": 1,
+                "local_id": 1,
+                "wall_unix_msec": 104000
+              }
+            ],
+            "binding_events": [],
+            "local_attempts": 1
+          }
+        },
+        "errors": [
+          "authority: authority lifecycle history is impossible: "
+        ]
+      },
+      "selected_authority_input_sha256": "4db929ce9c106286af6862501967876904b44eded9be0805f3c069c8c977767f",
+      "classification": "source-impossible-derived-construction",
+      "purpose": "Queue120 is legal; source backlog discard/pop and later tick remain valid, while queue121 is impossible.",
+      "source_certificate": {
+        "kind": "impossible-deadline",
+        "row": 24,
+        "now": 3001,
+        "C": 2000,
+        "observed_D": 22001,
+        "unrejected_D": 22000,
+        "required_reject_at": 21501,
+        "source": "PeerLifecycle.connected11\u201316/reject34\u201337; proposed rejection is in future"
+      },
+      "first_repair_group": false,
+      "proposal": "New named source-operation constructor and full paired intended counterfactuals required; timer repair alone does not prove coalescing/physics/ownership/packet semantics."
+    },
+    {
+      "ordinal": 26,
+      "kind": "failure",
+      "test": "test_input_consumption_stream.InputObservationStreamControls.test_rejection_state_and_calls_agree_in_both_directions",
+      "source": {
+        "path": "scripts/test_input_consumption_stream.py",
+        "line": 130,
+        "method_sha256": "a1703f894efb77cc52abbaf902f8772066df9f154647e9a77e32a7dffdbbdc51",
+        "module_sha256": "da27d8fb7b434fded3439c22d3cdbc569298263b8b0bff57f0a206577448db72"
+      },
+      "original_failure_sha256": "38773904dc57a684b48ba3fab54750627fe0c1210a94c816505b4e1ddf3e0d58",
+      "original_failure_reference": "b5a3ea334e5a2b02fe6600683823c4f21e56b23e:docs/reports/gauntlet/windows-input-foundation-r6-root-20261024/literal158-r1/FAILURES.json#26",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/sightbreak-input-foundation-r6-root-20261024/scripts/test_input_consumption_stream.py\", line 135, in test_rejection_state_and_calls_agree_in_both_directions\n    self.assertTrue(self.report(rows)['diagnostic_complete'])\nAssertionError: False is not true\n",
+      "retained_call_ids": [
+        2979,
+        2980,
+        2981,
+        2982,
+        2983,
+        2984,
+        2985
+      ],
+      "selected_call_id": 2985,
+      "selected_result": {
+        "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+        "diagnostic_complete": false,
+        "transition_status": "INVALID",
+        "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+        "roles": {
+          "client": {
+            "records": 7,
+            "coverage": [
+              "client_attempt",
+              "client_connected",
+              "client_tick",
+              "input_send_called",
+              "ready",
+              "snapshot_applied",
+              "welcome_received"
+            ],
+            "counters": {
+              "ready": 1,
+              "client_attempt": 1,
+              "client_connected": 1,
+              "welcome_received": 1,
+              "client_tick": 2,
+              "snapshot_applied": 1,
+              "input_send_called": 1
+            },
+            "max_observation_gap_msec": 1000,
+            "max_snapshot_age_msec": 3000,
+            "pending_saturation_indices": [],
+            "accepted_events": [],
+            "consumed_events": [],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [
+              {
+                "transport_id": 9,
+                "local_attempt": 1,
+                "local_id": 1,
+                "wall_unix_msec": 104000
+              }
+            ],
+            "binding_events": [],
+            "local_attempts": 1
+          }
+        },
+        "errors": [
+          "authority: authority lifecycle history is impossible: "
+        ]
+      },
+      "selected_authority_input_sha256": "58b1a4c24eeb371fb6500229e5cedec956498e112ddf2342aafca0745783a61e",
+      "classification": "source-impossible-derived-construction",
+      "purpose": "Stream rejection state and rejection observation counts constrain each other through a live stream.",
+      "source_certificate": {
+        "kind": "impossible-deadline",
+        "row": 5,
+        "now": 8500,
+        "C": 2000,
+        "observed_D": 22500,
+        "unrejected_D": 22000,
+        "required_reject_at": 22000,
+        "source": "PeerLifecycle.connected11\u201316/reject34\u201337; proposed rejection is in future"
+      },
+      "first_repair_group": false,
+      "proposal": "New named source-operation constructor and full paired intended counterfactuals required; timer repair alone does not prove coalescing/physics/ownership/packet semantics."
+    },
+    {
+      "ordinal": 27,
+      "kind": "failure",
+      "test": "test_input_consumption_stream.InputObservationStreamControls.test_single_command_is_fresh_and_inside_ack_window (sequence=2)",
+      "source": {
+        "path": "scripts/test_input_consumption_stream.py",
+        "line": 97,
+        "method_sha256": "469375ae8c7643d5d7c61855a86751057ab8dc3bc738346ac07d1c4148b42069",
+        "module_sha256": "da27d8fb7b434fded3439c22d3cdbc569298263b8b0bff57f0a206577448db72"
+      },
+      "original_failure_sha256": "ef7f099ad785f45f88fba97e79d151b0e4fef801c33e27ab7e680e45f01a2648",
+      "original_failure_reference": "b5a3ea334e5a2b02fe6600683823c4f21e56b23e:docs/reports/gauntlet/windows-input-foundation-r6-root-20261024/literal158-r1/FAILURES.json#27",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/sightbreak-input-foundation-r6-root-20261024/scripts/test_input_consumption_stream.py\", line 101, in test_single_command_is_fresh_and_inside_ack_window\n    self.assertEqual(result['diagnostic_complete'], expected, result['errors'])\nAssertionError: False != True : ['authority: authority lifecycle history is impossible: ']\n",
+      "retained_call_ids": [
+        2989,
+        2990,
+        2991,
+        2992
+      ],
+      "selected_call_id": 2992,
+      "selected_result": {
+        "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+        "diagnostic_complete": false,
+        "transition_status": "INVALID",
+        "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+        "roles": {
+          "client": {
+            "records": 7,
+            "coverage": [
+              "client_attempt",
+              "client_connected",
+              "client_tick",
+              "input_send_called",
+              "ready",
+              "snapshot_applied",
+              "welcome_received"
+            ],
+            "counters": {
+              "ready": 1,
+              "client_attempt": 1,
+              "client_connected": 1,
+              "welcome_received": 1,
+              "client_tick": 2,
+              "snapshot_applied": 1,
+              "input_send_called": 1
+            },
+            "max_observation_gap_msec": 1000,
+            "max_snapshot_age_msec": 3000,
+            "pending_saturation_indices": [],
+            "accepted_events": [],
+            "consumed_events": [],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [
+              {
+                "transport_id": 9,
+                "local_attempt": 1,
+                "local_id": 1,
+                "wall_unix_msec": 104000
+              }
+            ],
+            "binding_events": [],
+            "local_attempts": 1
+          }
+        },
+        "errors": [
+          "authority: authority lifecycle history is impossible: "
+        ]
+      },
+      "selected_authority_input_sha256": "8e579a8d21198e566a5fd01c1d16dfb5b1799b730eade33d381e9da84ccbb4d1",
+      "classification": "source-impossible-derived-construction",
+      "purpose": "For ACK1, seq2 and121 are legal fresh one-command inputs; seq1 and122 are invalid.",
+      "source_certificate": {
+        "kind": "impossible-deadline",
+        "row": 8,
+        "now": 12000,
+        "C": 2000,
+        "observed_D": 23000,
+        "unrejected_D": 22000,
+        "required_reject_at": 22500,
+        "source": "PeerLifecycle.connected11\u201316/reject34\u201337; proposed rejection is in future"
+      },
+      "first_repair_group": false,
+      "proposal": "New named source-operation constructor and full paired intended counterfactuals required; timer repair alone does not prove coalescing/physics/ownership/packet semantics."
+    },
+    {
+      "ordinal": 28,
+      "kind": "failure",
+      "test": "test_input_consumption_stream.InputObservationStreamControls.test_single_command_is_fresh_and_inside_ack_window (sequence=121)",
+      "source": {
+        "path": "scripts/test_input_consumption_stream.py",
+        "line": 97,
+        "method_sha256": "469375ae8c7643d5d7c61855a86751057ab8dc3bc738346ac07d1c4148b42069",
+        "module_sha256": "da27d8fb7b434fded3439c22d3cdbc569298263b8b0bff57f0a206577448db72"
+      },
+      "original_failure_sha256": "5803939d7c348f30587bcbc2ba319d297d8a2195ecd219f9f8dbc93ea058309b",
+      "original_failure_reference": "b5a3ea334e5a2b02fe6600683823c4f21e56b23e:docs/reports/gauntlet/windows-input-foundation-r6-root-20261024/literal158-r1/FAILURES.json#28",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/sightbreak-input-foundation-r6-root-20261024/scripts/test_input_consumption_stream.py\", line 101, in test_single_command_is_fresh_and_inside_ack_window\n    self.assertEqual(result['diagnostic_complete'], expected, result['errors'])\nAssertionError: False != True : ['authority: authority lifecycle history is impossible: ']\n",
+      "retained_call_ids": [
+        2993,
+        2994,
+        2995,
+        2996
+      ],
+      "selected_call_id": 2996,
+      "selected_result": {
+        "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+        "diagnostic_complete": false,
+        "transition_status": "INVALID",
+        "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+        "roles": {
+          "client": {
+            "records": 7,
+            "coverage": [
+              "client_attempt",
+              "client_connected",
+              "client_tick",
+              "input_send_called",
+              "ready",
+              "snapshot_applied",
+              "welcome_received"
+            ],
+            "counters": {
+              "ready": 1,
+              "client_attempt": 1,
+              "client_connected": 1,
+              "welcome_received": 1,
+              "client_tick": 2,
+              "snapshot_applied": 1,
+              "input_send_called": 1
+            },
+            "max_observation_gap_msec": 1000,
+            "max_snapshot_age_msec": 3000,
+            "pending_saturation_indices": [],
+            "accepted_events": [],
+            "consumed_events": [],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [
+              {
+                "transport_id": 9,
+                "local_attempt": 1,
+                "local_id": 1,
+                "wall_unix_msec": 104000
+              }
+            ],
+            "binding_events": [],
+            "local_attempts": 1
+          }
+        },
+        "errors": [
+          "authority: authority lifecycle history is impossible: "
+        ]
+      },
+      "selected_authority_input_sha256": "19d67d71e9b63573d02f8e556bff493b3c10046f3457f2d47495d34b28cf9665",
+      "classification": "source-impossible-derived-construction",
+      "purpose": "For ACK1, seq2 and121 are legal fresh one-command inputs; seq1 and122 are invalid.",
+      "source_certificate": {
+        "kind": "impossible-deadline",
+        "row": 8,
+        "now": 12000,
+        "C": 2000,
+        "observed_D": 23000,
+        "unrejected_D": 22000,
+        "required_reject_at": 22500,
+        "source": "PeerLifecycle.connected11\u201316/reject34\u201337; proposed rejection is in future"
+      },
+      "first_repair_group": false,
+      "proposal": "New named source-operation constructor and full paired intended counterfactuals required; timer repair alone does not prove coalescing/physics/ownership/packet semantics."
+    },
+    {
+      "ordinal": 29,
+      "kind": "failure",
+      "test": "test_input_consumption_stream.InputObservationStreamControls.test_unchanged_metadata_can_remain_older_than_current_interval",
+      "source": {
+        "path": "scripts/test_input_consumption_stream.py",
+        "line": 190,
+        "method_sha256": "e4d1753fa0c8d84efd208f0ba769c0c930a762d662b47dd7c950b2908d52e259",
+        "module_sha256": "da27d8fb7b434fded3439c22d3cdbc569298263b8b0bff57f0a206577448db72"
+      },
+      "original_failure_sha256": "4c824837dda5b7dcedbe7089bbdd62ed7a2b056c3ea9bd7eaf3dbae0e4a6d0dc",
+      "original_failure_reference": "b5a3ea334e5a2b02fe6600683823c4f21e56b23e:docs/reports/gauntlet/windows-input-foundation-r6-root-20261024/literal158-r1/FAILURES.json#29",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/sightbreak-input-foundation-r6-root-20261024/scripts/test_input_consumption_stream.py\", line 196, in test_unchanged_metadata_can_remain_older_than_current_interval\n    self.assertTrue(result['diagnostic_complete'], result['errors'])\nAssertionError: False is not true : ['authority: authority lifecycle history is impossible: ']\n",
+      "retained_call_ids": [
+        3000,
+        3001,
+        3002,
+        3003
+      ],
+      "selected_call_id": 3003,
+      "selected_result": {
+        "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+        "diagnostic_complete": false,
+        "transition_status": "INVALID",
+        "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+        "roles": {
+          "client": {
+            "records": 7,
+            "coverage": [
+              "client_attempt",
+              "client_connected",
+              "client_tick",
+              "input_send_called",
+              "ready",
+              "snapshot_applied",
+              "welcome_received"
+            ],
+            "counters": {
+              "ready": 1,
+              "client_attempt": 1,
+              "client_connected": 1,
+              "welcome_received": 1,
+              "client_tick": 2,
+              "snapshot_applied": 1,
+              "input_send_called": 1
+            },
+            "max_observation_gap_msec": 1000,
+            "max_snapshot_age_msec": 3000,
+            "pending_saturation_indices": [],
+            "accepted_events": [],
+            "consumed_events": [],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [
+              {
+                "transport_id": 9,
+                "local_attempt": 1,
+                "local_id": 1,
+                "wall_unix_msec": 104000
+              }
+            ],
+            "binding_events": [],
+            "local_attempts": 1
+          }
+        },
+        "errors": [
+          "authority: authority lifecycle history is impossible: "
+        ]
+      },
+      "selected_authority_input_sha256": "e4478e9ae8fc59e53b542a1eaa401548093ae4af6e602a6a00873f37d158870b",
+      "classification": "source-impossible-derived-construction",
+      "purpose": "Unchanged counted metadata may remain older than the latest observation interval.",
+      "source_certificate": {
+        "kind": "impossible-deadline",
+        "row": 8,
+        "now": 12000,
+        "C": 2000,
+        "observed_D": 23000,
+        "unrejected_D": 22000,
+        "required_reject_at": 22500,
+        "source": "PeerLifecycle.connected11\u201316/reject34\u201337; proposed rejection is in future"
+      },
+      "first_repair_group": false,
+      "proposal": "New named source-operation constructor and full paired intended counterfactuals required; timer repair alone does not prove coalescing/physics/ownership/packet semantics."
+    },
+    {
+      "ordinal": 30,
+      "kind": "failure",
+      "test": "test_input_consumption_stream.InputObservationStreamControls.test_zero_peer_lobby_reset_retains_history_and_allows_new_rejections",
+      "source": {
+        "path": "scripts/test_input_consumption_stream.py",
+        "line": 140,
+        "method_sha256": "a939163d54afb8280f9764d1d64a42ab13839a46532b0f16ddc2d13b86fbea2d",
+        "module_sha256": "da27d8fb7b434fded3439c22d3cdbc569298263b8b0bff57f0a206577448db72"
+      },
+      "original_failure_sha256": "a3e7891f1b7f40bf22a0fe3285a6fabf1780ef428845cb54b06c59e5676c149e",
+      "original_failure_reference": "b5a3ea334e5a2b02fe6600683823c4f21e56b23e:docs/reports/gauntlet/windows-input-foundation-r6-root-20261024/literal158-r1/FAILURES.json#30",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/sightbreak-input-foundation-r6-root-20261024/scripts/test_input_consumption_stream.py\", line 143, in test_zero_peer_lobby_reset_retains_history_and_allows_new_rejections\n    self.assertTrue(result['diagnostic_complete'], result['errors'])\nAssertionError: False is not true : ['authority: authority lifecycle history is impossible: ']\n",
+      "retained_call_ids": [
+        3004,
+        3005,
+        3006,
+        3007
+      ],
+      "selected_call_id": 3007,
+      "selected_result": {
+        "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+        "diagnostic_complete": false,
+        "transition_status": "INVALID",
+        "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+        "roles": {
+          "client": {
+            "records": 7,
+            "coverage": [
+              "client_attempt",
+              "client_connected",
+              "client_tick",
+              "input_send_called",
+              "ready",
+              "snapshot_applied",
+              "welcome_received"
+            ],
+            "counters": {
+              "ready": 1,
+              "client_attempt": 1,
+              "client_connected": 1,
+              "welcome_received": 1,
+              "client_tick": 2,
+              "snapshot_applied": 1,
+              "input_send_called": 1
+            },
+            "max_observation_gap_msec": 1000,
+            "max_snapshot_age_msec": 3000,
+            "pending_saturation_indices": [],
+            "accepted_events": [],
+            "consumed_events": [],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [
+              {
+                "transport_id": 9,
+                "local_attempt": 1,
+                "local_id": 1,
+                "wall_unix_msec": 104000
+              }
+            ],
+            "binding_events": [],
+            "local_attempts": 1
+          }
+        },
+        "errors": [
+          "authority: authority lifecycle history is impossible: "
+        ]
+      },
+      "selected_authority_input_sha256": "aabe9f9cb41e7e21a0926052d82c27c2eaa5cf88fd10dfcb74dcd9d462132091",
+      "classification": "source-impossible-derived-construction",
+      "purpose": "A zero-bound guest reset replaces stream state while diagnostic rejection history persists; subsequent rejection increments both appropriately.",
+      "source_certificate": {
+        "kind": "impossible-deadline",
+        "row": 5,
+        "now": 8500,
+        "C": 2000,
+        "observed_D": 22500,
+        "unrejected_D": 22000,
+        "required_reject_at": 22000,
+        "source": "PeerLifecycle.connected11\u201316/reject34\u201337; proposed rejection is in future"
+      },
+      "first_repair_group": false,
+      "proposal": "New named source-operation constructor and full paired intended counterfactuals required; timer repair alone does not prove coalescing/physics/ownership/packet semantics."
+    },
+    {
+      "ordinal": 31,
+      "kind": "failure",
+      "test": "test_input_consumption_transitions.InputObservationTransitionControls.test_delayed_selected_stream_uses_its_owned_header_not_global_latest",
+      "source": {
+        "path": "scripts/test_input_consumption_transitions.py",
+        "line": 280,
+        "method_sha256": "4e5a09e9d9f8128b5db3b24d6e3ea021efa11922df0ce757f506123ceda94688",
+        "module_sha256": "f41c9c9a1d84e97f484576cb797960270f4f2c8e1e9f35ad874908997c8ade54"
+      },
+      "original_failure_sha256": "e4682d3a58cb122295ac9290c7a8f593cd73271e519c322ba366c5753e359651",
+      "original_failure_reference": "b5a3ea334e5a2b02fe6600683823c4f21e56b23e:docs/reports/gauntlet/windows-input-foundation-r6-root-20261024/literal158-r1/FAILURES.json#31",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/sightbreak-input-foundation-r6-root-20261024/scripts/test_input_consumption_transitions.py\", line 299, in test_delayed_selected_stream_uses_its_owned_header_not_global_latest\n    self.assertTrue(result['diagnostic_complete'],result['errors'])\nAssertionError: False is not true : ['authority: successful connection has an impossible initial lifecycle projection']\n",
+      "retained_call_ids": [
+        3019,
+        3020,
+        3021,
+        3022
+      ],
+      "selected_call_id": 3022,
+      "selected_result": {
+        "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+        "diagnostic_complete": false,
+        "transition_status": "INVALID",
+        "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+        "roles": {
+          "client": {
+            "records": 7,
+            "coverage": [
+              "client_attempt",
+              "client_connected",
+              "client_tick",
+              "input_send_called",
+              "ready",
+              "snapshot_applied",
+              "welcome_received"
+            ],
+            "counters": {
+              "ready": 1,
+              "client_attempt": 1,
+              "client_connected": 1,
+              "welcome_received": 1,
+              "client_tick": 2,
+              "snapshot_applied": 1,
+              "input_send_called": 1
+            },
+            "max_observation_gap_msec": 1000,
+            "max_snapshot_age_msec": 3000,
+            "pending_saturation_indices": [],
+            "accepted_events": [],
+            "consumed_events": [],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [
+              {
+                "transport_id": 9,
+                "local_attempt": 1,
+                "local_id": 1,
+                "wall_unix_msec": 104000
+              }
+            ],
+            "binding_events": [],
+            "local_attempts": 1
+          }
+        },
+        "errors": [
+          "authority: successful connection has an impossible initial lifecycle projection"
+        ]
+      },
+      "selected_authority_input_sha256": "680f2c20da778ab7b92b3669233ab6158c3e838efdb67f685a54d8f9a0ea3412",
+      "classification": "source-impossible-derived-construction",
+      "purpose": "Delayed selected stream A uses A-owned acceptance/pop projections despite global latest belonging to stream B.",
+      "source_certificate": {
+        "kind": "successful-connect-sum",
+        "row": 8,
+        "now": 12000,
+        "age": 2000,
+        "remaining": 11000,
+        "sum": 13000,
+        "required": 20000,
+        "source": "PeerLifecycle.connected11\u201316"
+      },
+      "first_repair_group": false,
+      "proposal": "New named source-operation constructor and full paired intended counterfactuals required; timer repair alone does not prove coalescing/physics/ownership/packet semantics."
+    },
+    {
+      "ordinal": 32,
+      "kind": "failure",
+      "test": "test_input_consumption_transitions.InputObservationTransitionControls.test_epoch_boundary_uses_acceptance_epoch_and_preserves_new_receipts (accepted_epoch=1, queued=0)",
+      "source": {
+        "path": "scripts/test_input_consumption_transitions.py",
+        "line": 258,
+        "method_sha256": "64b0c285935ff47b574ae5a7045a724f6ffc2dd195b9de0ed14a4e990c1f4447",
+        "module_sha256": "f41c9c9a1d84e97f484576cb797960270f4f2c8e1e9f35ad874908997c8ade54"
+      },
+      "original_failure_sha256": "1724f59ffad9baaf3ff263fb14fb46d44c5262311de8a0fcf240c821e67f969b",
+      "original_failure_reference": "b5a3ea334e5a2b02fe6600683823c4f21e56b23e:docs/reports/gauntlet/windows-input-foundation-r6-root-20261024/literal158-r1/FAILURES.json#32",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/sightbreak-input-foundation-r6-root-20261024/scripts/test_input_consumption_transitions.py\", line 273, in test_epoch_boundary_uses_acceptance_epoch_and_preserves_new_receipts\n    self.assertEqual(result['diagnostic_complete'], expected, result['errors'])\nAssertionError: False != True : ['authority: authority lifecycle history is impossible: ']\n",
+      "retained_call_ids": [
+        3023,
+        3024,
+        3025,
+        3026
+      ],
+      "selected_call_id": 3026,
+      "selected_result": {
+        "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+        "diagnostic_complete": false,
+        "transition_status": "INVALID",
+        "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+        "roles": {
+          "client": {
+            "records": 7,
+            "coverage": [
+              "client_attempt",
+              "client_connected",
+              "client_tick",
+              "input_send_called",
+              "ready",
+              "snapshot_applied",
+              "welcome_received"
+            ],
+            "counters": {
+              "ready": 1,
+              "client_attempt": 1,
+              "client_connected": 1,
+              "welcome_received": 1,
+              "client_tick": 2,
+              "snapshot_applied": 1,
+              "input_send_called": 1
+            },
+            "max_observation_gap_msec": 1000,
+            "max_snapshot_age_msec": 3000,
+            "pending_saturation_indices": [],
+            "accepted_events": [],
+            "consumed_events": [],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [
+              {
+                "transport_id": 9,
+                "local_attempt": 1,
+                "local_id": 1,
+                "wall_unix_msec": 104000
+              }
+            ],
+            "binding_events": [],
+            "local_attempts": 1
+          }
+        },
+        "errors": [
+          "authority: authority lifecycle history is impossible: "
+        ]
+      },
+      "selected_authority_input_sha256": "bbc31874a28eb918d0e80fc01ce9bfaab5ad3cc068d89049668ef2fc92944d1e",
+      "classification": "source-impossible-derived-construction",
+      "purpose": "No-pop epoch changes distinguish old accepted data cleared by reset from new-epoch accepted receipts retained after reset.",
+      "source_certificate": {
+        "kind": "impossible-deadline",
+        "row": 8,
+        "now": 12000,
+        "C": 2000,
+        "observed_D": 23000,
+        "unrejected_D": 22000,
+        "required_reject_at": 22500,
+        "source": "PeerLifecycle.connected11\u201316/reject34\u201337; proposed rejection is in future"
+      },
+      "first_repair_group": false,
+      "proposal": "New named source-operation constructor and full paired intended counterfactuals required; timer repair alone does not prove coalescing/physics/ownership/packet semantics."
+    },
+    {
+      "ordinal": 33,
+      "kind": "failure",
+      "test": "test_input_consumption_transitions.InputObservationTransitionControls.test_epoch_boundary_uses_acceptance_epoch_and_preserves_new_receipts (accepted_epoch=2, queued=1)",
+      "source": {
+        "path": "scripts/test_input_consumption_transitions.py",
+        "line": 258,
+        "method_sha256": "64b0c285935ff47b574ae5a7045a724f6ffc2dd195b9de0ed14a4e990c1f4447",
+        "module_sha256": "f41c9c9a1d84e97f484576cb797960270f4f2c8e1e9f35ad874908997c8ade54"
+      },
+      "original_failure_sha256": "7899e6124d5a31c3d00a8f2eee7af3bfc07133922576278a028784640411bd86",
+      "original_failure_reference": "b5a3ea334e5a2b02fe6600683823c4f21e56b23e:docs/reports/gauntlet/windows-input-foundation-r6-root-20261024/literal158-r1/FAILURES.json#33",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/sightbreak-input-foundation-r6-root-20261024/scripts/test_input_consumption_transitions.py\", line 273, in test_epoch_boundary_uses_acceptance_epoch_and_preserves_new_receipts\n    self.assertEqual(result['diagnostic_complete'], expected, result['errors'])\nAssertionError: False != True : ['authority: authority lifecycle history is impossible: ']\n",
+      "retained_call_ids": [
+        3031,
+        3032,
+        3033,
+        3034
+      ],
+      "selected_call_id": 3034,
+      "selected_result": {
+        "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+        "diagnostic_complete": false,
+        "transition_status": "INVALID",
+        "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+        "roles": {
+          "client": {
+            "records": 7,
+            "coverage": [
+              "client_attempt",
+              "client_connected",
+              "client_tick",
+              "input_send_called",
+              "ready",
+              "snapshot_applied",
+              "welcome_received"
+            ],
+            "counters": {
+              "ready": 1,
+              "client_attempt": 1,
+              "client_connected": 1,
+              "welcome_received": 1,
+              "client_tick": 2,
+              "snapshot_applied": 1,
+              "input_send_called": 1
+            },
+            "max_observation_gap_msec": 1000,
+            "max_snapshot_age_msec": 3000,
+            "pending_saturation_indices": [],
+            "accepted_events": [],
+            "consumed_events": [],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [
+              {
+                "transport_id": 9,
+                "local_attempt": 1,
+                "local_id": 1,
+                "wall_unix_msec": 104000
+              }
+            ],
+            "binding_events": [],
+            "local_attempts": 1
+          }
+        },
+        "errors": [
+          "authority: authority lifecycle history is impossible: "
+        ]
+      },
+      "selected_authority_input_sha256": "2c772eefc54f5e05504d5108846206c352054d1a6ace1ef9c82feb5a48e4dfe6",
+      "classification": "source-impossible-derived-construction",
+      "purpose": "No-pop epoch changes distinguish old accepted data cleared by reset from new-epoch accepted receipts retained after reset.",
+      "source_certificate": {
+        "kind": "impossible-deadline",
+        "row": 8,
+        "now": 12000,
+        "C": 2000,
+        "observed_D": 23000,
+        "unrejected_D": 22000,
+        "required_reject_at": 22500,
+        "source": "PeerLifecycle.connected11\u201316/reject34\u201337; proposed rejection is in future"
+      },
+      "first_repair_group": false,
+      "proposal": "New named source-operation constructor and full paired intended counterfactuals required; timer repair alone does not prove coalescing/physics/ownership/packet semantics."
+    },
+    {
+      "ordinal": 34,
+      "kind": "failure",
+      "test": "test_input_consumption_transitions.InputObservationTransitionControls.test_explicit_unselected_pop_is_inferred_when_prior_state_proves_it",
+      "source": {
+        "path": "scripts/test_input_consumption_transitions.py",
+        "line": 234,
+        "method_sha256": "fb147603806abda230b9bc4df3a2a101e8a0aa07119f96014316233d67fe051a",
+        "module_sha256": "f41c9c9a1d84e97f484576cb797960270f4f2c8e1e9f35ad874908997c8ade54"
+      },
+      "original_failure_sha256": "0c63b86d1822dfad75b46a98c4b813575d094f670e298a03afc11589e9f0b77c",
+      "original_failure_reference": "b5a3ea334e5a2b02fe6600683823c4f21e56b23e:docs/reports/gauntlet/windows-input-foundation-r6-root-20261024/literal158-r1/FAILURES.json#34",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/sightbreak-input-foundation-r6-root-20261024/scripts/test_input_consumption_transitions.py\", line 246, in test_explicit_unselected_pop_is_inferred_when_prior_state_proves_it\n    self.assertTrue(result['diagnostic_complete'], result['errors'])\nAssertionError: False is not true : ['authority: authority lifecycle history is impossible: ']\n",
+      "retained_call_ids": [
+        3042,
+        3043,
+        3044,
+        3045
+      ],
+      "selected_call_id": 3045,
+      "selected_result": {
+        "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+        "diagnostic_complete": false,
+        "transition_status": "INVALID",
+        "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+        "roles": {
+          "client": {
+            "records": 7,
+            "coverage": [
+              "client_attempt",
+              "client_connected",
+              "client_tick",
+              "input_send_called",
+              "ready",
+              "snapshot_applied",
+              "welcome_received"
+            ],
+            "counters": {
+              "ready": 1,
+              "client_attempt": 1,
+              "client_connected": 1,
+              "welcome_received": 1,
+              "client_tick": 2,
+              "snapshot_applied": 1,
+              "input_send_called": 1
+            },
+            "max_observation_gap_msec": 1000,
+            "max_snapshot_age_msec": 3000,
+            "pending_saturation_indices": [],
+            "accepted_events": [],
+            "consumed_events": [],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [
+              {
+                "transport_id": 9,
+                "local_attempt": 1,
+                "local_id": 1,
+                "wall_unix_msec": 104000
+              }
+            ],
+            "binding_events": [],
+            "local_attempts": 1
+          }
+        },
+        "errors": [
+          "authority: authority lifecycle history is impossible: "
+        ]
+      },
+      "selected_authority_input_sha256": "cc0cc4f972b27fbbd3c18484e04a4b7fe31cf7c3fd63a0b0523857c464e5f859",
+      "classification": "source-impossible-derived-construction",
+      "purpose": "A sole known foreign-stream pop may update that stream even when another peer is selected.",
+      "source_certificate": {
+        "kind": "impossible-deadline",
+        "row": 8,
+        "now": 12000,
+        "C": 2000,
+        "observed_D": 23000,
+        "unrejected_D": 22000,
+        "required_reject_at": 22500,
+        "source": "PeerLifecycle.connected11\u201316/reject34\u201337; proposed rejection is in future"
+      },
+      "first_repair_group": false,
+      "proposal": "New named source-operation constructor and full paired intended counterfactuals required; timer repair alone does not prove coalescing/physics/ownership/packet semantics."
+    },
+    {
+      "ordinal": 35,
+      "kind": "failure",
+      "test": "test_input_consumption_transitions.InputObservationTransitionControls.test_exposed_queue_pops_oldest_instead_of_latest_accepted_packet",
+      "source": {
+        "path": "scripts/test_input_consumption_transitions.py",
+        "line": 159,
+        "method_sha256": "1dfbf14668eb6dc16598b769a4964276464d9bb3cad8ea634d4946bc6440f61e",
+        "module_sha256": "f41c9c9a1d84e97f484576cb797960270f4f2c8e1e9f35ad874908997c8ade54"
+      },
+      "original_failure_sha256": "a45d1ad91cf2e3b8a4303139d041eee379ef13329776d47425de99bc6a454256",
+      "original_failure_reference": "b5a3ea334e5a2b02fe6600683823c4f21e56b23e:docs/reports/gauntlet/windows-input-foundation-r6-root-20261024/literal158-r1/FAILURES.json#35",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/sightbreak-input-foundation-r6-root-20261024/scripts/test_input_consumption_transitions.py\", line 161, in test_exposed_queue_pops_oldest_instead_of_latest_accepted_packet\n    self.assertTrue(result['diagnostic_complete'], result['errors'])\nAssertionError: False is not true : ['authority: authority lifecycle history is impossible: ']\n",
+      "retained_call_ids": [
+        3046,
+        3047,
+        3048,
+        3049
+      ],
+      "selected_call_id": 3049,
+      "selected_result": {
+        "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+        "diagnostic_complete": false,
+        "transition_status": "INVALID",
+        "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+        "roles": {
+          "client": {
+            "records": 7,
+            "coverage": [
+              "client_attempt",
+              "client_connected",
+              "client_tick",
+              "input_send_called",
+              "ready",
+              "snapshot_applied",
+              "welcome_received"
+            ],
+            "counters": {
+              "ready": 1,
+              "client_attempt": 1,
+              "client_connected": 1,
+              "welcome_received": 1,
+              "client_tick": 2,
+              "snapshot_applied": 1,
+              "input_send_called": 1
+            },
+            "max_observation_gap_msec": 1000,
+            "max_snapshot_age_msec": 3000,
+            "pending_saturation_indices": [],
+            "accepted_events": [],
+            "consumed_events": [],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [
+              {
+                "transport_id": 9,
+                "local_attempt": 1,
+                "local_id": 1,
+                "wall_unix_msec": 104000
+              }
+            ],
+            "binding_events": [],
+            "local_attempts": 1
+          }
+        },
+        "errors": [
+          "authority: authority lifecycle history is impossible: "
+        ]
+      },
+      "selected_authority_input_sha256": "fbe4b9e474d64b588d5bd6bab49175f09fbce1a729dd146e8e26193a510c093d",
+      "classification": "source-impossible-derived-construction",
+      "purpose": "Sorted queue pop consumes the oldest command, not necessarily the latest accepted packet endpoint.",
+      "source_certificate": {
+        "kind": "impossible-deadline",
+        "row": 8,
+        "now": 9001,
+        "C": 2000,
+        "observed_D": 22001,
+        "unrejected_D": 22000,
+        "required_reject_at": 21501,
+        "source": "PeerLifecycle.connected11\u201316/reject34\u201337; proposed rejection is in future"
+      },
+      "first_repair_group": false,
+      "proposal": "New named source-operation constructor and full paired intended counterfactuals required; timer repair alone does not prove coalescing/physics/ownership/packet semantics."
+    },
+    {
+      "ordinal": 36,
+      "kind": "failure",
+      "test": "test_input_consumption_transitions.InputObservationTransitionControls.test_hidden_accept_before_hidden_pop_uses_pre_pop_ack_interval",
+      "source": {
+        "path": "scripts/test_input_consumption_transitions.py",
+        "line": 127,
+        "method_sha256": "c00b1f7e4d00cb8fb25779959beb6d32fb3d5fb5fefac0614926fd99d60d63ac",
+        "module_sha256": "f41c9c9a1d84e97f484576cb797960270f4f2c8e1e9f35ad874908997c8ade54"
+      },
+      "original_failure_sha256": "54971bdf7f988ddebc272aed966d1d8655e7e6591eb75bcac96b71c98ac23547",
+      "original_failure_reference": "b5a3ea334e5a2b02fe6600683823c4f21e56b23e:docs/reports/gauntlet/windows-input-foundation-r6-root-20261024/literal158-r1/FAILURES.json#36",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/sightbreak-input-foundation-r6-root-20261024/scripts/test_input_consumption_transitions.py\", line 129, in test_hidden_accept_before_hidden_pop_uses_pre_pop_ack_interval\n    self.assertTrue(result['diagnostic_complete'], result['errors'])\nAssertionError: False is not true : ['authority: authority lifecycle history is impossible: ']\n",
+      "retained_call_ids": [
+        3050,
+        3051,
+        3052,
+        3053
+      ],
+      "selected_call_id": 3053,
+      "selected_result": {
+        "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+        "diagnostic_complete": false,
+        "transition_status": "INVALID",
+        "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+        "roles": {
+          "client": {
+            "records": 7,
+            "coverage": [
+              "client_attempt",
+              "client_connected",
+              "client_tick",
+              "input_send_called",
+              "ready",
+              "snapshot_applied",
+              "welcome_received"
+            ],
+            "counters": {
+              "ready": 1,
+              "client_attempt": 1,
+              "client_connected": 1,
+              "welcome_received": 1,
+              "client_tick": 2,
+              "snapshot_applied": 1,
+              "input_send_called": 1
+            },
+            "max_observation_gap_msec": 1000,
+            "max_snapshot_age_msec": 3000,
+            "pending_saturation_indices": [],
+            "accepted_events": [],
+            "consumed_events": [],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [
+              {
+                "transport_id": 9,
+                "local_attempt": 1,
+                "local_id": 1,
+                "wall_unix_msec": 104000
+              }
+            ],
+            "binding_events": [],
+            "local_attempts": 1
+          }
+        },
+        "errors": [
+          "authority: authority lifecycle history is impossible: "
+        ]
+      },
+      "selected_authority_input_sha256": "76ce1aae7d5e51097cf468f6cdda2511e03c4dbd4775873676742def81546fd7",
+      "classification": "source-impossible-derived-construction",
+      "purpose": "Known hidden acceptance-before-pop timing selects the pre-pop ACK interval.",
+      "source_certificate": {
+        "kind": "impossible-deadline",
+        "row": 8,
+        "now": 12000,
+        "C": 2000,
+        "observed_D": 23000,
+        "unrejected_D": 22000,
+        "required_reject_at": 22500,
+        "source": "PeerLifecycle.connected11\u201316/reject34\u201337; proposed rejection is in future"
+      },
+      "first_repair_group": false,
+      "proposal": "New named source-operation constructor and full paired intended counterfactuals required; timer repair alone does not prove coalescing/physics/ownership/packet semantics."
+    },
+    {
+      "ordinal": 37,
+      "kind": "failure",
+      "test": "test_input_consumption_transitions.InputObservationTransitionControls.test_large_duplicate_batch_cannot_erase_earlier_immutable_intent",
+      "source": {
+        "path": "scripts/test_input_consumption_transitions.py",
+        "line": 196,
+        "method_sha256": "81d356aeae056d244f7b4094862e95e52048c844f00f2b02977ba3a9b45bf47f",
+        "module_sha256": "f41c9c9a1d84e97f484576cb797960270f4f2c8e1e9f35ad874908997c8ade54"
+      },
+      "original_failure_sha256": "77bd45e78ad3f0483d2d56b7874ee7b39bd62db943085f5fcb7a854e7b598d96",
+      "original_failure_reference": "b5a3ea334e5a2b02fe6600683823c4f21e56b23e:docs/reports/gauntlet/windows-input-foundation-r6-root-20261024/literal158-r1/FAILURES.json#37",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/sightbreak-input-foundation-r6-root-20261024/scripts/test_input_consumption_transitions.py\", line 209, in test_large_duplicate_batch_cannot_erase_earlier_immutable_intent\n    self.assertTrue(self.report(authority=rows)['diagnostic_complete'])\nAssertionError: False is not true\n",
+      "retained_call_ids": [
+        3054,
+        3055,
+        3056,
+        3057
+      ],
+      "selected_call_id": 3057,
+      "selected_result": {
+        "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+        "diagnostic_complete": false,
+        "transition_status": "INVALID",
+        "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+        "roles": {
+          "client": {
+            "records": 7,
+            "coverage": [
+              "client_attempt",
+              "client_connected",
+              "client_tick",
+              "input_send_called",
+              "ready",
+              "snapshot_applied",
+              "welcome_received"
+            ],
+            "counters": {
+              "ready": 1,
+              "client_attempt": 1,
+              "client_connected": 1,
+              "welcome_received": 1,
+              "client_tick": 2,
+              "snapshot_applied": 1,
+              "input_send_called": 1
+            },
+            "max_observation_gap_msec": 1000,
+            "max_snapshot_age_msec": 3000,
+            "pending_saturation_indices": [],
+            "accepted_events": [],
+            "consumed_events": [],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [
+              {
+                "transport_id": 9,
+                "local_attempt": 1,
+                "local_id": 1,
+                "wall_unix_msec": 104000
+              }
+            ],
+            "binding_events": [],
+            "local_attempts": 1
+          }
+        },
+        "errors": [
+          "authority: authority lifecycle history is impossible: "
+        ]
+      },
+      "selected_authority_input_sha256": "f18d0a50e24f9e289fdab7419549c451160dd39995d7e8323cc31fcd9bc70a47",
+      "classification": "source-impossible-derived-construction",
+      "purpose": "A large duplicate batch must preserve earlier per-sequence immutable controls.",
+      "source_certificate": {
+        "kind": "impossible-deadline",
+        "row": 6,
+        "now": 10000,
+        "C": 2000,
+        "observed_D": 23000,
+        "unrejected_D": 22000,
+        "required_reject_at": 22500,
+        "source": "PeerLifecycle.connected11\u201316/reject34\u201337; proposed rejection is in future"
+      },
+      "first_repair_group": false,
+      "proposal": "New named source-operation constructor and full paired intended counterfactuals required; timer repair alone does not prove coalescing/physics/ownership/packet semantics."
+    },
+    {
+      "ordinal": 38,
+      "kind": "failure",
+      "test": "test_input_consumption_transitions.InputObservationTransitionControls.test_multi_peer_forced_flow_passes_but_ambiguous_header_is_unknown",
+      "source": {
+        "path": "scripts/test_input_consumption_transitions.py",
+        "line": 173,
+        "method_sha256": "d4e425b0d72ef5df6903c458359c505a8a5fd38cde54295881aef340802a3fbe",
+        "module_sha256": "f41c9c9a1d84e97f484576cb797960270f4f2c8e1e9f35ad874908997c8ade54"
+      },
+      "original_failure_sha256": "543a4aefeff34617d642632148a751bebc586ac8607306b73384fcb777238b26",
+      "original_failure_reference": "b5a3ea334e5a2b02fe6600683823c4f21e56b23e:docs/reports/gauntlet/windows-input-foundation-r6-root-20261024/literal158-r1/FAILURES.json#38",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/sightbreak-input-foundation-r6-root-20261024/scripts/test_input_consumption_transitions.py\", line 175, in test_multi_peer_forced_flow_passes_but_ambiguous_header_is_unknown\n    self.assertTrue(self.report(authority=rows)['diagnostic_complete'])\nAssertionError: False is not true\n",
+      "retained_call_ids": [
+        3058,
+        3059,
+        3060,
+        3061
+      ],
+      "selected_call_id": 3061,
+      "selected_result": {
+        "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+        "diagnostic_complete": false,
+        "transition_status": "INVALID",
+        "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+        "roles": {
+          "client": {
+            "records": 7,
+            "coverage": [
+              "client_attempt",
+              "client_connected",
+              "client_tick",
+              "input_send_called",
+              "ready",
+              "snapshot_applied",
+              "welcome_received"
+            ],
+            "counters": {
+              "ready": 1,
+              "client_attempt": 1,
+              "client_connected": 1,
+              "welcome_received": 1,
+              "client_tick": 2,
+              "snapshot_applied": 1,
+              "input_send_called": 1
+            },
+            "max_observation_gap_msec": 1000,
+            "max_snapshot_age_msec": 3000,
+            "pending_saturation_indices": [],
+            "accepted_events": [],
+            "consumed_events": [],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [
+              {
+                "transport_id": 9,
+                "local_attempt": 1,
+                "local_id": 1,
+                "wall_unix_msec": 104000
+              }
+            ],
+            "binding_events": [],
+            "local_attempts": 1
+          }
+        },
+        "errors": [
+          "authority: successful connection has an impossible initial lifecycle projection"
+        ]
+      },
+      "selected_authority_input_sha256": "ba747611ea1ccb205986f7fc1f251f61bc15a48e44599dd5140f0f0bd57a786f",
+      "classification": "source-impossible-derived-construction",
+      "purpose": "Forced multi-peer ownership can pass while truly ambiguous accepted-header ownership remains UNKNOWN.",
+      "source_certificate": {
+        "kind": "successful-connect-sum",
+        "row": 8,
+        "now": 12000,
+        "age": 2000,
+        "remaining": 11000,
+        "sum": 13000,
+        "required": 20000,
+        "source": "PeerLifecycle.connected11\u201316"
+      },
+      "first_repair_group": false,
+      "proposal": "New named source-operation constructor and full paired intended counterfactuals required; timer repair alone does not prove coalescing/physics/ownership/packet semantics."
+    },
+    {
+      "ordinal": 39,
+      "kind": "failure",
+      "test": "test_input_consumption_transitions.InputObservationTransitionControls.test_receipt_aggregate_retains_one_joint_payload_history_across_pops (total=1, first=False, second=True, hidden=False)",
+      "source": {
+        "path": "scripts/test_input_consumption_transitions.py",
+        "line": 248,
+        "method_sha256": "d0f8ef91c89ed81d6f51fa1af239f2fa8ccd3a687c5b45230107696c2d601150",
+        "module_sha256": "f41c9c9a1d84e97f484576cb797960270f4f2c8e1e9f35ad874908997c8ade54"
+      },
+      "original_failure_sha256": "93bf8f99a68be2e5c4e100c36fd50321a4f0db96b2853787916c65126738bc41",
+      "original_failure_reference": "b5a3ea334e5a2b02fe6600683823c4f21e56b23e:docs/reports/gauntlet/windows-input-foundation-r6-root-20261024/literal158-r1/FAILURES.json#39",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/sightbreak-input-foundation-r6-root-20261024/scripts/test_input_consumption_transitions.py\", line 256, in test_receipt_aggregate_retains_one_joint_payload_history_across_pops\n    self.assertEqual(result['diagnostic_complete'], expected, result['errors'])\nAssertionError: False != True : ['authority: authority lifecycle history is impossible: ']\n",
+      "retained_call_ids": [
+        3087,
+        3088,
+        3089,
+        3090
+      ],
+      "selected_call_id": 3090,
+      "selected_result": {
+        "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+        "diagnostic_complete": false,
+        "transition_status": "INVALID",
+        "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+        "roles": {
+          "client": {
+            "records": 7,
+            "coverage": [
+              "client_attempt",
+              "client_connected",
+              "client_tick",
+              "input_send_called",
+              "ready",
+              "snapshot_applied",
+              "welcome_received"
+            ],
+            "counters": {
+              "ready": 1,
+              "client_attempt": 1,
+              "client_connected": 1,
+              "welcome_received": 1,
+              "client_tick": 2,
+              "snapshot_applied": 1,
+              "input_send_called": 1
+            },
+            "max_observation_gap_msec": 1000,
+            "max_snapshot_age_msec": 3000,
+            "pending_saturation_indices": [],
+            "accepted_events": [],
+            "consumed_events": [],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [
+              {
+                "transport_id": 9,
+                "local_attempt": 1,
+                "local_id": 1,
+                "wall_unix_msec": 104000
+              }
+            ],
+            "binding_events": [],
+            "local_attempts": 1
+          }
+        },
+        "errors": [
+          "authority: authority lifecycle history is impossible: "
+        ]
+      },
+      "selected_authority_input_sha256": "a8c0e97be7fcfd0886f373047da61db1d718ca29d6a9a6ebb330780539ff584d",
+      "classification": "source-impossible-derived-construction",
+      "purpose": "Action aggregates and successive pops must share one feasible persistent payload assignment, including hidden pops.",
+      "source_certificate": {
+        "kind": "impossible-deadline",
+        "row": 6,
+        "now": 9001,
+        "C": 2000,
+        "observed_D": 22001,
+        "unrejected_D": 22000,
+        "required_reject_at": 21501,
+        "source": "PeerLifecycle.connected11\u201316/reject34\u201337; proposed rejection is in future"
+      },
+      "first_repair_group": false,
+      "proposal": "New named source-operation constructor and full paired intended counterfactuals required; timer repair alone does not prove coalescing/physics/ownership/packet semantics."
+    },
+    {
+      "ordinal": 40,
+      "kind": "failure",
+      "test": "test_input_consumption_transitions.InputObservationTransitionControls.test_receipt_aggregate_retains_one_joint_payload_history_across_pops (total=0, first=False, second=False, hidden=True)",
+      "source": {
+        "path": "scripts/test_input_consumption_transitions.py",
+        "line": 248,
+        "method_sha256": "d0f8ef91c89ed81d6f51fa1af239f2fa8ccd3a687c5b45230107696c2d601150",
+        "module_sha256": "f41c9c9a1d84e97f484576cb797960270f4f2c8e1e9f35ad874908997c8ade54"
+      },
+      "original_failure_sha256": "93d50652a96cae9b3a52373bb60cdfc15be61eb59413a4de0a91296bb07d976b",
+      "original_failure_reference": "b5a3ea334e5a2b02fe6600683823c4f21e56b23e:docs/reports/gauntlet/windows-input-foundation-r6-root-20261024/literal158-r1/FAILURES.json#40",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/sightbreak-input-foundation-r6-root-20261024/scripts/test_input_consumption_transitions.py\", line 256, in test_receipt_aggregate_retains_one_joint_payload_history_across_pops\n    self.assertEqual(result['diagnostic_complete'], expected, result['errors'])\nAssertionError: False != True : ['authority: authority lifecycle history is impossible: ']\n",
+      "retained_call_ids": [
+        3107,
+        3108,
+        3109,
+        3110
+      ],
+      "selected_call_id": 3110,
+      "selected_result": {
+        "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+        "diagnostic_complete": false,
+        "transition_status": "INVALID",
+        "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+        "roles": {
+          "client": {
+            "records": 7,
+            "coverage": [
+              "client_attempt",
+              "client_connected",
+              "client_tick",
+              "input_send_called",
+              "ready",
+              "snapshot_applied",
+              "welcome_received"
+            ],
+            "counters": {
+              "ready": 1,
+              "client_attempt": 1,
+              "client_connected": 1,
+              "welcome_received": 1,
+              "client_tick": 2,
+              "snapshot_applied": 1,
+              "input_send_called": 1
+            },
+            "max_observation_gap_msec": 1000,
+            "max_snapshot_age_msec": 3000,
+            "pending_saturation_indices": [],
+            "accepted_events": [],
+            "consumed_events": [],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [
+              {
+                "transport_id": 9,
+                "local_attempt": 1,
+                "local_id": 1,
+                "wall_unix_msec": 104000
+              }
+            ],
+            "binding_events": [],
+            "local_attempts": 1
+          }
+        },
+        "errors": [
+          "authority: authority lifecycle history is impossible: "
+        ]
+      },
+      "selected_authority_input_sha256": "790d4d9ed0b36ec5d327d82cd51ec6580d921ba354fb0318923eb45b08bee559",
+      "classification": "source-impossible-derived-construction",
+      "purpose": "Action aggregates and successive pops must share one feasible persistent payload assignment, including hidden pops.",
+      "source_certificate": {
+        "kind": "impossible-deadline",
+        "row": 6,
+        "now": 9001,
+        "C": 2000,
+        "observed_D": 22001,
+        "unrejected_D": 22000,
+        "required_reject_at": 21501,
+        "source": "PeerLifecycle.connected11\u201316/reject34\u201337; proposed rejection is in future"
+      },
+      "first_repair_group": false,
+      "proposal": "New named source-operation constructor and full paired intended counterfactuals required; timer repair alone does not prove coalescing/physics/ownership/packet semantics."
+    },
+    {
+      "ordinal": 41,
+      "kind": "failure",
+      "test": "test_input_consumption_transitions.InputObservationTransitionControls.test_receipt_aggregate_retains_one_joint_payload_history_across_pops (total=2, first=True, second=True, hidden=True)",
+      "source": {
+        "path": "scripts/test_input_consumption_transitions.py",
+        "line": 248,
+        "method_sha256": "d0f8ef91c89ed81d6f51fa1af239f2fa8ccd3a687c5b45230107696c2d601150",
+        "module_sha256": "f41c9c9a1d84e97f484576cb797960270f4f2c8e1e9f35ad874908997c8ade54"
+      },
+      "original_failure_sha256": "eff18638a746a2474fe43b8df7559ea1975f853a6ecd2d76a461dc773946c7ae",
+      "original_failure_reference": "b5a3ea334e5a2b02fe6600683823c4f21e56b23e:docs/reports/gauntlet/windows-input-foundation-r6-root-20261024/literal158-r1/FAILURES.json#41",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/sightbreak-input-foundation-r6-root-20261024/scripts/test_input_consumption_transitions.py\", line 256, in test_receipt_aggregate_retains_one_joint_payload_history_across_pops\n    self.assertEqual(result['diagnostic_complete'], expected, result['errors'])\nAssertionError: False != True : ['authority: authority lifecycle history is impossible: ']\n",
+      "retained_call_ids": [
+        3111,
+        3112,
+        3113,
+        3114
+      ],
+      "selected_call_id": 3114,
+      "selected_result": {
+        "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+        "diagnostic_complete": false,
+        "transition_status": "INVALID",
+        "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+        "roles": {
+          "client": {
+            "records": 7,
+            "coverage": [
+              "client_attempt",
+              "client_connected",
+              "client_tick",
+              "input_send_called",
+              "ready",
+              "snapshot_applied",
+              "welcome_received"
+            ],
+            "counters": {
+              "ready": 1,
+              "client_attempt": 1,
+              "client_connected": 1,
+              "welcome_received": 1,
+              "client_tick": 2,
+              "snapshot_applied": 1,
+              "input_send_called": 1
+            },
+            "max_observation_gap_msec": 1000,
+            "max_snapshot_age_msec": 3000,
+            "pending_saturation_indices": [],
+            "accepted_events": [],
+            "consumed_events": [],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [
+              {
+                "transport_id": 9,
+                "local_attempt": 1,
+                "local_id": 1,
+                "wall_unix_msec": 104000
+              }
+            ],
+            "binding_events": [],
+            "local_attempts": 1
+          }
+        },
+        "errors": [
+          "authority: authority lifecycle history is impossible: "
+        ]
+      },
+      "selected_authority_input_sha256": "57ceeca571a1c526a5373319d34a8a089534cce7204a9bca556939767c1c1a8b",
+      "classification": "source-impossible-derived-construction",
+      "purpose": "Action aggregates and successive pops must share one feasible persistent payload assignment, including hidden pops.",
+      "source_certificate": {
+        "kind": "impossible-deadline",
+        "row": 6,
+        "now": 9001,
+        "C": 2000,
+        "observed_D": 22001,
+        "unrejected_D": 22000,
+        "required_reject_at": 21501,
+        "source": "PeerLifecycle.connected11\u201316/reject34\u201337; proposed rejection is in future"
+      },
+      "first_repair_group": false,
+      "proposal": "New named source-operation constructor and full paired intended counterfactuals required; timer repair alone does not prove coalescing/physics/ownership/packet semantics."
+    },
+    {
+      "ordinal": 42,
+      "kind": "failure",
+      "test": "test_input_consumption_transitions.InputObservationTransitionControls.test_same_stream_ack_and_queue_need_corresponding_calls",
+      "source": {
+        "path": "scripts/test_input_consumption_transitions.py",
+        "line": 141,
+        "method_sha256": "e2cb91e5a6411595067667b0331860e5743ecf7090dd9ae045b4f0ab70feab04",
+        "module_sha256": "f41c9c9a1d84e97f484576cb797960270f4f2c8e1e9f35ad874908997c8ade54"
+      },
+      "original_failure_sha256": "c328f602017d3127f9e75497e42e6608fb07f748c971e7651f2f23aaf88aaadf",
+      "original_failure_reference": "b5a3ea334e5a2b02fe6600683823c4f21e56b23e:docs/reports/gauntlet/windows-input-foundation-r6-root-20261024/literal158-r1/FAILURES.json#42",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/sightbreak-input-foundation-r6-root-20261024/scripts/test_input_consumption_transitions.py\", line 150, in test_same_stream_ack_and_queue_need_corresponding_calls\n    self.assertTrue(self.report(authority=rows)['diagnostic_complete'])\nAssertionError: False is not true\n",
+      "retained_call_ids": [
+        3127,
+        3128,
+        3129,
+        3130
+      ],
+      "selected_call_id": 3130,
+      "selected_result": {
+        "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+        "diagnostic_complete": false,
+        "transition_status": "INVALID",
+        "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+        "roles": {
+          "client": {
+            "records": 7,
+            "coverage": [
+              "client_attempt",
+              "client_connected",
+              "client_tick",
+              "input_send_called",
+              "ready",
+              "snapshot_applied",
+              "welcome_received"
+            ],
+            "counters": {
+              "ready": 1,
+              "client_attempt": 1,
+              "client_connected": 1,
+              "welcome_received": 1,
+              "client_tick": 2,
+              "snapshot_applied": 1,
+              "input_send_called": 1
+            },
+            "max_observation_gap_msec": 1000,
+            "max_snapshot_age_msec": 3000,
+            "pending_saturation_indices": [],
+            "accepted_events": [],
+            "consumed_events": [],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [
+              {
+                "transport_id": 9,
+                "local_attempt": 1,
+                "local_id": 1,
+                "wall_unix_msec": 104000
+              }
+            ],
+            "binding_events": [],
+            "local_attempts": 1
+          }
+        },
+        "errors": [
+          "authority: authority lifecycle history is impossible: "
+        ]
+      },
+      "selected_authority_input_sha256": "e4478e9ae8fc59e53b542a1eaa401548093ae4af6e602a6a00873f37d158870b",
+      "classification": "source-impossible-derived-construction",
+      "purpose": "Same-stream ACK/queue changes need corresponding accepted/pop/skipped calls.",
+      "source_certificate": {
+        "kind": "impossible-deadline",
+        "row": 8,
+        "now": 12000,
+        "C": 2000,
+        "observed_D": 23000,
+        "unrejected_D": 22000,
+        "required_reject_at": 22500,
+        "source": "PeerLifecycle.connected11\u201316/reject34\u201337; proposed rejection is in future"
+      },
+      "first_repair_group": false,
+      "proposal": "New named source-operation constructor and full paired intended counterfactuals required; timer repair alone does not prove coalescing/physics/ownership/packet semantics."
+    },
+    {
+      "ordinal": 43,
+      "kind": "failure",
+      "test": "test_input_consumption_transitions.InputObservationTransitionControls.test_shared_accepted_validation_covers_hidden_calls (sequence=2, count=1, epoch=1)",
+      "source": {
+        "path": "scripts/test_input_consumption_transitions.py",
+        "line": 119,
+        "method_sha256": "1c6e361fbb569e1050c4d99d750fe116cf8a4204877f4a68f4dd6fba0e7076e8",
+        "module_sha256": "f41c9c9a1d84e97f484576cb797960270f4f2c8e1e9f35ad874908997c8ade54"
+      },
+      "original_failure_sha256": "5a1d7e4a2a54a214f6d34ef692272f5efebf64d49bd67ad34b3f2b3c39f359eb",
+      "original_failure_reference": "b5a3ea334e5a2b02fe6600683823c4f21e56b23e:docs/reports/gauntlet/windows-input-foundation-r6-root-20261024/literal158-r1/FAILURES.json#43",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/sightbreak-input-foundation-r6-root-20261024/scripts/test_input_consumption_transitions.py\", line 125, in test_shared_accepted_validation_covers_hidden_calls\n    self.assertEqual(result['diagnostic_complete'], expected, result['errors'])\nAssertionError: False != True : ['authority: authority lifecycle history is impossible: ']\n",
+      "retained_call_ids": [
+        3131,
+        3132,
+        3133,
+        3134
+      ],
+      "selected_call_id": 3134,
+      "selected_result": {
+        "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+        "diagnostic_complete": false,
+        "transition_status": "INVALID",
+        "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+        "roles": {
+          "client": {
+            "records": 7,
+            "coverage": [
+              "client_attempt",
+              "client_connected",
+              "client_tick",
+              "input_send_called",
+              "ready",
+              "snapshot_applied",
+              "welcome_received"
+            ],
+            "counters": {
+              "ready": 1,
+              "client_attempt": 1,
+              "client_connected": 1,
+              "welcome_received": 1,
+              "client_tick": 2,
+              "snapshot_applied": 1,
+              "input_send_called": 1
+            },
+            "max_observation_gap_msec": 1000,
+            "max_snapshot_age_msec": 3000,
+            "pending_saturation_indices": [],
+            "accepted_events": [],
+            "consumed_events": [],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [
+              {
+                "transport_id": 9,
+                "local_attempt": 1,
+                "local_id": 1,
+                "wall_unix_msec": 104000
+              }
+            ],
+            "binding_events": [],
+            "local_attempts": 1
+          }
+        },
+        "errors": [
+          "authority: authority lifecycle history is impossible: "
+        ]
+      },
+      "selected_authority_input_sha256": "c8c73fb386c2ef98e835b5bc1adeaeb205c82323d2774ae43bd28ea17ab345c1",
+      "classification": "source-impossible-derived-construction",
+      "purpose": "Hidden accepted headers satisfy the same count/epoch/window/freshness constraints as direct accepted hooks.",
+      "source_certificate": {
+        "kind": "impossible-deadline",
+        "row": 8,
+        "now": 12000,
+        "C": 2000,
+        "observed_D": 23000,
+        "unrejected_D": 22000,
+        "required_reject_at": 22500,
+        "source": "PeerLifecycle.connected11\u201316/reject34\u201337; proposed rejection is in future"
+      },
+      "first_repair_group": false,
+      "proposal": "New named source-operation constructor and full paired intended counterfactuals required; timer repair alone does not prove coalescing/physics/ownership/packet semantics."
+    },
+    {
+      "ordinal": 44,
+      "kind": "failure",
+      "test": "test_input_consumption_transitions.InputObservationTransitionControls.test_shared_accepted_validation_covers_hidden_calls (sequence=1, count=3, epoch=1)",
+      "source": {
+        "path": "scripts/test_input_consumption_transitions.py",
+        "line": 119,
+        "method_sha256": "1c6e361fbb569e1050c4d99d750fe116cf8a4204877f4a68f4dd6fba0e7076e8",
+        "module_sha256": "f41c9c9a1d84e97f484576cb797960270f4f2c8e1e9f35ad874908997c8ade54"
+      },
+      "original_failure_sha256": "adcb85b003cbc907ebba28426c6faed57daeca5ec4eab5d53c3b8de3e181c134",
+      "original_failure_reference": "b5a3ea334e5a2b02fe6600683823c4f21e56b23e:docs/reports/gauntlet/windows-input-foundation-r6-root-20261024/literal158-r1/FAILURES.json#44",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/sightbreak-input-foundation-r6-root-20261024/scripts/test_input_consumption_transitions.py\", line 125, in test_shared_accepted_validation_covers_hidden_calls\n    self.assertEqual(result['diagnostic_complete'], expected, result['errors'])\nAssertionError: False != True : ['authority: authority lifecycle history is impossible: ']\n",
+      "retained_call_ids": [
+        3149,
+        3150,
+        3151,
+        3152
+      ],
+      "selected_call_id": 3152,
+      "selected_result": {
+        "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+        "diagnostic_complete": false,
+        "transition_status": "INVALID",
+        "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+        "roles": {
+          "client": {
+            "records": 7,
+            "coverage": [
+              "client_attempt",
+              "client_connected",
+              "client_tick",
+              "input_send_called",
+              "ready",
+              "snapshot_applied",
+              "welcome_received"
+            ],
+            "counters": {
+              "ready": 1,
+              "client_attempt": 1,
+              "client_connected": 1,
+              "welcome_received": 1,
+              "client_tick": 2,
+              "snapshot_applied": 1,
+              "input_send_called": 1
+            },
+            "max_observation_gap_msec": 1000,
+            "max_snapshot_age_msec": 3000,
+            "pending_saturation_indices": [],
+            "accepted_events": [],
+            "consumed_events": [],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [
+              {
+                "transport_id": 9,
+                "local_attempt": 1,
+                "local_id": 1,
+                "wall_unix_msec": 104000
+              }
+            ],
+            "binding_events": [],
+            "local_attempts": 1
+          }
+        },
+        "errors": [
+          "authority: authority lifecycle history is impossible: "
+        ]
+      },
+      "selected_authority_input_sha256": "d6723139186e63858245a8164c29c8df21cff382a604b1a6743885bf90a81d5a",
+      "classification": "source-impossible-derived-construction",
+      "purpose": "Hidden accepted headers satisfy the same count/epoch/window/freshness constraints as direct accepted hooks.",
+      "source_certificate": {
+        "kind": "impossible-deadline",
+        "row": 8,
+        "now": 12000,
+        "C": 2000,
+        "observed_D": 23000,
+        "unrejected_D": 22000,
+        "required_reject_at": 22500,
+        "source": "PeerLifecycle.connected11\u201316/reject34\u201337; proposed rejection is in future"
+      },
+      "first_repair_group": false,
+      "proposal": "New named source-operation constructor and full paired intended counterfactuals required; timer repair alone does not prove coalescing/physics/ownership/packet semantics."
+    },
+    {
+      "ordinal": 45,
+      "kind": "error",
+      "test": "test_input_consumption_lifecycle.InputObservationLifecycleControls.test_fresh_generation_after_retirement_can_reuse_peer_and_actor",
+      "source": {
+        "path": "scripts/test_input_consumption_lifecycle.py",
+        "line": 72,
+        "method_sha256": "697285ddca47fe7daaa057024de8ba4f338da736c9c6a0c4c2e98278d0367e33",
+        "module_sha256": "972e6f949b0251534079ad36999c5cbeb0a146e78d405dbfdd0bbdccf394892a"
+      },
+      "original_failure_sha256": "9679ba521dca9dec46989055f6ad2ab42b75df582d8d0931b309904cad84a082",
+      "original_failure_reference": "b5a3ea334e5a2b02fe6600683823c4f21e56b23e:docs/reports/gauntlet/windows-input-foundation-r6-root-20261024/literal158-r1/FAILURES.json#45",
+      "traceback": "Traceback (most recent call last):\n  File \"/workspace/sightbreak-input-foundation-r6-root-20261024/scripts/test_input_consumption_lifecycle.py\", line 83, in test_fresh_generation_after_retirement_can_reuse_peer_and_actor\n    report = analyze_role(restamp(rows), 'authority')\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/sightbreak-input-foundation-r6-root-20261024/scripts/analyze_input_consumption.py\", line 1189, in analyze_role\n    authority_lifecycle_foundation(rows)\n  File \"/workspace/sightbreak-input-foundation-r6-root-20261024/scripts/analyze_input_consumption.py\", line 1001, in authority_lifecycle_foundation\n    need(not history.errors and bool(history.states),\n  File \"/workspace/sightbreak-input-foundation-r6-root-20261024/scripts/analyze_input_consumption.py\", line 33, in need\n    raise ValueError(message)\nValueError: authority lifecycle history is impossible: \n",
+      "retained_call_ids": [
+        2724,
+        2725
+      ],
+      "selected_call_id": 2725,
+      "selected_result": null,
+      "selected_authority_input_sha256": null,
+      "classification": "source-impossible-derived-construction",
+      "purpose": "After retirement/forget, a fresh generation may reuse the same peer number and actor.",
+      "source_certificate": {
+        "kind": "impossible-deadline",
+        "row": 8,
+        "now": 12000,
+        "C": 2000,
+        "observed_D": 23000,
+        "unrejected_D": 22000,
+        "required_reject_at": 22500,
+        "source": "PeerLifecycle.connected11\u201316/reject34\u201337; proposed rejection is in future"
+      },
+      "first_repair_group": false,
+      "proposal": "New named source-operation constructor and full paired intended counterfactuals required; timer repair alone does not prove coalescing/physics/ownership/packet semantics.",
+      "selected_authority_rows_sha256": "11c7a10691c87d0c4af0a4dc00307b57aabef610012f5c48a85c42cd0479225f"
+    }
+  ]
+}
