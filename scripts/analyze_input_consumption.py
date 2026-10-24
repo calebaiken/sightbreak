@@ -802,6 +802,83 @@ def observation_prefix_invariants(rows, role):
         prior = row
 
 
+def deterministic_stream_constraints(row, prior, owners_before, bindings):
+    """Necessary stream observations independent of receipt-origin inference."""
+    if row['role'] != 'authority':
+        return
+    dc = (row['counters'].get('input_consumed', 0)
+          - (prior['counters'].get('input_consumed', 0) if prior else 0))
+    if prior:
+        need(row['authority_epoch'] >= prior['authority_epoch'], 'authority epoch regressed')
+        resets = row['authority_epoch'] > prior['authority_epoch'] and not owners_before
+        old, new = prior['stream_skipped'], row['stream_skipped']
+        possible_skip = lambda value: value == 0 or 5 <= value <= 118 * dc
+        need(possible_skip(new - old) or (resets and possible_skip(new)),
+             'skipped stream state has no corresponding pop/reset transition')
+    da = (row['counters'].get('input_accepted', 0)
+          - (prior['counters'].get('input_accepted', 0) if prior else 0))
+    if da:
+        need(bool(owners_before) or row['reason'] == 'input_accepted', 'acceptance has no live stream context')
+        value = row['latest']['input_accepted']
+        minimum_epoch = prior['authority_epoch'] if prior else row['authority_epoch']
+        need(minimum_epoch <= value['epoch'] <= row['authority_epoch']
+             and value['count'] in range(1, 13), 'accepted packet has wrong epoch or count')
+        need(value['first'] >= 1 and value['last'] >= 1
+             and (value['count'] > 1 or value['first'] == value['last']),
+             'accepted packet has invalid sequence endpoints')
+    if dc:
+        value = row['latest']['input_consumed']
+        owner = value['peer'], value['generation']
+        need(owner in owners_before, 'new consumed metadata has no live binding')
+        need(value['actor'] == bindings[owner] and value['sequence'] > 0,
+             'new consumed metadata disagrees with its bound stream identity')
+    need(row['stream_ack'] == -1 or row['stream_ack'] > 0,
+         'stream ACK is neither absent nor a popped positive sequence')
+    if row['generation'] <= 0 or row['reason'] in {'peer_connected', 'peer_bound'}:
+        need(row['stream_ack'] == -1 and row['queue_count'] == 0,
+             'new/absent stream has queued input or an ACK')
+
+
+class PacketProjectionHistory:
+    """Compare only receive/outcome projections with a proved call ordinal.
+
+    RPC processing is synchronous. The sole pending receive, if any, is exposed
+    by an input_received row. Mixed hidden outcomes do not identify which kind
+    finished last, so their unrelated latest headers are never equated.
+    """
+    def __init__(self):
+        self.received = {}
+        self.previous = {}
+
+    def observe(self, row):
+        if row['role'] != 'authority':
+            return
+        counters, latest = row['counters'], row['latest']
+        received = counters.get('input_received', 0)
+        if received:
+            self.received[received] = latest['input_received']
+        for stage, other in (('input_accepted', 'input_stream_rejected'),
+                             ('input_stream_rejected', 'input_accepted')):
+            amount = counters.get(stage, 0) - self.previous.get(stage, 0)
+            other_amount = counters.get(other, 0) - self.previous.get(other, 0)
+            if not amount or (row['reason'] != stage and other_amount):
+                continue
+            # A direct outcome or a same-kind suffix proves the last completed
+            # receive ordinal. A current direct receive may be the next call.
+            ordinal = counters.get('input_accepted', 0) + counters.get('input_stream_rejected', 0)
+            incoming = self.received.get(ordinal)
+            value = latest[stage]
+            if row['reason'] == stage:
+                need(value['wall_msec'] == row['wall_msec'], 'input outcome refers to stale metadata')
+            if incoming is not None:
+                fields = PACKET_KEYS - {'wall_msec'}
+                need({key: incoming[key] for key in fields} == {key: value[key] for key in fields},
+                     'input outcome differs from its proven synchronous receive')
+                need(incoming['wall_msec'] <= value['wall_msec'],
+                     'input outcome predates its proven synchronous receive')
+        self.previous = counters
+
+
 def authority_lifecycle_foundation(rows):
     """Check observed authority identity/timer histories before packet inference.
 
@@ -903,8 +980,6 @@ def analyze_role(rows, role):
     observed_events = {row['reason'] for row in rows}
     need(REQUIRED[role] - {'snapshot_applied'} <= observed_events, 'missing direct pipeline event records')
     observation_prefix_invariants(rows, role)
-    if role == 'authority':
-        authority_lifecycle_foundation(rows)
     prior, bindings, ended, consumed_sequences = None, {}, set(), {}
     live_peers, binding_accept_counts, lifecycle_counts = {}, {}, {}
     live_bindings = set()
@@ -916,6 +991,8 @@ def analyze_role(rows, role):
     consumed, accepted, expiries, disconnects, saturations, welcomes, binding_events = [], [], [], [], [], [], []
     max_gap = 0
     transitions = InputTransitions()
+    inference_rows = []
+    packets = PacketProjectionHistory()
     expiry_unknowns = []
     lifecycle_history = {}
     for row in rows:
@@ -1035,7 +1112,9 @@ def analyze_role(rows, role):
                 received.append({'index': row['index'], **value})
         if row['pending_count'] == 120:
             saturations.append(row['index'])
-        transitions.observe(row, owners_before)
+        deterministic_stream_constraints(row, prior, owners_before, bindings)
+        packets.observe(row)
+        inference_rows.append((row, owners_before))
         if role == 'authority' and reason == 'input_accepted':
             for other_identity, history in lifecycle_history.items():
                 if other_identity != identity:
@@ -1050,6 +1129,19 @@ def analyze_role(rows, role):
         prior = row
     if role == 'authority':
         need(bool(consumed) and bool(accepted), 'acceptance and actual consumption need distinct observed events')
+    # Finish every deterministic row before either independent inference pass.
+    # UNKNOWN is deferred; partially mutated queue inference is never resumed.
+    if role == 'authority':
+        try:
+            authority_lifecycle_foundation(rows)
+        except UnknownTransition as error:
+            expiry_unknowns.append(str(error))
+    for row, owners_before in inference_rows:
+        try:
+            transitions.observe(row, owners_before)
+        except UnknownTransition as error:
+            expiry_unknowns.append(str(error))
+            break
     if expiry_unknowns:
         raise UnknownTransition('; '.join(expiry_unknowns))
     return {'records': len(rows), 'coverage': sorted(coverage), 'counters': prior['counters'], 'max_observation_gap_msec': max_gap,
