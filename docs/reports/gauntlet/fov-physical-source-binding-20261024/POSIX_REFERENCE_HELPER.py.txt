@@ -1,0 +1,31 @@
+def physical_source_file(path, expected, mode, *, windows=False):
+    """Compare real checkout bytes; Git index flags never establish this proof."""
+    path=Path(path)
+    before=path.lstat()
+    require(stat.S_ISREG(before.st_mode) and not path.is_symlink(),'source must be a regular physical file: '+str(path))
+    require(mode in ('100644','100755'),'unsupported source mode: '+mode)
+    actual=path.read_bytes()
+    after=path.lstat()
+    def identity(value):
+        return (value.st_dev,value.st_ino,value.st_size,value.st_mtime_ns,value.st_ctime_ns,value.st_mode)
+    require(identity(before)==identity(after),
+            'source changed during physical read: '+str(path))
+    repeated=path.read_bytes()
+    final=path.lstat()
+    require(actual==repeated and identity(before)==identity(final),
+            'source changed during physical read: '+str(path))
+    conversion='none'
+    if actual!=expected:
+        # Only ordinary Windows text checkout conversion is allowed. No Git
+        # attribute/filter command can redefine the expected frozen bytes.
+        require(windows and b'\0' not in expected and b'\r' not in expected,
+                'physical source bytes differ: '+str(path))
+        expected.decode('utf-8',errors='strict')
+        require(actual==expected.replace(b'\n',b'\r\n'),'physical source bytes differ: '+str(path))
+        conversion='Windows LF to CRLF'
+    measured_mode=None if windows else ('100755' if before.st_mode & stat.S_IXUSR else '100644')
+    require(measured_mode is None or measured_mode==mode,'physical source executable mode differs: '+str(path))
+    return dict(bytes=len(actual),sha256=sha(actual),canonical_sha256=sha(expected),
+                canonical_mode=mode,physical_mode=measured_mode,checkout_conversion=conversion,
+                read_observations=2,change_metadata_scope='Windows NTFS ChangeTime unmeasured' if windows else 'POSIX st_ctime_ns',
+                mode_scope='NTFS executable bits not measured' if windows else 'POSIX owner executable bit')
