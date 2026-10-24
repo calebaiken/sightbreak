@@ -1,0 +1,313 @@
+{
+  "frozen_source": "f48c8461b3b6cb26c5ab2a79f2b51c444e94a0ec",
+  "checkout_head": "d7d5db3d5f78df8aba4fdf0be8f448cf5283d1cc",
+  "cpu_affinity": [
+    4
+  ],
+  "scope": "Necessary source-field projections only; not damage/physics/attribution/engine qualification",
+  "cases": [
+    {
+      "name": "unchanged_live_handoff",
+      "expected_accepted": true,
+      "actual_accepted": true,
+      "error": null,
+      "met_expectation": true,
+      "input_sha256": "b4fc6806852d20f837cce6b8c947d8252d95ab9861ad3b622d25aba4017ab638",
+      "source_basis": "No actor action changes the source-required protected fields."
+    },
+    {
+      "name": "opposing_kill_credit_800",
+      "expected_accepted": true,
+      "actual_accepted": true,
+      "error": null,
+      "met_expectation": true,
+      "input_sha256": "ceaaac166e4febd6ce5960c92a4ab3544f8913db262c9b7780192c9e7e511f52",
+      "source_basis": "_eliminated gives one opposing kill and mini(9000, credits+300). Projection validates necessary award fields, not damage attribution."
+    },
+    {
+      "name": "opposing_kill_credit_8800",
+      "expected_accepted": true,
+      "actual_accepted": true,
+      "error": null,
+      "met_expectation": true,
+      "input_sha256": "967be3bb454ae1e121f584268fdb31b1ce1f266fa6951f6bec02872dcb9a957a",
+      "source_basis": "_eliminated gives one opposing kill and mini(9000, credits+300). Projection validates necessary award fields, not damage attribution."
+    },
+    {
+      "name": "opposing_kill_credit_8900",
+      "expected_accepted": true,
+      "actual_accepted": true,
+      "error": null,
+      "met_expectation": true,
+      "input_sha256": "f35eccc752a08034620eede7f4f74e99f04d198048e5103b1b625fba685ca54d",
+      "source_basis": "_eliminated gives one opposing kill and mini(9000, credits+300). Projection validates necessary award fields, not damage attribution."
+    },
+    {
+      "name": "opposing_kill_credit_9000",
+      "expected_accepted": true,
+      "actual_accepted": true,
+      "error": null,
+      "met_expectation": true,
+      "input_sha256": "0a4cf7b0918bc504328453f2fbb86a6ceb67251b4bf6563ffffa14f02c2e7dcf",
+      "source_basis": "_eliminated gives one opposing kill and mini(9000, credits+300). Projection validates necessary award fields, not damage attribution."
+    },
+    {
+      "name": "uncredited_world_elimination",
+      "expected_accepted": true,
+      "actual_accepted": true,
+      "error": null,
+      "met_expectation": true,
+      "input_sha256": "59e8bca6886831196d404b9a7d5eca44f205ab1c91b343074c8d71840bb43e72",
+      "source_basis": "_eliminated increments victim deaths; absent/self/same-team source receives no kill award. This tests hook semantics, not the existence of a gameplay world hazard."
+    },
+    {
+      "name": "uncredited_suicide_elimination",
+      "expected_accepted": true,
+      "actual_accepted": true,
+      "error": null,
+      "met_expectation": true,
+      "input_sha256": "b8bfa8b7ddfeb14cf35ae59c647468e90893107816425a7ad9bd7cc9e33c04e9",
+      "source_basis": "_eliminated increments victim deaths; absent/self/same-team source receives no kill award. This tests hook semantics, not the existence of a gameplay world hazard."
+    },
+    {
+      "name": "uncredited_teammate_elimination",
+      "expected_accepted": true,
+      "actual_accepted": true,
+      "error": null,
+      "met_expectation": true,
+      "input_sha256": "0bcabba4ade3c6ba4623b52a104b7284f08dd3f652aa974b46039565aca62800",
+      "source_basis": "_eliminated increments victim deaths; absent/self/same-team source receives no kill award. This tests hook semantics, not the existence of a gameplay world hazard."
+    },
+    {
+      "name": "mutual_queued_eliminations",
+      "expected_accepted": true,
+      "actual_accepted": true,
+      "error": null,
+      "met_expectation": true,
+      "input_sha256": "5301cce643a7ec3cc21b2e926f09be0a03bb622758fd9082486da5bf84f11aab",
+      "source_basis": "All traces precede queued damage; resolve_shot_hit does not require the source still alive. Both opposing awards are conserved."
+    },
+    {
+      "name": "two_independent_eliminations",
+      "expected_accepted": true,
+      "actual_accepted": true,
+      "error": null,
+      "met_expectation": true,
+      "input_sha256": "49afc131f2eb9d1118f2668a48930894e1bcf03332204715e524469bbada8136",
+      "source_basis": "Independent opposing eliminations can occur in one authority damage phase; each victim increments once."
+    },
+    {
+      "name": "damage_without_death",
+      "expected_accepted": true,
+      "actual_accepted": true,
+      "error": null,
+      "met_expectation": true,
+      "input_sha256": "5d2eeb84128e6e33e66f4d635254cfee808aea49fdcab906a0d8eacf65c6d193",
+      "source_basis": "apply_damage may reduce health while leaving alive/death/kill/credit counters unchanged; damage geometry and memory effects are outside this projection corpus."
+    },
+    {
+      "name": "moving_carrier_keeps_stored_objective_position",
+      "expected_accepted": true,
+      "actual_accepted": true,
+      "error": null,
+      "met_expectation": true,
+      "input_sha256": "a07d94b9cc0b0fab798e35ffc7e0408b6591147e3bb21c5468ea2218c1c2d75e",
+      "source_basis": "Movement changes actor position; stored objective_position does not follow a living carried actor in the pre-consumer interval."
+    },
+    {
+      "name": "carrier_drop_uses_post_movement_position",
+      "expected_accepted": true,
+      "actual_accepted": true,
+      "error": null,
+      "met_expectation": true,
+      "input_sha256": "c280d93e2117df480fdc838b7c7d1b5e4b99174a31fb06476b61326e68471080",
+      "source_basis": "_eliminated unconditionally drops a carried device at killed.position after movement, with carrier0."
+    },
+    {
+      "name": "carrier_death_suppresses_required_drop",
+      "expected_accepted": false,
+      "actual_accepted": true,
+      "error": null,
+      "met_expectation": false,
+      "input_sha256": "770b8d5d7ad115033aa2d0a8d28c8470f785d35b58f927e899ab9ea4e9c6cf1d",
+      "source_basis": "Same elimination/award as the valid pair, but source _eliminated cannot leave its dead carrier in carried state. The drop is mandatory, not merely permitted."
+    },
+    {
+      "name": "carrier_drop_uses_stale_position",
+      "expected_accepted": false,
+      "actual_accepted": false,
+      "error": "action phase invented objective transition",
+      "met_expectation": true,
+      "input_sha256": "aa7334fe1deb8051a69abf7c60969022662b7163d19c93fc8e6cf138dca26435",
+      "source_basis": "Dropped position must be post-movement killed.position, not the prior pose."
+    },
+    {
+      "name": "carrier_drop_without_death",
+      "expected_accepted": false,
+      "actual_accepted": false,
+      "error": "action phase invented objective transition",
+      "met_expectation": true,
+      "input_sha256": "b7af22df9060ae5d26d963e0f31d29c21dbc5aa3a11a47c29e9fc692c0aa62f8",
+      "source_basis": "Action-phase carried\u2192dropped transition requires carrier elimination."
+    },
+    {
+      "name": "actor_rng_and_resources_can_advance",
+      "expected_accepted": true,
+      "actual_accepted": true,
+      "error": null,
+      "met_expectation": true,
+      "input_sha256": "714385ebb87e592dbac4da9c8164d38ebd8eeef43b4b029c79f084cc9b9b1331",
+      "source_basis": "Actor firing uses its own RNG/resources. Necessary handoff projection permits them; it does not reconstruct the shot."
+    },
+    {
+      "name": "post_decision_match_rng_reaches_consumer",
+      "expected_accepted": true,
+      "actual_accepted": true,
+      "error": null,
+      "met_expectation": true,
+      "input_sha256": "f7998a6e0b95abac59449358afb4b69c8f495b282454afa2c3e87a51a43716fe",
+      "source_basis": "Current is already the post-decision state; its match RNG must reach the consumer unchanged. This does not establish which RNG value the decision should have produced."
+    },
+    {
+      "name": "match_rng_changes_during_actions",
+      "expected_accepted": false,
+      "actual_accepted": false,
+      "error": "action phase changed protected match/objective state",
+      "met_expectation": true,
+      "input_sha256": "f8bb76cb11b44d30b01b1ae474e1934ac08c2aaf5127bfcf4101e22201d0a60c",
+      "source_basis": "Actions use actor RNG; no intervening Match RNG draw occurs in this synchronous interval."
+    },
+    {
+      "name": "unearned_credit",
+      "expected_accepted": false,
+      "actual_accepted": false,
+      "error": "action credits do not bind kill awards",
+      "met_expectation": true,
+      "input_sha256": "eb17292f0a4f63d93aa288be4836b5a4a581aa4f2521327100915f63d3d0fd6e",
+      "source_basis": "No objective award occurs before the consumer; kill0 cannot produce credit100."
+    },
+    {
+      "name": "team_reassignment",
+      "expected_accepted": false,
+      "actual_accepted": false,
+      "error": "action phase reassigned actor team",
+      "met_expectation": true,
+      "input_sha256": "d307b73cc14c5e9d990c21c3ca42cb80a9cad094d39d84f25a0ecf4e1ec8e655",
+      "source_basis": "Movement/actions cannot reassign a team."
+    },
+    {
+      "name": "kill_without_opposing_death",
+      "expected_accepted": false,
+      "actual_accepted": false,
+      "error": "action kills exceed opposing eliminations",
+      "met_expectation": true,
+      "input_sha256": "9c162ae731c84cb7ef8214a5fd29a00828025ed8e518072b6e0114e689f0553c",
+      "source_basis": "A credited kill needs an opposing victim elimination."
+    },
+    {
+      "name": "death_counter_without_death",
+      "expected_accepted": false,
+      "actual_accepted": false,
+      "error": "action death counter does not bind elimination",
+      "met_expectation": true,
+      "input_sha256": "49260ca11582f5d8a8884288948d65c7c36aa23bd01875c9c998ad2033ba00fb",
+      "source_basis": "Deaths increment only on alive\u2192dead elimination."
+    },
+    {
+      "name": "preconsumer_plant",
+      "expected_accepted": false,
+      "actual_accepted": false,
+      "error": "action phase invented objective transition",
+      "met_expectation": true,
+      "input_sha256": "9695c4fafc7415c29230f6e77faa4e635c47d97b71c4c62940d7ca602a53a5c6",
+      "source_basis": "Planting belongs inside _objective_tick."
+    },
+    {
+      "name": "preconsumer_defuse",
+      "expected_accepted": false,
+      "actual_accepted": false,
+      "error": "action phase invented objective transition",
+      "met_expectation": true,
+      "input_sha256": "3fd0721bb5d1f793435b68aa99648506ce5b9b8a5304446e044bee01f700ebc8",
+      "source_basis": "Defusing belongs inside _objective_tick."
+    },
+    {
+      "name": "preconsumer_progress",
+      "expected_accepted": false,
+      "actual_accepted": false,
+      "error": "action phase changed protected match/objective state",
+      "met_expectation": true,
+      "input_sha256": "8e70bceb2ae1a6ab00005a535d09b828c8e3c7afa8f5f5be7a967adb79bc5b17",
+      "source_basis": "Interaction progress changes inside the later consumer."
+    },
+    {
+      "name": "preconsumer_timer",
+      "expected_accepted": false,
+      "actual_accepted": false,
+      "error": "action phase changed protected match/objective state",
+      "met_expectation": true,
+      "input_sha256": "ce9b5ba7a35892d3150e5073a489da8c7a257297996e8c62c53216f3600d01ec",
+      "source_basis": "Objective timer does not advance in movement/actions."
+    },
+    {
+      "name": "preconsumer_contribution",
+      "expected_accepted": false,
+      "actual_accepted": false,
+      "error": "action phase changed protected match/objective state",
+      "met_expectation": true,
+      "input_sha256": "ff17d8fe2567c1900f6e779a2db427607599c26b6cc9ea0d8058c59ed4268a23",
+      "source_basis": "Objective contributions change in the consumer."
+    },
+    {
+      "name": "input_substitution",
+      "expected_accepted": false,
+      "actual_accepted": false,
+      "error": "actual command does not reach authority",
+      "met_expectation": true,
+      "input_sha256": "79a110281486a63c8b99db79e569080d518c611ef035cd3874f1bde6d582452e",
+      "source_basis": "The complete actual command must reach the consumer."
+    },
+    {
+      "name": "action_phase_transition",
+      "expected_accepted": false,
+      "actual_accepted": false,
+      "error": "action phase changed protected match/objective state",
+      "met_expectation": true,
+      "input_sha256": "87f09567cf246e5952db3696a7b7ef4d29f3b003a4de17def31dd5f8548d4246",
+      "source_basis": "Round/phase handling occurs after the consumer, not before it."
+    },
+    {
+      "name": "elimination_without_death_counter",
+      "expected_accepted": false,
+      "actual_accepted": false,
+      "error": "action death counter does not bind elimination",
+      "met_expectation": true,
+      "input_sha256": "7e04e6e8c53bc9406aa93083c61df43060b5f19a0a302e912fb75ab0d8b2c339",
+      "source_basis": "apply_damage emits one elimination, which increments victim deaths once."
+    },
+    {
+      "name": "action_revives_dead_actor",
+      "expected_accepted": false,
+      "actual_accepted": false,
+      "error": "action phase revived an actor",
+      "met_expectation": true,
+      "input_sha256": "c86447aff8d4340478bc4566b0b30c3c173c1f784876de8096ab333091a5daf7",
+      "source_basis": "No action in this interval revives an actor."
+    },
+    {
+      "name": "kill_credit_ignores_cap",
+      "expected_accepted": false,
+      "actual_accepted": false,
+      "error": "action credits do not bind kill awards",
+      "met_expectation": true,
+      "input_sha256": "543a07a407330c97b73b7087b141809ed5b7bd6e190fba389318b3eadf0a10fe",
+      "source_basis": "Repeated or single opposing awards use mini(9000, credits+300)."
+    }
+  ],
+  "cases_total": 33,
+  "expectations_met": 32,
+  "false_accepts": [
+    "carrier_death_suppresses_required_drop"
+  ],
+  "false_rejects": []
+}

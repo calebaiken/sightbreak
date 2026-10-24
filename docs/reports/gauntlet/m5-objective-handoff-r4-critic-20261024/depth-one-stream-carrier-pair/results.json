@@ -1,0 +1,33 @@
+{
+  "cpu_affinity": [
+    4
+  ],
+  "frozen_source": "f48c8461b3b6cb26c5ab2a79f2b51c444e94a0ec",
+  "results": [
+    {
+      "name": "required_drop_then_consumer_recovery",
+      "expected_accepted": true,
+      "r4_accepted": true,
+      "r4_error": null,
+      "r3_accepted": true,
+      "r3_error": null,
+      "met_expectation": true,
+      "raw_sha256": "fb6a85743338a0a943884c58864b2ddbc04536e8f534bd12b4eaeb4993ad70d8",
+      "raw_bytes": 26627621,
+      "source_basis": "_eliminated must drop when its carried actor dies; the later consumer may recover a genuinely dropped device. Conditional elimination projection only; no ballistics claim."
+    },
+    {
+      "name": "dead_carrier_stays_carried_complete_stream",
+      "expected_accepted": false,
+      "r4_accepted": true,
+      "r4_error": null,
+      "r3_accepted": true,
+      "r3_error": null,
+      "met_expectation": false,
+      "raw_sha256": "908a94b9721d1f53f045c5bdeec3b5c86c4c6a18dc19167a584acb3c36631560",
+      "raw_bytes": 26627628,
+      "source_basis": "_eliminated must drop when its carried actor dies; the later consumer may recover a genuinely dropped device. Conditional elimination projection only; no ballistics claim."
+    }
+  ],
+  "passed": false
+}

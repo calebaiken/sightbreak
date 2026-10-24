@@ -1,0 +1,103 @@
+{
+  "previous_independent_r3_report": "e87aa1659e48c2d8b1d2fbea161c2816f42eb393",
+  "all13_actual_input_hashes_identical": true,
+  "r3_expectations_met": 5,
+  "r4_expectations_met": 11,
+  "r4_false_passes": [
+    "fabricated_target_score_navigation_and_bot_memory",
+    "in_range_in_fov_candidate_falsely_rejected_by_fov"
+  ],
+  "cases": [
+    {
+      "name": "complete_synthetic_positive",
+      "raw_input_same": true,
+      "r3_accepted": true,
+      "r4_accepted": true,
+      "expected_rejection": false
+    },
+    {
+      "name": "freshness_complete_decision_for_wrong_actor",
+      "raw_input_same": true,
+      "r3_accepted": false,
+      "r4_accepted": false,
+      "expected_rejection": true
+    },
+    {
+      "name": "direct_perception_selects_target_without_candidates",
+      "raw_input_same": true,
+      "r3_accepted": false,
+      "r4_accepted": false,
+      "expected_rejection": true
+    },
+    {
+      "name": "nearest_defuser_ignores_device_destination",
+      "raw_input_same": true,
+      "r3_accepted": false,
+      "r4_accepted": false,
+      "expected_rejection": true
+    },
+    {
+      "name": "decision_role_not_produced_by_source",
+      "raw_input_same": true,
+      "r3_accepted": false,
+      "r4_accepted": false,
+      "expected_rejection": true
+    },
+    {
+      "name": "fabricated_target_score_navigation_and_bot_memory",
+      "raw_input_same": true,
+      "r3_accepted": true,
+      "r4_accepted": true,
+      "expected_rejection": true
+    },
+    {
+      "name": "in_range_in_fov_candidate_falsely_rejected_by_fov",
+      "raw_input_same": true,
+      "r3_accepted": true,
+      "r4_accepted": true,
+      "expected_rejection": true
+    },
+    {
+      "name": "forward_credits_added_without_kill_or_reward",
+      "raw_input_same": true,
+      "r3_accepted": true,
+      "r4_accepted": false,
+      "expected_rejection": true
+    },
+    {
+      "name": "forward_objective_plants_before_consumer_without_progress",
+      "raw_input_same": true,
+      "r3_accepted": true,
+      "r4_accepted": false,
+      "expected_rejection": true
+    },
+    {
+      "name": "forward_progress_injected_then_correctly_cleared",
+      "raw_input_same": true,
+      "r3_accepted": true,
+      "r4_accepted": false,
+      "expected_rejection": true
+    },
+    {
+      "name": "isolated_control_stationary_actor_teleports",
+      "raw_input_same": true,
+      "r3_accepted": true,
+      "r4_accepted": false,
+      "expected_rejection": true
+    },
+    {
+      "name": "isolated_control_match_rng_changes_without_bot_call",
+      "raw_input_same": true,
+      "r3_accepted": true,
+      "r4_accepted": false,
+      "expected_rejection": true
+    },
+    {
+      "name": "forward_action_phase_reassigns_actor_team",
+      "raw_input_same": true,
+      "r3_accepted": true,
+      "r4_accepted": false,
+      "expected_rejection": true
+    }
+  ]
+}
