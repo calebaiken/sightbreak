@@ -142,3 +142,26 @@ Independent baseline/accounting conditions and known51-child clean-path source
 model are recorded in FIXTURE_ACCOUNTING_MODEL.md. No source-counted value is an
 observed native count. The actual wrapper nonempty-directory conflict has been
 sent to root for a separately registered scope decision, with no wrapper edit yet.
+
+## Necessary wrapper setup correction, registered before edits
+
+Root explicitly authorized this correction after source inspection found frozen
+real_driver opens two controller files inside the trial directory before the
+unchanged driver's required-empty-directory guard. Preserve original wrapper
+source and a pure fake-main guard failure witness before edits. Keep the default
+driver source byte-exact and all ownership/clock/control code unchanged.
+
+Capture controller streams in a fresh owned sibling capture directory within the
+overall study output tree. The required-empty trial directory remains empty until
+the unchanged driver begins. After invocation, publish streams to required names
+using exclusive creation, never overwrite. Keep all full sibling captures plus
+any failed/partial published streams and a publication receipt; no unique evidence
+is deleted and no packaging/transfer route changes. Collision or publication error
+must make the invocation fail and cannot authorize strict collection. Attempt
+both stream publications so one failure does not discard the other stream.
+
+Pure tests will execute real_driver only with a fake imported module enforcing
+the actual empty-output guard. Cover original failure witness, corrected success,
+fake invocation error/partial stdout, fresh-capture collision, existing publication
+collision, and injected partial-copy error. No actual verify_offline_export.main,
+engine/API/helper trial, native process or CI runs. Public preflight stays BLOCKED.
