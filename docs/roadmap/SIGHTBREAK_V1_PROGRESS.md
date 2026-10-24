@@ -13,6 +13,10 @@ that limit. No background execution is claimed. The permanent mission remains
 IN PROGRESS / PRIMARY in issue25; completion still requires every RC gate to be
 independently verified. G1–G19 stay open; G20 is persistence only.
 
+The required native stop_goal(blocked) request failed: “The supplied goal context
+no longer matches an active goal.” No native status change or goal ID is claimed;
+issue25 and these repository records remain the persistent mission tracker.
+
 Root `/workspace/sightbreak-v1-recovered`, branch
 `codex/v1-executor-recovery-20261023`, previous pushed checkpointef7944dc,
 draft PR31 over PR27/ad6cdc20; main4d8cdb33 remains unchanged. Root game source
