@@ -237,8 +237,28 @@ def write_complete_trial(directory, identity, *, verbose=False, client_pid=101,
         raise ValueError('fixture verbose flag must be bool')
     if any(type(pid) is not int or pid <= 0 for pid in (client_pid, reopened_pid)) or client_pid == reopened_pid:
         raise ValueError('distinct positive fixture process IDs required')
-    directory = Path(directory).resolve()
-    directory.mkdir(parents=True, exist_ok=False)
+    directory = Path(directory).absolute()
+    if directory.is_symlink() or (directory.exists() and not directory.is_dir()):
+        raise ValueError('fixture needs a real directory')
+    owned = [name + '.png' for name in CAPTURES] + ['ocr-current.png']
+    owned += ['ocr-stdout/%03d.log' % index for index in range(1, 17)]
+    owned += ['commands.json', 'actions.json', 'ocr-commands.json', 'results.json',
+              'client.log', 'reopened.log', 'ocr-stderr.log',
+              'controller-stdout.log', 'controller-stderr.log',
+              'initial-offline-trace/events.jsonl', 'initial-offline-trace/status.json',
+              'restart-profile-trace/events.jsonl', 'restart-profile-trace/status.json',
+              'state/roaming/Godot/app_userdata/SIGHTBREAK/offline_training.json']
+    for name in owned:
+        target = directory / name
+        if target.exists() or target.is_symlink():
+            raise ValueError('fixture refuses existing producer output: ' + name)
+        for parent in target.parents:
+            if parent == directory.parent:
+                break
+            if parent.is_symlink() or (parent.exists() and not parent.is_dir()):
+                raise ValueError('fixture output parent is not a real directory')
+    directory.mkdir(parents=True, exist_ok=True)
+    directory = directory.resolve()
     identity = copy.deepcopy(identity)
     source = copy.deepcopy(identity['source'])
     started = time.monotonic()

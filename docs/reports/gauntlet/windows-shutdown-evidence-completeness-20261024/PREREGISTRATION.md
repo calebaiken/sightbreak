@@ -127,3 +127,18 @@ to exact game/scripts/profile.gd. No validation was skipped or relabeled. The
 original/project gauntlet and no-ai-slop skills are reused; owner-specific source-
 only scope overrides native capture/mission-document expansion in those skills.
 No canonical mission docs or runtime/default flags will change.
+
+## Additive fixture setup correction before edits
+
+Independent static construction adjudication found that the draft writer's
+mkdir(exist_ok=False) conflicts with run_generated preserving original-failure.bin
+first. Correct only the new fixture setup: allow an existing real directory with
+unrelated artifacts; refuse every existing producer-owned required output and
+symlinked/non-directory path; preserve originals before callbacks. Old test helper
+remains unedited pending independent review of the amended construction. V1/v2/v3
+proposal and draft history remain in Git; no failure is overwritten.
+
+Independent baseline/accounting conditions and known51-child clean-path source
+model are recorded in FIXTURE_ACCOUNTING_MODEL.md. No source-counted value is an
+observed native count. The actual wrapper nonempty-directory conflict has been
+sent to root for a separately registered scope decision, with no wrapper edit yet.
