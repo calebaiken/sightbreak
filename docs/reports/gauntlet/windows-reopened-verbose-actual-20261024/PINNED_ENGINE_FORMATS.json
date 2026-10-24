@@ -1,0 +1,18 @@
+{
+  "object.cpp": {
+    "url": "https://raw.githubusercontent.com/godotengine/godot/ed1daf0bf/core/object/object.cpp",
+    "bytes": 76810,
+    "sha256": "d16943098177c719820de78f664d4cde3a9c4f997f25ccfa6a1f9b7e18098bd4",
+    "excerpt_first_line": 2532,
+    "excerpt_last_line": 2567,
+    "excerpt": "void ObjectDB::cleanup() {\n\tspin_lock.lock();\n\n\tif (slot_count > 0) {\n\t\tWARN_PRINT(vformat(\"%d ObjectDB %s leaked at exit (run with `--verbose` for details).\", slot_count, slot_count == 1 ? \"instance was\" : \"instances were\"));\n\t\tif (OS::get_singleton()->is_stdout_verbose()) {\n\t\t\t// Ensure calling the native classes because if a leaked instance has a script\n\t\t\t// that overrides any of those methods, it'd not be OK to call them at this point,\n\t\t\t// now the scripting languages have already been terminated.\n\t\t\tMethodBind *node_get_path = ClassDB::get_method(\"Node\", \"get_path\");\n\t\t\tMethodBind *resource_get_path = ClassDB::get_method(\"Resource\", \"get_path\");\n\t\t\tCallable::CallError call_error;\n\n\t\t\tfor (uint32_t i = 0, count = slot_count; i < slot_max && count != 0; i++) {\n\t\t\t\tif (object_slots[i].validator) {\n\t\t\t\t\tObject *obj = object_slots[i].object;\n\n\t\t\t\t\tString extra_info;\n\t\t\t\t\tif (obj->is_class(\"Node\")) {\n\t\t\t\t\t\textra_info = \" - Node path: \" + String(node_get_path->call(obj, nullptr, 0, call_error));\n\t\t\t\t\t}\n\t\t\t\t\tif (obj->is_class(\"Resource\")) {\n\t\t\t\t\t\textra_info = \" - Resource path: \" + String(resource_get_path->call(obj, nullptr, 0, call_error));\n\t\t\t\t\t}\n\t\t\t\t\tif (obj->is_class(\"RefCounted\")) {\n\t\t\t\t\t\textra_info = \" - Reference count: \" + itos((static_cast<RefCounted *>(obj))->get_reference_count());\n\t\t\t\t\t}\n\n\t\t\t\t\tuint64_t id = uint64_t(i) | (uint64_t(object_slots[i].validator) << OBJECTDB_SLOT_MAX_COUNT_BITS) | (object_slots[i].is_ref_counted ? OBJECTDB_REFERENCE_BIT : 0);\n\t\t\t\t\tDEV_ASSERT(id == (uint64_t)obj->get_instance_id()); // We could just use the id from the object, but this check may help catching memory corruption catastrophes.\n\t\t\t\t\tprint_line(\"Leaked instance: \" + String(obj->get_class()) + \":\" + uitos(id) + extra_info);\n\n\t\t\t\t\tcount--;\n\t\t\t\t}\n\t\t\t}\n\t\t\tprint_line(\"Hint: Leaked instances typically happen when nodes are removed from the scene tree (with `remove_child()`) but not freed (with `free()` or `queue_free()`).\");"
+  },
+  "resource.cpp": {
+    "url": "https://raw.githubusercontent.com/godotengine/godot/ed1daf0bf/core/io/resource.cpp",
+    "bytes": 28597,
+    "sha256": "d6bf138aae0c24f06c1456e20d4bcc37cc47d7bac4616cc8e7cb3934b3bfffd2",
+    "excerpt_first_line": 814,
+    "excerpt_last_line": 823,
+    "excerpt": "void ResourceCache::clear() {\n\tif (!resources.is_empty()) {\n\t\tif (OS::get_singleton()->is_stdout_verbose()) {\n\t\t\tERR_PRINT(vformat(\"%d resources still in use at exit.\", resources.size()));\n\t\t\tfor (const KeyValue<String, Resource *> &E : resources) {\n\t\t\t\tprint_line(vformat(\"Resource still in use: %s (%s)\", E.key, E.value->get_class()));\n\t\t\t}\n\t\t} else {\n\t\t\tERR_PRINT(vformat(\"%d resources still in use at exit (run with --verbose for details).\", resources.size()));\n\t\t}"
+  }
+}

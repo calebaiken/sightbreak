@@ -1,9 +1,17 @@
 {
-  "scope": "Preparation/admission files only; excludes this self-referential manifest",
+  "scope": "Preparation/admission/active identity files; excludes self and generated Python cache",
   "files": {
+    "ACTUAL_IDENTITY.json": {
+      "bytes": 2328,
+      "sha256": "6d4b36b502dac48e15565497521c2ba0fed37dbfab5c1a7ba727c808bc45295d"
+    },
     "ADMISSION.md": {
       "bytes": 2517,
       "sha256": "a7d3cc3fb0affbe3b5ff8b733760924278c02cf98fb7da00ca13df518d6d8a99"
+    },
+    "DECODER_CORRECTIONS.md": {
+      "bytes": 1937,
+      "sha256": "c1dad218d0c5a3c82e8d77ec962873e59e75a7654c9082c15af20f7dcb32541a"
     },
     "EXACT_COMMAND_CONTRACT.json": {
       "bytes": 1890,
@@ -12,6 +20,10 @@
     "ORIGINAL_COUNTERPART.json": {
       "bytes": 10797,
       "sha256": "67dccac3f2e21ba0955d468c6980a7a871aee24daef9631592a2564f9a871b3b"
+    },
+    "PINNED_ENGINE_FORMATS.json": {
+      "bytes": 3256,
+      "sha256": "06bad6a96490ead2fc0f9410cda37132034876c51a805cf8600930c07744c19e"
     },
     "PREPARATION_AUDIT.json": {
       "bytes": 738,
@@ -25,9 +37,17 @@
       "bytes": 1484,
       "sha256": "b294c6ab1441cc01b50406f73ff6d8be36ea78fc32d344c45f61f0b5a6f84491"
     },
+    "ROOT_DISPATCH_RECEIPTS.json": {
+      "bytes": 1584,
+      "sha256": "7955e20f41ac46d0fdb0ea85ef75c9a03c5934836b6892e7223ddbda56a7c35f"
+    },
     "ROOT_QUALIFIER_CREATION.json": {
       "bytes": 1501,
       "sha256": "851f9c326458b5494e421725da81f4cce287f25b32877ea7239cb87bb329e3f5"
+    },
+    "ROOT_RELEASE.md": {
+      "bytes": 1684,
+      "sha256": "a266028b9db20b3ad030e468245725a3886609a231efb572849c4e4daead5bb7"
     },
     "SETUP_OBSERVATIONS.json": {
       "bytes": 1305,
@@ -38,12 +58,28 @@
       "sha256": "77642a26fa17482a94be7cfe15eae59d111671be7eea2d2e957a901376a0bede"
     },
     "STATUS.md": {
-      "bytes": 664,
-      "sha256": "db7bda1ad2816254f88f50f1745f691baffa60b1cb0a3be0c3efaa8ae0da375c"
+      "bytes": 676,
+      "sha256": "a43bf6a6342fc4c4a48aad54133b5f73f0131ca9b2a5216a207e44b96127a178"
+    },
+    "analyze_actual.py": {
+      "bytes": 12861,
+      "sha256": "6b6753d02d50be56cfd5256198a55b8e748dc8dd3502e09bc55b91b11d7d7fc9"
     },
     "bind_preparation.py": {
       "bytes": 5899,
       "sha256": "27acd9e225782cd2c837bd35ea7effc81166de08757a729be152e3c5f78b0e9d"
+    },
+    "decoder-controls.stderr": {
+      "bytes": 926,
+      "sha256": "55720784744a93d4d6f64d2a6d967d919d76a9cd9c2d7e7c9582e823052f8d4e"
+    },
+    "decoder-controls.stdout": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "decoder_controls.py": {
+      "bytes": 3731,
+      "sha256": "b36bb5d423562acd0d3b002eb239c151b81dad031c293e1480337916e3078a25"
     },
     "preparation.stderr": {
       "bytes": 0,

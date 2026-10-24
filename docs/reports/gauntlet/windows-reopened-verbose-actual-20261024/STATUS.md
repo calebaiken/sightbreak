@@ -1,11 +1,11 @@
-# Preparation status
+# Actual diagnostic status
 
-PRE-RUN DIAGNOSTIC ADMISSION SEALED. Exact fixed qualifier, committed/pushed root
-creation receipts,508 source identities and original53 offline counterpart files
-are bound. Root must retain this admission, then issue one later release and one
-dispatch. Release/run identity remains pending; no native action is released here.
+The sole released run40083894472/attempt1/job120842796227 is active. Exact source,
+ref/workflow, all three dispatch inputs and root release/dispatch receipts match
+admission78e972bc. Initial status and later step summaries are retained separately
+from actual raw. At10:04:00UTC, step29 was active and living step30 was pending.
 
-This own report branch is codex/critic-windows-reopened-verbose-actual-20261024.
-Only files in this report directory are edited. Source is initialized for hashing;
-no Godot, native input, export, CI, download or cleanup has run. The parent
-40080238905 critic retains ownership of its full original actual verdict.
+Complete official raw is pending; no leak/type, clean shutdown, HUD, progression
+or whole-product acceptance is claimed. Original40080238905 remains FAIL. The
+offline decoder is prepared and its conservative corrections/pure controls are
+retained. No local native action, export, rerun, download bypass or cleanup ran.
