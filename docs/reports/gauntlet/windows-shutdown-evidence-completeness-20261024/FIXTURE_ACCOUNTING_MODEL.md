@@ -33,3 +33,12 @@ values) in real emitted traces. New loader must accept signed canonical int64 se
 strings; do not impose an invented nonnegative seed restriction. These reads are
 not a native run or separate input-reader replay. The initial wrong match.gd path
 was corrected to game/scripts/gameplay/match.gd and is a retained setup note.
+
+V3 preserves the v2 origin but replaces fixed arm-index totals with an explicit
+cumulative ledger so partial arms do not inherit clean-path helper counts. It
+starts5 (controller+initial source4), each actual modeled identity read adds4,
+client launch adds6, client close adds28 (16OCR+12Git), reopened launch adds1,
+reopened close adds12Git, and only successful driver completion adds4 finalGit.
+Clean-path query values remain the anchored totals above. Partial arms add only
+the modeled calls they reach; original failures/mutations/read schedules remain.
+Old helper source is still unchanged, pending adjudication of this exactv3.
