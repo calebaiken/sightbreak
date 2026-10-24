@@ -1,0 +1,251 @@
+{
+  "source": "/workspace/reviews/windows-input-reader-r7-independent-source-20261024",
+  "records": [
+    {
+      "group": "projected",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "/workspace/reviews/windows-input-reader-r7-independent-source-20261024/docs/reports/gauntlet/windows-input-reader-r7-independent-source-20261024/controls/model-assessment/controls/projected_oracle.py",
+        "--prototype",
+        "/workspace/reviews/windows-input-reader-r7-independent-source-20261024/scripts/analyze_input_consumption.py",
+        "--output",
+        "/workspace/reviews/windows-input-reader-r7-independent-source-20261024/docs/reports/gauntlet/windows-input-reader-r7-independent-source-20261024/own-final/projected"
+      ],
+      "exit": 0
+    },
+    {
+      "group": "history",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "/workspace/reviews/windows-input-reader-r7-independent-source-20261024/docs/reports/gauntlet/windows-input-reader-r7-independent-source-20261024/controls/model-assessment/controls/replay_history_db912.py",
+        "--prototype",
+        "/workspace/reviews/windows-input-reader-r7-independent-source-20261024/scripts/analyze_input_consumption.py",
+        "--output",
+        "/workspace/reviews/windows-input-reader-r7-independent-source-20261024/docs/reports/gauntlet/windows-input-reader-r7-independent-source-20261024/own-final/history"
+      ],
+      "exit": 0
+    },
+    {
+      "group": "deadline",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "/workspace/reviews/windows-input-reader-r7-independent-source-20261024/docs/reports/gauntlet/windows-input-reader-r7-independent-source-20261024/controls/model-assessment/controls/deadline_histories.py",
+        "--prototype",
+        "/workspace/reviews/windows-input-reader-r7-independent-source-20261024/scripts/analyze_input_consumption.py",
+        "--schema-source",
+        "/workspace/reviews/windows-input-reader-r7-independent-source-20261024",
+        "--output",
+        "/workspace/reviews/windows-input-reader-r7-independent-source-20261024/docs/reports/gauntlet/windows-input-reader-r7-independent-source-20261024/own-final/deadline"
+      ],
+      "exit": 0
+    },
+    {
+      "group": "source-clocks",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "/workspace/reviews/windows-input-reader-r7-independent-source-20261024/docs/reports/gauntlet/windows-input-reader-r7-independent-source-20261024/controls/model-assessment/controls/source_clock_calls.py",
+        "--prototype",
+        "/workspace/reviews/windows-input-reader-r7-independent-source-20261024/scripts/analyze_input_consumption.py",
+        "--output",
+        "/workspace/reviews/windows-input-reader-r7-independent-source-20261024/docs/reports/gauntlet/windows-input-reader-r7-independent-source-20261024/own-final/source-clocks"
+      ],
+      "exit": 0
+    },
+    {
+      "group": "coincident",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "/workspace/reviews/windows-input-reader-r7-independent-source-20261024/docs/reports/gauntlet/windows-input-reader-r7-independent-source-20261024/controls/model-assessment/controls/coincident_cuts.py",
+        "--prototype",
+        "/workspace/reviews/windows-input-reader-r7-independent-source-20261024/scripts/analyze_input_consumption.py",
+        "--output",
+        "/workspace/reviews/windows-input-reader-r7-independent-source-20261024/docs/reports/gauntlet/windows-input-reader-r7-independent-source-20261024/own-final/coincident"
+      ],
+      "exit": 0
+    },
+    {
+      "group": "preforget",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "/workspace/reviews/windows-input-reader-r7-independent-source-20261024/docs/reports/gauntlet/windows-input-reader-r7-independent-source-20261024/controls/model-assessment/controls/preforget_pairs.py",
+        "--prototype",
+        "/workspace/reviews/windows-input-reader-r7-independent-source-20261024/scripts/analyze_input_consumption.py",
+        "--output",
+        "/workspace/reviews/windows-input-reader-r7-independent-source-20261024/docs/reports/gauntlet/windows-input-reader-r7-independent-source-20261024/own-final/preforget"
+      ],
+      "exit": 0
+    },
+    {
+      "group": "selected-pure",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "/workspace/reviews/windows-input-reader-r7-independent-source-20261024/docs/reports/gauntlet/windows-input-reader-r7-independent-source-20261024/controls/run_selected_pure.py",
+        "--source",
+        "/workspace/reviews/windows-input-reader-r7-independent-source-20261024",
+        "--output",
+        "/workspace/reviews/windows-input-reader-r7-independent-source-20261024/docs/reports/gauntlet/windows-input-reader-r7-independent-source-20261024/own-final/selected-pure"
+      ],
+      "exit": 1
+    },
+    {
+      "group": "retained139",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "/workspace/reviews/windows-input-reader-r7-independent-source-20261024/docs/reports/gauntlet/windows-input-reader-r7-independent-source-20261024/controls/replay_controls.py",
+        "--source",
+        "/workspace/reviews/windows-input-reader-r7-independent-source-20261024",
+        "--output",
+        "/workspace/reviews/windows-input-reader-r7-independent-source-20261024/docs/reports/gauntlet/windows-input-reader-r7-independent-source-20261024/own-final/retained139"
+      ],
+      "exit": 0
+    },
+    {
+      "group": "shell-syntax",
+      "command": [
+        "bash",
+        "-n",
+        "/workspace/reviews/windows-input-reader-r7-independent-source-20261024/scripts/capture_reload_matrix.sh"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "group": "shell-syntax",
+      "command": [
+        "bash",
+        "-n",
+        "/workspace/reviews/windows-input-reader-r7-independent-source-20261024/scripts/export.sh"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "group": "shell-syntax",
+      "command": [
+        "bash",
+        "-n",
+        "/workspace/reviews/windows-input-reader-r7-independent-source-20261024/scripts/godot.sh"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "group": "shell-syntax",
+      "command": [
+        "bash",
+        "-n",
+        "/workspace/reviews/windows-input-reader-r7-independent-source-20261024/scripts/profile_render.sh"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "group": "shell-syntax",
+      "command": [
+        "bash",
+        "-n",
+        "/workspace/reviews/windows-input-reader-r7-independent-source-20261024/scripts/serve-account-match.sh"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "group": "shell-syntax",
+      "command": [
+        "bash",
+        "-n",
+        "/workspace/reviews/windows-input-reader-r7-independent-source-20261024/scripts/session_brief.sh"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "group": "shell-syntax",
+      "command": [
+        "bash",
+        "-n",
+        "/workspace/reviews/windows-input-reader-r7-independent-source-20261024/scripts/setup-android.sh"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "group": "shell-syntax",
+      "command": [
+        "bash",
+        "-n",
+        "/workspace/reviews/windows-input-reader-r7-independent-source-20261024/scripts/setup.sh"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "group": "shell-syntax",
+      "command": [
+        "bash",
+        "-n",
+        "/workspace/reviews/windows-input-reader-r7-independent-source-20261024/scripts/test_handshake_hardening.sh"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "group": "shell-syntax",
+      "command": [
+        "bash",
+        "-n",
+        "/workspace/reviews/windows-input-reader-r7-independent-source-20261024/scripts/test_network.sh"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "group": "shell-syntax",
+      "command": [
+        "bash",
+        "-n",
+        "/workspace/reviews/windows-input-reader-r7-independent-source-20261024/scripts/test_protocol_compat.sh"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "group": "shell-syntax",
+      "command": [
+        "bash",
+        "-n",
+        "/workspace/reviews/windows-input-reader-r7-independent-source-20261024/scripts/test_render.sh"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "group": "shell-syntax",
+      "command": [
+        "bash",
+        "-n",
+        "/workspace/reviews/windows-input-reader-r7-independent-source-20261024/scripts/validate.sh"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "all_exit_zero": false,
+  "cpu_affinity": [
+    4
+  ],
+  "native_executed": false
+}

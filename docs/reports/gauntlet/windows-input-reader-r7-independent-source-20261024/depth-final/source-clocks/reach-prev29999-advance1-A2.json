@@ -1,0 +1,97 @@
+{
+  "name": "reach-prev29999-advance1-A2",
+  "rows": [
+    {
+      "wall_msec": 1000,
+      "input_age_msec": 0,
+      "deadline_remaining_msec": 20000,
+      "joined": false,
+      "reason": "peer_connected",
+      "peer_bound": false,
+      "bound_actor": 0,
+      "counters": {}
+    },
+    {
+      "wall_msec": 1001,
+      "input_age_msec": 0,
+      "deadline_remaining_msec": 19999,
+      "joined": true,
+      "reason": "peer_bound",
+      "peer_bound": true,
+      "bound_actor": 1,
+      "counters": {}
+    },
+    {
+      "wall_msec": 31000,
+      "input_age_msec": 29999,
+      "deadline_remaining_msec": -10000,
+      "joined": true,
+      "reason": "authority_tick",
+      "peer_bound": true,
+      "bound_actor": 1,
+      "counters": {}
+    },
+    {
+      "wall_msec": 31002,
+      "input_age_msec": 1,
+      "deadline_remaining_msec": -10002,
+      "joined": true,
+      "reason": "authority_tick",
+      "peer_bound": true,
+      "bound_actor": 1,
+      "counters": {
+        "input_accepted": 2
+      }
+    },
+    {
+      "wall_msec": 61002,
+      "input_age_msec": 30001,
+      "deadline_remaining_msec": -40002,
+      "joined": true,
+      "reason": "peer_expired",
+      "peer_bound": true,
+      "bound_actor": 1,
+      "counters": {
+        "input_accepted": 2
+      }
+    }
+  ],
+  "expected": "UNKNOWN",
+  "witness": [
+    [
+      "connected",
+      1000
+    ],
+    [
+      "admitted",
+      1001
+    ],
+    [
+      "active",
+      31000
+    ],
+    [
+      "active",
+      31001
+    ],
+    [
+      "unallocated_possible_foreign_calls",
+      0
+    ]
+  ],
+  "known_other_calls": {},
+  "actual": "UNKNOWN",
+  "matched": true,
+  "error": null,
+  "model_detail": "global accepted activity has unresolved local expiry ownership",
+  "model_errors": [],
+  "model_states": [
+    {
+      "rejected": false,
+      "deadline": 21000,
+      "last": 31001,
+      "joined": true,
+      "uncertain": true
+    }
+  ]
+}

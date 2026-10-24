@@ -1,0 +1,49 @@
+{
+  "name": "invalid-admission-at-deadline-20000",
+  "rows": [
+    {
+      "wall_msec": 20000,
+      "input_age_msec": 0,
+      "deadline_remaining_msec": 20000,
+      "joined": false,
+      "reason": "peer_connected",
+      "peer_bound": false,
+      "bound_actor": 0,
+      "counters": {}
+    },
+    {
+      "wall_msec": 40001,
+      "input_age_msec": 1,
+      "deadline_remaining_msec": -1,
+      "joined": true,
+      "reason": "peer_bound",
+      "peer_bound": true,
+      "bound_actor": 1,
+      "counters": {}
+    },
+    {
+      "wall_msec": 70000,
+      "input_age_msec": 30000,
+      "deadline_remaining_msec": -30000,
+      "joined": true,
+      "reason": "peer_expired",
+      "peer_bound": true,
+      "bound_actor": 1,
+      "counters": {}
+    }
+  ],
+  "expected": "INVALID",
+  "witness": [
+    [
+      "impossible_admitted_at_join_deadline",
+      40000
+    ]
+  ],
+  "known_other_calls": {},
+  "actual": "INVALID",
+  "matched": true,
+  "error": null,
+  "model_detail": "no persistent eligible lifecycle hypothesis matches all observed prefixes",
+  "model_errors": [],
+  "model_states": []
+}

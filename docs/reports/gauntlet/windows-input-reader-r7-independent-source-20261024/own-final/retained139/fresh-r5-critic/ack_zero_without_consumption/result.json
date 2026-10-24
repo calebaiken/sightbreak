@@ -1,0 +1,61 @@
+{
+  "group": "fresh-r5-critic",
+  "name": "ack_zero_without_consumption",
+  "expected_complete": false,
+  "actual_complete": false,
+  "expected_status": "INVALID",
+  "actual_status": "INVALID",
+  "legacy_status_inferred": false,
+  "expectation_met": true,
+  "source_basis": "Same live binding/epoch, unchanged accept/consume counters/latest: pop alone updates ACK, accept alone adds queued commands; forget/reset would need an observed lifecycle/epoch boundary.",
+  "prior_expectation": null,
+  "result": {
+    "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+    "diagnostic_complete": false,
+    "transition_status": "INVALID",
+    "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+    "roles": {
+      "client": {
+        "records": 7,
+        "coverage": [
+          "client_attempt",
+          "client_connected",
+          "client_tick",
+          "input_send_called",
+          "ready",
+          "snapshot_applied",
+          "welcome_received"
+        ],
+        "counters": {
+          "ready": 1,
+          "client_attempt": 1,
+          "client_connected": 1,
+          "welcome_received": 1,
+          "client_tick": 2,
+          "snapshot_applied": 1,
+          "input_send_called": 1
+        },
+        "max_observation_gap_msec": 1000,
+        "max_snapshot_age_msec": 3000,
+        "pending_saturation_indices": [],
+        "accepted_events": [],
+        "consumed_events": [],
+        "expiry_events": [],
+        "disconnect_events": [],
+        "welcome_events": [
+          {
+            "transport_id": 9,
+            "local_attempt": 1,
+            "local_id": 1,
+            "wall_unix_msec": 104000
+          }
+        ],
+        "binding_events": [],
+        "local_attempts": 1
+      }
+    },
+    "errors": [
+      "authority: stream ACK is neither absent nor a popped positive sequence"
+    ]
+  }
+}
