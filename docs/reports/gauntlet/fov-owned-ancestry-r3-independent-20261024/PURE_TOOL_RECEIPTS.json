@@ -1,0 +1,225 @@
+{
+  "note": "Original pure tool receipts. All model/test processes are Python CPU4; these timings are not native performance measures.",
+  "startups": [
+    {
+      "status": "fulfilled",
+      "value": {
+        "label": "own-maintained",
+        "command": "taskset -c 4 python3 /workspace/reviews/fov-owned-ancestry-r3-independent-20261024/docs/reports/gauntlet/fov-owned-ancestry-r3-independent-20261024/run_maintained.py --source /workspace/reviews/fov-owned-ancestry-r3-independent-20261024 --output /workspace/reviews/fov-owned-ancestry-r3-independent-20261024/docs/reports/gauntlet/fov-owned-ancestry-r3-independent-20261024/own-maintained",
+        "result": {
+          "chunk_id": "1674d5",
+          "wall_time_seconds": 1.000545084,
+          "session_id": 75821,
+          "original_token_count": 0,
+          "output": ""
+        }
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "label": "own-independent",
+        "command": "taskset -c 4 python3 /workspace/reviews/fov-owned-ancestry-r3-independent-20261024/docs/reports/gauntlet/fov-owned-ancestry-r3-independent-20261024/independent_models.py --source /workspace/reviews/fov-owned-ancestry-r3-independent-20261024 --data /workspace/reviews/fov-owned-ancestry-r3-independent-20261024/docs/reports/gauntlet/fov-owned-ancestry-r3-independent-20261024 --output /workspace/reviews/fov-owned-ancestry-r3-independent-20261024/docs/reports/gauntlet/fov-owned-ancestry-r3-independent-20261024/own-independent",
+        "result": {
+          "chunk_id": "67ce01",
+          "wall_time_seconds": 1.000824536,
+          "session_id": 31219,
+          "original_token_count": 0,
+          "output": ""
+        }
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "label": "own-literal",
+        "command": "taskset -c 4 python3 /workspace/reviews/fov-owned-ancestry-r3-independent-20261024/docs/reports/gauntlet/fov-owned-ancestry-r3-independent-20261024/run_legacy.py --source /workspace/reviews/fov-owned-ancestry-r3-independent-20261024 --data /workspace/reviews/fov-owned-ancestry-r3-independent-20261024/docs/reports/gauntlet/fov-owned-ancestry-r3-independent-20261024 --output /workspace/reviews/fov-owned-ancestry-r3-independent-20261024/docs/reports/gauntlet/fov-owned-ancestry-r3-independent-20261024/own-literal",
+        "result": {
+          "chunk_id": "917936",
+          "wall_time_seconds": 1.000813704,
+          "session_id": 53623,
+          "original_token_count": 0,
+          "output": ""
+        }
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "label": "own-adapted",
+        "command": "taskset -c 4 python3 /workspace/reviews/fov-owned-ancestry-r3-independent-20261024/docs/reports/gauntlet/fov-owned-ancestry-r3-independent-20261024/run_legacy.py --source /workspace/reviews/fov-owned-ancestry-r3-independent-20261024 --data /workspace/reviews/fov-owned-ancestry-r3-independent-20261024/docs/reports/gauntlet/fov-owned-ancestry-r3-independent-20261024 --output /workspace/reviews/fov-owned-ancestry-r3-independent-20261024/docs/reports/gauntlet/fov-owned-ancestry-r3-independent-20261024/own-adapted --adapt-safe-rejection",
+        "result": {
+          "chunk_id": "c857b0",
+          "wall_time_seconds": 1.001354374,
+          "session_id": 76373,
+          "original_token_count": 0,
+          "output": ""
+        }
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "label": "depth-maintained",
+        "command": "taskset -c 4 python3 /workspace/reviews/fov-owned-ancestry-r3-independent-20261024/docs/reports/gauntlet/fov-owned-ancestry-r3-independent-20261024/run_maintained.py --source /workspace/reviews/fov-owned-ancestry-r3-exact-depth1-20261024 --output /workspace/reviews/fov-owned-ancestry-r3-independent-20261024/docs/reports/gauntlet/fov-owned-ancestry-r3-independent-20261024/depth-maintained",
+        "result": {
+          "chunk_id": "b1d480",
+          "wall_time_seconds": 1.001314596,
+          "session_id": 26974,
+          "original_token_count": 0,
+          "output": ""
+        }
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "label": "depth-independent",
+        "command": "taskset -c 4 python3 /workspace/reviews/fov-owned-ancestry-r3-independent-20261024/docs/reports/gauntlet/fov-owned-ancestry-r3-independent-20261024/independent_models.py --source /workspace/reviews/fov-owned-ancestry-r3-exact-depth1-20261024 --data /workspace/reviews/fov-owned-ancestry-r3-independent-20261024/docs/reports/gauntlet/fov-owned-ancestry-r3-independent-20261024 --output /workspace/reviews/fov-owned-ancestry-r3-independent-20261024/docs/reports/gauntlet/fov-owned-ancestry-r3-independent-20261024/depth-independent",
+        "result": {
+          "chunk_id": "248762",
+          "wall_time_seconds": 1.000520162,
+          "session_id": 50643,
+          "original_token_count": 0,
+          "output": ""
+        }
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "label": "depth-literal",
+        "command": "taskset -c 4 python3 /workspace/reviews/fov-owned-ancestry-r3-independent-20261024/docs/reports/gauntlet/fov-owned-ancestry-r3-independent-20261024/run_legacy.py --source /workspace/reviews/fov-owned-ancestry-r3-exact-depth1-20261024 --data /workspace/reviews/fov-owned-ancestry-r3-independent-20261024/docs/reports/gauntlet/fov-owned-ancestry-r3-independent-20261024 --output /workspace/reviews/fov-owned-ancestry-r3-independent-20261024/docs/reports/gauntlet/fov-owned-ancestry-r3-independent-20261024/depth-literal",
+        "result": {
+          "chunk_id": "deaa1c",
+          "wall_time_seconds": 1.001165698,
+          "session_id": 3706,
+          "original_token_count": 0,
+          "output": ""
+        }
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "label": "depth-adapted",
+        "command": "taskset -c 4 python3 /workspace/reviews/fov-owned-ancestry-r3-independent-20261024/docs/reports/gauntlet/fov-owned-ancestry-r3-independent-20261024/run_legacy.py --source /workspace/reviews/fov-owned-ancestry-r3-exact-depth1-20261024 --data /workspace/reviews/fov-owned-ancestry-r3-independent-20261024/docs/reports/gauntlet/fov-owned-ancestry-r3-independent-20261024 --output /workspace/reviews/fov-owned-ancestry-r3-independent-20261024/docs/reports/gauntlet/fov-owned-ancestry-r3-independent-20261024/depth-adapted --adapt-safe-rejection",
+        "result": {
+          "chunk_id": "f08115",
+          "wall_time_seconds": 1.001148234,
+          "session_id": 2060,
+          "original_token_count": 0,
+          "output": ""
+        }
+      }
+    }
+  ],
+  "first_polls": [
+    {
+      "status": "fulfilled",
+      "value": {
+        "session": 31219,
+        "result": {
+          "chunk_id": "5a468e",
+          "wall_time_seconds": 0.000038285,
+          "exit_code": 1,
+          "original_token_count": 57,
+          "output": "{\"source\": \"/workspace/reviews/fov-owned-ancestry-r3-independent-20261024\", \"methods\": 9, \"failure_events\": 5, \"distinct_failed_methods\": 3, \"errors\": 0, \"skips\": 0, \"native_invocations\": 0, \"real_process_or_signal_calls\": 0}\n"
+        }
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "session": 53623,
+        "result": {
+          "chunk_id": "4b07ed",
+          "wall_time_seconds": 0.000029957,
+          "exit_code": 1,
+          "original_token_count": 88,
+          "output": "{\"source\": \"/workspace/reviews/fov-owned-ancestry-r3-independent-20261024\", \"selected_unchanged_methods\": [\"test_stale_children_pid_with_unrelated_parent_is_never_owned_or_signaled\", \"test_queued_owned_parent_reuse_cannot_import_unrelated_descendants\"], \"mode\": \"literal\", \"methods\": 2, \"failures\": 0, \"errors\": 2, \"skips\": 0, \"native_invocations\": 0}\n"
+        }
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "session": 76373,
+        "result": {
+          "chunk_id": "4544c2",
+          "wall_time_seconds": 0.000029153,
+          "exit_code": 0,
+          "original_token_count": 92,
+          "output": "{\"source\": \"/workspace/reviews/fov-owned-ancestry-r3-independent-20261024\", \"selected_unchanged_methods\": [\"test_stale_children_pid_with_unrelated_parent_is_never_owned_or_signaled\", \"test_queued_owned_parent_reuse_cannot_import_unrelated_descendants\"], \"mode\": \"adapted-safe-rejection\", \"methods\": 2, \"failures\": 0, \"errors\": 0, \"skips\": 0, \"native_invocations\": 0}\n"
+        }
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "session": 50643,
+        "result": {
+          "chunk_id": "9173fc",
+          "wall_time_seconds": 0.000034342,
+          "exit_code": 1,
+          "original_token_count": 57,
+          "output": "{\"source\": \"/workspace/reviews/fov-owned-ancestry-r3-exact-depth1-20261024\", \"methods\": 9, \"failure_events\": 5, \"distinct_failed_methods\": 3, \"errors\": 0, \"skips\": 0, \"native_invocations\": 0, \"real_process_or_signal_calls\": 0}\n"
+        }
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "session": 3706,
+        "result": {
+          "chunk_id": "912431",
+          "wall_time_seconds": 0.000026652,
+          "exit_code": 1,
+          "original_token_count": 89,
+          "output": "{\"source\": \"/workspace/reviews/fov-owned-ancestry-r3-exact-depth1-20261024\", \"selected_unchanged_methods\": [\"test_stale_children_pid_with_unrelated_parent_is_never_owned_or_signaled\", \"test_queued_owned_parent_reuse_cannot_import_unrelated_descendants\"], \"mode\": \"literal\", \"methods\": 2, \"failures\": 0, \"errors\": 2, \"skips\": 0, \"native_invocations\": 0}\n"
+        }
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "session": 2060,
+        "result": {
+          "chunk_id": "94e900",
+          "wall_time_seconds": 0.00002426,
+          "exit_code": 0,
+          "original_token_count": 92,
+          "output": "{\"source\": \"/workspace/reviews/fov-owned-ancestry-r3-exact-depth1-20261024\", \"selected_unchanged_methods\": [\"test_stale_children_pid_with_unrelated_parent_is_never_owned_or_signaled\", \"test_queued_owned_parent_reuse_cannot_import_unrelated_descendants\"], \"mode\": \"adapted-safe-rejection\", \"methods\": 2, \"failures\": 0, \"errors\": 0, \"skips\": 0, \"native_invocations\": 0}\n"
+        }
+      }
+    }
+  ],
+  "maintained_polls": [
+    {
+      "status": "fulfilled",
+      "value": {
+        "session": 75821,
+        "result": {
+          "chunk_id": "e9586c",
+          "wall_time_seconds": 0.000034737,
+          "exit_code": 0,
+          "original_token_count": 91,
+          "output": "{\"source\": \"/workspace/reviews/fov-owned-ancestry-r3-independent-20261024\", \"suites\": [{\"suite\": \"math-codec\", \"methods\": 57, \"failures\": 0, \"errors\": 0, \"skips\": 0, \"successful\": true}, {\"suite\": \"strict-log\", \"methods\": 5, \"failures\": 0, \"errors\": 0, \"skips\": 0, \"successful\": true}], \"methods\": 62, \"native_invocations\": 0, \"real_processes_forbidden\": true}\n"
+        }
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "session": 26974,
+        "result": {
+          "chunk_id": "800a64",
+          "wall_time_seconds": 0.000036237,
+          "exit_code": 0,
+          "original_token_count": 91,
+          "output": "{\"source\": \"/workspace/reviews/fov-owned-ancestry-r3-exact-depth1-20261024\", \"suites\": [{\"suite\": \"math-codec\", \"methods\": 57, \"failures\": 0, \"errors\": 0, \"skips\": 0, \"successful\": true}, {\"suite\": \"strict-log\", \"methods\": 5, \"failures\": 0, \"errors\": 0, \"skips\": 0, \"successful\": true}], \"methods\": 62, \"native_invocations\": 0, \"real_processes_forbidden\": true}\n"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,103 @@
+{
+  "source": "/workspace/reviews/fov-owned-ancestry-r3-independent-20261024",
+  "selected_unchanged_methods": [
+    "test_stale_children_pid_with_unrelated_parent_is_never_owned_or_signaled",
+    "test_queued_owned_parent_reuse_cannot_import_unrelated_descendants"
+  ],
+  "mode": "adapted-safe-rejection",
+  "methods": 2,
+  "failures": 0,
+  "errors": 0,
+  "skips": 0,
+  "safe_rejection_adaptations": [
+    {
+      "error": "child ancestry differs from observed owned parent",
+      "excluded_pid": 200,
+      "seen": [
+        {
+          "pid": 100,
+          "state": "R",
+          "ppid": 50,
+          "pgrp": 100,
+          "session": 100,
+          "start_ticks": 123
+        }
+      ],
+      "fake_signals": []
+    },
+    {
+      "error": "queued owned parent birth identity changed",
+      "excluded_pid": 300,
+      "seen": [
+        {
+          "pid": 100,
+          "state": "R",
+          "ppid": 50,
+          "pgrp": 100,
+          "session": 100,
+          "start_ticks": 123
+        },
+        {
+          "pid": 200,
+          "state": "R",
+          "ppid": 100,
+          "pgrp": 100,
+          "session": 100,
+          "start_ticks": 456
+        }
+      ],
+      "fake_signals": []
+    }
+  ],
+  "original_rig_results": {
+    "stale_child_parent": {
+      "seen": [
+        {
+          "pid": 100,
+          "state": "R",
+          "ppid": 50,
+          "pgrp": 100,
+          "session": 100,
+          "start_ticks": 123
+        }
+      ],
+      "fake_signals": [
+        [
+          100,
+          15
+        ]
+      ],
+      "unrelated_pid": 200,
+      "actual_parent": 999
+    },
+    "queued_parent_reuse": {
+      "seen": [
+        {
+          "pid": 100,
+          "state": "R",
+          "ppid": 50,
+          "pgrp": 100,
+          "session": 100,
+          "start_ticks": 123
+        },
+        {
+          "pid": 200,
+          "state": "R",
+          "ppid": 100,
+          "pgrp": 100,
+          "session": 100,
+          "start_ticks": 456
+        }
+      ],
+      "fake_signals": [
+        [
+          100,
+          15
+        ]
+      ],
+      "unrelated_child_pid": 300,
+      "reused_parent_pid": 200
+    }
+  },
+  "native_invocations": 0
+}

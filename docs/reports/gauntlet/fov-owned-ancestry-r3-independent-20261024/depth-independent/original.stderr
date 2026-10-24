@@ -1,0 +1,58 @@
+test_child_reparent_during_pidfd_open_closes_unproved_descriptor (__main__.IndependentLifetimeControls.test_child_reparent_during_pidfd_open_closes_unproved_descriptor) ... ok
+test_different_birth_reuse_rejects_without_foreign_adoption (__main__.IndependentLifetimeControls.test_different_birth_reuse_rejects_without_foreign_adoption) ... ok
+test_exact_protected_remainder_and_no_constructor_api_before_stream_retention (__main__.IndependentLifetimeControls.test_exact_protected_remainder_and_no_constructor_api_before_stream_retention) ... ok
+test_live_projection_excludes_same_tick_replacement_of_exited_pidfd (__main__.IndependentLifetimeControls.test_live_projection_excludes_same_tick_replacement_of_exited_pidfd) ... FAIL
+test_owned_orphan_reparents_to_supervisor_without_descriptor_loss (__main__.IndependentLifetimeControls.test_owned_orphan_reparents_to_supervisor_without_descriptor_loss) ... ok
+test_same_tick_parent_reuse_before_enumeration_never_imports_foreign_child (__main__.IndependentLifetimeControls.test_same_tick_parent_reuse_before_enumeration_never_imports_foreign_child) ... 
+  test_same_tick_parent_reuse_before_enumeration_never_imports_foreign_child (__main__.IndependentLifetimeControls.test_same_tick_parent_reuse_before_enumeration_never_imports_foreign_child) (postcondition='no_foreign_descendant_adoption') ... FAIL
+  test_same_tick_parent_reuse_before_enumeration_never_imports_foreign_child (__main__.IndependentLifetimeControls.test_same_tick_parent_reuse_before_enumeration_never_imports_foreign_child) (postcondition='no_foreign_lifetime_signal') ... FAIL
+test_same_tick_parent_reuse_during_enumeration_never_imports_foreign_child (__main__.IndependentLifetimeControls.test_same_tick_parent_reuse_during_enumeration_never_imports_foreign_child) ... 
+  test_same_tick_parent_reuse_during_enumeration_never_imports_foreign_child (__main__.IndependentLifetimeControls.test_same_tick_parent_reuse_during_enumeration_never_imports_foreign_child) (postcondition='no_foreign_descendant_adoption') ... FAIL
+  test_same_tick_parent_reuse_during_enumeration_never_imports_foreign_child (__main__.IndependentLifetimeControls.test_same_tick_parent_reuse_during_enumeration_never_imports_foreign_child) (postcondition='no_foreign_lifetime_signal') ... FAIL
+test_stable_three_generation_tree_keeps_only_owned_lifetimes (__main__.IndependentLifetimeControls.test_stable_three_generation_tree_keeps_only_owned_lifetimes) ... ok
+test_stale_foreign_child_list_is_safe_rejection (__main__.IndependentLifetimeControls.test_stale_foreign_child_list_is_safe_rejection) ... ok
+
+======================================================================
+FAIL: test_live_projection_excludes_same_tick_replacement_of_exited_pidfd (__main__.IndependentLifetimeControls.test_live_projection_excludes_same_tick_replacement_of_exited_pidfd)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/fov-owned-ancestry-r3-independent-20261024/docs/reports/gauntlet/fov-owned-ancestry-r3-independent-20261024/independent_models.py", line 154, in test_live_projection_excludes_same_tick_replacement_of_exited_pidfd
+    self.assertNotIn(200,[row['pid'] for row in live],'foreign replacement reported live through exited held descriptor')
+AssertionError: 200 unexpectedly found in [100, 200] : foreign replacement reported live through exited held descriptor
+
+======================================================================
+FAIL: test_same_tick_parent_reuse_before_enumeration_never_imports_foreign_child (__main__.IndependentLifetimeControls.test_same_tick_parent_reuse_before_enumeration_never_imports_foreign_child) (postcondition='no_foreign_descendant_adoption')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/fov-owned-ancestry-r3-independent-20261024/docs/reports/gauntlet/fov-owned-ancestry-r3-independent-20261024/independent_models.py", line 103, in collision
+    self.assertNotIn((300,1000),tree.seen,'unrelated child imported through reused numeric parent')
+AssertionError: (300, 1000) unexpectedly found in {(100, 900): {'identity': {'pid': 100, 'state': 'R', 'ppid': 50, 'pgrp': 100, 'session': 100, 'start_ticks': 900}, 'fd': 4001}, (200, 1000): {'identity': {'pid': 200, 'state': 'R', 'ppid': 100, 'pgrp': 100, 'session': 100, 'start_ticks': 1000}, 'fd': 4002}, (300, 1000): {'identity': {'pid': 300, 'state': 'R', 'ppid': 200, 'pgrp': 999, 'session': 999, 'start_ticks': 1000}, 'fd': 4003}} : unrelated child imported through reused numeric parent
+
+======================================================================
+FAIL: test_same_tick_parent_reuse_before_enumeration_never_imports_foreign_child (__main__.IndependentLifetimeControls.test_same_tick_parent_reuse_before_enumeration_never_imports_foreign_child) (postcondition='no_foreign_lifetime_signal')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/fov-owned-ancestry-r3-independent-20261024/docs/reports/gauntlet/fov-owned-ancestry-r3-independent-20261024/independent_models.py", line 105, in collision
+    self.assertFalse(any(r['lifetime']=='foreign-child' for r in kernel.signals),'new foreign pidfd was signaled')
+AssertionError: True is not false : new foreign pidfd was signaled
+
+======================================================================
+FAIL: test_same_tick_parent_reuse_during_enumeration_never_imports_foreign_child (__main__.IndependentLifetimeControls.test_same_tick_parent_reuse_during_enumeration_never_imports_foreign_child) (postcondition='no_foreign_descendant_adoption')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/fov-owned-ancestry-r3-independent-20261024/docs/reports/gauntlet/fov-owned-ancestry-r3-independent-20261024/independent_models.py", line 103, in collision
+    self.assertNotIn((300,1000),tree.seen,'unrelated child imported through reused numeric parent')
+AssertionError: (300, 1000) unexpectedly found in {(100, 900): {'identity': {'pid': 100, 'state': 'R', 'ppid': 50, 'pgrp': 100, 'session': 100, 'start_ticks': 900}, 'fd': 4001}, (200, 1000): {'identity': {'pid': 200, 'state': 'R', 'ppid': 100, 'pgrp': 100, 'session': 100, 'start_ticks': 1000}, 'fd': 4002}, (300, 1000): {'identity': {'pid': 300, 'state': 'R', 'ppid': 200, 'pgrp': 999, 'session': 999, 'start_ticks': 1000}, 'fd': 4003}} : unrelated child imported through reused numeric parent
+
+======================================================================
+FAIL: test_same_tick_parent_reuse_during_enumeration_never_imports_foreign_child (__main__.IndependentLifetimeControls.test_same_tick_parent_reuse_during_enumeration_never_imports_foreign_child) (postcondition='no_foreign_lifetime_signal')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/fov-owned-ancestry-r3-independent-20261024/docs/reports/gauntlet/fov-owned-ancestry-r3-independent-20261024/independent_models.py", line 105, in collision
+    self.assertFalse(any(r['lifetime']=='foreign-child' for r in kernel.signals),'new foreign pidfd was signaled')
+AssertionError: True is not false : new foreign pidfd was signaled
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.192s
+
+FAILED (failures=5)

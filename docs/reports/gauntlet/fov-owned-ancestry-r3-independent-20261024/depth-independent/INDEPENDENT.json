@@ -1,0 +1,2809 @@
+{
+  "source": "/workspace/reviews/fov-owned-ancestry-r3-exact-depth1-20261024",
+  "methods": 9,
+  "failure_events": 5,
+  "distinct_failed_methods": 3,
+  "errors": 0,
+  "skips": 0,
+  "results": {
+    "child-reparent": {
+      "observer_error": "safe ancestry rejection",
+      "seen": [
+        {
+          "key": [
+            100,
+            900
+          ],
+          "identity": {
+            "pid": 100,
+            "state": "R",
+            "ppid": 50,
+            "pgrp": 100,
+            "session": 100,
+            "start_ticks": 900
+          },
+          "fd": 4001,
+          "bound_lifetime": "root"
+        }
+      ],
+      "fake_signals": [
+        {
+          "fd": 4001,
+          "pid": 100,
+          "lifetime": "root",
+          "signal": 15
+        }
+      ],
+      "closed_fds": [
+        4002,
+        4001
+      ],
+      "pidfd_lifetimes": {
+        "4001": {
+          "lifetime": "root",
+          "exited": false
+        },
+        "4002": {
+          "lifetime": "parent-old",
+          "exited": false
+        }
+      },
+      "current": {
+        "50": {
+          "lifetime": "supervisor",
+          "pid": 50,
+          "state": "R",
+          "ppid": 49,
+          "pgrp": 50,
+          "session": 50,
+          "start_ticks": 1
+        },
+        "100": {
+          "lifetime": "root",
+          "pid": 100,
+          "state": "R",
+          "ppid": 50,
+          "pgrp": 100,
+          "session": 100,
+          "start_ticks": 900
+        },
+        "200": {
+          "lifetime": "parent-old",
+          "pid": 200,
+          "state": "R",
+          "ppid": 999,
+          "pgrp": 100,
+          "session": 100,
+          "start_ticks": 1000
+        },
+        "999": {
+          "lifetime": "unrelated-ancestor",
+          "pid": 999,
+          "state": "R",
+          "ppid": 998,
+          "pgrp": 999,
+          "session": 999,
+          "start_ticks": 800
+        }
+      },
+      "events": [
+        {
+          "kind": "create",
+          "lifetime": "supervisor",
+          "pid": 50,
+          "state": "R",
+          "ppid": 49,
+          "pgrp": 50,
+          "session": 50,
+          "start_ticks": 1
+        },
+        {
+          "kind": "create",
+          "lifetime": "root",
+          "pid": 100,
+          "state": "R",
+          "ppid": 50,
+          "pgrp": 100,
+          "session": 100,
+          "start_ticks": 900
+        },
+        {
+          "kind": "create",
+          "lifetime": "parent-old",
+          "pid": 200,
+          "state": "R",
+          "ppid": 100,
+          "pgrp": 100,
+          "session": 100,
+          "start_ticks": 1000
+        },
+        {
+          "kind": "create",
+          "lifetime": "unrelated-ancestor",
+          "pid": 999,
+          "state": "R",
+          "ppid": 998,
+          "pgrp": 999,
+          "session": 999,
+          "start_ticks": 800
+        },
+        {
+          "kind": "identity",
+          "pid": 50,
+          "lifetime": "supervisor"
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": "root"
+        },
+        {
+          "kind": "open_fake_pidfd",
+          "pid": 100,
+          "fd": 4001,
+          "lifetime": "root"
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": "root"
+        },
+        {
+          "kind": "identity",
+          "pid": 50,
+          "lifetime": "supervisor"
+        },
+        {
+          "kind": "identity",
+          "pid": 50,
+          "lifetime": "supervisor"
+        },
+        {
+          "kind": "children",
+          "pid": 50,
+          "result": [
+            100
+          ]
+        },
+        {
+          "kind": "identity",
+          "pid": 50,
+          "lifetime": "supervisor"
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": "root"
+        },
+        {
+          "kind": "identity",
+          "pid": 50,
+          "lifetime": "supervisor"
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": "root"
+        },
+        {
+          "kind": "children",
+          "pid": 100,
+          "result": [
+            200
+          ]
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": "root"
+        },
+        {
+          "kind": "identity",
+          "pid": 200,
+          "lifetime": "parent-old"
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": "root"
+        },
+        {
+          "kind": "open_fake_pidfd",
+          "pid": 200,
+          "fd": 4002,
+          "lifetime": "parent-old"
+        },
+        {
+          "kind": "identity",
+          "pid": 200,
+          "lifetime": "parent-old"
+        },
+        {
+          "kind": "close_fake_pidfd",
+          "fd": 4002
+        },
+        {
+          "kind": "identity",
+          "pid": 50,
+          "lifetime": "supervisor"
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": "root"
+        },
+        {
+          "kind": "fake_pidfd_send_attempt",
+          "fd": 4001,
+          "lifetime": "root",
+          "exited": false
+        },
+        {
+          "kind": "close_fake_pidfd",
+          "fd": 4001
+        }
+      ]
+    },
+    "different-birth": {
+      "observer_error": "safe queued-parent birth rejection",
+      "seen": [
+        {
+          "key": [
+            100,
+            900
+          ],
+          "identity": {
+            "pid": 100,
+            "state": "R",
+            "ppid": 50,
+            "pgrp": 100,
+            "session": 100,
+            "start_ticks": 900
+          },
+          "fd": 4001,
+          "bound_lifetime": "root"
+        },
+        {
+          "key": [
+            200,
+            1000
+          ],
+          "identity": {
+            "pid": 200,
+            "state": "R",
+            "ppid": 100,
+            "pgrp": 100,
+            "session": 100,
+            "start_ticks": 1000
+          },
+          "fd": 4002,
+          "bound_lifetime": "parent-old"
+        }
+      ],
+      "fake_signals": [
+        {
+          "fd": 4001,
+          "pid": 100,
+          "lifetime": "root",
+          "signal": 15
+        }
+      ],
+      "closed_fds": [
+        4001,
+        4002
+      ],
+      "pidfd_lifetimes": {
+        "4001": {
+          "lifetime": "root",
+          "exited": false
+        },
+        "4002": {
+          "lifetime": "parent-old",
+          "exited": true
+        }
+      },
+      "current": {
+        "50": {
+          "lifetime": "supervisor",
+          "pid": 50,
+          "state": "R",
+          "ppid": 49,
+          "pgrp": 50,
+          "session": 50,
+          "start_ticks": 1
+        },
+        "100": {
+          "lifetime": "root",
+          "pid": 100,
+          "state": "R",
+          "ppid": 50,
+          "pgrp": 100,
+          "session": 100,
+          "start_ticks": 900
+        },
+        "999": {
+          "lifetime": "unrelated-ancestor",
+          "pid": 999,
+          "state": "R",
+          "ppid": 998,
+          "pgrp": 999,
+          "session": 999,
+          "start_ticks": 800
+        },
+        "200": {
+          "lifetime": "foreign-parent",
+          "pid": 200,
+          "state": "R",
+          "ppid": 999,
+          "pgrp": 999,
+          "session": 999,
+          "start_ticks": 1001
+        },
+        "300": {
+          "lifetime": "foreign-child",
+          "pid": 300,
+          "state": "R",
+          "ppid": 200,
+          "pgrp": 999,
+          "session": 999,
+          "start_ticks": 1001
+        }
+      },
+      "events": [
+        {
+          "kind": "create",
+          "lifetime": "supervisor",
+          "pid": 50,
+          "state": "R",
+          "ppid": 49,
+          "pgrp": 50,
+          "session": 50,
+          "start_ticks": 1
+        },
+        {
+          "kind": "create",
+          "lifetime": "root",
+          "pid": 100,
+          "state": "R",
+          "ppid": 50,
+          "pgrp": 100,
+          "session": 100,
+          "start_ticks": 900
+        },
+        {
+          "kind": "create",
+          "lifetime": "parent-old",
+          "pid": 200,
+          "state": "R",
+          "ppid": 100,
+          "pgrp": 100,
+          "session": 100,
+          "start_ticks": 1000
+        },
+        {
+          "kind": "create",
+          "lifetime": "unrelated-ancestor",
+          "pid": 999,
+          "state": "R",
+          "ppid": 998,
+          "pgrp": 999,
+          "session": 999,
+          "start_ticks": 800
+        },
+        {
+          "kind": "identity",
+          "pid": 50,
+          "lifetime": "supervisor"
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": "root"
+        },
+        {
+          "kind": "open_fake_pidfd",
+          "pid": 100,
+          "fd": 4001,
+          "lifetime": "root"
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": "root"
+        },
+        {
+          "kind": "identity",
+          "pid": 50,
+          "lifetime": "supervisor"
+        },
+        {
+          "kind": "identity",
+          "pid": 50,
+          "lifetime": "supervisor"
+        },
+        {
+          "kind": "children",
+          "pid": 50,
+          "result": [
+            100
+          ]
+        },
+        {
+          "kind": "identity",
+          "pid": 50,
+          "lifetime": "supervisor"
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": "root"
+        },
+        {
+          "kind": "identity",
+          "pid": 50,
+          "lifetime": "supervisor"
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": "root"
+        },
+        {
+          "kind": "children",
+          "pid": 100,
+          "result": [
+            200
+          ]
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": "root"
+        },
+        {
+          "kind": "identity",
+          "pid": 200,
+          "lifetime": "parent-old"
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": "root"
+        },
+        {
+          "kind": "open_fake_pidfd",
+          "pid": 200,
+          "fd": 4002,
+          "lifetime": "parent-old"
+        },
+        {
+          "kind": "identity",
+          "pid": 200,
+          "lifetime": "parent-old"
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": "root"
+        },
+        {
+          "kind": "identity",
+          "pid": 200,
+          "lifetime": "parent-old"
+        },
+        {
+          "kind": "exit_and_reap",
+          "lifetime": "parent-old",
+          "pid": 200
+        },
+        {
+          "kind": "create",
+          "lifetime": "foreign-parent",
+          "pid": 200,
+          "state": "R",
+          "ppid": 999,
+          "pgrp": 999,
+          "session": 999,
+          "start_ticks": 1001
+        },
+        {
+          "kind": "create",
+          "lifetime": "foreign-child",
+          "pid": 300,
+          "state": "R",
+          "ppid": 200,
+          "pgrp": 999,
+          "session": 999,
+          "start_ticks": 1001
+        },
+        {
+          "kind": "children",
+          "pid": 200,
+          "result": [
+            300
+          ]
+        },
+        {
+          "kind": "identity",
+          "pid": 200,
+          "lifetime": "foreign-parent"
+        },
+        {
+          "kind": "identity",
+          "pid": 50,
+          "lifetime": "supervisor"
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": "root"
+        },
+        {
+          "kind": "identity",
+          "pid": 200,
+          "lifetime": "foreign-parent"
+        },
+        {
+          "kind": "fake_pidfd_send_attempt",
+          "fd": 4001,
+          "lifetime": "root",
+          "exited": false
+        },
+        {
+          "kind": "close_fake_pidfd",
+          "fd": 4001
+        },
+        {
+          "kind": "close_fake_pidfd",
+          "fd": 4002
+        }
+      ]
+    },
+    "protected_remainder_and_constructor": true,
+    "live-projection": {
+      "live": [
+        {
+          "pid": 100,
+          "state": "R",
+          "ppid": 50,
+          "pgrp": 100,
+          "session": 100,
+          "start_ticks": 900
+        },
+        {
+          "pid": 200,
+          "state": "R",
+          "ppid": 999,
+          "pgrp": 999,
+          "session": 999,
+          "start_ticks": 1000
+        }
+      ],
+      "observer_error": null,
+      "seen": [
+        {
+          "key": [
+            100,
+            900
+          ],
+          "identity": {
+            "pid": 100,
+            "state": "R",
+            "ppid": 50,
+            "pgrp": 100,
+            "session": 100,
+            "start_ticks": 900
+          },
+          "fd": 4001,
+          "bound_lifetime": "root"
+        },
+        {
+          "key": [
+            200,
+            1000
+          ],
+          "identity": {
+            "pid": 200,
+            "state": "R",
+            "ppid": 100,
+            "pgrp": 100,
+            "session": 100,
+            "start_ticks": 1000
+          },
+          "fd": 4002,
+          "bound_lifetime": "parent-old"
+        }
+      ],
+      "fake_signals": [],
+      "closed_fds": [
+        4001,
+        4002
+      ],
+      "pidfd_lifetimes": {
+        "4001": {
+          "lifetime": "root",
+          "exited": false
+        },
+        "4002": {
+          "lifetime": "parent-old",
+          "exited": true
+        }
+      },
+      "current": {
+        "50": {
+          "lifetime": "supervisor",
+          "pid": 50,
+          "state": "R",
+          "ppid": 49,
+          "pgrp": 50,
+          "session": 50,
+          "start_ticks": 1
+        },
+        "100": {
+          "lifetime": "root",
+          "pid": 100,
+          "state": "R",
+          "ppid": 50,
+          "pgrp": 100,
+          "session": 100,
+          "start_ticks": 900
+        },
+        "999": {
+          "lifetime": "unrelated-ancestor",
+          "pid": 999,
+          "state": "R",
+          "ppid": 998,
+          "pgrp": 999,
+          "session": 999,
+          "start_ticks": 800
+        },
+        "200": {
+          "lifetime": "foreign-parent",
+          "pid": 200,
+          "state": "R",
+          "ppid": 999,
+          "pgrp": 999,
+          "session": 999,
+          "start_ticks": 1000
+        }
+      },
+      "events": [
+        {
+          "kind": "create",
+          "lifetime": "supervisor",
+          "pid": 50,
+          "state": "R",
+          "ppid": 49,
+          "pgrp": 50,
+          "session": 50,
+          "start_ticks": 1
+        },
+        {
+          "kind": "create",
+          "lifetime": "root",
+          "pid": 100,
+          "state": "R",
+          "ppid": 50,
+          "pgrp": 100,
+          "session": 100,
+          "start_ticks": 900
+        },
+        {
+          "kind": "create",
+          "lifetime": "parent-old",
+          "pid": 200,
+          "state": "R",
+          "ppid": 100,
+          "pgrp": 100,
+          "session": 100,
+          "start_ticks": 1000
+        },
+        {
+          "kind": "create",
+          "lifetime": "unrelated-ancestor",
+          "pid": 999,
+          "state": "R",
+          "ppid": 998,
+          "pgrp": 999,
+          "session": 999,
+          "start_ticks": 800
+        },
+        {
+          "kind": "identity",
+          "pid": 50,
+          "lifetime": "supervisor"
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": "root"
+        },
+        {
+          "kind": "open_fake_pidfd",
+          "pid": 100,
+          "fd": 4001,
+          "lifetime": "root"
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": "root"
+        },
+        {
+          "kind": "identity",
+          "pid": 50,
+          "lifetime": "supervisor"
+        },
+        {
+          "kind": "identity",
+          "pid": 50,
+          "lifetime": "supervisor"
+        },
+        {
+          "kind": "children",
+          "pid": 50,
+          "result": [
+            100
+          ]
+        },
+        {
+          "kind": "identity",
+          "pid": 50,
+          "lifetime": "supervisor"
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": "root"
+        },
+        {
+          "kind": "identity",
+          "pid": 50,
+          "lifetime": "supervisor"
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": "root"
+        },
+        {
+          "kind": "children",
+          "pid": 100,
+          "result": [
+            200
+          ]
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": "root"
+        },
+        {
+          "kind": "identity",
+          "pid": 200,
+          "lifetime": "parent-old"
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": "root"
+        },
+        {
+          "kind": "open_fake_pidfd",
+          "pid": 200,
+          "fd": 4002,
+          "lifetime": "parent-old"
+        },
+        {
+          "kind": "identity",
+          "pid": 200,
+          "lifetime": "parent-old"
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": "root"
+        },
+        {
+          "kind": "identity",
+          "pid": 200,
+          "lifetime": "parent-old"
+        },
+        {
+          "kind": "children",
+          "pid": 200,
+          "result": []
+        },
+        {
+          "kind": "identity",
+          "pid": 200,
+          "lifetime": "parent-old"
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": "root"
+        },
+        {
+          "kind": "identity",
+          "pid": 200,
+          "lifetime": "parent-old"
+        },
+        {
+          "kind": "exit_and_reap",
+          "lifetime": "parent-old",
+          "pid": 200
+        },
+        {
+          "kind": "create",
+          "lifetime": "foreign-parent",
+          "pid": 200,
+          "state": "R",
+          "ppid": 999,
+          "pgrp": 999,
+          "session": 999,
+          "start_ticks": 1000
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": "root"
+        },
+        {
+          "kind": "identity",
+          "pid": 200,
+          "lifetime": "foreign-parent"
+        },
+        {
+          "kind": "close_fake_pidfd",
+          "fd": 4001
+        },
+        {
+          "kind": "close_fake_pidfd",
+          "fd": 4002
+        }
+      ]
+    },
+    "orphan": {
+      "observer_error": null,
+      "seen": [
+        {
+          "key": [
+            100,
+            900
+          ],
+          "identity": {
+            "pid": 100,
+            "state": "R",
+            "ppid": 50,
+            "pgrp": 100,
+            "session": 100,
+            "start_ticks": 900
+          },
+          "fd": 4001,
+          "bound_lifetime": "root"
+        },
+        {
+          "key": [
+            200,
+            1000
+          ],
+          "identity": {
+            "pid": 200,
+            "state": "R",
+            "ppid": 100,
+            "pgrp": 100,
+            "session": 100,
+            "start_ticks": 1000
+          },
+          "fd": 4002,
+          "bound_lifetime": "parent-old"
+        },
+        {
+          "key": [
+            300,
+            1000
+          ],
+          "identity": {
+            "pid": 300,
+            "state": "R",
+            "ppid": 200,
+            "pgrp": 100,
+            "session": 100,
+            "start_ticks": 1000
+          },
+          "fd": 4003,
+          "bound_lifetime": "owned-child"
+        }
+      ],
+      "fake_signals": [
+        {
+          "fd": 4002,
+          "pid": 200,
+          "lifetime": "parent-old",
+          "signal": 15
+        },
+        {
+          "fd": 4003,
+          "pid": 300,
+          "lifetime": "owned-child",
+          "signal": 15
+        }
+      ],
+      "closed_fds": [
+        4001,
+        4002,
+        4003
+      ],
+      "pidfd_lifetimes": {
+        "4001": {
+          "lifetime": "root",
+          "exited": true
+        },
+        "4002": {
+          "lifetime": "parent-old",
+          "exited": false
+        },
+        "4003": {
+          "lifetime": "owned-child",
+          "exited": false
+        }
+      },
+      "current": {
+        "50": {
+          "lifetime": "supervisor",
+          "pid": 50,
+          "state": "R",
+          "ppid": 49,
+          "pgrp": 50,
+          "session": 50,
+          "start_ticks": 1
+        },
+        "200": {
+          "lifetime": "parent-old",
+          "pid": 200,
+          "state": "R",
+          "ppid": 50,
+          "pgrp": 100,
+          "session": 100,
+          "start_ticks": 1000
+        },
+        "999": {
+          "lifetime": "unrelated-ancestor",
+          "pid": 999,
+          "state": "R",
+          "ppid": 998,
+          "pgrp": 999,
+          "session": 999,
+          "start_ticks": 800
+        },
+        "300": {
+          "lifetime": "owned-child",
+          "pid": 300,
+          "state": "R",
+          "ppid": 200,
+          "pgrp": 100,
+          "session": 100,
+          "start_ticks": 1000
+        }
+      },
+      "events": [
+        {
+          "kind": "create",
+          "lifetime": "supervisor",
+          "pid": 50,
+          "state": "R",
+          "ppid": 49,
+          "pgrp": 50,
+          "session": 50,
+          "start_ticks": 1
+        },
+        {
+          "kind": "create",
+          "lifetime": "root",
+          "pid": 100,
+          "state": "R",
+          "ppid": 50,
+          "pgrp": 100,
+          "session": 100,
+          "start_ticks": 900
+        },
+        {
+          "kind": "create",
+          "lifetime": "parent-old",
+          "pid": 200,
+          "state": "R",
+          "ppid": 100,
+          "pgrp": 100,
+          "session": 100,
+          "start_ticks": 1000
+        },
+        {
+          "kind": "create",
+          "lifetime": "unrelated-ancestor",
+          "pid": 999,
+          "state": "R",
+          "ppid": 998,
+          "pgrp": 999,
+          "session": 999,
+          "start_ticks": 800
+        },
+        {
+          "kind": "create",
+          "lifetime": "owned-child",
+          "pid": 300,
+          "state": "R",
+          "ppid": 200,
+          "pgrp": 100,
+          "session": 100,
+          "start_ticks": 1000
+        },
+        {
+          "kind": "identity",
+          "pid": 50,
+          "lifetime": "supervisor"
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": "root"
+        },
+        {
+          "kind": "open_fake_pidfd",
+          "pid": 100,
+          "fd": 4001,
+          "lifetime": "root"
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": "root"
+        },
+        {
+          "kind": "identity",
+          "pid": 50,
+          "lifetime": "supervisor"
+        },
+        {
+          "kind": "identity",
+          "pid": 50,
+          "lifetime": "supervisor"
+        },
+        {
+          "kind": "children",
+          "pid": 50,
+          "result": [
+            100
+          ]
+        },
+        {
+          "kind": "identity",
+          "pid": 50,
+          "lifetime": "supervisor"
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": "root"
+        },
+        {
+          "kind": "identity",
+          "pid": 50,
+          "lifetime": "supervisor"
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": "root"
+        },
+        {
+          "kind": "children",
+          "pid": 100,
+          "result": [
+            200
+          ]
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": "root"
+        },
+        {
+          "kind": "identity",
+          "pid": 200,
+          "lifetime": "parent-old"
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": "root"
+        },
+        {
+          "kind": "open_fake_pidfd",
+          "pid": 200,
+          "fd": 4002,
+          "lifetime": "parent-old"
+        },
+        {
+          "kind": "identity",
+          "pid": 200,
+          "lifetime": "parent-old"
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": "root"
+        },
+        {
+          "kind": "identity",
+          "pid": 200,
+          "lifetime": "parent-old"
+        },
+        {
+          "kind": "children",
+          "pid": 200,
+          "result": [
+            300
+          ]
+        },
+        {
+          "kind": "identity",
+          "pid": 200,
+          "lifetime": "parent-old"
+        },
+        {
+          "kind": "identity",
+          "pid": 300,
+          "lifetime": "owned-child"
+        },
+        {
+          "kind": "identity",
+          "pid": 200,
+          "lifetime": "parent-old"
+        },
+        {
+          "kind": "open_fake_pidfd",
+          "pid": 300,
+          "fd": 4003,
+          "lifetime": "owned-child"
+        },
+        {
+          "kind": "identity",
+          "pid": 300,
+          "lifetime": "owned-child"
+        },
+        {
+          "kind": "identity",
+          "pid": 200,
+          "lifetime": "parent-old"
+        },
+        {
+          "kind": "identity",
+          "pid": 300,
+          "lifetime": "owned-child"
+        },
+        {
+          "kind": "children",
+          "pid": 300,
+          "result": []
+        },
+        {
+          "kind": "identity",
+          "pid": 300,
+          "lifetime": "owned-child"
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": "root"
+        },
+        {
+          "kind": "identity",
+          "pid": 200,
+          "lifetime": "parent-old"
+        },
+        {
+          "kind": "identity",
+          "pid": 300,
+          "lifetime": "owned-child"
+        },
+        {
+          "kind": "exit_and_reap",
+          "lifetime": "root",
+          "pid": 100
+        },
+        {
+          "kind": "identity",
+          "pid": 50,
+          "lifetime": "supervisor"
+        },
+        {
+          "kind": "identity",
+          "pid": 50,
+          "lifetime": "supervisor"
+        },
+        {
+          "kind": "children",
+          "pid": 50,
+          "result": [
+            200
+          ]
+        },
+        {
+          "kind": "identity",
+          "pid": 50,
+          "lifetime": "supervisor"
+        },
+        {
+          "kind": "identity",
+          "pid": 200,
+          "lifetime": "parent-old"
+        },
+        {
+          "kind": "identity",
+          "pid": 50,
+          "lifetime": "supervisor"
+        },
+        {
+          "kind": "identity",
+          "pid": 200,
+          "lifetime": "parent-old"
+        },
+        {
+          "kind": "children",
+          "pid": 200,
+          "result": [
+            300
+          ]
+        },
+        {
+          "kind": "identity",
+          "pid": 200,
+          "lifetime": "parent-old"
+        },
+        {
+          "kind": "identity",
+          "pid": 300,
+          "lifetime": "owned-child"
+        },
+        {
+          "kind": "identity",
+          "pid": 200,
+          "lifetime": "parent-old"
+        },
+        {
+          "kind": "identity",
+          "pid": 300,
+          "lifetime": "owned-child"
+        },
+        {
+          "kind": "children",
+          "pid": 300,
+          "result": []
+        },
+        {
+          "kind": "identity",
+          "pid": 300,
+          "lifetime": "owned-child"
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": null
+        },
+        {
+          "kind": "identity",
+          "pid": 200,
+          "lifetime": "parent-old"
+        },
+        {
+          "kind": "identity",
+          "pid": 300,
+          "lifetime": "owned-child"
+        },
+        {
+          "kind": "identity",
+          "pid": 50,
+          "lifetime": "supervisor"
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": null
+        },
+        {
+          "kind": "identity",
+          "pid": 200,
+          "lifetime": "parent-old"
+        },
+        {
+          "kind": "identity",
+          "pid": 300,
+          "lifetime": "owned-child"
+        },
+        {
+          "kind": "fake_pidfd_send_attempt",
+          "fd": 4002,
+          "lifetime": "parent-old",
+          "exited": false
+        },
+        {
+          "kind": "fake_pidfd_send_attempt",
+          "fd": 4003,
+          "lifetime": "owned-child",
+          "exited": false
+        },
+        {
+          "kind": "close_fake_pidfd",
+          "fd": 4001
+        },
+        {
+          "kind": "close_fake_pidfd",
+          "fd": 4002
+        },
+        {
+          "kind": "close_fake_pidfd",
+          "fd": 4003
+        }
+      ]
+    },
+    "before-enumeration": {
+      "observer_error": null,
+      "seen": [
+        {
+          "key": [
+            100,
+            900
+          ],
+          "identity": {
+            "pid": 100,
+            "state": "R",
+            "ppid": 50,
+            "pgrp": 100,
+            "session": 100,
+            "start_ticks": 900
+          },
+          "fd": 4001,
+          "bound_lifetime": "root"
+        },
+        {
+          "key": [
+            200,
+            1000
+          ],
+          "identity": {
+            "pid": 200,
+            "state": "R",
+            "ppid": 100,
+            "pgrp": 100,
+            "session": 100,
+            "start_ticks": 1000
+          },
+          "fd": 4002,
+          "bound_lifetime": "parent-old"
+        },
+        {
+          "key": [
+            300,
+            1000
+          ],
+          "identity": {
+            "pid": 300,
+            "state": "R",
+            "ppid": 200,
+            "pgrp": 999,
+            "session": 999,
+            "start_ticks": 1000
+          },
+          "fd": 4003,
+          "bound_lifetime": "foreign-child"
+        }
+      ],
+      "fake_signals": [
+        {
+          "fd": 4001,
+          "pid": 100,
+          "lifetime": "root",
+          "signal": 15
+        },
+        {
+          "fd": 4003,
+          "pid": 300,
+          "lifetime": "foreign-child",
+          "signal": 15
+        }
+      ],
+      "closed_fds": [
+        4001,
+        4002,
+        4003
+      ],
+      "pidfd_lifetimes": {
+        "4001": {
+          "lifetime": "root",
+          "exited": false
+        },
+        "4002": {
+          "lifetime": "parent-old",
+          "exited": true
+        },
+        "4003": {
+          "lifetime": "foreign-child",
+          "exited": false
+        }
+      },
+      "current": {
+        "50": {
+          "lifetime": "supervisor",
+          "pid": 50,
+          "state": "R",
+          "ppid": 49,
+          "pgrp": 50,
+          "session": 50,
+          "start_ticks": 1
+        },
+        "100": {
+          "lifetime": "root",
+          "pid": 100,
+          "state": "R",
+          "ppid": 50,
+          "pgrp": 100,
+          "session": 100,
+          "start_ticks": 900
+        },
+        "999": {
+          "lifetime": "unrelated-ancestor",
+          "pid": 999,
+          "state": "R",
+          "ppid": 998,
+          "pgrp": 999,
+          "session": 999,
+          "start_ticks": 800
+        },
+        "200": {
+          "lifetime": "foreign-parent",
+          "pid": 200,
+          "state": "R",
+          "ppid": 999,
+          "pgrp": 999,
+          "session": 999,
+          "start_ticks": 1000
+        },
+        "300": {
+          "lifetime": "foreign-child",
+          "pid": 300,
+          "state": "R",
+          "ppid": 200,
+          "pgrp": 999,
+          "session": 999,
+          "start_ticks": 1000
+        }
+      },
+      "events": [
+        {
+          "kind": "create",
+          "lifetime": "supervisor",
+          "pid": 50,
+          "state": "R",
+          "ppid": 49,
+          "pgrp": 50,
+          "session": 50,
+          "start_ticks": 1
+        },
+        {
+          "kind": "create",
+          "lifetime": "root",
+          "pid": 100,
+          "state": "R",
+          "ppid": 50,
+          "pgrp": 100,
+          "session": 100,
+          "start_ticks": 900
+        },
+        {
+          "kind": "create",
+          "lifetime": "parent-old",
+          "pid": 200,
+          "state": "R",
+          "ppid": 100,
+          "pgrp": 100,
+          "session": 100,
+          "start_ticks": 1000
+        },
+        {
+          "kind": "create",
+          "lifetime": "unrelated-ancestor",
+          "pid": 999,
+          "state": "R",
+          "ppid": 998,
+          "pgrp": 999,
+          "session": 999,
+          "start_ticks": 800
+        },
+        {
+          "kind": "identity",
+          "pid": 50,
+          "lifetime": "supervisor"
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": "root"
+        },
+        {
+          "kind": "open_fake_pidfd",
+          "pid": 100,
+          "fd": 4001,
+          "lifetime": "root"
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": "root"
+        },
+        {
+          "kind": "identity",
+          "pid": 50,
+          "lifetime": "supervisor"
+        },
+        {
+          "kind": "identity",
+          "pid": 50,
+          "lifetime": "supervisor"
+        },
+        {
+          "kind": "children",
+          "pid": 50,
+          "result": [
+            100
+          ]
+        },
+        {
+          "kind": "identity",
+          "pid": 50,
+          "lifetime": "supervisor"
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": "root"
+        },
+        {
+          "kind": "identity",
+          "pid": 50,
+          "lifetime": "supervisor"
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": "root"
+        },
+        {
+          "kind": "children",
+          "pid": 100,
+          "result": [
+            200
+          ]
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": "root"
+        },
+        {
+          "kind": "identity",
+          "pid": 200,
+          "lifetime": "parent-old"
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": "root"
+        },
+        {
+          "kind": "open_fake_pidfd",
+          "pid": 200,
+          "fd": 4002,
+          "lifetime": "parent-old"
+        },
+        {
+          "kind": "identity",
+          "pid": 200,
+          "lifetime": "parent-old"
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": "root"
+        },
+        {
+          "kind": "exit_and_reap",
+          "lifetime": "parent-old",
+          "pid": 200
+        },
+        {
+          "kind": "create",
+          "lifetime": "foreign-parent",
+          "pid": 200,
+          "state": "R",
+          "ppid": 999,
+          "pgrp": 999,
+          "session": 999,
+          "start_ticks": 1000
+        },
+        {
+          "kind": "create",
+          "lifetime": "foreign-child",
+          "pid": 300,
+          "state": "R",
+          "ppid": 200,
+          "pgrp": 999,
+          "session": 999,
+          "start_ticks": 1000
+        },
+        {
+          "kind": "identity",
+          "pid": 200,
+          "lifetime": "foreign-parent"
+        },
+        {
+          "kind": "children",
+          "pid": 200,
+          "result": [
+            300
+          ]
+        },
+        {
+          "kind": "identity",
+          "pid": 200,
+          "lifetime": "foreign-parent"
+        },
+        {
+          "kind": "identity",
+          "pid": 300,
+          "lifetime": "foreign-child"
+        },
+        {
+          "kind": "identity",
+          "pid": 200,
+          "lifetime": "foreign-parent"
+        },
+        {
+          "kind": "open_fake_pidfd",
+          "pid": 300,
+          "fd": 4003,
+          "lifetime": "foreign-child"
+        },
+        {
+          "kind": "identity",
+          "pid": 300,
+          "lifetime": "foreign-child"
+        },
+        {
+          "kind": "identity",
+          "pid": 200,
+          "lifetime": "foreign-parent"
+        },
+        {
+          "kind": "identity",
+          "pid": 300,
+          "lifetime": "foreign-child"
+        },
+        {
+          "kind": "children",
+          "pid": 300,
+          "result": []
+        },
+        {
+          "kind": "identity",
+          "pid": 300,
+          "lifetime": "foreign-child"
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": "root"
+        },
+        {
+          "kind": "identity",
+          "pid": 200,
+          "lifetime": "foreign-parent"
+        },
+        {
+          "kind": "identity",
+          "pid": 300,
+          "lifetime": "foreign-child"
+        },
+        {
+          "kind": "identity",
+          "pid": 50,
+          "lifetime": "supervisor"
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": "root"
+        },
+        {
+          "kind": "identity",
+          "pid": 200,
+          "lifetime": "foreign-parent"
+        },
+        {
+          "kind": "identity",
+          "pid": 300,
+          "lifetime": "foreign-child"
+        },
+        {
+          "kind": "fake_pidfd_send_attempt",
+          "fd": 4001,
+          "lifetime": "root",
+          "exited": false
+        },
+        {
+          "kind": "fake_pidfd_send_attempt",
+          "fd": 4002,
+          "lifetime": "parent-old",
+          "exited": true
+        },
+        {
+          "kind": "fake_pidfd_send_attempt",
+          "fd": 4003,
+          "lifetime": "foreign-child",
+          "exited": false
+        },
+        {
+          "kind": "close_fake_pidfd",
+          "fd": 4001
+        },
+        {
+          "kind": "close_fake_pidfd",
+          "fd": 4002
+        },
+        {
+          "kind": "close_fake_pidfd",
+          "fd": 4003
+        }
+      ]
+    },
+    "during-enumeration": {
+      "observer_error": null,
+      "seen": [
+        {
+          "key": [
+            100,
+            900
+          ],
+          "identity": {
+            "pid": 100,
+            "state": "R",
+            "ppid": 50,
+            "pgrp": 100,
+            "session": 100,
+            "start_ticks": 900
+          },
+          "fd": 4001,
+          "bound_lifetime": "root"
+        },
+        {
+          "key": [
+            200,
+            1000
+          ],
+          "identity": {
+            "pid": 200,
+            "state": "R",
+            "ppid": 100,
+            "pgrp": 100,
+            "session": 100,
+            "start_ticks": 1000
+          },
+          "fd": 4002,
+          "bound_lifetime": "parent-old"
+        },
+        {
+          "key": [
+            300,
+            1000
+          ],
+          "identity": {
+            "pid": 300,
+            "state": "R",
+            "ppid": 200,
+            "pgrp": 999,
+            "session": 999,
+            "start_ticks": 1000
+          },
+          "fd": 4003,
+          "bound_lifetime": "foreign-child"
+        }
+      ],
+      "fake_signals": [
+        {
+          "fd": 4001,
+          "pid": 100,
+          "lifetime": "root",
+          "signal": 15
+        },
+        {
+          "fd": 4003,
+          "pid": 300,
+          "lifetime": "foreign-child",
+          "signal": 15
+        }
+      ],
+      "closed_fds": [
+        4001,
+        4002,
+        4003
+      ],
+      "pidfd_lifetimes": {
+        "4001": {
+          "lifetime": "root",
+          "exited": false
+        },
+        "4002": {
+          "lifetime": "parent-old",
+          "exited": true
+        },
+        "4003": {
+          "lifetime": "foreign-child",
+          "exited": false
+        }
+      },
+      "current": {
+        "50": {
+          "lifetime": "supervisor",
+          "pid": 50,
+          "state": "R",
+          "ppid": 49,
+          "pgrp": 50,
+          "session": 50,
+          "start_ticks": 1
+        },
+        "100": {
+          "lifetime": "root",
+          "pid": 100,
+          "state": "R",
+          "ppid": 50,
+          "pgrp": 100,
+          "session": 100,
+          "start_ticks": 900
+        },
+        "999": {
+          "lifetime": "unrelated-ancestor",
+          "pid": 999,
+          "state": "R",
+          "ppid": 998,
+          "pgrp": 999,
+          "session": 999,
+          "start_ticks": 800
+        },
+        "200": {
+          "lifetime": "foreign-parent",
+          "pid": 200,
+          "state": "R",
+          "ppid": 999,
+          "pgrp": 999,
+          "session": 999,
+          "start_ticks": 1000
+        },
+        "300": {
+          "lifetime": "foreign-child",
+          "pid": 300,
+          "state": "R",
+          "ppid": 200,
+          "pgrp": 999,
+          "session": 999,
+          "start_ticks": 1000
+        }
+      },
+      "events": [
+        {
+          "kind": "create",
+          "lifetime": "supervisor",
+          "pid": 50,
+          "state": "R",
+          "ppid": 49,
+          "pgrp": 50,
+          "session": 50,
+          "start_ticks": 1
+        },
+        {
+          "kind": "create",
+          "lifetime": "root",
+          "pid": 100,
+          "state": "R",
+          "ppid": 50,
+          "pgrp": 100,
+          "session": 100,
+          "start_ticks": 900
+        },
+        {
+          "kind": "create",
+          "lifetime": "parent-old",
+          "pid": 200,
+          "state": "R",
+          "ppid": 100,
+          "pgrp": 100,
+          "session": 100,
+          "start_ticks": 1000
+        },
+        {
+          "kind": "create",
+          "lifetime": "unrelated-ancestor",
+          "pid": 999,
+          "state": "R",
+          "ppid": 998,
+          "pgrp": 999,
+          "session": 999,
+          "start_ticks": 800
+        },
+        {
+          "kind": "identity",
+          "pid": 50,
+          "lifetime": "supervisor"
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": "root"
+        },
+        {
+          "kind": "open_fake_pidfd",
+          "pid": 100,
+          "fd": 4001,
+          "lifetime": "root"
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": "root"
+        },
+        {
+          "kind": "identity",
+          "pid": 50,
+          "lifetime": "supervisor"
+        },
+        {
+          "kind": "identity",
+          "pid": 50,
+          "lifetime": "supervisor"
+        },
+        {
+          "kind": "children",
+          "pid": 50,
+          "result": [
+            100
+          ]
+        },
+        {
+          "kind": "identity",
+          "pid": 50,
+          "lifetime": "supervisor"
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": "root"
+        },
+        {
+          "kind": "identity",
+          "pid": 50,
+          "lifetime": "supervisor"
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": "root"
+        },
+        {
+          "kind": "children",
+          "pid": 100,
+          "result": [
+            200
+          ]
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": "root"
+        },
+        {
+          "kind": "identity",
+          "pid": 200,
+          "lifetime": "parent-old"
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": "root"
+        },
+        {
+          "kind": "open_fake_pidfd",
+          "pid": 200,
+          "fd": 4002,
+          "lifetime": "parent-old"
+        },
+        {
+          "kind": "identity",
+          "pid": 200,
+          "lifetime": "parent-old"
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": "root"
+        },
+        {
+          "kind": "identity",
+          "pid": 200,
+          "lifetime": "parent-old"
+        },
+        {
+          "kind": "exit_and_reap",
+          "lifetime": "parent-old",
+          "pid": 200
+        },
+        {
+          "kind": "create",
+          "lifetime": "foreign-parent",
+          "pid": 200,
+          "state": "R",
+          "ppid": 999,
+          "pgrp": 999,
+          "session": 999,
+          "start_ticks": 1000
+        },
+        {
+          "kind": "create",
+          "lifetime": "foreign-child",
+          "pid": 300,
+          "state": "R",
+          "ppid": 200,
+          "pgrp": 999,
+          "session": 999,
+          "start_ticks": 1000
+        },
+        {
+          "kind": "children",
+          "pid": 200,
+          "result": [
+            300
+          ]
+        },
+        {
+          "kind": "identity",
+          "pid": 200,
+          "lifetime": "foreign-parent"
+        },
+        {
+          "kind": "identity",
+          "pid": 300,
+          "lifetime": "foreign-child"
+        },
+        {
+          "kind": "identity",
+          "pid": 200,
+          "lifetime": "foreign-parent"
+        },
+        {
+          "kind": "open_fake_pidfd",
+          "pid": 300,
+          "fd": 4003,
+          "lifetime": "foreign-child"
+        },
+        {
+          "kind": "identity",
+          "pid": 300,
+          "lifetime": "foreign-child"
+        },
+        {
+          "kind": "identity",
+          "pid": 200,
+          "lifetime": "foreign-parent"
+        },
+        {
+          "kind": "identity",
+          "pid": 300,
+          "lifetime": "foreign-child"
+        },
+        {
+          "kind": "children",
+          "pid": 300,
+          "result": []
+        },
+        {
+          "kind": "identity",
+          "pid": 300,
+          "lifetime": "foreign-child"
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": "root"
+        },
+        {
+          "kind": "identity",
+          "pid": 200,
+          "lifetime": "foreign-parent"
+        },
+        {
+          "kind": "identity",
+          "pid": 300,
+          "lifetime": "foreign-child"
+        },
+        {
+          "kind": "identity",
+          "pid": 50,
+          "lifetime": "supervisor"
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": "root"
+        },
+        {
+          "kind": "identity",
+          "pid": 200,
+          "lifetime": "foreign-parent"
+        },
+        {
+          "kind": "identity",
+          "pid": 300,
+          "lifetime": "foreign-child"
+        },
+        {
+          "kind": "fake_pidfd_send_attempt",
+          "fd": 4001,
+          "lifetime": "root",
+          "exited": false
+        },
+        {
+          "kind": "fake_pidfd_send_attempt",
+          "fd": 4002,
+          "lifetime": "parent-old",
+          "exited": true
+        },
+        {
+          "kind": "fake_pidfd_send_attempt",
+          "fd": 4003,
+          "lifetime": "foreign-child",
+          "exited": false
+        },
+        {
+          "kind": "close_fake_pidfd",
+          "fd": 4001
+        },
+        {
+          "kind": "close_fake_pidfd",
+          "fd": 4002
+        },
+        {
+          "kind": "close_fake_pidfd",
+          "fd": 4003
+        }
+      ]
+    },
+    "stable": {
+      "observer_error": null,
+      "seen": [
+        {
+          "key": [
+            100,
+            900
+          ],
+          "identity": {
+            "pid": 100,
+            "state": "R",
+            "ppid": 50,
+            "pgrp": 100,
+            "session": 100,
+            "start_ticks": 900
+          },
+          "fd": 4001,
+          "bound_lifetime": "root"
+        },
+        {
+          "key": [
+            200,
+            1000
+          ],
+          "identity": {
+            "pid": 200,
+            "state": "R",
+            "ppid": 100,
+            "pgrp": 100,
+            "session": 100,
+            "start_ticks": 1000
+          },
+          "fd": 4002,
+          "bound_lifetime": "parent-old"
+        },
+        {
+          "key": [
+            300,
+            1000
+          ],
+          "identity": {
+            "pid": 300,
+            "state": "R",
+            "ppid": 200,
+            "pgrp": 100,
+            "session": 100,
+            "start_ticks": 1000
+          },
+          "fd": 4003,
+          "bound_lifetime": "owned-child"
+        }
+      ],
+      "fake_signals": [
+        {
+          "fd": 4001,
+          "pid": 100,
+          "lifetime": "root",
+          "signal": 15
+        },
+        {
+          "fd": 4002,
+          "pid": 200,
+          "lifetime": "parent-old",
+          "signal": 15
+        },
+        {
+          "fd": 4003,
+          "pid": 300,
+          "lifetime": "owned-child",
+          "signal": 15
+        }
+      ],
+      "closed_fds": [
+        4001,
+        4002,
+        4003
+      ],
+      "pidfd_lifetimes": {
+        "4001": {
+          "lifetime": "root",
+          "exited": false
+        },
+        "4002": {
+          "lifetime": "parent-old",
+          "exited": false
+        },
+        "4003": {
+          "lifetime": "owned-child",
+          "exited": false
+        }
+      },
+      "current": {
+        "50": {
+          "lifetime": "supervisor",
+          "pid": 50,
+          "state": "R",
+          "ppid": 49,
+          "pgrp": 50,
+          "session": 50,
+          "start_ticks": 1
+        },
+        "100": {
+          "lifetime": "root",
+          "pid": 100,
+          "state": "R",
+          "ppid": 50,
+          "pgrp": 100,
+          "session": 100,
+          "start_ticks": 900
+        },
+        "200": {
+          "lifetime": "parent-old",
+          "pid": 200,
+          "state": "R",
+          "ppid": 100,
+          "pgrp": 100,
+          "session": 100,
+          "start_ticks": 1000
+        },
+        "999": {
+          "lifetime": "unrelated-ancestor",
+          "pid": 999,
+          "state": "R",
+          "ppid": 998,
+          "pgrp": 999,
+          "session": 999,
+          "start_ticks": 800
+        },
+        "300": {
+          "lifetime": "owned-child",
+          "pid": 300,
+          "state": "R",
+          "ppid": 200,
+          "pgrp": 100,
+          "session": 100,
+          "start_ticks": 1000
+        }
+      },
+      "events": [
+        {
+          "kind": "create",
+          "lifetime": "supervisor",
+          "pid": 50,
+          "state": "R",
+          "ppid": 49,
+          "pgrp": 50,
+          "session": 50,
+          "start_ticks": 1
+        },
+        {
+          "kind": "create",
+          "lifetime": "root",
+          "pid": 100,
+          "state": "R",
+          "ppid": 50,
+          "pgrp": 100,
+          "session": 100,
+          "start_ticks": 900
+        },
+        {
+          "kind": "create",
+          "lifetime": "parent-old",
+          "pid": 200,
+          "state": "R",
+          "ppid": 100,
+          "pgrp": 100,
+          "session": 100,
+          "start_ticks": 1000
+        },
+        {
+          "kind": "create",
+          "lifetime": "unrelated-ancestor",
+          "pid": 999,
+          "state": "R",
+          "ppid": 998,
+          "pgrp": 999,
+          "session": 999,
+          "start_ticks": 800
+        },
+        {
+          "kind": "create",
+          "lifetime": "owned-child",
+          "pid": 300,
+          "state": "R",
+          "ppid": 200,
+          "pgrp": 100,
+          "session": 100,
+          "start_ticks": 1000
+        },
+        {
+          "kind": "identity",
+          "pid": 50,
+          "lifetime": "supervisor"
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": "root"
+        },
+        {
+          "kind": "open_fake_pidfd",
+          "pid": 100,
+          "fd": 4001,
+          "lifetime": "root"
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": "root"
+        },
+        {
+          "kind": "identity",
+          "pid": 50,
+          "lifetime": "supervisor"
+        },
+        {
+          "kind": "identity",
+          "pid": 50,
+          "lifetime": "supervisor"
+        },
+        {
+          "kind": "children",
+          "pid": 50,
+          "result": [
+            100
+          ]
+        },
+        {
+          "kind": "identity",
+          "pid": 50,
+          "lifetime": "supervisor"
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": "root"
+        },
+        {
+          "kind": "identity",
+          "pid": 50,
+          "lifetime": "supervisor"
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": "root"
+        },
+        {
+          "kind": "children",
+          "pid": 100,
+          "result": [
+            200
+          ]
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": "root"
+        },
+        {
+          "kind": "identity",
+          "pid": 200,
+          "lifetime": "parent-old"
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": "root"
+        },
+        {
+          "kind": "open_fake_pidfd",
+          "pid": 200,
+          "fd": 4002,
+          "lifetime": "parent-old"
+        },
+        {
+          "kind": "identity",
+          "pid": 200,
+          "lifetime": "parent-old"
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": "root"
+        },
+        {
+          "kind": "identity",
+          "pid": 200,
+          "lifetime": "parent-old"
+        },
+        {
+          "kind": "children",
+          "pid": 200,
+          "result": [
+            300
+          ]
+        },
+        {
+          "kind": "identity",
+          "pid": 200,
+          "lifetime": "parent-old"
+        },
+        {
+          "kind": "identity",
+          "pid": 300,
+          "lifetime": "owned-child"
+        },
+        {
+          "kind": "identity",
+          "pid": 200,
+          "lifetime": "parent-old"
+        },
+        {
+          "kind": "open_fake_pidfd",
+          "pid": 300,
+          "fd": 4003,
+          "lifetime": "owned-child"
+        },
+        {
+          "kind": "identity",
+          "pid": 300,
+          "lifetime": "owned-child"
+        },
+        {
+          "kind": "identity",
+          "pid": 200,
+          "lifetime": "parent-old"
+        },
+        {
+          "kind": "identity",
+          "pid": 300,
+          "lifetime": "owned-child"
+        },
+        {
+          "kind": "children",
+          "pid": 300,
+          "result": []
+        },
+        {
+          "kind": "identity",
+          "pid": 300,
+          "lifetime": "owned-child"
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": "root"
+        },
+        {
+          "kind": "identity",
+          "pid": 200,
+          "lifetime": "parent-old"
+        },
+        {
+          "kind": "identity",
+          "pid": 300,
+          "lifetime": "owned-child"
+        },
+        {
+          "kind": "identity",
+          "pid": 50,
+          "lifetime": "supervisor"
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": "root"
+        },
+        {
+          "kind": "identity",
+          "pid": 200,
+          "lifetime": "parent-old"
+        },
+        {
+          "kind": "identity",
+          "pid": 300,
+          "lifetime": "owned-child"
+        },
+        {
+          "kind": "fake_pidfd_send_attempt",
+          "fd": 4001,
+          "lifetime": "root",
+          "exited": false
+        },
+        {
+          "kind": "fake_pidfd_send_attempt",
+          "fd": 4002,
+          "lifetime": "parent-old",
+          "exited": false
+        },
+        {
+          "kind": "fake_pidfd_send_attempt",
+          "fd": 4003,
+          "lifetime": "owned-child",
+          "exited": false
+        },
+        {
+          "kind": "close_fake_pidfd",
+          "fd": 4001
+        },
+        {
+          "kind": "close_fake_pidfd",
+          "fd": 4002
+        },
+        {
+          "kind": "close_fake_pidfd",
+          "fd": 4003
+        }
+      ]
+    },
+    "stale-list": {
+      "observer_error": "safe ancestry rejection",
+      "seen": [
+        {
+          "key": [
+            100,
+            900
+          ],
+          "identity": {
+            "pid": 100,
+            "state": "R",
+            "ppid": 50,
+            "pgrp": 100,
+            "session": 100,
+            "start_ticks": 900
+          },
+          "fd": 4001,
+          "bound_lifetime": "root"
+        }
+      ],
+      "fake_signals": [
+        {
+          "fd": 4001,
+          "pid": 100,
+          "lifetime": "root",
+          "signal": 15
+        }
+      ],
+      "closed_fds": [
+        4001
+      ],
+      "pidfd_lifetimes": {
+        "4001": {
+          "lifetime": "root",
+          "exited": false
+        }
+      },
+      "current": {
+        "50": {
+          "lifetime": "supervisor",
+          "pid": 50,
+          "state": "R",
+          "ppid": 49,
+          "pgrp": 50,
+          "session": 50,
+          "start_ticks": 1
+        },
+        "100": {
+          "lifetime": "root",
+          "pid": 100,
+          "state": "R",
+          "ppid": 50,
+          "pgrp": 100,
+          "session": 100,
+          "start_ticks": 900
+        },
+        "200": {
+          "lifetime": "parent-old",
+          "pid": 200,
+          "state": "R",
+          "ppid": 999,
+          "pgrp": 100,
+          "session": 100,
+          "start_ticks": 1000
+        },
+        "999": {
+          "lifetime": "unrelated-ancestor",
+          "pid": 999,
+          "state": "R",
+          "ppid": 998,
+          "pgrp": 999,
+          "session": 999,
+          "start_ticks": 800
+        },
+        "300": {
+          "lifetime": "owned-child",
+          "pid": 300,
+          "state": "R",
+          "ppid": 200,
+          "pgrp": 100,
+          "session": 100,
+          "start_ticks": 1000
+        }
+      },
+      "events": [
+        {
+          "kind": "create",
+          "lifetime": "supervisor",
+          "pid": 50,
+          "state": "R",
+          "ppid": 49,
+          "pgrp": 50,
+          "session": 50,
+          "start_ticks": 1
+        },
+        {
+          "kind": "create",
+          "lifetime": "root",
+          "pid": 100,
+          "state": "R",
+          "ppid": 50,
+          "pgrp": 100,
+          "session": 100,
+          "start_ticks": 900
+        },
+        {
+          "kind": "create",
+          "lifetime": "parent-old",
+          "pid": 200,
+          "state": "R",
+          "ppid": 100,
+          "pgrp": 100,
+          "session": 100,
+          "start_ticks": 1000
+        },
+        {
+          "kind": "create",
+          "lifetime": "unrelated-ancestor",
+          "pid": 999,
+          "state": "R",
+          "ppid": 998,
+          "pgrp": 999,
+          "session": 999,
+          "start_ticks": 800
+        },
+        {
+          "kind": "create",
+          "lifetime": "owned-child",
+          "pid": 300,
+          "state": "R",
+          "ppid": 200,
+          "pgrp": 100,
+          "session": 100,
+          "start_ticks": 1000
+        },
+        {
+          "kind": "identity",
+          "pid": 50,
+          "lifetime": "supervisor"
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": "root"
+        },
+        {
+          "kind": "open_fake_pidfd",
+          "pid": 100,
+          "fd": 4001,
+          "lifetime": "root"
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": "root"
+        },
+        {
+          "kind": "identity",
+          "pid": 50,
+          "lifetime": "supervisor"
+        },
+        {
+          "kind": "identity",
+          "pid": 50,
+          "lifetime": "supervisor"
+        },
+        {
+          "kind": "identity",
+          "pid": 50,
+          "lifetime": "supervisor"
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": "root"
+        },
+        {
+          "kind": "identity",
+          "pid": 50,
+          "lifetime": "supervisor"
+        },
+        {
+          "kind": "identity",
+          "pid": 200,
+          "lifetime": "parent-old"
+        },
+        {
+          "kind": "identity",
+          "pid": 50,
+          "lifetime": "supervisor"
+        },
+        {
+          "kind": "identity",
+          "pid": 100,
+          "lifetime": "root"
+        },
+        {
+          "kind": "fake_pidfd_send_attempt",
+          "fd": 4001,
+          "lifetime": "root",
+          "exited": false
+        },
+        {
+          "kind": "close_fake_pidfd",
+          "fd": 4001
+        }
+      ]
+    }
+  },
+  "native_invocations": 0,
+  "real_process_or_signal_calls": 0
+}

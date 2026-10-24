@@ -1,0 +1,30 @@
+[
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check",
+      "329d3ff56e686fccdefa04151667ecb7841c3d64",
+      "8cc38cdcd7dfff37056782149e513c08037e4e77",
+      "--",
+      "scripts",
+      "tools"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check",
+      "a6b652e56e07366f452cbffd52eed218608d8226",
+      "--",
+      "docs/reports/gauntlet/fov-owned-ancestry-r3-independent-20261024"
+    ],
+    "exit": 2,
+    "stdout": "docs/reports/gauntlet/fov-owned-ancestry-r3-independent-20261024/depth-independent/original.stderr:6: trailing whitespace.\n+test_same_tick_parent_reuse_before_enumeration_never_imports_foreign_child (__main__.IndependentLifetimeControls.test_same_tick_parent_reuse_before_enumeration_never_imports_foreign_child) ... \ndocs/reports/gauntlet/fov-owned-ancestry-r3-independent-20261024/depth-independent/original.stderr:9: trailing whitespace.\n+test_same_tick_parent_reuse_during_enumeration_never_imports_foreign_child (__main__.IndependentLifetimeControls.test_same_tick_parent_reuse_during_enumeration_never_imports_foreign_child) ... \ndocs/reports/gauntlet/fov-owned-ancestry-r3-independent-20261024/own-independent/original.stderr:6: trailing whitespace.\n+test_same_tick_parent_reuse_before_enumeration_never_imports_foreign_child (__main__.IndependentLifetimeControls.test_same_tick_parent_reuse_before_enumeration_never_imports_foreign_child) ... \ndocs/reports/gauntlet/fov-owned-ancestry-r3-independent-20261024/own-independent/original.stderr:9: trailing whitespace.\n+test_same_tick_parent_reuse_during_enumeration_never_imports_foreign_child (__main__.IndependentLifetimeControls.test_same_tick_parent_reuse_during_enumeration_never_imports_foreign_child) ... \n",
+    "stderr": ""
+  }
+]
