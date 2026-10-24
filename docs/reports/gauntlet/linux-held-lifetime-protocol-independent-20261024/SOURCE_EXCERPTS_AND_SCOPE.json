@@ -1,0 +1,51 @@
+{
+  "protocol_target": "12c076128eff25a1dfee63e6bc7441f500ac8607",
+  "rejected_source": "8cc38cdcd7dfff37056782149e513c08037e4e77",
+  "non_doc_delta_empty": true,
+  "full_index_count_current": 11685,
+  "initial_index_count": 11680,
+  "common_git_dir": "/workspace/sightbreak/.git",
+  "self_contained_clone": false,
+  "source_files": {
+    "scripts/acquire_fov_math_reference.py": {
+      "commit": "8cc38cdcd7dfff37056782149e513c08037e4e77",
+      "bytes": 22078,
+      "sha256": "6157064f862f34e811adb16a95e2b352fad3ca83237e79fdb0172e1b9b44f5f6",
+      "excerpts": [
+        {
+          "first_line": 64,
+          "last_line": 123,
+          "text": "    def __init__(self):\n        self.supervisor=os.getpid()\n\n    def enable_subreaper(self):\n        require(self.identity(self.supervisor) is not None,'supervisor identity unavailable before native launch')\n        # An unavailable children interface cannot establish an empty owned tree.\n        # Check our still-live supervisor before creating the sole native child.\n        self.children(self.supervisor)\n        require(hasattr(os,'pidfd_open') and hasattr(signal,'pidfd_send_signal'),'owned pidfd API unavailable')\n        libc=ctypes.CDLL(None,use_errno=True)\n        require(libc.prctl(36,1,0,0,0)==0,'cannot enable owned child subreaper')\n        value=ctypes.c_int()\n        require(libc.prctl(37,ctypes.byref(value),0,0,0)==0 and value.value==1,'subreaper readback failed')\n\n    def identity(self,pid):\n        try:\n            tail=Path(f'/proc/{pid}/stat').read_text().rsplit(')',1)[1].split()\n            return dict(pid=pid,state=tail[0],ppid=int(tail[1]),pgrp=int(tail[2]),session=int(tail[3]),start_ticks=int(tail[19]))\n        except FileNotFoundError:\n            return None\n\n    def children(self,pid):\n        result=set()\n        parent=Path(f'/proc/{pid}')\n        try:\n            tasks=list((parent/'task').iterdir())\n        except FileNotFoundError:\n            require(not parent.exists(),'owned process task interface unavailable for existing parent')\n            return []\n        require(tasks or not parent.exists(),'owned process task interface empty for existing parent')\n        for task in tasks:\n            try:\n                values=(task/'children').read_text().split()\n            except FileNotFoundError:\n                require(not task.exists(),'owned process child-list interface unavailable for existing task')\n                continue\n            require(all(value.isascii() and value.isdecimal() and int(value)>0 for value in values),'malformed owned process child-list')\n            result.update(int(value) for value in values)\n        return sorted(result)\n\n    def open_pid(self,pid):\n        return os.pidfd_open(pid)\n\n    def close_pid(self,fd):\n        os.close(fd)\n\n    def send(self,fd,signum):\n        signal.pidfd_send_signal(fd,signum)\n\n    def reap(self,pid):\n        try:\n            return os.waitpid(pid,os.WNOHANG)\n        except ChildProcessError:\n            return (0,0)\n\n    def affinity(self,pid):\n        return sorted(os.sched_getaffinity(pid))\n\n    def executable(self,pid):\n        return os.readlink(f'/proc/{pid}/exe')\n"
+        },
+        {
+          "first_line": 250,
+          "last_line": 302,
+          "text": "        for stream in self.files.values():stream.close()\n\n\ndef cleanup(process,tree,deadline,*,streams=None,clock=time.monotonic,sleep=time.sleep):\n    start=clock();escalated=False;drain_error=None\n    tree.observe();process.poll();tree.reap_descendants()\n    root_bound=any(key[0]==tree.root_pid for key in tree.seen)\n    if process.poll() is None and not any(value['pid']==tree.root_pid for value in tree.live()):\n        # Discovery is never allowed to erase the child returned by Popen.\n        process.kill()\n        tree.signals.append(dict(pid=process.pid,start_ticks=None,signal=int(signal.SIGKILL),via='owned Popen safety cleanup'))\n    if tree.live():tree.signal_all(signal.SIGTERM)\n    while clock()<deadline:\n        tree.observe();process.poll();tree.reap_descendants()\n        if streams is not None and streams.pending() and drain_error is None:\n            try:streams.read(min(.02,max(0,deadline-clock())))\n            except BaseException as error:drain_error=type(error).__name__+': '+str(error)\n        pending=streams is not None and streams.pending()\n        root_code=process.poll()\n        if root_code is not None and not tree.live() and not tree.kernel.children(tree.kernel.supervisor) and (not pending or drain_error):\n            waited=process.wait(timeout=max(0,deadline-clock()))\n            require(waited==root_code,'known Popen root wait status mismatch')\n            return dict(passed=clock()<=deadline and not drain_error and root_bound,signals=tree.signals,reaped=tree.reaped,\n                        survivors=[],stream_drain_error=drain_error,root_birth_bound=root_bound,\n                        root_exit_code=root_code,root_popen_waited=True)\n        if not escalated and clock()-start>=CLEANUP_SECONDS/2:\n            tree.signal_all(signal.SIGKILL);escalated=True\n        sleep(min(.02,max(0,deadline-clock())))\n    tree.observe();process.poll();tree.reap_descendants()\n    return dict(passed=False,signals=tree.signals,reaped=tree.reaped,survivors=tree.live(),\n                late=True,stream_drain_error=drain_error,root_birth_bound=root_bound,\n                root_exit_code=process.poll(),root_popen_waited=False)\n\n\ndef monitor(process,tree,streams,deadline,*,clock=time.monotonic):\n    while True:\n        require(clock()<deadline,'whole math deadline exceeded before observed completion')\n        tree.observe()\n        for owned in tree.live():\n            require(tree.kernel.affinity(owned['pid'])==[0,1],'owned native affinity changed')\n        require(not streams.read(min(.02,max(0,deadline-clock()))),'native stream cap exceeded')\n        code=process.poll();tree.reap_descendants()\n        observed=clock()\n        require(observed<deadline,'native completion or drain observed after whole deadline')\n        if code is not None and not streams.pending():\n            require(not tree.live() and not tree.kernel.children(tree.kernel.supervisor),'owned child survives native completion')\n            return code,observed\n\n\ndef acquire(output,expected_source,*,clock=time.monotonic,sleep=time.sleep,process_factory=subprocess.Popen,kernel=None,stream_factory=Streams):\n    started=clock();deadline=started+WHOLE_SECONDS\n    require(sys.platform=='linux','isolated math acquisition requires Linux')\n    require(sorted(os.sched_getaffinity(0))==[4],'supervisor requires CPU4 only')\n"
+        }
+      ]
+    },
+    "scripts/test_fov_math_reference.py": {
+      "commit": "8cc38cdcd7dfff37056782149e513c08037e4e77",
+      "bytes": 28378,
+      "sha256": "036b76a9107e3198e312605686fdc5a487d88f0aa686d7021f4e4c4c7475ab89",
+      "excerpts": [
+        {
+          "first_line": 277,
+          "last_line": 281,
+          "text": "    def test_tree_does_not_signal_unrelated_process_and_reaps_owned_zombie(self):\n        kernel=FakeKernel();kernel.table[999]=dict(pid=999,state='R',ppid=999,pgrp=999,session=999,start_ticks=999)\n        kernel.table[101]=dict(pid=101,state='Z',ppid=50,pgrp=777,session=777,start_ticks=124)\n        tree=acquisition.OwnedTree(kernel,100);tree.observe();tree.reap_descendants();tree.signal_all(15)\n        self.assertIn(999,kernel.table);self.assertNotIn(101,kernel.table);self.assertTrue(all(pid!=999 for pid,_ in kernel.sent));tree.close()\n"
+        }
+      ]
+    },
+    "old_zombie_method": {
+      "owner": "SupervisorControls",
+      "name": "test_tree_does_not_signal_unrelated_process_and_reaps_owned_zombie",
+      "first_line": 277,
+      "last_line": 281,
+      "bytes": 543,
+      "sha256": "03c5b02d36f0e544ad6f0ea768dc7beff28f44d357e6b76cca8c3718d9ccf94c",
+      "body_unchanged": true
+    }
+  },
+  "existing_protocol_state_claims_tested_by_execution": false,
+  "production_API_or_model_calls": 0
+}

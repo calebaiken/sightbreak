@@ -1,0 +1,83 @@
+{
+  "protocol_target": "12c076128eff25a1dfee63e6bc7441f500ac8607",
+  "protocol_files": [
+    {
+      "path": "docs/reports/gauntlet/linux-held-lifetime-protocol-20261024/HANDOFF.md",
+      "bytes": 2181,
+      "sha256": "44f8de3d089d3541bd382cd626b7c730e9b0fa6961fbc45f2e798fbbd0fdca98",
+      "working_bytes_equal_frozen_blob": true
+    },
+    {
+      "path": "docs/reports/gauntlet/linux-held-lifetime-protocol-20261024/PROTOCOL.md",
+      "bytes": 16040,
+      "sha256": "d627d1b8c7b9de30230d713e2539122d4c4bf5ef773018020554096444f692c5",
+      "working_bytes_equal_frozen_blob": true
+    },
+    {
+      "path": "docs/reports/gauntlet/linux-held-lifetime-protocol-20261024/PURE_MODEL_PLAN.md",
+      "bytes": 6335,
+      "sha256": "ae4777f32b9d96337602f438b9ac9cd5226dacd44a682d8650a031a2be007820",
+      "working_bytes_equal_frozen_blob": true
+    },
+    {
+      "path": "docs/reports/gauntlet/linux-held-lifetime-protocol-20261024/SOURCE_IDENTITIES.json",
+      "bytes": 8544,
+      "sha256": "482d6ae755ff7592a55cf195ddcba8a4237c0989af007b0e742a948f91e1f8dd",
+      "working_bytes_equal_frozen_blob": true
+    }
+  ],
+  "kernel_sources": [
+    {
+      "commit": "e4685e4874b7934289dd03cff9146479066e88d2",
+      "path": "docs/reports/gauntlet/fov-ancestry-protection-preedit-20261024/original-critic/kernel-model-source/fork.c",
+      "bytes": 89405,
+      "sha256": "1b35da7893f1f4a1a61705d685eb8bf69ccc1cb755d90bddbe9f381466d62b63",
+      "excerpts": [
+        {
+          "first_line": 2072,
+          "last_line": 2091,
+          "text": "/*\n * Poll support for process exit notification.\n */\nstatic __poll_t pidfd_poll(struct file *file, struct poll_table_struct *pts)\n{\n\tstruct pid *pid = file->private_data;\n\t__poll_t poll_flags = 0;\n\n\tpoll_wait(file, &pid->wait_pidfd, pts);\n\n\t/*\n\t * Inform pollers only when the whole thread group exits.\n\t * If the thread group leader exits before all other threads in the\n\t * group, then poll(2) should block, similar to the wait(2) family.\n\t */\n\tif (thread_group_exited(pid))\n\t\tpoll_flags = EPOLLIN | EPOLLRDNORM;\n\n\treturn poll_flags;\n}\n"
+        },
+        {
+          "first_line": 2040,
+          "last_line": 2052,
+          "text": " */\nstatic void pidfd_show_fdinfo(struct seq_file *m, struct file *f)\n{\n\tstruct pid *pid = f->private_data;\n\tstruct pid_namespace *ns;\n\tpid_t nr = -1;\n\n\tif (likely(pid_has_task(pid, PIDTYPE_PID))) {\n\t\tns = proc_pid_ns(file_inode(m->file)->i_sb);\n\t\tnr = pid_nr_ns(pid, ns);\n\t}\n\n\tseq_put_decimal_ll(m, \"Pid:\\t\", nr);\n"
+        },
+        {
+          "first_line": 2173,
+          "last_line": 2185,
+          "text": " * Return: On success, a reserved pidfd is returned from the function and a new\n *         pidfd file is returned in the last argument to the function. On\n *         error, a negative error code is returned from the function and the\n *         last argument remains unchanged.\n */\nint pidfd_prepare(struct pid *pid, unsigned int flags, struct file **ret)\n{\n\tif (!pid || !pid_has_task(pid, PIDTYPE_TGID))\n\t\treturn -EINVAL;\n\n\treturn __pidfd_prepare(pid, flags, ret);\n}\n\n"
+        }
+      ]
+    },
+    {
+      "commit": "e4685e4874b7934289dd03cff9146479066e88d2",
+      "path": "docs/reports/gauntlet/fov-ancestry-protection-preedit-20261024/pinned-source/exit.c",
+      "bytes": 49059,
+      "sha256": "2f87b2d9df07cf8f426bf488e0cc1013eb35b24e64b6a590c8fda6806e5d0ad5",
+      "excerpts": [
+        {
+          "first_line": 1890,
+          "last_line": 1913,
+          "text": " * thread_group_exited - check that a thread group has exited\n * @pid: tgid of thread group to be checked.\n *\n * Test if the thread group represented by tgid has exited (all\n * threads are zombies, dead or completely gone).\n *\n * Return: true if the thread group has exited. false otherwise.\n */\nbool thread_group_exited(struct pid *pid)\n{\n\tstruct task_struct *task;\n\tbool exited;\n\n\trcu_read_lock();\n\ttask = pid_task(pid, PIDTYPE_PID);\n\texited = !task ||\n\t\t(READ_ONCE(task->exit_state) && thread_group_empty(task));\n\trcu_read_unlock();\n\n\treturn exited;\n}\nEXPORT_SYMBOL(thread_group_exited);\n\n/*\n"
+        }
+      ]
+    },
+    {
+      "commit": "e4685e4874b7934289dd03cff9146479066e88d2",
+      "path": "docs/reports/gauntlet/fov-ancestry-protection-preedit-20261024/pinned-source/select.c",
+      "bytes": 35550,
+      "sha256": "2dbda059cdb4cb215c78f4432c40615276b7d5d3c0668850ab1fb0d85bea47fc",
+      "excerpts": [
+        {
+          "first_line": 855,
+          "last_line": 881,
+          "text": "static inline __poll_t do_pollfd(struct pollfd *pollfd, poll_table *pwait,\n\t\t\t\t     bool *can_busy_poll,\n\t\t\t\t     __poll_t busy_flag)\n{\n\tint fd = pollfd->fd;\n\t__poll_t mask = 0, filter;\n\tstruct fd f;\n\n\tif (fd < 0)\n\t\tgoto out;\n\tmask = EPOLLNVAL;\n\tf = fdget(fd);\n\tif (!f.file)\n\t\tgoto out;\n\n\t/* userland u16 ->events contains POLL... bitmap */\n\tfilter = demangle_poll(pollfd->events) | EPOLLERR | EPOLLHUP;\n\tpwait->_key = filter | busy_flag;\n\tmask = vfs_poll(f.file, pwait);\n\tif (mask & busy_flag)\n\t\t*can_busy_poll = true;\n\tmask &= filter;\t\t/* Mask out unneeded events. */\n\tfdput(f);\n\nout:\n\t/* ... and so does ->revents */\n\tpollfd->revents = mangle_poll(mask);\n"
+        }
+      ]
+    }
+  ],
+  "pinned_pidfd_poll_emits_HUP": false,
+  "other_variant_claimed_qualified": false,
+  "no_actual_poll_or_process_API": 0
+}
