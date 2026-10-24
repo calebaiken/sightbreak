@@ -357,6 +357,31 @@ class DeterministicAuthorityPhaseControls(unittest.TestCase):
             with self.subTest(field=field):
                 self.status(altered, 'INVALID')
 
+    def test_failed_duplicate_callback_keeps_source_state_unknown_not_invalid(self):
+        model = TimedAuthority()
+        # connected() returns false; Match still emits this lifecycle hook.
+        model._hook('peer_connected', 11200, 9)
+        with self.subTest(case='source-duplicate-callback'):
+            self.status(model.rows, 'UNKNOWN')
+        altered = deepcopy(model.rows)
+        altered[-1]['process_frames'] = 1
+        with self.subTest(case='independent-later-frame-fault'):
+            self.status(altered, 'INVALID')
+
+    def test_failed_capacity_callback_keeps_source_state_unknown_not_invalid(self):
+        model = TimedAuthority()
+        for position, peer in enumerate(range(10, 19)):
+            model.connect(peer, 11200+position*10)
+        self.assertEqual(len(model.peers), 10)
+        # The eleventh peer is absent after connected() fails its capacity guard.
+        model._hook('peer_connected', 11290, 19)
+        with self.subTest(case='source-capacity-callback'):
+            self.status(model.rows, 'UNKNOWN')
+        altered = deepcopy(model.rows)
+        altered[-1]['process_frames'] = 1
+        with self.subTest(case='independent-later-frame-fault'):
+            self.status(altered, 'INVALID')
+
     def test_generated_source_words_and_independent_counter_contradictions(self):
         from itertools import product
 
