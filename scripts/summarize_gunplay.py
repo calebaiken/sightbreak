@@ -203,7 +203,7 @@ def main():
                 continue
             distances = sorted({r["distance"] for r in rows["ACCURACY"]})
             print("\n### Standing target, %s (%d trials per cell)\n" % (labels[mode], trials))
-            print("Each cell: hit rate of fired shots / share of trials that killed within one magazine (95% Wilson interval) / median seconds from first shot to kill, over the trials that killed. Cells where fewer than 30 trials killed show the count, because the median then describes only the lucky trials.\n")
+            print("Each cell: hit rate of fired shots / share of trials that killed within one magazine (95% Wilson interval) / median (and 90th percentile) seconds from first shot to kill, over the trials that killed. Cells where fewer than 30 trials killed show the count, because the median then describes only the lucky trials.\n")
             print("| Weapon | %s |" % " | ".join("%g m" % d for d in distances))
             print("| --- | %s |" % " | ".join("---" for _ in distances))
             for name in names:
@@ -215,7 +215,7 @@ def main():
                         cells.append("beyond range" if d > spec[name]["range"] + 1e-9 else "not run")
                         continue
                     r = match[0]
-                    kill_time = "%.2f s" % r["kill_time_median_s"] if r["kill_time_median_s"] >= 0 else "no kill"
+                    kill_time = "%.2f s (p90 %.2f)" % (r["kill_time_median_s"], r["kill_time_p90_s"]) if r["kill_time_median_s"] >= 0 else "no kill"
                     if 0 < r["kills"] < 30:
                         kill_time += " (n=%d)" % r["kills"]
                     cells.append("%s / %s (%s) / %s" % (pct(r["hit_rate"]), pct(r["kill_rate"]), interval_text(r["kills"], r["trials"]), kill_time))

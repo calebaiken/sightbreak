@@ -19,7 +19,7 @@ extends SceneTree
 ## Fixtures, not matches: a bare floor, one standing target that does not move or shoot back (accuracy), aim at the
 ## chest from a standing start, no armour. What it measures is the weapon, not a player. Modes: hold (trigger held,
 ## recoil not countered: a beginner), comp (trigger held, the shooter pulls down by exactly the accumulated recoil: the
-## weapon's ceiling under perfect spray control), head (the same, aimed at the centre of the head), burst3, advance
+## weapon's ceiling under perfect spray control, both axes), head (the same, aimed at the centre of the head), burst3, advance
 ## (walking at the target, re-aimed every tick, recoil not countered), advcomp (the same with recoil countered).
 ## In a duel a tick resolves one actor at a time, so a same-tick trade cannot happen: the first actor processed fires
 ## and the dead cannot answer. The duel loop shuffles that order per tick, as the match does since the order fix.
@@ -32,7 +32,7 @@ const HEAD := 1.6
 ## Feet on the floor surface (y = 0): an actor spawned above it falls while only the ticked actor moves, which put
 ## the first version's aim 5 cm low.
 const FEET := 0.0
-const DISTANCES := [5.0, 10.0, 20.0, 30.0, 45.0, 70.0]
+const DISTANCES := [5.0, 10.0, 20.0, 30.0, 45.0, 70.0, 100.0]
 const DUEL_DISTANCES := [8.0, 20.0, 40.0]
 const MAX_SECONDS := 6.0
 
@@ -161,6 +161,21 @@ func _modes(weapon: String) -> Array:
 ## A stable number per measurement cell, so two cells never reuse the same random draws.
 func _cell_salt(parts: Array) -> int:
 	return int("|".join(parts).hash() & 0x3fffffff)
+
+func _quantile(values: Array, fraction: float) -> float:
+	if values.is_empty():
+		return -1.0
+	var sorted := values.duplicate()
+	sorted.sort()
+	return float(sorted[mini(sorted.size() - 1, int(fraction * float(sorted.size())))])
+
+func _mean(values: Array) -> float:
+	if values.is_empty():
+		return -1.0
+	var total := 0.0
+	for value: float in values:
+		total += value
+	return total / float(values.size())
 
 func _median(values: Array) -> float:
 	if values.is_empty():
@@ -328,9 +343,12 @@ func _accuracy(weapon: String, distance: float, mode: String) -> void:
 			# Aim at the chest from where the shooter stands now; in comp mode also pull down by the recoil carried.
 			var here := absf(target.global_position.z - shooter.global_position.z)
 			var aim := atan2(target.global_position.y + (HEAD if mode == "head" else CHEST) - (shooter.global_position.y + EYE), here)
+			var aim_yaw := 0.0
 			if mode == "comp" or mode == "head" or mode == "advcomp":
+				# Exact spray control on both axes: the shot carries yaw + recoil.x and pitch + recoil.y.
 				aim -= shooter.recoil.y
-			shooter.input_state = {"look": Vector2(0.0, aim), "fire": fire, "move": move}
+				aim_yaw -= shooter.recoil.x
+			shooter.input_state = {"look": Vector2(aim_yaw, aim), "fire": fire, "move": move}
 			shooter.tick_authority(DT)
 			if int(stats["shots"]) > last_shots:
 				burst_shots += int(stats["shots"]) - last_shots
@@ -353,7 +371,7 @@ func _accuracy(weapon: String, distance: float, mode: String) -> void:
 		"hit_rate": snappedf(float(hits_total) / float(maxi(shots_total, 1)), 0.001),
 		"head_share_of_hits": snappedf(float(heads_total) / float(maxi(hits_total, 1)), 0.001),
 		"kill_rate": snappedf(float(kills) / float(trials), 0.001), "kills": kills,
-		"kill_time_median_s": snappedf(_median(kill_times), 0.001), "kill_shots_median": _median(kill_shots),
+		"kill_time_median_s": snappedf(_median(kill_times), 0.001), "kill_time_p90_s": snappedf(_quantile(kill_times, 0.9), 0.001), "kill_time_mean_s": snappedf(_mean(kill_times), 0.001), "kill_shots_median": _median(kill_shots),
 	})
 
 ## Two operators of the given weapons start facing each other and open fire on the same tick, both aiming at the
