@@ -1,0 +1,53 @@
+{
+  "scope": "Exact disclosed four-field constructor and two historical-only expiry methods",
+  "source_constructor_proposal": "a45a2b683407184ea15ef1f9eec044978f3ada56",
+  "changes": [
+    {
+      "index": 8,
+      "field": "input_age_msec",
+      "old": 2000,
+      "proposed": 3000
+    },
+    {
+      "index": 8,
+      "field": "deadline_remaining_msec",
+      "old": 11000,
+      "proposed": 10000
+    },
+    {
+      "index": 9,
+      "field": "input_age_msec",
+      "old": 2000,
+      "proposed": 0
+    },
+    {
+      "index": 9,
+      "field": "deadline_remaining_msec",
+      "old": 11000,
+      "proposed": 9000
+    }
+  ],
+  "results": [
+    {
+      "name": "original",
+      "status": "INVALID",
+      "complete": false,
+      "errors": [
+        "authority: authority lifecycle history is impossible: "
+      ]
+    },
+    {
+      "name": "versioned",
+      "status": "CONSISTENT",
+      "complete": true,
+      "errors": []
+    }
+  ],
+  "whole_other_fields_exact": true,
+  "old_snapshot_methods": 2,
+  "old_snapshot_failures": 0,
+  "old_snapshot_errors": 0,
+  "candidate_pass_credit": 0,
+  "raw_input_normalization": false,
+  "native_executed": false
+}
