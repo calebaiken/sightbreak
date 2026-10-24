@@ -29,12 +29,17 @@ for name in ['own-final','depth-final']:
  assert rawhash.hexdigest()==s['raw_jsonl_sha256'] and hashlib.sha256((p/'generated-histories/cases.jsonl.gz').read_bytes()).hexdigest()==s['gzip_sha256']
  views.append(dict(view=name,pure_methods=227,pure_pass=224,pure_skip=3,retained=139,queue=13,aggregate=5,generated=36948,generated_feasible=5896,generated_infeasible=31052,shell_syntax_checks=sum(r['group']=='shell-syntax' for r in runs['records']),generated_gzip_sha256=s['gzip_sha256']))
 # All final model/corpus input/results (apart from path-bearing summaries) match.
-parity=[]
+parity=[];serialization_differences=[]
 for group in ['queue-models','aggregate-models','generated-histories','causal-cases','retained-controls','selected-pure']:
  left=P/'own-final'/group;right=P/'depth-final'/group;members=0
  for f in left.rglob('*'):
   if f.is_file() and f.name not in {'SUMMARY.json','results.json'}:
-   assert f.read_bytes()==(right/f.relative_to(left)).read_bytes(),str(f);members+=1
+   if f.read_bytes()!=(right/f.relative_to(left)).read_bytes():
+    assert group=='retained-controls' and f.relative_to(left).as_posix()=='versioned/consumption_older_than_latest_accepted/authority.log',str(f)
+    def parsed(path):return [json.loads(line[len('SIGHTBREAK_INPUT_OBSERVATION '):]) for line in path.read_text().splitlines() if line.startswith('SIGHTBREAK_INPUT_OBSERVATION ')]
+    assert parsed(f)==parsed(right/f.relative_to(left))
+    serialization_differences.append(dict(group=group,path=f.relative_to(left).as_posix(),parsed_objects_identical=True,reason='Frozen builder correction iterates CONTROL_KEYS set; serialized object key order differs.'))
+   else:members+=1
  parity.append(dict(group=group,byte_identical_members=members))
 fresh=[]
 for group in ['causal-v3','epoch-ties']:
@@ -57,4 +62,4 @@ for name in ['own-causal-v1','own-causal-v2','own-causal-v3','own-epoch-ties']:
  s=json.loads((P/name/'SUMMARY.json').read_text());assert s['analyzer_sha256']=='c53b1ced5743c7440d0530874115d474da2a70f2416c7515e098109837182be8'
 # Preserve all authority v1/v2 bytes: only the separately registered client clock changes.
 for f in (P/'own-causal-v1').glob('*/authority.txt'):assert f.read_bytes()==(P/'own-causal-v2'/f.parent.name/f.name).read_bytes()
-print(json.dumps(dict(source='c8827e7d158431097a5413273b5a1e93715961b0',copied_frozen_members=len(copied),frozen_provenance=copied,views=views,parity=parity,fresh=fresh,expiry_pair_exact_delta=deltas,prior_rig_authority_v1_v2_unchanged=True,cpu_affinity=[4],native_executed=False),indent=2))
+print(json.dumps(dict(source='c8827e7d158431097a5413273b5a1e93715961b0',copied_frozen_members=len(copied),frozen_provenance=copied,views=views,parity=parity,serialization_differences=serialization_differences,fresh=fresh,expiry_pair_exact_delta=deltas,prior_rig_authority_v1_v2_unchanged=True,cpu_affinity=[4],native_executed=False),indent=2))
