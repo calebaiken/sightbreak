@@ -1,0 +1,135 @@
+{
+  "name": "prefix2-deadline14109",
+  "expected": "INVALID",
+  "actual": "INVALID",
+  "matched": true,
+  "C": 13009,
+  "claimed_deadline": 14109,
+  "visible_prefix_sha256": "1fe3c359578f0114bf0392d0679437752c2beb4186bc1ee6909d5f051143b205",
+  "all_possible_deadlines": [
+    14259
+  ],
+  "source_witness": null,
+  "canonical_source_events": [
+    {
+      "event": "connect",
+      "peer": 9,
+      "generation": 1
+    },
+    {
+      "event": "accept",
+      "peer": 9,
+      "epoch": 1,
+      "commands": [
+        {
+          "sequence": 1,
+          "fire": true,
+          "reload": false,
+          "move": [
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "queue": {
+        "1": {
+          "sequence": 1,
+          "fire": true,
+          "reload": false,
+          "move": [
+            0.0,
+            0.0
+          ]
+        }
+      }
+    },
+    {
+      "event": "pop",
+      "peer": 9,
+      "command": {
+        "sequence": 1,
+        "fire": true,
+        "reload": false,
+        "move": [
+          0.0,
+          0.0
+        ]
+      },
+      "queue": {}
+    },
+    {
+      "event": "unbound_connected",
+      "peer": 10,
+      "at": 13009
+    },
+    {
+      "event": "reject_once",
+      "peer": 10,
+      "at": 13759
+    },
+    {
+      "event": "connect",
+      "peer": 11,
+      "generation": 3
+    },
+    {
+      "event": "expired",
+      "peer": 10,
+      "at": 34011
+    },
+    {
+      "event": "disconnect",
+      "peer": 10
+    }
+  ],
+  "mutated_expiry_index": 12,
+  "result": {
+    "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+    "diagnostic_complete": false,
+    "transition_status": "INVALID",
+    "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+    "roles": {
+      "client": {
+        "records": 7,
+        "coverage": [
+          "client_attempt",
+          "client_connected",
+          "client_tick",
+          "input_send_called",
+          "ready",
+          "snapshot_applied",
+          "welcome_received"
+        ],
+        "counters": {
+          "ready": 1,
+          "client_attempt": 1,
+          "client_connected": 1,
+          "welcome_received": 1,
+          "client_tick": 2,
+          "snapshot_applied": 1,
+          "input_send_called": 1
+        },
+        "max_observation_gap_msec": 1000,
+        "max_snapshot_age_msec": 3000,
+        "pending_saturation_indices": [],
+        "accepted_events": [],
+        "consumed_events": [],
+        "expiry_events": [],
+        "disconnect_events": [],
+        "welcome_events": [
+          {
+            "transport_id": 9,
+            "local_attempt": 1,
+            "local_id": 1,
+            "wall_unix_msec": 113000
+          }
+        ],
+        "binding_events": [],
+        "local_attempts": 1
+      }
+    },
+    "errors": [
+      "authority: peer expiry contradicts lifecycle history: no persistent eligible lifecycle hypothesis matches all observed prefixes"
+    ]
+  }
+}
