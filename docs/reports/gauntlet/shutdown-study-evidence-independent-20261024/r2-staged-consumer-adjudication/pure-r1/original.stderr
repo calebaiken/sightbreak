@@ -1,0 +1,48 @@
+test_01_declared_format_runs_and_persistent_held_keys (__main__.ConsumerControls.test_01_declared_format_runs_and_persistent_held_keys) ... ok
+test_02_source_wait_conditions_exist_before_completed_trace (__main__.ConsumerControls.test_02_source_wait_conditions_exist_before_completed_trace) ... FAIL
+test_03_local_source_predicates_and_typed_receipt_boundaries (__main__.ConsumerControls.test_03_local_source_predicates_and_typed_receipt_boundaries) ... ok
+test_04_callback_failures_stop_future_target_stages (__main__.ConsumerControls.test_04_callback_failures_stop_future_target_stages) ... ok
+test_05_initial_collisions_preserve_original_bytes (__main__.ConsumerControls.test_05_initial_collisions_preserve_original_bytes) ... ok
+test_06_replaced_owned_metadata_is_not_overwritten (__main__.ConsumerControls.test_06_replaced_owned_metadata_is_not_overwritten) ... FAIL
+test_07_one_shot_capture_publication_error_retains_partial (__main__.ConsumerControls.test_07_one_shot_capture_publication_error_retains_partial) ... ok
+test_08_declared_route_and_pulse_match_pure_source_branch (__main__.ConsumerControls.test_08_declared_route_and_pulse_match_pure_source_branch) ... ERROR
+
+======================================================================
+ERROR: test_08_declared_route_and_pulse_match_pure_source_branch (__main__.ConsumerControls.test_08_declared_route_and_pulse_match_pure_source_branch)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/shutdown-study-evidence-independent-20261024/docs/reports/gauntlet/shutdown-study-evidence-independent-20261024/r2-staged-consumer-adjudication/consumer_controls.py", line 210, in test_08_declared_route_and_pulse_match_pure_source_branch
+    source_scope['relocate_settings_actor'](copy.deepcopy(feedback[0]),actor_id=1,round_number=2,observe=observe,
+  File "<source route>", line 21, in relocate_settings_actor
+NameError: name 'SETTINGS_COVER' is not defined
+
+======================================================================
+FAIL: test_02_source_wait_conditions_exist_before_completed_trace (__main__.ConsumerControls.test_02_source_wait_conditions_exist_before_completed_trace)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/shutdown-study-evidence-independent-20261024/docs/reports/gauntlet/shutdown-study-evidence-independent-20261024/r2-staged-consumer-adjudication/consumer_controls.py", line 124, in test_02_source_wait_conditions_exist_before_completed_trace
+    self.assertEqual([r['label'] for r in checkpoints if not r['condition_true']],[],'A successful source wait requires its predicate true before completion')
+AssertionError: Lists differ: ['Actual offline live phase', 'Natural exp[126 chars]tch'] != []
+
+First list contains 4 additional elements.
+First extra element 0:
+'Actual offline live phase'
+
++ []
+- ['Actual offline live phase',
+-  'Natural exported round completion',
+-  'Second active round for weapon switching',
+-  'Reopened process loaded profile into ordinary offline match'] : A successful source wait requires its predicate true before completion
+
+======================================================================
+FAIL: test_06_replaced_owned_metadata_is_not_overwritten (__main__.ConsumerControls.test_06_replaced_owned_metadata_is_not_overwritten)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/shutdown-study-evidence-independent-20261024/docs/reports/gauntlet/shutdown-study-evidence-independent-20261024/r2-staged-consumer-adjudication/consumer_controls.py", line 185, in test_06_replaced_owned_metadata_is_not_overwritten
+    self.assertEqual(after,marker,'Name membership cannot authorize truncating a replaced metadata file')
+AssertionError: b'[\n  {\n    "event": "wait_begin",\n    "[637923 chars]n]\n' != b'unique replacement metadata\x00\xff' : Name membership cannot authorize truncating a replaced metadata file
+
+----------------------------------------------------------------------
+Ran 8 tests in 19.274s
+
+FAILED (failures=2, errors=1)

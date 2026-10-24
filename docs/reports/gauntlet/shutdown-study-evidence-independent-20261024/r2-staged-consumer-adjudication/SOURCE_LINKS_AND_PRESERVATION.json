@@ -1,0 +1,164 @@
+{
+  "source": "0f478a078277fdb0d711837bef67cf14262d9d8f",
+  "proposal": "7ef59cdce780f4f1fb7dc1a75ff14b74354df6c3",
+  "fixture_only_prior_reload_change": true,
+  "old28_Helper_Owner_file_exact_0f": true,
+  "new30_changed_methods": [
+    "EnvelopeTests.test_cleanup_elapsed_and_wall_clock_step_are_not_invented_deadlines",
+    "WrapperTests.test_publication_receipt_error_preserves_original_invocation_cause"
+  ],
+  "new30_assertions_exact": true,
+  "staged_clock_and_consumer_not_applied": true,
+  "preserved_prior_manifests": [
+    {
+      "prefix": "final-source-r1",
+      "members": 858,
+      "bytes": 205551297,
+      "unchanged": true
+    },
+    {
+      "prefix": "r2-construction-adjudication",
+      "members": 8,
+      "bytes": 48540,
+      "unchanged": true
+    },
+    {
+      "prefix": "r2-clock-seam-adjudication",
+      "members": 15,
+      "bytes": 63610,
+      "unchanged": true
+    },
+    {
+      "prefix": "r2-clock-seam-v2b-adjudication",
+      "members": 11,
+      "bytes": 49765,
+      "unchanged": true
+    }
+  ],
+  "R1_manifest_members_preserved": 396,
+  "R1_bytes_preserved": 12293538,
+  "native_notification_source_links": [
+    {
+      "path": "game/scripts/gameplay/match.gd",
+      "source": "0f478a078277fdb0d711837bef67cf14262d9d8f",
+      "sha256": "80c1cc2fceeb44dd4bf8c9726a8f6a77124e649a8535a9e508ea6d904ec9f238",
+      "snippets": [
+        {
+          "match": "_announce(\"Round live. Secure Relay Yard.\")",
+          "first_line": 335,
+          "text": "\t\t\t\ttime_left = ROUND_SECONDS\n\t\t\t\t_announce(\"Round live. Secure Relay Yard.\")\n\t\t\telif phase == \"live\" and objective_state != \"planted\":\n\t\t\t\t_end_round(1, \"Time expired\")\n"
+        },
+        {
+          "match": "func _announce(message",
+          "first_line": 597,
+          "text": "\nfunc _announce(message: String) -> void:\n\tnotification.emit(message)\n\tif options.get(\"mode\", \"offline\") == \"server\":\n"
+        },
+        {
+          "match": "notification.emit(message)",
+          "first_line": 598,
+          "text": "func _announce(message: String) -> void:\n\tnotification.emit(message)\n\tif options.get(\"mode\", \"offline\") == \"server\":\n\t\tfor peer_id: int in _active_peers():\n"
+        },
+        {
+          "match": "notification.emit(message)",
+          "first_line": 606,
+          "text": "\t\tif local_actor() != null and local_actor().team == team:\n\t\t\tnotification.emit(message)\n\t\treturn\n\tfor peer_id: int in _active_peers():\n"
+        },
+        {
+          "match": "notification.emit(message)",
+          "first_line": 780,
+          "text": "\tconnection_notice = message\n\tnotification.emit(message)\n\n## Terminal client failure: shows the reason and never retries on its own.\n"
+        },
+        {
+          "match": "notification.emit(message)",
+          "first_line": 1147,
+          "text": "func _notice_rpc(message: String) -> void:\n\tnotification.emit(message)\n\nfunc _snapshot(recipient_id: int = 0) -> Dictionary:\n"
+        }
+      ]
+    },
+    {
+      "path": "game/scripts/main.gd",
+      "source": "0f478a078277fdb0d711837bef67cf14262d9d8f",
+      "sha256": "0e94a4580715011f9b2f425de34c03a3843b9e10d6ce7637ce41bff9a25da320",
+      "snippets": [
+        {
+          "match": "match_game.notification.connect(show_notification)",
+          "first_line": 839,
+          "text": "\tmatch_game.match_finished.connect(on_match_finished)\n\tmatch_game.notification.connect(show_notification)\n\tmatch_game.exit_requested.connect(leave_match)\n\tmatch_game.elimination_reported.connect(add_kill_feed)\n"
+        },
+        {
+          "match": "func show_notification",
+          "first_line": 1567,
+          "text": "\nfunc show_notification(message: String) -> void:\n\tprint(\"MATCH: \", message)\n\tif is_instance_valid(status_label):\n"
+        },
+        {
+          "match": "print(\"MATCH: \", message)",
+          "first_line": 1568,
+          "text": "func show_notification(message: String) -> void:\n\tprint(\"MATCH: \", message)\n\tif is_instance_valid(status_label):\n\t\tstatus_label.text = message\n"
+        }
+      ]
+    },
+    {
+      "path": "game/scripts/offline_diagnostics.gd",
+      "source": "0f478a078277fdb0d711837bef67cf14262d9d8f",
+      "sha256": "f3c08ac3cdfd7acca59662caebf579812573fcb6267306aa916522bcba24217c",
+      "snippets": [
+        {
+          "match": "game.notification.connect",
+          "first_line": 259,
+          "text": "\t\t\tif _can_observe(game): _event(\"local_shot\", _snapshot(game)))\n\tgame.notification.connect(func(message):\n\t\tif _can_observe(game): _event(\"notification\", {\"message\": message, \"elapsed\": game._elapsed, \"simulation_tick\": game._simulation_tick}))\n\n"
+        },
+        {
+          "match": "_event(\"notification\"",
+          "first_line": 260,
+          "text": "\tgame.notification.connect(func(message):\n\t\tif _can_observe(game): _event(\"notification\", {\"message\": message, \"elapsed\": game._elapsed, \"simulation_tick\": game._simulation_tick}))\n\nfunc observe(game, delta: float) -> void:\n"
+        },
+        {
+          "match": "Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME",
+          "first_line": 159,
+          "text": "\t\t\"physics_step_max_seconds_last_engine_window\": Performance.get_monitor(Performance.TIME_PHYSICS_PROCESS),\n\t\t\"draw_calls_last_rendered_frame\": Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME),\n\t\t\"primitives_last_rendered_frame\": Performance.get_monitor(Performance.RENDER_TOTAL_PRIMITIVES_IN_FRAME),\n\t\t\"viewport_visible_size\": [visible_size.x, visible_size.y],\n"
+        },
+        {
+          "match": "Performance.RENDER_TOTAL_PRIMITIVES_IN_FRAME",
+          "first_line": 160,
+          "text": "\t\t\"draw_calls_last_rendered_frame\": Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME),\n\t\t\"primitives_last_rendered_frame\": Performance.get_monitor(Performance.RENDER_TOTAL_PRIMITIVES_IN_FRAME),\n\t\t\"viewport_visible_size\": [visible_size.x, visible_size.y],\n\t\t\"viewport_texture_size_pixels\": [texture_size.x, texture_size.y],\n"
+        }
+      ]
+    }
+  ],
+  "generated_event_inventory": {
+    "initial-offline-trace": {
+      "bytes": 62203,
+      "sha256": "04e155046633c46c1a2d08897d655af1ac8139a74ddd4bd3d6506b55927d827a",
+      "events": [
+        "initial",
+        "phase",
+        "local_shot",
+        "local_shot",
+        "reload",
+        "reload",
+        "phase",
+        "round_number",
+        "weapon",
+        "phase",
+        "weapon",
+        "weapon"
+      ],
+      "notification_count": 0
+    },
+    "restart-profile-trace": {
+      "bytes": 11261,
+      "sha256": "b9d54f61633d44a1a9581a6eee0aebd7a90782e62025b9a92b5d19249ddfb4b9",
+      "events": [
+        "initial",
+        "phase"
+      ],
+      "notification_count": 0
+    }
+  },
+  "source_or_test_edits_by_critic": 0,
+  "lookup_notes": [
+    "scripts/native_route_pulse.py is absent; exact WinUI.key_pulse located in verify_integration_export.py",
+    "offline_diagnostics.gd is sparse-omitted; exact frozen Git blob read instead"
+  ],
+  "wrapper_sibling_original_stream_contract_reviewed": false
+}
