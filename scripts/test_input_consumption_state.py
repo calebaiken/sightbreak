@@ -17,6 +17,8 @@ def append_event(rows, reason, **updates):
     row['counters'][reason] = row['counters'].get(reason, 0) + 1
     if reason in row['latest']:
         row['latest'][reason]['wall_msec'] = now
+    if row['snapshot']:
+        row['snapshot_age_msec'] = now - row['snapshot']['wall_msec']
     row.update(updates)
     rows.append(row)
     return row
