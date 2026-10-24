@@ -226,3 +226,113 @@ def parse_output(raw,payload,*,cases_sha256,program_sha256):
                                 transfer='UNRESOLVED_FOR_UNMEASURED_INPUTS'))
     return dict(reference_capture_schema_valid=True,case_count=len(comparisons),precision=precision,comparisons=comparisons,
                 broader_cutoff_parity='UNRESOLVED',visibility_gameplay_physical_acceptance=False)
+
+
+# The schema1 corpus/parser above stay immutable controls. Native JSON decimal
+# conversion did not preserve all of those input bits in actual550. Schema2
+# therefore transports every operational primitive independently of presentation.
+INPUT_CODEC = 'ieee754-binary64-little-endian-v1'
+CANONICAL_CASES_SHA256 = 'd3e3cbc53b89cd0f872d333262524e43a84155c2b8ae0aaab06850e1337dcbae'
+BINARY_CASES_NAME = 'cases-binary64-v2.json'
+INPUT_SCALARS = ('yaw','threshold','vision_range','elapsed','damaged_at','enemy_id','attacker_id')
+INPUT_VECTORS = ('actor_position','enemy_position')
+TRANSPORT_KEYS = {'ordinal','input64_le','transport_sha256'}
+
+
+def decode_binary64(encoded):
+    require(type(encoded) is str and re.fullmatch('[0-9a-f]{16}',encoded) is not None,'exact binary64 hex')
+    value=struct.unpack('<d',bytes.fromhex(encoded))[0]
+    require(math.isfinite(value) and bits64(value)==encoded,'finite exact binary64')
+    return value
+
+
+def input_bits(row):
+    result={}
+    for name in INPUT_SCALARS+INPUT_VECTORS:
+        values=row[name] if name in INPUT_VECTORS else [row[name]]
+        require(type(values) is list and all(number(value) and float(value)==value for value in values),'finite representable input')
+    for name in INPUT_VECTORS:
+        require(type(row[name]) is list and len(row[name])==3,'input vector shape')
+        result[name]=[bits64(value) for value in row[name]]
+    for name in INPUT_SCALARS:result[name]=bits64(row[name])
+    return result
+
+
+def decode_inputs(encoded):
+    require(type(encoded) is dict and set(encoded)==set(INPUT_SCALARS+INPUT_VECTORS),'binary input schema')
+    result={}
+    for name in INPUT_VECTORS:
+        require(type(encoded[name]) is list and len(encoded[name])==3,'binary vector shape')
+        result[name]=[decode_binary64(value) for value in encoded[name]]
+    for name in INPUT_SCALARS:result[name]=decode_binary64(encoded[name])
+    return result
+
+
+def canonical_cases():
+    path=Path(__file__).resolve().parents[1]/'tools/fov_math_reference/cases.json'
+    raw=path.read_bytes();require(sha(raw)==CANONICAL_CASES_SHA256,'protected canonical corpus changed')
+    payload=json.loads(raw);validate_cases(payload)
+    return payload
+
+
+def generate_binary_cases():
+    original=canonical_cases();rows=[]
+    for ordinal,case in enumerate(original['cases']):
+        row=dict(case,ordinal=ordinal,input64_le=input_bits(case))
+        row['transport_sha256']=sha(canonical(row));rows.append(row)
+    payload=dict(original,schema=2,input_codec=INPUT_CODEC,canonical_cases_sha256=CANONICAL_CASES_SHA256,cases=rows)
+    validate_binary_cases(payload)
+    return payload
+
+
+def validate_binary_cases(payload):
+    original=canonical_cases()
+    require(type(payload) is dict and set(payload)==set(original)|{'input_codec','canonical_cases_sha256'},'binary payload schema')
+    require(type(payload['schema']) is int and payload['schema']==2 and payload['input_codec']==INPUT_CODEC,'binary payload version')
+    require(payload['canonical_cases_sha256']==CANONICAL_CASES_SHA256,'canonical payload identity')
+    for key in ('engine','source_fixture_sha256','seed'):
+        require(type(payload[key]) is type(original[key]) and payload[key]==original[key],'canonical metadata')
+    require(type(payload['cases']) is list and len(payload['cases'])==len(original['cases']),'canonical case count')
+    for ordinal,(row,expected) in enumerate(zip(payload['cases'],original['cases'])):
+        require(type(row) is dict and set(row)==INPUT_KEYS|TRANSPORT_KEYS,'binary case schema')
+        require(type(row['ordinal']) is int and row['ordinal']==ordinal,'canonical case order')
+        presentation={k:v for k,v in row.items() if k not in TRANSPORT_KEYS}
+        # Source canonical values are checked here, NOT reconstructed by native
+        # JSON parsing. This also binds IDs/meta/hash under coordinated changes.
+        require(canonical(presentation)==canonical(expected),'canonical decimal presentation changed')
+        decoded=decode_inputs(row['input64_le'])
+        require(input_bits(decoded)==input_bits(expected),'canonical binary input changed')
+        require(row['transport_sha256']==sha(canonical({k:v for k,v in row.items() if k!='transport_sha256'})),'transport identity')
+    return payload['cases']
+
+
+def parse_binary_output(raw,payload,*,cases_sha256,program_sha256):
+    """Validate schema2 metadata, then apply the unchanged strict legacy gates."""
+    validate_binary_cases(payload);require(type(raw) is bytes,'output bytes')
+    rows=[];banner=0
+    def unique(pairs):
+        result={}
+        for key,value in pairs:
+            require(key not in result,'duplicate output key');result[key]=value
+        return result
+    for line in raw.decode('utf-8',errors='strict').splitlines():
+        if line.startswith(PREFIX):
+            rows.append(json.loads(line[len(PREFIX):],object_pairs_hook=unique,parse_constant=lambda _:(_ for _ in ()).throw(ValueError('nonfinite JSON'))))
+        elif line=='Godot Engine v'+ENGINE+' - https://godotengine.org':banner+=1
+        else:require(not line.strip(),'unexpected native output')
+    require(banner<=1 and len(rows)==len(payload['cases'])+2,'output framing/count')
+    header=rows[0]
+    require(type(header) is dict and set(header)=={'kind','schema','engine','cases_sha256','program_sha256','precision','input_codec','canonical_cases_sha256'},'binary header schema')
+    require(type(header['schema']) is int and header['schema']==2 and header['input_codec']==INPUT_CODEC and header['canonical_cases_sha256']==CANONICAL_CASES_SHA256,'binary header identity')
+    rows[0]={k:v for k,v in header.items() if k not in ('input_codec','canonical_cases_sha256')};rows[0]['schema']=1
+    for expected,row in zip(payload['cases'],rows[1:-1]):
+        require(type(row) is dict and set(row)=={'kind','id','input_sha256','values','bits64','predicates','ordinal','transport_sha256','decoded_input64_le'},'binary output case schema')
+        require(type(row['ordinal']) is int and row['ordinal']==expected['ordinal'] and row['transport_sha256']==expected['transport_sha256'],'binary output order/transport')
+        decoded=decode_inputs(row['decoded_input64_le'])
+        require(input_bits(decoded)==expected['input64_le'],'native decoded input roundtrip')
+        for key in ('ordinal','transport_sha256','decoded_input64_le'):del row[key]
+    projected=b'\n'.join(PREFIX.encode()+canonical(row) for row in rows)+b'\n'
+    result=parse_output(projected,canonical_cases(),cases_sha256=cases_sha256,program_sha256=program_sha256)
+    result.update(input_codec=INPUT_CODEC,input_transport_schema=2,canonical_cases_sha256=CANONICAL_CASES_SHA256,
+                  decoded_input_bit_roundtrip_strict=True)
+    return result
