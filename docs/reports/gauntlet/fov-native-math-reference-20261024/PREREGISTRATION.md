@@ -26,7 +26,11 @@ Frozen stable-ID/case-hash corpus includes every captured120/122/127 actor vs
 opposite-team actor pair (retain liveness metadata; math only), actual synthetic
 defuse placements,128 seeded normal-range cases, zero/vertical/reference angles,
 range endpoints,257 neighboring binary32 values around normal−0.15, and recent-
-specific-attacker/1.2-second boundary cases kept separate from geometry. Preserve
+specific-attacker/1.2-second boundary cases kept separate from geometry. Before
+generating the corpus, add immediate binary32 neighbors for easy−0.05/hard−0.25,
+explicit captured-pose1226→2/yaw0 synthetic-negative and exact-axis comparison
+equality/side controls requested by the independent plan reviewer. These remain
+math-only reference cases within the same1024-case/output/time caps. Preserve
 original fixture whole bytes and report their hashes. Fixed generated cases are
 math references, not replayed gameplay, LOS or physical/human evidence.
 
