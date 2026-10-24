@@ -37,6 +37,36 @@ class UnknownTransition(ValueError):
     """The observations do not identify a sound stream context."""
 
 
+def expiry_projection(row, *, connected_at=None):
+    """Feasible hidden rejection states under the fixed PeerLifecycle timers.
+
+    This checks the expiry projection, not an unobserved callback history.
+    Rejection freezes last_input and replaces deadline by reject_time + 500.
+    An unrejected deadline remains connect_time + 20000.
+    """
+    now, age, remaining = (row[k] for k in ('wall_msec', 'input_age_msec', 'deadline_remaining_msec'))
+    need(type(row['joined']) is bool and all(type(v) is int for v in (now, age, remaining)), 'invalid lifecycle expiry projection types')
+    if age < 0 or now < age:
+        return 'INVALID'
+    last_input = now - age
+    if connected_at is not None:
+        need(type(connected_at) is int and connected_at >= 0, 'invalid proved connection time')
+        if last_input < connected_at:
+            return 'INVALID'
+    deadline = now + remaining
+    possible = []
+    initial_connection = deadline - 20000
+    if (0 <= initial_connection <= last_input and (connected_at is None or initial_connection == connected_at)
+            and (row['joined'] or initial_connection == last_input)):
+        possible.append((not row['joined'] and remaining <= 0) or (row['joined'] and age >= 30000))
+    rejected_at = deadline - 500
+    if last_input <= rejected_at <= now:
+        possible.append(remaining <= 0 or (row['joined'] and age >= 30000))
+    if not possible or not any(possible):
+        return 'INVALID'
+    return 'CONSISTENT' if all(possible) else 'UNKNOWN'
+
+
 def integral_feasible(node_count, edges):
     """Integral circulation with lower bounds, used for latent command origins."""
     graph = [[] for _ in range(node_count + 2)]
@@ -612,6 +642,8 @@ def analyze_role(rows, role):
     consumed, accepted, expiries, disconnects, saturations, welcomes, binding_events = [], [], [], [], [], [], []
     max_gap = 0
     transitions = InputTransitions()
+    expiry_unknowns = []
+    lifecycle_history = {}
     for row in rows:
         owners_before = set(live_bindings)
         need(row['role'] == role, 'mixed role evidence')
@@ -665,6 +697,10 @@ def analyze_role(rows, role):
             highest_generation = row['generation']
             live_peers[row['peer']] = row['generation']
             connected.add(identity)
+            age = row['input_age_msec']
+            connection = row['wall_msec'] - age if age >= 0 and age + row['deadline_remaining_msec'] == 20000 else None
+            lifecycle_history[identity] = dict(connected_at=connection, last_input=None, accepted=0,
+                                               violations=[], unknown_activity=False)
         if row['reason'] == 'peer_bound':
             need(role == 'authority' and row['peer_bound'] and row['joined'] and row['generation'] > 0 and identity not in ended, 'invalid/reused retired peer generation')
             need(identity in connected, 'binding has no preceding matching connected peer generation')
@@ -679,6 +715,28 @@ def analyze_role(rows, role):
             current_welcome = tuple(row[k] for k in ('transport_id', 'local_attempt', 'local_id'))
             welcomes.append({k: row[k] for k in ('transport_id', 'local_attempt', 'local_id', 'wall_unix_msec')})
         if row['reason'] in {'peer_expired', 'peer_disconnected'}:
+            if row['reason'] == 'peer_expired':
+                need(identity in connected and live_peers.get(row['peer']) == row['generation'] and identity not in ended,
+                     'expiry has no current connected peer generation')
+                history = lifecycle_history[identity]
+                need(not history['violations'], 'expiry history contradicts lifecycle: ' + '; '.join(history['violations']))
+                actor = bindings.get(identity, 0)
+                need(row['joined'] == bool(actor) and row['peer_bound'] == bool(actor) and row['bound_actor'] == actor,
+                     'expiry changed the live joined/actor binding before disconnect')
+                last_input = row['wall_msec'] - row['input_age_msec']
+                if history['last_input'] is None or history['connected_at'] is None:
+                    expiry_unknowns.append('expiry lacks a source-faithful prior lifecycle projection')
+                else:
+                    need(last_input >= history['last_input'], 'expiry last_input regressed within the peer generation')
+                    if last_input > history['last_input']:
+                        need(counters.get('input_accepted', 0) > history['accepted'], 'expiry last_input advanced without accepted activity')
+                        expiry_unknowns.append('new global accepted activity has unresolved local expiry ownership')
+                if history['unknown_activity']:
+                    expiry_unknowns.append('earlier global activity has unresolved lifecycle ownership')
+                status = expiry_projection(row, connected_at=history['connected_at'])
+                need(status != 'INVALID', 'peer expiry contradicts lifecycle timing')
+                if status == 'UNKNOWN':
+                    expiry_unknowns.append('expiry depends on unobserved rejection for peer %s generation %s' % identity)
             ended.add(identity)
             if row['reason'] == 'peer_disconnected' and live_peers.get(row['peer']) == row['generation']:
                 del live_peers[row['peer']]
@@ -721,9 +779,29 @@ def analyze_role(rows, role):
         if row['pending_count'] == 120:
             saturations.append(row['index'])
         transitions.observe(row, owners_before)
+        if role == 'authority' and identity in lifecycle_history and row['reason'] not in {'peer_expired', 'peer_disconnected'}:
+            history = lifecycle_history[identity]
+            current_input = row['wall_msec'] - row['input_age_msec'] if row['input_age_msec'] >= 0 else None
+            previous_input = history['last_input']
+            if current_input is not None and previous_input is not None:
+                if current_input < previous_input:
+                    history['violations'].append('last_input regressed')
+                elif current_input > previous_input and row['reason'] != 'peer_bound':
+                    delta = counters.get('input_accepted', 0) - history['accepted']
+                    if delta == 0:
+                        history['violations'].append('last_input advanced without accepted activity')
+                    elif row['reason'] != 'input_accepted' or delta != 1:
+                        history['unknown_activity'] = True
+            actor = bindings.get(identity, 0)
+            if row['joined'] != bool(actor) or row['peer_bound'] != bool(actor) or row['bound_actor'] != actor:
+                history['violations'].append('joined/actor binding changed before disconnect')
+            history['last_input'] = current_input
+            history['accepted'] = counters.get('input_accepted', 0)
         prior = row
     if role == 'authority':
         need(bool(consumed) and bool(accepted), 'acceptance and actual consumption need distinct observed events')
+    if expiry_unknowns:
+        raise UnknownTransition('; '.join(expiry_unknowns))
     return {'records': len(rows), 'coverage': sorted(coverage), 'counters': prior['counters'], 'max_observation_gap_msec': max_gap,
             'max_snapshot_age_msec': max(r['snapshot_age_msec'] for r in rows), 'pending_saturation_indices': saturations,
             'accepted_events': accepted, 'consumed_events': consumed, 'expiry_events': expiries, 'disconnect_events': disconnects,
