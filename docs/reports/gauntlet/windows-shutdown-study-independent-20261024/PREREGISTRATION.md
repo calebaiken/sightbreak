@@ -126,3 +126,20 @@ an alternate, with no full clone or independent-object-store claim. Keep outputs
 separate from both prior iterations. Harness changes only parameterize root/output
 locations; assertions and adversarial inputs stay the same. Verify all physical
 source bytes/modes again after the flags are restored.
+
+## Additive incomplete-receipt propagation check
+
+The frozen trial_evidence reader returned strict_passed=true for the registered
+synthetic passed=true-only file. The builder independently confirmed that the
+handoff has no explicit authorization for missing required logs/events/OCR to
+count as strict success. Before execution, extend this exact synthetic missing-
+receipt construction through collect_trials with the actual default evidence
+loader and fake controller-only job rows; verify whether all four attempts can
+make report.passed true. This evaluates trust/validation propagation only. It
+cannot demonstrate a source-emitted passing native result or actual trial outcome.
+Preserve the old13-case corpus/results exactly and store this check separately.
+
+The first depth controls and regressions ran concurrently on CPU4; the mutated
+source witness only appended a comment and restored bytes/flags, but retain that
+repeat as such. Repeat depth regressions sequentially after all mutations and
+verify physical source, in a new output directory, for final qualification.

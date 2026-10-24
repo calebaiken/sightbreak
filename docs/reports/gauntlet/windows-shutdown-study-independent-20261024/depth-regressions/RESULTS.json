@@ -1,0 +1,115 @@
+{
+  "source": "c90fedfd56a09bd0ba13cce5565ccd160891c3fb",
+  "cpu": [
+    4
+  ],
+  "native_invocations": 0,
+  "groups": [
+    {
+      "name": "dedicated",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "scripts",
+        "-p",
+        "test_windows_shutdown_study.py",
+        "-v"
+      ],
+      "exit": 0,
+      "seconds": 0.7022928789956495
+    },
+    {
+      "name": "native_log",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "scripts/test_native_log.py",
+        "-v"
+      ],
+      "exit": 0,
+      "seconds": 0.35390203400311293
+    },
+    {
+      "name": "reopened_shutdown_diagnostic",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "scripts/test_reopened_shutdown_diagnostic.py",
+        "-v"
+      ],
+      "exit": 0,
+      "seconds": 0.33137918599823024
+    },
+    {
+      "name": "offline_capture_fences",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "scripts/test_offline_capture_fences.py",
+        "-v"
+      ],
+      "exit": 0,
+      "seconds": 0.8380928539991146
+    },
+    {
+      "name": "offline_export_ocr",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "scripts/test_offline_export_ocr.py",
+        "-v"
+      ],
+      "exit": 0,
+      "seconds": 0.3479848559945822
+    },
+    {
+      "name": "native_focus_fence",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "scripts/test_native_focus_fence.py",
+        "-v"
+      ],
+      "exit": 0,
+      "seconds": 1.7571463019994553
+    },
+    {
+      "name": "focus_resume_timing",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "scripts/test_focus_resume_timing.py",
+        "-v"
+      ],
+      "exit": 0,
+      "seconds": 0.18951764500525314
+    },
+    {
+      "name": "native_settings_route",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "scripts/test_native_settings_route.py",
+        "-v"
+      ],
+      "exit": 0,
+      "seconds": 0.1964301769985468
+    },
+    {
+      "name": "native_route_pulse",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "scripts/test_native_route_pulse.py",
+        "-v"
+      ],
+      "exit": 0,
+      "seconds": 0.29769460600073216
+    },
+    {
+      "name": "package_qa_receipts",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "scripts/test_package_qa_receipts.py",
+        "-v"
+      ],
+      "exit": 0,
+      "seconds": 0.11460202000307618
+    }
+  ]
+}

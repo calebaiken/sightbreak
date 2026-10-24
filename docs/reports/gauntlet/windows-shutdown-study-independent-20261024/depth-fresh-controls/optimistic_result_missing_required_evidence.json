@@ -1,0 +1,30 @@
+{
+  "files": {
+    "results.json": "{\"passed\":true}\n"
+  },
+  "actual": {
+    "result": {
+      "passed": true
+    },
+    "process_seed_initial_events": [
+      {
+        "process_trace": "initial-offline-trace",
+        "initial_event": null,
+        "provenance": "UNREACHED_OR_UNRESOLVED"
+      },
+      {
+        "process_trace": "restart-profile-trace",
+        "initial_event": null,
+        "provenance": "UNREACHED_OR_UNRESOLVED"
+      }
+    ],
+    "native_logs": [],
+    "typed_leak_observations": [],
+    "original_stream_retention_complete": true,
+    "close_observations": [],
+    "strict_passed": true
+  },
+  "expected": "incomplete evidence cannot independently substantiate source-faithful success",
+  "interpretation": "Evidence-reader trust boundary; not claimed source-emittable passed native output",
+  "matched": false
+}

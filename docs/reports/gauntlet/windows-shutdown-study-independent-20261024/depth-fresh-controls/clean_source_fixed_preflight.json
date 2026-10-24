@@ -1,0 +1,59 @@
+{
+  "expected_status": "BLOCKED",
+  "actual": {
+    "schema": 1,
+    "source": {
+      "commit": "c90fedfd56a09bd0ba13cce5565ccd160891c3fb",
+      "non_doc_union_sha256": "183e3c27bbf122e198e2020435e36170cdc01992cbddf7c8e630b16ee950d368",
+      "non_doc_paths": 512,
+      "model_sources": {
+        "scripts/verify_offline_export.py": "b744b9bb8d594d2018f3ca71c89a22ca03fc0966570e5e1bf7658725aea90edd",
+        "scripts/verify_integration_export.py": "2b2a67d99e723caabc52d6ded00927280921694985d0b99ffeb22f05fee21963",
+        "scripts/native_observation.py": "4fb0778090888420a4bdb30c09dc0046bc48bc7ee65b6ba68a66320a18e4689a",
+        "game/scripts/offline_diagnostics.gd": "f3c08ac3cdfd7acca59662caebf579812573fcb6267306aa916522bcba24217c",
+        "scripts/shutdown_study_retention.py": "6ddaa38f4fc8d5f16a9a2e303a82c412a644e0d0e757bff591604e12c1f3c46b"
+      }
+    },
+    "model": {
+      "trial_count": 4,
+      "order": [
+        "ordinary",
+        "verbose",
+        "verbose",
+        "ordinary"
+      ],
+      "flow_seconds": 300,
+      "close_seconds": 20,
+      "named_acceptance_pngs": 22,
+      "overwritten_ocr_pngs": 1,
+      "ocr_stdout_files": 16,
+      "ocr_stdout_prefix_bytes": 2097152,
+      "png_bytes": null,
+      "native_combined_stdout_stderr_bytes": null,
+      "trace_jsonl_bytes": null,
+      "actions_status_results_profile_state_bytes": null,
+      "ocr_stderr_bytes": null,
+      "controller_job_receipts_bytes": null,
+      "complete_ocr_stdout_on_overflow": false
+    },
+    "status": "BLOCKED",
+    "reasons": [
+      "No source-backed finite maximum: png_bytes",
+      "No source-backed finite maximum: native_combined_stdout_stderr_bytes",
+      "No source-backed finite maximum: trace_jsonl_bytes",
+      "No source-backed finite maximum: actions_status_results_profile_state_bytes",
+      "No source-backed finite maximum: ocr_stderr_bytes",
+      "No source-backed finite maximum: controller_job_receipts_bytes",
+      "Existing OCR overflow keeps a prefix; complete failure stream not guaranteed",
+      "No source-backed maximum for ZIP members/names/index overhead",
+      "No source-backed maximum indivisible archive member"
+    ],
+    "archive_count": 2,
+    "archive_bytes": 33554432,
+    "ocr_prefix_capacity_per_trial": 33554432,
+    "conservative_all_trials_bytes": null,
+    "execution_authorized": false,
+    "scope": "Source-only retention preflight; old observations cannot certify future maxima"
+  },
+  "matched": true
+}
