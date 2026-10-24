@@ -1,0 +1,1042 @@
+{
+  "scope": "Offline source consistency only; historical contradictions explicitly retained",
+  "checkout_head": "30e410e0440c5dbd4b342a8714f92f0027e71b13",
+  "reader_sha256": "207beebe124a1ad5928a154fb77c99d2e43864ce236751dc7ce985878181bcb2",
+  "cpu_affinity": [
+    4
+  ],
+  "cases": [
+    {
+      "group": "independent-25",
+      "name": "coherent_independent_pipeline",
+      "expected_complete": true,
+      "actual_complete": false,
+      "expectation_met": false,
+      "obsolete_historical_positive": true,
+      "fixture_changes": [],
+      "required_verdict_met": true
+    },
+    {
+      "group": "source-corrected-independent-25",
+      "name": "coherent_independent_pipeline",
+      "expected_complete": true,
+      "actual_complete": true,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [
+        "Match1068-1078/InputStream35-47: first accepted queue nonempty, pre-pop ACK absent; Match279-281/InputStream83: popped ACK and actor controls, retained on later rows. Existing identity/header/privacy/truncation mutations remain."
+      ],
+      "required_verdict_met": true
+    },
+    {
+      "group": "independent-25",
+      "name": "stale_receive",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [],
+      "required_verdict_met": true
+    },
+    {
+      "group": "source-corrected-independent-25",
+      "name": "stale_receive",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [
+        "Match1068-1078/InputStream35-47: first accepted queue nonempty, pre-pop ACK absent; Match279-281/InputStream83: popped ACK and actor controls, retained on later rows. Existing identity/header/privacy/truncation mutations remain."
+      ],
+      "required_verdict_met": true
+    },
+    {
+      "group": "independent-25",
+      "name": "receive_wrong_epoch",
+      "expected_complete": true,
+      "actual_complete": false,
+      "expectation_met": false,
+      "obsolete_historical_positive": true,
+      "fixture_changes": [],
+      "required_verdict_met": true
+    },
+    {
+      "group": "source-corrected-independent-25",
+      "name": "receive_wrong_epoch",
+      "expected_complete": true,
+      "actual_complete": true,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [
+        "Match1068-1078/InputStream35-47: first accepted queue nonempty, pre-pop ACK absent; Match279-281/InputStream83: popped ACK and actor controls, retained on later rows. Existing identity/header/privacy/truncation mutations remain.",
+        "Match1066-1078/1295-1300: malformed receive rejects without printing, then same-action valid receive coalesces before valid acceptance; counters/latest explicitly include both calls."
+      ],
+      "required_verdict_met": true
+    },
+    {
+      "group": "independent-25",
+      "name": "receive_impossible_sequence",
+      "expected_complete": true,
+      "actual_complete": false,
+      "expectation_met": false,
+      "obsolete_historical_positive": true,
+      "fixture_changes": [],
+      "required_verdict_met": true
+    },
+    {
+      "group": "source-corrected-independent-25",
+      "name": "receive_impossible_sequence",
+      "expected_complete": true,
+      "actual_complete": true,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [
+        "Match1068-1078/InputStream35-47: first accepted queue nonempty, pre-pop ACK absent; Match279-281/InputStream83: popped ACK and actor controls, retained on later rows. Existing identity/header/privacy/truncation mutations remain.",
+        "Match1249-1264: count1 malformed sequence projects equal negative endpoints; old unequal projection remains historical.",
+        "Match1066-1078/1295-1300: malformed receive rejects without printing, then same-action valid receive coalesces before valid acceptance; counters/latest explicitly include both calls."
+      ],
+      "required_verdict_met": true
+    },
+    {
+      "group": "independent-25",
+      "name": "receive_missing_metadata",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [],
+      "required_verdict_met": true
+    },
+    {
+      "group": "source-corrected-independent-25",
+      "name": "receive_missing_metadata",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [
+        "Match1068-1078/InputStream35-47: first accepted queue nonempty, pre-pop ACK absent; Match279-281/InputStream83: popped ACK and actor controls, retained on later rows. Existing identity/header/privacy/truncation mutations remain."
+      ],
+      "required_verdict_met": true
+    },
+    {
+      "group": "independent-25",
+      "name": "receive_unbound_different_peer",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [],
+      "required_verdict_met": true
+    },
+    {
+      "group": "source-corrected-independent-25",
+      "name": "receive_unbound_different_peer",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [
+        "Match1068-1078/InputStream35-47: first accepted queue nonempty, pre-pop ACK absent; Match279-281/InputStream83: popped ACK and actor controls, retained on later rows. Existing identity/header/privacy/truncation mutations remain."
+      ],
+      "required_verdict_met": true
+    },
+    {
+      "group": "independent-25",
+      "name": "accepted_reversed_sequence_interval",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [],
+      "required_verdict_met": true
+    },
+    {
+      "group": "source-corrected-independent-25",
+      "name": "accepted_reversed_sequence_interval",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [
+        "Match1068-1078/InputStream35-47: first accepted queue nonempty, pre-pop ACK absent; Match279-281/InputStream83: popped ACK and actor controls, retained on later rows. Existing identity/header/privacy/truncation mutations remain."
+      ],
+      "required_verdict_met": true
+    },
+    {
+      "group": "independent-25",
+      "name": "consumption_outside_accepted_batch",
+      "expected_complete": true,
+      "actual_complete": false,
+      "expectation_met": false,
+      "obsolete_historical_positive": true,
+      "fixture_changes": [],
+      "required_verdict_met": true
+    },
+    {
+      "group": "source-corrected-independent-25",
+      "name": "consumption_outside_accepted_batch",
+      "expected_complete": true,
+      "actual_complete": true,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [
+        "Match1068-1078/InputStream35-47: first accepted queue nonempty, pre-pop ACK absent; Match279-281/InputStream83: popped ACK and actor controls, retained on later rows. Existing identity/header/privacy/truncation mutations remain.",
+        "Match1295-1300: later same-action receive/accept may coalesce; counters/latest expose its new command while the earlier direct accepted event remains unchanged. No packet correlation inferred."
+      ],
+      "required_verdict_met": true
+    },
+    {
+      "group": "independent-25",
+      "name": "consumption_before_receive_accept",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [],
+      "required_verdict_met": true
+    },
+    {
+      "group": "source-corrected-independent-25",
+      "name": "consumption_before_receive_accept",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [
+        "Match1068-1078/InputStream35-47: first accepted queue nonempty, pre-pop ACK absent; Match279-281/InputStream83: popped ACK and actor controls, retained on later rows. Existing identity/header/privacy/truncation mutations remain."
+      ],
+      "required_verdict_met": true
+    },
+    {
+      "group": "independent-25",
+      "name": "client_send_different_transport",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [],
+      "required_verdict_met": true
+    },
+    {
+      "group": "source-corrected-independent-25",
+      "name": "client_send_different_transport",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [
+        "Match1068-1078/InputStream35-47: first accepted queue nonempty, pre-pop ACK absent; Match279-281/InputStream83: popped ACK and actor controls, retained on later rows. Existing identity/header/privacy/truncation mutations remain."
+      ],
+      "required_verdict_met": true
+    },
+    {
+      "group": "independent-25",
+      "name": "client_send_unwelcomed_attempt",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [],
+      "required_verdict_met": true
+    },
+    {
+      "group": "source-corrected-independent-25",
+      "name": "client_send_unwelcomed_attempt",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [
+        "Match1068-1078/InputStream35-47: first accepted queue nonempty, pre-pop ACK absent; Match279-281/InputStream83: popped ACK and actor controls, retained on later rows. Existing identity/header/privacy/truncation mutations remain."
+      ],
+      "required_verdict_met": true
+    },
+    {
+      "group": "independent-25",
+      "name": "client_send_different_actor",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [],
+      "required_verdict_met": true
+    },
+    {
+      "group": "source-corrected-independent-25",
+      "name": "client_send_different_actor",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [
+        "Match1068-1078/InputStream35-47: first accepted queue nonempty, pre-pop ACK absent; Match279-281/InputStream83: popped ACK and actor controls, retained on later rows. Existing identity/header/privacy/truncation mutations remain."
+      ],
+      "required_verdict_met": true
+    },
+    {
+      "group": "independent-25",
+      "name": "client_send_epoch_disagrees_with_authority",
+      "expected_complete": true,
+      "actual_complete": false,
+      "expectation_met": false,
+      "obsolete_historical_positive": true,
+      "fixture_changes": [],
+      "required_verdict_met": true
+    },
+    {
+      "group": "source-corrected-independent-25",
+      "name": "client_send_epoch_disagrees_with_authority",
+      "expected_complete": true,
+      "actual_complete": true,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [
+        "Match1068-1078/InputStream35-47: first accepted queue nonempty, pre-pop ACK absent; Match279-281/InputStream83: popped ACK and actor controls, retained on later rows. Existing identity/header/privacy/truncation mutations remain."
+      ],
+      "required_verdict_met": true
+    },
+    {
+      "group": "independent-25",
+      "name": "send_outside_pending_interval",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [],
+      "required_verdict_met": true
+    },
+    {
+      "group": "source-corrected-independent-25",
+      "name": "send_outside_pending_interval",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [
+        "Match1068-1078/InputStream35-47: first accepted queue nonempty, pre-pop ACK absent; Match279-281/InputStream83: popped ACK and actor controls, retained on later rows. Existing identity/header/privacy/truncation mutations remain."
+      ],
+      "required_verdict_met": true
+    },
+    {
+      "group": "independent-25",
+      "name": "missing_consumption",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [],
+      "required_verdict_met": true
+    },
+    {
+      "group": "source-corrected-independent-25",
+      "name": "missing_consumption",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [
+        "Match1068-1078/InputStream35-47: first accepted queue nonempty, pre-pop ACK absent; Match279-281/InputStream83: popped ACK and actor controls, retained on later rows. Existing identity/header/privacy/truncation mutations remain."
+      ],
+      "required_verdict_met": true
+    },
+    {
+      "group": "independent-25",
+      "name": "stale_consumption",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [],
+      "required_verdict_met": true
+    },
+    {
+      "group": "source-corrected-independent-25",
+      "name": "stale_consumption",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [
+        "Match1068-1078/InputStream35-47: first accepted queue nonempty, pre-pop ACK absent; Match279-281/InputStream83: popped ACK and actor controls, retained on later rows. Existing identity/header/privacy/truncation mutations remain."
+      ],
+      "required_verdict_met": true
+    },
+    {
+      "group": "independent-25",
+      "name": "consumption_wrong_generation",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [],
+      "required_verdict_met": true
+    },
+    {
+      "group": "source-corrected-independent-25",
+      "name": "consumption_wrong_generation",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [
+        "Match1068-1078/InputStream35-47: first accepted queue nonempty, pre-pop ACK absent; Match279-281/InputStream83: popped ACK and actor controls, retained on later rows. Existing identity/header/privacy/truncation mutations remain."
+      ],
+      "required_verdict_met": true
+    },
+    {
+      "group": "independent-25",
+      "name": "explicit_cap_truncation",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [],
+      "required_verdict_met": true
+    },
+    {
+      "group": "source-corrected-independent-25",
+      "name": "explicit_cap_truncation",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [
+        "Match1068-1078/InputStream35-47: first accepted queue nonempty, pre-pop ACK absent; Match279-281/InputStream83: popped ACK and actor controls, retained on later rows. Existing identity/header/privacy/truncation mutations remain."
+      ],
+      "required_verdict_met": true
+    },
+    {
+      "group": "independent-25",
+      "name": "index_gap",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [],
+      "required_verdict_met": true
+    },
+    {
+      "group": "source-corrected-independent-25",
+      "name": "index_gap",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [
+        "Match1068-1078/InputStream35-47: first accepted queue nonempty, pre-pop ACK absent; Match279-281/InputStream83: popped ACK and actor controls, retained on later rows. Existing identity/header/privacy/truncation mutations remain."
+      ],
+      "required_verdict_met": true
+    },
+    {
+      "group": "independent-25",
+      "name": "account_field",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [],
+      "required_verdict_met": true
+    },
+    {
+      "group": "source-corrected-independent-25",
+      "name": "account_field",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [
+        "Match1068-1078/InputStream35-47: first accepted queue nonempty, pre-pop ACK absent; Match279-281/InputStream83: popped ACK and actor controls, retained on later rows. Existing identity/header/privacy/truncation mutations remain."
+      ],
+      "required_verdict_met": true
+    },
+    {
+      "group": "independent-25",
+      "name": "hidden_spatial_field",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [],
+      "required_verdict_met": true
+    },
+    {
+      "group": "source-corrected-independent-25",
+      "name": "hidden_spatial_field",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [
+        "Match1068-1078/InputStream35-47: first accepted queue nonempty, pre-pop ACK absent; Match279-281/InputStream83: popped ACK and actor controls, retained on later rows. Existing identity/header/privacy/truncation mutations remain."
+      ],
+      "required_verdict_met": true
+    },
+    {
+      "group": "independent-25",
+      "name": "private_value_in_allowed_field",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [],
+      "required_verdict_met": true
+    },
+    {
+      "group": "source-corrected-independent-25",
+      "name": "private_value_in_allowed_field",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [
+        "Match1068-1078/InputStream35-47: first accepted queue nonempty, pre-pop ACK absent; Match279-281/InputStream83: popped ACK and actor controls, retained on later rows. Existing identity/header/privacy/truncation mutations remain."
+      ],
+      "required_verdict_met": true
+    },
+    {
+      "group": "independent-25",
+      "name": "malformed_truncated_json",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [],
+      "required_verdict_met": true
+    },
+    {
+      "group": "source-corrected-independent-25",
+      "name": "malformed_truncated_json",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [
+        "Match1068-1078/InputStream35-47: first accepted queue nonempty, pre-pop ACK absent; Match279-281/InputStream83: popped ACK and actor controls, retained on later rows. Existing identity/header/privacy/truncation mutations remain."
+      ],
+      "required_verdict_met": true
+    },
+    {
+      "group": "independent-25",
+      "name": "empty_logs",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [],
+      "required_verdict_met": true
+    },
+    {
+      "group": "source-corrected-independent-25",
+      "name": "empty_logs",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [],
+      "required_verdict_met": true
+    },
+    {
+      "group": "independent-25",
+      "name": "original_failed_windows_untraced",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [],
+      "required_verdict_met": true
+    },
+    {
+      "group": "source-corrected-independent-25",
+      "name": "original_failed_windows_untraced",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [],
+      "required_verdict_met": true
+    },
+    {
+      "group": "supplemental-4",
+      "name": "duplicate_index_record",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [],
+      "required_verdict_met": true
+    },
+    {
+      "group": "source-corrected-supplemental-4",
+      "name": "duplicate_index_record",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [
+        "Match1068-1078/InputStream35-47: first accepted queue nonempty, pre-pop ACK absent; Match279-281/InputStream83: popped ACK and actor controls, retained on later rows. Existing identity/header/privacy/truncation mutations remain."
+      ],
+      "required_verdict_met": true
+    },
+    {
+      "group": "supplemental-4",
+      "name": "duplicate_json_key",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [],
+      "required_verdict_met": true
+    },
+    {
+      "group": "source-corrected-supplemental-4",
+      "name": "duplicate_json_key",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [
+        "Match1068-1078/InputStream35-47: first accepted queue nonempty, pre-pop ACK absent; Match279-281/InputStream83: popped ACK and actor controls, retained on later rows. Existing identity/header/privacy/truncation mutations remain."
+      ],
+      "required_verdict_met": true
+    },
+    {
+      "group": "supplemental-4",
+      "name": "duplicate_consumption_sequence",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [],
+      "required_verdict_met": true
+    },
+    {
+      "group": "source-corrected-supplemental-4",
+      "name": "duplicate_consumption_sequence",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [
+        "Match1068-1078/InputStream35-47: first accepted queue nonempty, pre-pop ACK absent; Match279-281/InputStream83: popped ACK and actor controls, retained on later rows. Existing identity/header/privacy/truncation mutations remain."
+      ],
+      "required_verdict_met": true
+    },
+    {
+      "group": "supplemental-4",
+      "name": "authority_expiry_stage_in_client_role",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [],
+      "required_verdict_met": true
+    },
+    {
+      "group": "source-corrected-supplemental-4",
+      "name": "authority_expiry_stage_in_client_role",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [
+        "Match1068-1078/InputStream35-47: first accepted queue nonempty, pre-pop ACK absent; Match279-281/InputStream83: popped ACK and actor controls, retained on later rows. Existing identity/header/privacy/truncation mutations remain."
+      ],
+      "required_verdict_met": true
+    },
+    {
+      "group": "additional-9",
+      "name": "coherent_control",
+      "expected_complete": true,
+      "actual_complete": false,
+      "expectation_met": false,
+      "obsolete_historical_positive": true,
+      "fixture_changes": [],
+      "required_verdict_met": true
+    },
+    {
+      "group": "source-corrected-additional-9",
+      "name": "coherent_control",
+      "expected_complete": true,
+      "actual_complete": true,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [
+        "Match1068-1078/InputStream35-47: first accepted queue nonempty, pre-pop ACK absent; Match279-281/InputStream83: popped ACK and actor controls, retained on later rows. Existing identity/header/privacy/truncation mutations remain."
+      ],
+      "required_verdict_met": true
+    },
+    {
+      "group": "additional-9",
+      "name": "bound_generation_never_connected",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [],
+      "required_verdict_met": true
+    },
+    {
+      "group": "source-corrected-additional-9",
+      "name": "bound_generation_never_connected",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [
+        "Match1068-1078/InputStream35-47: first accepted queue nonempty, pre-pop ACK absent; Match279-281/InputStream83: popped ACK and actor controls, retained on later rows. Existing identity/header/privacy/truncation mutations remain."
+      ],
+      "required_verdict_met": true
+    },
+    {
+      "group": "additional-9",
+      "name": "bound_peer_never_connected",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [],
+      "required_verdict_met": true
+    },
+    {
+      "group": "source-corrected-additional-9",
+      "name": "bound_peer_never_connected",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [
+        "Match1068-1078/InputStream35-47: first accepted queue nonempty, pre-pop ACK absent; Match279-281/InputStream83: popped ACK and actor controls, retained on later rows. Existing identity/header/privacy/truncation mutations remain."
+      ],
+      "required_verdict_met": true
+    },
+    {
+      "group": "additional-9",
+      "name": "binding_before_connection",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [],
+      "required_verdict_met": true
+    },
+    {
+      "group": "source-corrected-additional-9",
+      "name": "binding_before_connection",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [
+        "Match1068-1078/InputStream35-47: first accepted queue nonempty, pre-pop ACK absent; Match279-281/InputStream83: popped ACK and actor controls, retained on later rows. Existing identity/header/privacy/truncation mutations remain."
+      ],
+      "required_verdict_met": true
+    },
+    {
+      "group": "additional-9",
+      "name": "same_generation_rebound_to_other_actor",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [],
+      "required_verdict_met": true
+    },
+    {
+      "group": "source-corrected-additional-9",
+      "name": "same_generation_rebound_to_other_actor",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [
+        "Match1068-1078/InputStream35-47: first accepted queue nonempty, pre-pop ACK absent; Match279-281/InputStream83: popped ACK and actor controls, retained on later rows. Existing identity/header/privacy/truncation mutations remain."
+      ],
+      "required_verdict_met": true
+    },
+    {
+      "group": "additional-9",
+      "name": "first_accept_before_first_receive",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [],
+      "required_verdict_met": true
+    },
+    {
+      "group": "source-corrected-additional-9",
+      "name": "first_accept_before_first_receive",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [
+        "Match1068-1078/InputStream35-47: first accepted queue nonempty, pre-pop ACK absent; Match279-281/InputStream83: popped ACK and actor controls, retained on later rows. Existing identity/header/privacy/truncation mutations remain."
+      ],
+      "required_verdict_met": true
+    },
+    {
+      "group": "additional-9",
+      "name": "one_command_two_sequence_endpoints",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [],
+      "required_verdict_met": true
+    },
+    {
+      "group": "source-corrected-additional-9",
+      "name": "one_command_two_sequence_endpoints",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [
+        "Match1068-1078/InputStream35-47: first accepted queue nonempty, pre-pop ACK absent; Match279-281/InputStream83: popped ACK and actor controls, retained on later rows. Existing identity/header/privacy/truncation mutations remain."
+      ],
+      "required_verdict_met": true
+    },
+    {
+      "group": "additional-9",
+      "name": "welcome_claims_unobserved_attempt",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [],
+      "required_verdict_met": true
+    },
+    {
+      "group": "source-corrected-additional-9",
+      "name": "welcome_claims_unobserved_attempt",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [
+        "Match1068-1078/InputStream35-47: first accepted queue nonempty, pre-pop ACK absent; Match279-281/InputStream83: popped ACK and actor controls, retained on later rows. Existing identity/header/privacy/truncation mutations remain."
+      ],
+      "required_verdict_met": true
+    },
+    {
+      "group": "additional-9",
+      "name": "accepted_unordered_two_command_batch",
+      "expected_complete": true,
+      "actual_complete": true,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [],
+      "required_verdict_met": true
+    },
+    {
+      "group": "source-corrected-additional-9",
+      "name": "accepted_unordered_two_command_batch",
+      "expected_complete": true,
+      "actual_complete": true,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [
+        "Match1068-1078/InputStream35-47: first accepted queue nonempty, pre-pop ACK absent; Match279-281/InputStream83: popped ACK and actor controls, retained on later rows. Existing identity/header/privacy/truncation mutations remain."
+      ],
+      "required_verdict_met": true
+    },
+    {
+      "group": "new-controls",
+      "name": "accepted_latest_differs_from_synchronous_receive",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [
+        "_input_rpc passes the same data to input_received and input_accepted synchronously. A current accepted fire0 cannot retain received fire1 metadata from that invocation."
+      ],
+      "required_verdict_met": true
+    },
+    {
+      "group": "new-controls",
+      "name": "binding_counter_claims_hidden_lifecycle_event",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [
+        "Every peer_bound increments its counter and always emits. Exactly one observed binding cannot have cumulative count2; no missing index or observation_limit exists."
+      ],
+      "required_verdict_met": true
+    },
+    {
+      "group": "new-controls",
+      "name": "consumed_ack_disagrees_with_command",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [
+        "input_stream.pop sets acknowledged[peer] to returned command.sequence; authority immediately observes that consumed command before any next pop."
+      ],
+      "required_verdict_met": true
+    },
+    {
+      "group": "new-controls",
+      "name": "consumed_actor_projection_disagrees",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [
+        "authority_tick assigns actors[id].input_state = command, then observes input_consumed. The actor input sequence and consumed command sequence must agree."
+      ],
+      "required_verdict_met": true
+    },
+    {
+      "group": "new-controls",
+      "name": "direct_accepted_has_empty_queue",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [
+        "input_stream.accept returns true only with nonempty staged commands, writes them to queues, then _input_rpc calls input_accepted synchronously before any pop."
+      ],
+      "required_verdict_met": true
+    },
+    {
+      "group": "new-controls",
+      "name": "emitted_reason_counter_does_not_increment",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [
+        "_native_input_observe increments diagnostic.counters[reason] before every emitted row. The second directly observed authority_tick cannot retain count1."
+      ],
+      "required_verdict_met": true
+    },
+    {
+      "group": "new-controls",
+      "name": "latest_accepted_deleted_without_reset",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [
+        "diagnostic.latest is initialized once and only updated by reason; an existing input_accepted key cannot disappear at authority_tick."
+      ],
+      "required_verdict_met": true
+    },
+    {
+      "group": "new-controls",
+      "name": "malformed_receive_then_coalesced_valid_receive",
+      "expected_complete": true,
+      "actual_complete": true,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [
+        "Invalid epoch/negative sequence is observable before validation; count1 still projects equal endpoints. Stream rejection increments without emitting; later valid receive can coalesce because epoch/sequence are excluded from its action edge. Counters/latest account for both receives and rejection before acceptance."
+      ],
+      "required_verdict_met": true
+    },
+    {
+      "group": "new-controls",
+      "name": "normalized_stream_control",
+      "expected_complete": true,
+      "actual_complete": true,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [
+        "Original schema baseline with pre-pop ACK-1, nonempty accepted queue, and actor input equal to the popped command; still synthetic, never native qualification."
+      ],
+      "required_verdict_met": true
+    },
+    {
+      "group": "new-controls",
+      "name": "received_one_command_two_endpoints",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [
+        "_native_input_packet count1 visits one command: first/last both derive from its sequence, including invalid negative sequences; a nondict produces -1/-1. Prevalidation does not permit an impossible projection."
+      ],
+      "required_verdict_met": true
+    },
+    {
+      "group": "new-controls",
+      "name": "same_peer_second_live_generation",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [
+        "peer_lifecycle.connected returns false while peers.has(peer); no disconnect/forget can be hidden because peer_disconnected always emits. A second live generation for peer71 cannot exist."
+      ],
+      "required_verdict_met": true
+    },
+    {
+      "group": "new-controls",
+      "name": "second_accept_without_receive_counter_increment",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [
+        "Each accept attempt calls input_received first and increments its counter even if coalesced. Two accepted calls cannot coexist with a cumulative receive count1. Fire1 to0 would also force a direct receive edge."
+      ],
+      "required_verdict_met": true
+    },
+    {
+      "group": "new-controls",
+      "name": "second_peer_coalesced_acceptance",
+      "expected_complete": true,
+      "actual_complete": true,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [
+        "Per-reason receive/accepted edges omit peer identity and use moving count, while consumed edge includes full move. A +X then B -X can hide B receive/accept but emit B consumption. Both counters/latest must advance; when they remain1 after B binding there was no B acceptance to populate its empty queue."
+      ],
+      "required_verdict_met": true
+    },
+    {
+      "group": "new-controls",
+      "name": "second_peer_pop_without_any_acceptance",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [
+        "Per-reason receive/accepted edges omit peer identity and use moving count, while consumed edge includes full move. A +X then B -X can hide B receive/accept but emit B consumption. Both counters/latest must advance; when they remain1 after B binding there was no B acceptance to populate its empty queue."
+      ],
+      "required_verdict_met": true
+    },
+    {
+      "group": "new-controls",
+      "name": "valid_batch_endpoints_1_1",
+      "expected_complete": true,
+      "actual_complete": true,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [
+        "accept validates commands individually and stages a dictionary; valid incoming array endpoints may be reversed or duplicated. Pop returns sorted fresh sequence1."
+      ],
+      "required_verdict_met": true
+    },
+    {
+      "group": "new-controls",
+      "name": "valid_batch_endpoints_2_1",
+      "expected_complete": true,
+      "actual_complete": true,
+      "expectation_met": true,
+      "obsolete_historical_positive": false,
+      "fixture_changes": [
+        "accept validates commands individually and stages a dictionary; valid incoming array endpoints may be reversed or duplicated. Pop returns sorted fresh sequence1."
+      ],
+      "required_verdict_met": true
+    }
+  ],
+  "cases_total": 92,
+  "required_verdicts_met": 92,
+  "obsolete_historical_positives": 6,
+  "passed": true
+}
