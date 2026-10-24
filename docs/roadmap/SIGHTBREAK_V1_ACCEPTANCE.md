@@ -182,3 +182,11 @@ is held/unfrozen under assessment. Actual-log replay remains unexecuted. Shutdow
 75ddeb26 rejects binding and incomplete receipts; narrow physical fixb6da/b692 has
 36 pure passes and source-only preflightBLOCKED, with independent review pending.
 Whole gates/external requirements/strict warnings/Mac review-stop remain unchanged.
+
+At 2026-10-24 14:44 UTC, source bindingebc1a941 is independently scoped-accepted
+f05741f8 for POSIX/source observations, and codec329d3ff5 is component-accepted
+9fa673ab. Whole study/native producer remain rejected or blocked. R7 e83114a7 has
+32 absorbing-history false completes; new lifecycle model is unsealed. Ancestry
+draftb94ffeaf awaits protection-scope adjudication after57tests/1intendedguardfailure.
+Receipt completeness is in new source/fixture review. No native retry, actual
+input-reader replay, whole gate, quality target or external dependency is waived.

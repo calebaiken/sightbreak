@@ -1,0 +1,105 @@
+{
+  "source": "/workspace/reviews/objective-perception-math-independent-20261024",
+  "methods": 6,
+  "failures": 2,
+  "errors": 0,
+  "skips": 1,
+  "scope": "Pure fake states and own local Git metadata; no engine/process/helper/proc probe or real signal",
+  "results": {
+    "direct_root_empty_discovery": {
+      "passed": true,
+      "signals": [
+        {
+          "pid": 100,
+          "start_ticks": 123,
+          "signal": 15
+        }
+      ],
+      "reaped": [],
+      "survivors": [],
+      "stream_drain_error": null,
+      "root_birth_bound": true,
+      "root_exit_code": -9,
+      "root_popen_waited": true
+    },
+    "observer_exception": {
+      "error": "declared observer error",
+      "cleanup_error": "OSError: declared observer error",
+      "fake_returncode": -9,
+      "terminal_code_persisted": false
+    },
+    "original_scalar_failure_preserved": true,
+    "queued_parent_reuse": {
+      "seen": [
+        {
+          "pid": 100,
+          "state": "R",
+          "ppid": 50,
+          "pgrp": 100,
+          "session": 100,
+          "start_ticks": 123
+        },
+        {
+          "pid": 200,
+          "state": "R",
+          "ppid": 100,
+          "pgrp": 100,
+          "session": 100,
+          "start_ticks": 456
+        },
+        {
+          "pid": 300,
+          "state": "R",
+          "ppid": 200,
+          "pgrp": 777,
+          "session": 777,
+          "start_ticks": 789
+        }
+      ],
+      "fake_signals": [
+        [
+          100,
+          15
+        ],
+        [
+          300,
+          15
+        ]
+      ],
+      "unrelated_child_pid": 300,
+      "reused_parent_pid": 200
+    },
+    "stale_child_parent": {
+      "seen": [
+        {
+          "pid": 100,
+          "state": "R",
+          "ppid": 50,
+          "pgrp": 100,
+          "session": 100,
+          "start_ticks": 123
+        },
+        {
+          "pid": 200,
+          "state": "R",
+          "ppid": 999,
+          "pgrp": 777,
+          "session": 777,
+          "start_ticks": 456
+        }
+      ],
+      "fake_signals": [
+        [
+          100,
+          15
+        ],
+        [
+          200,
+          15
+        ]
+      ],
+      "unrelated_pid": 200,
+      "actual_parent": 999
+    }
+  }
+}

@@ -1,0 +1,101 @@
+{
+  "verdict": "REJECT",
+  "scope": "Physical source binding correction only; whole study remains REJECTED/BLOCKED",
+  "source": "b6da3aecfc2d88443c5e0757a9bd9320122a1d4d",
+  "handoff": "b69213b13a4503a330d283bf72565096e152f9d5",
+  "cpu": [
+    4
+  ],
+  "native_invocations": 0,
+  "preflight_exit": 2,
+  "preflight_status": "BLOCKED",
+  "physical_non_doc": 513,
+  "protected_original_non_doc": 511,
+  "builder_members": 10,
+  "tests": {
+    "own-new-tests": {
+      "methods": 8,
+      "passed": true
+    },
+    "own-old-tests": {
+      "methods": 28,
+      "passed": true
+    },
+    "depth-new-tests": {
+      "methods": 8,
+      "passed": true
+    },
+    "depth-old-tests": {
+      "methods": 28,
+      "passed": true
+    }
+  },
+  "fresh_controls": {
+    "own-controls": {
+      "controls": 23,
+      "unmatched": [
+        "read_race_restore_mtime_True"
+      ]
+    },
+    "depth-controls": {
+      "controls": 23,
+      "unmatched": [
+        "read_race_restore_mtime_True"
+      ]
+    }
+  },
+  "whole_binding_race": {
+    "own-race-propagation": {
+      "actual": "BIND",
+      "expected": "REJECT",
+      "before": {
+        "inode": 73286,
+        "size": 15,
+        "mtime_ns": 1792850832999381602,
+        "ctime_ns": 1792850832999381602
+      },
+      "after": {
+        "inode": 73286,
+        "size": 15,
+        "mtime_ns": 1792850832999381602,
+        "ctime_ns": 1792850833026879796
+      }
+    },
+    "depth-race-propagation": {
+      "actual": "BIND",
+      "expected": "REJECT",
+      "before": {
+        "inode": 73362,
+        "size": 15,
+        "mtime_ns": 1792850833217201876,
+        "ctime_ns": 1792850833217201876
+      },
+      "after": {
+        "inode": 73362,
+        "size": 15,
+        "mtime_ns": 1792850833217201876,
+        "ctime_ns": 1792850833246670549
+      }
+    }
+  },
+  "views": [
+    {
+      "path": "/workspace/sightbreak-windows-shutdown-source-binding-r2",
+      "head": "b69213b13a4503a330d283bf72565096e152f9d5",
+      "status": "",
+      "shallow": "false"
+    },
+    {
+      "path": "/workspace/reviews/windows-shutdown-source-binding-r2-exact-20261024",
+      "head": "b6da3aecfc2d88443c5e0757a9bd9320122a1d4d",
+      "status": "",
+      "shallow": "false"
+    },
+    {
+      "path": "/workspace/reviews/windows-shutdown-source-binding-r2-depth1-20261024",
+      "head": "b6da3aecfc2d88443c5e0757a9bd9320122a1d4d",
+      "status": "",
+      "shallow": "true"
+    }
+  ]
+}

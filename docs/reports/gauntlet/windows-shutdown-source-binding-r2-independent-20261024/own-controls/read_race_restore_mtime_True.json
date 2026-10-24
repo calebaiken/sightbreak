@@ -1,0 +1,31 @@
+{
+  "name": "read_race_restore_mtime_True",
+  "expected": "REJECT",
+  "actual": "BIND",
+  "matched": false,
+  "expected_bytes_hex": "6f726967696e616c2062797465730a",
+  "current_bytes_hex": "6368616e676564212062797465730a",
+  "before": {
+    "size": 15,
+    "mtime_ns": 1792850709708030988,
+    "ctime_ns": 1792850709708030988,
+    "ino": 72049
+  },
+  "after": {
+    "size": 15,
+    "mtime_ns": 1792850709708030988,
+    "ctime_ns": 1792850709708691905,
+    "ino": 72049
+  },
+  "receipt": {
+    "bytes": 15,
+    "sha256": "45c0b761a6c6640319e6cddeb492718532f70161ed9174c75ca7f1158c508b2f",
+    "canonical_sha256": "45c0b761a6c6640319e6cddeb492718532f70161ed9174c75ca7f1158c508b2f",
+    "canonical_mode": "100644",
+    "physical_mode": "100644",
+    "checkout_conversion": "none",
+    "mode_scope": "POSIX owner executable bit"
+  },
+  "error": null,
+  "scope": "Same-call mutation after an actual read; not a whole-filesystem atomicity claim"
+}
