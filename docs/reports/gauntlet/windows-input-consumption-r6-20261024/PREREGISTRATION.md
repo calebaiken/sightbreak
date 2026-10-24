@@ -110,3 +110,22 @@ consumes21 with matching actor/ACK21 and queue1 retaining22, and carries those
 consumed fields/queue through the terminal tick. This preserves the useful
 distinction between latest accepted metadata and actual popped intent without
 inventing packet identity. Do not change the historical case or expectation.
+
+## Definite-fact abstraction refinement before source freeze
+
+Independent static model assessment found that unknown middle command bodies
+must not erase known queue facts. Refine the model to retain definite queued
+endpoint keys and immutable known control signatures alongside observed queue
+cardinality. Exactness follows when definite keys fill that cardinality, including
+re-establishing exact emptiness after queue0. Unknown packet middles never remove
+earlier definite keys/signatures by themselves. Pop removes the minimum retained
+key, while known smaller keys must fit the skipped count; uniqueness also bounds
+a post-backlog popped sequence by prior ACK+skipped+1 and the remaining window.
+Intersect definite facts across genuine event-order alternatives only.
+
+An explicit consumed identity can prove a pop even when a later hook selects
+another peer. If its prior cardinality, sole pop and no new acceptance determine
+the source transition, infer that unselected stream state. UNKNOWN is reserved
+for unresolved state/context, not imposed merely because the row selects a
+different peer. Add source-faithful pure controls for these abstraction cases
+before calling the implementation ready; preserve earlier outputs unchanged.
