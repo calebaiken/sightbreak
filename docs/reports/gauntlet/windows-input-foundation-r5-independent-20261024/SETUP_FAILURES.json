@@ -1,0 +1,12 @@
+{
+  "schema": 1,
+  "failures": [
+    {
+      "stage": "required historical pure fixture sparse selection; candidate not executed",
+      "command": "git sparse-checkout add --no-cone --stdin",
+      "exit": 129,
+      "stderr": "error: unknown option `no-cone'\nusage: git sparse-checkout add [--skip-checks] (--stdin | <patterns>)\n\n    --skip-checks         skip some sanity checks on the given paths that might give false positives\n    --[no-]stdin          read patterns from standard in\n\nTraceback (most recent call last):\n  File \"<stdin>\", line 12, in <module>\n  File \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['git', 'sparse-checkout', 'add', '--no-cone', '--stdin']' returned non-zero exit status 129.",
+      "planned_correction": "already non-cone checkout: git sparse-checkout add --stdin, then exact Git restore"
+    }
+  ]
+}

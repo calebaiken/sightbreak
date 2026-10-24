@@ -1,0 +1,11 @@
+# Additive pure-control adjudication, before second execution
+
+Registered first target run1009867e is preserved untouched. Three schema-valid target negatives reject; exact23-leaf constructor/projection and the single separate proposal method pass. Four of six proposed mutants change expected INVALID to UNKNOWN. helper-noop and queue-early remain INVALID because the ACK0 construction reaches an independent accepted-header ACK/window guard first. These are surviving redundant-guard controls, not candidate defects and not meaningful kills.
+
+Register a distinct R2 construction before execution: seed two bound peers, coalesced accepted calls from each, then an emitted ambiguous-owner tick; append a second later emitted tick and put ACK0 only there. This makes a real earlier queue UNKNOWN precede the later deterministic contradiction. Reuse unchanged header/time cases and constructor proof, preserve R1 code/results, and count each mutant only if the concrete observed result supports it. No candidate bytes change. This registration does not assume the new construction succeeds.
+
+Source metadata correction: 135 old test methods contain313 assert* calls. The complete unchanged old test files contain315 such calls including two helper calls outside methods. Bare Python assert statements are separately counted and must not be added to call counts. Earlier quick note to root mixed those scopes; full-file315 and all bytes remain protected.
+
+Retained setup error: after copying the selected immutable R4 input corpus, `git sparse-checkout add --no-cone --stdin` exited129 because this Git accepts --no-cone on set, not add. No candidate/test check ran through that failed setup. Existing checkout already has sparseCheckoutCone=false; use add --stdin, then restore the exact declared fixtures, before literal execution. Preserve the error text in SETUP_FAILURES.json. No source fixture is omitted or reclassified as passing.
+
+Builder proposal provenance field `original_method_source_sha256` is mislabeled: d25d15b8 is the entire original module's SHA256. The literal named method's full physical lines hash2a1da6dc and its AST/tail are independently bound. Both source forms and the misleading original field remain retained; this is a documentation identity correction, not a candidate behavior defect.
