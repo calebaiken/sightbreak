@@ -193,11 +193,14 @@ class SupervisorControls(unittest.TestCase):
     @classmethod
     def setUpClass(cls):cls.raw=encoded(declared_records())
 
-    def trial(self,*,finish=.1,code=0,survivor=False,overflow=False,stderr=b'',observer_error=False,bad_affinity=False):
+    def trial(self,*,finish=.1,code=0,survivor=False,overflow=False,stderr=b'',observer_error=False,bad_affinity=False,preflight_error=False):
         clock=FakeClock();kernel=FakeKernel(survivor=survivor,observer_error=observer_error);calls=[]
         temporary=tempfile.TemporaryDirectory();out=Path(temporary.name)/'owned'
         process=FakeProcess(clock,kernel,finish,code)
         if bad_affinity:kernel.affinity=lambda pid:[4]
+        if preflight_error:
+            def unavailable():raise RuntimeError('owned process child-list interface unavailable for existing task')
+            kernel.enable_subreaper=unavailable
         def spawn(command,**options):calls.append((command,options));return process
         binding=dict(commit='a'*40,files={p:acquisition.digest(ROOT/p) for p in acquisition.COMPONENT})
         original=acquisition.digest
@@ -327,6 +330,102 @@ class SupervisorControls(unittest.TestCase):
         kernel.open_pid=changed;tree=acquisition.OwnedTree(kernel,100)
         with self.assertRaisesRegex(RuntimeError,'birth identity'):tree.observe()
         self.assertFalse(tree.seen);self.assertFalse(kernel.sent)
+
+    def test_unavailable_prelaunch_observer_does_not_create_native_process(self):
+        tmp,out,report,calls,kernel,process,clock=self.trial(preflight_error=True)
+        try:
+            self.assertFalse(report['passed']);self.assertEqual(calls,[])
+            self.assertEqual(report['native_invocations'],0);self.assertNotIn('cleanup',report)
+            self.assertIn('child-list interface unavailable',report['error'])
+            self.assertNotIn('spawned_pid',report);self.assertFalse(process.killed)
+        finally:tmp.cleanup()
+
+    def test_intended_root_pid_is_retained_but_does_not_replace_failed_readback(self):
+        tmp,out,report,calls,kernel,process,clock=self.trial(bad_affinity=True)
+        try:
+            self.assertEqual(report['spawned_pid'],100);self.assertFalse(report['passed'])
+            self.assertNotIn('math',report);self.assertTrue(report['failure_log_coverage_complete'])
+        finally:tmp.cleanup()
+
+    def test_direct_root_binding_checks_parent_and_birth_before_ownership(self):
+        for changed in ('parent','birth'):
+            kernel=FakeKernel();tree=acquisition.OwnedTree(kernel,100)
+            if changed=='parent':kernel.table[100]['ppid']=999
+            else:
+                def reused(pid):kernel.table[pid]['start_ticks']+=1;return pid
+                kernel.open_pid=reused
+            with self.assertRaisesRegex(RuntimeError,'parent|birth'):tree.bind_root()
+            self.assertFalse(tree.seen);self.assertFalse(kernel.sent)
+            if changed=='birth':self.assertEqual(kernel.closed,[100])
+
+    def test_live_popen_root_cannot_vanish_with_empty_discovery(self):
+        clock=FakeClock();kernel=FakeKernel();kernel.children=lambda pid:[]
+        process=FakeProcess(clock,kernel);tree=acquisition.OwnedTree(kernel,100)
+        result=acquisition.cleanup(process,tree,clock()+5,clock=clock,sleep=clock.sleep)
+        self.assertFalse(result['passed']);self.assertTrue(process.killed)
+        self.assertTrue(result['root_popen_waited']);self.assertFalse(result['root_birth_bound'])
+        self.assertEqual(result['root_exit_code'],-9);self.assertTrue(result['signals'])
+
+    def test_bound_exited_popen_root_has_explicit_wait_status(self):
+        clock=FakeClock();kernel=FakeKernel();process=FakeProcess(clock,kernel)
+        tree=acquisition.OwnedTree(kernel,100);tree.bind_root();clock.sleep(.2)
+        result=acquisition.cleanup(process,tree,clock()+5,clock=clock,sleep=clock.sleep)
+        self.assertTrue(result['passed']);self.assertTrue(result['root_birth_bound'])
+        self.assertTrue(result['root_popen_waited']);self.assertEqual(result['root_exit_code'],0)
+        self.assertFalse(result['signals']);tree.close()
+
+
+class ProcInterfaceControls(unittest.TestCase):
+    def fixture(self):
+        tmp=tempfile.TemporaryDirectory();root=Path(tmp.name);parent=root/'50';task=parent/'task'/'50'
+        task.mkdir(parents=True)
+        def mapped(value):
+            p=Path(value)
+            return root.joinpath(*p.parts[2:]) if p.is_absolute() and p.parts[1:2]==('proc',) else p
+        return tmp,parent,task,mapped
+
+    def test_existing_task_missing_interface_and_existing_parent_missing_tasks_fail(self):
+        tmp,parent,task,mapped=self.fixture()
+        try:
+            with patch.object(acquisition,'Path',side_effect=mapped):
+                with self.assertRaisesRegex(RuntimeError,'existing task'):acquisition.LinuxKernel().children(50)
+                task.rmdir()
+                with self.assertRaisesRegex(RuntimeError,'empty for existing parent'):acquisition.LinuxKernel().children(50)
+                (parent/'task').rmdir()
+                with self.assertRaisesRegex(RuntimeError,'existing parent'):acquisition.LinuxKernel().children(50)
+                parent.rmdir();self.assertEqual(acquisition.LinuxKernel().children(50),[])
+        finally:tmp.cleanup()
+
+    def test_multiple_thread_lists_deduplicate_and_invalid_pid_tokens_fail(self):
+        tmp,parent,task,mapped=self.fixture();other=parent/'task'/'51';other.mkdir()
+        try:
+            (task/'children').write_text('100 101\n');(other/'children').write_text('101 102')
+            with patch.object(acquisition,'Path',side_effect=mapped):
+                self.assertEqual(acquisition.LinuxKernel().children(50),[100,101,102])
+                for token in ('0','-1','abc','1.5','１２３'):
+                    (task/'children').write_text(token)
+                    with self.subTest(token=token),self.assertRaisesRegex(RuntimeError,'malformed'):acquisition.LinuxKernel().children(50)
+                (task/'children').write_text('')
+                with patch.object(Path,'read_text',side_effect=PermissionError('denied')):
+                    with self.assertRaises(PermissionError):acquisition.LinuxKernel().children(50)
+        finally:tmp.cleanup()
+
+    def test_departed_thread_is_distinct_from_missing_children_on_live_thread(self):
+        tmp,parent,task,mapped=self.fixture();original=Path.read_text
+        def departed(path,*args,**kwargs):
+            if path==task/'children':task.rmdir();raise FileNotFoundError('declared thread departure')
+            return original(path,*args,**kwargs)
+        try:
+            with patch.object(acquisition,'Path',side_effect=mapped),patch.object(Path,'read_text',departed):
+                self.assertEqual(acquisition.LinuxKernel().children(50),[])
+        finally:tmp.cleanup()
+
+    def test_supervisor_preflight_checks_interface_before_subreaper_mutation(self):
+        kernel=acquisition.LinuxKernel();kernel.identity=lambda pid:dict(pid=pid)
+        kernel.children=lambda pid:(_ for _ in ()).throw(RuntimeError('interface absent'))
+        with patch.object(acquisition.ctypes,'CDLL') as libc,self.assertRaisesRegex(RuntimeError,'interface absent'):
+            kernel.enable_subreaper()
+        libc.assert_not_called()
 
 
 if __name__=='__main__':unittest.main()

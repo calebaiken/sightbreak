@@ -62,6 +62,10 @@ class LinuxKernel:
         self.supervisor=os.getpid()
 
     def enable_subreaper(self):
+        require(self.identity(self.supervisor) is not None,'supervisor identity unavailable before native launch')
+        # An unavailable children interface cannot establish an empty owned tree.
+        # Check our still-live supervisor before creating the sole native child.
+        self.children(self.supervisor)
         require(hasattr(os,'pidfd_open') and hasattr(signal,'pidfd_send_signal'),'owned pidfd API unavailable')
         libc=ctypes.CDLL(None,use_errno=True)
         require(libc.prctl(36,1,0,0,0)==0,'cannot enable owned child subreaper')
@@ -77,13 +81,21 @@ class LinuxKernel:
 
     def children(self,pid):
         result=set()
+        parent=Path(f'/proc/{pid}')
         try:
-            tasks=list(Path(f'/proc/{pid}/task').iterdir())
+            tasks=list((parent/'task').iterdir())
         except FileNotFoundError:
+            require(not parent.exists(),'owned process task interface unavailable for existing parent')
             return []
+        require(tasks or not parent.exists(),'owned process task interface empty for existing parent')
         for task in tasks:
-            try:result.update(int(p) for p in (task/'children').read_text().split())
-            except FileNotFoundError:pass
+            try:
+                values=(task/'children').read_text().split()
+            except FileNotFoundError:
+                require(not task.exists(),'owned process child-list interface unavailable for existing task')
+                continue
+            require(all(value.isascii() and value.isdecimal() and int(value)>0 for value in values),'malformed owned process child-list')
+            result.update(int(value) for value in values)
         return sorted(result)
 
     def open_pid(self,pid):
@@ -116,6 +128,22 @@ class OwnedTree:
     @staticmethod
     def key(value):
         return value['pid'],value['start_ticks']
+
+    def bind_root(self):
+        current=self.kernel.identity(self.root_pid)
+        require(current is not None,'known Popen root identity unavailable')
+        require(current['ppid']==self.kernel.supervisor,'known Popen root parent mismatch')
+        key=self.key(current)
+        fd=self.kernel.open_pid(self.root_pid)
+        try:
+            after=self.kernel.identity(self.root_pid)
+            require(after is not None and self.key(after)==key and after['ppid']==self.kernel.supervisor,
+                    'known Popen root birth/parent changed during binding')
+        except BaseException:
+            self.kernel.close_pid(fd)
+            raise
+        self.seen[key]=dict(identity=current,fd=fd)
+        return after
 
     def observe(self):
         queue=[self.kernel.supervisor];visited=set()
@@ -197,6 +225,11 @@ class Streams:
 def cleanup(process,tree,deadline,*,streams=None,clock=time.monotonic,sleep=time.sleep):
     start=clock();escalated=False;drain_error=None
     tree.observe();process.poll();tree.reap_descendants()
+    root_bound=any(key[0]==tree.root_pid for key in tree.seen)
+    if process.poll() is None and not any(value['pid']==tree.root_pid for value in tree.live()):
+        # Discovery is never allowed to erase the child returned by Popen.
+        process.kill()
+        tree.signals.append(dict(pid=process.pid,start_ticks=None,signal=int(signal.SIGKILL),via='owned Popen safety cleanup'))
     if tree.live():tree.signal_all(signal.SIGTERM)
     while clock()<deadline:
         tree.observe();process.poll();tree.reap_descendants()
@@ -204,15 +237,20 @@ def cleanup(process,tree,deadline,*,streams=None,clock=time.monotonic,sleep=time
             try:streams.read(min(.02,max(0,deadline-clock())))
             except BaseException as error:drain_error=type(error).__name__+': '+str(error)
         pending=streams is not None and streams.pending()
-        if not tree.live() and not tree.kernel.children(tree.kernel.supervisor) and (not pending or drain_error):
-            return dict(passed=clock()<=deadline and not drain_error,signals=tree.signals,reaped=tree.reaped,
-                        survivors=[],stream_drain_error=drain_error)
+        root_code=process.poll()
+        if root_code is not None and not tree.live() and not tree.kernel.children(tree.kernel.supervisor) and (not pending or drain_error):
+            waited=process.wait(timeout=max(0,deadline-clock()))
+            require(waited==root_code,'known Popen root wait status mismatch')
+            return dict(passed=clock()<=deadline and not drain_error and root_bound,signals=tree.signals,reaped=tree.reaped,
+                        survivors=[],stream_drain_error=drain_error,root_birth_bound=root_bound,
+                        root_exit_code=root_code,root_popen_waited=True)
         if not escalated and clock()-start>=CLEANUP_SECONDS/2:
             tree.signal_all(signal.SIGKILL);escalated=True
         sleep(min(.02,max(0,deadline-clock())))
     tree.observe();process.poll();tree.reap_descendants()
     return dict(passed=False,signals=tree.signals,reaped=tree.reaped,survivors=tree.live(),
-                late=True,stream_drain_error=drain_error)
+                late=True,stream_drain_error=drain_error,root_birth_bound=root_bound,
+                root_exit_code=process.poll(),root_popen_waited=False)
 
 
 def monitor(process,tree,streams,deadline,*,clock=time.monotonic):
@@ -264,8 +302,10 @@ def acquire(output,expected_source,*,clock=time.monotonic,sleep=time.sleep,proce
         report['native_invocations']+=1
         process=process_factory(command,stdout=subprocess.PIPE,stderr=subprocess.PIPE,cwd=target,env=env,
                                 start_new_session=True,preexec_fn=lambda:os.sched_setaffinity(0,{0,1}))
+        report['spawned_pid']=process.pid  # Intended child only; birth/ownership still require readback.
         tree=OwnedTree(kernel,process.pid)
         streams=stream_factory(process,output)
+        tree.bind_root()
         tree.observe()
         roots=[v for v in tree.live() if v['pid']==process.pid]
         require(len(roots)==1 and roots[0]['pgrp']==process.pid and roots[0]['session']==process.pid,'owned native root identity/session not observed')
