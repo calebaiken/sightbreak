@@ -22,6 +22,18 @@ root ref was stale because the fetch configuration covers main; actual ls-remote
 and GitHub PR metadata agree. Never reset the newer local work to that stale ref.
 No shared merge, history rewrite, release or production deployment is authorized.
 
+## Sole math attempt consumed — do not rerun
+
+Source550e96c9/output /workspace/fov-math-reference-550e96c9-r1-20261024 was invoked
+ONCE at13:07:44UTC after pushed releasea260bfda. Tool314ec8 exits1; native count1.
+Failure: owned native root identity/session not observed. Complete588-row-looking
+stdout770593B/stderr0 reach EOF; independent actual review is active in the same
+math critic. No whole ownership/cleanup/numeric acceptance. Root has retained all
+originals/tool receipts under objective-perception-math-independent-20261024.
+The release below is CONSUMED; no retry/versionprobe/alternate output/payload.
+Diagnose from exact source/raw, obtain separate review/admission before any future
+new-source acquisition. Retain original runtime/failed output unchanged.
+
 ## One-shot math release — consume at most once
 
 Independent source/concrete admissionee47c7b4 is retained in

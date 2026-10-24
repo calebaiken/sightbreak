@@ -1,0 +1,85 @@
+{
+  "scope": "isolated native vector math only; no gameplay/LOS/physical proof",
+  "passed": false,
+  "started_monotonic": 33037.248252535,
+  "whole_deadline": 33097.248252535,
+  "whole_seconds": 60.0,
+  "cleanup_seconds": 5.0,
+  "native_invocations": 1,
+  "engine_path": "/workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+  "engine_sha256_expected": "8d106cbe6144c2dc7e881d61d2429c1a8a76e6b22ef48bd5e48dcf934953f71e",
+  "supervisor_cpu_affinity": [
+    4
+  ],
+  "native_cpu_affinity": [
+    0,
+    1
+  ],
+  "output": "/workspace/fov-math-reference-550e96c9-r1-20261024",
+  "source": {
+    "commit": "550e96c9c2e3388a7e06e3df8aa31f973baeae59",
+    "files": {
+      "scripts/fov_math_reference.py": "9643f04f4fa2e8a37eff236a8fe891abb7ff9085cfa1d497f9f87eb67e5502fe",
+      "scripts/acquire_fov_math_reference.py": "f6f0715c21581005421817988701206343683443ca1933a1e86c288e96d36dd5",
+      "scripts/test_fov_math_reference.py": "0e70a43b5d9ddf3cc578911fe86bd9a5423b8debaa86b23ffdb68238a39dc680",
+      "tools/fov_math_reference/project.godot": "ac147de9e3c307335b7dc7fa837f994f775dee5d46c81039bf04a2de5117626f",
+      "tools/fov_math_reference/reference.gd": "d0d42198ca6d70ece17224c8e5b28eb2ae1b27a568ca2b158fcfb72f37dfd9e5",
+      "tools/fov_math_reference/cases.json": "d3e3cbc53b89cd0f872d333262524e43a84155c2b8ae0aaab06850e1337dcbae"
+    }
+  },
+  "isolated_user_paths": {
+    "XDG_DATA_HOME": "/workspace/fov-math-reference-550e96c9-r1-20261024/user/data",
+    "XDG_CONFIG_HOME": "/workspace/fov-math-reference-550e96c9-r1-20261024/user/config",
+    "XDG_CACHE_HOME": "/workspace/fov-math-reference-550e96c9-r1-20261024/user/cache"
+  },
+  "command": [
+    "/workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+    "--headless",
+    "--path",
+    "/workspace/fov-math-reference-550e96c9-r1-20261024/project",
+    "--script",
+    "/workspace/fov-math-reference-550e96c9-r1-20261024/project/reference.gd",
+    "--",
+    "--cases=/workspace/fov-math-reference-550e96c9-r1-20261024/project/cases.json",
+    "--expected-cases-sha256=d3e3cbc53b89cd0f872d333262524e43a84155c2b8ae0aaab06850e1337dcbae"
+  ],
+  "error_type": "RuntimeError",
+  "error": "owned native root identity/session not observed",
+  "cleanup": {
+    "passed": true,
+    "signals": [],
+    "reaped": [],
+    "survivors": [],
+    "stream_drain_error": null
+  },
+  "observed_processes": [],
+  "stream_counts": {
+    "stdout": 770593,
+    "stderr": 0
+  },
+  "stream_retained": {
+    "stdout": 770593,
+    "stderr": 0
+  },
+  "stream_truncated": {
+    "stdout": false,
+    "stderr": false
+  },
+  "stream_eof": {
+    "stdout": true,
+    "stderr": true
+  },
+  "failure_log_coverage_complete": true,
+  "finished_monotonic": 33038.036091028,
+  "elapsed_seconds": 0.7878384930008906,
+  "logs": {
+    "stdout": {
+      "bytes": 770593,
+      "sha256": "a973a0a9b95a04644e8b3f0b6fb69d49cc7f9e727a915341a9bd27e1ed0b1e75"
+    },
+    "stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  }
+}
