@@ -74,7 +74,7 @@ def audit(root):
                 pulse['hold_until_monotonic'] <= pulse['absolute_deadline']
                 and edges[0]['before_monotonic'] < pulse['hold_until_monotonic']
                 and edges[len(keys)]['before_monotonic'] >= pulse['hold_until_monotonic']
-                and pulse['hold_until_monotonic'] - edges[0]['before_monotonic'] <= pulse.get('requested_seconds', -math.inf))
+                and pulse['hold_until_monotonic'] <= edges[0]['before_monotonic'] + pulse.get('requested_seconds', -math.inf))
         rows.append({'pulse': index, 'checks': checks, 'all_passed': all(checks.values()), 'original': pulse})
     checks = {'at_least_one_actual_pulse': bool(rows),
               'complete_before_after_publications': len(before) == len(after) == len(pulses),

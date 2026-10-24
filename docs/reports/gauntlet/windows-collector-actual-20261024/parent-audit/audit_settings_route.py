@@ -115,13 +115,29 @@ def audit(root):
             route_actions = [a for a in actions if start_action['seconds'] <= a['seconds'] <= end['seconds']]
             key_events = [a for a in route_actions if a.get('event') == 'key_after']
             downs = [a for a in key_events if a.get('down') is True]
-            checks['only_ordinary_WASD_input_during_route'] = bool(downs) \
-                and all(a.get('key') in ('w', 'a', 's', 'd') for a in key_events)
-            checks['native_route_keys_owned_focused_and_dispatched'] = bool(downs) and all(
+            pulses = route.get('native_pulses', [])
+            pulse_downs = [edge for pulse in pulses for edge in pulse.get('edges', []) if edge.get('down') is True]
+            checks['only_ordinary_WASD_input_during_route'] = bool(downs or pulse_downs) \
+                and all(a.get('key') in ('w', 'a', 's', 'd') for a in key_events + pulse_downs)
+            wrapped_downs_valid = all(
                 a.get('native_state', {}).get('target_focused') is True
                 and a['key'] in a.get('held_keys', [])
                 and (a['key'] not in a.get('native_state', {}).get('keys_down', {})
                      or a['native_state']['keys_down'][a['key']] is True) for a in downs)
+            pulse_downs_valid = bool(pulses) and all(
+                pulse.get('status') == 'API_RETURNED_WITH_OS_RELEASE'
+                and pulse.get('attempted_keys') == pulse.get('released_keys') == pulse.get('keys')
+                and pulse.get('release_complete') is True and pulse.get('release_errors') == []
+                and len(pulse.get('os_states', [])) == 3
+                and all(state.get('visible') is True
+                    and state.get('expected_pid') == state.get('window_pid')
+                    and state.get('target_window') == state.get('foreground_window')
+                    for state in pulse['os_states'])
+                and all(pulse['os_states'][1]['keys_down'].get(key) is True for key in pulse['keys'])
+                and all(not state['lmb_down'] for state in pulse['os_states'])
+                for pulse in pulses)
+            checks['native_route_keys_owned_focused_and_dispatched'] = bool(downs or pulse_downs) \
+                and wrapped_downs_valid and (not pulse_downs or pulse_downs_valid)
             checks['completion_inside_original_shared_deadline'] = \
                 0 <= end['seconds']-waits[0]['seconds'] < waits[0]['budget_seconds'] <= 35
             details.update(route_key_actions=key_events, route_completion=end,
