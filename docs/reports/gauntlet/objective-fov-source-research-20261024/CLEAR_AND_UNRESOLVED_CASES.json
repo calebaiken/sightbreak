@@ -1,0 +1,146 @@
+{
+  "scope": "Read-only source arithmetic/adjudication only; no suite/runtime/native process or fixture edits",
+  "original_fixture_preserved": true,
+  "rows": [
+    {
+      "case": "captured_pose_clear_in_fov",
+      "actor_position": [
+        -3.04687762260437,
+        -0.000745564699172974,
+        -18.6400375366211
+      ],
+      "enemy_position": [
+        -1.15435981750488,
+        0.000937312899623066,
+        14.5123338699341
+      ],
+      "yaw": 3.08645486831665,
+      "model": {
+        "distance_model": 33.20634512187203,
+        "dot_model": 0.9937165070415048,
+        "threshold": -0.15,
+        "age_model": 323.583333333403,
+        "specific_recent_attacker": false,
+        "in_fov_model": true,
+        "native_numerical_equivalence": "UNVERIFIED"
+      },
+      "independent_geometry_adjudication": "in_fov",
+      "native_cutoff_certified": false,
+      "strict_without_calibration": "UNRESOLVED_NATIVE_NUMERICS"
+    },
+    {
+      "case": "report_only_same_positions_yaw_zero_out_of_fov",
+      "actor_position": [
+        -3.04687762260437,
+        -0.000745564699172974,
+        -18.6400375366211
+      ],
+      "enemy_position": [
+        -1.15435981750488,
+        0.000937312899623066,
+        14.5123338699341
+      ],
+      "yaw": 0,
+      "model": {
+        "distance_model": 33.20634512187203,
+        "dot_model": -0.9983745963273363,
+        "threshold": -0.15,
+        "age_model": 323.583333333403,
+        "specific_recent_attacker": false,
+        "in_fov_model": false,
+        "native_numerical_equivalence": "UNVERIFIED"
+      },
+      "independent_geometry_adjudication": "out_of_fov",
+      "native_cutoff_certified": false,
+      "strict_without_calibration": "UNRESOLVED_NATIVE_NUMERICS"
+    },
+    {
+      "case": "axis_front",
+      "model": {
+        "distance_model": 16.0,
+        "dot_model": 1.0,
+        "threshold": -0.15,
+        "age_model": 110,
+        "specific_recent_attacker": false,
+        "in_fov_model": true,
+        "native_numerical_equivalence": "UNVERIFIED"
+      },
+      "constructed_exact_dot": 1.0,
+      "result": "CONSISTENT_FOV_STAGE_ONLY",
+      "scope": "source construction only; not engine execution"
+    },
+    {
+      "case": "axis_back",
+      "model": {
+        "distance_model": 16.0,
+        "dot_model": -1.0,
+        "threshold": -0.15,
+        "age_model": 110,
+        "specific_recent_attacker": false,
+        "in_fov_model": false,
+        "native_numerical_equivalence": "UNVERIFIED"
+      },
+      "constructed_exact_dot": -1.0,
+      "result": "CONSISTENT_FOV_STAGE_ONLY",
+      "scope": "source construction only; not engine execution"
+    },
+    {
+      "case": "axis_side",
+      "model": {
+        "distance_model": 16.0,
+        "dot_model": -0.0,
+        "threshold": -0.15,
+        "age_model": 110,
+        "specific_recent_attacker": false,
+        "in_fov_model": true,
+        "native_numerical_equivalence": "UNVERIFIED"
+      },
+      "constructed_exact_dot": 0.0,
+      "result": "CONSISTENT_FOV_STAGE_ONLY",
+      "scope": "source construction only; not engine execution"
+    },
+    {
+      "case": "coincident",
+      "model": {
+        "distance_model": 0.0,
+        "dot_model": -0.0,
+        "threshold": -0.15,
+        "age_model": 110,
+        "specific_recent_attacker": false,
+        "in_fov_model": true,
+        "native_numerical_equivalence": "UNVERIFIED"
+      },
+      "constructed_exact_dot": 0.0,
+      "result": "CONSISTENT_FOV_STAGE_ONLY",
+      "scope": "source construction only; not engine execution"
+    },
+    {
+      "case": "fractional_cutoff_no_native_math_calibration",
+      "recorded_reason": "fov",
+      "model": {
+        "distance_model": 1.0,
+        "dot_model": -0.15,
+        "threshold": -0.15,
+        "age_model": 110,
+        "specific_recent_attacker": false,
+        "in_fov_model": false,
+        "native_numerical_equivalence": "UNVERIFIED"
+      },
+      "result": "UNRESOLVED_NATIVE_NUMERICS"
+    },
+    {
+      "case": "fractional_cutoff_no_native_math_calibration",
+      "recorded_reason": "visibility",
+      "model": {
+        "distance_model": 1.0,
+        "dot_model": -0.15,
+        "threshold": -0.15,
+        "age_model": 110,
+        "specific_recent_attacker": false,
+        "in_fov_model": false,
+        "native_numerical_equivalence": "UNVERIFIED"
+      },
+      "result": "UNRESOLVED_NATIVE_NUMERICS"
+    }
+  ]
+}

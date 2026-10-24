@@ -1,0 +1,31 @@
+{
+  "command": [
+    "timeout",
+    "60s",
+    "taskset",
+    "-c",
+    "4",
+    "env",
+    "PYTHONPATH=scripts",
+    "python3",
+    "-m",
+    "unittest",
+    "-v",
+    "test_touch_geometry_r4b",
+    "test_touch_method_r4b",
+    "test_touch_receipts_r4b_r2",
+    "test_touch_declaration_r4b_r3"
+  ],
+  "started_utc": "2026-10-23T10:53:26.223483+00:00",
+  "exit_code": 0,
+  "elapsed_seconds": 41.283386023002095,
+  "engine_invocations": 0,
+  "source_only": true,
+  "sources_before": {
+    "docs/reports/gauntlet/m6-touch-label-edge-r5/prototype.py": "e439d299317dae5e69f77043e463306379b1e580237e2a89f99880337428cb59",
+    "docs/reports/gauntlet/m6-touch-label-edge-r5/checks.py": "97f9eca6796e39125473cee8469fb8880b778c0f27d358238615975a65908d72",
+    "docs/reports/gauntlet/m6-touch-label-edge-r5/retained-inputs.json": "8a332de6bdd634b0cc2eacd925ca353e2fd7a81fa92def6bd77d057619c46ce3"
+  },
+  "source_hashes_unchanged_after": true,
+  "log_sha256": "508f1c7b0ec2d1bf81c6402bcbd054931ea93b5da72b900d58b21cec4e4301c7"
+}

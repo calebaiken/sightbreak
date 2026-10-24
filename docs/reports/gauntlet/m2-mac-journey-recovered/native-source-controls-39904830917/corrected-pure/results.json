@@ -1,0 +1,213 @@
+{
+  "scope": "Pure source controls and aliased-temp-root reproduction only; no engine/native/OCR/CI",
+  "source_parent": "0100ecdd922ee6022be332c6e4bc29fdda08823d",
+  "tested_file_sha256": {
+    "scripts/macos_ordinary_input.py": "154c24e068314bef81de424273889744ed432841a46ce9af3efd274ab0ac9da8",
+    "scripts/verify_macos_ordinary.py": "d62b12f605099c0c3096b27525ef1486f9c577fdae5d6b108af0f753df96f793",
+    "scripts/test_macos_ordinary.py": "e34b57807689d1f12b725e7dc7092a8645f9880f3673c64653d5ef5c068877cc",
+    "scripts/test_macos_ordinary_controller.py": "8863a7734bfed542c1151dec4c7c757af6770a79538556ab524a33d398b16854",
+    "scripts/test_macos_ordinary_paths.py": "4a971061a9ca7f5a9e870c835247dbc33021d0a5b31af9a42664e578aa3b74d6",
+    ".github/workflows/desktop-alpha.yml": "d5a8ef170c310959fdf3c6b4cd2f75d98764d36bb7adeb13ade864695343dcbf"
+  },
+  "tested_files_unchanged": true,
+  "runtime_bytes_unchanged_from_bd9ac47": {
+    "scripts/macos_ordinary_input.py": {
+      "frozen_git_blob": "ab6f8210bd9f9c74bada3e22d637b70b8bac975f",
+      "candidate_git_blob": "ab6f8210bd9f9c74bada3e22d637b70b8bac975f"
+    },
+    "scripts/verify_macos_ordinary.py": {
+      "frozen_git_blob": "abc254b8b90b50e0d512cb7bd047a6f0dd2d2290",
+      "candidate_git_blob": "abc254b8b90b50e0d512cb7bd047a6f0dd2d2290"
+    }
+  },
+  "commands": [
+    {
+      "label": "normal-test_macos_ordinary",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "scripts/test_macos_ordinary.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 0.2648524210007963,
+      "log": "normal-test_macos_ordinary.txt",
+      "bytes": 3228,
+      "sha256": "d15b496aedc9f863841fef3058e5852f9bbb51c660280bc8edeeb57e3eca7a62"
+    },
+    {
+      "label": "normal-test_macos_ordinary_controller",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "scripts/test_macos_ordinary_controller.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 0.4657954199992673,
+      "log": "normal-test_macos_ordinary_controller.txt",
+      "bytes": 1199,
+      "sha256": "cc5773d5c44afd295d13be77f2b8e3af347f31cff7e1bbd86f4a0b8b23a8be4d"
+    },
+    {
+      "label": "normal-test_macos_ordinary_paths",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "scripts/test_macos_ordinary_paths.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 0.4657960529993943,
+      "log": "normal-test_macos_ordinary_paths.txt",
+      "bytes": 470,
+      "sha256": "734d21a2f96af5fd30850ab156a138aac42244baf0dd231d882897fd5421627e"
+    },
+    {
+      "label": "normal-test_macos_menu",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "scripts/test_macos_menu.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 0.21457650100001047,
+      "log": "normal-test_macos_menu.txt",
+      "bytes": 2217,
+      "sha256": "121222b338ea226504e6716a828099ec6370c5fe16744afc25bffefbf76db620"
+    },
+    {
+      "label": "normal-test_macos_focus",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "scripts/test_macos_focus.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 0.21488799700000527,
+      "log": "normal-test_macos_focus.txt",
+      "bytes": 1494,
+      "sha256": "29d4207aab341220c5421822c8dc52e3c9e69866dcf93720c4e96313ce37d49f"
+    },
+    {
+      "label": "normal-test_macos_screen_identity",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "scripts/test_macos_screen_identity.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 0.21479238000029,
+      "log": "normal-test_macos_screen_identity.txt",
+      "bytes": 1235,
+      "sha256": "006a6d2aeaa023025ff39dc9467f7a63fbe5772e1645af3f1ecf882cd68ce2b9"
+    },
+    {
+      "label": "normal-test_probe_macos_input",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "scripts/test_probe_macos_input.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 0.2149931549993198,
+      "log": "normal-test_probe_macos_input.txt",
+      "bytes": 1844,
+      "sha256": "1eac2e0e3dcb80b547d45fe6977a2306cd41586b2b6bbf86b9aa6509cdeedd9b"
+    },
+    {
+      "label": "alias-test_macos_ordinary",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "scripts/test_macos_ordinary.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 0.21521798899993883,
+      "log": "alias-test_macos_ordinary.txt",
+      "bytes": 3228,
+      "sha256": "510991105da4fac20ca4b8431df061093d561169f2ce0c12a968d717f966398e"
+    },
+    {
+      "label": "alias-test_macos_ordinary_controller",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "scripts/test_macos_ordinary_controller.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 0.5155798720006715,
+      "log": "alias-test_macos_ordinary_controller.txt",
+      "bytes": 1199,
+      "sha256": "b4a1f41d1a293b7c4af4776ed899c7fa984fac8b701a7635aabdec8700e68408"
+    },
+    {
+      "label": "alias-test_macos_ordinary_paths",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "scripts/test_macos_ordinary_paths.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 0.5161698629999592,
+      "log": "alias-test_macos_ordinary_paths.txt",
+      "bytes": 470,
+      "sha256": "5de0f9d9fe0615cc478a6d6fdd97f1706ff21626585cd8c17ecfdbb66f9ff388"
+    },
+    {
+      "label": "alias-control-rejects-original-unresolved-tests",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-c",
+        "import sys,unittest;sys.path[:0]=['/tmp/sightbreak-mac-corrected-paths-vspp5r8g/original-unresolved-tests', '/workspace/sightbreak-mac-journey-recovered/scripts'];import test_macos_ordinary_paths as module;unittest.main(module=module,verbosity=2)"
+      ],
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "seconds": 0.26549473799968837,
+      "log": "alias-control-rejects-original-unresolved-tests.txt",
+      "bytes": 40957,
+      "sha256": "09f3f26e2906b2fe48630f96dc9fa951c556b040ff2439ae1f0a57c9f0c18625"
+    },
+    {
+      "label": "compile",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-m",
+        "py_compile",
+        "scripts/macos_ordinary_input.py",
+        "scripts/verify_macos_ordinary.py",
+        "scripts/test_macos_ordinary.py",
+        "scripts/test_macos_ordinary_controller.py",
+        "scripts/test_macos_ordinary_paths.py"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 0.11565051300021878,
+      "log": "compile.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "diff-check",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 0.016416969000601966,
+      "log": "diff-check.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "passed": true
+}

@@ -1,0 +1,68 @@
+{
+  "source": "bc9f945d7fb0741307504381f4b95b2fa993e392",
+  "cpu_affinity": [
+    4
+  ],
+  "source_audit": {
+    "source_erasure_passed": true,
+    "source_base": "022d60faa830696af3f03c554e99356c1beac0dd",
+    "acquisition_files": 451,
+    "native_executed": false,
+    "compilation_verified": false
+  },
+  "cases": [
+    {
+      "name": "positive",
+      "bytes": 26627654,
+      "sha256": "539d2065fee77a9377c4564bb9d7bf7714c9e12acf11e8e9e3122bbacb0a5ac6",
+      "gzip_sha256": "312601f243df57b555eddd1e49977a29699063da12a25a26f9c6b9fa9fd2efdc",
+      "accepted": true,
+      "error": null,
+      "expected_error": null,
+      "passed": true
+    },
+    {
+      "name": "wrong_actor",
+      "bytes": 26627654,
+      "sha256": "d25bb7a11faa9ec415c3b5420f64d58b14add45c1e9aaeee667c7ff7de593ced",
+      "gzip_sha256": "094eec10b30446d5b96429c5861c887766a2bb6b2a4a97e238a1f1603561b41e",
+      "accepted": false,
+      "error": "freshness call describes another actor",
+      "expected_error": "freshness call describes another actor",
+      "passed": true
+    },
+    {
+      "name": "unperceived_target",
+      "bytes": 26627655,
+      "sha256": "23d9780ded583db9274ab41fc3c8b0214b0abbd70b09f41adceb91e0a995f117",
+      "gzip_sha256": "d82a5b5c48f0984b09deb871bb15d989f468e7019608646dc42be6ca769b6ab6",
+      "accepted": false,
+      "error": "direct perception selected an unperceived target",
+      "expected_error": "direct perception selected an unperceived target",
+      "passed": true
+    },
+    {
+      "name": "wrong_defuser_destination",
+      "bytes": 26627656,
+      "sha256": "509499427cef3196404b3e764feced720357b32921c32571ddd635fe385c2faa",
+      "gzip_sha256": "d9d998b0c23c0f66de69d0347befe0bf0934177728cecbe8033fffe6d31ddd5e",
+      "accepted": false,
+      "error": "defuser destination contradicts device",
+      "expected_error": "defuser destination contradicts device",
+      "passed": true
+    },
+    {
+      "name": "invented_role",
+      "bytes": 26627674,
+      "sha256": "0b6aa225dd1b212755ff5629317be553e4ebbe01d39d794f32a95d9088f7c295",
+      "gzip_sha256": "3439bd5b50a4adaa147f6cbe076fb0a304a0826e519b4a4e96b3948a5a9fa2d8",
+      "accepted": false,
+      "error": "typed decision roles",
+      "expected_error": "typed decision roles",
+      "passed": true
+    }
+  ],
+  "passed": true,
+  "remaining_eight_trace_defects_block_readiness": true,
+  "native_executed": false
+}

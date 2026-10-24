@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/workspace/reviews/windows-shutdown-study-independent-20261024/docs/reports/gauntlet/windows-shutdown-study-independent-20261024/fresh_controls.py", line 38, in <module>
+    actual=retention.source_binding(SOURCE,ROOT)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/reviews/windows-shutdown-study-independent-source-20261024/scripts/shutdown_study_retention.py", line 42, in source_binding
+    require(not git('status','--porcelain','--untracked-files=all'),'source must be fully clean')
+  File "/workspace/reviews/windows-shutdown-study-independent-source-20261024/scripts/shutdown_study_retention.py", line 26, in require
+    raise ValueError(message)
+ValueError: source must be fully clean

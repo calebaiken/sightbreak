@@ -1,0 +1,30 @@
+{
+  "source": "c90fedfd56a09bd0ba13cce5565ccd160891c3fb",
+  "cpu_affinity": [
+    4
+  ],
+  "pure_command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "scripts",
+    "-p",
+    "test_windows_shutdown_study.py",
+    "-v"
+  ],
+  "pure_exit": 0,
+  "preflight_command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "scripts/windows_shutdown_study.py",
+    "preflight",
+    "--expected-source",
+    "c90fedfd56a09bd0ba13cce5565ccd160891c3fb",
+    "--output",
+    "/workspace/sightbreak-windows-shutdown-bounded-study/.local/frozen-study-final/preflight.json"
+  ],
+  "preflight_exit": 2,
+  "actual_native_invocations": 0,
+  "preflight_status": "BLOCKED"
+}

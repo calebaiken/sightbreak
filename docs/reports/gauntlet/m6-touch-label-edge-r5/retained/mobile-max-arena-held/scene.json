@@ -1,0 +1,730 @@
+{
+	"action_order": [
+		"fire",
+		"jump",
+		"crouch",
+		"reload",
+		"interact",
+		"grenade",
+		"smoke",
+		"buy",
+		"pause",
+		"switch",
+		"score",
+		"move"
+	],
+	"actions": [
+		"fire",
+		"reload",
+		"interact"
+	],
+	"alphas": {
+		"active_icon": 0.899999976158142,
+		"active_label": 1.0,
+		"backdrop": 0.860000014305115,
+		"badge_paint": 0.899999976158142,
+		"border": 0.949999988079071,
+		"component_buy": 0.860000014305115,
+		"component_crouch": 0.860000014305115,
+		"component_fire": 0.649999976158142,
+		"component_grenade": 0.349999994039536,
+		"component_interact": 0.649999976158142,
+		"component_jump": 0.860000014305115,
+		"component_move": 0.899999976158142,
+		"component_pause": 0.860000014305115,
+		"component_reload": 0.649999976158142,
+		"component_score": 0.860000014305115,
+		"component_smoke": 0.860000014305115,
+		"component_switch": 0.860000014305115,
+		"empty_count": 1.0,
+		"held_border": 0.949999988079071,
+		"held_fill": 0.649999976158142,
+		"icon_surround": 0.400000005960464,
+		"inactive_icon": 0.349999994039536,
+		"inactive_label": 0.400000005960464,
+		"joystick_knob": 0.899999976158142,
+		"joystick_ring": 0.949999988079071,
+		"label_surround": 0.400000005960464,
+		"ready_count": 1.0
+	},
+	"background": "/workspace/sightbreak-touch-contrast-native-recovered-r4b-r3/backgrounds/mobile-max-arena.png",
+	"background_sha256": "ba40705202846e2b7e3e42f81b04de98a629523e53bc95d1b3302c634075c962",
+	"counts": {
+		"grenade": 0,
+		"smoke": 1
+	},
+	"effective_scale": 1.4,
+	"geometry": {
+		"buy": {
+			"hit_radius": 49.0,
+			"point": [
+				184.320007324219,
+				259.200012207031
+			],
+			"radius": 39.2,
+			"resolved_position": [
+				0.170000001788139,
+				0.360000014305115
+			]
+		},
+		"crouch": {
+			"hit_radius": 49.0,
+			"point": [
+				739.840026855469,
+				597.599975585938
+			],
+			"radius": 39.2,
+			"resolved_position": [
+				0.790000021457672,
+				0.829999983310699
+			]
+		},
+		"fire": {
+			"hit_radius": 70.0,
+			"point": [
+				829.440002441406,
+				381.599975585938
+			],
+			"radius": 56.0,
+			"resolved_position": [
+				0.889999985694885,
+				0.529999971389771
+			]
+		},
+		"grenade": {
+			"hit_radius": 49.0,
+			"point": [
+				551.679992675781,
+				576.0
+			],
+			"radius": 39.2,
+			"resolved_position": [
+				0.579999983310699,
+				0.800000011920929
+			]
+		},
+		"interact": {
+			"hit_radius": 49.0,
+			"point": [
+				614.399963378906,
+				439.200012207031
+			],
+			"radius": 39.2,
+			"resolved_position": [
+				0.649999976158142,
+				0.610000014305115
+			]
+		},
+		"jump": {
+			"hit_radius": 49.0,
+			"point": [
+				847.360046386719,
+				518.400024414062
+			],
+			"radius": 39.2,
+			"resolved_position": [
+				0.910000026226044,
+				0.720000028610229
+			]
+		},
+		"move": {
+			"hit_radius": 113.75,
+			"point": [
+				148.479995727539,
+				532.799987792969
+			],
+			"radius": 91.0,
+			"resolved_position": [
+				0.129999995231628,
+				0.740000009536743
+			]
+		},
+		"pause": {
+			"hit_radius": 49.0,
+			"point": [
+				878.0,
+				50.4000015258789
+			],
+			"radius": 39.2,
+			"resolved_position": [
+				0.959999978542328,
+				0.0700000002980232
+			]
+		},
+		"reload": {
+			"hit_radius": 49.0,
+			"point": [
+				712.9599609375,
+				446.399993896484
+			],
+			"radius": 39.2,
+			"resolved_position": [
+				0.759999990463257,
+				0.620000004768372
+			]
+		},
+		"score": {
+			"hit_radius": 49.0,
+			"point": [
+				85.7599945068359,
+				259.200012207031
+			],
+			"radius": 39.2,
+			"resolved_position": [
+				0.0599999986588955,
+				0.360000014305115
+			]
+		},
+		"smoke": {
+			"hit_radius": 49.0,
+			"point": [
+				650.239990234375,
+				576.0
+			],
+			"radius": 39.2,
+			"resolved_position": [
+				0.689999997615814,
+				0.800000011920929
+			]
+		},
+		"switch": {
+			"hit_radius": 49.0,
+			"point": [
+				847.360046386719,
+				655.200012207031
+			],
+			"radius": 39.2,
+			"resolved_position": [
+				0.910000026226044,
+				0.910000026226044
+			]
+		}
+	},
+	"held": true,
+	"id": "mobile-max-arena-held",
+	"images": {
+		"active_icon-black.png": "7c80ac3dd51991c17a7ce6cb257b520045ffd9aaaa3a6087d081c30f9727ede8",
+		"active_icon-footprint.png": "4073fcf8df4fcdd4733852330e90954b47474821a27e0884426304af3f007b28",
+		"active_icon-underlay.png": "7c80ac3dd51991c17a7ce6cb257b520045ffd9aaaa3a6087d081c30f9727ede8",
+		"active_icon-white.png": "e1782aac9a9de4511ebad6c09ef1f8b7ece9882206b00248903b9e8dd607909e",
+		"active_label-black.png": "08dc7ae32899eeb1c32488ad5bb8a7c45ff6b3cdcc09830c5c71f44852c1d8d7",
+		"active_label-footprint.png": "7be89e5d4bc9870d702f93ac75000be3b8115739a3ea526a68bc4bd7a655f85e",
+		"active_label-underlay.png": "95aa19eda9704e15e6e6917dad0b5b2575d4ac0d01029ad14f898f4830a995d5",
+		"active_label-white.png": "c9e7076c437d497b3bdded14f610aa777db1ee15a1e3d0ba08f3f7cb4a0ab4d8",
+		"badge_paint-footprint.png": "fd134a641736204b1171c65c4dd1fc312e8bea4ba9cc8626e003dca99aaf4caf",
+		"border-black.png": "e48bbd9801eb229705b38fff5e154b189b56624843fa0d3f98c39e45ba275ff6",
+		"border-footprint.png": "64acb5f82078c754ac640554759cfb56a6671f7305a8a7163fefc9ffcf0e17e1",
+		"border-underlay.png": "5c21982a5536c1e59de80b32ebe1f0c2e4e8b8150810f169becb1bc1eddae3b6",
+		"border-white.png": "f7c1f23267dcafc686b5196909df7552f23c7b1ad974e88b9aafeb3c9b6fe2c9",
+		"component_buy-black.png": "c8dfcdadd8257005263ad4bd3bb792da09c16edf1c4c82c8bd9b4b8536ca0f65",
+		"component_buy-footprint.png": "8c288ec714c16eabe4c746e6caca3a8cc2d9ff95a6fdc2f9554e6f641ee92b7d",
+		"component_buy-underlay.png": "f6466bed673211f03f7f6d7ea9d101aad92cc15c900b7f6fd00e8e7e99f1b7d5",
+		"component_buy-white.png": "5ad66005453d6928c3023a0a1cb21595f39cb1c5d52227b2dfc0612ac1081f5b",
+		"component_crouch-black.png": "3906f4d23cbac00d815e9b27ef58bdb76b4a282fa380f115d35432e6e766d9e9",
+		"component_crouch-footprint.png": "694477cfcdcbfc82a98fd568d83a1a7c62102f95fcce09a4da2fc45f8092efb1",
+		"component_crouch-underlay.png": "5cdc9b60cc9914e267a8f96e4c2ad33bb3a6a84596c515409699ee281a36ea43",
+		"component_crouch-white.png": "4a3e4b9f0768d1982f909ddee9d3c6225e86fa13c5fa12d59367fd2e7e848a3d",
+		"component_fire-black.png": "1a3a8e58ec200798ff89579aeca7f6888bb6feb36752f421cdcc71b2c0db0a0d",
+		"component_fire-footprint.png": "d588774a794b9c625367a28debcb1b80b261f06893fd274c74d32b227dec6602",
+		"component_fire-underlay.png": "a1cdec779a7092ab7050a7664f1b941bd450a428579229e9c5bb291cf07ab65a",
+		"component_fire-white.png": "4a33c31e886709bbb848ba714d6b4606c18105db687474e5daa8b8b70929927a",
+		"component_grenade-black.png": "c25b96072a2b70cdb85d4573c6d935474df791f289cee53da2afee3273c1189e",
+		"component_grenade-footprint.png": "f7ed21afe2089a5792d9a8cd3f8c26480e6fd1cf5ab2335040595fd827cede50",
+		"component_grenade-underlay.png": "7638c31fce342370853c7c24d022f6cd83f659c62a08356c4f628c9ca45f149e",
+		"component_grenade-white.png": "441c7789e018d8fb03fea19d5b6ae4819c8ebdfa9a6b56525fd19bda74dc5a22",
+		"component_interact-black.png": "b78a6ed27e35c84de71a20e8f13f3a0ff17adc7095ca0884c9d6afbd167a4eed",
+		"component_interact-footprint.png": "9339cb5e8ff68442a0eb894f88c9a6ed1c72c39d9fe67d945ac158739b9974bc",
+		"component_interact-underlay.png": "6418c00db5c05095ada6bad4b2f795d8ed2b77173dcc2e549fc4422f354a526f",
+		"component_interact-white.png": "80936f0cb9706b12685b5a4f29a4983ed2113ef001f1783bff1b63596a8fc24c",
+		"component_jump-black.png": "0a2b1498523ec47cf0478e05d22d8cfcfcbb39b1e7d6f91ca3742200d672f6d0",
+		"component_jump-footprint.png": "55d88d278e2b93ae551991ead011ce8136ced4c6e85e62320fb515e67ee968b1",
+		"component_jump-underlay.png": "1a460d6681e3d71c39b2159777233368cadd5a05ee0cf22975d54fc027fee3a1",
+		"component_jump-white.png": "dfb91489680ba3a2d9ada7c98f777aa56361730822c228c1c66c4f91d0695492",
+		"component_pause-black.png": "1fd2c28f4c83cf727742ac4d0f7f199bce674ba9c8f0276b387a86286f8a0841",
+		"component_pause-footprint.png": "f5a8246b4342d9649c10b7655eee334a022ec22309062b2f125c79c45a5b807d",
+		"component_pause-underlay.png": "33d0b2a6b4084025653c146656ca3a4a8e3513ade91312572bdf3867dcbbaf66",
+		"component_pause-white.png": "f2206eb9da4b402f570fae55aa55a8699fce0bf7aa3970181f164bec43416bb8",
+		"component_reload-black.png": "97f935fc5b775a358ce29371668c02659f5e2c2f1dcee19dcf43dad70b15f416",
+		"component_reload-footprint.png": "d8efe038fbdcef1b3f53375c791aeaa70889d282f47055f315aedd37f9551b49",
+		"component_reload-underlay.png": "807084176f557160b9273d6242a2ec8d6050ecf32fbdef3cb260179570bbf33e",
+		"component_reload-white.png": "76cdbee8b8f6fe84ce825c64fa476afd958501f292337d53a019ef8fbcc5216f",
+		"component_score-black.png": "6ffa4f4786d34927d095140618a31d2e3cae6ce71c5ce1e7484c542bcb92f946",
+		"component_score-footprint.png": "db3a746944f3c291b67c2eabec38d1e40e5a3525e95e9e0e0751985fd13d282d",
+		"component_score-underlay.png": "b4c7f8f747ee59a4f88ffa952d184ad80db5b961260e00e4ae4bf29710c9b527",
+		"component_score-white.png": "5b6b2d6a84ceb6f86cfcadb01b3ed9b9b4fa8e0c14135a1dc2892a9917fe7895",
+		"component_smoke-black.png": "56c95e03ad2fc69673df5aca6998886143e73156625bd870c9e5e6a7cd60e02c",
+		"component_smoke-footprint.png": "e1d809e4c092786bf0b25d856944e1e8ea6f56c883defd360456fe96c4baf0eb",
+		"component_smoke-underlay.png": "760431439decc5898e6bd909492c2ff7759625b5c63e7dd6835cfc7e7d21c42d",
+		"component_smoke-white.png": "a76373cb622c0b4cc378bb2190f39abe20f14bd977e371845d83a29af55dad47",
+		"component_switch-black.png": "69fc72c389f0d80f1f9c164e8fe4dae43ea6152795d7340898e6348a5d34b557",
+		"component_switch-footprint.png": "bd8b75794eba4cf501ae37609e625d5463d5285cd00ebe18eea77d6d03ef8f36",
+		"component_switch-underlay.png": "414638096deaee4dd1dfc3910e50e3518b4db0ddb3685cc90f40fe02f9c98de0",
+		"component_switch-white.png": "37920182b097186ecc2cab3a2617d5381c18f5edef349db8f920f37209c5f051",
+		"empty_count-black.png": "c4c2d2e7cfb757c8e6d0bd1bd51d5f400bdc01c99d622f5fa7ae6a19cc4c7c1c",
+		"empty_count-footprint.png": "3c7505dd2d802468434b4430fe47dcc238c004f4df6bf2ef9ffae3f85d82d089",
+		"empty_count-underlay.png": "48a7fb92ce9c17f2910c80e21eb5e6e987a01a100cebffd61e5e224c6a614722",
+		"empty_count-white.png": "c9e7076c437d497b3bdded14f610aa777db1ee15a1e3d0ba08f3f7cb4a0ab4d8",
+		"held_border-black.png": "9c1b2bb570abc8c40d0312626a32f0b231762ee36ff204e17ba22a2ac540f3c6",
+		"held_border-footprint.png": "bc592900f0409f6741943453eb9675fd14b610fa85f8b9c5b670161292415b03",
+		"held_border-underlay.png": "e421e889f0bce5d56f8af77221163f2af9512cbfe06aa5f56514b0d268c3f968",
+		"held_border-white.png": "91dc01cb2141c865307145c223fc604995eb83b26401dd8babcdd3ceb7ebed17",
+		"held_fill-footprint.png": "b490327a75dab96b697e0b465687d66bbae4525d55603d136da9ddcf7e7aad9a",
+		"icon_surround-footprint.png": "db12b22fceb8e2b47581199b7ff1be19f40e55e5637ee34830c7756b40515e34",
+		"inactive_icon-black.png": "4e4f2fbc5408985fdbffc3dd89e8796d2e09479748918f2df20f0ed4ccaf1859",
+		"inactive_icon-footprint.png": "5a2a5f422b5815e7f716771e72fd63409fc139eefaeddcf6169bddbb91f20998",
+		"inactive_icon-underlay.png": "7377a3753d2a3c08833f8d6c3f58fc3e177e4c86050c3d1b53f83788fa2584a4",
+		"inactive_icon-white.png": "ab5bf3fe2847e95d794edc8a22f354ce2556f25bfc85fd2b982f7b4d5fa31e4c",
+		"inactive_label-black.png": "ee5d2d8b960110df3a6fa69387f20a64ac30f94cdfe01f713bfabbce62319b13",
+		"inactive_label-footprint.png": "0499991cb3d3480ee89cac8d2cb41fb587f233c4b40ec59d0cccb00f8545957b",
+		"inactive_label-underlay.png": "f73f9da32f9d43eda37e2fcf333755e4b87e56c3772c6b5af9668669a0c72b6c",
+		"inactive_label-white.png": "c9e7076c437d497b3bdded14f610aa777db1ee15a1e3d0ba08f3f7cb4a0ab4d8",
+		"joystick_knob-black.png": "1a8bd2dfc1e8566fe8f29fbefc5a08a57eb0001ac549156c0f415738c0a80194",
+		"joystick_knob-footprint.png": "76ccbfaa2a3ed470b461392f9b1e71415e92e8298fc45ec672bf50156793e07a",
+		"joystick_knob-underlay.png": "261f007df866c91c9d14317f107084aa91c679a44cca02eb92905d328d83428c",
+		"joystick_knob-white.png": "ed389e8c02e61728fd707202ceca636b6be7a5ecfb4f2cdbfec5a7cf3a0ba5ad",
+		"joystick_ring-black.png": "d0035f100d71aec945a3399ed3e651d6d650f0a3cac4b282f9d5632be89a7cd9",
+		"joystick_ring-footprint.png": "4e0ec3422bfebc56d9da284ecb47ca3c83e2f3046a62fffa8750e911e39e327b",
+		"joystick_ring-underlay.png": "ff719adc5e53bc4e8e101639aebd0c4c0a136b5ee8b5b4700fb386d98fe87c21",
+		"joystick_ring-white.png": "72d0e500b1c2fd08ab42bbc7ae5d089355fa3fa814780709801e3ac4fa672d83",
+		"label_surround-footprint.png": "2481a37cb1d95ee4704d5e3ad64c1de2d767c9472b3cec12c4808fe26b656743",
+		"normal.png": "c9e7076c437d497b3bdded14f610aa777db1ee15a1e3d0ba08f3f7cb4a0ab4d8",
+		"original.png": "c9e7076c437d497b3bdded14f610aa777db1ee15a1e3d0ba08f3f7cb4a0ab4d8",
+		"ready_count-black.png": "799bf9f76728d6886c73f5d40a35d03d77b7b319eb22c5578cc14ace9e950b13",
+		"ready_count-footprint.png": "dd2c98d20bdd062bfbd3748b9d656ba629c818a00145820af86e17ab87b9b45b",
+		"ready_count-underlay.png": "35d6cc5a9cdba62201c7eed8488812b8a1791e3f1e2cf92cbf716daf52894d91",
+		"ready_count-white.png": "558b60dcaee3e62012baef25576db0f80961ff6dbee5fec1a36082906d85a2a3"
+	},
+	"inset": 32,
+	"layout": "mobile-max",
+	"movement": [
+		0.65,
+		0.45
+	],
+	"ownership": {
+		"buy": {
+			"method": "actual source action_at at every isolated component native pixel center; cache only within unchanged layout/scale/positions",
+			"support_pixels": 5478,
+			"unclaimed_pixels": 0,
+			"wrong_owner_pixels": 0,
+			"wrong_owner_witnesses_xy_action": []
+		},
+		"crouch": {
+			"method": "actual source action_at at every isolated component native pixel center; cache only within unchanged layout/scale/positions",
+			"support_pixels": 5479,
+			"unclaimed_pixels": 0,
+			"wrong_owner_pixels": 0,
+			"wrong_owner_witnesses_xy_action": []
+		},
+		"fire": {
+			"method": "actual source action_at at every isolated component native pixel center; cache only within unchanged layout/scale/positions",
+			"support_pixels": 10766,
+			"unclaimed_pixels": 0,
+			"wrong_owner_pixels": 0,
+			"wrong_owner_witnesses_xy_action": []
+		},
+		"grenade": {
+			"method": "actual source action_at at every isolated component native pixel center; cache only within unchanged layout/scale/positions",
+			"support_pixels": 5587,
+			"unclaimed_pixels": 0,
+			"wrong_owner_pixels": 0,
+			"wrong_owner_witnesses_xy_action": []
+		},
+		"interact": {
+			"method": "actual source action_at at every isolated component native pixel center; cache only within unchanged layout/scale/positions",
+			"support_pixels": 5476,
+			"unclaimed_pixels": 0,
+			"wrong_owner_pixels": 0,
+			"wrong_owner_witnesses_xy_action": []
+		},
+		"jump": {
+			"method": "actual source action_at at every isolated component native pixel center; cache only within unchanged layout/scale/positions",
+			"support_pixels": 5476,
+			"unclaimed_pixels": 0,
+			"wrong_owner_pixels": 0,
+			"wrong_owner_witnesses_xy_action": []
+		},
+		"pause": {
+			"method": "actual source action_at at every isolated component native pixel center; cache only within unchanged layout/scale/positions",
+			"support_pixels": 5486,
+			"unclaimed_pixels": 0,
+			"wrong_owner_pixels": 0,
+			"wrong_owner_witnesses_xy_action": []
+		},
+		"reload": {
+			"method": "actual source action_at at every isolated component native pixel center; cache only within unchanged layout/scale/positions",
+			"support_pixels": 5483,
+			"unclaimed_pixels": 0,
+			"wrong_owner_pixels": 0,
+			"wrong_owner_witnesses_xy_action": []
+		},
+		"score": {
+			"method": "actual source action_at at every isolated component native pixel center; cache only within unchanged layout/scale/positions",
+			"support_pixels": 5484,
+			"unclaimed_pixels": 0,
+			"wrong_owner_pixels": 0,
+			"wrong_owner_witnesses_xy_action": []
+		},
+		"smoke": {
+			"method": "actual source action_at at every isolated component native pixel center; cache only within unchanged layout/scale/positions",
+			"support_pixels": 5584,
+			"unclaimed_pixels": 0,
+			"wrong_owner_pixels": 0,
+			"wrong_owner_witnesses_xy_action": []
+		},
+		"switch": {
+			"method": "actual source action_at at every isolated component native pixel center; cache only within unchanged layout/scale/positions",
+			"support_pixels": 5477,
+			"unclaimed_pixels": 0,
+			"wrong_owner_pixels": 0,
+			"wrong_owner_witnesses_xy_action": []
+		}
+	},
+	"paint_geometry": {
+		"buy": {
+			"badge_center": [
+				210.041016489879,
+				233.479003041371
+			],
+			"badge_radius": 9.0,
+			"badge_rim": 1.25,
+			"badge_shadow": 5.25,
+			"body_radius": 39.2,
+			"font_ascent": 13.0,
+			"font_descent": 4.0,
+			"font_size": 12,
+			"hit_radius": 49.0,
+			"icon_center": [
+				184.320007324219,
+				251.200012207031
+			],
+			"label": "BUY",
+			"label_origin": [
+				172.320007324219,
+				276.200012207031
+			],
+			"label_width": 24.0,
+			"nominal_radius": 39.2,
+			"point": [
+				184.320007324219,
+				259.200012207031
+			],
+			"rim_radius": 39.2,
+			"rim_shadow": 5.25
+		},
+		"crouch": {
+			"badge_center": [
+				765.561036021129,
+				571.878966420277
+			],
+			"badge_radius": 9.0,
+			"badge_rim": 1.25,
+			"badge_shadow": 5.25,
+			"body_radius": 39.2,
+			"font_ascent": 13.0,
+			"font_descent": 4.0,
+			"font_size": 12,
+			"hit_radius": 49.0,
+			"icon_center": [
+				739.840026855469,
+				589.599975585938
+			],
+			"label": "LOW",
+			"label_origin": [
+				725.840026855469,
+				614.599975585938
+			],
+			"label_width": 28.0,
+			"nominal_radius": 39.2,
+			"point": [
+				739.840026855469,
+				597.599975585938
+			],
+			"rim_radius": 39.2,
+			"rim_shadow": 5.25
+		},
+		"fire": {
+			"badge_center": [
+				866.400002441406,
+				344.639975585938
+			],
+			"badge_radius": 9.0,
+			"badge_rim": 1.25,
+			"badge_shadow": 5.25,
+			"body_radius": 56.0,
+			"font_ascent": 13.0,
+			"font_descent": 4.0,
+			"font_size": 12,
+			"hit_radius": 70.0,
+			"icon_center": [
+				829.440002441406,
+				373.599975585938
+			],
+			"label": "FIRE",
+			"label_origin": [
+				816.940002441406,
+				398.599975585938
+			],
+			"label_width": 25.0,
+			"nominal_radius": 56.0,
+			"point": [
+				829.440002441406,
+				381.599975585938
+			],
+			"rim_radius": 56.0,
+			"rim_shadow": 5.25
+		},
+		"grenade": {
+			"badge_center": [
+				577.401001841442,
+				550.278990834339
+			],
+			"badge_radius": 9.0,
+			"badge_rim": 1.25,
+			"badge_shadow": 5.25,
+			"body_radius": 39.2,
+			"font_ascent": 13.0,
+			"font_descent": 4.0,
+			"font_size": 12,
+			"hit_radius": 49.0,
+			"icon_center": [
+				551.679992675781,
+				568.0
+			],
+			"label": "FRAG",
+			"label_origin": [
+				536.179992675781,
+				593.0
+			],
+			"label_width": 31.0,
+			"nominal_radius": 39.2,
+			"point": [
+				551.679992675781,
+				576.0
+			],
+			"rim_radius": 39.2,
+			"rim_shadow": 5.25
+		},
+		"interact": {
+			"badge_center": [
+				640.120972544567,
+				413.479003041371
+			],
+			"badge_radius": 9.0,
+			"badge_rim": 1.25,
+			"badge_shadow": 5.25,
+			"body_radius": 39.2,
+			"font_ascent": 13.0,
+			"font_descent": 4.0,
+			"font_size": 12,
+			"hit_radius": 49.0,
+			"icon_center": [
+				614.399963378906,
+				431.200012207031
+			],
+			"label": "USE",
+			"label_origin": [
+				602.899963378906,
+				456.200012207031
+			],
+			"label_width": 23.0,
+			"nominal_radius": 39.2,
+			"point": [
+				614.399963378906,
+				439.200012207031
+			],
+			"rim_radius": 39.2,
+			"rim_shadow": 5.25
+		},
+		"jump": {
+			"badge_center": [
+				873.081055552379,
+				492.679015248402
+			],
+			"badge_radius": 9.0,
+			"badge_rim": 1.25,
+			"badge_shadow": 5.25,
+			"body_radius": 39.2,
+			"font_ascent": 13.0,
+			"font_descent": 4.0,
+			"font_size": 12,
+			"hit_radius": 49.0,
+			"icon_center": [
+				847.360046386719,
+				510.400024414062
+			],
+			"label": "JUMP",
+			"label_origin": [
+				831.860046386719,
+				535.400024414062
+			],
+			"label_width": 31.0,
+			"nominal_radius": 39.2,
+			"point": [
+				847.360046386719,
+				518.400024414062
+			],
+			"rim_radius": 39.2,
+			"rim_shadow": 5.25
+		},
+		"pause": {
+			"badge_center": [
+				903.721009165661,
+				24.6789923602182
+			],
+			"badge_radius": 9.0,
+			"badge_rim": 1.25,
+			"badge_shadow": 5.25,
+			"body_radius": 39.2,
+			"font_ascent": 13.0,
+			"font_descent": 4.0,
+			"font_size": 12,
+			"hit_radius": 49.0,
+			"icon_center": [
+				878.0,
+				42.4000015258789
+			],
+			"label": "MENU",
+			"label_origin": [
+				859.5,
+				67.4000015258789
+			],
+			"label_width": 37.0,
+			"nominal_radius": 39.2,
+			"point": [
+				878.0,
+				50.4000015258789
+			],
+			"rim_radius": 39.2,
+			"rim_shadow": 5.25
+		},
+		"reload": {
+			"badge_center": [
+				738.680970103161,
+				420.678984730824
+			],
+			"badge_radius": 9.0,
+			"badge_rim": 1.25,
+			"badge_shadow": 5.25,
+			"body_radius": 39.2,
+			"font_ascent": 13.0,
+			"font_descent": 4.0,
+			"font_size": 12,
+			"hit_radius": 49.0,
+			"icon_center": [
+				712.9599609375,
+				438.399993896484
+			],
+			"label": "RELOAD",
+			"label_origin": [
+				688.9599609375,
+				463.399993896484
+			],
+			"label_width": 48.0,
+			"nominal_radius": 39.2,
+			"point": [
+				712.9599609375,
+				446.399993896484
+			],
+			"rim_radius": 39.2,
+			"rim_shadow": 5.25
+		},
+		"score": {
+			"badge_center": [
+				111.481003672497,
+				233.479003041371
+			],
+			"badge_radius": 9.0,
+			"badge_rim": 1.25,
+			"badge_shadow": 5.25,
+			"body_radius": 39.2,
+			"font_ascent": 13.0,
+			"font_descent": 4.0,
+			"font_size": 12,
+			"hit_radius": 49.0,
+			"icon_center": [
+				85.7599945068359,
+				251.200012207031
+			],
+			"label": "TEAM",
+			"label_origin": [
+				69.2599945068359,
+				276.200012207031
+			],
+			"label_width": 33.0,
+			"nominal_radius": 39.2,
+			"point": [
+				85.7599945068359,
+				259.200012207031
+			],
+			"rim_radius": 39.2,
+			"rim_shadow": 5.25
+		},
+		"smoke": {
+			"badge_center": [
+				675.960999400036,
+				550.278990834339
+			],
+			"badge_radius": 9.0,
+			"badge_rim": 1.25,
+			"badge_shadow": 5.25,
+			"body_radius": 39.2,
+			"font_ascent": 13.0,
+			"font_descent": 4.0,
+			"font_size": 12,
+			"hit_radius": 49.0,
+			"icon_center": [
+				650.239990234375,
+				568.0
+			],
+			"label": "SMOKE",
+			"label_origin": [
+				629.239990234375,
+				593.0
+			],
+			"label_width": 42.0,
+			"nominal_radius": 39.2,
+			"point": [
+				650.239990234375,
+				576.0
+			],
+			"rim_radius": 39.2,
+			"rim_shadow": 5.25
+		},
+		"switch": {
+			"badge_center": [
+				873.081055552379,
+				629.479003041371
+			],
+			"badge_radius": 9.0,
+			"badge_rim": 1.25,
+			"badge_shadow": 5.25,
+			"body_radius": 39.2,
+			"font_ascent": 13.0,
+			"font_descent": 4.0,
+			"font_size": 12,
+			"hit_radius": 49.0,
+			"icon_center": [
+				847.360046386719,
+				647.200012207031
+			],
+			"label": "SWAP",
+			"label_origin": [
+				830.360046386719,
+				672.200012207031
+			],
+			"label_width": 34.0,
+			"nominal_radius": 39.2,
+			"point": [
+				847.360046386719,
+				655.200012207031
+			],
+			"rim_radius": 39.2,
+			"rim_shadow": 5.25
+		}
+	},
+	"scale": 1.5,
+	"size": [
+		960,
+		720
+	]
+}

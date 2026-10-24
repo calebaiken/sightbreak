@@ -1,0 +1,357 @@
+{
+  "name": "genuinely_ambiguous_duplicate_accept_owner",
+  "expected_model": "UNKNOWN",
+  "source_basis": "Both livequeues containfreshunacked1; hidden duplicate canbelongeither withoutqueuegrowth; selectedA doesnotidentifyitsowner.",
+  "ground_truth": [
+    {
+      "event": "accept",
+      "peer": 9,
+      "commands": [
+        {
+          "sequence": 1,
+          "fire": true,
+          "reload": false,
+          "move": [
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "ack": -1,
+      "queue": {
+        "1": {
+          "sequence": 1,
+          "fire": true,
+          "reload": false,
+          "move": [
+            0.0,
+            0.0
+          ]
+        }
+      }
+    },
+    {
+      "event": "accept",
+      "peer": 10,
+      "commands": [
+        {
+          "sequence": 1,
+          "fire": true,
+          "reload": false,
+          "move": [
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "ack": -1,
+      "queue": {
+        "1": {
+          "sequence": 1,
+          "fire": true,
+          "reload": false,
+          "move": [
+            0.0,
+            0.0
+          ]
+        }
+      }
+    },
+    {
+      "event": "accept",
+      "peer": 10,
+      "commands": [
+        {
+          "sequence": 1,
+          "fire": true,
+          "reload": false,
+          "move": [
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "ack": -1,
+      "queue": {
+        "1": {
+          "sequence": 1,
+          "fire": true,
+          "reload": false,
+          "move": [
+            0.0,
+            0.0
+          ]
+        }
+      }
+    }
+  ],
+  "source_states": {
+    "9": {
+      "generation": 1,
+      "actor": 1,
+      "ack": -1,
+      "queue": {
+        "1": {
+          "sequence": 1,
+          "fire": true,
+          "reload": false,
+          "move": [
+            0.0,
+            0.0
+          ]
+        }
+      }
+    },
+    "10": {
+      "generation": 2,
+      "actor": 2,
+      "ack": -1,
+      "queue": {
+        "1": {
+          "sequence": 1,
+          "fire": true,
+          "reload": false,
+          "move": [
+            0.0,
+            0.0
+          ]
+        }
+      }
+    }
+  },
+  "projected_rows": [
+    {
+      "row": {
+        "role": "authority",
+        "reason": "peer_connected",
+        "peer": 9,
+        "generation": 1,
+        "bound_actor": 0,
+        "authority_epoch": 1,
+        "stream_ack": -1,
+        "queue_count": 0,
+        "stream_skipped": 0,
+        "counters": {
+          "peer_connected": 1
+        },
+        "latest": {}
+      },
+      "owners_before": []
+    },
+    {
+      "row": {
+        "role": "authority",
+        "reason": "peer_bound",
+        "peer": 9,
+        "generation": 1,
+        "bound_actor": 1,
+        "authority_epoch": 1,
+        "stream_ack": -1,
+        "queue_count": 0,
+        "stream_skipped": 0,
+        "counters": {
+          "peer_connected": 1,
+          "peer_bound": 1
+        },
+        "latest": {}
+      },
+      "owners_before": []
+    },
+    {
+      "row": {
+        "role": "authority",
+        "reason": "peer_connected",
+        "peer": 10,
+        "generation": 2,
+        "bound_actor": 0,
+        "authority_epoch": 1,
+        "stream_ack": -1,
+        "queue_count": 0,
+        "stream_skipped": 0,
+        "counters": {
+          "peer_connected": 2,
+          "peer_bound": 1
+        },
+        "latest": {}
+      },
+      "owners_before": [
+        [
+          9,
+          1
+        ]
+      ]
+    },
+    {
+      "row": {
+        "role": "authority",
+        "reason": "peer_bound",
+        "peer": 10,
+        "generation": 2,
+        "bound_actor": 2,
+        "authority_epoch": 1,
+        "stream_ack": -1,
+        "queue_count": 0,
+        "stream_skipped": 0,
+        "counters": {
+          "peer_connected": 2,
+          "peer_bound": 2
+        },
+        "latest": {}
+      },
+      "owners_before": [
+        [
+          9,
+          1
+        ]
+      ]
+    },
+    {
+      "row": {
+        "role": "authority",
+        "reason": "input_received",
+        "peer": 9,
+        "generation": 1,
+        "bound_actor": 1,
+        "authority_epoch": 1,
+        "stream_ack": -1,
+        "queue_count": 0,
+        "stream_skipped": 0,
+        "counters": {
+          "peer_connected": 2,
+          "peer_bound": 2,
+          "input_received": 1
+        },
+        "latest": {
+          "input_received": {
+            "epoch": 1,
+            "count": 1,
+            "first": 1,
+            "last": 1,
+            "fire": 1,
+            "reload": 0,
+            "moving": 0,
+            "wall_msec": 5
+          }
+        }
+      },
+      "owners_before": [
+        [
+          9,
+          1
+        ],
+        [
+          10,
+          2
+        ]
+      ]
+    },
+    {
+      "row": {
+        "role": "authority",
+        "reason": "input_accepted",
+        "peer": 9,
+        "generation": 1,
+        "bound_actor": 1,
+        "authority_epoch": 1,
+        "stream_ack": -1,
+        "queue_count": 1,
+        "stream_skipped": 0,
+        "counters": {
+          "peer_connected": 2,
+          "peer_bound": 2,
+          "input_received": 1,
+          "input_accepted": 1
+        },
+        "latest": {
+          "input_received": {
+            "epoch": 1,
+            "count": 1,
+            "first": 1,
+            "last": 1,
+            "fire": 1,
+            "reload": 0,
+            "moving": 0,
+            "wall_msec": 5
+          },
+          "input_accepted": {
+            "epoch": 1,
+            "count": 1,
+            "first": 1,
+            "last": 1,
+            "fire": 1,
+            "reload": 0,
+            "moving": 0,
+            "wall_msec": 6
+          }
+        }
+      },
+      "owners_before": [
+        [
+          9,
+          1
+        ],
+        [
+          10,
+          2
+        ]
+      ]
+    },
+    {
+      "row": {
+        "role": "authority",
+        "reason": "authority_tick",
+        "peer": 9,
+        "generation": 1,
+        "bound_actor": 1,
+        "authority_epoch": 1,
+        "stream_ack": -1,
+        "queue_count": 1,
+        "stream_skipped": 0,
+        "counters": {
+          "peer_connected": 2,
+          "peer_bound": 2,
+          "input_received": 3,
+          "input_accepted": 3,
+          "input_decode_rejected": 1,
+          "authority_tick": 1
+        },
+        "latest": {
+          "input_received": {
+            "epoch": 1,
+            "count": 1,
+            "first": 1,
+            "last": 1,
+            "fire": 1,
+            "reload": 0,
+            "moving": 0,
+            "wall_msec": 9
+          },
+          "input_accepted": {
+            "epoch": 1,
+            "count": 1,
+            "first": 1,
+            "last": 1,
+            "fire": 1,
+            "reload": 0,
+            "moving": 0,
+            "wall_msec": 10
+          }
+        }
+      },
+      "owners_before": [
+        [
+          9,
+          1
+        ],
+        [
+          10,
+          2
+        ]
+      ]
+    }
+  ],
+  "counterfactual": false,
+  "actual_model": "UNKNOWN",
+  "matches_expectation": true,
+  "error": "UNKNOWN acceptance ownership across multiple live streams"
+}

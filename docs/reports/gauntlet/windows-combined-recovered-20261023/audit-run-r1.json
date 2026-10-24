@@ -1,0 +1,125 @@
+[
+  {
+    "script": "verify_receipts.py",
+    "command": [
+      "python3",
+      "/workspace/reviews/windows-combined-recovered/docs/reports/gauntlet/windows-combined-recovered-20261023/verify_receipts.py",
+      "/workspace/reviews/windows-combined-recovered/builds/windows-combined-review/receipts",
+      "--output",
+      "/workspace/reviews/windows-combined-recovered/docs/reports/gauntlet/windows-combined-recovered-20261023/raw-recomputed.json"
+    ],
+    "exit": 0,
+    "output": "{\"raw_artifact_index\": true, \"regressions\": true, \"full_match\": true, \"objectives\": [false, true], \"journey\": false, \"layouts\": {\"not_applicable\": true}, \"native_input\": [true, true, true], \"settings_transaction\": true}\n",
+    "JSON_retained": true
+  },
+  {
+    "script": "audit_native_commands.py",
+    "command": [
+      "python3",
+      "/workspace/reviews/windows-combined-recovered/docs/reports/gauntlet/windows-combined-recovered-20261023/audit_native_commands.py",
+      "/workspace/reviews/windows-combined-recovered/builds/windows-combined-review/receipts",
+      "--output",
+      "/workspace/reviews/windows-combined-recovered/docs/reports/gauntlet/windows-combined-recovered-20261023/native-commands-recomputed.json"
+    ],
+    "exit": 0,
+    "output": "{\"all_checks_passed\": false, \"native_assertion_total\": null, \"failed_checks\": [\"bot_dry_weapon:single_expected_native_summary\"]}\n",
+    "JSON_retained": true
+  },
+  {
+    "script": "audit_windows_source.py",
+    "command": [
+      "python3",
+      "/workspace/reviews/windows-combined-recovered/docs/reports/gauntlet/windows-combined-recovered-20261023/audit_windows_source.py",
+      "/workspace/reviews/windows-combined-recovered",
+      "/workspace/reviews/windows-combined-recovered/builds/windows-combined-review/receipts",
+      "--output",
+      "/workspace/reviews/windows-combined-recovered/docs/reports/gauntlet/windows-combined-recovered-20261023/source-Windows-recomputed.json"
+    ],
+    "exit": 0,
+    "output": "{\"all_checks_passed\": false}\n",
+    "JSON_retained": true
+  },
+  {
+    "script": "audit_gunplay.py",
+    "command": [
+      "python3",
+      "/workspace/reviews/windows-combined-recovered/docs/reports/gauntlet/windows-combined-recovered-20261023/audit_gunplay.py",
+      "/workspace/reviews/windows-combined-recovered/builds/windows-combined-review/receipts/evidence/regressions/gunplay_rules.log",
+      "--output",
+      "/workspace/reviews/windows-combined-recovered/docs/reports/gauntlet/windows-combined-recovered-20261023/gunplay-recomputed.json"
+    ],
+    "exit": 0,
+    "output": "{\"checks\": 4399, \"failures\": [], \"case_count\": 52}\n",
+    "JSON_retained": true
+  },
+  {
+    "script": "recompute_dry_observable.py",
+    "command": [
+      "python3",
+      "/workspace/reviews/windows-combined-recovered/docs/reports/gauntlet/windows-combined-recovered-20261023/recompute_dry_observable.py",
+      "--mode",
+      "candidate",
+      "/workspace/reviews/windows-combined-recovered/builds/windows-combined-review/receipts/evidence/regressions/bot_dry_weapon.log",
+      "--output",
+      "/workspace/reviews/windows-combined-recovered/docs/reports/gauntlet/windows-combined-recovered-20261023/dry-observable-recomputed.json"
+    ],
+    "exit": 0,
+    "output": "{\n  \"mode\": \"candidate\",\n  \"input\": \"/workspace/reviews/windows-combined-recovered/builds/windows-combined-review/receipts/evidence/regressions/bot_dry_weapon.log\",\n  \"predicates\": 1974,\n  \"observed_records\": {\n    \"ENGINE\": 1,\n    \"CASE\": 84,\n    \"STEP\": 48,\n    \"SEQUENCE\": 6,\n    \"RESULT\": 1,\n    \"FAILURE\": 0\n  },\n  \"expected_fixture_failures\": 0,\n  \"errors\": [],\n  \"observable_comparison_passed\": true,\n  \"excluded\": \"Unlogged full protected authority snapshots; supervisor/source/cleanup evidence\"\n}\n",
+    "JSON_retained": true
+  },
+  {
+    "script": "audit_journey_ocr.py",
+    "command": [
+      "python3",
+      "/workspace/reviews/windows-combined-recovered/docs/reports/gauntlet/windows-combined-recovered-20261023/audit_journey_ocr.py",
+      "/workspace/reviews/windows-combined-recovered/builds/windows-combined-review/receipts",
+      "--output",
+      "/workspace/reviews/windows-combined-recovered/docs/reports/gauntlet/windows-combined-recovered-20261023/journey-OCR-recomputed.json"
+    ],
+    "exit": 1,
+    "output": "Traceback (most recent call last):\n  File \"/workspace/reviews/windows-combined-recovered/docs/reports/gauntlet/windows-combined-recovered-20261023/audit_journey_ocr.py\", line 80, in <module>\n    result=audit(args.root);args.output.write_text(json.dumps(result,indent=2)+'\\n');print(json.dumps({'all_checks_passed':result['all_checks_passed'],'calls':len(result['calls']),'LEAVE_call':result['LEAVE_call']}))\n           ^^^^^^^^^^^^^^^^\n  File \"/workspace/reviews/windows-combined-recovered/docs/reports/gauntlet/windows-combined-recovered-20261023/audit_journey_ocr.py\", line 59, in audit\n    hud.append({'capture':capture,'parsed_original_stdout':parsed,'matches_receipt':parsed==receipt[key],\n                                                                                            ~~~~~~~^^^^^\nKeyError: 'fired_hud'\n",
+    "JSON_retained": false
+  },
+  {
+    "script": "audit_phase_captures.py",
+    "command": [
+      "python3",
+      "/workspace/reviews/windows-combined-recovered/docs/reports/gauntlet/windows-combined-recovered-20261023/audit_phase_captures.py",
+      "/workspace/reviews/windows-combined-recovered/builds/windows-combined-review/receipts",
+      "--full",
+      "/workspace/reviews/windows-combined-recovered/builds/windows-combined-review/full",
+      "--output",
+      "/workspace/reviews/windows-combined-recovered/docs/reports/gauntlet/windows-combined-recovered-20261023/phase-captures-recomputed.json"
+    ],
+    "exit": 0,
+    "output": "{\"all_native_bracket_checks_passed\": true, \"cases\": [{\"capture\": \"06c-next-round\", \"accepted\": true}, {\"capture\": \"10-reopened-loaded-settings\", \"accepted\": true}]}\n",
+    "JSON_retained": true
+  },
+  {
+    "script": "audit_objective_stages.py",
+    "command": [
+      "python3",
+      "/workspace/reviews/windows-combined-recovered/docs/reports/gauntlet/windows-combined-recovered-20261023/audit_objective_stages.py",
+      "/workspace/reviews/windows-combined-recovered/builds/windows-combined-review/receipts",
+      "--output",
+      "/workspace/reviews/windows-combined-recovered/docs/reports/gauntlet/windows-combined-recovered-20261023/objective-stages-recomputed.json"
+    ],
+    "exit": 0,
+    "output": "{\"all_stage_checks_passed\": false, \"next_buy_conservative_bounds_seconds\": [null, 4.5150000000001], \"profile_files_retained\": [null, []]}\n",
+    "JSON_retained": true
+  },
+  {
+    "script": "audit_full_qa.py",
+    "command": [
+      "python3",
+      "/workspace/reviews/windows-combined-recovered/docs/reports/gauntlet/windows-combined-recovered-20261023/audit_full_qa.py",
+      "/workspace/reviews/windows-combined-recovered/builds/windows-combined-review/receipts",
+      "/workspace/reviews/windows-combined-recovered/builds/windows-combined-review/full",
+      "--output",
+      "/workspace/reviews/windows-combined-recovered/docs/reports/gauntlet/windows-combined-recovered-20261023/full-QA-crosscheck.json"
+    ],
+    "exit": 0,
+    "output": "{\"bounded_files\": 229, \"all_match_full_QA\": true, \"PNG_count\": 79, \"all_original_PNGs_pass_integrity_check\": true}\n",
+    "JSON_retained": true
+  }
+]

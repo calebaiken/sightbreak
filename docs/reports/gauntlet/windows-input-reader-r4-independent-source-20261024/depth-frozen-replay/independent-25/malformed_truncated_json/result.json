@@ -1,0 +1,20 @@
+{
+  "group": "independent-25",
+  "name": "malformed_truncated_json",
+  "expected_complete": false,
+  "actual_complete": false,
+  "expectation_met": true,
+  "obsolete_historical_positive": false,
+  "fixture_changes": [],
+  "result": {
+    "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+    "diagnostic_complete": false,
+    "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+    "roles": {},
+    "errors": [
+      "client: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)",
+      "authority: accepted input left an empty queue"
+    ]
+  },
+  "required_verdict_met": true
+}

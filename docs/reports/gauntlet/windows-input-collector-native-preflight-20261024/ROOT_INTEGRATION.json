@@ -1,0 +1,22 @@
+{
+  "candidate": "c32415148db1f110bbc7eadfca3793d4693429ff",
+  "source_verdict": "a379a268860cea3090696eb7de28ed5fbe961274",
+  "native_scoped_verdict": "22b287296f8c7580f4bbf6afc577b9b83a6a6eb4",
+  "integration_criteria": "b6f135a88a54bc7be7311e0aa281a6f8a047454c",
+  "changed_paths": [
+    "game/scripts/gameplay/match.gd",
+    "game/tests/movement_prediction_test.gd",
+    "scripts/fixtures/export_integration.gd",
+    "scripts/verify_integration_export.py"
+  ],
+  "all_507_index_modes_types_blobs_equal": true,
+  "all_materialized_non_doc_bytes_equal": true,
+  "reader_absent": true,
+  "initial_integration_setup_failure": {
+    "actual_chunk": "02d607",
+    "python_error": "Missing sparse tools/art/REFERENCES.md",
+    "overall_exit": 128,
+    "correction": "Restored exact tracked tools prefix and reran entire507path comparison; source copying was not repeated"
+  },
+  "scope": "Exact source integration only; no new native or Windows input acceptance"
+}

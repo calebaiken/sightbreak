@@ -1,0 +1,23 @@
+{
+  "audit": {
+    "command": "taskset -c 4 python3 audit_union.py",
+    "exit": 1,
+    "failed_assertion": "shallow_parent_object_absent",
+    "reason": "git cat-file on partial clone can lazily fetch missing parent; this check altered availability and did not establish initial local absence",
+    "correction": "new exact shallow clone, remove remote before testing parent absence, preserve single current export_presets fixture"
+  },
+  "pure_initial": {
+    "labels": [
+      "own",
+      "depth-one"
+    ],
+    "each": {
+      "methods": 137,
+      "skips": 3,
+      "build_manifest_errors": 2,
+      "other_groups_exit": 0
+    },
+    "reason": "static game/export_presets.cfg omitted by scripts-only sparse setup",
+    "correction": "restore exact current tracked fixture and use fresh output labels; no test or assertion changed"
+  }
+}

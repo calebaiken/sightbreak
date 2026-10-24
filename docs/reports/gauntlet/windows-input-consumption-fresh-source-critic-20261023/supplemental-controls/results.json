@@ -1,0 +1,36 @@
+{
+  "candidate": "c0738163965804297a1881905d5bb4646da40a16",
+  "checkout_head": "bed06bc9ed15cf77f745019baf55e082bdcabc17",
+  "cpu_affinity": [
+    4
+  ],
+  "analyzer_sha256": "7654c44f13d765a2f98f64f7ced4e463d13f040768e87cd56fb0a943d6953e01",
+  "cases": [
+    {
+      "name": "duplicate_index_record",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true
+    },
+    {
+      "name": "duplicate_json_key",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true
+    },
+    {
+      "name": "duplicate_consumption_sequence",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true
+    },
+    {
+      "name": "authority_expiry_stage_in_client_role",
+      "expected_complete": false,
+      "actual_complete": true,
+      "expectation_met": false
+    }
+  ],
+  "cases_total": 4,
+  "expectations_met": 3
+}

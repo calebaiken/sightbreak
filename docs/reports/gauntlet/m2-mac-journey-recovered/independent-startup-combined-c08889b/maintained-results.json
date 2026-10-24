@@ -1,0 +1,163 @@
+{
+  "combined_source": "c08889b8c1118c89e83c151079df4dc224076760",
+  "scope": "Combined pure source controls only",
+  "normal_tests": 70,
+  "commands": [
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "scripts/test_macos_ordinary.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "seconds": 0.1951552949994948,
+      "log": "normal-test_macos_ordinary.txt",
+      "tests": 14,
+      "sha256": "9c9857e47f1bbcb3adf72dd95e3891c7fa4d9b74e2cc9c2543bee54d30574138"
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "scripts/test_macos_ordinary_controller.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "seconds": 0.4233476379995409,
+      "log": "normal-test_macos_ordinary_controller.txt",
+      "tests": 7,
+      "sha256": "5386774f8dfee0ecf2653d87620354dbfc99328f08b1d61ea0ae351194f746e9"
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "scripts/test_macos_ordinary_paths.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "seconds": 0.44472273900100845,
+      "log": "normal-test_macos_ordinary_paths.txt",
+      "tests": 2,
+      "sha256": "bd77e3c9d7e371b4ef578377524d62f75e20b349433fc4b21fa36711af17abaf"
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "scripts/test_macos_ordinary_startup.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "seconds": 0.5624448299986398,
+      "log": "normal-test_macos_ordinary_startup.txt",
+      "tests": 11,
+      "sha256": "179dbf2b22a619a095afeb09ba6d415c6f40242da763f75f7c5df563127284ec"
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "scripts/test_macos_menu.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "seconds": 0.1981709640003828,
+      "log": "normal-test_macos_menu.txt",
+      "tests": 11,
+      "sha256": "4979f6869780fd6173f0033ab55ff8dcf76e6bbcb9032c9ac4db63d81b277d86"
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "scripts/test_macos_focus.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "seconds": 0.2997116910009936,
+      "log": "normal-test_macos_focus.txt",
+      "tests": 9,
+      "sha256": "ca9abdf2c14612d87c75f9fb4894b7e5c662b341284b3fc6f49b60d5796a45c9"
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "scripts/test_macos_screen_identity.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "seconds": 0.25417621999986295,
+      "log": "normal-test_macos_screen_identity.txt",
+      "tests": 7,
+      "sha256": "6aa4bc092f51127a30e33e5ab92db53f3e69e6bc2462e7a813916b72f8639e21"
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "scripts/test_probe_macos_input.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "seconds": 0.18047427400051674,
+      "log": "normal-test_probe_macos_input.txt",
+      "tests": 9,
+      "sha256": "050a0fb58d7de36dcda2027515a4bd958ad9382881ce75c0e0703f8cbf09d516"
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "scripts/test_macos_ordinary.py",
+        "-v"
+      ],
+      "TMPDIR": "symlink to owned real temp root",
+      "exit_code": 0,
+      "seconds": 0.3272280959990894,
+      "log": "alias-test_macos_ordinary.txt",
+      "sha256": "a5c00cb81e0f7be183e26ce00f9334f0a002f8b431f059f69b6cc9dccf070f75"
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "scripts/test_macos_ordinary_controller.py",
+        "-v"
+      ],
+      "TMPDIR": "symlink to owned real temp root",
+      "exit_code": 0,
+      "seconds": 0.7137220020013046,
+      "log": "alias-test_macos_ordinary_controller.txt",
+      "sha256": "69fab915504f457ed1868e642531e144acec6411bf88c39786f7e52bc9c55b03"
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "scripts/test_macos_ordinary_paths.py",
+        "-v"
+      ],
+      "TMPDIR": "symlink to owned real temp root",
+      "exit_code": 0,
+      "seconds": 0.46936046199880366,
+      "log": "alias-test_macos_ordinary_paths.txt",
+      "sha256": "fa15736b303c7ce039d4dfb8bb2fcc6756a324240ac2a26ddbfaaf00e2af78c3"
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "scripts/test_macos_ordinary_startup.py",
+        "-v"
+      ],
+      "TMPDIR": "symlink to owned real temp root",
+      "exit_code": 0,
+      "seconds": 0.5220917470014683,
+      "log": "alias-test_macos_ordinary_startup.txt",
+      "sha256": "401696e3a3cec17fbd7a8047f98ca9e9f7ee054ccfa0dc1874e0085626e04c60"
+    }
+  ],
+  "additional_input_guard_groups": 3,
+  "additional_input_guard_result": {
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "docs/reports/gauntlet/m2-mac-journey-recovered/independent-startup-combined-c08889b/input_guard_controls.py"
+    ],
+    "exit_code": 0,
+    "seconds": 0.1894232220001868,
+    "log": "input-guard-controls.txt",
+    "sha256": "f503bda9abba1b5a30084d2fee976a752c21f770d23202bffb33dd51679c384d"
+  },
+  "passed": true
+}

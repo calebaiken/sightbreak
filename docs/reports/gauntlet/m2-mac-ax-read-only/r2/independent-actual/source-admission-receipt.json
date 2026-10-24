@@ -1,0 +1,73 @@
+{
+  "source": "d6cb78aa4b0bc5a8265d9b82a0d379b4ee386e53",
+  "preregistration_commit": "6cfc5d8d",
+  "review_branch": "review/m2-mac-ax-r2-actual-independent",
+  "game_tree": "55691684d31d44f1680141954bbe530443de9d1f",
+  "scripts_tree": "9bad84882ff6515dc9aca921dcf5df3d80612033",
+  "workflow_blob": "616720c47c93bf3fb9c2f36853b951b9afbd77ad",
+  "local_execution": "CPU 4 source reads and pure mocked tests only",
+  "files": {
+    ".github/workflows/desktop-alpha.yml": {
+      "bytes": 21131,
+      "sha256": "c5d7b6d5afcc92fe67240497121f8a295d92a3c2771d2af2bfcd484b6cdfe56b",
+      "source_bytes_equal": true
+    },
+    "scripts/verify_macos_ax_read_only.py": {
+      "bytes": 21912,
+      "sha256": "862de0ac7d4d4a10ad2551a779aa4fefcb163eb5b33d80f2e6ad7368a81ec733",
+      "source_bytes_equal": true
+    },
+    "scripts/probe_macos_ax.py": {
+      "bytes": 20734,
+      "sha256": "4779c81ed0bd8525d89f5a618c3dc0d064c46f657b9e6e040a81e8a487c9df4b",
+      "source_bytes_equal": true
+    },
+    "scripts/macos_ax_contract.py": {
+      "bytes": 12088,
+      "sha256": "fdf5acf120fdbf0c5e916d8efd3749ebd4722ef48fffdbf38cb92d8bc09aff8b",
+      "source_bytes_equal": true
+    },
+    "scripts/macos_ax_appkit.py": {
+      "bytes": 6679,
+      "sha256": "be2c9969cdc084cb27980651da65b95e29a460ec1c2b7ef83536900b18f02e97",
+      "source_bytes_equal": true
+    },
+    "scripts/macos_window_capture.swift": {
+      "bytes": 12058,
+      "sha256": "6b64561032d86b60dc1276aea1a642f427b48a1b5257934e89b71afb4269f71f",
+      "source_bytes_equal": true
+    },
+    "scripts/verify_macos_ordinary.py": {
+      "bytes": 29731,
+      "sha256": "9e7d52338865e6b5c4ad32b32d44f83fea39d1e6645931e678c91feb21412518",
+      "source_bytes_equal": true
+    },
+    "scripts/package_qa_receipts.py": {
+      "bytes": 5259,
+      "sha256": "457531ea5cb9962a7f16c1e7f528e4689dc12e034d0f9305c57787e0d2ac001a",
+      "source_bytes_equal": true
+    },
+    "scripts/fixtures/macos_ax_read_only/preserved-source.json": {
+      "bytes": 1020,
+      "sha256": "7e9c0d7b10460edd0e1a14ca0e108c98db0d5e2060123db02e66879457d6c88c",
+      "source_bytes_equal": true
+    }
+  },
+  "supplementary_pure_console_observations": [
+    {
+      "command": "taskset -c 4 python scripts/test_macos_ax_read_only.py -v",
+      "exit_code": 0,
+      "tests": 25,
+      "result": "OK",
+      "reported_seconds": 0.214
+    },
+    {
+      "command": "taskset -c 4 python scripts/test_macos_ax_controller.py -v",
+      "exit_code": 0,
+      "tests": 8,
+      "result": "OK",
+      "reported_seconds": 1.266
+    }
+  ],
+  "pure_output_scope": "Observed tool console summaries; no fresh native or OCR output, engine, native library or compile; exact source review 114f22249d9fe9f8aad8869ff00688b438e4f194 retains full independent source receipts."
+}

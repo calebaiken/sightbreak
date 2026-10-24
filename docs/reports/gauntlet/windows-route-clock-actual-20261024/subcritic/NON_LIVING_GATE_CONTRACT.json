@@ -1,0 +1,777 @@
+{
+  "scope": "Preparation contract for later independent non-living controls reconstruction; existing subcritic thread reused; no future raw or actual verdict",
+  "source_commit": "4cf6ac8e744603ed6af122a362036d276754cc76",
+  "run_context_parent_reported": {
+    "run_id": 40089125575,
+    "attempt": 1,
+    "job_id": 120858007351,
+    "root_release": "e5ff0c23",
+    "admission": "90d68181"
+  },
+  "historical_schema_reference": {
+    "run_id": 40083894472,
+    "scope": "Previously preserved bounded official raw used for schema/count baselines only; no new verdict",
+    "root": "/workspace/reviews/windows-reopened-verbose-actual-20261024/.local/windows40083894472/full"
+  },
+  "source_bindings": {
+    ".github/workflows/desktop-alpha.yml": {
+      "git_blob": "1f73834f190fce1e925c16084d7a33f072a13ff0",
+      "sha256_git_blob_bytes": "fd3f55d3307335042cf3c4f3eee7a38bcfb5ffa62c3d4a427394bfb3bf314ef8"
+    },
+    "scripts/run_native_regressions.py": {
+      "git_blob": "843dba19da88a5b2d20bc5977031fbcd29ad776d",
+      "sha256_git_blob_bytes": "c441a65fd0434e7c72e42b90bcf392e28adff8f838ead0c0fcb0176dc1d0875f"
+    },
+    "scripts/verify_integration_export.py": {
+      "git_blob": "67cd164ba85805fae9a0a3ede94c53bbccbb40c4",
+      "sha256_git_blob_bytes": "2b2a67d99e723caabc52d6ded00927280921694985d0b99ffeb22f05fee21963"
+    },
+    "scripts/verify_offline_match.py": {
+      "git_blob": "e242ed83ddd332c0624df6f2ec59ad689d181b52",
+      "sha256_git_blob_bytes": "f6f45ed28feceb1140e02bf5faffc6293c7d3cac96e83a5e1ab2d70dd07baabf"
+    },
+    "scripts/native_log.py": {
+      "git_blob": "4394d69d5813e33184f0e269e5b383061fc21c33",
+      "sha256_git_blob_bytes": "8684252c3ec4ca466fe24a31f938a7614b8ce993c91041b0a2c42d2d483f94e1"
+    },
+    "scripts/build_manifest.py": {
+      "git_blob": "3087a172f8a6194d0ce7b6ada078703653dbb626",
+      "sha256_git_blob_bytes": "64482563194b3a0bcbc766fa7bedbb064f055e2bba34f82bb743f221aa6f0560"
+    },
+    "scripts/verify_builds.py": {
+      "git_blob": "f9b4b936c8327f1ab5dae7cff3a926ac5053ec9c",
+      "sha256_git_blob_bytes": "b809b72aab14410b4f942d86ec8e4230c6ca1c4f94fcb682f17549e97a875ff1"
+    },
+    "scripts/package_qa_receipts.py": {
+      "git_blob": "0410baac440c7b5d31346daf86b484d7383d2aa0",
+      "sha256_git_blob_bytes": "457531ea5cb9962a7f16c1e7f528e4689dc12e034d0f9305c57787e0d2ac001a"
+    }
+  },
+  "expected_source_identity": {
+    "source_commit": "4cf6ac8e744603ed6af122a362036d276754cc76",
+    "source_game_tree": "bca627d5dc8e4482b63e263020a6382f2d36f33c",
+    "source_content_sha256": "43a71ef7ea38febc735b67e24337c8f975bf69d57e3e4b06f94d175170d56eb8",
+    "forward_windows_source_validation_sha256": "e0e223328351507a02d6b63b845531324c2e432e29e86eebed07740c45a2c496",
+    "engine": "4.7.2.stable.official.ed1daf0bf",
+    "source_dirty": false,
+    "source_game_dirty": false
+  },
+  "native_suites": {
+    "ordered_suites": [
+      {
+        "suite": "actor",
+        "expected_checks": 73,
+        "historical_summary": "ACTOR TESTS: 73 checks, 0 failures",
+        "historical_log": {
+          "bytes": 111,
+          "sha256": "21d442400429153642d4cd2b7eaa19e926bdc44dfff40332c0951615089b86f6"
+        }
+      },
+      {
+        "suite": "match",
+        "expected_checks": 75,
+        "historical_summary": "MATCH_TEST: 75/75 passed",
+        "historical_log": {
+          "bytes": 101,
+          "sha256": "5f0b37341aba392259d8fd077c81f89628491beb11998b9787d360a558fa86f9"
+        }
+      },
+      {
+        "suite": "authority_order",
+        "expected_checks": 178,
+        "historical_summary": "AUTHORITY_ORDER checks=178 failures=0 mode=assertion",
+        "historical_log": {
+          "bytes": 14485,
+          "sha256": "eca30aa20d0eeb57abbee7fdead697c802cfa83b7452eac5a48069b39bb84980"
+        }
+      },
+      {
+        "suite": "state_privacy",
+        "expected_checks": 55,
+        "historical_summary": "STATE_PRIVACY_TEST checks=55 failures=0",
+        "historical_log": {
+          "bytes": 116,
+          "sha256": "fc8683297ef17193297e4f08d73436fd664469ea848b6abe2928f7567e66058b"
+        }
+      },
+      {
+        "suite": "movement_prediction",
+        "expected_checks": 742,
+        "historical_summary": "MOVEMENT_PREDICTION_TEST checks=742 failures=0 maximum_error_m=0.075834",
+        "historical_log": {
+          "bytes": 148,
+          "sha256": "d1def24446026e494eeabbafa9d26d22ac0c3ca996f26b7c386a8c5161aa67a6"
+        }
+      },
+      {
+        "suite": "peer_lifecycle",
+        "expected_checks": 16,
+        "historical_summary": "PEER_LIFECYCLE_TEST checks=16 failures=0",
+        "historical_log": {
+          "bytes": 117,
+          "sha256": "c80bcc74f7610d31e8b5259f46bf154fec85209761fd20a3c351b9e5a39308b7"
+        }
+      },
+      {
+        "suite": "input_mode",
+        "expected_checks": 462,
+        "historical_summary": "INPUT_MODE_TEST checks=462 failures=0 graphical_pointer=false scope=simulated_capabilities_and_input_not_physical_hardware baseline=false",
+        "historical_log": {
+          "bytes": 14884,
+          "sha256": "f41998065a60c550d716f8276c4b4a650e8adbaab10461efd22174e7e8e1a23a"
+        }
+      },
+      {
+        "suite": "menu_focus",
+        "expected_checks": 30,
+        "historical_summary": "MENU_FOCUS_TEST checks=30 failures=0 scope=scene_focus_synthetic_actions_not_physical_hardware",
+        "historical_log": {
+          "bytes": 171,
+          "sha256": "f34388840ba05ce35f30bded973e80c7748ceb0db0470f2f39f60001ef09345d"
+        }
+      },
+      {
+        "suite": "offline_diagnostics",
+        "expected_checks": 60,
+        "historical_summary": "OFFLINE_DIAGNOSTICS_TEST checks=60 failures=0 scope=source_initialization_and_read_only_observer_not_exported_gameplay",
+        "historical_log": {
+          "bytes": 769,
+          "sha256": "251364535f8df062e76ac3737a84a8c3ae6729e94e21738374b9a6e9cc014591"
+        }
+      },
+      {
+        "suite": "hud_objective_hint",
+        "expected_checks": 1535,
+        "historical_summary": "HUD_OBJECTIVE_HINT_TEST source=res://scripts/main.gd scope=frozen_source_ui checks=1535 failures=0",
+        "historical_log": {
+          "bytes": 379505,
+          "sha256": "461d472a1ce63ec2552dbacf7a0cc75bf4e6cc086b3337c25d8a9e57ce6f9498"
+        }
+      },
+      {
+        "suite": "activity_provenance",
+        "expected_checks": 32,
+        "historical_summary": "ACTIVITY_PROVENANCE_TEST checks=32 failures=0",
+        "historical_log": {
+          "bytes": 122,
+          "sha256": "a65cf3114179045a1d530b91363721234801fd03ae7a2114b45d4d91b5d1ad04"
+        }
+      },
+      {
+        "suite": "bot_squad_symmetry",
+        "expected_checks": 2722,
+        "historical_summary": "BOT_SQUAD_SYMMETRY_RESULT samples=960 checks=2722 failures=0 mode=assertion",
+        "historical_log": {
+          "bytes": 306635,
+          "sha256": "0f839ed44d72ab0054936ede383248ea72441e4ff96e4aa066a586406a48889e"
+        }
+      },
+      {
+        "suite": "bot_dry_weapon",
+        "expected_checks": 590,
+        "historical_summary": {
+          "prefix": "BOT_DRY_WEAPON_RESULT",
+          "checks": 590,
+          "failures": 0,
+          "passed": true
+        },
+        "historical_log": {
+          "bytes": 32595,
+          "sha256": "33742a2f4a4fe0948ee1b2d1aa60f14cd1a385da798447457eaeacad2d285993"
+        }
+      },
+      {
+        "suite": "bot_exhausted_primary",
+        "expected_checks": 20116,
+        "historical_summary": {
+          "prefix": "BOT_EXHAUSTED_RESULT",
+          "checks": 20116,
+          "failures": [],
+          "passed": null
+        },
+        "historical_log": {
+          "bytes": 8775646,
+          "sha256": "73373e75b21cbf28be83e86c5d27dad6492401126edfcf240d122d29d57049cc"
+        }
+      },
+      {
+        "suite": "transaction_journal",
+        "expected_checks": 41,
+        "historical_summary": "TRANSACTION_JOURNAL 41/41 passed",
+        "historical_log": {
+          "bytes": 302,
+          "sha256": "626eea30dcf930d0c721f5244ca6103a09173d4f19c766d7fc3e66cd0a28a57d"
+        }
+      },
+      {
+        "suite": "gunplay_rules",
+        "expected_checks": 2840,
+        "historical_summary": {
+          "prefix": "GUNPLAY_RULES",
+          "checks": 2840,
+          "failures": [],
+          "passed": null
+        },
+        "historical_log": {
+          "bytes": 408633,
+          "sha256": "fdfaf51efc9381e03ce6c0443e131607f0b2e942feea58a771257afa5229f989"
+        }
+      }
+    ],
+    "expected_suite_count": 16,
+    "expected_total_checks": 29567,
+    "expected_producer_probes": 33,
+    "probe_recipe": "bootstrap then before/after each ordered suite",
+    "suite_timeout_seconds": 120,
+    "probe_timeout_seconds": 30,
+    "required_result_row_keys": [
+      "command",
+      "exit",
+      "clean_log",
+      "wall_seconds",
+      "log",
+      "suite",
+      "before",
+      "after",
+      "produced_files_sha256"
+    ],
+    "required_probe_keys": [
+      "custom_user_dir",
+      "data_dir",
+      "diagnostics_exist",
+      "os",
+      "profile_exists",
+      "project_path",
+      "user_data_dir",
+      "uses_custom_user_dir",
+      "producer_receipt",
+      "run"
+    ],
+    "acceptance": [
+      "Exactly16 ordered suites; parse named native summary counts and failure forms from complete logs",
+      "Every suite and33producer runs exit0 and native_log.failed false; read complete original logs, do not accept clean_log alone",
+      "Per-suite custom native user directories unique, before profile_exists/diagnostics_exist literal false, actual project/user_data identities agree",
+      "isolation.json passed/source_resources_unchanged/copied_resources_unchanged/temporary_project_removed literal true; finalization_failures empty, failure null, owned cleanup removed true",
+      "Hash all produced files and copied/production game resources; retained count/mode/source bindings remain exact"
+    ],
+    "limits": "Native source suites; no exported-gameplay, physical-device or performance acceptance"
+  },
+  "integration_gates": {
+    "native-input": {
+      "input_schedule": "legacy",
+      "synthetic_fire_capture_delay_seconds": 0,
+      "observe_input_consumption": true,
+      "visit_armory": true,
+      "timeout_seconds": 240,
+      "classification": "ordinary undelayed qualification gate"
+    },
+    "reload-release-first": {
+      "input_schedule": "release-first",
+      "synthetic_fire_capture_delay_seconds": 4,
+      "observe_input_consumption": false,
+      "visit_armory": false,
+      "timeout_seconds": 240,
+      "classification": "separate controlled synthetic-delay diagnostic"
+    },
+    "reload-legacy-delayed": {
+      "input_schedule": "legacy",
+      "synthetic_fire_capture_delay_seconds": 4,
+      "observe_input_consumption": false,
+      "visit_armory": false,
+      "timeout_seconds": 240,
+      "outer_timeout_seconds": 270,
+      "classification": "separate original-schedule synthetic-delay diagnostic; wrapper exit_code can differ from shell-step conclusion"
+    },
+    "required_artifacts": [
+      "results.json",
+      "commands.json",
+      "actions.json",
+      "client.log",
+      "server.log",
+      "authority.json when completed",
+      "authority-telemetry.json",
+      "join-snapshot.json",
+      "original capture PNGs",
+      "diagnostic-exit.json for legacy-delayed"
+    ],
+    "required_authority_fields": [
+      "passed",
+      "joined_id",
+      "shots",
+      "lowest_ammo",
+      "largest_ack",
+      "reload_seen",
+      "reload_completed",
+      "reload_trigger",
+      "reload_command_seen",
+      "first_reload_observation",
+      "protocol",
+      "prediction_default"
+    ],
+    "required_input_timing_fields": [
+      "before_firing",
+      "fire_button_edges",
+      "reload_key_edges",
+      "capture_durations",
+      "last_authority_sample"
+    ],
+    "acceptance": [
+      "Each gate retains its own evaluated command/schedule/delay and full result/error; delayed results cannot substitute for ordinary undelayed gate",
+      "source/artifact/authority identity and executable hash match candidate; ordinary observer args remain after -- on source authority and exported client",
+      "Authority protocol6, prediction_default literal false, source fixture guest-loopback and no rewards",
+      "Require actual consumed fire/reload and completion evidence from full actions/authority telemetry; passed flags or command dispatch alone do not prove consumption",
+      "Natural client/server exits0, unchanged native_log predicate clean for both logs, original source/package checks, Windows job query success when reached; preserve all warnings separately",
+      "Success-only Windows job accounting predicate is active_processes==1 (controller); early failure can skip it; cleanup_errors and cleanup-populated command exit codes are not normal-close proof"
+    ],
+    "historical_failure_shape_only": {
+      "reload-legacy-delayed": {
+        "passed": false,
+        "error": "Authority reload completion",
+        "scope": "Retain known historical failure; do not infer future result or cause"
+      }
+    },
+    "limits": [
+      "Synthetic delay is not a spontaneous timing failure or physical performance measure",
+      "Authority reload timing is not rendered reload timing; raw capture/HUD inspection remains separate",
+      "Native input delivery alone does not establish authoritative displacement or physical controls"
+    ]
+  },
+  "objective_scenarios": {
+    "plant": {
+      "timeout_seconds": 180,
+      "display": ":103",
+      "required_simulation_seconds": 3,
+      "required_partial_checks": [
+        "native_smoke_deployed",
+        "interrupted_E_reset",
+        "player_plant",
+        "postplant_attacker_role_guidance",
+        "objective_resolution_and_next_round"
+      ]
+    },
+    "defuse": {
+      "timeout_seconds": 180,
+      "display": ":104",
+      "required_simulation_seconds": 5,
+      "required_partial_checks": [
+        "native_smoke_deployed",
+        "ordinary_bot_plant_observed",
+        "interrupted_E_reset",
+        "player_defuse",
+        "objective_resolution_and_next_round"
+      ]
+    },
+    "initial_contract": {
+      "initial_conditions": "declared_initial_spawns_side_and_seeds_only",
+      "seed_default": 42,
+      "ten_living_actors_health": 100,
+      "protocol": 6,
+      "prediction_enabled": false,
+      "time_scale": 1,
+      "empty_offline_training": true
+    },
+    "rules": {
+      "buy_seconds": 15,
+      "round_seconds": 100,
+      "device_seconds": 35,
+      "plant_seconds": 3,
+      "defuse_seconds": 5,
+      "win_score": 7
+    },
+    "objective_hold_required_keys": [
+      "command_wall_unix_msec",
+      "command_elapsed",
+      "command_simulation_tick",
+      "samples",
+      "diagnostic_start_inferred_from_normalized_progress",
+      "diagnostic_native_command_to_observed_completion_wall_seconds",
+      "input_started",
+      "completion_notification",
+      "simulation_seconds",
+      "simulation_ticks",
+      "one_tick_tolerance_seconds"
+    ],
+    "acceptance": [
+      "Use actual trace consumed local_interact_input held true exactly once after known-zero prior and before one matching notification; same actor/round and living eligible context",
+      "No intervening release or progress reset; source requires seconds+1/60+1e-6>=3 or5 and ticks+1+1e-6>=required*60",
+      "Keep source one-tick tolerance; normalized-progress inferred start and wall command-to-observed duration are diagnostic only",
+      "Wall completion watchdog remains required*3; legitimate site/device radius, interrupted E reset, smoke and ordinary bot plant remain original gates",
+      "Contribution increments exactly1; credits ordinary objective300, optionally same observed ordinary round reward2700/1900 capped9000",
+      "Plant postplant role capture requires same living attacker; later natural resolution may kill actor and does not prove living through resolution",
+      "Both original and reopened exits0, complete strict logs, unchanged saved profile/settings and original source/job checks"
+    ],
+    "limits": [
+      "Declared objective layout is distinct from stock random full match",
+      "Natural resolution must be evidenced from trace; no actor/target/round reset or forced winner accepted"
+    ]
+  },
+  "stock_match_and_progression": {
+    "timeout_seconds": 1800,
+    "display": ":105",
+    "initial_conditions": "stock_spawns_teams_random_seeds",
+    "seed_option_forbidden": true,
+    "required_partial_checks": [
+      "standard_live_move_aim_fire_reload",
+      "normal_full_match_and_single_training_record",
+      "earned_profile_loaded_after_restart"
+    ],
+    "acceptance": [
+      "Stock sidearm ammo/movement/aim/fire/reload; ordinary autonomous gameplay through complete stock match at time_scale1",
+      "Final rounds7..12; attack+defend==rounds; winning score7 or rounds12; ten unique scoreboard actors, five per team, exactly one local human",
+      "Summary human counters match final roster; won/draw computed from actual post-halftime team",
+      "All natural round transitions1..N; round7 switches local team; exactly one completed event and no duplicate_completion; completion_calls1; events_dropped0",
+      "Genuine initially empty isolated offline profile; actual saved JSON equals training_after; exactly1 match/history entry, no second mutation during dwell",
+      "XP=old_xp+120+15*kills+50*objectives; level=1+int(sqrt(xp/150)); earned=100+75_if_won+150_if_new_daily+(level-old_level)*250",
+      "credits=old_credits+earned, wins/kills/deaths ordinary additive formula, history summary and credits_earned exact",
+      "Reopen normal menu, compare saved profile; deploy into next fresh stock buy phase with completion_calls0 and runtime initial_profile equal saved; no profile change from uncompleted next match",
+      "Both exits0, strict complete logs, source unchanged, executable/package identity and Windows success job accounting remain original gates"
+    ],
+    "required_raw": [
+      "actions.jsonl",
+      "trace/events.jsonl",
+      "trace/status.json",
+      "trace-reopened/events.jsonl",
+      "trace-reopened/status.json",
+      "state/roaming/Godot/app_userdata/SIGHTBREAK/offline_training.json",
+      "client.log",
+      "reopened.log",
+      "commands.json",
+      "results.json",
+      "bounded original captures"
+    ],
+    "variable_outcomes": "Do not freeze old12rounds/5:7/loss/120XP/250credits as required outcomes; recompute from actual source formulas and actual summary",
+    "screenshot_limit": "Bounded general QA excludes round-*.png by workflow; inventory omissions and do not claim unseen images were inspected"
+  },
+  "cleanup_and_strict_limits": [
+    "Retain original native_log.failed predicate plus every generic warning separately; ANGLE fallback remains visible and applicable stricter qualification blockers remain",
+    "All JSON acceptance Booleans must be literal; Python-owned PIDs/exits/counters exclude bool; preserve actual Godot JSON number encodings in nested profiles and compare under original source semantics",
+    "Empty cleanup_errors, root exit0 or kill-on-job-close ownership alone do not prove every short-lived/escaped descendant was observed",
+    "Normal success Windows job query must be reached and consistent with original source; failures preserve any skipped query as unverified",
+    "No new process probe, sleep/drain, timeout increase, runtime invocation or cleanup is admitted",
+    "Official bounded raw only;32MiB transfer cap remains; large development package remains untransferred/unparsed unless a separately supported bounded receipt proves a limited fact",
+    "No physical input, device FPS, audio quality, causality, security or product acceptance follows from these bookkeeping checks"
+  ],
+  "historical_schema_bindings": {
+    "native-input/results.json": {
+      "historical_input": {
+        "bytes": 13951,
+        "sha256": "3873a506bc90ca8c1f37979d9cd7c86771e53d5eb39e4e3cd3a45133d50f4a90"
+      },
+      "top_level_keys": [
+        "passed",
+        "target",
+        "host",
+        "input_schedule",
+        "synthetic_fire_capture_delay_seconds",
+        "qualification_note",
+        "input_consumption_observation",
+        "artifact_source",
+        "authority_source",
+        "engine",
+        "executable_sha256",
+        "authority",
+        "client_exit",
+        "server_exit",
+        "capture_method",
+        "rendered_capture_stages",
+        "capture_dimensions",
+        "reload_trigger",
+        "inventory_navigation_captured",
+        "desktop_R_key_input",
+        "movement_aim_input",
+        "exit_method",
+        "automation_accessibility",
+        "scope",
+        "cleanup_errors",
+        "commands",
+        "elapsed_seconds",
+        "input_timing"
+      ]
+    },
+    "reload-release-first/results.json": {
+      "historical_input": {
+        "bytes": 13370,
+        "sha256": "4ac8a5eec089c6845b3af477bcbb8d2070fc1e5d0e98d01b70803cd185121274"
+      },
+      "top_level_keys": [
+        "passed",
+        "target",
+        "host",
+        "input_schedule",
+        "synthetic_fire_capture_delay_seconds",
+        "qualification_note",
+        "artifact_source",
+        "authority_source",
+        "engine",
+        "executable_sha256",
+        "authority",
+        "client_exit",
+        "server_exit",
+        "capture_method",
+        "rendered_capture_stages",
+        "capture_dimensions",
+        "reload_trigger",
+        "inventory_navigation_captured",
+        "desktop_R_key_input",
+        "movement_aim_input",
+        "exit_method",
+        "automation_accessibility",
+        "scope",
+        "cleanup_errors",
+        "commands",
+        "elapsed_seconds",
+        "input_timing"
+      ]
+    },
+    "reload-legacy-delayed/results.json": {
+      "historical_input": {
+        "bytes": 12360,
+        "sha256": "ede4518284892da833331d708b5cb7013942285be30a7ff1c79f93b810b908b9"
+      },
+      "top_level_keys": [
+        "passed",
+        "target",
+        "host",
+        "input_schedule",
+        "synthetic_fire_capture_delay_seconds",
+        "qualification_note",
+        "artifact_source",
+        "authority_source",
+        "engine",
+        "executable_sha256",
+        "error",
+        "failure_authority_observation",
+        "cleanup_errors",
+        "commands",
+        "elapsed_seconds",
+        "input_timing"
+      ]
+    },
+    "offline-plant/results.json": {
+      "historical_input": {
+        "bytes": 22846,
+        "sha256": "93a8fe734fcc2ad1e09460e42ef51455a5afc43ae3d6c0208431ac65ad384a76"
+      },
+      "top_level_keys": [
+        "passed",
+        "scenario",
+        "target",
+        "host",
+        "controller_command",
+        "timeout_seconds",
+        "partial_checks",
+        "captures",
+        "source",
+        "artifact_source",
+        "executable",
+        "executable_sha256",
+        "engine",
+        "hosted_render_priority",
+        "initial",
+        "profile_observation_path",
+        "approach_origin",
+        "approach_end",
+        "approach_distance",
+        "objective_hold_wall_budget_seconds",
+        "objective_hold",
+        "objective_transition",
+        "local_contribution_before",
+        "local_contribution_after",
+        "credits_before",
+        "credits_after",
+        "funds_explanation",
+        "objective_resolution",
+        "progression_settings_restart_equal",
+        "exit_method",
+        "capture_method",
+        "scope",
+        "initial_exit",
+        "reopened_exit",
+        "commands",
+        "cleanup_errors",
+        "elapsed_seconds",
+        "controller_sha256"
+      ]
+    },
+    "offline-defuse/results.json": {
+      "historical_input": {
+        "bytes": 24026,
+        "sha256": "f3aea2de8147545d95d585d6a8114e35fb73bcd1beff33b497e7a45d6b90412b"
+      },
+      "top_level_keys": [
+        "passed",
+        "scenario",
+        "target",
+        "host",
+        "controller_command",
+        "timeout_seconds",
+        "partial_checks",
+        "captures",
+        "source",
+        "artifact_source",
+        "executable",
+        "executable_sha256",
+        "engine",
+        "hosted_render_priority",
+        "initial",
+        "profile_observation_path",
+        "bot_planter_id",
+        "approach_origin",
+        "approach_end",
+        "approach_distance",
+        "objective_hold_wall_budget_seconds",
+        "objective_hold",
+        "objective_transition",
+        "local_contribution_before",
+        "local_contribution_after",
+        "credits_before",
+        "credits_after",
+        "funds_explanation",
+        "objective_resolution",
+        "progression_settings_restart_equal",
+        "exit_method",
+        "capture_method",
+        "scope",
+        "initial_exit",
+        "reopened_exit",
+        "commands",
+        "cleanup_errors",
+        "elapsed_seconds",
+        "controller_sha256"
+      ]
+    },
+    "offline-full-match/results.json": {
+      "historical_input": {
+        "bytes": 64095,
+        "sha256": "ac1525fc130c7e41b8e8098218c653c31dddb09f905c90ea2fe2e4283ba73bf5"
+      },
+      "top_level_keys": [
+        "passed",
+        "scenario",
+        "target",
+        "host",
+        "controller_command",
+        "timeout_seconds",
+        "partial_checks",
+        "captures",
+        "source",
+        "artifact_source",
+        "executable",
+        "executable_sha256",
+        "engine",
+        "hosted_render_priority",
+        "initial",
+        "profile_observation_path",
+        "initial_displacement",
+        "fired_ammunition",
+        "reloaded_ammunition",
+        "summary",
+        "training_before",
+        "training_after",
+        "expected_xp",
+        "expected_credits_earned",
+        "natural_rounds",
+        "final_roster_visibility",
+        "reopened_initial_profile",
+        "progression_settings_restart_equal",
+        "exit_method",
+        "capture_method",
+        "scope",
+        "initial_exit",
+        "reopened_exit",
+        "commands",
+        "cleanup_errors",
+        "elapsed_seconds",
+        "controller_sha256"
+      ]
+    },
+    "regressions/isolation.json": {
+      "historical_input": {
+        "bytes": 36947,
+        "sha256": "704d2d29ca4521bf9333fa9bfb357e861e7d5d502d772398f953b27aba0df916"
+      },
+      "top_level_keys": [
+        "namespace",
+        "source_resources_sha256",
+        "suite_timeout_seconds",
+        "probe_timeout_seconds",
+        "scope",
+        "engine",
+        "import",
+        "passed",
+        "source_resources_unchanged",
+        "copied_resources_unchanged",
+        "temporary_project_removed",
+        "cleanup",
+        "finalization_failures",
+        "failure"
+      ]
+    },
+    "verification/results.json": {
+      "historical_input": {
+        "bytes": 1771,
+        "sha256": "bdaa06c33e771fb0b52416b20f39d6bd2784517d9595ab273eea3639cbe80d43"
+      },
+      "top_level_keys": [
+        "source_dirty",
+        "source_validation_sha256",
+        "source_commit",
+        "source_game_tree",
+        "source_content_sha256",
+        "source_game_dirty",
+        "host",
+        "targets",
+        "runs",
+        "gameplay"
+      ]
+    },
+    "windows/source.json": {
+      "historical_input": {
+        "bytes": 1643,
+        "sha256": "a637fe9344277adc505ab65bea820a3ba4c8eb5cec0da9c6fd192542921afefe"
+      },
+      "top_level_keys": [
+        "source_dirty",
+        "source_validation_sha256",
+        "source_commit",
+        "source_game_tree",
+        "source_content_sha256",
+        "source_game_dirty",
+        "target",
+        "version",
+        "build_number",
+        "export_completed",
+        "built_at_utc",
+        "artifact",
+        "payload"
+      ]
+    },
+    "manifest.json": {
+      "historical_input": {
+        "bytes": 3167,
+        "sha256": "86bd0ee1ae42aa01df77c6732e17f47d4ba60e24b55a12994686db14f32b8076"
+      },
+      "top_level_keys": [
+        "targets",
+        "game",
+        "version",
+        "engine",
+        "build_type",
+        "source_dirty",
+        "source_validation_sha256",
+        "source_commit",
+        "source_game_tree",
+        "source_content_sha256",
+        "source_game_dirty",
+        "exports",
+        "artifacts",
+        "limitations"
+      ]
+    }
+  },
+  "preparation_limits": [
+    "No future40089125575 raw exists or was inspected",
+    "Broad historical summary read initially exceeded tool output budget; only subsequent compact structured reads and source bindings supply this contract",
+    "This contract creates no new native/CI release and does not replace the parent preregistration or separate independent source review"
+  ]
+}

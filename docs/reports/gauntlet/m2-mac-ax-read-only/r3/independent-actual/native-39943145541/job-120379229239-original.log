@@ -1,0 +1,2180 @@
+﻿2026-10-23T11:01:20.8342900Z Current runner version: '2.338.0'
+2026-10-23T11:01:20.8372760Z ##[group]Runner Image Provisioner
+2026-10-23T11:01:20.8374390Z Hosted Compute Agent
+2026-10-23T11:01:20.8375410Z Version: 20260828.587
+2026-10-23T11:01:20.8376500Z Commit: abac92662cab4cc7352de4f9f9d2e2419aad9c29
+2026-10-23T11:01:20.8378440Z Build Date: 2026-08-28T16:44:25Z
+2026-10-23T11:01:20.8379170Z Worker ID: {b9505386-0e25-40dc-81ce-669a3681a15c}
+2026-10-23T11:01:20.8379650Z Azure Region: westus
+2026-10-23T11:01:20.8380020Z ##[endgroup]
+2026-10-23T11:01:20.8381350Z ##[group]Operating System
+2026-10-23T11:01:20.8381760Z macOS
+2026-10-23T11:01:20.8382120Z 15.7.9
+2026-10-23T11:01:20.8382440Z 24G830
+2026-10-23T11:01:20.8382770Z ##[endgroup]
+2026-10-23T11:01:20.8383130Z ##[group]Runner Image
+2026-10-23T11:01:20.8383540Z Image: macos-15-arm64
+2026-10-23T11:01:20.8383910Z Version: 20260907.0337.1
+2026-10-23T11:01:20.8384890Z Included Software: https://github.com/actions/runner-images/blob/macos-15-arm64/20260907.0337/images/macos/macos-15-arm64-Readme.md
+2026-10-23T11:01:20.8386000Z Image Release: https://github.com/actions/runner-images/releases/tag/macos-15-arm64%2F20260907.0337
+2026-10-23T11:01:20.8386690Z ##[endgroup]
+2026-10-23T11:01:20.8387520Z ##[group]GITHUB_TOKEN Permissions
+2026-10-23T11:01:20.8389040Z Actions: read
+2026-10-23T11:01:20.8389410Z Contents: read
+2026-10-23T11:01:20.8389750Z Metadata: read
+2026-10-23T11:01:20.8390100Z ##[endgroup]
+2026-10-23T11:01:20.8391690Z Secret source: Actions
+2026-10-23T11:01:20.8392360Z Cache mode: write
+2026-10-23T11:01:20.8392820Z Prepare workflow directory
+2026-10-23T11:01:20.8940010Z Prepare all required actions
+2026-10-23T11:01:20.8994620Z Getting action download info
+2026-10-23T11:01:21.1844900Z Download action repository 'actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683' (SHA:11bd71901bbe5b1630ceea73d27597364c9af683)
+2026-10-23T11:01:21.7110960Z Download action repository 'actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+2026-10-23T11:01:21.8864170Z Download action repository 'actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-10-23T11:01:22.2552800Z Complete job name: macos_ax_read_only
+2026-10-23T11:01:22.3323700Z ##[group]Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+2026-10-23T11:01:22.3324530Z with:
+2026-10-23T11:01:22.3324960Z   repository: calebaiken/sightbreak
+2026-10-23T11:01:22.3327830Z   token: ***
+2026-10-23T11:01:22.3328140Z   ssh-strict: true
+2026-10-23T11:01:22.3328460Z   ssh-user: git
+2026-10-23T11:01:22.3328790Z   persist-credentials: true
+2026-10-23T11:01:22.3329150Z   clean: true
+2026-10-23T11:01:22.3329480Z   sparse-checkout-cone-mode: true
+2026-10-23T11:01:22.3329970Z   fetch-depth: 1
+2026-10-23T11:01:22.3330280Z   fetch-tags: false
+2026-10-23T11:01:22.3330610Z   show-progress: true
+2026-10-23T11:01:22.3330930Z   lfs: false
+2026-10-23T11:01:22.3331230Z   submodules: false
+2026-10-23T11:01:22.3331560Z   set-safe-directory: true
+2026-10-23T11:01:22.3332120Z env:
+2026-10-23T11:01:22.3332670Z   SIGHTBREAK_BUILDS_DIR: /Users/runner/work/sightbreak/sightbreak/builds/macos-ax-diagnostic
+2026-10-23T11:01:22.3333270Z ##[endgroup]
+2026-10-23T11:01:22.8492030Z Syncing repository: calebaiken/sightbreak
+2026-10-23T11:01:22.8493660Z ##[group]Getting Git version info
+2026-10-23T11:01:22.8494400Z Working directory is '/Users/runner/work/sightbreak/sightbreak'
+2026-10-23T11:01:22.8495370Z [command]/opt/homebrew/bin/git version
+2026-10-23T11:01:22.9421440Z git version 2.55.0
+2026-10-23T11:01:22.9459420Z ##[endgroup]
+2026-10-23T11:01:22.9475660Z Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/2fbe98ae-b6e9-4b04-8fe3-b47baf35e2fa/.gitconfig'
+2026-10-23T11:01:22.9490330Z Temporarily overriding HOME='/Users/runner/work/_temp/2fbe98ae-b6e9-4b04-8fe3-b47baf35e2fa' before making global git config changes
+2026-10-23T11:01:22.9492070Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-23T11:01:22.9500920Z [command]/opt/homebrew/bin/git config --global --add safe.directory /Users/runner/work/sightbreak/sightbreak
+2026-10-23T11:01:22.9681520Z Deleting the contents of '/Users/runner/work/sightbreak/sightbreak'
+2026-10-23T11:01:22.9685480Z ##[group]Initializing the repository
+2026-10-23T11:01:22.9688190Z [command]/opt/homebrew/bin/git init /Users/runner/work/sightbreak/sightbreak
+2026-10-23T11:01:23.0056550Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-23T11:01:23.0072380Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-23T11:01:23.0073450Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-23T11:01:23.0074150Z hint: call:
+2026-10-23T11:01:23.0076160Z hint:
+2026-10-23T11:01:23.0076740Z hint: 	git config --global init.defaultBranch <name>
+2026-10-23T11:01:23.0107640Z hint:
+2026-10-23T11:01:23.0178180Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-23T11:01:23.0181780Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-23T11:01:23.0184430Z hint:
+2026-10-23T11:01:23.0186660Z hint: 	git branch -m <name>
+2026-10-23T11:01:23.0188410Z hint:
+2026-10-23T11:01:23.0190130Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-23T11:01:23.0193100Z Initialized empty Git repository in /Users/runner/work/sightbreak/sightbreak/.git/
+2026-10-23T11:01:23.0196580Z [command]/opt/homebrew/bin/git remote add origin https://github.com/calebaiken/sightbreak
+2026-10-23T11:01:23.0349990Z ##[endgroup]
+2026-10-23T11:01:23.0351540Z ##[group]Disabling automatic garbage collection
+2026-10-23T11:01:23.0352710Z [command]/opt/homebrew/bin/git config --local gc.auto 0
+2026-10-23T11:01:23.0406130Z ##[endgroup]
+2026-10-23T11:01:23.0407150Z ##[group]Setting up auth
+2026-10-23T11:01:23.0408290Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-23T11:01:23.0566770Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-23T11:01:23.2495650Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-23T11:01:23.2580210Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-23T11:01:23.4434440Z [command]/opt/homebrew/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-23T11:01:23.4494710Z ##[endgroup]
+2026-10-23T11:01:23.4497590Z ##[group]Fetching the repository
+2026-10-23T11:01:23.4503800Z [command]/opt/homebrew/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +4854aed946d25d27482af66c332f84aa51cea8fb:refs/remotes/origin/qualifier/m2-mac-ax-r3-read-only-4854aed9
+2026-10-23T11:01:47.6170820Z From https://github.com/calebaiken/sightbreak
+2026-10-23T11:01:47.6175360Z  * [new ref]         4854aed946d25d27482af66c332f84aa51cea8fb -> origin/qualifier/m2-mac-ax-r3-read-only-4854aed9
+2026-10-23T11:01:47.6196630Z ##[endgroup]
+2026-10-23T11:01:47.6199410Z ##[group]Determining the checkout info
+2026-10-23T11:01:47.6203890Z ##[endgroup]
+2026-10-23T11:01:47.6204370Z [command]/opt/homebrew/bin/git sparse-checkout disable
+2026-10-23T11:01:47.6416700Z [command]/opt/homebrew/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-23T11:01:47.6487030Z ##[group]Checking out the ref
+2026-10-23T11:01:47.6500690Z [command]/opt/homebrew/bin/git checkout --progress --force -B qualifier/m2-mac-ax-r3-read-only-4854aed9 refs/remotes/origin/qualifier/m2-mac-ax-r3-read-only-4854aed9
+2026-10-23T11:01:49.4971570Z Updating files:  10% (1041/9964)
+2026-10-23T11:01:49.7096810Z Updating files:  11% (1097/9964)
+2026-10-23T11:01:50.1070920Z Updating files:  11% (1110/9964)
+2026-10-23T11:01:50.4300980Z Updating files:  12% (1196/9964)
+2026-10-23T11:01:50.5712840Z Updating files:  13% (1296/9964)
+2026-10-23T11:01:50.6808310Z Updating files:  14% (1395/9964)
+2026-10-23T11:01:50.7635650Z Updating files:  14% (1408/9964)
+2026-10-23T11:01:50.7912490Z Updating files:  15% (1495/9964)
+2026-10-23T11:01:50.8173070Z Updating files:  16% (1595/9964)
+2026-10-23T11:01:50.8384920Z Updating files:  17% (1694/9964)
+2026-10-23T11:01:50.8856070Z Updating files:  18% (1794/9964)
+2026-10-23T11:01:50.8958420Z Updating files:  19% (1894/9964)
+2026-10-23T11:01:50.9162370Z Updating files:  20% (1993/9964)
+2026-10-23T11:01:50.9857580Z Updating files:  21% (2093/9964)
+2026-10-23T11:01:50.9978530Z Updating files:  22% (2193/9964)
+2026-10-23T11:01:51.0649070Z Updating files:  23% (2292/9964)
+2026-10-23T11:01:51.1223620Z Updating files:  24% (2392/9964)
+2026-10-23T11:01:51.1594420Z Updating files:  25% (2491/9964)
+2026-10-23T11:01:51.1866380Z Updating files:  26% (2591/9964)
+2026-10-23T11:01:51.2415130Z Updating files:  27% (2691/9964)
+2026-10-23T11:01:51.3880030Z Updating files:  28% (2790/9964)
+2026-10-23T11:01:51.4252260Z Updating files:  29% (2890/9964)
+2026-10-23T11:01:51.4461370Z Updating files:  30% (2990/9964)
+2026-10-23T11:01:51.4644080Z Updating files:  31% (3089/9964)
+2026-10-23T11:01:51.5119110Z Updating files:  32% (3189/9964)
+2026-10-23T11:01:51.5419050Z Updating files:  33% (3289/9964)
+2026-10-23T11:01:51.5538890Z Updating files:  34% (3388/9964)
+2026-10-23T11:01:51.6508470Z Updating files:  35% (3488/9964)
+2026-10-23T11:01:51.6775090Z Updating files:  36% (3588/9964)
+2026-10-23T11:01:51.6917030Z Updating files:  36% (3656/9964)
+2026-10-23T11:01:51.7143230Z Updating files:  37% (3687/9964)
+2026-10-23T11:01:51.7571120Z Updating files:  38% (3787/9964)
+2026-10-23T11:01:51.7822980Z Updating files:  39% (3886/9964)
+2026-10-23T11:01:51.8052310Z Updating files:  40% (3986/9964)
+2026-10-23T11:01:51.8388990Z Updating files:  41% (4086/9964)
+2026-10-23T11:01:51.8943120Z Updating files:  42% (4185/9964)
+2026-10-23T11:01:51.9209800Z Updating files:  43% (4285/9964)
+2026-10-23T11:01:51.9847130Z Updating files:  44% (4385/9964)
+2026-10-23T11:01:52.0015090Z Updating files:  45% (4484/9964)
+2026-10-23T11:01:52.0235720Z Updating files:  46% (4584/9964)
+2026-10-23T11:01:52.5067730Z Updating files:  47% (4684/9964)
+2026-10-23T11:01:52.5282960Z Updating files:  48% (4783/9964)
+2026-10-23T11:01:52.5614300Z Updating files:  49% (4883/9964)
+2026-10-23T11:01:52.5795780Z Updating files:  50% (4982/9964)
+2026-10-23T11:01:52.8630030Z Updating files:  51% (5082/9964)
+2026-10-23T11:01:53.8444000Z Updating files:  51% (5129/9964)
+2026-10-23T11:01:54.8280240Z Updating files:  51% (5132/9964)
+2026-10-23T11:01:54.9479230Z Updating files:  51% (5135/9964)
+2026-10-23T11:01:54.9879380Z Updating files:  52% (5182/9964)
+2026-10-23T11:01:55.0116200Z Updating files:  53% (5281/9964)
+2026-10-23T11:01:55.1490380Z Updating files:  54% (5381/9964)
+2026-10-23T11:01:55.2353100Z Updating files:  55% (5481/9964)
+2026-10-23T11:01:55.2933460Z Updating files:  56% (5580/9964)
+2026-10-23T11:01:55.3176170Z Updating files:  57% (5680/9964)
+2026-10-23T11:01:55.7886020Z Updating files:  58% (5780/9964)
+2026-10-23T11:01:55.8339140Z Updating files:  58% (5874/9964)
+2026-10-23T11:01:55.9429750Z Updating files:  59% (5879/9964)
+2026-10-23T11:01:56.1092100Z Updating files:  60% (5979/9964)
+2026-10-23T11:01:56.2596030Z Updating files:  61% (6079/9964)
+2026-10-23T11:01:56.2836220Z Updating files:  62% (6178/9964)
+2026-10-23T11:01:56.3300490Z Updating files:  63% (6278/9964)
+2026-10-23T11:01:56.4023540Z Updating files:  64% (6377/9964)
+2026-10-23T11:01:56.5510970Z Updating files:  65% (6477/9964)
+2026-10-23T11:01:56.6861760Z Updating files:  66% (6577/9964)
+2026-10-23T11:01:56.8705380Z Updating files:  66% (6617/9964)
+2026-10-23T11:01:57.1403800Z Updating files:  67% (6676/9964)
+2026-10-23T11:01:57.1943300Z Updating files:  68% (6776/9964)
+2026-10-23T11:01:57.2156970Z Updating files:  69% (6876/9964)
+2026-10-23T11:01:57.2575780Z Updating files:  70% (6975/9964)
+2026-10-23T11:01:57.3974980Z Updating files:  71% (7075/9964)
+2026-10-23T11:01:57.4900530Z Updating files:  72% (7175/9964)
+2026-10-23T11:01:57.6804820Z Updating files:  73% (7274/9964)
+2026-10-23T11:01:57.7243170Z Updating files:  73% (7334/9964)
+2026-10-23T11:01:57.9699920Z Updating files:  74% (7374/9964)
+2026-10-23T11:01:58.3643610Z Updating files:  75% (7473/9964)
+2026-10-23T11:01:58.4178910Z Updating files:  76% (7573/9964)
+2026-10-23T11:01:58.4630900Z Updating files:  77% (7673/9964)
+2026-10-23T11:01:58.4861830Z Updating files:  78% (7772/9964)
+2026-10-23T11:01:58.5109780Z Updating files:  79% (7872/9964)
+2026-10-23T11:01:58.6402630Z Updating files:  80% (7972/9964)
+2026-10-23T11:01:58.6645630Z Updating files:  81% (8071/9964)
+2026-10-23T11:01:58.7584930Z Updating files:  82% (8171/9964)
+2026-10-23T11:01:58.7588510Z Updating files:  82% (8222/9964)
+2026-10-23T11:01:58.8502110Z Updating files:  83% (8271/9964)
+2026-10-23T11:01:58.9317910Z Updating files:  84% (8370/9964)
+2026-10-23T11:01:58.9544750Z Updating files:  85% (8470/9964)
+2026-10-23T11:01:59.1501750Z Updating files:  86% (8570/9964)
+2026-10-23T11:01:59.3169860Z Updating files:  87% (8669/9964)
+2026-10-23T11:01:59.6858610Z Updating files:  88% (8769/9964)
+2026-10-23T11:01:59.7109490Z Updating files:  88% (8852/9964)
+2026-10-23T11:01:59.8125400Z Updating files:  89% (8868/9964)
+2026-10-23T11:01:59.8289400Z Updating files:  90% (8968/9964)
+2026-10-23T11:01:59.8456360Z Updating files:  91% (9068/9964)
+2026-10-23T11:01:59.8641330Z Updating files:  92% (9167/9964)
+2026-10-23T11:01:59.8968940Z Updating files:  93% (9267/9964)
+2026-10-23T11:02:00.1447920Z Updating files:  94% (9367/9964)
+2026-10-23T11:02:00.3763320Z Updating files:  95% (9466/9964)
+2026-10-23T11:02:00.3931430Z Updating files:  96% (9566/9964)
+2026-10-23T11:02:00.4078900Z Updating files:  97% (9666/9964)
+2026-10-23T11:02:00.4373690Z Updating files:  98% (9765/9964)
+2026-10-23T11:02:00.4663710Z Updating files:  99% (9865/9964)
+2026-10-23T11:02:00.4669990Z Updating files: 100% (9964/9964)
+2026-10-23T11:02:00.4670580Z Updating files: 100% (9964/9964), done.
+2026-10-23T11:02:00.5012590Z Switched to a new branch 'qualifier/m2-mac-ax-r3-read-only-4854aed9'
+2026-10-23T11:02:00.5034350Z branch 'qualifier/m2-mac-ax-r3-read-only-4854aed9' set up to track 'origin/qualifier/m2-mac-ax-r3-read-only-4854aed9'.
+2026-10-23T11:02:00.5373520Z ##[endgroup]
+2026-10-23T11:02:00.5747600Z [command]/opt/homebrew/bin/git log -1 --format=%H
+2026-10-23T11:02:00.5917480Z 4854aed946d25d27482af66c332f84aa51cea8fb
+2026-10-23T11:02:00.8416400Z ##[group]Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+2026-10-23T11:02:00.8420100Z with:
+2026-10-23T11:02:00.8421200Z   python-version: 3.12
+2026-10-23T11:02:00.8424450Z   check-latest: false
+2026-10-23T11:02:00.8428560Z   token: ***
+2026-10-23T11:02:00.8429080Z   update-environment: true
+2026-10-23T11:02:00.8429670Z   allow-prereleases: false
+2026-10-23T11:02:00.8430180Z   freethreaded: false
+2026-10-23T11:02:00.8430750Z env:
+2026-10-23T11:02:00.8431270Z   SIGHTBREAK_BUILDS_DIR: /Users/runner/work/sightbreak/sightbreak/builds/macos-ax-diagnostic
+2026-10-23T11:02:00.8431990Z ##[endgroup]
+2026-10-23T11:02:01.4294560Z ##[group]Installed versions
+2026-10-23T11:02:01.4442930Z (node:2755) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-23T11:02:01.4443590Z Successfully set up CPython (3.12.10)
+2026-10-23T11:02:01.4445610Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-23T11:02:01.4446640Z ##[endgroup]
+2026-10-23T11:02:01.4724730Z ##[group]Run python scripts/test_macos_ax_read_only.py -v
+2026-10-23T11:02:01.4726170Z [36;1mpython scripts/test_macos_ax_read_only.py -v[0m
+2026-10-23T11:02:01.4726700Z [36;1mpython scripts/test_macos_ax_controller.py -v[0m
+2026-10-23T11:02:01.4727130Z [36;1mpython scripts/test_macos_ax_paths.py -v[0m
+2026-10-23T11:02:01.4727530Z [36;1mpython scripts/test_probe_macos_input.py -v[0m
+2026-10-23T11:02:01.4727860Z [36;1mpython scripts/test_macos_menu.py -v[0m
+2026-10-23T11:02:01.4735800Z [36;1mpython scripts/test_macos_focus.py -v[0m
+2026-10-23T11:02:01.4736890Z [36;1mpython scripts/test_macos_screen_identity.py -v[0m
+2026-10-23T11:02:01.4738000Z [36;1mpython scripts/test_macos_ordinary.py -v[0m
+2026-10-23T11:02:01.4739050Z [36;1mpython scripts/test_macos_ordinary_controller.py -v[0m
+2026-10-23T11:02:01.4740120Z [36;1mpython scripts/test_macos_ordinary_paths.py -v[0m
+2026-10-23T11:02:01.4741180Z [36;1mpython scripts/test_macos_ordinary_startup.py -v[0m
+2026-10-23T11:02:01.4742380Z [36;1mpython scripts/test_macos_deploy_ocr.py -v[0m
+2026-10-23T11:02:01.5004110Z shell: /bin/bash -e {0}
+2026-10-23T11:02:01.5004520Z env:
+2026-10-23T11:02:01.5005020Z   SIGHTBREAK_BUILDS_DIR: /Users/runner/work/sightbreak/sightbreak/builds/macos-ax-diagnostic
+2026-10-23T11:02:01.5005530Z   pythonLocation: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-23T11:02:01.5006070Z   PKG_CONFIG_PATH: /Users/runner/hostedtoolcache/Python/3.12.10/arm64/lib/pkgconfig
+2026-10-23T11:02:01.5006660Z   Python_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-23T11:02:01.5007050Z   Python2_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-23T11:02:01.5007450Z   Python3_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-23T11:02:01.5007780Z ##[endgroup]
+2026-10-23T11:02:02.4080800Z test_actual_call_elapsed_bound_rejects_point_two_five_without_renewing_whole_deadline (__main__.NativeBoundaryControls.test_actual_call_elapsed_bound_rejects_point_two_five_without_renewing_whole_deadline) ... ok
+2026-10-23T11:02:02.4141490Z test_complete_counted_native_strings_preserve_utf8_non_bmp_and_exact_byte_boundary (__main__.NativeBoundaryControls.test_complete_counted_native_strings_preserve_utf8_non_bmp_and_exact_byte_boundary) ... ok
+2026-10-23T11:02:02.4150910Z test_copy_array_wrong_type_count_or_null_child_preserves_array_cleanup (__main__.NativeBoundaryControls.test_copy_array_wrong_type_count_or_null_child_preserves_array_cleanup) ... ok
+2026-10-23T11:02:02.4165080Z test_create_and_copy_plus_one_references_survive_post_call_rejection_and_native_error (__main__.NativeBoundaryControls.test_create_and_copy_plus_one_references_survive_post_call_rejection_and_native_error) ... ok
+2026-10-23T11:02:02.4172180Z test_native_nul_control_and_trailing_nul_cannot_become_exact_deploy (__main__.NativeBoundaryControls.test_native_nul_control_and_trailing_nul_cannot_become_exact_deploy) ... ok
+2026-10-23T11:02:02.4178320Z test_owned_string_type_length_conversion_and_control_failures_release_original_copy (__main__.NativeBoundaryControls.test_owned_string_type_length_conversion_and_control_failures_release_original_copy) ... ok
+2026-10-23T11:02:02.4187190Z test_reference_limit_or_registry_failure_releases_owned_but_not_borrowed_pointers (__main__.NativeBoundaryControls.test_reference_limit_or_registry_failure_releases_owned_but_not_borrowed_pointers) ... ok
+2026-10-23T11:02:02.4190900Z test_string_bad_utf8_count_conversion_failure_and_oversize_fail_without_prefix_acceptance (__main__.NativeBoundaryControls.test_string_bad_utf8_count_conversion_failure_and_oversize_fail_without_prefix_acceptance) ... ok
+2026-10-23T11:02:02.4204380Z test_existing_normal_workflow_job_is_exact_except_explicit_diagnostic_exclusion (__main__.SourceControls.test_existing_normal_workflow_job_is_exact_except_explicit_diagnostic_exclusion) ... ok
+2026-10-23T11:02:02.4208830Z test_launch_amendment_and_original_finite_caps (__main__.SourceControls.test_launch_amendment_and_original_finite_caps) ... ok
+2026-10-23T11:02:02.4313240Z test_new_native_sources_have_only_declared_read_api_and_appkit_selectors (__main__.SourceControls.test_new_native_sources_have_only_declared_read_api_and_appkit_selectors) ... ok
+2026-10-23T11:02:02.4316850Z test_original_helper_selector_hud_and_runtime_sources_are_byte_identical (__main__.SourceControls.test_original_helper_selector_hud_and_runtime_sources_are_byte_identical) ... ok
+2026-10-23T11:02:02.4320140Z test_actual_attribute_gate_rejects_private_account_value_and_text_reads (__main__.StructuralControls.test_actual_attribute_gate_rejects_private_account_value_and_text_reads) ... ok
+2026-10-23T11:02:02.4324610Z test_actual_native_call_rejects_late_success_and_changed_window (__main__.StructuralControls.test_actual_native_call_rejects_late_success_and_changed_window) ... ok
+2026-10-23T11:02:02.4327680Z test_actual_reader_methods_fail_before_any_sensitive_string_or_private_call (__main__.StructuralControls.test_actual_reader_methods_fail_before_any_sensitive_string_or_private_call) ... ok
+2026-10-23T11:02:02.6257980Z test_cumulative_large_busy_trees_and_serialized_byte_ceiling_cannot_reset (__main__.StructuralControls.test_cumulative_large_busy_trees_and_serialized_byte_ceiling_cannot_reset) ... ok
+2026-10-23T11:02:02.6291100Z test_every_current_cg_row_set_rejects_late_extra_window_or_pinned_change (__main__.StructuralControls.test_every_current_cg_row_set_rejects_late_extra_window_or_pinned_change) ... ok
+2026-10-23T11:02:02.6315130Z test_exact_title_words_role_enabled_duplicate_and_bounded_frame (__main__.StructuralControls.test_exact_title_words_role_enabled_duplicate_and_bounded_frame) ... ok
+2026-10-23T11:02:02.6349860Z test_owner_window_nonce_trust_stale_time_caps_and_raw_context_reject (__main__.StructuralControls.test_owner_window_nonce_trust_stale_time_caps_and_raw_context_reject) ... ok
+2026-10-23T11:02:02.6377170Z test_stale_snapshot_private_call_or_spoofed_parent_window_identity_reject (__main__.StructuralControls.test_stale_snapshot_private_call_or_spoofed_parent_window_identity_reject) ... ok
+2026-10-23T11:02:02.6397450Z test_textfield_subtree_and_static_text_titles_are_never_read (__main__.StructuralControls.test_textfield_subtree_and_static_text_titles_are_never_read) ... ok
+2026-10-23T11:02:02.6405390Z test_three_empty_snapshots_share_original_clock_and_cumulative_node_cap (__main__.StructuralControls.test_three_empty_snapshots_share_original_clock_and_cumulative_node_cap) ... ok
+2026-10-23T11:02:02.6409500Z test_valid_synthetic_exposure_preserves_original_point_eight_rejection (__main__.StructuralControls.test_valid_synthetic_exposure_preserves_original_point_eight_rejection) ... ok
+2026-10-23T11:02:02.6411310Z test_window_duplicates_foreign_containing_window_and_geometry_disagreement_fail (__main__.StructuralControls.test_window_duplicates_foreign_containing_window_and_geometry_disagreement_fail) ... ok
+2026-10-23T11:02:02.6418340Z test_wrong_pid_cycle_depth_and_node_exhaustion_fail_real_traversal (__main__.StructuralControls.test_wrong_pid_cycle_depth_and_node_exhaustion_fail_real_traversal) ... ok
+2026-10-23T11:02:02.6419780Z 
+2026-10-23T11:02:02.6420240Z ----------------------------------------------------------------------
+2026-10-23T11:02:02.6421040Z Ran 25 tests in 0.235s
+2026-10-23T11:02:02.6421360Z 
+2026-10-23T11:02:02.6421560Z OK
+2026-10-23T11:02:02.8299800Z test_actual_appkit_focus_and_pin_methods_refuse_repeat_and_late_extra_window (__main__.ControllerControls.test_actual_appkit_focus_and_pin_methods_refuse_repeat_and_late_extra_window) ... ok
+2026-10-23T11:02:03.0271230Z test_binding_context_duplicate_byte_cap_and_unexpected_match_trace_fail (__main__.ControllerControls.test_binding_context_duplicate_byte_cap_and_unexpected_match_trace_fail) ... ok
+2026-10-23T11:02:03.1012940Z test_late_compile_capture_focus_menu_ax_and_close_never_pass (__main__.ControllerControls.test_late_compile_capture_focus_menu_ax_and_close_never_pass) ... ok
+2026-10-23T11:02:03.1563970Z test_late_geometry_window_or_foreground_change_preserves_current_failure_rows (__main__.ControllerControls.test_late_geometry_window_or_foreground_change_preserves_current_failure_rows) ... ok
+2026-10-23T11:02:03.1581540Z test_non_native_refusal_precedes_all_compilation_launch_and_library_loads (__main__.ControllerControls.test_non_native_refusal_precedes_all_compilation_launch_and_library_loads) ... ok
+2026-10-23T11:02:03.2746880Z test_payload_default_source_native_leaks_cleanup_signals_survivors_close_refusal_fail (__main__.ControllerControls.test_payload_default_source_native_leaks_cleanup_signals_survivors_close_refusal_fail) ... ok
+2026-10-23T11:02:03.2994130Z test_private_menu_profile_creation_is_preserved_and_reported_without_parsing (__main__.ControllerControls.test_private_menu_profile_creation_is_preserved_and_reported_without_parsing) ... ok
+2026-10-23T11:02:03.3264160Z test_valid_full_synthetic_diagnostic_posts_no_event_and_ordinary_closes (__main__.ControllerControls.test_valid_full_synthetic_diagnostic_posts_no_event_and_ordinary_closes) ... ok
+2026-10-23T11:02:03.3265960Z 
+2026-10-23T11:02:03.3266460Z ----------------------------------------------------------------------
+2026-10-23T11:02:03.3267270Z Ran 8 tests in 0.502s
+2026-10-23T11:02:03.3267660Z 
+2026-10-23T11:02:03.3267870Z OK
+2026-10-23T11:02:04.6345330Z test_new_full_pure_suites_pass_with_aliased_tempdir_without_changing_runtime_guards (__main__.AXTemporaryRootControls.test_new_full_pure_suites_pass_with_aliased_tempdir_without_changing_runtime_guards) ... ok
+2026-10-23T11:02:04.6351200Z test_production_still_rejects_alias_while_test_owned_root_can_be_canonicalized (__main__.AXTemporaryRootControls.test_production_still_rejects_alias_while_test_owned_root_can_be_canonicalized) ... ok
+2026-10-23T11:02:04.6353090Z 
+2026-10-23T11:02:04.6353560Z ----------------------------------------------------------------------
+2026-10-23T11:02:04.6354560Z Ran 2 tests in 1.153s
+2026-10-23T11:02:04.6355070Z 
+2026-10-23T11:02:04.6355310Z OK
+2026-10-23T11:02:04.7799560Z test_actual_owned_process_is_reaped (__main__.PreflightControls.test_actual_owned_process_is_reaped) ... ok
+2026-10-23T11:02:04.7837070Z test_actual_plist_bytes_decode_through_cf_boundary (__main__.PreflightControls.test_actual_plist_bytes_decode_through_cf_boundary) ... ok
+2026-10-23T11:02:04.7838300Z test_existing_profile_and_dangling_entries_block_without_reading (__main__.PreflightControls.test_existing_profile_and_dangling_entries_block_without_reading) ... ok
+2026-10-23T11:02:04.7869490Z test_native_cache_inventory_is_observed_without_deletion (__main__.PreflightControls.test_native_cache_inventory_is_observed_without_deletion) ... ok
+2026-10-23T11:02:04.7877470Z test_native_framework_objects_are_released_on_bad_payload (__main__.PreflightControls.test_native_framework_objects_are_released_on_bad_payload) ... ok
+2026-10-23T11:02:04.7894090Z test_non_native_run_retains_failure_and_never_launches (__main__.PreflightControls.test_non_native_run_retains_failure_and_never_launches) ... ok
+2026-10-23T11:02:04.7896580Z test_only_owned_layer_zero_metadata_survives (__main__.PreflightControls.test_only_owned_layer_zero_metadata_survives) ... ok
+2026-10-23T11:02:04.7898550Z test_prior_attempt_is_preserved (__main__.PreflightControls.test_prior_attempt_is_preserved) ... ok
+2026-10-23T11:02:04.7900290Z test_required_permissions_fail_closed (__main__.PreflightControls.test_required_permissions_fail_closed) ... ok
+2026-10-23T11:02:04.7905640Z 
+2026-10-23T11:02:04.7905960Z ----------------------------------------------------------------------
+2026-10-23T11:02:04.7906410Z Ran 9 tests in 0.027s
+2026-10-23T11:02:04.7906590Z 
+2026-10-23T11:02:04.7906650Z OK
+2026-10-23T11:02:04.7907370Z {
+2026-10-23T11:02:04.7908030Z   "scope": "Read-only permission queries plus ordinary exported smoke; no native input or OS screenshot acceptance",
+2026-10-23T11:02:04.7908520Z   "status": "FAILED",
+2026-10-23T11:02:04.7908870Z   "native_input_verified": false,
+2026-10-23T11:02:04.7909140Z   "input_events_posted": 0,
+2026-10-23T11:02:04.7909470Z   "permission_requests_made": 0,
+2026-10-23T11:02:04.7910560Z   "host": "Linux observer control",
+2026-10-23T11:02:04.7910910Z   "architecture": "arm64",
+2026-10-23T11:02:04.7911170Z   "failure": {
+2026-10-23T11:02:04.7911470Z     "type": "RuntimeError",
+2026-10-23T11:02:04.7911920Z     "message": "Requires native ARM macOS; no native-input claim from another host"
+2026-10-23T11:02:04.7912550Z   },
+2026-10-23T11:02:04.7916540Z   "cleanup": {
+2026-10-23T11:02:04.7917010Z     "owned_group_gone": true,
+2026-10-23T11:02:04.7917470Z     "process_started": false
+2026-10-23T11:02:04.7918250Z   },
+2026-10-23T11:02:04.7918640Z   "seconds": 5.4125000019666913e-05
+2026-10-23T11:02:04.7920030Z }
+2026-10-23T11:02:04.9019460Z test_actual_down_boundary_rejects_newly_dirty_os_controls (__main__.MenuControls.test_actual_down_boundary_rejects_newly_dirty_os_controls) ... ok
+2026-10-23T11:02:04.9034590Z test_cleanup_releases_only_recorded_owned_controls (__main__.MenuControls.test_cleanup_releases_only_recorded_owned_controls) ... ok
+2026-10-23T11:02:04.9041610Z test_failure_cleanup_tries_public_quit_before_owned_group_fallback (__main__.MenuControls.test_failure_cleanup_tries_public_quit_before_owned_group_fallback) ... ok
+2026-10-23T11:02:04.9045750Z test_fresh_neutral_observation_cannot_ignore_lost_foreground (__main__.MenuControls.test_fresh_neutral_observation_cannot_ignore_lost_foreground) ... ok
+2026-10-23T11:02:04.9047110Z test_non_mac_host_never_launches_helper_or_client (__main__.MenuControls.test_non_mac_host_never_launches_helper_or_client) ... ok
+2026-10-23T11:02:04.9049000Z test_prior_preflight_must_match_source_artifact_permissions_and_cleanup (__main__.MenuControls.test_prior_preflight_must_match_source_artifact_permissions_and_cleanup) ... ok
+2026-10-23T11:02:04.9050570Z test_retina_and_titlebar_use_one_window_coordinate_space (__main__.MenuControls.test_retina_and_titlebar_use_one_window_coordinate_space) ... ok
+2026-10-23T11:02:04.9051710Z test_screen_confirmation_requires_both_menu_and_settings_outcomes (__main__.MenuControls.test_screen_confirmation_requires_both_menu_and_settings_outcomes) ... ok
+2026-10-23T11:02:04.9052920Z test_target_requires_unique_exact_confident_in_bounds_text (__main__.MenuControls.test_target_requires_unique_exact_confident_in_bounds_text) ... ok
+2026-10-23T11:02:04.9053920Z test_unknown_chrome_or_backing_scale_never_authorizes_pointer (__main__.MenuControls.test_unknown_chrome_or_backing_scale_never_authorizes_pointer) ... ok
+2026-10-23T11:02:04.9061670Z test_wrong_focus_geometry_permission_or_profile_prevents_down_event (__main__.MenuControls.test_wrong_focus_geometry_permission_or_profile_prevents_down_event) ... ok
+2026-10-23T11:02:04.9062710Z {
+2026-10-23T11:02:04.9063140Z 
+2026-10-23T11:02:04.9063710Z   "scope": "Actual ARM Mac ordinary menu pointer/Escape navigation only; no gameplay/device acceptance",
+2026-10-23T11:02:04.9064460Z ----------------------------------------------------------------------
+2026-10-23T11:02:04.9064970Z   "passed": false,
+2026-10-23T11:02:04.9065490Z Ran 11 tests in 0.005s
+2026-10-23T11:02:04.9065930Z   "permission_requests_made": 0,
+2026-10-23T11:02:04.9066330Z 
+2026-10-23T11:02:04.9066590Z   "captures": [],
+2026-10-23T11:02:04.9067170Z OK
+2026-10-23T11:02:04.9067560Z   "actions": [],
+2026-10-23T11:02:04.9068040Z   "controller_pid": 2874,
+2026-10-23T11:02:04.9068320Z   "failure": {
+2026-10-23T11:02:04.9068600Z     "type": "RuntimeError",
+2026-10-23T11:02:04.9068900Z     "message": "requires ARM Mac"
+2026-10-23T11:02:04.9069280Z   },
+2026-10-23T11:02:04.9069680Z   "failure_ordinary_close": {
+2026-10-23T11:02:04.9070040Z     "needed": false
+2026-10-23T11:02:04.9070730Z   },
+2026-10-23T11:02:04.9071150Z   "cleanup": [],
+2026-10-23T11:02:04.9071700Z   "seconds": 2.1750000001929948e-05,
+2026-10-23T11:02:04.9072020Z   "status": "FAILED"
+2026-10-23T11:02:04.9072260Z }
+2026-10-23T11:02:05.0157210Z test_background_capture_does_not_turn_failed_focus_into_success (__main__.FocusControls.test_background_capture_does_not_turn_failed_focus_into_success) ... ok
+2026-10-23T11:02:05.0160890Z test_background_receipt_does_not_silently_refresh_raw_observer (__main__.FocusControls.test_background_receipt_does_not_silently_refresh_raw_observer) ... ok
+2026-10-23T11:02:05.0163920Z test_failed_background_capture_still_gets_focus_data_then_blocks_progress (__main__.FocusControls.test_failed_background_capture_still_gets_focus_data_then_blocks_progress) ... ok
+2026-10-23T11:02:05.0167100Z test_input_guard_refreshes_public_observer_and_still_rejects_other_pid (__main__.FocusControls.test_input_guard_refreshes_public_observer_and_still_rejects_other_pid) ... ok
+2026-10-23T11:02:05.0168950Z test_newer_diagnostics_focus_loss_cannot_be_ignored (__main__.FocusControls.test_newer_diagnostics_focus_loss_cannot_be_ignored) ... ok
+2026-10-23T11:02:05.0170100Z test_non_main_run_loop_is_rejected_without_running_it (__main__.FocusControls.test_non_main_run_loop_is_rejected_without_running_it) ... ok
+2026-10-23T11:02:05.0171340Z test_raw_before_and_pumped_after_samples_are_distinct (__main__.FocusControls.test_raw_before_and_pumped_after_samples_are_distinct) ... ok
+2026-10-23T11:02:05.0172460Z test_request_active_or_visible_window_never_substitutes_for_foreground (__main__.FocusControls.test_request_active_or_visible_window_never_substitutes_for_foreground) ... ok
+2026-10-23T11:02:05.0173560Z test_target_after_five_second_deadline_is_rejected (__main__.FocusControls.test_target_after_five_second_deadline_is_rejected) ... ok
+2026-10-23T11:02:05.0174110Z 
+2026-10-23T11:02:05.0174340Z ----------------------------------------------------------------------
+2026-10-23T11:02:05.0174730Z Ran 9 tests in 0.001s
+2026-10-23T11:02:05.0174940Z 
+2026-10-23T11:02:05.0175090Z OK
+2026-10-23T11:02:05.1430040Z test_each_required_label_rejects_missing_foreign_partial_low_confidence_or_ambiguity (__main__.ScreenIdentity.test_each_required_label_rejects_missing_foreign_partial_low_confidence_or_ambiguity) ... ok
+2026-10-23T11:02:05.1530910Z test_every_required_box_must_be_positive_finite_and_inside_original_image (__main__.ScreenIdentity.test_every_required_box_must_be_positive_finite_and_inside_original_image) ... ok
+2026-10-23T11:02:05.1635990Z test_mixed_screen_labels_do_not_qualify_either_screen (__main__.ScreenIdentity.test_mixed_screen_labels_do_not_qualify_either_screen) ... ok
+2026-10-23T11:02:05.1735740Z test_original_returned_masthead_remains_below_threshold (__main__.ScreenIdentity.test_original_returned_masthead_remains_below_threshold) ... ok
+2026-10-23T11:02:05.1840360Z test_originals_are_byte_exact_and_all_three_screens_are_distinguished (__main__.ScreenIdentity.test_originals_are_byte_exact_and_all_three_screens_are_distinguished) ... ok
+2026-10-23T11:02:05.1842420Z test_settings_requires_exact_unique_heading_at_same_threshold (__main__.ScreenIdentity.test_settings_requires_exact_unique_heading_at_same_threshold) ... ok
+2026-10-23T11:02:05.1843460Z test_threshold_boundary_and_normalization_are_exact (__main__.ScreenIdentity.test_threshold_boundary_and_normalization_are_exact) ... ok
+2026-10-23T11:02:05.1844050Z 
+2026-10-23T11:02:05.1844380Z ----------------------------------------------------------------------
+2026-10-23T11:02:05.1844910Z Ran 7 tests in 0.017s
+2026-10-23T11:02:05.1845150Z 
+2026-10-23T11:02:05.1845400Z OK
+2026-10-23T11:02:05.3114760Z test_default_userdata_rejects_symlinked_ancestors_and_tracks_file_modes (__main__.OrdinaryControls.test_default_userdata_rejects_symlinked_ancestors_and_tracks_file_modes) ... ok
+2026-10-23T11:02:05.3121550Z test_fake_home_and_settings_injection_never_establish_isolation (__main__.OrdinaryControls.test_fake_home_and_settings_injection_never_establish_isolation) ... ok
+2026-10-23T11:02:05.3124320Z test_field_menu_requires_unique_exact_heading_and_leave (__main__.OrdinaryControls.test_field_menu_requires_unique_exact_heading_and_leave) ... ok
+2026-10-23T11:02:05.3126880Z test_foreign_focus_or_dirty_r_prevents_down_and_preserves_external_input (__main__.OrdinaryControls.test_foreign_focus_or_dirty_r_prevents_down_and_preserves_external_input) ... ok
+2026-10-23T11:02:05.3130880Z test_initial_requires_stock_rules_defaults_and_pretransition_menu_state (__main__.OrdinaryControls.test_initial_requires_stock_rules_defaults_and_pretransition_menu_state) ... ok
+2026-10-23T11:02:05.3134050Z test_living_context_rejects_changed_life_round_scope_focus_and_nonfinite_fields (__main__.OrdinaryControls.test_living_context_rejects_changed_life_round_scope_focus_and_nonfinite_fields) ... ok
+2026-10-23T11:02:05.3136910Z test_native_bounds_and_retina_mapping_match_accepted_menu_mapping (__main__.OrdinaryControls.test_native_bounds_and_retina_mapping_match_accepted_menu_mapping) ... ok
+2026-10-23T11:02:05.3144440Z test_native_hud_rejects_missing_ambiguous_foreign_or_dead_values (__main__.OrdinaryControls.test_native_hud_rejects_missing_ambiguous_foreign_or_dead_values) ... ok
+2026-10-23T11:02:05.3170400Z test_non_native_host_never_compiles_or_launches (__main__.OrdinaryControls.test_non_native_host_never_compiles_or_launches) ... ok
+2026-10-23T11:02:05.3172940Z test_pointer_target_is_exact_unique_confident_and_inside_original_image (__main__.OrdinaryControls.test_pointer_target_is_exact_unique_confident_and_inside_original_image) ... ok
+2026-10-23T11:02:05.3197180Z test_private_userdir_requires_native_log_and_unchanged_default_directory (__main__.OrdinaryControls.test_private_userdir_requires_native_log_and_unchanged_default_directory) ... ok
+2026-10-23T11:02:05.3250590Z test_r_cleanup_releases_only_owned_reload_and_confirms_os_state (__main__.OrdinaryControls.test_r_cleanup_releases_only_owned_reload_and_confirms_os_state) ... ok
+2026-10-23T11:02:05.3363870Z test_staged_native_bytes_modes_and_only_two_setting_overrides (__main__.OrdinaryControls.test_staged_native_bytes_modes_and_only_two_setting_overrides) ... ok
+2026-10-23T11:02:05.3365570Z {
+2026-10-23T11:02:05.3375350Z test_symlinked_app_or_native_userdata_is_refused_without_following (__main__.OrdinaryControls.test_symlinked_app_or_native_userdata_is_refused_without_following) ... ok
+2026-10-23T11:02:05.3379050Z   "scope": "ARM Mac stock Deploy/living sidearm fire+reload/FIELD MENU/leave/ordinary close only; no objectives, full match, restart, Intel or physical-device acceptance",
+2026-10-23T11:02:05.3381710Z 
+2026-10-23T11:02:05.3381910Z   "passed": false,
+2026-10-23T11:02:05.3383060Z ----------------------------------------------------------------------
+2026-10-23T11:02:05.3383930Z   "permission_requests_made": 0,
+2026-10-23T11:02:05.3384990Z Ran 14 tests in 0.029s
+2026-10-23T11:02:05.3385620Z   "controller_pid": 2877,
+2026-10-23T11:02:05.3386240Z 
+2026-10-23T11:02:05.3386520Z   "budgets_seconds": {
+2026-10-23T11:02:05.3387500Z OK
+2026-10-23T11:02:05.3387870Z     "total": 300,
+2026-10-23T11:02:05.3388690Z     "compile": 60,
+2026-10-23T11:02:05.3389290Z     "window": 30,
+2026-10-23T11:02:05.3390120Z     "focus": 5,
+2026-10-23T11:02:05.3390710Z     "menu": 60,
+2026-10-23T11:02:05.3391310Z     "deploy": 30,
+2026-10-23T11:02:05.3391980Z     "live": 60,
+2026-10-23T11:02:05.3392600Z     "fire": 5,
+2026-10-23T11:02:05.3393270Z     "reload_start": 5,
+2026-10-23T11:02:05.3393930Z     "reload_complete": 15,
+2026-10-23T11:02:05.3394620Z     "reload_frames": 5,
+2026-10-23T11:02:05.3395270Z     "field_menu": 10,
+2026-10-23T11:02:05.3395900Z     "return_menu": 30,
+2026-10-23T11:02:05.3396610Z     "close": 20,
+2026-10-23T11:02:05.3397250Z     "capture": 25
+2026-10-23T11:02:05.3397900Z   },
+2026-10-23T11:02:05.3398490Z   "actions": [],
+2026-10-23T11:02:05.3399440Z   "captures": [],
+2026-10-23T11:02:05.3400250Z   "capture_attempts": [],
+2026-10-23T11:02:05.3401220Z   "failure": {
+2026-10-23T11:02:05.3402050Z     "type": "RuntimeError",
+2026-10-23T11:02:05.3403100Z     "message": "requires native ARM Mac"
+2026-10-23T11:02:05.3404140Z   },
+2026-10-23T11:02:05.3404860Z   "cleanup": [],
+2026-10-23T11:02:05.3405680Z   "seconds": 0.00018612499999903775,
+2026-10-23T11:02:05.3406400Z   "status": "FAILED"
+2026-10-23T11:02:05.3407040Z }
+2026-10-23T11:02:05.5231760Z test_complete_synthetic_schedule_exercises_all_acceptance_stages (__main__.ControllerFalsifiers.test_complete_synthetic_schedule_exercises_all_acceptance_stages) ... ok
+2026-10-23T11:02:05.5513580Z test_dead_or_mismatched_native_hud_never_pass (__main__.ControllerFalsifiers.test_dead_or_mismatched_native_hud_never_pass) ... ok
+2026-10-23T11:02:05.5773140Z test_delayed_os_acknowledgement_cannot_extend_original_input_slots (__main__.ControllerFalsifiers.test_delayed_os_acknowledgement_cannot_extend_original_input_slots) ... ok
+2026-10-23T11:02:05.7485340Z test_finalization_checks_cannot_be_replaced_by_completed_gameplay (__main__.ControllerFalsifiers.test_finalization_checks_cannot_be_replaced_by_completed_gameplay) ... ok
+2026-10-23T11:02:05.7962470Z test_stale_samples_no_ammo_effect_or_missing_drawn_frames_fail (__main__.ControllerFalsifiers.test_stale_samples_no_ammo_effect_or_missing_drawn_frames_fail) ... ok
+2026-10-23T11:02:05.8240370Z test_unobserved_reload_or_early_transfer_never_pass (__main__.ControllerFalsifiers.test_unobserved_reload_or_early_transfer_never_pass) ... ok
+2026-10-23T11:02:05.8255780Z test_zero_exit_after_helper_stage_deadline_is_rejected (__main__.ControllerFalsifiers.test_zero_exit_after_helper_stage_deadline_is_rejected) ... ok
+2026-10-23T11:02:05.8256380Z 
+2026-10-23T11:02:05.8257750Z ----------------------------------------------------------------------
+2026-10-23T11:02:05.8258520Z Ran 7 tests in 0.335s
+2026-10-23T11:02:05.8258890Z 
+2026-10-23T11:02:05.8259040Z OK
+2026-10-23T11:02:06.2035260Z test_both_full_pure_suites_use_canonical_test_roots_under_aliased_tempdir (__main__.TemporaryRootControls.test_both_full_pure_suites_use_canonical_test_roots_under_aliased_tempdir) ... ok
+2026-10-23T11:02:06.2041200Z test_runtime_still_rejects_raw_alias_and_accepts_canonical_owned_target (__main__.TemporaryRootControls.test_runtime_still_rejects_raw_alias_and_accepts_canonical_owned_target) ... ok
+2026-10-23T11:02:06.2041870Z 
+2026-10-23T11:02:06.2042000Z ----------------------------------------------------------------------
+2026-10-23T11:02:06.2042270Z Ran 2 tests in 0.272s
+2026-10-23T11:02:06.2042380Z 
+2026-10-23T11:02:06.2042430Z OK
+2026-10-23T11:02:06.6429320Z test_churn_and_invalid_captures_cannot_authorize_input_or_reset_menu_deadline (__main__.StartupControls.test_churn_and_invalid_captures_cannot_authorize_input_or_reset_menu_deadline) ... ok
+2026-10-23T11:02:06.6439330Z test_discovery_and_actual_pin_share_exact_owned_visible_selection (__main__.StartupControls.test_discovery_and_actual_pin_share_exact_owned_visible_selection) ... ok
+2026-10-23T11:02:06.6467720Z test_foreign_or_ambiguous_windows_never_authorize_capture_selection (__main__.StartupControls.test_foreign_or_ambiguous_windows_never_authorize_capture_selection) ... ok
+2026-10-23T11:02:06.7186010Z test_full_controller_uses_actual_unique_window_guard_before_and_after_input (__main__.StartupControls.test_full_controller_uses_actual_unique_window_guard_before_and_after_input) ... ok
+2026-10-23T11:02:06.7275310Z test_late_focus_and_post_focus_change_fail_without_repeated_focus_or_input (__main__.StartupControls.test_late_focus_and_post_focus_change_fail_without_repeated_focus_or_input) ... ok
+2026-10-23T11:02:06.7276610Z test_late_ready_menu_and_any_existing_event_attempt_are_rejected (__main__.StartupControls.test_late_ready_menu_and_any_existing_event_attempt_are_rejected) ... ok
+2026-10-23T11:02:06.7281870Z test_no_cgevent_is_posted_before_pin_and_allocated_event_is_released (__main__.StartupControls.test_no_cgevent_is_posted_before_pin_and_allocated_event_is_released) ... ok
+2026-10-23T11:02:06.7283720Z test_pin_requires_exact_menu_identity_ownership_mapping_and_is_permanent (__main__.StartupControls.test_pin_requires_exact_menu_identity_ownership_mapping_and_is_permanent) ... ok
+2026-10-23T11:02:06.7285660Z test_post_input_geometry_change_is_strict_and_actual_decision_rows_are_retained (__main__.StartupControls.test_post_input_geometry_change_is_strict_and_actual_decision_rows_are_retained) ... ok
+2026-10-23T11:02:06.7292760Z test_second_owned_visible_window_rejects_actual_pin_and_every_later_target_guard (__main__.StartupControls.test_second_owned_visible_window_rejects_actual_pin_and_every_later_target_guard) ... ok
+2026-10-23T11:02:06.8107620Z test_splash_and_changed_startup_candidate_are_rejected_then_menu_is_pinned_once (__main__.StartupControls.test_splash_and_changed_startup_candidate_are_rejected_then_menu_is_pinned_once) ... ok
+2026-10-23T11:02:06.8108980Z 
+2026-10-23T11:02:06.8109310Z ----------------------------------------------------------------------
+2026-10-23T11:02:06.8110030Z Ran 11 tests in 0.506s
+2026-10-23T11:02:06.8110580Z 
+2026-10-23T11:02:06.8110860Z OK
+2026-10-23T11:02:06.9765350Z test_actual_file_identity_dimensions_and_image_caps_are_required (__main__.DeployAnalysisControls.test_actual_file_identity_dimensions_and_image_caps_are_required) ... ok
+2026-10-23T11:02:06.9846670Z test_boxes_must_be_in_window_and_agree_at_original_center (__main__.DeployAnalysisControls.test_boxes_must_be_in_window_and_agree_at_original_center) ... ok
+2026-10-23T11:02:06.9851660Z test_default_native_helper_ocr_and_gameplay_tail_are_byte_preserved (__main__.DeployAnalysisControls.test_default_native_helper_ocr_and_gameplay_tail_are_byte_preserved) ... ok
+2026-10-23T11:02:06.9867260Z test_derived_confidence_never_weakens_point_eight (__main__.DeployAnalysisControls.test_derived_confidence_never_weakens_point_eight) ... ok
+2026-10-23T11:02:06.9883800Z test_duplicate_or_invalid_native_corroboration_is_rejected_at_any_confidence (__main__.DeployAnalysisControls.test_duplicate_or_invalid_native_corroboration_is_rejected_at_any_confidence) ... ok
+2026-10-23T11:02:06.9906520Z test_every_identity_transform_and_recognition_setting_binds_exactly (__main__.DeployAnalysisControls.test_every_identity_transform_and_recognition_setting_binds_exactly) ... ok
+2026-10-23T11:02:06.9969520Z test_exact_words_and_only_observed_separator_equivalence (__main__.DeployAnalysisControls.test_exact_words_and_only_observed_separator_equivalence) ... ok
+2026-10-23T11:02:06.9972300Z test_existing_native_selector_and_hud_confidence_remain_strict (__main__.DeployAnalysisControls.test_existing_native_selector_and_hud_confidence_remain_strict) ... ok
+2026-10-23T11:02:07.0720640Z test_full_controller_rejects_missing_unopted_spoofed_and_invalid_derived_observations (__main__.DeployAnalysisControls.test_full_controller_rejects_missing_unopted_spoofed_and_invalid_derived_observations) ... ok
+2026-10-23T11:02:07.1021600Z test_full_synthetic_controller_requests_derived_analysis_once_and_retains_both_png_headers (__main__.DeployAnalysisControls.test_full_synthetic_controller_requests_derived_analysis_once_and_retains_both_png_headers) ... ok
+2026-10-23T11:02:07.1042450Z test_json_cannot_spoof_a_binding_or_mutate_an_already_bound_receipt (__main__.DeployAnalysisControls.test_json_cannot_spoof_a_binding_or_mutate_an_already_bound_receipt) ... ok
+2026-10-23T11:02:07.1066570Z test_original_low_confidence_bullet_receipts_still_reject_without_new_observations (__main__.DeployAnalysisControls.test_original_low_confidence_bullet_receipts_still_reject_without_new_observations) ... ok
+2026-10-23T11:02:07.1095410Z test_synthetic_high_confidence_analysis_preserves_native_center_and_raw_rows (__main__.DeployAnalysisControls.test_synthetic_high_confidence_analysis_preserves_native_center_and_raw_rows) ... ok
+2026-10-23T11:02:07.1097180Z 
+2026-10-23T11:02:07.1097590Z ----------------------------------------------------------------------
+2026-10-23T11:02:07.1098680Z Ran 13 tests in 0.136s
+2026-10-23T11:02:07.1099070Z 
+2026-10-23T11:02:07.1099350Z OK
+2026-10-23T11:02:07.1388680Z ##[group]Run python scripts/toolchain.py setup --targets macos
+2026-10-23T11:02:07.1389160Z [36;1mpython scripts/toolchain.py setup --targets macos[0m
+2026-10-23T11:02:07.1508160Z shell: /bin/bash -e {0}
+2026-10-23T11:02:07.1508370Z env:
+2026-10-23T11:02:07.1508710Z   SIGHTBREAK_BUILDS_DIR: /Users/runner/work/sightbreak/sightbreak/builds/macos-ax-diagnostic
+2026-10-23T11:02:07.1509160Z   pythonLocation: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-23T11:02:07.1509570Z   PKG_CONFIG_PATH: /Users/runner/hostedtoolcache/Python/3.12.10/arm64/lib/pkgconfig
+2026-10-23T11:02:07.1509970Z   Python_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-23T11:02:07.1514780Z   Python2_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-23T11:02:07.1515220Z   Python3_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-23T11:02:07.1515490Z ##[endgroup]
+2026-10-23T11:02:21.5586030Z 4.7.2.stable.official.ed1daf0bf
+2026-10-23T11:02:21.6123800Z ##[group]Run python scripts/export.py macos
+2026-10-23T11:02:21.6125200Z [36;1mpython scripts/export.py macos[0m
+2026-10-23T11:02:21.6287790Z shell: /bin/bash -e {0}
+2026-10-23T11:02:21.6288000Z env:
+2026-10-23T11:02:21.6288450Z   SIGHTBREAK_BUILDS_DIR: /Users/runner/work/sightbreak/sightbreak/builds/macos-ax-diagnostic
+2026-10-23T11:02:21.6288900Z   pythonLocation: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-23T11:02:21.6289360Z   PKG_CONFIG_PATH: /Users/runner/hostedtoolcache/Python/3.12.10/arm64/lib/pkgconfig
+2026-10-23T11:02:21.6289760Z   Python_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-23T11:02:21.6290120Z   Python2_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-23T11:02:21.6290480Z   Python3_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-23T11:02:21.6290740Z ##[endgroup]
+2026-10-23T11:02:40.7383210Z Exported /Users/runner/work/sightbreak/sightbreak/builds/macos-ax-diagnostic/macos/SIGHTBREAK.app
+2026-10-23T11:02:40.7635240Z ##[group]Run python scripts/verify_macos_ax_read_only.py --output builds/macos-ax-diagnostic/ax-read-only
+2026-10-23T11:02:40.7638590Z [36;1mpython scripts/verify_macos_ax_read_only.py --output builds/macos-ax-diagnostic/ax-read-only[0m
+2026-10-23T11:02:40.7737340Z shell: /bin/bash -e {0}
+2026-10-23T11:02:40.7737720Z env:
+2026-10-23T11:02:40.7738140Z   SIGHTBREAK_BUILDS_DIR: /Users/runner/work/sightbreak/sightbreak/builds/macos-ax-diagnostic
+2026-10-23T11:02:40.7738740Z   pythonLocation: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-23T11:02:40.7739200Z   PKG_CONFIG_PATH: /Users/runner/hostedtoolcache/Python/3.12.10/arm64/lib/pkgconfig
+2026-10-23T11:02:40.7739760Z   Python_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-23T11:02:40.7740280Z   Python2_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-23T11:02:40.7740740Z   Python3_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-23T11:02:40.7741330Z ##[endgroup]
+2026-10-23T11:03:20.5404130Z {
+2026-10-23T11:03:20.5406410Z   "scope": "Opt-in --accessibility always read-only exported AX exposure diagnostic; no input or gameplay acceptance",
+2026-10-23T11:03:20.5407340Z   "passed": false,
+2026-10-23T11:03:20.5407770Z   "permission_requests_made": 0,
+2026-10-23T11:03:20.5408150Z   "cg_event_post_attempts": 0,
+2026-10-23T11:03:20.5408570Z   "controller_pid": 3438,
+2026-10-23T11:03:20.5408960Z   "budgets_seconds": {
+2026-10-23T11:03:20.5409270Z     "total": 300,
+2026-10-23T11:03:20.5409760Z     "compile": 60,
+2026-10-23T11:03:20.5410030Z     "window": 30,
+2026-10-23T11:03:20.5410410Z     "focus": 5,
+2026-10-23T11:03:20.5410670Z     "menu": 60,
+2026-10-23T11:03:20.5411040Z     "deploy": 30,
+2026-10-23T11:03:20.5411280Z     "live": 60,
+2026-10-23T11:03:20.5411700Z     "fire": 5,
+2026-10-23T11:03:20.5411950Z     "reload_start": 5,
+2026-10-23T11:03:20.5412370Z     "reload_complete": 15,
+2026-10-23T11:03:20.5412840Z     "reload_frames": 5,
+2026-10-23T11:03:20.5413470Z     "field_menu": 10,
+2026-10-23T11:03:20.5413860Z     "return_menu": 30,
+2026-10-23T11:03:20.5414140Z     "close": 20,
+2026-10-23T11:03:20.5414470Z     "capture": 25
+2026-10-23T11:03:20.5414710Z   },
+2026-10-23T11:03:20.5415070Z   "ax_caps": {
+2026-10-23T11:03:20.5415260Z     "seconds": 5,
+2026-10-23T11:03:20.5415650Z     "snapshots": 3,
+2026-10-23T11:03:20.5415940Z     "spacing_seconds": 0.1,
+2026-10-23T11:03:20.5416580Z     "call_seconds": 0.25,
+2026-10-23T11:03:20.5416860Z     "depth": 16,
+2026-10-23T11:03:20.5417180Z     "nodes": 256,
+2026-10-23T11:03:20.5417540Z     "receipt_bytes": 524288,
+2026-10-23T11:03:20.5417800Z     "title_bytes": 512
+2026-10-23T11:03:20.5418210Z   },
+2026-10-23T11:03:20.5418470Z   "actions": [
+2026-10-23T11:03:20.5418740Z     {
+2026-10-23T11:03:20.5419010Z       "event": "helper_command",
+2026-10-23T11:03:20.5419320Z       "seconds": 1.255035915999997,
+2026-10-23T11:03:20.5419650Z       "name": "compile-capture-helper",
+2026-10-23T11:03:20.5419980Z       "command": [
+2026-10-23T11:03:20.5420210Z         "xcrun",
+2026-10-23T11:03:20.5420490Z         "swiftc",
+2026-10-23T11:03:20.5421740Z         "-parse-as-library",
+2026-10-23T11:03:20.5423650Z         "-swift-version",
+2026-10-23T11:03:20.5424030Z         "5",
+2026-10-23T11:03:20.5424270Z         "-target",
+2026-10-23T11:03:20.5424710Z         "arm64-apple-macos14.0",
+2026-10-23T11:03:20.5425210Z         "/Users/runner/work/sightbreak/sightbreak/scripts/macos_window_capture.swift",
+2026-10-23T11:03:20.5425830Z         "-framework",
+2026-10-23T11:03:20.5426150Z         "AppKit",
+2026-10-23T11:03:20.5426670Z         "-framework",
+2026-10-23T11:03:20.5427020Z         "CoreGraphics",
+2026-10-23T11:03:20.5427350Z         "-framework",
+2026-10-23T11:03:20.5427650Z         "ScreenCaptureKit",
+2026-10-23T11:03:20.5427990Z         "-framework",
+2026-10-23T11:03:20.5428290Z         "Vision",
+2026-10-23T11:03:20.5428590Z         "-framework",
+2026-10-23T11:03:20.5428840Z         "ImageIO",
+2026-10-23T11:03:20.5429130Z         "-framework",
+2026-10-23T11:03:20.5430200Z         "UniformTypeIdentifiers",
+2026-10-23T11:03:20.5430700Z         "-o",
+2026-10-23T11:03:20.5431200Z         "/Users/runner/work/sightbreak/sightbreak/builds/macos-ax-diagnostic/ax-read-only/macos-window-capture"
+2026-10-23T11:03:20.5431720Z       ],
+2026-10-23T11:03:20.5432010Z       "budget_seconds": 60
+2026-10-23T11:03:20.5432240Z     },
+2026-10-23T11:03:20.5432490Z     {
+2026-10-23T11:03:20.5432740Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5437080Z       "seconds": 17.06477537500001,
+2026-10-23T11:03:20.5437400Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5437790Z     },
+2026-10-23T11:03:20.5529870Z     {
+2026-10-23T11:03:20.5530400Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5530700Z       "seconds": 17.142527583000003,
+2026-10-23T11:03:20.5531080Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5531400Z     },
+2026-10-23T11:03:20.5531580Z     {
+2026-10-23T11:03:20.5531750Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5532070Z       "seconds": 17.280916165999997,
+2026-10-23T11:03:20.5532320Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5532670Z     },
+2026-10-23T11:03:20.5532830Z     {
+2026-10-23T11:03:20.5533080Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5533400Z       "seconds": 17.348383833000014,
+2026-10-23T11:03:20.5533870Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5534230Z     },
+2026-10-23T11:03:20.5536310Z     {
+2026-10-23T11:03:20.5536690Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5537030Z       "seconds": 17.436356416000024,
+2026-10-23T11:03:20.5537380Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5537620Z     },
+2026-10-23T11:03:20.5537820Z     {
+2026-10-23T11:03:20.5538080Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5538500Z       "seconds": 17.545381125000006,
+2026-10-23T11:03:20.5538770Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5539040Z     },
+2026-10-23T11:03:20.5539260Z     {
+2026-10-23T11:03:20.5539530Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5539770Z       "seconds": 17.624032833,
+2026-10-23T11:03:20.5540070Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5540440Z     },
+2026-10-23T11:03:20.5540650Z     {
+2026-10-23T11:03:20.5540900Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5541240Z       "seconds": 17.729071500000032,
+2026-10-23T11:03:20.5541590Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5541890Z     },
+2026-10-23T11:03:20.5542170Z     {
+2026-10-23T11:03:20.5542470Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5542820Z       "seconds": 17.81235774999999,
+2026-10-23T11:03:20.5543130Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5543420Z     },
+2026-10-23T11:03:20.5543740Z     {
+2026-10-23T11:03:20.5544000Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5544380Z       "seconds": 17.938085166000008,
+2026-10-23T11:03:20.5544690Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5545080Z     },
+2026-10-23T11:03:20.5546030Z     {
+2026-10-23T11:03:20.5546210Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5546910Z       "seconds": 18.010037166000018,
+2026-10-23T11:03:20.5547230Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5547480Z     },
+2026-10-23T11:03:20.5547870Z     {
+2026-10-23T11:03:20.5548390Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5549010Z       "seconds": 18.104501583,
+2026-10-23T11:03:20.5549870Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5550260Z     },
+2026-10-23T11:03:20.5550440Z     {
+2026-10-23T11:03:20.5550640Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5551040Z       "seconds": 18.210324500000013,
+2026-10-23T11:03:20.5552620Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5552950Z     },
+2026-10-23T11:03:20.5553450Z     {
+2026-10-23T11:03:20.5554210Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5555090Z       "seconds": 18.337970832999986,
+2026-10-23T11:03:20.5555560Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5556240Z     },
+2026-10-23T11:03:20.5557330Z     {
+2026-10-23T11:03:20.5560430Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5561110Z       "seconds": 18.392412250000007,
+2026-10-23T11:03:20.5561570Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5562950Z     },
+2026-10-23T11:03:20.5563530Z     {
+2026-10-23T11:03:20.5564550Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5565660Z       "seconds": 18.514514915999996,
+2026-10-23T11:03:20.5578700Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5578990Z     },
+2026-10-23T11:03:20.5580100Z     {
+2026-10-23T11:03:20.5580400Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5582760Z       "seconds": 18.61424737499999,
+2026-10-23T11:03:20.5584780Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5585070Z     },
+2026-10-23T11:03:20.5585320Z     {
+2026-10-23T11:03:20.5585610Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5586800Z       "seconds": 18.72272937500003,
+2026-10-23T11:03:20.5589260Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5589540Z     },
+2026-10-23T11:03:20.5590180Z     {
+2026-10-23T11:03:20.5590940Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5591290Z       "seconds": 18.847559708000006,
+2026-10-23T11:03:20.5591570Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5592270Z     },
+2026-10-23T11:03:20.5593080Z     {
+2026-10-23T11:03:20.5593530Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5594040Z       "seconds": 18.97643445800003,
+2026-10-23T11:03:20.5597920Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5600350Z     },
+2026-10-23T11:03:20.5601520Z     {
+2026-10-23T11:03:20.5602290Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5602630Z       "seconds": 19.090021291000028,
+2026-10-23T11:03:20.5603390Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5603820Z     },
+2026-10-23T11:03:20.5604000Z     {
+2026-10-23T11:03:20.5604530Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5605610Z       "seconds": 19.15592837500003,
+2026-10-23T11:03:20.5606170Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5610090Z     },
+2026-10-23T11:03:20.5611530Z     {
+2026-10-23T11:03:20.5611990Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5616530Z       "seconds": 19.246940041000016,
+2026-10-23T11:03:20.5617570Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5618230Z     },
+2026-10-23T11:03:20.5618950Z     {
+2026-10-23T11:03:20.5619760Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5620900Z       "seconds": 19.311814207999987,
+2026-10-23T11:03:20.5621620Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5622460Z     },
+2026-10-23T11:03:20.5622960Z     {
+2026-10-23T11:03:20.5623540Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5624990Z       "seconds": 19.37560616600001,
+2026-10-23T11:03:20.5625260Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5625610Z     },
+2026-10-23T11:03:20.5625870Z     {
+2026-10-23T11:03:20.5626260Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5626610Z       "seconds": 19.50120258300001,
+2026-10-23T11:03:20.5627040Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5627410Z     },
+2026-10-23T11:03:20.5627560Z     {
+2026-10-23T11:03:20.5627770Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5628050Z       "seconds": 19.563887333000025,
+2026-10-23T11:03:20.5628340Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5628720Z     },
+2026-10-23T11:03:20.5628950Z     {
+2026-10-23T11:03:20.5629170Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5629540Z       "seconds": 19.646697666000023,
+2026-10-23T11:03:20.5630200Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5630480Z     },
+2026-10-23T11:03:20.5630670Z     {
+2026-10-23T11:03:20.5630880Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5631150Z       "seconds": 19.767111750000026,
+2026-10-23T11:03:20.5631460Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5631710Z     },
+2026-10-23T11:03:20.5632010Z     {
+2026-10-23T11:03:20.5632250Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5632510Z       "seconds": 19.84754079100003,
+2026-10-23T11:03:20.5632840Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5633120Z     },
+2026-10-23T11:03:20.5633340Z     {
+2026-10-23T11:03:20.5633570Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5633790Z       "seconds": 19.94100266600003,
+2026-10-23T11:03:20.5634070Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5634310Z     },
+2026-10-23T11:03:20.5634440Z     {
+2026-10-23T11:03:20.5634610Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5634820Z       "seconds": 19.99995579099999,
+2026-10-23T11:03:20.5635120Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5635360Z     },
+2026-10-23T11:03:20.5635480Z     {
+2026-10-23T11:03:20.5635640Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5635850Z       "seconds": 20.055525250000017,
+2026-10-23T11:03:20.5636060Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5636280Z     },
+2026-10-23T11:03:20.5636390Z     {
+2026-10-23T11:03:20.5636530Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5636780Z       "seconds": 20.123623082999984,
+2026-10-23T11:03:20.5637110Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5637360Z     },
+2026-10-23T11:03:20.5637480Z     {
+2026-10-23T11:03:20.5637640Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5637910Z       "seconds": 20.19148629099999,
+2026-10-23T11:03:20.5638170Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5638440Z     },
+2026-10-23T11:03:20.5638600Z     {
+2026-10-23T11:03:20.5638780Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5639030Z       "seconds": 20.316542083,
+2026-10-23T11:03:20.5639220Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5639420Z     },
+2026-10-23T11:03:20.5639540Z     {
+2026-10-23T11:03:20.5639700Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5639920Z       "seconds": 20.418316583000035,
+2026-10-23T11:03:20.5640150Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5640360Z     },
+2026-10-23T11:03:20.5640500Z     {
+2026-10-23T11:03:20.5640660Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5640880Z       "seconds": 20.518679582999994,
+2026-10-23T11:03:20.5641120Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5641320Z     },
+2026-10-23T11:03:20.5641450Z     {
+2026-10-23T11:03:20.5641590Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5641800Z       "seconds": 20.598267540999984,
+2026-10-23T11:03:20.5642000Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5642470Z     },
+2026-10-23T11:03:20.5642590Z     {
+2026-10-23T11:03:20.5642730Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5642930Z       "seconds": 20.699710916000015,
+2026-10-23T11:03:20.5643130Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5643330Z     },
+2026-10-23T11:03:20.5643440Z     {
+2026-10-23T11:03:20.5643580Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5643780Z       "seconds": 20.75845874999999,
+2026-10-23T11:03:20.5643980Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5644170Z     },
+2026-10-23T11:03:20.5644290Z     {
+2026-10-23T11:03:20.5644430Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5644650Z       "seconds": 20.846769999999992,
+2026-10-23T11:03:20.5644910Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5645130Z     },
+2026-10-23T11:03:20.5645470Z     {
+2026-10-23T11:03:20.5645700Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5645930Z       "seconds": 20.91907333300003,
+2026-10-23T11:03:20.5646170Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5646410Z     },
+2026-10-23T11:03:20.5646530Z     {
+2026-10-23T11:03:20.5646670Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5646900Z       "seconds": 20.982652125000016,
+2026-10-23T11:03:20.5647110Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5647300Z     },
+2026-10-23T11:03:20.5647420Z     {
+2026-10-23T11:03:20.5647590Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5647810Z       "seconds": 21.039107290999993,
+2026-10-23T11:03:20.5648040Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5648280Z     },
+2026-10-23T11:03:20.5648510Z     {
+2026-10-23T11:03:20.5648750Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5649140Z       "seconds": 21.159369166000033,
+2026-10-23T11:03:20.5649540Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5649790Z     },
+2026-10-23T11:03:20.5650060Z     {
+2026-10-23T11:03:20.5650290Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5650690Z       "seconds": 21.239575000000002,
+2026-10-23T11:03:20.5650970Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5651340Z     },
+2026-10-23T11:03:20.5651560Z     {
+2026-10-23T11:03:20.5652020Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5652440Z       "seconds": 21.329914958000018,
+2026-10-23T11:03:20.5652730Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5653080Z     },
+2026-10-23T11:03:20.5660560Z     {
+2026-10-23T11:03:20.5660800Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5661090Z       "seconds": 21.456852249999997,
+2026-10-23T11:03:20.5661340Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5661580Z     },
+2026-10-23T11:03:20.5661710Z     {
+2026-10-23T11:03:20.5661870Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5662100Z       "seconds": 21.52452358300002,
+2026-10-23T11:03:20.5662330Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5662540Z     },
+2026-10-23T11:03:20.5662650Z     {
+2026-10-23T11:03:20.5662790Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5662990Z       "seconds": 21.592613874999984,
+2026-10-23T11:03:20.5663220Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5663420Z     },
+2026-10-23T11:03:20.5663540Z     {
+2026-10-23T11:03:20.5663670Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5663890Z       "seconds": 21.730420625000022,
+2026-10-23T11:03:20.5664140Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5664370Z     },
+2026-10-23T11:03:20.5664480Z     {
+2026-10-23T11:03:20.5664620Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5664840Z       "seconds": 21.851379124999994,
+2026-10-23T11:03:20.5665060Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5665570Z     },
+2026-10-23T11:03:20.5665690Z     {
+2026-10-23T11:03:20.5665830Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5666370Z       "seconds": 21.97257033300002,
+2026-10-23T11:03:20.5666570Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5666880Z     },
+2026-10-23T11:03:20.5666990Z     {
+2026-10-23T11:03:20.5667140Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5667360Z       "seconds": 22.09782283300001,
+2026-10-23T11:03:20.5667580Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5667770Z     },
+2026-10-23T11:03:20.5667880Z     {
+2026-10-23T11:03:20.5668020Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5668220Z       "seconds": 22.188133166,
+2026-10-23T11:03:20.5668420Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5668650Z     },
+2026-10-23T11:03:20.5668770Z     {
+2026-10-23T11:03:20.5668910Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5669750Z       "seconds": 22.320941333000007,
+2026-10-23T11:03:20.5670010Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5670210Z     },
+2026-10-23T11:03:20.5670330Z     {
+2026-10-23T11:03:20.5670480Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5670680Z       "seconds": 22.424870208000016,
+2026-10-23T11:03:20.5670890Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5671090Z     },
+2026-10-23T11:03:20.5671210Z     {
+2026-10-23T11:03:20.5671350Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5671560Z       "seconds": 22.559636666000017,
+2026-10-23T11:03:20.5671770Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5672020Z     },
+2026-10-23T11:03:20.5672170Z     {
+2026-10-23T11:03:20.5672340Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5672610Z       "seconds": 22.693191791000004,
+2026-10-23T11:03:20.5672860Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5673110Z     },
+2026-10-23T11:03:20.5673270Z     {
+2026-10-23T11:03:20.5673500Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5673730Z       "seconds": 22.829939500000023,
+2026-10-23T11:03:20.5673960Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5674170Z     },
+2026-10-23T11:03:20.5674300Z     {
+2026-10-23T11:03:20.5674470Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5674690Z       "seconds": 22.936689708000017,
+2026-10-23T11:03:20.5674940Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5675180Z     },
+2026-10-23T11:03:20.5675340Z     {
+2026-10-23T11:03:20.5675520Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5675770Z       "seconds": 23.031714082999997,
+2026-10-23T11:03:20.5676030Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5676220Z     },
+2026-10-23T11:03:20.5676370Z     {
+2026-10-23T11:03:20.5676530Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5676810Z       "seconds": 23.097822082999983,
+2026-10-23T11:03:20.5677060Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5677300Z     },
+2026-10-23T11:03:20.5677420Z     {
+2026-10-23T11:03:20.5677610Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5677890Z       "seconds": 23.230962833000035,
+2026-10-23T11:03:20.5678100Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5678310Z     },
+2026-10-23T11:03:20.5678440Z     {
+2026-10-23T11:03:20.5678620Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5678890Z       "seconds": 23.376349208000022,
+2026-10-23T11:03:20.5679110Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5679310Z     },
+2026-10-23T11:03:20.5679440Z     {
+2026-10-23T11:03:20.5679620Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5679850Z       "seconds": 23.518699666000032,
+2026-10-23T11:03:20.5680060Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5680320Z     },
+2026-10-23T11:03:20.5680520Z     {
+2026-10-23T11:03:20.5680700Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5680960Z       "seconds": 23.648014708000005,
+2026-10-23T11:03:20.5681250Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5681650Z     },
+2026-10-23T11:03:20.5681820Z     {
+2026-10-23T11:03:20.5682010Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5682250Z       "seconds": 23.77800987500001,
+2026-10-23T11:03:20.5682500Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5682770Z     },
+2026-10-23T11:03:20.5682920Z     {
+2026-10-23T11:03:20.5683060Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5683270Z       "seconds": 23.859718791000034,
+2026-10-23T11:03:20.5683510Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5683760Z     },
+2026-10-23T11:03:20.5683900Z     {
+2026-10-23T11:03:20.5684060Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5684340Z       "seconds": 23.96314183300001,
+2026-10-23T11:03:20.5684630Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5685110Z     },
+2026-10-23T11:03:20.5685310Z     {
+2026-10-23T11:03:20.5685460Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5685720Z       "seconds": 24.083367582999983,
+2026-10-23T11:03:20.5685980Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5686280Z     },
+2026-10-23T11:03:20.5686470Z     {
+2026-10-23T11:03:20.5686620Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5686860Z       "seconds": 24.15680770800003,
+2026-10-23T11:03:20.5687120Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5687370Z     },
+2026-10-23T11:03:20.5687520Z     {
+2026-10-23T11:03:20.5687700Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5687970Z       "seconds": 24.27313966600002,
+2026-10-23T11:03:20.5688190Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5688390Z     },
+2026-10-23T11:03:20.5688510Z     {
+2026-10-23T11:03:20.5688660Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5688880Z       "seconds": 24.38238091599999,
+2026-10-23T11:03:20.5689140Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5689410Z     },
+2026-10-23T11:03:20.5689580Z     {
+2026-10-23T11:03:20.5689760Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5690010Z       "seconds": 24.501081708000015,
+2026-10-23T11:03:20.5690240Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5690450Z     },
+2026-10-23T11:03:20.5690580Z     {
+2026-10-23T11:03:20.5690780Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5691050Z       "seconds": 24.56391370800003,
+2026-10-23T11:03:20.5691300Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5691550Z     },
+2026-10-23T11:03:20.5693300Z     {
+2026-10-23T11:03:20.5693490Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5693720Z       "seconds": 24.686578250000025,
+2026-10-23T11:03:20.5693960Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5694230Z     },
+2026-10-23T11:03:20.5694380Z     {
+2026-10-23T11:03:20.5694530Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5694740Z       "seconds": 24.777607708000005,
+2026-10-23T11:03:20.5695030Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5695230Z     },
+2026-10-23T11:03:20.5695360Z     {
+2026-10-23T11:03:20.5695550Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5695870Z       "seconds": 24.90572987500002,
+2026-10-23T11:03:20.5696140Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5696440Z     },
+2026-10-23T11:03:20.5696560Z     {
+2026-10-23T11:03:20.5696720Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5696940Z       "seconds": 25.011437208000018,
+2026-10-23T11:03:20.5697220Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5697440Z     },
+2026-10-23T11:03:20.5697600Z     {
+2026-10-23T11:03:20.5697800Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5698070Z       "seconds": 25.101551166000036,
+2026-10-23T11:03:20.5698290Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5698500Z     },
+2026-10-23T11:03:20.5698620Z     {
+2026-10-23T11:03:20.5698770Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5699210Z       "seconds": 25.15406058299999,
+2026-10-23T11:03:20.5699420Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5699630Z     },
+2026-10-23T11:03:20.5699750Z     {
+2026-10-23T11:03:20.5699930Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5700190Z       "seconds": 25.281662832999984,
+2026-10-23T11:03:20.5700640Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5700880Z     },
+2026-10-23T11:03:20.5701010Z     {
+2026-10-23T11:03:20.5701160Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5701370Z       "seconds": 25.40771858300002,
+2026-10-23T11:03:20.5701590Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5701810Z     },
+2026-10-23T11:03:20.5701940Z     {
+2026-10-23T11:03:20.5702080Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5702480Z       "seconds": 25.51932562500002,
+2026-10-23T11:03:20.5702730Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:03:20.5702950Z     },
+2026-10-23T11:03:20.5703060Z     {
+2026-10-23T11:03:20.5703200Z       "event": "first_window_observation",
+2026-10-23T11:03:20.5703420Z       "seconds": 25.598243458000013,
+2026-10-23T11:03:20.5703630Z       "observed_owned_layer_zero_windows": [
+2026-10-23T11:03:20.5703820Z         {
+2026-10-23T11:03:20.5703970Z           "window_id": 24,
+2026-10-23T11:03:20.5704150Z           "owner_pid": 3602,
+2026-10-23T11:03:20.5704350Z           "bounds_points_including_chrome": [
+2026-10-23T11:03:20.5704550Z             0.0,
+2026-10-23T11:03:20.5704690Z             25.0,
+2026-10-23T11:03:20.5704850Z             1024.0,
+2026-10-23T11:03:20.5704990Z             684.0
+2026-10-23T11:03:20.5705110Z           ],
+2026-10-23T11:03:20.5705260Z           "onscreen": true
+2026-10-23T11:03:20.5705410Z         }
+2026-10-23T11:03:20.5705530Z       ]
+2026-10-23T11:03:20.5705650Z     },
+2026-10-23T11:03:20.5705760Z     {
+2026-10-23T11:03:20.5705910Z       "event": "startup_window_observation",
+2026-10-23T11:03:20.5706120Z       "seconds": 25.63740604100002,
+2026-10-23T11:03:20.5706320Z       "observed_owned_layer_zero_windows": [
+2026-10-23T11:03:20.5706550Z         {
+2026-10-23T11:03:20.5706700Z           "window_id": 24,
+2026-10-23T11:03:20.5706870Z           "owner_pid": 3602,
+2026-10-23T11:03:20.5707060Z           "bounds_points_including_chrome": [
+2026-10-23T11:03:20.5707260Z             0.0,
+2026-10-23T11:03:20.5707390Z             25.0,
+2026-10-23T11:03:20.5707530Z             1024.0,
+2026-10-23T11:03:20.5707660Z             684.0
+2026-10-23T11:03:20.5707790Z           ],
+2026-10-23T11:03:20.5707920Z           "onscreen": true
+2026-10-23T11:03:20.5708070Z         }
+2026-10-23T11:03:20.5708190Z       ]
+2026-10-23T11:03:20.5708310Z     },
+2026-10-23T11:03:20.5708420Z     {
+2026-10-23T11:03:20.5708550Z       "event": "owned_window_guard",
+2026-10-23T11:03:20.5708740Z       "seconds": 25.66898545800001,
+2026-10-23T11:03:20.5708950Z       "observed_owned_layer_zero_windows": [
+2026-10-23T11:03:20.5709150Z         {
+2026-10-23T11:03:20.5709270Z           "window_id": 24,
+2026-10-23T11:03:20.5709430Z           "owner_pid": 3602,
+2026-10-23T11:03:20.5709610Z           "bounds_points_including_chrome": [
+2026-10-23T11:03:20.5709800Z             0.0,
+2026-10-23T11:03:20.5709920Z             25.0,
+2026-10-23T11:03:20.5710040Z             1024.0,
+2026-10-23T11:03:20.5710170Z             684.0
+2026-10-23T11:03:20.5710300Z           ],
+2026-10-23T11:03:20.5710420Z           "onscreen": true
+2026-10-23T11:03:20.5710570Z         }
+2026-10-23T11:03:20.5710790Z       ],
+2026-10-23T11:03:20.5711030Z       "expected_window": 24,
+2026-10-23T11:03:20.5711420Z       "expected_bounds_points": [
+2026-10-23T11:03:20.5711680Z         0.0,
+2026-10-23T11:03:20.5712000Z         25.0,
+2026-10-23T11:03:20.5712220Z         1024.0,
+2026-10-23T11:03:20.5712570Z         684.0
+2026-10-23T11:03:20.5718940Z       ],
+2026-10-23T11:03:20.5719100Z       "geometry_pinned": false,
+2026-10-23T11:03:20.5719290Z       "event_post_attempts": 0
+2026-10-23T11:03:20.5719580Z     },
+2026-10-23T11:03:20.5719690Z     {
+2026-10-23T11:03:20.5719830Z       "event": "helper_command",
+2026-10-23T11:03:20.5720010Z       "seconds": 25.682967958000006,
+2026-10-23T11:03:20.5720240Z       "name": "00-startup-menu-1",
+2026-10-23T11:03:20.5720420Z       "command": [
+2026-10-23T11:03:20.5720790Z         "/Users/runner/work/sightbreak/sightbreak/builds/macos-ax-diagnostic/ax-read-only/macos-window-capture",
+2026-10-23T11:03:20.5721180Z         "--pid",
+2026-10-23T11:03:20.5721310Z         "3602",
+2026-10-23T11:03:20.5721440Z         "--window",
+2026-10-23T11:03:20.5721580Z         "24",
+2026-10-23T11:03:20.5721700Z         "--png",
+2026-10-23T11:03:20.5722050Z         "/Users/runner/work/sightbreak/sightbreak/builds/macos-ax-diagnostic/ax-read-only/00-startup-menu-1.png",
+2026-10-23T11:03:20.5722440Z         "--report",
+2026-10-23T11:03:20.5722910Z         "/Users/runner/work/sightbreak/sightbreak/builds/macos-ax-diagnostic/ax-read-only/00-startup-menu-1.json"
+2026-10-23T11:03:20.5723290Z       ],
+2026-10-23T11:03:20.5723420Z       "budget_seconds": 25
+2026-10-23T11:03:20.5723580Z     }
+2026-10-23T11:03:20.5723690Z   ],
+2026-10-23T11:03:20.5723820Z   "capture_attempts": [
+2026-10-23T11:03:20.5723970Z     {
+2026-10-23T11:03:20.5724100Z       "name": "00-startup-menu-1",
+2026-10-23T11:03:20.5724280Z       "accepted": false,
+2026-10-23T11:03:20.5724460Z       "started_monotonic": 298.130337875,
+2026-10-23T11:03:20.5724660Z       "foreground_required": false,
+2026-10-23T11:03:20.5724830Z       "failure": {
+2026-10-23T11:03:20.5724990Z         "type": "RuntimeError",
+2026-10-23T11:03:20.5725220Z         "message": "Original read-only capture helper failed"
+2026-10-23T11:03:20.5725450Z       },
+2026-10-23T11:03:20.5725600Z       "finished_monotonic": 299.748986333,
+2026-10-23T11:03:20.5725830Z       "retained_files": {
+2026-10-23T11:03:20.5726030Z         "00-startup-menu-1.json": {
+2026-10-23T11:03:20.5726210Z           "bytes": 859,
+2026-10-23T11:03:20.5726490Z           "sha256": "d63129b91900c6ad5d2a99767e6d4c35dacc8ec254e54be28981a1613adb1ecf"
+2026-10-23T11:03:20.5726790Z         }
+2026-10-23T11:03:20.5726920Z       }
+2026-10-23T11:03:20.5727030Z     }
+2026-10-23T11:03:20.5727150Z   ],
+2026-10-23T11:03:20.5727270Z   "captures": [],
+2026-10-23T11:03:20.5727450Z   "query_prerequisites": false,
+2026-10-23T11:03:20.5727690Z   "bounded_traversal_complete": false,
+2026-10-23T11:03:20.5727920Z   "unique_semantic_candidate": false,
+2026-10-23T11:03:20.5728120Z   "native_pixel_frame_agreement": false,
+2026-10-23T11:03:20.5728320Z   "gameplay_target_accepted": false,
+2026-10-23T11:03:20.5728530Z   "ocr_confidence_threshold_changed": false,
+2026-10-23T11:03:20.5728750Z   "source": {
+2026-10-23T11:03:20.5728930Z     "source_dirty": false,
+2026-10-23T11:03:20.5729300Z     "source_validation_sha256": "d122b5fa927dba8910cb9749df34ac9bc0cc5e1be8723c85a1072f7539ed4d7b",
+2026-10-23T11:03:20.5729730Z     "source_commit": "4854aed946d25d27482af66c332f84aa51cea8fb",
+2026-10-23T11:03:20.5730050Z     "source_game_tree": "55691684d31d44f1680141954bbe530443de9d1f",
+2026-10-23T11:03:20.5730480Z     "source_content_sha256": "bcb872f6998ed8504c852dee354ab0acf5b6f19e58e40717267a1927e6d68a50",
+2026-10-23T11:03:20.5730910Z     "source_game_dirty": false
+2026-10-23T11:03:20.5731070Z   },
+2026-10-23T11:03:20.5731190Z   "artifact_source": {
+2026-10-23T11:03:20.5731350Z     "source_dirty": false,
+2026-10-23T11:03:20.5731670Z     "source_validation_sha256": "d122b5fa927dba8910cb9749df34ac9bc0cc5e1be8723c85a1072f7539ed4d7b",
+2026-10-23T11:03:20.5732180Z     "source_commit": "4854aed946d25d27482af66c332f84aa51cea8fb",
+2026-10-23T11:03:20.5732490Z     "source_game_tree": "55691684d31d44f1680141954bbe530443de9d1f",
+2026-10-23T11:03:20.5732900Z     "source_content_sha256": "bcb872f6998ed8504c852dee354ab0acf5b6f19e58e40717267a1927e6d68a50",
+2026-10-23T11:03:20.5733250Z     "source_game_dirty": false,
+2026-10-23T11:03:20.5733440Z     "target": "macos",
+2026-10-23T11:03:20.5733640Z     "version": "0.3.3-dev",
+2026-10-23T11:03:20.5734040Z     "build_number": 6,
+2026-10-23T11:03:20.5734200Z     "export_completed": true,
+2026-10-23T11:03:20.5734410Z     "built_at_utc": "2026-10-23T11:02:22.487663+00:00",
+2026-10-23T11:03:20.5734620Z     "artifact": {
+2026-10-23T11:03:20.5734840Z       "path": "macos/SIGHTBREAK.app/Contents/MacOS/SIGHTBREAK",
+2026-10-23T11:03:20.5735230Z       "bytes": 187121136,
+2026-10-23T11:03:20.5735500Z       "sha256": "7ad5bdea56e5138b19147e4212335da39e01116214a720ebbc830e69ada2f2fc",
+2026-10-23T11:03:20.5735800Z       "mode": 493,
+2026-10-23T11:03:20.5735950Z       "archive_mode": 493
+2026-10-23T11:03:20.5736110Z     },
+2026-10-23T11:03:20.5736230Z     "payload": [
+2026-10-23T11:03:20.5736360Z       {
+2026-10-23T11:03:20.5736510Z         "path": "macos/GODOT-COPYRIGHT.txt",
+2026-10-23T11:03:20.5736710Z         "bytes": 100108,
+2026-10-23T11:03:20.5737170Z         "sha256": "cb1980c88089573bcacd7221d777c689bb8bbd778799f24c27fca0fe5f774d6d",
+2026-10-23T11:03:20.5737570Z         "mode": 420,
+2026-10-23T11:03:20.5737740Z         "archive_mode": 420
+2026-10-23T11:03:20.5737900Z       },
+2026-10-23T11:03:20.5738010Z       {
+2026-10-23T11:03:20.5738150Z         "path": "macos/GODOT-LICENSE.txt",
+2026-10-23T11:03:20.5738340Z         "bytes": 1149,
+2026-10-23T11:03:20.5738600Z         "sha256": "b0435e3b3e4e55238f05f4b306f30524a1b2e20147810d436eaa554fa6855c80",
+2026-10-23T11:03:20.5738960Z         "mode": 420,
+2026-10-23T11:03:20.5739150Z         "archive_mode": 420
+2026-10-23T11:03:20.5739300Z       },
+2026-10-23T11:03:20.5739420Z       {
+2026-10-23T11:03:20.5739600Z         "path": "macos/SIGHTBREAK.app/Contents/Info.plist",
+2026-10-23T11:03:20.5739890Z         "bytes": 1793,
+2026-10-23T11:03:20.5740190Z         "sha256": "61f5f8110ffd074aa62abcdd56d23d66bda33b9224f0bf4031cfe559d20b9e5f",
+2026-10-23T11:03:20.5740500Z         "mode": 420,
+2026-10-23T11:03:20.5740700Z         "archive_mode": 420
+2026-10-23T11:03:20.5740890Z       },
+2026-10-23T11:03:20.5741050Z       {
+2026-10-23T11:03:20.5741230Z         "path": "macos/SIGHTBREAK.app/Contents/MacOS/SIGHTBREAK",
+2026-10-23T11:03:20.5741480Z         "bytes": 187121136,
+2026-10-23T11:03:20.5741800Z         "sha256": "7ad5bdea56e5138b19147e4212335da39e01116214a720ebbc830e69ada2f2fc",
+2026-10-23T11:03:20.5742150Z         "mode": 493,
+2026-10-23T11:03:20.5742300Z         "archive_mode": 493
+2026-10-23T11:03:20.5742450Z       },
+2026-10-23T11:03:20.5742570Z       {
+2026-10-23T11:03:20.5742730Z         "path": "macos/SIGHTBREAK.app/Contents/PkgInfo",
+2026-10-23T11:03:20.5742950Z         "bytes": 9,
+2026-10-23T11:03:20.5743200Z         "sha256": "7e50a30efad50208a173203ced60818d693bb61266b75aa10927d1a2adce80cb",
+2026-10-23T11:03:20.5743490Z         "mode": 420,
+2026-10-23T11:03:20.5743650Z         "archive_mode": 420
+2026-10-23T11:03:20.5743860Z       },
+2026-10-23T11:03:20.5744040Z       {
+2026-10-23T11:03:20.5744310Z         "path": "macos/SIGHTBREAK.app/Contents/Resources/PrivacyInfo.xcprivacy",
+2026-10-23T11:03:20.5744600Z         "bytes": 229,
+2026-10-23T11:03:20.5744870Z         "sha256": "0535353bb08c25b8ce5ed9ac7e442a5994f402e0f6cbc4bed668cfc63c2ceac3",
+2026-10-23T11:03:20.5745180Z         "mode": 420,
+2026-10-23T11:03:20.5745330Z         "archive_mode": 420
+2026-10-23T11:03:20.5745490Z       },
+2026-10-23T11:03:20.5745600Z       {
+2026-10-23T11:03:20.5745810Z         "path": "macos/SIGHTBREAK.app/Contents/Resources/SIGHTBREAK.pck",
+2026-10-23T11:03:20.5746090Z         "bytes": 10528904,
+2026-10-23T11:03:20.5746370Z         "sha256": "a408ba1a8aeec90d8ed8bfd07e281f2656b1999292eca72d89850bd3426c53b5",
+2026-10-23T11:03:20.5746690Z         "mode": 420,
+2026-10-23T11:03:20.5746850Z         "archive_mode": 420
+2026-10-23T11:03:20.5747010Z       },
+2026-10-23T11:03:20.5747130Z       {
+2026-10-23T11:03:20.5747330Z         "path": "macos/SIGHTBREAK.app/Contents/Resources/icon.icns",
+2026-10-23T11:03:20.5747590Z         "bytes": 121661,
+2026-10-23T11:03:20.5747880Z         "sha256": "5e8a6414d6e04bc7348e55b8cc3dae325d1798373a87bec34ffb49acc77d8e54",
+2026-10-23T11:03:20.5748190Z         "mode": 420,
+2026-10-23T11:03:20.5748460Z         "archive_mode": 420
+2026-10-23T11:03:20.5748630Z       },
+2026-10-23T11:03:20.5748740Z       {
+2026-10-23T11:03:20.5748970Z         "path": "macos/SIGHTBREAK.app/Contents/_CodeSignature/CodeResources",
+2026-10-23T11:03:20.5749240Z         "bytes": 3177,
+2026-10-23T11:03:20.5749560Z         "sha256": "a78cbc3b0b98bcb9a6acf3c9f04dc98b75b34cc46801e7e31a9e11abda22dd76",
+2026-10-23T11:03:20.5749950Z         "mode": 420,
+2026-10-23T11:03:20.5750100Z         "archive_mode": 420
+2026-10-23T11:03:20.5750290Z       },
+2026-10-23T11:03:20.5750440Z       {
+2026-10-23T11:03:20.5750620Z         "path": "macos/SIGHTBREAK.command",
+2026-10-23T11:03:20.5750820Z         "bytes": 430,
+2026-10-23T11:03:20.5751100Z         "sha256": "fdd8cfd353001655c75d07e1b74a5453635d6fd0dba23971b53ee47330315c25",
+2026-10-23T11:03:20.5751390Z         "mode": 493,
+2026-10-23T11:03:20.5751710Z         "archive_mode": 493
+2026-10-23T11:03:20.5751870Z       }
+2026-10-23T11:03:20.5751990Z     ]
+2026-10-23T11:03:20.5752110Z   },
+2026-10-23T11:03:20.5752260Z   "engine": "4.7.2.stable.official.ed1daf0bf",
+2026-10-23T11:03:20.5752480Z   "account_home": "/Users/runner",
+2026-10-23T11:03:20.5752710Z   "permissions": {
+2026-10-23T11:03:20.5752890Z     "CGPreflightPostEventAccess": true,
+2026-10-23T11:03:20.5753190Z     "CGPreflightScreenCaptureAccess": true,
+2026-10-23T11:03:20.5753480Z     "CGPreflightListenEventAccess": true,
+2026-10-23T11:03:20.5753700Z     "AXIsProcessTrusted": true
+2026-10-23T11:03:20.5753870Z   },
+2026-10-23T11:03:20.5754030Z   "environment_whitelist": {
+2026-10-23T11:03:20.5754260Z     "HOME": "/Users/runner",
+2026-10-23T11:03:20.5756170Z     "PATH": "/Users/runner/hostedtoolcache/Python/3.12.10/arm64/bin:/Users/runner/hostedtoolcache/Python/3.12.10/arm64:/opt/homebrew/lib/ruby/gems/3.3.0/bin:/opt/homebrew/opt/ruby@3.3/bin:/Users/runner/.local/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/runner/.cargo/bin:/usr/local/opt/curl/bin:/usr/local/bin:/usr/local/sbin:/Users/runner/bin:/Users/runner/.yarn/bin:/Users/runner/Library/Android/sdk/tools:/Users/runner/Library/Android/sdk/platform-tools:/Library/Frameworks/Python.framework/Versions/Current/bin:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/usr/bin:/bin:/usr/sbin:/sbin:/Users/runner/.dotnet/tools",
+2026-10-23T11:03:20.5758360Z     "DISPLAY": null,
+2026-10-23T11:03:20.5758520Z     "DEVELOPER_DIR": null,
+2026-10-23T11:03:20.5758690Z     "SDKROOT": null,
+2026-10-23T11:03:20.5758860Z     "MACOSX_DEPLOYMENT_TARGET": null,
+2026-10-23T11:03:20.5759080Z     "DYLD_LIBRARY_PATH": null,
+2026-10-23T11:03:20.5759290Z     "DYLD_FRAMEWORK_PATH": null,
+2026-10-23T11:03:20.5759480Z     "DYLD_INSERT_LIBRARIES": null,
+2026-10-23T11:03:20.5759680Z     "GODOT_RENDERING_DRIVER": null,
+2026-10-23T11:03:20.5759880Z     "GODOT_RENDERING_METHOD": null,
+2026-10-23T11:03:20.5760090Z     "GODOT_EDITOR_SETTINGS_PATH": null,
+2026-10-23T11:03:20.5760300Z     "GODOT_PROJECT_DATA_DIR": null,
+2026-10-23T11:03:20.5760500Z     "VK_ICD_FILENAMES": null,
+2026-10-23T11:03:20.5760700Z     "LIBGL_ALWAYS_SOFTWARE": null,
+2026-10-23T11:03:20.5760900Z     "MESA_LOADER_DRIVER_OVERRIDE": null,
+2026-10-23T11:03:20.5761100Z     "LP_NUM_THREADS": null,
+2026-10-23T11:03:20.5761280Z     "XDG_DATA_HOME": null,
+2026-10-23T11:03:20.5761450Z     "XDG_CONFIG_HOME": null,
+2026-10-23T11:03:20.5761630Z     "XDG_CACHE_HOME": null,
+2026-10-23T11:03:20.5761820Z     "APPDATA": null,
+2026-10-23T11:03:20.5762010Z     "LOCALAPPDATA": null,
+2026-10-23T11:03:20.5762230Z     "SIGHTBREAK_TOOLS_DIR": null,
+2026-10-23T11:03:20.5762430Z     "SIGHTBREAK_STATE_DIR": null,
+2026-10-23T11:03:20.5762790Z     "SIGHTBREAK_BUILDS_DIR": "/Users/runner/work/sightbreak/sightbreak/builds/macos-ax-diagnostic"
+2026-10-23T11:03:20.5763150Z   },
+2026-10-23T11:03:20.5763280Z   "bound_source_sha256": {
+2026-10-23T11:03:20.5763660Z     "verify_macos_ax_read_only.py": "862de0ac7d4d4a10ad2551a779aa4fefcb163eb5b33d80f2e6ad7368a81ec733",
+2026-10-23T11:03:20.5764200Z     "probe_macos_ax.py": "298bf62dbb60d324b006ab970683e6278464005b9af30917460fc8f49de8097e",
+2026-10-23T11:03:20.5764990Z     "macos_ax_contract.py": "fdf5acf120fdbf0c5e916d8efd3749ebd4722ef48fffdbf38cb92d8bc09aff8b",
+2026-10-23T11:03:20.5765490Z     "macos_ax_appkit.py": "be2c9969cdc084cb27980651da65b95e29a460ec1c2b7ef83536900b18f02e97",
+2026-10-23T11:03:20.5766030Z     "macos_window_capture.swift": "6b64561032d86b60dc1276aea1a642f427b48a1b5257934e89b71afb4269f71f"
+2026-10-23T11:03:20.5766470Z   },
+2026-10-23T11:03:20.5766600Z   "interpreter": {
+2026-10-23T11:03:20.5766860Z     "path": "/Library/Frameworks/Python.framework/Versions/3.12/bin/python",
+2026-10-23T11:03:20.5767270Z     "sha256": "d4f152f2a753c94e0e7935c8ebbe6b2609979e1df7898422b577d0076383d08b",
+2026-10-23T11:03:20.5767720Z     "version": "3.12.10 (v3.12.10:0cc81280367, Apr  8 2025, 08:46:59) [Clang 13.0.0 (clang-1300.0.29.30)]"
+2026-10-23T11:03:20.5768040Z   },
+2026-10-23T11:03:20.5768340Z   "default_user_directory_before": {
+2026-10-23T11:03:20.5768560Z     "directory_exists": true,
+2026-10-23T11:03:20.5768740Z     "directories": [
+2026-10-23T11:03:20.5768900Z       "objectdb_snapshots"
+2026-10-23T11:03:20.5769050Z     ],
+2026-10-23T11:03:20.5769170Z     "files": {}
+2026-10-23T11:03:20.5769300Z   },
+2026-10-23T11:03:20.5769710Z   "private_user_directory": "/Users/runner/Library/Application Support/SIGHTBREAK-mac-ordinary-2fffdac9cc9845bea60d8ae8751ca5b1",
+2026-10-23T11:03:20.5770190Z   "native_artifact_attestation": {
+2026-10-23T11:03:20.5770590Z     "original": "/Users/runner/work/sightbreak/sightbreak/builds/macos-ax-diagnostic/macos/SIGHTBREAK.app",
+2026-10-23T11:03:20.5771210Z     "staged": "/Users/runner/work/sightbreak/sightbreak/builds/macos-ax-diagnostic/ax-read-only/native/SIGHTBREAK.app",
+2026-10-23T11:03:20.5771640Z     "original_inventory": {
+2026-10-23T11:03:20.5771820Z       "directory_exists": true,
+2026-10-23T11:03:20.5772000Z       "directories": [
+2026-10-23T11:03:20.5772160Z         "Contents",
+2026-10-23T11:03:20.5772330Z         "Contents/Frameworks",
+2026-10-23T11:03:20.5772520Z         "Contents/MacOS",
+2026-10-23T11:03:20.5772680Z         "Contents/Resources",
+2026-10-23T11:03:20.5772870Z         "Contents/_CodeSignature"
+2026-10-23T11:03:20.5773040Z       ],
+2026-10-23T11:03:20.5773160Z       "files": {
+2026-10-23T11:03:20.5773310Z         "Contents/Info.plist": {
+2026-10-23T11:03:20.5773500Z           "bytes": 1793,
+2026-10-23T11:03:20.5773790Z           "sha256": "61f5f8110ffd074aa62abcdd56d23d66bda33b9224f0bf4031cfe559d20b9e5f",
+2026-10-23T11:03:20.5774100Z           "mode": 420
+2026-10-23T11:03:20.5774250Z         },
+2026-10-23T11:03:20.5774390Z         "Contents/MacOS/SIGHTBREAK": {
+2026-10-23T11:03:20.5774580Z           "bytes": 187121136,
+2026-10-23T11:03:20.5774860Z           "sha256": "7ad5bdea56e5138b19147e4212335da39e01116214a720ebbc830e69ada2f2fc",
+2026-10-23T11:03:20.5775250Z           "mode": 493
+2026-10-23T11:03:20.5775400Z         },
+2026-10-23T11:03:20.5775540Z         "Contents/PkgInfo": {
+2026-10-23T11:03:20.5775700Z           "bytes": 9,
+2026-10-23T11:03:20.5775970Z           "sha256": "7e50a30efad50208a173203ced60818d693bb61266b75aa10927d1a2adce80cb",
+2026-10-23T11:03:20.5776280Z           "mode": 420
+2026-10-23T11:03:20.5776420Z         },
+2026-10-23T11:03:20.5776590Z         "Contents/Resources/PrivacyInfo.xcprivacy": {
+2026-10-23T11:03:20.5776810Z           "bytes": 229,
+2026-10-23T11:03:20.5777100Z           "sha256": "0535353bb08c25b8ce5ed9ac7e442a5994f402e0f6cbc4bed668cfc63c2ceac3",
+2026-10-23T11:03:20.5777410Z           "mode": 420
+2026-10-23T11:03:20.5777560Z         },
+2026-10-23T11:03:20.5777710Z         "Contents/Resources/SIGHTBREAK.pck": {
+2026-10-23T11:03:20.5777940Z           "bytes": 10528904,
+2026-10-23T11:03:20.5778230Z           "sha256": "a408ba1a8aeec90d8ed8bfd07e281f2656b1999292eca72d89850bd3426c53b5",
+2026-10-23T11:03:20.5778540Z           "mode": 420
+2026-10-23T11:03:20.5778680Z         },
+2026-10-23T11:03:20.5778830Z         "Contents/Resources/icon.icns": {
+2026-10-23T11:03:20.5779040Z           "bytes": 121661,
+2026-10-23T11:03:20.5779390Z           "sha256": "5e8a6414d6e04bc7348e55b8cc3dae325d1798373a87bec34ffb49acc77d8e54",
+2026-10-23T11:03:20.5779710Z           "mode": 420
+2026-10-23T11:03:20.5780040Z         },
+2026-10-23T11:03:20.5780430Z         "Contents/_CodeSignature/CodeResources": {
+2026-10-23T11:03:20.5787300Z           "bytes": 3177,
+2026-10-23T11:03:20.5787640Z           "sha256": "a78cbc3b0b98bcb9a6acf3c9f04dc98b75b34cc46801e7e31a9e11abda22dd76",
+2026-10-23T11:03:20.5787990Z           "mode": 420
+2026-10-23T11:03:20.5788160Z         }
+2026-10-23T11:03:20.5788310Z       }
+2026-10-23T11:03:20.5788470Z     },
+2026-10-23T11:03:20.5788620Z     "staged_inventory": {
+2026-10-23T11:03:20.5788800Z       "directory_exists": true,
+2026-10-23T11:03:20.5788990Z       "directories": [
+2026-10-23T11:03:20.5789140Z         "Contents",
+2026-10-23T11:03:20.5789300Z         "Contents/Frameworks",
+2026-10-23T11:03:20.5789730Z         "Contents/MacOS",
+2026-10-23T11:03:20.5789940Z         "Contents/Resources",
+2026-10-23T11:03:20.5790200Z         "Contents/_CodeSignature"
+2026-10-23T11:03:20.5790450Z       ],
+2026-10-23T11:03:20.5790590Z       "files": {
+2026-10-23T11:03:20.5790740Z         "Contents/Info.plist": {
+2026-10-23T11:03:20.5790970Z           "bytes": 1793,
+2026-10-23T11:03:20.5791290Z           "sha256": "61f5f8110ffd074aa62abcdd56d23d66bda33b9224f0bf4031cfe559d20b9e5f",
+2026-10-23T11:03:20.5791600Z           "mode": 420
+2026-10-23T11:03:20.5791750Z         },
+2026-10-23T11:03:20.5791900Z         "Contents/MacOS/SIGHTBREAK": {
+2026-10-23T11:03:20.5792140Z           "bytes": 187121136,
+2026-10-23T11:03:20.5792490Z           "sha256": "7ad5bdea56e5138b19147e4212335da39e01116214a720ebbc830e69ada2f2fc",
+2026-10-23T11:03:20.5792870Z           "mode": 493
+2026-10-23T11:03:20.5793040Z         },
+2026-10-23T11:03:20.5793180Z         "Contents/MacOS/override.cfg": {
+2026-10-23T11:03:20.5793420Z           "bytes": 133,
+2026-10-23T11:03:20.5793740Z           "sha256": "2562940c8c2b8d8413e51f19cdc216a840e9a318d423cd24bab4b5fa25d34c52",
+2026-10-23T11:03:20.5794090Z           "mode": 420
+2026-10-23T11:03:20.5794270Z         },
+2026-10-23T11:03:20.5794440Z         "Contents/PkgInfo": {
+2026-10-23T11:03:20.5794620Z           "bytes": 9,
+2026-10-23T11:03:20.5794940Z           "sha256": "7e50a30efad50208a173203ced60818d693bb61266b75aa10927d1a2adce80cb",
+2026-10-23T11:03:20.5795260Z           "mode": 420
+2026-10-23T11:03:20.5795400Z         },
+2026-10-23T11:03:20.5795580Z         "Contents/Resources/PrivacyInfo.xcprivacy": {
+2026-10-23T11:03:20.5795800Z           "bytes": 229,
+2026-10-23T11:03:20.5796090Z           "sha256": "0535353bb08c25b8ce5ed9ac7e442a5994f402e0f6cbc4bed668cfc63c2ceac3",
+2026-10-23T11:03:20.5796470Z           "mode": 420
+2026-10-23T11:03:20.5796620Z         },
+2026-10-23T11:03:20.5796770Z         "Contents/Resources/SIGHTBREAK.pck": {
+2026-10-23T11:03:20.5797000Z           "bytes": 10528904,
+2026-10-23T11:03:20.5797360Z           "sha256": "a408ba1a8aeec90d8ed8bfd07e281f2656b1999292eca72d89850bd3426c53b5",
+2026-10-23T11:03:20.5797670Z           "mode": 420
+2026-10-23T11:03:20.5797820Z         },
+2026-10-23T11:03:20.5797960Z         "Contents/Resources/icon.icns": {
+2026-10-23T11:03:20.5798160Z           "bytes": 121661,
+2026-10-23T11:03:20.5798430Z           "sha256": "5e8a6414d6e04bc7348e55b8cc3dae325d1798373a87bec34ffb49acc77d8e54",
+2026-10-23T11:03:20.5798730Z           "mode": 420
+2026-10-23T11:03:20.5798870Z         },
+2026-10-23T11:03:20.5799040Z         "Contents/_CodeSignature/CodeResources": {
+2026-10-23T11:03:20.5799250Z           "bytes": 3177,
+2026-10-23T11:03:20.5799530Z           "sha256": "a78cbc3b0b98bcb9a6acf3c9f04dc98b75b34cc46801e7e31a9e11abda22dd76",
+2026-10-23T11:03:20.5799830Z           "mode": 420
+2026-10-23T11:03:20.5799970Z         }
+2026-10-23T11:03:20.5800090Z       }
+2026-10-23T11:03:20.5800210Z     },
+2026-10-23T11:03:20.5800700Z     "override_text": "[application]\nconfig/use_custom_user_dir=true\nconfig/custom_user_dir_name=\"SIGHTBREAK-mac-ordinary-2fffdac9cc9845bea60d8ae8751ca5b1\"\n",
+2026-10-23T11:03:20.5801570Z     "override_sha256": "2562940c8c2b8d8413e51f19cdc216a840e9a318d423cd24bab4b5fa25d34c52",
+2026-10-23T11:03:20.5802050Z     "executable_sha256": "7ad5bdea56e5138b19147e4212335da39e01116214a720ebbc830e69ada2f2fc",
+2026-10-23T11:03:20.5802500Z     "pck_sha256": "a408ba1a8aeec90d8ed8bfd07e281f2656b1999292eca72d89850bd3426c53b5"
+2026-10-23T11:03:20.5802800Z   },
+2026-10-23T11:03:20.5802930Z   "capture_helper": {
+2026-10-23T11:03:20.5803210Z     "source_sha256": "6b64561032d86b60dc1276aea1a642f427b48a1b5257934e89b71afb4269f71f",
+2026-10-23T11:03:20.5803660Z     "executable_sha256": "d17e32c94939f0f52ecade4ecafa5a8e58e81ecfcc007e0e158f52a518d7893b"
+2026-10-23T11:03:20.5803990Z   },
+2026-10-23T11:03:20.5804110Z   "client_command": [
+2026-10-23T11:03:20.5804800Z     "/Users/runner/work/sightbreak/sightbreak/builds/macos-ax-diagnostic/ax-read-only/native/SIGHTBREAK.app/Contents/MacOS/SIGHTBREAK",
+2026-10-23T11:03:20.5805360Z     "--audio-driver",
+2026-10-23T11:03:20.5805510Z     "Dummy",
+2026-10-23T11:03:20.5805640Z     "--log-file",
+2026-10-23T11:03:20.5805930Z     "user://mac-ordinary-engine.log",
+2026-10-23T11:03:20.5806120Z     "--windowed",
+2026-10-23T11:03:20.5806260Z     "--resolution",
+2026-10-23T11:03:20.5806390Z     "1280x720",
+2026-10-23T11:03:20.5806520Z     "--position",
+2026-10-23T11:03:20.5806660Z     "40,60",
+2026-10-23T11:03:20.5806790Z     "--accessibility",
+2026-10-23T11:03:20.5806930Z     "always",
+2026-10-23T11:03:20.5807060Z     "--",
+2026-10-23T11:03:20.5807190Z     "--offline-validation",
+2026-10-23T11:03:20.5807620Z     "--offline-trace-dir=/Users/runner/work/sightbreak/sightbreak/builds/macos-ax-diagnostic/ax-read-only/stock-offline-trace"
+2026-10-23T11:03:20.5808050Z   ],
+2026-10-23T11:03:20.5808170Z   "launch_amendment": {
+2026-10-23T11:03:20.5808330Z     "engine_arguments": [
+2026-10-23T11:03:20.5808510Z       "--accessibility",
+2026-10-23T11:03:20.5808660Z       "always"
+2026-10-23T11:03:20.5808800Z     ],
+2026-10-23T11:03:20.5809020Z     "scope": "Explicit diagnostic only; ordinary launch/selector unchanged"
+2026-10-23T11:03:20.5809300Z   },
+2026-10-23T11:03:20.5809430Z   "client_pid": 3602,
+2026-10-23T11:03:20.5809590Z   "first_client_window": {
+2026-10-23T11:03:20.5809760Z     "window_id": 24,
+2026-10-23T11:03:20.5809910Z     "owner_pid": 3602,
+2026-10-23T11:03:20.5810080Z     "bounds_points_including_chrome": [
+2026-10-23T11:03:20.5810260Z       0.0,
+2026-10-23T11:03:20.5810390Z       25.0,
+2026-10-23T11:03:20.5810510Z       1024.0,
+2026-10-23T11:03:20.5810640Z       684.0
+2026-10-23T11:03:20.5810750Z     ],
+2026-10-23T11:03:20.5810880Z     "onscreen": true
+2026-10-23T11:03:20.5811010Z   },
+2026-10-23T11:03:20.5811160Z   "private_menu_inventory_after_window": {
+2026-10-23T11:03:20.5811370Z     "directory_exists": true,
+2026-10-23T11:03:20.5811540Z     "directories": [
+2026-10-23T11:03:20.5811690Z       "shader_cache",
+2026-10-23T11:03:20.5811870Z       "shader_cache/CanvasOcclusionShaderGLES3",
+2026-10-23T11:03:20.5812320Z       "shader_cache/CanvasOcclusionShaderGLES3/ea04000c9ef145dcfa04db83e907602d2861ff3c67aad979f0843ea690a725eb",
+2026-10-23T11:03:20.5812750Z       "shader_cache/CanvasSdfShaderGLES3",
+2026-10-23T11:03:20.5813130Z       "shader_cache/CanvasSdfShaderGLES3/48b0a8634e4014e682195f819ab1802ad1eba3c66e5a240cb41a40476da3a8a8",
+2026-10-23T11:03:20.5813510Z       "shader_cache/CanvasShaderGLES3",
+2026-10-23T11:03:20.5813890Z       "shader_cache/CanvasShaderGLES3/e60a8a3f8f237693d3b2a08e85fbf397ce996152b8d5bac9bcf1212e1cc1888e",
+2026-10-23T11:03:20.5814260Z       "shader_cache/CopyShaderGLES3",
+2026-10-23T11:03:20.5814610Z       "shader_cache/CopyShaderGLES3/5778e4e887307f7592591c029033a06924dcd7dda47984bd7728d40e7305659a",
+2026-10-23T11:03:20.5814990Z       "shader_cache/CubemapFilterShaderGLES3",
+2026-10-23T11:03:20.5815410Z       "shader_cache/CubemapFilterShaderGLES3/c1696eea1d431d13f5100a2c4aaa8a1a1bdc3638667c5d6b823274c0b64609ea",
+2026-10-23T11:03:20.5815800Z       "shader_cache/EGL",
+2026-10-23T11:03:20.5815970Z       "shader_cache/FeedShaderGLES3",
+2026-10-23T11:03:20.5816420Z       "shader_cache/FeedShaderGLES3/fa70cd8c476bce52dc50f8a7a301688061fd5b25dec59f9541b5a94f75ac2251",
+2026-10-23T11:03:20.5816780Z       "shader_cache/GlowShaderGLES3",
+2026-10-23T11:03:20.5817140Z       "shader_cache/GlowShaderGLES3/bbd6df238d8696e7f67d552a022a32b35da73e147fca773d440198c9a5318096",
+2026-10-23T11:03:20.5817520Z       "shader_cache/ParticlesCopyShaderGLES3",
+2026-10-23T11:03:20.5817920Z       "shader_cache/ParticlesCopyShaderGLES3/465f40e00477cf9b0a97b401595e600af70ea690be2951bbe9dcf4830e7dd4db",
+2026-10-23T11:03:20.5818330Z       "shader_cache/ParticlesShaderGLES3",
+2026-10-23T11:03:20.5818720Z       "shader_cache/ParticlesShaderGLES3/16dd9d57054f8b71af1146d9082ad9be712f883dfa3796473fad842a6c63ff8b",
+2026-10-23T11:03:20.5819100Z       "shader_cache/PostShaderGLES3",
+2026-10-23T11:03:20.5819580Z       "shader_cache/PostShaderGLES3/2bf967af90390dd7cf8b2c471eda26d033a3f17e941e8d754ed6de6cad30178f",
+2026-10-23T11:03:20.5819960Z       "shader_cache/SceneShaderGLES3",
+2026-10-23T11:03:20.5820320Z       "shader_cache/SceneShaderGLES3/8281c29b1cfa01264385d492f7511292466d03ae7683338f702e791c9d50e63c",
+2026-10-23T11:03:20.5820680Z       "shader_cache/SkeletonShaderGLES3",
+2026-10-23T11:03:20.5821060Z       "shader_cache/SkeletonShaderGLES3/7f2029d22b3600ee82481ba37eb5937daec02e1d0afdc695195046b4cdfa7132",
+2026-10-23T11:03:20.5821440Z       "shader_cache/SkyShaderGLES3",
+2026-10-23T11:03:20.5821780Z       "shader_cache/SkyShaderGLES3/d50d89841f8f80f3b318156c959378bc1ba091a2457989d54fe660616cbd3624",
+2026-10-23T11:03:20.5822140Z       "shader_cache/TexBlitShaderGLES3",
+2026-10-23T11:03:20.5822510Z       "shader_cache/TexBlitShaderGLES3/c2825065069e36dc4ed3d07e6fb42b5470f952b52aaafc78a3e94d059a446057"
+2026-10-23T11:03:20.5822850Z     ],
+2026-10-23T11:03:20.5822970Z     "files": {
+2026-10-23T11:03:20.5823120Z       "mac-ordinary-engine.log": {
+2026-10-23T11:03:20.5823300Z         "bytes": 409,
+2026-10-23T11:03:20.5823650Z         "sha256": "df2a1929c8fec3648bed37e195863aabd97965c7e4e6d9e7613aad9d12ab20ae",
+2026-10-23T11:03:20.5823950Z         "mode": 420
+2026-10-23T11:03:20.5824080Z       },
+2026-10-23T11:03:20.5824510Z       "shader_cache/CopyShaderGLES3/5778e4e887307f7592591c029033a06924dcd7dda47984bd7728d40e7305659a/fa7b62523470356194bdf709eb2639ab149a07cc.cache": {
+2026-10-23T11:03:20.5824980Z         "bytes": 275098,
+2026-10-23T11:03:20.5825240Z         "sha256": "3c849954b28a9631cbbf811e30f44ae9dd820e26cfcf00d8dbc207818adbb0fc",
+2026-10-23T11:03:20.5825530Z         "mode": 420
+2026-10-23T11:03:20.5825660Z       },
+2026-10-23T11:03:20.5825850Z       "shader_cache/EGL/0UGUs0kvhdbTVqWbXDwVySBwkDw=.cache": {
+2026-10-23T11:03:20.5826090Z         "bytes": 3210,
+2026-10-23T11:03:20.5826350Z         "sha256": "6fff9e26edb26461306824b2e9c62ee681493dc08dd814c95a793170b87a8f00",
+2026-10-23T11:03:20.5826630Z         "mode": 420
+2026-10-23T11:03:20.5826770Z       },
+2026-10-23T11:03:20.5826950Z       "shader_cache/EGL/7EEsNkEYGObqiv1yYwShA1vZhD8=.cache": {
+2026-10-23T11:03:20.5827190Z         "bytes": 45592,
+2026-10-23T11:03:20.5827450Z         "sha256": "8cf2c16263708d0f9d6fb36fb149974fd62562ecedcf870c9474067f14ff3026",
+2026-10-23T11:03:20.5827740Z         "mode": 420
+2026-10-23T11:03:20.5827870Z       },
+2026-10-23T11:03:20.5828050Z       "shader_cache/EGL/A_D8osdjOIo6Hxo9ARLWzJXDj4s=.cache": {
+2026-10-23T11:03:20.5828290Z         "bytes": 5278,
+2026-10-23T11:03:20.5828560Z         "sha256": "591a595a073985ebeeeded212f995e6390a6fa873938b0191639057cd99e52d3",
+2026-10-23T11:03:20.5828860Z         "mode": 420
+2026-10-23T11:03:20.5828990Z       },
+2026-10-23T11:03:20.5829180Z       "shader_cache/EGL/Iyl6su_blDOsVLbOW77Zgvporiw=.cache": {
+2026-10-23T11:03:20.5829540Z         "bytes": 2650,
+2026-10-23T11:03:20.5829800Z         "sha256": "8882d840625679fd6e9de4f97dbe78aa6af3843ea90421d1ee111854bc48b311",
+2026-10-23T11:03:20.5830100Z         "mode": 420
+2026-10-23T11:03:20.5830230Z       },
+2026-10-23T11:03:20.5830420Z       "shader_cache/EGL/QJlObemwO0JaRCM9DR1LeHOVMDc=.cache": {
+2026-10-23T11:03:20.5830670Z         "bytes": 3174,
+2026-10-23T11:03:20.5831080Z         "sha256": "d844d67fcd74c92bf5f19f39aefe29da5e0dea9312cd2e8e896d4885595c109b",
+2026-10-23T11:03:20.5831420Z         "mode": 420
+2026-10-23T11:03:20.5831590Z       },
+2026-10-23T11:03:20.5831830Z       "shader_cache/EGL/TC2DQNFr_5aIPlFvOHBFJFqqcpI=.cache": {
+2026-10-23T11:03:20.5832110Z         "bytes": 4618,
+2026-10-23T11:03:20.5832430Z         "sha256": "53666b2ffc413efc5489fcfe9c63fb75c5ddcff778f386ee0de6e472b13133ba",
+2026-10-23T11:03:20.5832730Z         "mode": 420
+2026-10-23T11:03:20.5832860Z       },
+2026-10-23T11:03:20.5833050Z       "shader_cache/EGL/VoA5sYiPWri3r5ni+7K2RZZAVKw=.cache": {
+2026-10-23T11:03:20.5833290Z         "bytes": 3022,
+2026-10-23T11:03:20.5833560Z         "sha256": "595bdfe54e08cb4e68bd871cafdb1657394d9238a9eda72a95cccc81ab005b10",
+2026-10-23T11:03:20.5833870Z         "mode": 420
+2026-10-23T11:03:20.5834000Z       },
+2026-10-23T11:03:20.5834280Z       "shader_cache/EGL/_gFs_sE2K3xgXT5b1C6pHULou+c=.cache": {
+2026-10-23T11:03:20.5834530Z         "bytes": 2833,
+2026-10-23T11:03:20.5834810Z         "sha256": "76164d9f21febd9b2f2c6a744aa4db7ee946ad1904fa74d4fbaf2a0eea8a8f5b",
+2026-10-23T11:03:20.5835100Z         "mode": 420
+2026-10-23T11:03:20.5835230Z       },
+2026-10-23T11:03:20.5835410Z       "shader_cache/EGL/aZOGOizhluQHmaU0PWXxHgN8yh8=.cache": {
+2026-10-23T11:03:20.5835650Z         "bytes": 3576,
+2026-10-23T11:03:20.5835910Z         "sha256": "8c95374b210fd91becbe5a94329839f8e139372f52fdd2e599a7ea784fef5e40",
+2026-10-23T11:03:20.5836210Z         "mode": 420
+2026-10-23T11:03:20.5836340Z       },
+2026-10-23T11:03:20.5836530Z       "shader_cache/EGL/ddKGAYHJdcVCAzygjXL6HbDZcYU=.cache": {
+2026-10-23T11:03:20.5836780Z         "bytes": 2410,
+2026-10-23T11:03:20.5837030Z         "sha256": "52d845a76d194651529386ae3143593f3589921ad2dd9d0d75528bc986197040",
+2026-10-23T11:03:20.5837320Z         "mode": 420
+2026-10-23T11:03:20.5837460Z       },
+2026-10-23T11:03:20.5837650Z       "shader_cache/EGL/dzC4bwTOSS_wJrbon6nNXmiOqDI=.cache": {
+2026-10-23T11:03:20.5837900Z         "bytes": 3538,
+2026-10-23T11:03:20.5838170Z         "sha256": "04c56c972ec31c5835d6722d5284144fbd5241ed9ff7030f774ad3949653f184",
+2026-10-23T11:03:20.5838470Z         "mode": 420
+2026-10-23T11:03:20.5838600Z       },
+2026-10-23T11:03:20.5838790Z       "shader_cache/EGL/eNAI33KO7r49+dlKpVnjsqbezTM=.cache": {
+2026-10-23T11:03:20.5839030Z         "bytes": 3218,
+2026-10-23T11:03:20.5839300Z         "sha256": "b27f6baa098109900b77eee5a6972746d5e8c478344cde97e14ae3487cc35b47",
+2026-10-23T11:03:20.5839590Z         "mode": 420
+2026-10-23T11:03:20.5839720Z       },
+2026-10-23T11:03:20.5840190Z       "shader_cache/EGL/eYROWbkHnMG53uZfU0b6hLsOH+g=.cache": {
+2026-10-23T11:03:20.5840450Z         "bytes": 2920,
+2026-10-23T11:03:20.5840730Z         "sha256": "81d0b6f77b2380bcab33698de20e9ca840fc5ce3424e9a0eec1f894ced2fc186",
+2026-10-23T11:03:20.5841070Z         "mode": 420
+2026-10-23T11:03:20.5841210Z       },
+2026-10-23T11:03:20.5841420Z       "shader_cache/EGL/fhr1uPv9Ilaudc11ZzWZPEtdTpk=.cache": {
+2026-10-23T11:03:20.5841680Z         "bytes": 3129,
+2026-10-23T11:03:20.5841940Z         "sha256": "a8a38f61726a24938dfa73574a7a1c22f5368b8d89fe89444e13797c5ec61565",
+2026-10-23T11:03:20.5842280Z         "mode": 420
+2026-10-23T11:03:20.5842430Z       },
+2026-10-23T11:03:20.5842610Z       "shader_cache/EGL/khygRgQP3cRXbe899vHe_UBYvzY=.cache": {
+2026-10-23T11:03:20.5842850Z         "bytes": 2821,
+2026-10-23T11:03:20.5843130Z         "sha256": "af16bcea4ee3225425df7d4de386b0736ddefe9fc111828022c4160cc0be2291",
+2026-10-23T11:03:20.5843470Z         "mode": 420
+2026-10-23T11:03:20.5843610Z       },
+2026-10-23T11:03:20.5843800Z       "shader_cache/EGL/p2yJl7EmP+xf3H909QLHVpMwOPE=.cache": {
+2026-10-23T11:03:20.5844040Z         "bytes": 2980,
+2026-10-23T11:03:20.5844300Z         "sha256": "ea695d2e678057d5d546d507b7f274db0730e4f747c4d14f91c3608ed8207064",
+2026-10-23T11:03:20.5844600Z         "mode": 420
+2026-10-23T11:03:20.5844730Z       },
+2026-10-23T11:03:20.5844850Z       "shader_cache/EGL/pRnvvTM3EJBj4GRPdbdiDJMVdmg=.cache": {
+2026-10-23T11:03:20.5845030Z         "bytes": 46573,
+2026-10-23T11:03:20.5845200Z         "sha256": "77acb262d9c501cdadda5976ae3459588974ed23d365c828019a6143c1f65092",
+2026-10-23T11:03:20.5845250Z         "mode": 420
+2026-10-23T11:03:20.5845310Z       },
+2026-10-23T11:03:20.5845430Z       "shader_cache/EGL/q2jJY9M1cz+y+0QSn2T0PCH7+Es=.cache": {
+2026-10-23T11:03:20.5845480Z         "bytes": 3102,
+2026-10-23T11:03:20.5845650Z         "sha256": "b35b782cfa412efc1c38b043942590d170633507694222339629f1eccead9eff",
+2026-10-23T11:03:20.5845690Z         "mode": 420
+2026-10-23T11:03:20.5845740Z       },
+2026-10-23T11:03:20.5845860Z       "shader_cache/EGL/vnoRMwpQgdstt1mdz5mDQYUJYLw=.cache": {
+2026-10-23T11:03:20.5845920Z         "bytes": 5891,
+2026-10-23T11:03:20.5846080Z         "sha256": "7e0bcec16f39b8300264ef35c1e08ef4f846057d6e170fcc1926799a92b2c0c3",
+2026-10-23T11:03:20.5846260Z         "mode": 420
+2026-10-23T11:03:20.5846320Z       },
+2026-10-23T11:03:20.5846690Z       "shader_cache/FeedShaderGLES3/fa70cd8c476bce52dc50f8a7a301688061fd5b25dec59f9541b5a94f75ac2251/fa7b62523470356194bdf709eb2639ab149a07cc.cache": {
+2026-10-23T11:03:20.5846750Z         "bytes": 19624,
+2026-10-23T11:03:20.5846940Z         "sha256": "4dea53e1d44f0d0dc66e8ae0e290118fef798d19234138dd4c23aa7d92458bd8",
+2026-10-23T11:03:20.5847010Z         "mode": 420
+2026-10-23T11:03:20.5847070Z       },
+2026-10-23T11:03:20.5847460Z       "shader_cache/PostShaderGLES3/2bf967af90390dd7cf8b2c471eda26d033a3f17e941e8d754ed6de6cad30178f/fa7b62523470356194bdf709eb2639ab149a07cc.cache": {
+2026-10-23T11:03:20.5847530Z         "bytes": 28160,
+2026-10-23T11:03:20.5847730Z         "sha256": "91fe3cfe7814a6603d5f523dd6f8c49fb2c16ce92fc98fb2c654e131e00ce419",
+2026-10-23T11:03:20.5847790Z         "mode": 420
+2026-10-23T11:03:20.5847840Z       },
+2026-10-23T11:03:20.5848210Z       "shader_cache/SceneShaderGLES3/8281c29b1cfa01264385d492f7511292466d03ae7683338f702e791c9d50e63c/fa7b62523470356194bdf709eb2639ab149a07cc.cache": {
+2026-10-23T11:03:20.5848270Z         "bytes": 850340,
+2026-10-23T11:03:20.5848430Z         "sha256": "759919169d0c919736e4d4c184f80719907400ed8472ce01fa340fe1d37af074",
+2026-10-23T11:03:20.5848480Z         "mode": 420
+2026-10-23T11:03:20.5848530Z       }
+2026-10-23T11:03:20.5848580Z     }
+2026-10-23T11:03:20.5848620Z   },
+2026-10-23T11:03:20.5848670Z   "failure": {
+2026-10-23T11:03:20.5848740Z     "type": "RuntimeError",
+2026-10-23T11:03:20.5848850Z     "message": "Original read-only capture helper failed"
+2026-10-23T11:03:20.5848980Z   },
+2026-10-23T11:03:20.5854260Z   "ordinary_termination_requested": true,
+2026-10-23T11:03:20.5854340Z   "normal_exit_code": 0,
+2026-10-23T11:03:20.5854390Z   "cleanup": [
+2026-10-23T11:03:20.5854440Z     {
+2026-10-23T11:03:20.5854520Z       "name": "compile-capture-helper",
+2026-10-23T11:03:20.5854570Z       "pid": 3446,
+2026-10-23T11:03:20.5854630Z       "exit_code": 0,
+2026-10-23T11:03:20.5854700Z       "signals_sent": [],
+2026-10-23T11:03:20.5854780Z       "owned_group_gone": true
+2026-10-23T11:03:20.5854840Z     },
+2026-10-23T11:03:20.5854900Z     {
+2026-10-23T11:03:20.5854970Z       "name": "client",
+2026-10-23T11:03:20.5855040Z       "pid": 3602,
+2026-10-23T11:03:20.5855110Z       "exit_code": 0,
+2026-10-23T11:03:20.5855180Z       "signals_sent": [],
+2026-10-23T11:03:20.5855250Z       "owned_group_gone": true
+2026-10-23T11:03:20.5855300Z     },
+2026-10-23T11:03:20.5855340Z     {
+2026-10-23T11:03:20.5855410Z       "name": "00-startup-menu-1",
+2026-10-23T11:03:20.5855460Z       "pid": 3619,
+2026-10-23T11:03:20.5855520Z       "exit_code": 1,
+2026-10-23T11:03:20.5855580Z       "signals_sent": [],
+2026-10-23T11:03:20.5855640Z       "owned_group_gone": true
+2026-10-23T11:03:20.5855680Z     }
+2026-10-23T11:03:20.5855730Z   ],
+2026-10-23T11:03:20.5855790Z   "focus_requests": 0,
+2026-10-23T11:03:20.5855850Z   "payload_unchanged": true,
+2026-10-23T11:03:20.5855920Z   "default_user_directory_after": {
+2026-10-23T11:03:20.5856000Z     "directory_exists": true,
+2026-10-23T11:03:20.5856050Z     "directories": [
+2026-10-23T11:03:20.5856330Z       "objectdb_snapshots"
+2026-10-23T11:03:20.5856370Z     ],
+2026-10-23T11:03:20.5856430Z     "files": {}
+2026-10-23T11:03:20.5856470Z   },
+2026-10-23T11:03:20.5856550Z   "default_user_directory_unchanged": true,
+2026-10-23T11:03:20.5856620Z   "private_user_directory_after": {
+2026-10-23T11:03:20.5856690Z     "directory_exists": true,
+2026-10-23T11:03:20.5856740Z     "directories": [
+2026-10-23T11:03:20.5856790Z       "shader_cache",
+2026-10-23T11:03:20.5856890Z       "shader_cache/CanvasOcclusionShaderGLES3",
+2026-10-23T11:03:20.5857170Z       "shader_cache/CanvasOcclusionShaderGLES3/ea04000c9ef145dcfa04db83e907602d2861ff3c67aad979f0843ea690a725eb",
+2026-10-23T11:03:20.5857250Z       "shader_cache/CanvasSdfShaderGLES3",
+2026-10-23T11:03:20.5857500Z       "shader_cache/CanvasSdfShaderGLES3/48b0a8634e4014e682195f819ab1802ad1eba3c66e5a240cb41a40476da3a8a8",
+2026-10-23T11:03:20.5857730Z       "shader_cache/CanvasShaderGLES3",
+2026-10-23T11:03:20.5857980Z       "shader_cache/CanvasShaderGLES3/e60a8a3f8f237693d3b2a08e85fbf397ce996152b8d5bac9bcf1212e1cc1888e",
+2026-10-23T11:03:20.5858060Z       "shader_cache/CopyShaderGLES3",
+2026-10-23T11:03:20.5858280Z       "shader_cache/CopyShaderGLES3/5778e4e887307f7592591c029033a06924dcd7dda47984bd7728d40e7305659a",
+2026-10-23T11:03:20.5858370Z       "shader_cache/CubemapFilterShaderGLES3",
+2026-10-23T11:03:20.5858620Z       "shader_cache/CubemapFilterShaderGLES3/c1696eea1d431d13f5100a2c4aaa8a1a1bdc3638667c5d6b823274c0b64609ea",
+2026-10-23T11:03:20.5858680Z       "shader_cache/EGL",
+2026-10-23T11:03:20.5858750Z       "shader_cache/FeedShaderGLES3",
+2026-10-23T11:03:20.5858980Z       "shader_cache/FeedShaderGLES3/fa70cd8c476bce52dc50f8a7a301688061fd5b25dec59f9541b5a94f75ac2251",
+2026-10-23T11:03:20.5859050Z       "shader_cache/GlowShaderGLES3",
+2026-10-23T11:03:20.5859270Z       "shader_cache/GlowShaderGLES3/bbd6df238d8696e7f67d552a022a32b35da73e147fca773d440198c9a5318096",
+2026-10-23T11:03:20.5859360Z       "shader_cache/ParticlesCopyShaderGLES3",
+2026-10-23T11:03:20.5859620Z       "shader_cache/ParticlesCopyShaderGLES3/465f40e00477cf9b0a97b401595e600af70ea690be2951bbe9dcf4830e7dd4db",
+2026-10-23T11:03:20.5859720Z       "shader_cache/ParticlesShaderGLES3",
+2026-10-23T11:03:20.5859960Z       "shader_cache/ParticlesShaderGLES3/16dd9d57054f8b71af1146d9082ad9be712f883dfa3796473fad842a6c63ff8b",
+2026-10-23T11:03:20.5860030Z       "shader_cache/PostShaderGLES3",
+2026-10-23T11:03:20.5860260Z       "shader_cache/PostShaderGLES3/2bf967af90390dd7cf8b2c471eda26d033a3f17e941e8d754ed6de6cad30178f",
+2026-10-23T11:03:20.5860330Z       "shader_cache/SceneShaderGLES3",
+2026-10-23T11:03:20.5860550Z       "shader_cache/SceneShaderGLES3/8281c29b1cfa01264385d492f7511292466d03ae7683338f702e791c9d50e63c",
+2026-10-23T11:03:20.5860620Z       "shader_cache/SkeletonShaderGLES3",
+2026-10-23T11:03:20.5860870Z       "shader_cache/SkeletonShaderGLES3/7f2029d22b3600ee82481ba37eb5937daec02e1d0afdc695195046b4cdfa7132",
+2026-10-23T11:03:20.5860940Z       "shader_cache/SkyShaderGLES3",
+2026-10-23T11:03:20.5861160Z       "shader_cache/SkyShaderGLES3/d50d89841f8f80f3b318156c959378bc1ba091a2457989d54fe660616cbd3624",
+2026-10-23T11:03:20.5861230Z       "shader_cache/TexBlitShaderGLES3",
+2026-10-23T11:03:20.5861460Z       "shader_cache/TexBlitShaderGLES3/c2825065069e36dc4ed3d07e6fb42b5470f952b52aaafc78a3e94d059a446057"
+2026-10-23T11:03:20.5861520Z     ],
+2026-10-23T11:03:20.5861560Z     "files": {
+2026-10-23T11:03:20.5861640Z       "mac-ordinary-engine.log": {
+2026-10-23T11:03:20.5861690Z         "bytes": 409,
+2026-10-23T11:03:20.5861860Z         "sha256": "df2a1929c8fec3648bed37e195863aabd97965c7e4e6d9e7613aad9d12ab20ae",
+2026-10-23T11:03:20.5861910Z         "mode": 420
+2026-10-23T11:03:20.5861950Z       },
+2026-10-23T11:03:20.5862330Z       "shader_cache/CanvasShaderGLES3/e60a8a3f8f237693d3b2a08e85fbf397ce996152b8d5bac9bcf1212e1cc1888e/fa7b62523470356194bdf709eb2639ab149a07cc.cache": {
+2026-10-23T11:03:20.5862390Z         "bytes": 88872,
+2026-10-23T11:03:20.5862560Z         "sha256": "604232cead57e5afd96496f2cf9d4e0fbe14581079749c564dd2d3d1881d6e6d",
+2026-10-23T11:03:20.5862670Z         "mode": 420
+2026-10-23T11:03:20.5862710Z       },
+2026-10-23T11:03:20.5863080Z       "shader_cache/CopyShaderGLES3/5778e4e887307f7592591c029033a06924dcd7dda47984bd7728d40e7305659a/fa7b62523470356194bdf709eb2639ab149a07cc.cache": {
+2026-10-23T11:03:20.5863130Z         "bytes": 275098,
+2026-10-23T11:03:20.5863300Z         "sha256": "3c849954b28a9631cbbf811e30f44ae9dd820e26cfcf00d8dbc207818adbb0fc",
+2026-10-23T11:03:20.5863350Z         "mode": 420
+2026-10-23T11:03:20.5863400Z       },
+2026-10-23T11:03:20.5863890Z       "shader_cache/CubemapFilterShaderGLES3/c1696eea1d431d13f5100a2c4aaa8a1a1bdc3638667c5d6b823274c0b64609ea/fa7b62523470356194bdf709eb2639ab149a07cc.cache": {
+2026-10-23T11:03:20.5863950Z         "bytes": 54201,
+2026-10-23T11:03:20.5864170Z         "sha256": "de4c84e3c75cddd1eb3a769e3ab4b9f027a03be6d05362ece3a54fc885e206a8",
+2026-10-23T11:03:20.5864220Z         "mode": 420
+2026-10-23T11:03:20.5864270Z       },
+2026-10-23T11:03:20.5864390Z       "shader_cache/EGL/+fO2x6tp2Ya5SHYMEbaeE4tOrbo=.cache": {
+2026-10-23T11:03:20.5864440Z         "bytes": 47058,
+2026-10-23T11:03:20.5864600Z         "sha256": "f527f2388b8235164229086090b42bb900176d5897f6b62292c7b335b99f1bde",
+2026-10-23T11:03:20.5864650Z         "mode": 420
+2026-10-23T11:03:20.5864700Z       },
+2026-10-23T11:03:20.5864810Z       "shader_cache/EGL/0Ea_FNSKctn4LMJonOudNQJvQzQ=.cache": {
+2026-10-23T11:03:20.5864870Z         "bytes": 46941,
+2026-10-23T11:03:20.5865030Z         "sha256": "2c3c5e8c4e39b54695d46af14181a7989226ca0a18789ddf8909486c63943cbf",
+2026-10-23T11:03:20.5865080Z         "mode": 420
+2026-10-23T11:03:20.5865130Z       },
+2026-10-23T11:03:20.5865290Z       "shader_cache/EGL/0UGUs0kvhdbTVqWbXDwVySBwkDw=.cache": {
+2026-10-23T11:03:20.5865340Z         "bytes": 3210,
+2026-10-23T11:03:20.5865520Z         "sha256": "6fff9e26edb26461306824b2e9c62ee681493dc08dd814c95a793170b87a8f00",
+2026-10-23T11:03:20.5865590Z         "mode": 420
+2026-10-23T11:03:20.5865640Z       },
+2026-10-23T11:03:20.5865800Z       "shader_cache/EGL/12dh8hHIL21QQ5vdKSgbuvbC2Ek=.cache": {
+2026-10-23T11:03:20.5865870Z         "bytes": 14036,
+2026-10-23T11:03:20.5866050Z         "sha256": "84e87dcc839fd72e37058a2ade270e40cf609035353a44196f6c24212785bcdb",
+2026-10-23T11:03:20.5866100Z         "mode": 420
+2026-10-23T11:03:20.5866140Z       },
+2026-10-23T11:03:20.5866270Z       "shader_cache/EGL/1G+pJ0NK9YOkCMgj9titrVAY668=.cache": {
+2026-10-23T11:03:20.5866320Z         "bytes": 6499,
+2026-10-23T11:03:20.5866490Z         "sha256": "35af72bceb97739be928de0c2c93cf36ab8966fbc90ff24754459fa66d370807",
+2026-10-23T11:03:20.5866540Z         "mode": 420
+2026-10-23T11:03:20.5866590Z       },
+2026-10-23T11:03:20.5866710Z       "shader_cache/EGL/3HfnjY9CQl1bGXOjFDDD0UktvOE=.cache": {
+2026-10-23T11:03:20.5866760Z         "bytes": 6048,
+2026-10-23T11:03:20.5866930Z         "sha256": "74ccb9a822d461054a6d940387d71c55e301c21f9b3dbe18b0b47c27040a2705",
+2026-10-23T11:03:20.5866970Z         "mode": 420
+2026-10-23T11:03:20.5867030Z       },
+2026-10-23T11:03:20.5867140Z       "shader_cache/EGL/6l6KpwyLfMjHZ0PQB3oGHlN3kBk=.cache": {
+2026-10-23T11:03:20.5867200Z         "bytes": 7307,
+2026-10-23T11:03:20.5867360Z         "sha256": "cbe4c8c5a2055365d83f8915e546ef5f96954134bb3f893999ec29e7b86c0062",
+2026-10-23T11:03:20.5867410Z         "mode": 420
+2026-10-23T11:03:20.5867460Z       },
+2026-10-23T11:03:20.5867570Z       "shader_cache/EGL/7EEsNkEYGObqiv1yYwShA1vZhD8=.cache": {
+2026-10-23T11:03:20.5867630Z         "bytes": 45592,
+2026-10-23T11:03:20.5867790Z         "sha256": "8cf2c16263708d0f9d6fb36fb149974fd62562ecedcf870c9474067f14ff3026",
+2026-10-23T11:03:20.5867850Z         "mode": 420
+2026-10-23T11:03:20.5868050Z       },
+2026-10-23T11:03:20.5868190Z       "shader_cache/EGL/83_mNJBYPNl9mWDhk8sOjCdntkg=.cache": {
+2026-10-23T11:03:20.5868260Z         "bytes": 11757,
+2026-10-23T11:03:20.5868440Z         "sha256": "bfab3cfb6484a0677dd7e915986b99236258592190b291ef3fd7fc485fd72be5",
+2026-10-23T11:03:20.5868500Z         "mode": 420
+2026-10-23T11:03:20.5868600Z       },
+2026-10-23T11:03:20.5868710Z       "shader_cache/EGL/8x+K_fUxYB4T1yV72u_8n4Q9LNk=.cache": {
+2026-10-23T11:03:20.5868770Z         "bytes": 6499,
+2026-10-23T11:03:20.5868930Z         "sha256": "35af72bceb97739be928de0c2c93cf36ab8966fbc90ff24754459fa66d370807",
+2026-10-23T11:03:20.5868990Z         "mode": 420
+2026-10-23T11:03:20.5869030Z       },
+2026-10-23T11:03:20.5869150Z       "shader_cache/EGL/9hHDCkDHT6wm20d6TOlxEvwmL9Y=.cache": {
+2026-10-23T11:03:20.5869200Z         "bytes": 7171,
+2026-10-23T11:03:20.5869370Z         "sha256": "17d64a76a03c42f23586b333350bd04e812c3ebc6a4e9f41432baf9fe9a1349b",
+2026-10-23T11:03:20.5869420Z         "mode": 420
+2026-10-23T11:03:20.5869460Z       },
+2026-10-23T11:03:20.5869580Z       "shader_cache/EGL/9qH1YcDGHxIKBJcRS98jiw78x8I=.cache": {
+2026-10-23T11:03:20.5869640Z         "bytes": 47960,
+2026-10-23T11:03:20.5869850Z         "sha256": "f6d9cc0f938cef587fa1c0d2ee169aa396c0e9d5707aa7ccd9f4afb194b57b89",
+2026-10-23T11:03:20.5869910Z         "mode": 420
+2026-10-23T11:03:20.5869960Z       },
+2026-10-23T11:03:20.5870070Z       "shader_cache/EGL/A_D8osdjOIo6Hxo9ARLWzJXDj4s=.cache": {
+2026-10-23T11:03:20.5870130Z         "bytes": 5278,
+2026-10-23T11:03:20.5870290Z         "sha256": "591a595a073985ebeeeded212f995e6390a6fa873938b0191639057cd99e52d3",
+2026-10-23T11:03:20.5870340Z         "mode": 420
+2026-10-23T11:03:20.5870390Z       },
+2026-10-23T11:03:20.5870510Z       "shader_cache/EGL/Bz6k8PFj1piravaxVGwAaJ7Pv9U=.cache": {
+2026-10-23T11:03:20.5870570Z         "bytes": 5421,
+2026-10-23T11:03:20.5870780Z         "sha256": "b2ffc45a85853149f4b1edad756bbdfc3afc1690781f7ea25a79be24d6a43d7b",
+2026-10-23T11:03:20.5870840Z         "mode": 420
+2026-10-23T11:03:20.5870900Z       },
+2026-10-23T11:03:20.5871040Z       "shader_cache/EGL/CEOsR7EH9qadDjBNDzy8VXOuMN4=.cache": {
+2026-10-23T11:03:20.5871100Z         "bytes": 13030,
+2026-10-23T11:03:20.5871270Z         "sha256": "8fd40feac38d5727ff8ba0753fb1537553bc3fc78ec85489bb8619113f7112b2",
+2026-10-23T11:03:20.5871320Z         "mode": 420
+2026-10-23T11:03:20.5871370Z       },
+2026-10-23T11:03:20.5871490Z       "shader_cache/EGL/Dou_e9zJSFu5tLrZ3JwgZCkEITI=.cache": {
+2026-10-23T11:03:20.5871540Z         "bytes": 3255,
+2026-10-23T11:03:20.5871710Z         "sha256": "65a4ed898eff25cc4a23a330f65a62ab8ccfd7e64f9dbda27b1d68a56ab2cc8d",
+2026-10-23T11:03:20.5871770Z         "mode": 420
+2026-10-23T11:03:20.5871810Z       },
+2026-10-23T11:03:20.5871930Z       "shader_cache/EGL/FJFshh4WbuI_SkD5adqHqhTWTd8=.cache": {
+2026-10-23T11:03:20.5871980Z         "bytes": 38057,
+2026-10-23T11:03:20.5872150Z         "sha256": "4de7e550fad94cb2916572eed92b6649f1cfc119cde469ee0bfb07a051186b8c",
+2026-10-23T11:03:20.5872200Z         "mode": 420
+2026-10-23T11:03:20.5872250Z       },
+2026-10-23T11:03:20.5872360Z       "shader_cache/EGL/GHmi4gXzr3L4+UWUksmK4mm3p5M=.cache": {
+2026-10-23T11:03:20.5872420Z         "bytes": 49098,
+2026-10-23T11:03:20.5872590Z         "sha256": "c1e2c99f557c58ca4c4e08fb14b984572473b931472fa69dbf6bd4cc59883450",
+2026-10-23T11:03:20.5872640Z         "mode": 420
+2026-10-23T11:03:20.5872690Z       },
+2026-10-23T11:03:20.5872810Z       "shader_cache/EGL/Iyl6su_blDOsVLbOW77Zgvporiw=.cache": {
+2026-10-23T11:03:20.5872860Z         "bytes": 2650,
+2026-10-23T11:03:20.5873020Z         "sha256": "8882d840625679fd6e9de4f97dbe78aa6af3843ea90421d1ee111854bc48b311",
+2026-10-23T11:03:20.5873080Z         "mode": 420
+2026-10-23T11:03:20.5873130Z       },
+2026-10-23T11:03:20.5873240Z       "shader_cache/EGL/KiRII8bMSRzOQ37WU3GwaOhviZQ=.cache": {
+2026-10-23T11:03:20.5873300Z         "bytes": 36114,
+2026-10-23T11:03:20.5873460Z         "sha256": "8b0bb85198dc4cd5b9e0fa0417493b1a5a4b0b743ad67dd2f0e1944b47dfee7a",
+2026-10-23T11:03:20.5873510Z         "mode": 420
+2026-10-23T11:03:20.5873560Z       },
+2026-10-23T11:03:20.5873670Z       "shader_cache/EGL/LL1xNlum4X0qO5d7lWodXnZsdG4=.cache": {
+2026-10-23T11:03:20.5873730Z         "bytes": 8395,
+2026-10-23T11:03:20.5873890Z         "sha256": "f95404a7efa1535435f5f56b2100dd16ec7cff74b754f76171aafee815127b46",
+2026-10-23T11:03:20.5873990Z         "mode": 420
+2026-10-23T11:03:20.5874030Z       },
+2026-10-23T11:03:20.5874150Z       "shader_cache/EGL/LmMOGl9zdcqAHp_psf4BOEscljI=.cache": {
+2026-10-23T11:03:20.5874200Z         "bytes": 47987,
+2026-10-23T11:03:20.5874370Z         "sha256": "535334d6ca2f15767a937c36f88e5de9c3ab73287cb747e77ecbfcda91bd3c19",
+2026-10-23T11:03:20.5874420Z         "mode": 420
+2026-10-23T11:03:20.5874470Z       },
+2026-10-23T11:03:20.5874590Z       "shader_cache/EGL/M4e0hnbrNNIGHiVZrG7Cyl+wDAw=.cache": {
+2026-10-23T11:03:20.5874640Z         "bytes": 48099,
+2026-10-23T11:03:20.5874810Z         "sha256": "6c9e2a51a69e055706fc04d6aa1eda2cb3fa56c1973de80116da1d6cd1fa6dc3",
+2026-10-23T11:03:20.5874860Z         "mode": 420
+2026-10-23T11:03:20.5874900Z       },
+2026-10-23T11:03:20.5875020Z       "shader_cache/EGL/Q+tuUuv6qpBZaebXwkQaiRaiLGo=.cache": {
+2026-10-23T11:03:20.5875120Z         "bytes": 23858,
+2026-10-23T11:03:20.5875290Z         "sha256": "9e5098a41adb9c1deb1a8b07fa7522cef0e1015cb5e65d469cb966b0ca2208cb",
+2026-10-23T11:03:20.5875340Z         "mode": 420
+2026-10-23T11:03:20.5875390Z       },
+2026-10-23T11:03:20.5875500Z       "shader_cache/EGL/Q5hHtHt+W1KeXAlZKRZtudLa0C0=.cache": {
+2026-10-23T11:03:20.5875550Z         "bytes": 7223,
+2026-10-23T11:03:20.5875720Z         "sha256": "a1c1d65dfffbd772cd18f5c744c44cff763d7d61e7d7b96f51f8d101a03c2b92",
+2026-10-23T11:03:20.5875770Z         "mode": 420
+2026-10-23T11:03:20.5875820Z       },
+2026-10-23T11:03:20.5875930Z       "shader_cache/EGL/QJlObemwO0JaRCM9DR1LeHOVMDc=.cache": {
+2026-10-23T11:03:20.5875980Z         "bytes": 3174,
+2026-10-23T11:03:20.5876150Z         "sha256": "d844d67fcd74c92bf5f19f39aefe29da5e0dea9312cd2e8e896d4885595c109b",
+2026-10-23T11:03:20.5876210Z         "mode": 420
+2026-10-23T11:03:20.5876260Z       },
+2026-10-23T11:03:20.5876370Z       "shader_cache/EGL/R5OEoWEMomin0vOWsqOzwSnQjlk=.cache": {
+2026-10-23T11:03:20.5876430Z         "bytes": 47019,
+2026-10-23T11:03:20.5876590Z         "sha256": "6a0c12ee0c0839cd4c2f569dc095c30f8bef13cd3dcd68aa3c0a0d09b970f687",
+2026-10-23T11:03:20.5876650Z         "mode": 420
+2026-10-23T11:03:20.5876690Z       },
+2026-10-23T11:03:20.5876800Z       "shader_cache/EGL/SobXaEXHEBpkWWSALIsD3LGdiw4=.cache": {
+2026-10-23T11:03:20.5876860Z         "bytes": 22729,
+2026-10-23T11:03:20.5877020Z         "sha256": "f092899f878fafd1ca82bc44d37072a56cffb5c81a5842564b09bdd9cbe8bbb7",
+2026-10-23T11:03:20.5877070Z         "mode": 420
+2026-10-23T11:03:20.5877110Z       },
+2026-10-23T11:03:20.5877230Z       "shader_cache/EGL/TC2DQNFr_5aIPlFvOHBFJFqqcpI=.cache": {
+2026-10-23T11:03:20.5877280Z         "bytes": 4618,
+2026-10-23T11:03:20.5877450Z         "sha256": "53666b2ffc413efc5489fcfe9c63fb75c5ddcff778f386ee0de6e472b13133ba",
+2026-10-23T11:03:20.5877500Z         "mode": 420
+2026-10-23T11:03:20.5877540Z       },
+2026-10-23T11:03:20.5877660Z       "shader_cache/EGL/TFopsQbKEF4k2jWlGI69a7uVrAo=.cache": {
+2026-10-23T11:03:20.5877710Z         "bytes": 7145,
+2026-10-23T11:03:20.5877870Z         "sha256": "3e9eebb0b3aa77850a1c070541a90135629b90fb006b0d33d96a6b9635d949db",
+2026-10-23T11:03:20.5877920Z         "mode": 420
+2026-10-23T11:03:20.5877960Z       },
+2026-10-23T11:03:20.5878070Z       "shader_cache/EGL/UGPUYKWTVdACBjR432gzj_e0L4c=.cache": {
+2026-10-23T11:03:20.5878130Z         "bytes": 37235,
+2026-10-23T11:03:20.5878290Z         "sha256": "c56a5eabf38d37b30d70b3051f1651db7ca87fc5e08f499a237fe988cbdedddf",
+2026-10-23T11:03:20.5878340Z         "mode": 420
+2026-10-23T11:03:20.5878380Z       },
+2026-10-23T11:03:20.5878490Z       "shader_cache/EGL/VoA5sYiPWri3r5ni+7K2RZZAVKw=.cache": {
+2026-10-23T11:03:20.5878550Z         "bytes": 3022,
+2026-10-23T11:03:20.5878710Z         "sha256": "595bdfe54e08cb4e68bd871cafdb1657394d9238a9eda72a95cccc81ab005b10",
+2026-10-23T11:03:20.5878760Z         "mode": 420
+2026-10-23T11:03:20.5878810Z       },
+2026-10-23T11:03:20.5878920Z       "shader_cache/EGL/Xc2V23cFhIH4QMn4trLXKvOlfb4=.cache": {
+2026-10-23T11:03:20.5878980Z         "bytes": 4248,
+2026-10-23T11:03:20.5879130Z         "sha256": "940322da56187e20e13448ac07c9075cce50b6ad8933ebd6e0d19fe78ff3ad1e",
+2026-10-23T11:03:20.5879360Z         "mode": 420
+2026-10-23T11:03:20.5879410Z       },
+2026-10-23T11:03:20.5879520Z       "shader_cache/EGL/XyKl1ZUmOu0bpFPjJ+2d41UCiYY=.cache": {
+2026-10-23T11:03:20.5879580Z         "bytes": 45658,
+2026-10-23T11:03:20.5879750Z         "sha256": "8ba9f8c80e9f421edc602136fed0f135df5baa6e2b2ef626fd288d10340cc47c",
+2026-10-23T11:03:20.5879800Z         "mode": 420
+2026-10-23T11:03:20.5879840Z       },
+2026-10-23T11:03:20.5879960Z       "shader_cache/EGL/ZswD0CkshUmGAHuGQMHhlbyrMJ0=.cache": {
+2026-10-23T11:03:20.5880020Z         "bytes": 21524,
+2026-10-23T11:03:20.5880190Z         "sha256": "b79d0a5e27dc03b3a03700b4ccf5eef0a9498d9cab288ef7db0bf7e2c8fed57f",
+2026-10-23T11:03:20.5880240Z         "mode": 420
+2026-10-23T11:03:20.5880280Z       },
+2026-10-23T11:03:20.5880520Z       "shader_cache/EGL/_gFs_sE2K3xgXT5b1C6pHULou+c=.cache": {
+2026-10-23T11:03:20.5880610Z         "bytes": 2833,
+2026-10-23T11:03:20.5880830Z         "sha256": "76164d9f21febd9b2f2c6a744aa4db7ee946ad1904fa74d4fbaf2a0eea8a8f5b",
+2026-10-23T11:03:20.5880890Z         "mode": 420
+2026-10-23T11:03:20.5880960Z       },
+2026-10-23T11:03:20.5881090Z       "shader_cache/EGL/aZOGOizhluQHmaU0PWXxHgN8yh8=.cache": {
+2026-10-23T11:03:20.5881150Z         "bytes": 3576,
+2026-10-23T11:03:20.5881310Z         "sha256": "8c95374b210fd91becbe5a94329839f8e139372f52fdd2e599a7ea784fef5e40",
+2026-10-23T11:03:20.5881360Z         "mode": 420
+2026-10-23T11:03:20.5881410Z       },
+2026-10-23T11:03:20.5881520Z       "shader_cache/EGL/bqMH4WHb4jgnnR25ctQhXZfcamI=.cache": {
+2026-10-23T11:03:20.5881580Z         "bytes": 47835,
+2026-10-23T11:03:20.5881750Z         "sha256": "31f6fdc93ee61d362a53fb13338e16fc7200540464eef00929832808abaa01fa",
+2026-10-23T11:03:20.5881800Z         "mode": 420
+2026-10-23T11:03:20.5881840Z       },
+2026-10-23T11:03:20.5881960Z       "shader_cache/EGL/ddKGAYHJdcVCAzygjXL6HbDZcYU=.cache": {
+2026-10-23T11:03:20.5882020Z         "bytes": 2410,
+2026-10-23T11:03:20.5882170Z         "sha256": "52d845a76d194651529386ae3143593f3589921ad2dd9d0d75528bc986197040",
+2026-10-23T11:03:20.5882230Z         "mode": 420
+2026-10-23T11:03:20.5882280Z       },
+2026-10-23T11:03:20.5882390Z       "shader_cache/EGL/dzC4bwTOSS_wJrbon6nNXmiOqDI=.cache": {
+2026-10-23T11:03:20.5882440Z         "bytes": 3538,
+2026-10-23T11:03:20.5882610Z         "sha256": "04c56c972ec31c5835d6722d5284144fbd5241ed9ff7030f774ad3949653f184",
+2026-10-23T11:03:20.5882660Z         "mode": 420
+2026-10-23T11:03:20.5882700Z       },
+2026-10-23T11:03:20.5882820Z       "shader_cache/EGL/eNAI33KO7r49+dlKpVnjsqbezTM=.cache": {
+2026-10-23T11:03:20.5882870Z         "bytes": 3218,
+2026-10-23T11:03:20.5883040Z         "sha256": "b27f6baa098109900b77eee5a6972746d5e8c478344cde97e14ae3487cc35b47",
+2026-10-23T11:03:20.5883090Z         "mode": 420
+2026-10-23T11:03:20.5883130Z       },
+2026-10-23T11:03:20.5883250Z       "shader_cache/EGL/eYROWbkHnMG53uZfU0b6hLsOH+g=.cache": {
+2026-10-23T11:03:20.5883300Z         "bytes": 2920,
+2026-10-23T11:03:20.5883480Z         "sha256": "81d0b6f77b2380bcab33698de20e9ca840fc5ce3424e9a0eec1f894ced2fc186",
+2026-10-23T11:03:20.5883530Z         "mode": 420
+2026-10-23T11:03:20.5883570Z       },
+2026-10-23T11:03:20.5883690Z       "shader_cache/EGL/fXnZHUzZMD13Xdng3W4GIeTiAyw=.cache": {
+2026-10-23T11:03:20.5883740Z         "bytes": 6677,
+2026-10-23T11:03:20.5883890Z         "sha256": "844b12257960118f994494c7d820dd2e4f114c398b4122717b8dbad6ea8d0f57",
+2026-10-23T11:03:20.5883940Z         "mode": 420
+2026-10-23T11:03:20.5883990Z       },
+2026-10-23T11:03:20.5884100Z       "shader_cache/EGL/fhr1uPv9Ilaudc11ZzWZPEtdTpk=.cache": {
+2026-10-23T11:03:20.5884150Z         "bytes": 3129,
+2026-10-23T11:03:20.5884310Z         "sha256": "a8a38f61726a24938dfa73574a7a1c22f5368b8d89fe89444e13797c5ec61565",
+2026-10-23T11:03:20.5884360Z         "mode": 420
+2026-10-23T11:03:20.5884400Z       },
+2026-10-23T11:03:20.5884520Z       "shader_cache/EGL/gfcW1aQUkEpMLPnSYT4PDL10OIg=.cache": {
+2026-10-23T11:03:20.5884570Z         "bytes": 46633,
+2026-10-23T11:03:20.5884800Z         "sha256": "2aaa56f494099630d36845e6497e1579865941b45c47eb3ad2b0523095460de6",
+2026-10-23T11:03:20.5884850Z         "mode": 420
+2026-10-23T11:03:20.5884900Z       },
+2026-10-23T11:03:20.5885020Z       "shader_cache/EGL/h3pUc6dUG5ThDd6FFKxGl6vXGYw=.cache": {
+2026-10-23T11:03:20.5885080Z         "bytes": 7145,
+2026-10-23T11:03:20.5885240Z         "sha256": "3e9eebb0b3aa77850a1c070541a90135629b90fb006b0d33d96a6b9635d949db",
+2026-10-23T11:03:20.5885290Z         "mode": 420
+2026-10-23T11:03:20.5885340Z       },
+2026-10-23T11:03:20.5885460Z       "shader_cache/EGL/ib1l0O6GDG6nXCGVvCCIquiI5rs=.cache": {
+2026-10-23T11:03:20.5885510Z         "bytes": 7171,
+2026-10-23T11:03:20.5885680Z         "sha256": "17d64a76a03c42f23586b333350bd04e812c3ebc6a4e9f41432baf9fe9a1349b",
+2026-10-23T11:03:20.5885730Z         "mode": 420
+2026-10-23T11:03:20.5885820Z       },
+2026-10-23T11:03:20.5885940Z       "shader_cache/EGL/kD7hL9A8SDaKSUNMkX8kNOV1Xk8=.cache": {
+2026-10-23T11:03:20.5886000Z         "bytes": 10482,
+2026-10-23T11:03:20.5886160Z         "sha256": "4364745c518943ccab1d18958d70d77a2664801fb09be4e058a05fa7303a4835",
+2026-10-23T11:03:20.5886210Z         "mode": 420
+2026-10-23T11:03:20.5886260Z       },
+2026-10-23T11:03:20.5886370Z       "shader_cache/EGL/khLt30CV1Xl3AW_v_UMlAl1dixs=.cache": {
+2026-10-23T11:03:20.5886420Z         "bytes": 5960,
+2026-10-23T11:03:20.5886580Z         "sha256": "a5385fc5a860ab7c7fa04c373ebc6e16534f146304fb542d2bc64475032e019f",
+2026-10-23T11:03:20.5886630Z         "mode": 420
+2026-10-23T11:03:20.5886680Z       },
+2026-10-23T11:03:20.5886790Z       "shader_cache/EGL/khygRgQP3cRXbe899vHe_UBYvzY=.cache": {
+2026-10-23T11:03:20.5886850Z         "bytes": 2821,
+2026-10-23T11:03:20.5887020Z         "sha256": "af16bcea4ee3225425df7d4de386b0736ddefe9fc111828022c4160cc0be2291",
+2026-10-23T11:03:20.5887070Z         "mode": 420
+2026-10-23T11:03:20.5887120Z       },
+2026-10-23T11:03:20.5887240Z       "shader_cache/EGL/lk8orZHyGG1xTmQAvYJnBvyU7kk=.cache": {
+2026-10-23T11:03:20.5887320Z         "bytes": 6452,
+2026-10-23T11:03:20.5887480Z         "sha256": "7d21a733fba63d06116913fc5272a7c54b41afe55adaeb82b2b4aa44da4d8c34",
+2026-10-23T11:03:20.5887540Z         "mode": 420
+2026-10-23T11:03:20.5887580Z       },
+2026-10-23T11:03:20.5887700Z       "shader_cache/EGL/lxfEgu9EA+02hPf3a7pZPhzgoKc=.cache": {
+2026-10-23T11:03:20.5887760Z         "bytes": 37087,
+2026-10-23T11:03:20.5887930Z         "sha256": "f264dd05d8079fdbb72bee78a9fffa5540a0fb0fee4b3f03f7fd6cb482e07130",
+2026-10-23T11:03:20.5887980Z         "mode": 420
+2026-10-23T11:03:20.5888030Z       },
+2026-10-23T11:03:20.5888140Z       "shader_cache/EGL/p2yJl7EmP+xf3H909QLHVpMwOPE=.cache": {
+2026-10-23T11:03:20.5888190Z         "bytes": 2980,
+2026-10-23T11:03:20.5888350Z         "sha256": "ea695d2e678057d5d546d507b7f274db0730e4f747c4d14f91c3608ed8207064",
+2026-10-23T11:03:20.5888400Z         "mode": 420
+2026-10-23T11:03:20.5888440Z       },
+2026-10-23T11:03:20.5888560Z       "shader_cache/EGL/pQpyADHajM0+S00KhO2PAmeTUlk=.cache": {
+2026-10-23T11:03:20.5888610Z         "bytes": 22694,
+2026-10-23T11:03:20.5888780Z         "sha256": "5dbdf5e0da6ac003413216bb7a0fb723b2b46564eeb81f9993f53ea2518cec31",
+2026-10-23T11:03:20.5888830Z         "mode": 420
+2026-10-23T11:03:20.5888870Z       },
+2026-10-23T11:03:20.5888990Z       "shader_cache/EGL/pRnvvTM3EJBj4GRPdbdiDJMVdmg=.cache": {
+2026-10-23T11:03:20.5889040Z         "bytes": 46573,
+2026-10-23T11:03:20.5889200Z         "sha256": "77acb262d9c501cdadda5976ae3459588974ed23d365c828019a6143c1f65092",
+2026-10-23T11:03:20.5889240Z         "mode": 420
+2026-10-23T11:03:20.5889290Z       },
+2026-10-23T11:03:20.5889400Z       "shader_cache/EGL/q2jJY9M1cz+y+0QSn2T0PCH7+Es=.cache": {
+2026-10-23T11:03:20.5889450Z         "bytes": 3102,
+2026-10-23T11:03:20.5889610Z         "sha256": "b35b782cfa412efc1c38b043942590d170633507694222339629f1eccead9eff",
+2026-10-23T11:03:20.5889660Z         "mode": 420
+2026-10-23T11:03:20.5889700Z       },
+2026-10-23T11:03:20.5889810Z       "shader_cache/EGL/qQyIM6wisCBeaFwkl7HxU+_lkBY=.cache": {
+2026-10-23T11:03:20.5889910Z         "bytes": 5348,
+2026-10-23T11:03:20.5890070Z         "sha256": "97f65f8be958a04a64b6c46a279a7c7990fd26bfe067d01b7ccb74219899c27b",
+2026-10-23T11:03:20.5890120Z         "mode": 420
+2026-10-23T11:03:20.5890170Z       },
+2026-10-23T11:03:20.5890270Z       "shader_cache/EGL/q_NWcSoF0A1T3qSro_Fwqzg2K5I=.cache": {
+2026-10-23T11:03:20.5890330Z         "bytes": 48011,
+2026-10-23T11:03:20.5890480Z         "sha256": "08cf39779ae27de7743863ea32459b4fe0b0bd8d2487d207175622097c536f2e",
+2026-10-23T11:03:20.5890530Z         "mode": 420
+2026-10-23T11:03:20.5890570Z       },
+2026-10-23T11:03:20.5890690Z       "shader_cache/EGL/r+oO4p_PLWlkugOnaarbWuSV7qA=.cache": {
+2026-10-23T11:03:20.5890740Z         "bytes": 6623,
+2026-10-23T11:03:20.5890900Z         "sha256": "5098c7977c3ee7b67ba6d7aeb7deef1998ffcb6a7b834398826cf068d6ab8792",
+2026-10-23T11:03:20.5890990Z         "mode": 420
+2026-10-23T11:03:20.5891030Z       },
+2026-10-23T11:03:20.5891150Z       "shader_cache/EGL/sr+_4+RjslKhZOiatz8PTA3l_Rs=.cache": {
+2026-10-23T11:03:20.5891200Z         "bytes": 21707,
+2026-10-23T11:03:20.5891360Z         "sha256": "feb45549d52108dfd0f65218ecbcc0841a75b407897112873037b9d0ad4bbb2a",
+2026-10-23T11:03:20.5891410Z         "mode": 420
+2026-10-23T11:03:20.5891450Z       },
+2026-10-23T11:03:20.5891570Z       "shader_cache/EGL/vnWem3uIffo+7zsWuskXSMQPRrg=.cache": {
+2026-10-23T11:03:20.5891620Z         "bytes": 6535,
+2026-10-23T11:03:20.5891780Z         "sha256": "8d716b57b4c2124f0954879963184d7da9dc2180a1d02c7be67f57a9f2cd80f0",
+2026-10-23T11:03:20.5891830Z         "mode": 420
+2026-10-23T11:03:20.5891870Z       },
+2026-10-23T11:03:20.5891980Z       "shader_cache/EGL/vnoRMwpQgdstt1mdz5mDQYUJYLw=.cache": {
+2026-10-23T11:03:20.5892040Z         "bytes": 5891,
+2026-10-23T11:03:20.5892200Z         "sha256": "7e0bcec16f39b8300264ef35c1e08ef4f846057d6e170fcc1926799a92b2c0c3",
+2026-10-23T11:03:20.5892240Z         "mode": 420
+2026-10-23T11:03:20.5892290Z       },
+2026-10-23T11:03:20.5892400Z       "shader_cache/EGL/w_2OrGBgx+YgoP7bKp5aceqQEZg=.cache": {
+2026-10-23T11:03:20.5892460Z         "bytes": 6044,
+2026-10-23T11:03:20.5892630Z         "sha256": "ce70c9faa86b36ca6658f32d01cb8f67139dd11dab3ee8aaba0dbf0f19f87d1d",
+2026-10-23T11:03:20.5892670Z         "mode": 420
+2026-10-23T11:03:20.5892720Z       },
+2026-10-23T11:03:20.5892820Z       "shader_cache/EGL/yLQwb7NJW_BYTo++tAFjk_CAX2U=.cache": {
+2026-10-23T11:03:20.5892880Z         "bytes": 6535,
+2026-10-23T11:03:20.5893030Z         "sha256": "8d716b57b4c2124f0954879963184d7da9dc2180a1d02c7be67f57a9f2cd80f0",
+2026-10-23T11:03:20.5893080Z         "mode": 420
+2026-10-23T11:03:20.5893130Z       },
+2026-10-23T11:03:20.5893250Z       "shader_cache/EGL/yhlP2nShK7gSVLRvhbtHRpKCgn4=.cache": {
+2026-10-23T11:03:20.5893300Z         "bytes": 46809,
+2026-10-23T11:03:20.5893460Z         "sha256": "0fe55dfc2c4ff520a3e35d205ee8758d2e46809aa308f25bb4e9d578ff5c01f1",
+2026-10-23T11:03:20.5893510Z         "mode": 420
+2026-10-23T11:03:20.5893560Z       },
+2026-10-23T11:03:20.5893670Z       "shader_cache/EGL/zoO_UyMSqbsr5bPmmT2oL0hPVZ0=.cache": {
+2026-10-23T11:03:20.5893720Z         "bytes": 7037,
+2026-10-23T11:03:20.5893890Z         "sha256": "a3841cc4f0fdbb5accbd1d53790bab02e98058c0a1717b4ecfa4f8e5fff7d093",
+2026-10-23T11:03:20.5893940Z         "mode": 420
+2026-10-23T11:03:20.5893980Z       },
+2026-10-23T11:03:20.5894380Z       "shader_cache/FeedShaderGLES3/fa70cd8c476bce52dc50f8a7a301688061fd5b25dec59f9541b5a94f75ac2251/fa7b62523470356194bdf709eb2639ab149a07cc.cache": {
+2026-10-23T11:03:20.5894450Z         "bytes": 19624,
+2026-10-23T11:03:20.5894670Z         "sha256": "4dea53e1d44f0d0dc66e8ae0e290118fef798d19234138dd4c23aa7d92458bd8",
+2026-10-23T11:03:20.5894740Z         "mode": 420
+2026-10-23T11:03:20.5894790Z       },
+2026-10-23T11:03:20.5895250Z       "shader_cache/PostShaderGLES3/2bf967af90390dd7cf8b2c471eda26d033a3f17e941e8d754ed6de6cad30178f/fa7b62523470356194bdf709eb2639ab149a07cc.cache": {
+2026-10-23T11:03:20.5895340Z         "bytes": 28160,
+2026-10-23T11:03:20.5895540Z         "sha256": "91fe3cfe7814a6603d5f523dd6f8c49fb2c16ce92fc98fb2c654e131e00ce419",
+2026-10-23T11:03:20.5895650Z         "mode": 420
+2026-10-23T11:03:20.5895700Z       },
+2026-10-23T11:03:20.5896160Z       "shader_cache/SceneShaderGLES3/8281c29b1cfa01264385d492f7511292466d03ae7683338f702e791c9d50e63c/29d944bd82e0a44bfde4d72062b02ee375caf911.cache": {
+2026-10-23T11:03:20.5896260Z         "bytes": 942824,
+2026-10-23T11:03:20.5896480Z         "sha256": "ac4165fc2ab92187a0108919388b40c371897382407c8ae081b410ff9895e79f",
+2026-10-23T11:03:20.5896550Z         "mode": 420
+2026-10-23T11:03:20.5896610Z       },
+2026-10-23T11:03:20.5896970Z       "shader_cache/SceneShaderGLES3/8281c29b1cfa01264385d492f7511292466d03ae7683338f702e791c9d50e63c/3c3b6ac65c03c114a5a55aae4099299fbec2173e.cache": {
+2026-10-23T11:03:20.5897030Z         "bytes": 1086093,
+2026-10-23T11:03:20.5897330Z         "sha256": "bb67f4035f1da03e303ec78985fb13c2ad261de8ccadbbfcd5e25445f97fbb99",
+2026-10-23T11:03:20.5897430Z         "mode": 420
+2026-10-23T11:03:20.5897530Z       },
+2026-10-23T11:03:20.5897910Z       "shader_cache/SceneShaderGLES3/8281c29b1cfa01264385d492f7511292466d03ae7683338f702e791c9d50e63c/64038ae6df87cd27a3e64bdbcbb28b6589a5e90d.cache": {
+2026-10-23T11:03:20.5897970Z         "bytes": 858492,
+2026-10-23T11:03:20.5898170Z         "sha256": "d7750a201fb54617d936145cf8a20e2790c09a377a398c0b098b93f291985df2",
+2026-10-23T11:03:20.5898240Z         "mode": 420
+2026-10-23T11:03:20.5898290Z       },
+2026-10-23T11:03:20.5898800Z       "shader_cache/SceneShaderGLES3/8281c29b1cfa01264385d492f7511292466d03ae7683338f702e791c9d50e63c/90659b8d1e981e4b3ebf8e8b58450a27162bab54.cache": {
+2026-10-23T11:03:20.5898910Z         "bytes": 1020546,
+2026-10-23T11:03:20.5899140Z         "sha256": "1ad62eb298a0303c2b6adc55674a093e7915a0d991a12dc5b2ccf486c57bf2f8",
+2026-10-23T11:03:20.5899220Z         "mode": 420
+2026-10-23T11:03:20.5899280Z       },
+2026-10-23T11:03:20.5899650Z       "shader_cache/SceneShaderGLES3/8281c29b1cfa01264385d492f7511292466d03ae7683338f702e791c9d50e63c/9646162de64789504316ad04ec4177f292c38f01.cache": {
+2026-10-23T11:03:20.5899710Z         "bytes": 1014802,
+2026-10-23T11:03:20.5899880Z         "sha256": "8d40646163b930be837ab8035d7871bc8c146d50fb455ef61ba5a8607d483941",
+2026-10-23T11:03:20.5899930Z         "mode": 420
+2026-10-23T11:03:20.5899980Z       },
+2026-10-23T11:03:20.5900400Z       "shader_cache/SceneShaderGLES3/8281c29b1cfa01264385d492f7511292466d03ae7683338f702e791c9d50e63c/a0626f2b8dd758e7b6a712b3dbf63f58ea7869f3.cache": {
+2026-10-23T11:03:20.5900460Z         "bytes": 873206,
+2026-10-23T11:03:20.5900640Z         "sha256": "870c62d200234bc5d6ec6381fccca190fdb2afa552aec77afae5489178e54159",
+2026-10-23T11:03:20.5900700Z         "mode": 420
+2026-10-23T11:03:20.5900750Z       },
+2026-10-23T11:03:20.5901120Z       "shader_cache/SceneShaderGLES3/8281c29b1cfa01264385d492f7511292466d03ae7683338f702e791c9d50e63c/d4b135d8010287bba1bf6eb8e4d1c6105ba96eb2.cache": {
+2026-10-23T11:03:20.5901180Z         "bytes": 1025005,
+2026-10-23T11:03:20.5901420Z         "sha256": "52a0f097482afc9c99b76eb11461f2d70a78a1ddab68f7a6bdfcdf4d0c478104",
+2026-10-23T11:03:20.5901510Z         "mode": 420
+2026-10-23T11:03:20.5901570Z       },
+2026-10-23T11:03:20.5902010Z       "shader_cache/SceneShaderGLES3/8281c29b1cfa01264385d492f7511292466d03ae7683338f702e791c9d50e63c/ee3518d7a4ae0933e9d6c48048f661b588ce4fa5.cache": {
+2026-10-23T11:03:20.5902070Z         "bytes": 1027817,
+2026-10-23T11:03:20.5902240Z         "sha256": "2b20df536e927ac7e29d8069c7b61408dc33ba1b31fc28d2a1a849c0c25b2665",
+2026-10-23T11:03:20.5902290Z         "mode": 420
+2026-10-23T11:03:20.5902340Z       },
+2026-10-23T11:03:20.5902830Z       "shader_cache/SceneShaderGLES3/8281c29b1cfa01264385d492f7511292466d03ae7683338f702e791c9d50e63c/fa7b62523470356194bdf709eb2639ab149a07cc.cache": {
+2026-10-23T11:03:20.5902900Z         "bytes": 850340,
+2026-10-23T11:03:20.5903080Z         "sha256": "759919169d0c919736e4d4c184f80719907400ed8472ce01fa340fe1d37af074",
+2026-10-23T11:03:20.5903130Z         "mode": 420
+2026-10-23T11:03:20.5903290Z       },
+2026-10-23T11:03:20.5903740Z       "shader_cache/SkyShaderGLES3/d50d89841f8f80f3b318156c959378bc1ba091a2457989d54fe660616cbd3624/24dc6ab7251cf2c2f1cc8457ad51c8017862cc13.cache": {
+2026-10-23T11:03:20.5903800Z         "bytes": 99725,
+2026-10-23T11:03:20.5903980Z         "sha256": "d6a040d70a5ca2869a9de6749b260646f4813bd0f353dd7c6cd323074a2138f6",
+2026-10-23T11:03:20.5904030Z         "mode": 420
+2026-10-23T11:03:20.5904080Z       }
+2026-10-23T11:03:20.5904120Z     }
+2026-10-23T11:03:20.5904170Z   },
+2026-10-23T11:03:20.5904250Z   "private_menu_profile_files_present": [],
+2026-10-23T11:03:20.5904630Z   "private_profile_scope": "Engine-owned private menu files preserved with byte hashes; no profile fields parsed/retained; no input or reward action",
+2026-10-23T11:03:20.5904710Z   "source_unchanged": true,
+2026-10-23T11:03:20.5904860Z   "seconds": 39.52825312499999,
+2026-10-23T11:03:20.5905120Z   "status": "FAILED"
+2026-10-23T11:03:20.5910720Z }
+2026-10-23T11:03:20.5960020Z ##[error]Process completed with exit code 1.
+2026-10-23T11:03:20.6110530Z ##[group]Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+2026-10-23T11:03:20.6110620Z with:
+2026-10-23T11:03:20.6110830Z   name: sightbreak-macos-ax-read-only-qa-4854aed946d25d27482af66c332f84aa51cea8fb
+2026-10-23T11:03:20.6111210Z   path: builds/macos-ax-diagnostic/**/*.json
+builds/macos-ax-diagnostic/**/*.log
+builds/macos-ax-diagnostic/**/*.png
+!builds/macos-ax-diagnostic/**/native/**
+
+2026-10-23T11:03:20.6111270Z   if-no-files-found: warn
+2026-10-23T11:03:20.6111330Z   retention-days: 14
+2026-10-23T11:03:20.6111390Z   compression-level: 6
+2026-10-23T11:03:20.6111440Z   overwrite: false
+2026-10-23T11:03:20.6111500Z   include-hidden-files: false
+2026-10-23T11:03:20.6111550Z env:
+2026-10-23T11:03:20.6111760Z   SIGHTBREAK_BUILDS_DIR: /Users/runner/work/sightbreak/sightbreak/builds/macos-ax-diagnostic
+2026-10-23T11:03:20.6111910Z   pythonLocation: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-23T11:03:20.6112210Z   PKG_CONFIG_PATH: /Users/runner/hostedtoolcache/Python/3.12.10/arm64/lib/pkgconfig
+2026-10-23T11:03:20.6112370Z   Python_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-23T11:03:20.6112500Z   Python2_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-23T11:03:20.6112630Z   Python3_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-23T11:03:20.6112690Z ##[endgroup]
+2026-10-23T11:03:20.9793360Z (node:3903) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-23T11:03:20.9794020Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-23T11:03:20.9902240Z With the provided path, there will be 11 files uploaded
+2026-10-23T11:03:20.9904990Z Artifact name is valid!
+2026-10-23T11:03:20.9905430Z Root directory input is valid!
+2026-10-23T11:03:21.3040530Z (node:3903) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-10-23T11:03:21.3044810Z Beginning upload of artifact content to blob storage
+2026-10-23T11:03:21.4745350Z Uploaded bytes 21987
+2026-10-23T11:03:21.5147170Z Finished uploading artifact content to blob storage!
+2026-10-23T11:03:21.5248300Z SHA256 digest of uploaded artifact zip is 4a37fade71120fd967c131b3b59112557b8b0fdbc6e5cb8dc7c125138a5ce7f4
+2026-10-23T11:03:21.5348700Z Finalizing artifact upload
+2026-10-23T11:03:21.9925510Z Artifact sightbreak-macos-ax-read-only-qa-4854aed946d25d27482af66c332f84aa51cea8fb.zip successfully finalized. Artifact ID 12497016555
+2026-10-23T11:03:21.9926730Z Artifact sightbreak-macos-ax-read-only-qa-4854aed946d25d27482af66c332f84aa51cea8fb has been successfully uploaded! Final size is 21987 bytes. Artifact ID is 12497016555
+2026-10-23T11:03:21.9984130Z Artifact download URL: https://github.com/calebaiken/sightbreak/actions/runs/39943145541/artifacts/12497016555
+2026-10-23T11:03:22.0073630Z ##[group]Run python scripts/package_qa_receipts.py --source builds/macos-ax-diagnostic --output builds/macos-ax-receipts/qa-receipts.zip
+2026-10-23T11:03:22.0074420Z [36;1mpython scripts/package_qa_receipts.py --source builds/macos-ax-diagnostic --output builds/macos-ax-receipts/qa-receipts.zip[0m
+2026-10-23T11:03:22.0229490Z shell: /bin/bash -e {0}
+2026-10-23T11:03:22.0229710Z env:
+2026-10-23T11:03:22.0230050Z   SIGHTBREAK_BUILDS_DIR: /Users/runner/work/sightbreak/sightbreak/builds/macos-ax-diagnostic
+2026-10-23T11:03:22.0230530Z   pythonLocation: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-23T11:03:22.0231000Z   PKG_CONFIG_PATH: /Users/runner/hostedtoolcache/Python/3.12.10/arm64/lib/pkgconfig
+2026-10-23T11:03:22.0231420Z   Python_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-23T11:03:22.0231850Z   Python2_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-23T11:03:22.0232340Z   Python3_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-23T11:03:22.0232640Z ##[endgroup]
+2026-10-23T11:03:22.1547740Z {
+2026-10-23T11:03:22.1548280Z   "archive": "/Users/runner/work/sightbreak/sightbreak/builds/macos-ax-receipts/qa-receipts.zip",
+2026-10-23T11:03:22.1548670Z   "bytes": 112836,
+2026-10-23T11:03:22.1549050Z   "sha256": "9b2853e4ba4ef253bbc775c5eeee1568c18d498cf3dcad564718a2af07f46102",
+2026-10-23T11:03:22.1549400Z   "files": 11,
+2026-10-23T11:03:22.1549650Z   "bound_bytes": 31457280,
+2026-10-23T11:03:22.1550120Z   "scope": "Raw QA receipts; screenshots remain in the full QA artifact. Packaging does not establish test acceptance."
+2026-10-23T11:03:22.1550830Z }
+2026-10-23T11:03:22.1644860Z ##[group]Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+2026-10-23T11:03:22.1645220Z with:
+2026-10-23T11:03:22.1645560Z   name: sightbreak-macos-ax-read-only-receipts-4854aed946d25d27482af66c332f84aa51cea8fb
+2026-10-23T11:03:22.1646080Z   path: builds/macos-ax-receipts/qa-receipts.zip
+2026-10-23T11:03:22.1646380Z   compression-level: 0
+2026-10-23T11:03:22.1646700Z   if-no-files-found: warn
+2026-10-23T11:03:22.1646910Z   retention-days: 14
+2026-10-23T11:03:22.1647080Z   overwrite: false
+2026-10-23T11:03:22.1647270Z   include-hidden-files: false
+2026-10-23T11:03:22.1647450Z env:
+2026-10-23T11:03:22.1647770Z   SIGHTBREAK_BUILDS_DIR: /Users/runner/work/sightbreak/sightbreak/builds/macos-ax-diagnostic
+2026-10-23T11:03:22.1648320Z   pythonLocation: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-23T11:03:22.1648770Z   PKG_CONFIG_PATH: /Users/runner/hostedtoolcache/Python/3.12.10/arm64/lib/pkgconfig
+2026-10-23T11:03:22.1649280Z   Python_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-23T11:03:22.1649680Z   Python2_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-23T11:03:22.1650080Z   Python3_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-23T11:03:22.1650380Z ##[endgroup]
+2026-10-23T11:03:22.3198450Z (node:3908) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-23T11:03:22.3298570Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-23T11:03:22.3972980Z With the provided path, there will be 1 file uploaded
+2026-10-23T11:03:22.3974300Z Artifact name is valid!
+2026-10-23T11:03:22.3974860Z Root directory input is valid!
+2026-10-23T11:03:22.6003610Z (node:3908) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-10-23T11:03:22.6155920Z Beginning upload of artifact content to blob storage
+2026-10-23T11:03:22.8099100Z Uploaded bytes 112980
+2026-10-23T11:03:22.8500100Z Finished uploading artifact content to blob storage!
+2026-10-23T11:03:22.8601170Z SHA256 digest of uploaded artifact zip is 5e510442474f03a411b109428d1bc4d4af206049d3aa7d2ae464671e8fd3da7a
+2026-10-23T11:03:22.8701320Z Finalizing artifact upload
+2026-10-23T11:03:23.3221180Z Artifact sightbreak-macos-ax-read-only-receipts-4854aed946d25d27482af66c332f84aa51cea8fb.zip successfully finalized. Artifact ID 12497410762
+2026-10-23T11:03:23.3222590Z Artifact sightbreak-macos-ax-read-only-receipts-4854aed946d25d27482af66c332f84aa51cea8fb has been successfully uploaded! Final size is 112980 bytes. Artifact ID is 12497410762
+2026-10-23T11:03:23.3224930Z Artifact download URL: https://github.com/calebaiken/sightbreak/actions/runs/39943145541/artifacts/12497410762
+2026-10-23T11:03:23.3387700Z Post job cleanup.
+2026-10-23T11:03:23.5417130Z [command]/opt/homebrew/bin/git version
+2026-10-23T11:03:23.5671510Z git version 2.55.0
+2026-10-23T11:03:23.5729720Z Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/5df3cfb8-9193-4c39-b125-0df039aa47f4/.gitconfig'
+2026-10-23T11:03:23.5742910Z Temporarily overriding HOME='/Users/runner/work/_temp/5df3cfb8-9193-4c39-b125-0df039aa47f4' before making global git config changes
+2026-10-23T11:03:23.5746300Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-23T11:03:23.5751980Z [command]/opt/homebrew/bin/git config --global --add safe.directory /Users/runner/work/sightbreak/sightbreak
+2026-10-23T11:03:23.5943780Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-23T11:03:23.6039180Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-23T11:03:23.7487250Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-23T11:03:23.7558070Z http.https://github.com/.extraheader
+2026-10-23T11:03:23.7565800Z [command]/opt/homebrew/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-10-23T11:03:23.7651740Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-23T11:03:23.9228510Z Cleaning up orphan processes
+2026-10-23T11:03:25.7368740Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683, actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065, actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

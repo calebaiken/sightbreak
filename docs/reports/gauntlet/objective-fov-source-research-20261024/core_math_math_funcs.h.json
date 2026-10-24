@@ -1,0 +1,53 @@
+{
+  "path": "core/math/math_funcs.h",
+  "url": "https://raw.githubusercontent.com/godotengine/godot/ed1daf0bf/core/math/math_funcs.h",
+  "bytes": 26599,
+  "sha256": "944eac1e6c84b9ebf4ea51af604af129c6f1dc1117c6ef57fe6a62e34ddbbb49",
+  "ranges": [
+    {
+      "start_line": 149,
+      "end_line": 167,
+      "text": "149: \n150: _ALWAYS_INLINE_ double sqrt(double p_x) {\n151: \treturn std::sqrt(p_x);\n152: }\n153: _ALWAYS_INLINE_ float sqrt(float p_x) {\n154: \treturn std::sqrt(p_x);\n155: }\n156: \n157: _ALWAYS_INLINE_ double fmod(double p_x, double p_y) {\n158: \treturn std::fmod(p_x, p_y);\n159: }\n160: _ALWAYS_INLINE_ float fmod(float p_x, float p_y) {\n161: \treturn std::fmod(p_x, p_y);\n162: }\n163: \n164: _ALWAYS_INLINE_ double modf(double p_x, double *r_y) {\n165: \treturn std::modf(p_x, r_y);\n166: }\n167: _ALWAYS_INLINE_ float modf(float p_x, float *r_y) {"
+    },
+    {
+      "start_line": 507,
+      "end_line": 525,
+      "text": "507: _ALWAYS_INLINE_ float remap(float p_value, float p_istart, float p_istop, float p_ostart, float p_ostop) {\n508: \treturn lerp(p_ostart, p_ostop, inverse_lerp(p_istart, p_istop, p_value));\n509: }\n510: \n511: _ALWAYS_INLINE_ bool is_equal_approx(double p_left, double p_right, double p_tolerance) {\n512: \t// Check for exact equality first, required to handle \"infinity\" values.\n513: \tif (p_left == p_right) {\n514: \t\treturn true;\n515: \t}\n516: \t// Then check for approximate equality.\n517: \treturn abs(p_left - p_right) < p_tolerance;\n518: }\n519: _ALWAYS_INLINE_ bool is_equal_approx(float p_left, float p_right, float p_tolerance) {\n520: \t// Check for exact equality first, required to handle \"infinity\" values.\n521: \tif (p_left == p_right) {\n522: \t\treturn true;\n523: \t}\n524: \t// Then check for approximate equality.\n525: \treturn abs(p_left - p_right) < p_tolerance;"
+    },
+    {
+      "start_line": 515,
+      "end_line": 533,
+      "text": "515: \t}\n516: \t// Then check for approximate equality.\n517: \treturn abs(p_left - p_right) < p_tolerance;\n518: }\n519: _ALWAYS_INLINE_ bool is_equal_approx(float p_left, float p_right, float p_tolerance) {\n520: \t// Check for exact equality first, required to handle \"infinity\" values.\n521: \tif (p_left == p_right) {\n522: \t\treturn true;\n523: \t}\n524: \t// Then check for approximate equality.\n525: \treturn abs(p_left - p_right) < p_tolerance;\n526: }\n527: \n528: _ALWAYS_INLINE_ bool is_equal_approx(double p_left, double p_right) {\n529: \t// Check for exact equality first, required to handle \"infinity\" values.\n530: \tif (p_left == p_right) {\n531: \t\treturn true;\n532: \t}\n533: \t// Then check for approximate equality."
+    },
+    {
+      "start_line": 524,
+      "end_line": 542,
+      "text": "524: \t// Then check for approximate equality.\n525: \treturn abs(p_left - p_right) < p_tolerance;\n526: }\n527: \n528: _ALWAYS_INLINE_ bool is_equal_approx(double p_left, double p_right) {\n529: \t// Check for exact equality first, required to handle \"infinity\" values.\n530: \tif (p_left == p_right) {\n531: \t\treturn true;\n532: \t}\n533: \t// Then check for approximate equality.\n534: \tdouble tolerance = CMP_EPSILON * abs(p_left);\n535: \tif (tolerance < CMP_EPSILON) {\n536: \t\ttolerance = CMP_EPSILON;\n537: \t}\n538: \treturn abs(p_left - p_right) < tolerance;\n539: }\n540: _ALWAYS_INLINE_ bool is_equal_approx(float p_left, float p_right) {\n541: \t// Check for exact equality first, required to handle \"infinity\" values.\n542: \tif (p_left == p_right) {"
+    },
+    {
+      "start_line": 536,
+      "end_line": 554,
+      "text": "536: \t\ttolerance = CMP_EPSILON;\n537: \t}\n538: \treturn abs(p_left - p_right) < tolerance;\n539: }\n540: _ALWAYS_INLINE_ bool is_equal_approx(float p_left, float p_right) {\n541: \t// Check for exact equality first, required to handle \"infinity\" values.\n542: \tif (p_left == p_right) {\n543: \t\treturn true;\n544: \t}\n545: \t// Then check for approximate equality.\n546: \tfloat tolerance = (float)CMP_EPSILON * abs(p_left);\n547: \tif (tolerance < (float)CMP_EPSILON) {\n548: \t\ttolerance = (float)CMP_EPSILON;\n549: \t}\n550: \treturn abs(p_left - p_right) < tolerance;\n551: }\n552: \n553: _ALWAYS_INLINE_ bool is_zero_approx(double p_value) {\n554: \treturn abs(p_value) < CMP_EPSILON;"
+    },
+    {
+      "start_line": 564,
+      "end_line": 582,
+      "text": "564: \treturn (p_left == p_right) || (is_nan(p_left) && is_nan(p_right));\n565: }\n566: \n567: _ALWAYS_INLINE_ double smoothstep(double p_from, double p_to, double p_s) {\n568: \tif (is_equal_approx(p_from, p_to)) {\n569: \t\tif (likely(p_from <= p_to)) {\n570: \t\t\treturn p_s <= p_from ? 0.0 : 1.0;\n571: \t\t} else {\n572: \t\t\treturn p_s <= p_to ? 1.0 : 0.0;\n573: \t\t}\n574: \t}\n575: \tdouble s = CLAMP((p_s - p_from) / (p_to - p_from), 0.0, 1.0);\n576: \treturn s * s * (3.0 - 2.0 * s);\n577: }\n578: _ALWAYS_INLINE_ float smoothstep(float p_from, float p_to, float p_s) {\n579: \tif (is_equal_approx(p_from, p_to)) {\n580: \t\tif (likely(p_from <= p_to)) {\n581: \t\t\treturn p_s <= p_from ? 0.0f : 1.0f;\n582: \t\t} else {"
+    },
+    {
+      "start_line": 575,
+      "end_line": 593,
+      "text": "575: \tdouble s = CLAMP((p_s - p_from) / (p_to - p_from), 0.0, 1.0);\n576: \treturn s * s * (3.0 - 2.0 * s);\n577: }\n578: _ALWAYS_INLINE_ float smoothstep(float p_from, float p_to, float p_s) {\n579: \tif (is_equal_approx(p_from, p_to)) {\n580: \t\tif (likely(p_from <= p_to)) {\n581: \t\t\treturn p_s <= p_from ? 0.0f : 1.0f;\n582: \t\t} else {\n583: \t\t\treturn p_s <= p_to ? 1.0f : 0.0f;\n584: \t\t}\n585: \t}\n586: \tfloat s = CLAMP((p_s - p_from) / (p_to - p_from), 0.0f, 1.0f);\n587: \treturn s * s * (3.0f - 2.0f * s);\n588: }\n589: \n590: _ALWAYS_INLINE_ double move_toward(double p_from, double p_to, double p_delta) {\n591: \treturn abs(p_to - p_from) <= p_delta ? p_to : p_from + SIGN(p_to - p_from) * p_delta;\n592: }\n593: _ALWAYS_INLINE_ float move_toward(float p_from, float p_to, float p_delta) {"
+    },
+    {
+      "start_line": 633,
+      "end_line": 651,
+      "text": "633: \tif (is_zero_approx(range)) {\n634: \t\treturn p_min;\n635: \t}\n636: \tdouble result = p_value - (range * floor((p_value - p_min) / range));\n637: \tif (is_equal_approx(result, p_max)) {\n638: \t\treturn p_min;\n639: \t}\n640: \treturn result;\n641: }\n642: _ALWAYS_INLINE_ float wrapf(float p_value, float p_min, float p_max) {\n643: \tfloat range = p_max - p_min;\n644: \tif (is_zero_approx(range)) {\n645: \t\treturn p_min;\n646: \t}\n647: \tfloat result = p_value - (range * floor((p_value - p_min) / range));\n648: \tif (is_equal_approx(result, p_max)) {\n649: \t\treturn p_min;\n650: \t}\n651: \treturn result;"
+    },
+    {
+      "start_line": 644,
+      "end_line": 662,
+      "text": "644: \tif (is_zero_approx(range)) {\n645: \t\treturn p_min;\n646: \t}\n647: \tfloat result = p_value - (range * floor((p_value - p_min) / range));\n648: \tif (is_equal_approx(result, p_max)) {\n649: \t\treturn p_min;\n650: \t}\n651: \treturn result;\n652: }\n653: \n654: _ALWAYS_INLINE_ int64_t wrapi(int64_t p_value, int64_t p_min, int64_t p_max) {\n655: \tint64_t range = p_max - p_min;\n656: \treturn range == 0 ? p_min : p_min + ((((p_value - p_min) % range) + range) % range);\n657: }\n658: \n659: _ALWAYS_INLINE_ double fract(double p_value) {\n660: \treturn p_value - floor(p_value);\n661: }\n662: _ALWAYS_INLINE_ float fract(float p_value) {"
+    }
+  ]
+}

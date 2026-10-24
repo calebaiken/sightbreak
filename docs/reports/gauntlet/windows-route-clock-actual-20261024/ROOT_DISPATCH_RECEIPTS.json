@@ -1,0 +1,395 @@
+{
+  "repository": "calebaiken/sightbreak",
+  "workflow": "desktop-alpha.yml",
+  "source": "4cf6ac8e744603ed6af122a362036d276754cc76",
+  "ref": "qualifier/windows-route-clock-4cf6ac8e-20261024",
+  "requested_inputs": {
+    "lane": "windows",
+    "observe_windows_input": true,
+    "verbose_reopened_shutdown": true
+  },
+  "root_release": "e5ff0c23bade93bdc56be829320694a9e1a77c24",
+  "pre_dispatch_push_and_refs": {
+    "chunk_id": "e25b7f",
+    "wall_time_seconds": 0.376861473,
+    "exit_code": 0,
+    "original_token_count": 76,
+    "output": "To https://github.com/calebaiken/sightbreak.git\n   e3849063..e5ff0c23  HEAD -> codex/v1-executor-recovery-20261023\ne5ff0c23bade93bdc56be829320694a9e1a77c24\trefs/heads/codex/v1-executor-recovery-20261023\n4cf6ac8e744603ed6af122a362036d276754cc76\trefs/heads/qualifier/windows-route-clock-4cf6ac8e-20261024\n"
+  },
+  "dispatch_clock": {
+    "current_time": "2026-10-24 11:14:49 UTC"
+  },
+  "dispatch_initial": {
+    "chunk_id": "9ccd54",
+    "wall_time_seconds": 1.000566619,
+    "session_id": 16279,
+    "original_token_count": 0,
+    "output": ""
+  },
+  "dispatch_terminal": {
+    "chunk_id": "26731a",
+    "wall_time_seconds": 0.000040764,
+    "exit_code": 0,
+    "original_token_count": 0,
+    "output": ""
+  },
+  "run_lookup": {
+    "chunk_id": "4a2256",
+    "wall_time_seconds": 0.445367738,
+    "exit_code": 0,
+    "original_token_count": 65,
+    "output": "[{\"conclusion\":\"\",\"createdAt\":\"2026-10-24T11:14:51Z\",\"databaseId\":40089125575,\"event\":\"workflow_dispatch\",\"headSha\":\"4cf6ac8e744603ed6af122a362036d276754cc76\",\"status\":\"in_progress\",\"url\":\"https://github.com/calebaiken/sightbreak/actions/runs/40089125575\"}]\n"
+  },
+  "run_metadata": {
+    "chunk_id": "f7a9bf",
+    "wall_time_seconds": 0.290834851,
+    "exit_code": 0,
+    "original_token_count": 89,
+    "output": "{\"created_at\":\"2026-10-24T11:14:51Z\",\"event\":\"workflow_dispatch\",\"head_branch\":\"qualifier/windows-route-clock-4cf6ac8e-20261024\",\"head_sha\":\"4cf6ac8e744603ed6af122a362036d276754cc76\",\"html_url\":\"https://github.com/calebaiken/sightbreak/actions/runs/40089125575\",\"id\":40089125575,\"run_attempt\":1,\"status\":\"in_progress\",\"updated_at\":\"2026-10-24T11:14:56Z\"}\n"
+  },
+  "initial_jobs_tool": {
+    "content": [
+      {
+        "type": "text",
+        "text": "Action completed."
+      }
+    ],
+    "structuredContent": {
+      "jobs": [
+        {
+          "id": 120858007351,
+          "name": "native (windows-latest, windows)",
+          "status": "in_progress",
+          "conclusion": null,
+          "run_id": 40089125575,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Linux display dependencies",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 4
+            },
+            {
+              "name": "Windows OCR dependency",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Native screenshot dependency",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Install checksum-pinned native editor and selected templates",
+              "status": "in_progress",
+              "conclusion": null,
+              "number": 7
+            },
+            {
+              "name": "Packaging integrity controls",
+              "status": "pending",
+              "conclusion": null,
+              "number": 8
+            },
+            {
+              "name": "Strict native log failure controls",
+              "status": "pending",
+              "conclusion": null,
+              "number": 9
+            },
+            {
+              "name": "Atomic observation reader filesystem semantics",
+              "status": "pending",
+              "conclusion": null,
+              "number": 10
+            },
+            {
+              "name": "Verify strict native menu captions",
+              "status": "pending",
+              "conclusion": null,
+              "number": 11
+            },
+            {
+              "name": "QA receipt packaging controls",
+              "status": "pending",
+              "conclusion": null,
+              "number": 12
+            },
+            {
+              "name": "Export exact clean source",
+              "status": "pending",
+              "conclusion": null,
+              "number": 13
+            },
+            {
+              "name": "Inspect development package structure independently of gameplay qualification",
+              "status": "pending",
+              "conclusion": null,
+              "number": 14
+            },
+            {
+              "name": "Native graphical startup and artifact inspection (Windows/macOS)",
+              "status": "pending",
+              "conclusion": null,
+              "number": 15
+            },
+            {
+              "name": "Retain macOS OpenGL diagnostic after default virtual-GPU failure",
+              "status": "pending",
+              "conclusion": null,
+              "number": 16
+            },
+            {
+              "name": "Native graphical startup and artifact inspection (Linux)",
+              "status": "pending",
+              "conclusion": null,
+              "number": 17
+            },
+            {
+              "name": "Native authority and compatibility regressions",
+              "status": "pending",
+              "conclusion": null,
+              "number": 18
+            },
+            {
+              "name": "ARM Mac first failed leak suite diagnostic controls",
+              "status": "pending",
+              "conclusion": null,
+              "number": 19
+            },
+            {
+              "name": "ARM Mac retain verbose first failed leak suite after strict failure",
+              "status": "pending",
+              "conclusion": null,
+              "number": 20
+            },
+            {
+              "name": "ARM Mac read-only input preflight observer controls",
+              "status": "pending",
+              "conclusion": null,
+              "number": 21
+            },
+            {
+              "name": "ARM Mac permission queries and ordinary exported-window preflight",
+              "status": "pending",
+              "conclusion": null,
+              "number": 22
+            },
+            {
+              "name": "ARM Mac native menu input source controls",
+              "status": "pending",
+              "conclusion": null,
+              "number": 23
+            },
+            {
+              "name": "ARM Mac real exported Settings pointer and Escape navigation",
+              "status": "pending",
+              "conclusion": null,
+              "number": 24
+            },
+            {
+              "name": "ARM Mac ordinary exported gameplay source controls",
+              "status": "pending",
+              "conclusion": null,
+              "number": 25
+            },
+            {
+              "name": "ARM Mac stock Deploy living sidearm and ordinary leave",
+              "status": "pending",
+              "conclusion": null,
+              "number": 26
+            },
+            {
+              "name": "Real exported keyboard and pointer input (Windows/Linux)",
+              "status": "pending",
+              "conclusion": null,
+              "number": 27
+            },
+            {
+              "name": "Controlled delayed-capture reload comparison (Windows)",
+              "status": "pending",
+              "conclusion": null,
+              "number": 28
+            },
+            {
+              "name": "Retain original delayed-capture schedule (Windows diagnostic)",
+              "status": "pending",
+              "conclusion": null,
+              "number": 29
+            },
+            {
+              "name": "Living-player offline input and settings restart (Windows/Linux)",
+              "status": "pending",
+              "conclusion": null,
+              "number": 30
+            },
+            {
+              "name": "Real player plant and natural device resolution (Windows/Linux)",
+              "status": "pending",
+              "conclusion": null,
+              "number": 31
+            },
+            {
+              "name": "Real player defuse after ordinary bot plant (Windows/Linux)",
+              "status": "pending",
+              "conclusion": null,
+              "number": 32
+            },
+            {
+              "name": "Complete stock-rules offline match and earned training restart (Windows/Linux)",
+              "status": "pending",
+              "conclusion": null,
+              "number": 33
+            },
+            {
+              "name": "Rendered desktop layouts and explicit touch selection (Linux)",
+              "status": "pending",
+              "conclusion": null,
+              "number": 34
+            },
+            {
+              "name": "Download immutable macOS alpha comparison artifact",
+              "status": "pending",
+              "conclusion": null,
+              "number": 35
+            },
+            {
+              "name": "Native macOS minimal/frozen/candidate graphical diagnosis",
+              "status": "pending",
+              "conclusion": null,
+              "number": 36
+            },
+            {
+              "name": "Intel macOS render feature attribution after the unchanged startup gate",
+              "status": "pending",
+              "conclusion": null,
+              "number": 37
+            },
+            {
+              "name": "iOS compile qualification controls (ARM macOS)",
+              "status": "pending",
+              "conclusion": null,
+              "number": 38
+            },
+            {
+              "name": "Unsigned generic-device iOS compiler and linker qualification (ARM macOS)",
+              "status": "pending",
+              "conclusion": null,
+              "number": 39
+            },
+            {
+              "name": "Preserve source-bound development package including failed qualification attempts",
+              "status": "pending",
+              "conclusion": null,
+              "number": 40
+            },
+            {
+              "name": "Preserve development packages and failed attempts",
+              "status": "pending",
+              "conclusion": null,
+              "number": 41
+            },
+            {
+              "name": "Package bounded raw QA receipts",
+              "status": "pending",
+              "conclusion": null,
+              "number": 42
+            },
+            {
+              "name": "Preserve separately downloadable raw QA receipts",
+              "status": "pending",
+              "conclusion": null,
+              "number": 43
+            },
+            {
+              "name": "Preserve separately downloadable QA evidence",
+              "status": "pending",
+              "conclusion": null,
+              "number": 44
+            },
+            {
+              "name": "Package bounded original Linux layout PNGs by native size",
+              "status": "pending",
+              "conclusion": null,
+              "number": 45
+            },
+            {
+              "name": "Preserve original Linux layout PNGs at 960x540",
+              "status": "pending",
+              "conclusion": null,
+              "number": 46
+            },
+            {
+              "name": "Preserve original Linux layout PNGs at 1280x720",
+              "status": "pending",
+              "conclusion": null,
+              "number": 47
+            },
+            {
+              "name": "Preserve original Linux layout PNGs at 1920x1080",
+              "status": "pending",
+              "conclusion": null,
+              "number": 48
+            },
+            {
+              "name": "Preserve original Linux layout PNGs at 1280x800",
+              "status": "pending",
+              "conclusion": null,
+              "number": 49
+            },
+            {
+              "name": "Post Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065",
+              "status": "pending",
+              "conclusion": null,
+              "number": 97
+            },
+            {
+              "name": "Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683",
+              "status": "pending",
+              "conclusion": null,
+              "number": 98
+            }
+          ]
+        }
+      ]
+    },
+    "isError": false
+  },
+  "original_release_logs_tool": {
+    "chunk_id": "484863",
+    "wall_time_seconds": 0.000044394,
+    "exit_code": 0,
+    "original_token_count": 143,
+    "output": "[{\"path\": \"/workspace/root-route-clock-actual-release-commit.log\", \"bytes\": 110, \"sha256\": \"4d622a38ab4bd171c1ef5499618a237ca8aaa7e2a0b6235d9eceffe9d175e88e\", \"text\": \"e5ff0c23bade93bdc56be829320694a9e1a77c24 Release one independently admitted Windows route-clock qualification\\n\"}, {\"path\": \"/workspace/root-route-clock-actual-release-push.log\", \"bytes\": 115, \"sha256\": \"481e4319471fb19c9c893319258ad12777661fe60a90eade6b23a7b1f4416fc3\", \"text\": \"To https://github.com/calebaiken/sightbreak.git\\n   e3849063..e5ff0c23  HEAD -> codex/v1-executor-recovery-20261023\\n\"}]\n"
+  },
+  "run": {
+    "id": 40089125575,
+    "job_id": 120858007351,
+    "attempt": 1,
+    "event": "workflow_dispatch",
+    "created_at": "2026-10-24T11:14:51Z",
+    "url": "https://github.com/calebaiken/sightbreak/actions/runs/40089125575"
+  },
+  "scope": "Exactly one new-source request after pushed release; no actual gameplay/quality gate accepted by these receipts."
+}

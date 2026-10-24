@@ -1,0 +1,33 @@
+{
+  "cpu_affinity": [
+    4
+  ],
+  "frozen_source": "f48c8461b3b6cb26c5ab2a79f2b51c444e94a0ec",
+  "results": [
+    {
+      "name": "required_drop_then_consumer_recovery",
+      "expected_accepted": true,
+      "r4_accepted": true,
+      "r4_error": null,
+      "r3_accepted": true,
+      "r3_error": null,
+      "met_expectation": true,
+      "raw_sha256": "7d4fbd000e6c099668003a2c97da35db7d2a4571101f24cc27439c5fee4ce3c8",
+      "raw_bytes": 26627621,
+      "source_basis": "_eliminated must drop when its carried actor dies; the later consumer may recover a genuinely dropped device. Conditional elimination projection only; no ballistics claim."
+    },
+    {
+      "name": "dead_carrier_stays_carried_complete_stream",
+      "expected_accepted": false,
+      "r4_accepted": true,
+      "r4_error": null,
+      "r3_accepted": true,
+      "r3_error": null,
+      "met_expectation": false,
+      "raw_sha256": "ff790f5120d1ae4ad28e1d0ab8455fcf27c99ef4aa93ddee162a8fa7b28a9734",
+      "raw_bytes": 26627628,
+      "source_basis": "_eliminated must drop when its carried actor dies; the later consumer may recover a genuinely dropped device. Conditional elimination projection only; no ballistics claim."
+    }
+  ],
+  "passed": false
+}

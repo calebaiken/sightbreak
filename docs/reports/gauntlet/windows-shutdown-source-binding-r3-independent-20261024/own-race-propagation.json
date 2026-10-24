@@ -1,0 +1,35 @@
+{
+  "source": "ebc1a94133d4d73c3a553d528986c8fc40c740a9",
+  "cpu": [
+    4
+  ],
+  "native_invocations": 0,
+  "expected": "REJECT",
+  "actual": "REJECT",
+  "error": "ValueError: source changed during physical read: /tmp/tmpb8to8yuk/runtime/race.txt",
+  "input": {
+    "scripts/verify_offline_export.py": "666978747572650a",
+    "scripts/verify_integration_export.py": "666978747572650a",
+    "scripts/native_observation.py": "666978747572650a",
+    "game/scripts/offline_diagnostics.gd": "666978747572650a",
+    "scripts/shutdown_study_retention.py": "666978747572650a",
+    "runtime/race.txt": "6f726967696e616c2062797465730a"
+  },
+  "changed_bytes_hex": "6368616e676564212062797465730a",
+  "current_bytes_hex": "6368616e676564212062797465730a",
+  "before": {
+    "inode": 74810,
+    "size": 15,
+    "mtime_ns": 1792851412966536811,
+    "ctime_ns": 1792851412966536811
+  },
+  "after": {
+    "inode": 74810,
+    "size": 15,
+    "mtime_ns": 1792851412966536811,
+    "ctime_ns": 1792851412993983204
+  },
+  "returned_binding": null,
+  "git_status_after": " M runtime/race.txt\n",
+  "scope": "Mutation within physical helper read call; not whole-filesystem atomicity"
+}

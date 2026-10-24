@@ -1,0 +1,174 @@
+{
+  "working_directory": "/workspace/reviews/m5-objective-decision-r3-source",
+  "scope": "Actual exec tool command exits; expected whole-reader failure1 retained, no native calls",
+  "commands": [
+    {
+      "name": "maintained",
+      "command": [
+        "taskset",
+        "-c",
+        "4",
+        "python3",
+        "scripts/test_bot_objective_observation.py",
+        "-v"
+      ],
+      "environment": {},
+      "actual_exit_code": 0,
+      "stdout": "maintained.stdout",
+      "stderr": "maintained.stderr"
+    },
+    {
+      "name": "depth-one-maintained",
+      "command": [
+        "taskset",
+        "-c",
+        "4",
+        "python3",
+        ".local/depth-one-source/scripts/test_bot_objective_observation.py",
+        "-v"
+      ],
+      "environment": {},
+      "actual_exit_code": 0,
+      "stdout": "depth-one-maintained.stdout",
+      "stderr": "depth-one-maintained.stderr"
+    },
+    {
+      "name": "original13",
+      "command": [
+        "taskset",
+        "-c",
+        "4",
+        "python3",
+        "docs/reports/gauntlet/m5-objective-decision-r3-critic-20261024/capture_original_controls.py",
+        "--source",
+        ".",
+        "--rig",
+        "docs/reports/gauntlet/m5-objective-observability-r3-20261024/original-fresh-controls.py",
+        "--output",
+        "docs/reports/gauntlet/m5-objective-decision-r3-critic-20261024/original13"
+      ],
+      "environment": {
+        "PYTHONHASHSEED": "0"
+      },
+      "actual_exit_code": 1,
+      "stdout": "original13.stdout",
+      "stderr": "original13.stderr"
+    },
+    {
+      "name": "full-component",
+      "command": [
+        "taskset",
+        "-c",
+        "4",
+        "python3",
+        "docs/reports/gauntlet/m5-objective-decision-r3-critic-20261024/review_component.py",
+        "--source",
+        ".",
+        "--output",
+        "docs/reports/gauntlet/m5-objective-decision-r3-critic-20261024/full-component"
+      ],
+      "environment": {
+        "PYTHONHASHSEED": "0"
+      },
+      "actual_exit_code": 0,
+      "stdout": "full-component.stdout",
+      "stderr": "full-component.stderr"
+    },
+    {
+      "name": "depth-one-component",
+      "command": [
+        "taskset",
+        "-c",
+        "4",
+        "python3",
+        "docs/reports/gauntlet/m5-objective-decision-r3-critic-20261024/review_component.py",
+        "--source",
+        ".local/depth-one-source",
+        "--output",
+        "docs/reports/gauntlet/m5-objective-decision-r3-critic-20261024/depth-one-component"
+      ],
+      "environment": {
+        "PYTHONHASHSEED": "0"
+      },
+      "actual_exit_code": 0,
+      "stdout": "depth-one-component.stdout",
+      "stderr": "depth-one-component.stderr"
+    },
+    {
+      "name": "full-other-defender",
+      "command": [
+        "taskset",
+        "-c",
+        "4",
+        "python3",
+        "docs/reports/gauntlet/m5-objective-decision-r3-critic-20261024/review_other_defender.py",
+        "--source",
+        ".",
+        "--output",
+        "docs/reports/gauntlet/m5-objective-decision-r3-critic-20261024/full-other-defender"
+      ],
+      "environment": {
+        "PYTHONHASHSEED": "0"
+      },
+      "actual_exit_code": 0,
+      "stdout": "full-other-defender.stdout",
+      "stderr": "full-other-defender.stderr"
+    },
+    {
+      "name": "depth-one-other-defender",
+      "command": [
+        "taskset",
+        "-c",
+        "4",
+        "python3",
+        "docs/reports/gauntlet/m5-objective-decision-r3-critic-20261024/review_other_defender.py",
+        "--source",
+        ".local/depth-one-source",
+        "--output",
+        "docs/reports/gauntlet/m5-objective-decision-r3-critic-20261024/depth-one-other-defender"
+      ],
+      "environment": {
+        "PYTHONHASHSEED": "0"
+      },
+      "actual_exit_code": 0,
+      "stdout": "depth-one-other-defender.stdout",
+      "stderr": "depth-one-other-defender.stderr"
+    },
+    {
+      "name": "full-source-bindings",
+      "command": [
+        "taskset",
+        "-c",
+        "4",
+        "python3",
+        "docs/reports/gauntlet/m5-objective-decision-r3-critic-20261024/bind_source.py",
+        "--source",
+        ".",
+        "--output",
+        "docs/reports/gauntlet/m5-objective-decision-r3-critic-20261024/full-source-bindings.json"
+      ],
+      "environment": {},
+      "actual_exit_code": 0,
+      "stdout": "full-source-bindings.stdout",
+      "stderr": "full-source-bindings.stderr"
+    },
+    {
+      "name": "depth-one-source-bindings",
+      "command": [
+        "taskset",
+        "-c",
+        "4",
+        "python3",
+        "docs/reports/gauntlet/m5-objective-decision-r3-critic-20261024/bind_source.py",
+        "--source",
+        ".local/depth-one-source",
+        "--output",
+        "docs/reports/gauntlet/m5-objective-decision-r3-critic-20261024/depth-one-source-bindings.json"
+      ],
+      "environment": {},
+      "actual_exit_code": 0,
+      "stdout": "depth-one-source-bindings.stdout",
+      "stderr": "depth-one-source-bindings.stderr"
+    }
+  ]
+}

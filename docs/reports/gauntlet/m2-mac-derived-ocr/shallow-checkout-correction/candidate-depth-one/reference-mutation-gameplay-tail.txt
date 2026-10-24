@@ -1,0 +1,17 @@
+test_default_native_helper_ocr_and_gameplay_tail_are_byte_preserved (test_macos_deploy_ocr.DeployAnalysisControls.test_default_native_helper_ocr_and_gameplay_tail_are_byte_preserved) ... FAIL
+
+======================================================================
+FAIL: test_default_native_helper_ocr_and_gameplay_tail_are_byte_preserved (test_macos_deploy_ocr.DeployAnalysisControls.test_default_native_helper_ocr_and_gameplay_tail_are_byte_preserved)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/sightbreak-deploy-complete-shallow-ofpnrfiw/checkout/scripts/test_macos_deploy_ocr.py", line 262, in test_default_native_helper_ocr_and_gameplay_tail_are_byte_preserved
+    self.assertEqual(hashlib.sha256(current[current.index(boundary):]).hexdigest(),
+AssertionError: '3e7a45f6994910e54c456412e28ae16043808f5b4e456ecb53691515eb148a14' != '3a2abc588525152b922bc97ca7640d2baa8a90030fdb8f3111242c5dd18bc837'
+- 3e7a45f6994910e54c456412e28ae16043808f5b4e456ecb53691515eb148a14
++ 3a2abc588525152b922bc97ca7640d2baa8a90030fdb8f3111242c5dd18bc837
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=1)

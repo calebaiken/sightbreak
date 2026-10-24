@@ -1,0 +1,1517 @@
+{
+  "all_three_original_schedules_passed": true,
+  "scenarios": [
+    {
+      "scenario": "native-input",
+      "checks": {
+        "original_schedule_and_delay": true,
+        "original_inner_result_passed": true,
+        "every_reached_wait_completed_before_its_deadline": true,
+        "original_reload_wait:Authority confirms reload start": true,
+        "original_reload_wait:Authority reload completion": true,
+        "one_original_fire_down_release_and_capture": true,
+        "actual_fire_capture_release_order": true,
+        "actual_synthetic_capture_pressure_matches": true
+      },
+      "all_passed": true,
+      "original_passed": true,
+      "original_error": null,
+      "elapsed_seconds_including_cleanup": 38.17099999999999,
+      "waits": [
+        {
+          "label": "Authority readiness",
+          "outcome": "wait_completed",
+          "budget_seconds": 15,
+          "wall_seconds": 0.5,
+          "completed_within_original_wait": true,
+          "begin": {
+            "event": "wait_begin",
+            "seconds": 0.42099999999999227,
+            "wall_unix_msec": 1792832680481,
+            "driver_held_keys": [],
+            "driver_fire_down": false,
+            "label": "Authority readiness",
+            "budget_seconds": 15,
+            "native_state": {
+              "target_window": null,
+              "foreground_window": 131588,
+              "target_focused": false,
+              "lmb_down": false,
+              "keys_down": {
+                "r": false,
+                "d": false,
+                "w": false
+              },
+              "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+            }
+          },
+          "end": {
+            "event": "wait_completed",
+            "seconds": 0.9209999999999923,
+            "wall_unix_msec": 1792832680986,
+            "driver_held_keys": [],
+            "driver_fire_down": false,
+            "label": "Authority readiness",
+            "authority": {
+              "authority_elapsed_seconds": 0.0,
+              "fixture_elapsed_seconds": 0.0,
+              "joined_id": 0,
+              "peer_count": 0,
+              "phase": "live",
+              "reason": "setup",
+              "simulation_tick": 0,
+              "wall_elapsed_msec": 147,
+              "wall_unix_msec": 1792832680969
+            },
+            "native_state": {
+              "target_window": null,
+              "foreground_window": 131588,
+              "target_focused": false,
+              "lmb_down": false,
+              "keys_down": {
+                "r": false,
+                "d": false,
+                "w": false
+              },
+              "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+            }
+          }
+        },
+        {
+          "label": "Export window readiness",
+          "outcome": "wait_completed",
+          "budget_seconds": 30,
+          "wall_seconds": 1.8600000000000136,
+          "completed_within_original_wait": true,
+          "begin": {
+            "event": "wait_begin",
+            "seconds": 0.9209999999999923,
+            "wall_unix_msec": 1792832680990,
+            "driver_held_keys": [],
+            "driver_fire_down": false,
+            "label": "Export window readiness",
+            "budget_seconds": 30,
+            "native_state": {
+              "target_window": null,
+              "foreground_window": 131588,
+              "target_focused": false,
+              "lmb_down": false,
+              "keys_down": {
+                "r": false,
+                "d": false,
+                "w": false
+              },
+              "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+            }
+          },
+          "end": {
+            "event": "wait_completed",
+            "seconds": 2.781000000000006,
+            "wall_unix_msec": 1792832682854,
+            "driver_held_keys": [],
+            "driver_fire_down": false,
+            "label": "Export window readiness",
+            "authority": {
+              "authority_elapsed_seconds": 2.0,
+              "fixture_elapsed_seconds": 2.01883333333333,
+              "joined_id": 0,
+              "peer_count": 0,
+              "phase": "live",
+              "reason": "periodic",
+              "simulation_tick": 120,
+              "wall_elapsed_msec": 1932,
+              "wall_unix_msec": 1792832682755
+            },
+            "native_state": {
+              "target_window": 262652,
+              "foreground_window": 262652,
+              "target_focused": true,
+              "lmb_down": false,
+              "keys_down": {
+                "r": false,
+                "d": false,
+                "w": false
+              },
+              "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+            }
+          }
+        },
+        {
+          "label": "Actual native menu readiness",
+          "outcome": "wait_completed",
+          "budget_seconds": 60,
+          "wall_seconds": 9.922000000000025,
+          "completed_within_original_wait": true,
+          "begin": {
+            "event": "wait_begin",
+            "seconds": 2.7959999999999923,
+            "wall_unix_msec": 1792832682855,
+            "driver_held_keys": [],
+            "driver_fire_down": false,
+            "label": "Actual native menu readiness",
+            "budget_seconds": 60,
+            "native_state": {
+              "target_window": 262652,
+              "foreground_window": 262652,
+              "target_focused": true,
+              "lmb_down": false,
+              "keys_down": {
+                "r": false,
+                "d": false,
+                "w": false
+              },
+              "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+            }
+          },
+          "end": {
+            "event": "wait_completed",
+            "seconds": 12.718000000000018,
+            "wall_unix_msec": 1792832692778,
+            "driver_held_keys": [],
+            "driver_fire_down": false,
+            "label": "Actual native menu readiness",
+            "authority": {
+              "authority_elapsed_seconds": 11.5833333333335,
+              "fixture_elapsed_seconds": 11.6021239999997,
+              "joined_id": 0,
+              "peer_count": 0,
+              "phase": "live",
+              "reason": "periodic",
+              "simulation_tick": 695,
+              "wall_elapsed_msec": 11512,
+              "wall_unix_msec": 1792832692335
+            },
+            "native_state": {
+              "target_window": 262652,
+              "foreground_window": 262652,
+              "target_focused": true,
+              "lmb_down": false,
+              "keys_down": {
+                "r": false,
+                "d": false,
+                "w": false
+              },
+              "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+            }
+          }
+        },
+        {
+          "label": "Exported inventory page opened",
+          "outcome": "wait_completed",
+          "budget_seconds": 9.9,
+          "wall_seconds": 3.6399999999999864,
+          "completed_within_original_wait": true,
+          "begin": {
+            "event": "wait_begin",
+            "seconds": 13.531000000000006,
+            "wall_unix_msec": 1792832693601,
+            "driver_held_keys": [],
+            "driver_fire_down": false,
+            "label": "Exported inventory page opened",
+            "budget_seconds": 9.9,
+            "native_state": {
+              "target_window": 262652,
+              "foreground_window": 262652,
+              "target_focused": true,
+              "lmb_down": false,
+              "keys_down": {
+                "r": false,
+                "d": false,
+                "w": false
+              },
+              "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+            }
+          },
+          "end": {
+            "event": "wait_completed",
+            "seconds": 17.170999999999992,
+            "wall_unix_msec": 1792832697232,
+            "driver_held_keys": [],
+            "driver_fire_down": false,
+            "label": "Exported inventory page opened",
+            "authority": {
+              "authority_elapsed_seconds": 16.116666666667,
+              "fixture_elapsed_seconds": 16.1350359999995,
+              "joined_id": 0,
+              "peer_count": 0,
+              "phase": "live",
+              "reason": "periodic",
+              "simulation_tick": 967,
+              "wall_elapsed_msec": 16054,
+              "wall_unix_msec": 1792832696877
+            },
+            "native_state": {
+              "target_window": 262652,
+              "foreground_window": 262652,
+              "target_focused": true,
+              "lmb_down": false,
+              "keys_down": {
+                "r": false,
+                "d": false,
+                "w": false
+              },
+              "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+            }
+          }
+        },
+        {
+          "label": "Return from exported armory",
+          "outcome": "wait_completed",
+          "budget_seconds": 15,
+          "wall_seconds": 0.17199999999996862,
+          "completed_within_original_wait": true,
+          "begin": {
+            "event": "wait_begin",
+            "seconds": 18.687000000000012,
+            "wall_unix_msec": 1792832698746,
+            "driver_held_keys": [],
+            "driver_fire_down": false,
+            "label": "Return from exported armory",
+            "budget_seconds": 15,
+            "native_state": {
+              "target_window": 262652,
+              "foreground_window": 262652,
+              "target_focused": true,
+              "lmb_down": false,
+              "keys_down": {
+                "r": false,
+                "d": false,
+                "w": false
+              },
+              "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+            }
+          },
+          "end": {
+            "event": "wait_completed",
+            "seconds": 18.85899999999998,
+            "wall_unix_msec": 1792832698928,
+            "driver_held_keys": [],
+            "driver_fire_down": false,
+            "label": "Return from exported armory",
+            "authority": {
+              "authority_elapsed_seconds": 18.1333333333336,
+              "fixture_elapsed_seconds": 18.152343666666,
+              "joined_id": 0,
+              "peer_count": 0,
+              "phase": "live",
+              "reason": "periodic",
+              "simulation_tick": 1088,
+              "wall_elapsed_msec": 18079,
+              "wall_unix_msec": 1792832698902
+            },
+            "native_state": {
+              "target_window": 262652,
+              "foreground_window": 262652,
+              "target_focused": true,
+              "lmb_down": false,
+              "keys_down": {
+                "r": false,
+                "d": false,
+                "w": false
+              },
+              "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+            }
+          }
+        },
+        {
+          "label": "Exported local-network page opened",
+          "outcome": "wait_completed",
+          "budget_seconds": 9.9,
+          "wall_seconds": 0.3120000000000118,
+          "completed_within_original_wait": true,
+          "begin": {
+            "event": "wait_begin",
+            "seconds": 19.5,
+            "wall_unix_msec": 1792832699563,
+            "driver_held_keys": [],
+            "driver_fire_down": false,
+            "label": "Exported local-network page opened",
+            "budget_seconds": 9.9,
+            "native_state": {
+              "target_window": 262652,
+              "foreground_window": 262652,
+              "target_focused": true,
+              "lmb_down": false,
+              "keys_down": {
+                "r": false,
+                "d": false,
+                "w": false
+              },
+              "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+            }
+          },
+          "end": {
+            "event": "wait_completed",
+            "seconds": 19.812000000000012,
+            "wall_unix_msec": 1792832699879,
+            "driver_held_keys": [],
+            "driver_fire_down": false,
+            "label": "Exported local-network page opened",
+            "authority": {
+              "authority_elapsed_seconds": 18.6333333333336,
+              "fixture_elapsed_seconds": 18.653220666666,
+              "joined_id": 0,
+              "peer_count": 0,
+              "phase": "live",
+              "reason": "periodic",
+              "simulation_tick": 1118,
+              "wall_elapsed_msec": 18578,
+              "wall_unix_msec": 1792832699402
+            },
+            "native_state": {
+              "target_window": 262652,
+              "foreground_window": 262652,
+              "target_focused": true,
+              "lmb_down": false,
+              "keys_down": {
+                "r": false,
+                "d": false,
+                "w": false
+              },
+              "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+            }
+          }
+        },
+        {
+          "label": "Owner snapshot acknowledged",
+          "outcome": "wait_completed",
+          "budget_seconds": 80,
+          "wall_seconds": 4.343999999999994,
+          "completed_within_original_wait": true,
+          "begin": {
+            "event": "wait_begin",
+            "seconds": 21.389999999999986,
+            "wall_unix_msec": 1792832701462,
+            "driver_held_keys": [],
+            "driver_fire_down": false,
+            "label": "Owner snapshot acknowledged",
+            "budget_seconds": 80,
+            "native_state": {
+              "target_window": 262652,
+              "foreground_window": 262652,
+              "target_focused": true,
+              "lmb_down": false,
+              "keys_down": {
+                "r": false,
+                "d": false,
+                "w": false
+              },
+              "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+            }
+          },
+          "end": {
+            "event": "wait_completed",
+            "seconds": 25.73399999999998,
+            "wall_unix_msec": 1792832705801,
+            "driver_held_keys": [],
+            "driver_fire_down": false,
+            "label": "Owner snapshot acknowledged",
+            "authority": {
+              "ack": 0,
+              "alive": true,
+              "ammo": 30,
+              "authority_elapsed_seconds": 24.7333333333332,
+              "fire_input": false,
+              "fixture_elapsed_seconds": 24.759554,
+              "joined_id": 1,
+              "peer_bound": true,
+              "peer_count": 1,
+              "phase": "live",
+              "reason": "periodic",
+              "reload_input": false,
+              "reload_remaining": 0.0,
+              "reserve": 90,
+              "shots": 0,
+              "simulation_tick": 1484,
+              "wall_elapsed_msec": 24679,
+              "wall_unix_msec": 1792832705502,
+              "weapon": "rifle",
+              "weapon_input": ""
+            },
+            "native_state": {
+              "target_window": 262652,
+              "foreground_window": 262652,
+              "target_focused": true,
+              "lmb_down": false,
+              "keys_down": {
+                "r": false,
+                "d": false,
+                "w": false
+              },
+              "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+            }
+          }
+        },
+        {
+          "label": "Authority confirms reload start",
+          "outcome": "wait_completed",
+          "budget_seconds": 10,
+          "wall_seconds": 0.8120000000000118,
+          "completed_within_original_wait": true,
+          "begin": {
+            "event": "wait_begin",
+            "seconds": 29.781000000000006,
+            "wall_unix_msec": 1792832709842,
+            "driver_held_keys": [
+              "r"
+            ],
+            "driver_fire_down": false,
+            "label": "Authority confirms reload start",
+            "budget_seconds": 10,
+            "native_state": {
+              "target_window": 262652,
+              "foreground_window": 262652,
+              "target_focused": true,
+              "lmb_down": false,
+              "keys_down": {
+                "r": true,
+                "d": false,
+                "w": false
+              },
+              "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+            }
+          },
+          "end": {
+            "event": "wait_completed",
+            "seconds": 30.593000000000018,
+            "wall_unix_msec": 1792832710652,
+            "driver_held_keys": [
+              "r"
+            ],
+            "driver_fire_down": false,
+            "label": "Authority confirms reload start",
+            "authority": {
+              "ack": 201,
+              "alive": true,
+              "ammo": 26,
+              "authority_elapsed_seconds": 29.8499999999996,
+              "fire_input": false,
+              "fixture_elapsed_seconds": 29.8775319999998,
+              "joined_id": 1,
+              "peer_bound": true,
+              "peer_count": 1,
+              "phase": "live",
+              "reason": "state_edge",
+              "reload_input": true,
+              "reload_remaining": 2.23333333333333,
+              "reserve": 90,
+              "shots": 4,
+              "simulation_tick": 1791,
+              "wall_elapsed_msec": 29813,
+              "wall_unix_msec": 1792832710636,
+              "weapon": "rifle",
+              "weapon_input": ""
+            },
+            "native_state": {
+              "target_window": 262652,
+              "foreground_window": 262652,
+              "target_focused": true,
+              "lmb_down": false,
+              "keys_down": {
+                "r": true,
+                "d": false,
+                "w": false
+              },
+              "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+            }
+          }
+        },
+        {
+          "label": "Authority reload completion",
+          "outcome": "wait_completed",
+          "budget_seconds": 5,
+          "wall_seconds": 0.7349999999999568,
+          "completed_within_original_wait": true,
+          "begin": {
+            "event": "wait_begin",
+            "seconds": 32.34300000000002,
+            "wall_unix_msec": 1792832712405,
+            "driver_held_keys": [],
+            "driver_fire_down": false,
+            "label": "Authority reload completion",
+            "budget_seconds": 5,
+            "native_state": {
+              "target_window": 262652,
+              "foreground_window": 262652,
+              "target_focused": true,
+              "lmb_down": false,
+              "keys_down": {
+                "r": false,
+                "d": false,
+                "w": false
+              },
+              "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+            }
+          },
+          "end": {
+            "event": "wait_completed",
+            "seconds": 33.077999999999975,
+            "wall_unix_msec": 1792832713145,
+            "driver_held_keys": [],
+            "driver_fire_down": false,
+            "label": "Authority reload completion",
+            "authority": {
+              "ack": 336,
+              "alive": true,
+              "ammo": 30,
+              "authority_elapsed_seconds": 32.0999999999995,
+              "fire_input": false,
+              "fixture_elapsed_seconds": 32.1288583333331,
+              "joined_id": 1,
+              "peer_bound": true,
+              "peer_count": 1,
+              "phase": "live",
+              "reason": "state_edge",
+              "reload_input": false,
+              "reload_remaining": 0.0,
+              "reserve": 86,
+              "shots": 4,
+              "simulation_tick": 1926,
+              "wall_elapsed_msec": 32251,
+              "wall_unix_msec": 1792832713074,
+              "weapon": "rifle",
+              "weapon_input": ""
+            },
+            "native_state": {
+              "target_window": 262652,
+              "foreground_window": 262652,
+              "target_focused": true,
+              "lmb_down": false,
+              "keys_down": {
+                "r": false,
+                "d": false,
+                "w": false
+              },
+              "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+            }
+          }
+        }
+      ],
+      "unterminated_waits": [],
+      "actions_sha256": "3cf55f1a7607981b3403fb3738557701046d81454416fd553211490c85256197"
+    },
+    {
+      "scenario": "reload-release-first",
+      "checks": {
+        "original_schedule_and_delay": true,
+        "original_inner_result_passed": true,
+        "every_reached_wait_completed_before_its_deadline": true,
+        "original_reload_wait:Authority confirms reload start": true,
+        "original_reload_wait:Authority reload completion": true,
+        "one_original_fire_down_release_and_capture": true,
+        "actual_fire_capture_release_order": true,
+        "actual_synthetic_capture_pressure_matches": true
+      },
+      "all_passed": true,
+      "original_passed": true,
+      "original_error": null,
+      "elapsed_seconds_including_cleanup": 36.202999999999975,
+      "waits": [
+        {
+          "label": "Authority readiness",
+          "outcome": "wait_completed",
+          "budget_seconds": 15,
+          "wall_seconds": 0.5,
+          "completed_within_original_wait": true,
+          "begin": {
+            "event": "wait_begin",
+            "seconds": 0.4060000000000059,
+            "wall_unix_msec": 1792832719031,
+            "driver_held_keys": [],
+            "driver_fire_down": false,
+            "label": "Authority readiness",
+            "budget_seconds": 15,
+            "native_state": {
+              "target_window": null,
+              "foreground_window": 131588,
+              "target_focused": false,
+              "lmb_down": false,
+              "keys_down": {
+                "r": false,
+                "d": false,
+                "w": false
+              },
+              "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+            }
+          },
+          "end": {
+            "event": "wait_completed",
+            "seconds": 0.9060000000000059,
+            "wall_unix_msec": 1792832719534,
+            "driver_held_keys": [],
+            "driver_fire_down": false,
+            "label": "Authority readiness",
+            "authority": {
+              "authority_elapsed_seconds": 0.0,
+              "fixture_elapsed_seconds": 0.0,
+              "joined_id": 0,
+              "peer_count": 0,
+              "phase": "live",
+              "reason": "setup",
+              "simulation_tick": 0,
+              "wall_elapsed_msec": 146,
+              "wall_unix_msec": 1792832719520
+            },
+            "native_state": {
+              "target_window": null,
+              "foreground_window": 131588,
+              "target_focused": false,
+              "lmb_down": false,
+              "keys_down": {
+                "r": false,
+                "d": false,
+                "w": false
+              },
+              "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+            }
+          }
+        },
+        {
+          "label": "Export window readiness",
+          "outcome": "wait_completed",
+          "budget_seconds": 30,
+          "wall_seconds": 1.9219999999999686,
+          "completed_within_original_wait": true,
+          "begin": {
+            "event": "wait_begin",
+            "seconds": 0.9060000000000059,
+            "wall_unix_msec": 1792832719537,
+            "driver_held_keys": [],
+            "driver_fire_down": false,
+            "label": "Export window readiness",
+            "budget_seconds": 30,
+            "native_state": {
+              "target_window": null,
+              "foreground_window": 131588,
+              "target_focused": false,
+              "lmb_down": false,
+              "keys_down": {
+                "r": false,
+                "d": false,
+                "w": false
+              },
+              "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+            }
+          },
+          "end": {
+            "event": "wait_completed",
+            "seconds": 2.8279999999999745,
+            "wall_unix_msec": 1792832721453,
+            "driver_held_keys": [],
+            "driver_fire_down": false,
+            "label": "Export window readiness",
+            "authority": {
+              "authority_elapsed_seconds": 2.0,
+              "fixture_elapsed_seconds": 2.02261333333333,
+              "joined_id": 0,
+              "peer_count": 0,
+              "phase": "live",
+              "reason": "periodic",
+              "simulation_tick": 120,
+              "wall_elapsed_msec": 1945,
+              "wall_unix_msec": 1792832721318
+            },
+            "native_state": {
+              "target_window": 655470,
+              "foreground_window": 655470,
+              "target_focused": true,
+              "lmb_down": false,
+              "keys_down": {
+                "r": false,
+                "d": false,
+                "w": false
+              },
+              "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+            }
+          }
+        },
+        {
+          "label": "Actual native menu readiness",
+          "outcome": "wait_completed",
+          "budget_seconds": 60,
+          "wall_seconds": 9.953000000000031,
+          "completed_within_original_wait": true,
+          "begin": {
+            "event": "wait_begin",
+            "seconds": 2.8279999999999745,
+            "wall_unix_msec": 1792832721455,
+            "driver_held_keys": [],
+            "driver_fire_down": false,
+            "label": "Actual native menu readiness",
+            "budget_seconds": 60,
+            "native_state": {
+              "target_window": 655470,
+              "foreground_window": 655470,
+              "target_focused": true,
+              "lmb_down": false,
+              "keys_down": {
+                "r": false,
+                "d": false,
+                "w": false
+              },
+              "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+            }
+          },
+          "end": {
+            "event": "wait_completed",
+            "seconds": 12.781000000000006,
+            "wall_unix_msec": 1792832731402,
+            "driver_held_keys": [],
+            "driver_fire_down": false,
+            "label": "Actual native menu readiness",
+            "authority": {
+              "authority_elapsed_seconds": 11.5666666666668,
+              "fixture_elapsed_seconds": 11.592111333333,
+              "joined_id": 0,
+              "peer_count": 0,
+              "phase": "live",
+              "reason": "periodic",
+              "simulation_tick": 694,
+              "wall_elapsed_msec": 11516,
+              "wall_unix_msec": 1792832730890
+            },
+            "native_state": {
+              "target_window": 655470,
+              "foreground_window": 655470,
+              "target_focused": true,
+              "lmb_down": false,
+              "keys_down": {
+                "r": false,
+                "d": false,
+                "w": false
+              },
+              "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+            }
+          }
+        },
+        {
+          "label": "Exported local-network page opened",
+          "outcome": "wait_completed",
+          "budget_seconds": 9.9,
+          "wall_seconds": 0.3439999999999941,
+          "completed_within_original_wait": true,
+          "begin": {
+            "event": "wait_begin",
+            "seconds": 13.5,
+            "wall_unix_msec": 1792832732125,
+            "driver_held_keys": [],
+            "driver_fire_down": false,
+            "label": "Exported local-network page opened",
+            "budget_seconds": 9.9,
+            "native_state": {
+              "target_window": 655470,
+              "foreground_window": 655470,
+              "target_focused": true,
+              "lmb_down": false,
+              "keys_down": {
+                "r": false,
+                "d": false,
+                "w": false
+              },
+              "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+            }
+          },
+          "end": {
+            "event": "wait_completed",
+            "seconds": 13.843999999999994,
+            "wall_unix_msec": 1792832732471,
+            "driver_held_keys": [],
+            "driver_fire_down": false,
+            "label": "Exported local-network page opened",
+            "authority": {
+              "authority_elapsed_seconds": 13.1000000000002,
+              "fixture_elapsed_seconds": 13.1255769999996,
+              "joined_id": 0,
+              "peer_count": 0,
+              "phase": "live",
+              "reason": "periodic",
+              "simulation_tick": 786,
+              "wall_elapsed_msec": 13054,
+              "wall_unix_msec": 1792832732428
+            },
+            "native_state": {
+              "target_window": 655470,
+              "foreground_window": 655470,
+              "target_focused": true,
+              "lmb_down": false,
+              "keys_down": {
+                "r": false,
+                "d": false,
+                "w": false
+              },
+              "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+            }
+          }
+        },
+        {
+          "label": "Owner snapshot acknowledged",
+          "outcome": "wait_completed",
+          "budget_seconds": 80,
+          "wall_seconds": 4.328000000000031,
+          "completed_within_original_wait": true,
+          "begin": {
+            "event": "wait_begin",
+            "seconds": 15.327999999999975,
+            "wall_unix_msec": 1792832733957,
+            "driver_held_keys": [],
+            "driver_fire_down": false,
+            "label": "Owner snapshot acknowledged",
+            "budget_seconds": 80,
+            "native_state": {
+              "target_window": 655470,
+              "foreground_window": 655470,
+              "target_focused": true,
+              "lmb_down": false,
+              "keys_down": {
+                "r": false,
+                "d": false,
+                "w": false
+              },
+              "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+            }
+          },
+          "end": {
+            "event": "wait_completed",
+            "seconds": 19.656000000000006,
+            "wall_unix_msec": 1792832738286,
+            "driver_held_keys": [],
+            "driver_fire_down": false,
+            "label": "Owner snapshot acknowledged",
+            "authority": {
+              "ack": 0,
+              "alive": true,
+              "ammo": 30,
+              "authority_elapsed_seconds": 18.7166666666669,
+              "fire_input": false,
+              "fixture_elapsed_seconds": 18.7333423333333,
+              "joined_id": 1,
+              "peer_bound": true,
+              "peer_count": 1,
+              "phase": "live",
+              "reason": "periodic",
+              "reload_input": false,
+              "reload_remaining": 0.0,
+              "reserve": 90,
+              "shots": 0,
+              "simulation_tick": 1123,
+              "wall_elapsed_msec": 18654,
+              "wall_unix_msec": 1792832738027,
+              "weapon": "rifle",
+              "weapon_input": ""
+            },
+            "native_state": {
+              "target_window": 655470,
+              "foreground_window": 655470,
+              "target_focused": true,
+              "lmb_down": false,
+              "keys_down": {
+                "r": false,
+                "d": false,
+                "w": false
+              },
+              "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+            }
+          }
+        },
+        {
+          "label": "Authority confirms reload start",
+          "outcome": "wait_completed",
+          "budget_seconds": 10,
+          "wall_seconds": 0.13999999999998636,
+          "completed_within_original_wait": true,
+          "begin": {
+            "event": "wait_begin",
+            "seconds": 28.437999999999988,
+            "wall_unix_msec": 1792832747069,
+            "driver_held_keys": [
+              "r"
+            ],
+            "driver_fire_down": false,
+            "label": "Authority confirms reload start",
+            "budget_seconds": 10,
+            "native_state": {
+              "target_window": 655470,
+              "foreground_window": 655470,
+              "target_focused": true,
+              "lmb_down": false,
+              "keys_down": {
+                "r": true,
+                "d": false,
+                "w": false
+              },
+              "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+            }
+          },
+          "end": {
+            "event": "wait_completed",
+            "seconds": 28.577999999999975,
+            "wall_unix_msec": 1792832747205,
+            "driver_held_keys": [
+              "r"
+            ],
+            "driver_fire_down": false,
+            "label": "Authority confirms reload start",
+            "authority": {
+              "ack": 431,
+              "alive": true,
+              "ammo": 27,
+              "authority_elapsed_seconds": 27.7999999999997,
+              "fire_input": false,
+              "fixture_elapsed_seconds": 27.8216850000003,
+              "joined_id": 1,
+              "peer_bound": true,
+              "peer_count": 1,
+              "phase": "live",
+              "reason": "state_edge",
+              "reload_input": true,
+              "reload_remaining": 2.25,
+              "reserve": 90,
+              "shots": 3,
+              "simulation_tick": 1668,
+              "wall_elapsed_msec": 27762,
+              "wall_unix_msec": 1792832747137,
+              "weapon": "rifle",
+              "weapon_input": ""
+            },
+            "native_state": {
+              "target_window": 655470,
+              "foreground_window": 655470,
+              "target_focused": true,
+              "lmb_down": false,
+              "keys_down": {
+                "r": true,
+                "d": false,
+                "w": false
+              },
+              "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+            }
+          }
+        },
+        {
+          "label": "Authority reload completion",
+          "outcome": "wait_completed",
+          "budget_seconds": 5,
+          "wall_seconds": 0.06200000000001182,
+          "completed_within_original_wait": true,
+          "begin": {
+            "event": "wait_begin",
+            "seconds": 30.968999999999994,
+            "wall_unix_msec": 1792832749599,
+            "driver_held_keys": [],
+            "driver_fire_down": false,
+            "label": "Authority reload completion",
+            "budget_seconds": 5,
+            "native_state": {
+              "target_window": 655470,
+              "foreground_window": 655470,
+              "target_focused": true,
+              "lmb_down": false,
+              "keys_down": {
+                "r": false,
+                "d": false,
+                "w": false
+              },
+              "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+            }
+          },
+          "end": {
+            "event": "wait_completed",
+            "seconds": 31.031000000000006,
+            "wall_unix_msec": 1792832749663,
+            "driver_held_keys": [],
+            "driver_fire_down": false,
+            "label": "Authority reload completion",
+            "authority": {
+              "ack": 565,
+              "alive": true,
+              "ammo": 30,
+              "authority_elapsed_seconds": 30.0666666666662,
+              "fire_input": false,
+              "fixture_elapsed_seconds": 30.0833333333336,
+              "joined_id": 1,
+              "peer_bound": true,
+              "peer_count": 1,
+              "phase": "live",
+              "reason": "state_edge",
+              "reload_input": true,
+              "reload_remaining": 0.0,
+              "reserve": 87,
+              "shots": 3,
+              "simulation_tick": 1804,
+              "wall_elapsed_msec": 30158,
+              "wall_unix_msec": 1792832749531,
+              "weapon": "rifle",
+              "weapon_input": ""
+            },
+            "native_state": {
+              "target_window": 655470,
+              "foreground_window": 655470,
+              "target_focused": true,
+              "lmb_down": false,
+              "keys_down": {
+                "r": false,
+                "d": false,
+                "w": false
+              },
+              "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+            }
+          }
+        }
+      ],
+      "unterminated_waits": [],
+      "actions_sha256": "7a4fd159aa3d05f14aa51e717c09c0ac0c435ca6bf99a11638ca7da30ca7f4f2"
+    },
+    {
+      "scenario": "reload-legacy-delayed",
+      "checks": {
+        "original_schedule_and_delay": true,
+        "original_inner_result_passed": true,
+        "every_reached_wait_completed_before_its_deadline": true,
+        "original_reload_wait:Authority confirms reload start": true,
+        "original_reload_wait:Authority reload completion": true,
+        "one_original_fire_down_release_and_capture": true,
+        "actual_fire_capture_release_order": true,
+        "actual_synthetic_capture_pressure_matches": true,
+        "legacy_inner_exit_zero": true
+      },
+      "all_passed": true,
+      "original_passed": true,
+      "original_error": null,
+      "elapsed_seconds_including_cleanup": 36.327999999999975,
+      "waits": [
+        {
+          "label": "Authority readiness",
+          "outcome": "wait_completed",
+          "budget_seconds": 15,
+          "wall_seconds": 0.5,
+          "completed_within_original_wait": true,
+          "begin": {
+            "event": "wait_begin",
+            "seconds": 0.4060000000000059,
+            "wall_unix_msec": 1792832755470,
+            "driver_held_keys": [],
+            "driver_fire_down": false,
+            "label": "Authority readiness",
+            "budget_seconds": 15,
+            "native_state": {
+              "target_window": null,
+              "foreground_window": 131588,
+              "target_focused": false,
+              "lmb_down": false,
+              "keys_down": {
+                "r": false,
+                "d": false,
+                "w": false
+              },
+              "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+            }
+          },
+          "end": {
+            "event": "wait_completed",
+            "seconds": 0.9060000000000059,
+            "wall_unix_msec": 1792832755975,
+            "driver_held_keys": [],
+            "driver_fire_down": false,
+            "label": "Authority readiness",
+            "authority": {
+              "authority_elapsed_seconds": 0.0,
+              "fixture_elapsed_seconds": 0.0,
+              "joined_id": 0,
+              "peer_count": 0,
+              "phase": "live",
+              "reason": "setup",
+              "simulation_tick": 0,
+              "wall_elapsed_msec": 146,
+              "wall_unix_msec": 1792832755956
+            },
+            "native_state": {
+              "target_window": null,
+              "foreground_window": 131588,
+              "target_focused": false,
+              "lmb_down": false,
+              "keys_down": {
+                "r": false,
+                "d": false,
+                "w": false
+              },
+              "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+            }
+          }
+        },
+        {
+          "label": "Export window readiness",
+          "outcome": "wait_completed",
+          "budget_seconds": 30,
+          "wall_seconds": 1.9219999999999686,
+          "completed_within_original_wait": true,
+          "begin": {
+            "event": "wait_begin",
+            "seconds": 0.9060000000000059,
+            "wall_unix_msec": 1792832755978,
+            "driver_held_keys": [],
+            "driver_fire_down": false,
+            "label": "Export window readiness",
+            "budget_seconds": 30,
+            "native_state": {
+              "target_window": null,
+              "foreground_window": 131588,
+              "target_focused": false,
+              "lmb_down": false,
+              "keys_down": {
+                "r": false,
+                "d": false,
+                "w": false
+              },
+              "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+            }
+          },
+          "end": {
+            "event": "wait_completed",
+            "seconds": 2.8279999999999745,
+            "wall_unix_msec": 1792832757887,
+            "driver_held_keys": [],
+            "driver_fire_down": false,
+            "label": "Export window readiness",
+            "authority": {
+              "authority_elapsed_seconds": 2.0,
+              "fixture_elapsed_seconds": 2.02305599999999,
+              "joined_id": 0,
+              "peer_count": 0,
+              "phase": "live",
+              "reason": "periodic",
+              "simulation_tick": 120,
+              "wall_elapsed_msec": 1935,
+              "wall_unix_msec": 1792832757745
+            },
+            "native_state": {
+              "target_window": 786542,
+              "foreground_window": 786542,
+              "target_focused": true,
+              "lmb_down": false,
+              "keys_down": {
+                "r": false,
+                "d": false,
+                "w": false
+              },
+              "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+            }
+          }
+        },
+        {
+          "label": "Actual native menu readiness",
+          "outcome": "wait_completed",
+          "budget_seconds": 60,
+          "wall_seconds": 9.937000000000012,
+          "completed_within_original_wait": true,
+          "begin": {
+            "event": "wait_begin",
+            "seconds": 2.8279999999999745,
+            "wall_unix_msec": 1792832757889,
+            "driver_held_keys": [],
+            "driver_fire_down": false,
+            "label": "Actual native menu readiness",
+            "budget_seconds": 60,
+            "native_state": {
+              "target_window": 786542,
+              "foreground_window": 786542,
+              "target_focused": true,
+              "lmb_down": false,
+              "keys_down": {
+                "r": false,
+                "d": false,
+                "w": false
+              },
+              "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+            }
+          },
+          "end": {
+            "event": "wait_completed",
+            "seconds": 12.764999999999986,
+            "wall_unix_msec": 1792832767828,
+            "driver_held_keys": [],
+            "driver_fire_down": false,
+            "label": "Actual native menu readiness",
+            "authority": {
+              "authority_elapsed_seconds": 12.0666666666668,
+              "fixture_elapsed_seconds": 12.0999999999996,
+              "joined_id": 0,
+              "peer_count": 0,
+              "phase": "live",
+              "reason": "periodic",
+              "simulation_tick": 724,
+              "wall_elapsed_msec": 12017,
+              "wall_unix_msec": 1792832767827
+            },
+            "native_state": {
+              "target_window": 786542,
+              "foreground_window": 786542,
+              "target_focused": true,
+              "lmb_down": false,
+              "keys_down": {
+                "r": false,
+                "d": false,
+                "w": false
+              },
+              "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+            }
+          }
+        },
+        {
+          "label": "Exported local-network page opened",
+          "outcome": "wait_completed",
+          "budget_seconds": 9.9,
+          "wall_seconds": 0.3280000000000314,
+          "completed_within_original_wait": true,
+          "begin": {
+            "event": "wait_begin",
+            "seconds": 13.60899999999998,
+            "wall_unix_msec": 1792832768683,
+            "driver_held_keys": [],
+            "driver_fire_down": false,
+            "label": "Exported local-network page opened",
+            "budget_seconds": 9.9,
+            "native_state": {
+              "target_window": 786542,
+              "foreground_window": 786542,
+              "target_focused": true,
+              "lmb_down": false,
+              "keys_down": {
+                "r": false,
+                "d": false,
+                "w": false
+              },
+              "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+            }
+          },
+          "end": {
+            "event": "wait_completed",
+            "seconds": 13.937000000000012,
+            "wall_unix_msec": 1792832769006,
+            "driver_held_keys": [],
+            "driver_fire_down": false,
+            "label": "Exported local-network page opened",
+            "authority": {
+              "authority_elapsed_seconds": 13.1000000000002,
+              "fixture_elapsed_seconds": 13.1170226666663,
+              "joined_id": 0,
+              "peer_count": 0,
+              "phase": "live",
+              "reason": "periodic",
+              "simulation_tick": 786,
+              "wall_elapsed_msec": 13039,
+              "wall_unix_msec": 1792832768849
+            },
+            "native_state": {
+              "target_window": 786542,
+              "foreground_window": 786542,
+              "target_focused": true,
+              "lmb_down": false,
+              "keys_down": {
+                "r": false,
+                "d": false,
+                "w": false
+              },
+              "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+            }
+          }
+        },
+        {
+          "label": "Owner snapshot acknowledged",
+          "outcome": "wait_completed",
+          "budget_seconds": 80,
+          "wall_seconds": 4.3589999999999804,
+          "completed_within_original_wait": true,
+          "begin": {
+            "event": "wait_begin",
+            "seconds": 15.437000000000012,
+            "wall_unix_msec": 1792832770511,
+            "driver_held_keys": [],
+            "driver_fire_down": false,
+            "label": "Owner snapshot acknowledged",
+            "budget_seconds": 80,
+            "native_state": {
+              "target_window": 786542,
+              "foreground_window": 786542,
+              "target_focused": true,
+              "lmb_down": false,
+              "keys_down": {
+                "r": false,
+                "d": false,
+                "w": false
+              },
+              "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+            }
+          },
+          "end": {
+            "event": "wait_completed",
+            "seconds": 19.795999999999992,
+            "wall_unix_msec": 1792832774864,
+            "driver_held_keys": [],
+            "driver_fire_down": false,
+            "label": "Owner snapshot acknowledged",
+            "authority": {
+              "ack": 0,
+              "alive": true,
+              "ammo": 30,
+              "authority_elapsed_seconds": 18.6500000000002,
+              "fire_input": false,
+              "fixture_elapsed_seconds": 18.6697133333334,
+              "joined_id": 1,
+              "peer_bound": true,
+              "peer_count": 1,
+              "phase": "live",
+              "reason": "periodic",
+              "reload_input": false,
+              "reload_remaining": 0.0,
+              "reserve": 90,
+              "shots": 0,
+              "simulation_tick": 1119,
+              "wall_elapsed_msec": 18600,
+              "wall_unix_msec": 1792832774410,
+              "weapon": "rifle",
+              "weapon_input": ""
+            },
+            "native_state": {
+              "target_window": 786542,
+              "foreground_window": 786542,
+              "target_focused": true,
+              "lmb_down": false,
+              "keys_down": {
+                "r": false,
+                "d": false,
+                "w": false
+              },
+              "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+            }
+          }
+        },
+        {
+          "label": "Authority confirms reload start",
+          "outcome": "wait_completed",
+          "budget_seconds": 10,
+          "wall_seconds": 0.28099999999994907,
+          "completed_within_original_wait": true,
+          "begin": {
+            "event": "wait_begin",
+            "seconds": 28.437000000000012,
+            "wall_unix_msec": 1792832783506,
+            "driver_held_keys": [
+              "r"
+            ],
+            "driver_fire_down": false,
+            "label": "Authority confirms reload start",
+            "budget_seconds": 10,
+            "native_state": {
+              "target_window": 786542,
+              "foreground_window": 786542,
+              "target_focused": true,
+              "lmb_down": false,
+              "keys_down": {
+                "r": true,
+                "d": false,
+                "w": false
+              },
+              "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+            }
+          },
+          "end": {
+            "event": "wait_completed",
+            "seconds": 28.71799999999996,
+            "wall_unix_msec": 1792832783779,
+            "driver_held_keys": [
+              "r"
+            ],
+            "driver_fire_down": false,
+            "label": "Authority confirms reload start",
+            "authority": {
+              "ack": 426,
+              "alive": true,
+              "ammo": 1,
+              "authority_elapsed_seconds": 27.3999999999997,
+              "fire_input": false,
+              "fixture_elapsed_seconds": 27.4247480000004,
+              "joined_id": 1,
+              "peer_bound": true,
+              "peer_count": 1,
+              "phase": "live",
+              "reason": "state_edge",
+              "reload_input": true,
+              "reload_remaining": 2.25,
+              "reserve": 90,
+              "shots": 29,
+              "simulation_tick": 1644,
+              "wall_elapsed_msec": 27833,
+              "wall_unix_msec": 1792832783643,
+              "weapon": "rifle",
+              "weapon_input": ""
+            },
+            "native_state": {
+              "target_window": 786542,
+              "foreground_window": 786542,
+              "target_focused": true,
+              "lmb_down": false,
+              "keys_down": {
+                "r": true,
+                "d": false,
+                "w": false
+              },
+              "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+            }
+          }
+        },
+        {
+          "label": "Authority reload completion",
+          "outcome": "wait_completed",
+          "budget_seconds": 5,
+          "wall_seconds": 0.0,
+          "completed_within_original_wait": true,
+          "begin": {
+            "event": "wait_begin",
+            "seconds": 31.04600000000005,
+            "wall_unix_msec": 1792832786109,
+            "driver_held_keys": [],
+            "driver_fire_down": false,
+            "label": "Authority reload completion",
+            "budget_seconds": 5,
+            "native_state": {
+              "target_window": 786542,
+              "foreground_window": 786542,
+              "target_focused": true,
+              "lmb_down": false,
+              "keys_down": {
+                "r": false,
+                "d": false,
+                "w": false
+              },
+              "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+            }
+          },
+          "end": {
+            "event": "wait_completed",
+            "seconds": 31.04600000000005,
+            "wall_unix_msec": 1792832786112,
+            "driver_held_keys": [],
+            "driver_fire_down": false,
+            "label": "Authority reload completion",
+            "authority": null,
+            "native_state": {
+              "target_window": 786542,
+              "foreground_window": 786542,
+              "target_focused": true,
+              "lmb_down": false,
+              "keys_down": {
+                "r": false,
+                "d": false,
+                "w": false
+              },
+              "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+            }
+          }
+        }
+      ],
+      "unterminated_waits": [],
+      "actions_sha256": "b090448d86966bb36d56ea3280cf579ca92751f0629f6d4fd73e2ac340399355"
+    }
+  ],
+  "scope": "Original driver schedule and wait brackets. Authority resource/input consumption is audited separately. An expired wait remains failed even if later final ammunition is complete."
+}

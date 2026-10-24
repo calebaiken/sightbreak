@@ -1,0 +1,23 @@
+test_no_value_null_button_title_is_empty_without_a_native_string_read (__main__.NativeUntitledControls.test_no_value_null_button_title_is_empty_without_a_native_string_read) ... ERROR
+
+======================================================================
+ERROR: test_no_value_null_button_title_is_empty_without_a_native_string_read (__main__.NativeUntitledControls.test_no_value_null_button_title_is_empty_without_a_native_string_read)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-mac-ax-untitled-r3/scripts/test_macos_ax_untitled.py", line 79, in test_no_value_null_button_title_is_empty_without_a_native_string_read
+    self.assertEqual(reader.title(1), '')
+                     ^^^^^^^^^^^^^^^
+  File "/workspace/reviews/mac-ax-read-only-r2-depth1-d6cb78aa/scripts/probe_macos_ax.py", line 195, in title
+    return self.string(element, 'AXTitle', CAPS['title_bytes'])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/reviews/mac-ax-read-only-r2-depth1-d6cb78aa/scripts/probe_macos_ax.py", line 166, in string
+    value = self.attribute(element, name)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/reviews/mac-ax-read-only-r2-depth1-d6cb78aa/scripts/probe_macos_ax.py", line 158, in attribute
+    raise RuntimeError('Required AX attribute unavailable: ' + name + ' code=' + str(error))
+RuntimeError: Required AX attribute unavailable: AXTitle code=-25212
+
+----------------------------------------------------------------------
+Ran 1 test in 0.003s
+
+FAILED (errors=1)

@@ -1,0 +1,173 @@
+{
+  "path": "core/math/vector3.h",
+  "url": "https://raw.githubusercontent.com/godotengine/godot/ed1daf0bf/core/math/vector3.h",
+  "bytes": 20478,
+  "sha256": "60bd8b6351a45b4e0927bbbda7b605b89ebe0572173c7dc2a1d121f33c9d5ae9",
+  "ranges": [
+    {
+      "start_line": 120,
+      "end_line": 138,
+      "text": "120: \t\t\t\tCLAMP(z, p_min, p_max));\n121: \t}\n122: \n123: \t_FORCE_INLINE_ real_t length() const;\n124: \t_FORCE_INLINE_ real_t length_squared() const;\n125: \n126: \t_FORCE_INLINE_ void normalize();\n127: \t_FORCE_INLINE_ Vector3 normalized() const;\n128: \t_FORCE_INLINE_ bool is_normalized() const;\n129: \t_FORCE_INLINE_ Vector3 inverse() const;\n130: \tVector3 limit_length(real_t p_len = 1.0) const;\n131: \n132: \t_FORCE_INLINE_ void zero();\n133: \n134: \tvoid snap(const Vector3 &p_step);\n135: \tvoid snapf(real_t p_step);\n136: \tVector3 snapped(const Vector3 &p_step) const;\n137: \tVector3 snappedf(real_t p_step) const;\n138: "
+    },
+    {
+      "start_line": 122,
+      "end_line": 140,
+      "text": "122: \n123: \t_FORCE_INLINE_ real_t length() const;\n124: \t_FORCE_INLINE_ real_t length_squared() const;\n125: \n126: \t_FORCE_INLINE_ void normalize();\n127: \t_FORCE_INLINE_ Vector3 normalized() const;\n128: \t_FORCE_INLINE_ bool is_normalized() const;\n129: \t_FORCE_INLINE_ Vector3 inverse() const;\n130: \tVector3 limit_length(real_t p_len = 1.0) const;\n131: \n132: \t_FORCE_INLINE_ void zero();\n133: \n134: \tvoid snap(const Vector3 &p_step);\n135: \tvoid snapf(real_t p_step);\n136: \tVector3 snapped(const Vector3 &p_step) const;\n137: \tVector3 snappedf(real_t p_step) const;\n138: \n139: \tvoid rotate(const Vector3 &p_axis, real_t p_angle);\n140: \tVector3 rotated(const Vector3 &p_axis, real_t p_angle) const;"
+    },
+    {
+      "start_line": 123,
+      "end_line": 141,
+      "text": "123: \t_FORCE_INLINE_ real_t length() const;\n124: \t_FORCE_INLINE_ real_t length_squared() const;\n125: \n126: \t_FORCE_INLINE_ void normalize();\n127: \t_FORCE_INLINE_ Vector3 normalized() const;\n128: \t_FORCE_INLINE_ bool is_normalized() const;\n129: \t_FORCE_INLINE_ Vector3 inverse() const;\n130: \tVector3 limit_length(real_t p_len = 1.0) const;\n131: \n132: \t_FORCE_INLINE_ void zero();\n133: \n134: \tvoid snap(const Vector3 &p_step);\n135: \tvoid snapf(real_t p_step);\n136: \tVector3 snapped(const Vector3 &p_step) const;\n137: \tVector3 snappedf(real_t p_step) const;\n138: \n139: \tvoid rotate(const Vector3 &p_axis, real_t p_angle);\n140: \tVector3 rotated(const Vector3 &p_axis, real_t p_angle) const;\n141: "
+    },
+    {
+      "start_line": 124,
+      "end_line": 142,
+      "text": "124: \t_FORCE_INLINE_ real_t length_squared() const;\n125: \n126: \t_FORCE_INLINE_ void normalize();\n127: \t_FORCE_INLINE_ Vector3 normalized() const;\n128: \t_FORCE_INLINE_ bool is_normalized() const;\n129: \t_FORCE_INLINE_ Vector3 inverse() const;\n130: \tVector3 limit_length(real_t p_len = 1.0) const;\n131: \n132: \t_FORCE_INLINE_ void zero();\n133: \n134: \tvoid snap(const Vector3 &p_step);\n135: \tvoid snapf(real_t p_step);\n136: \tVector3 snapped(const Vector3 &p_step) const;\n137: \tVector3 snappedf(real_t p_step) const;\n138: \n139: \tvoid rotate(const Vector3 &p_axis, real_t p_angle);\n140: \tVector3 rotated(const Vector3 &p_axis, real_t p_angle) const;\n141: \n142: \t/* Static Methods between 2 vector3s */"
+    },
+    {
+      "start_line": 155,
+      "end_line": 173,
+      "text": "155: \tVector2 octahedron_tangent_encode(float p_sign) const;\n156: \tstatic Vector3 octahedron_tangent_decode(const Vector2 &p_oct, float *r_sign);\n157: \n158: \t_FORCE_INLINE_ Vector3 cross(const Vector3 &p_with) const;\n159: \t_FORCE_INLINE_ real_t dot(const Vector3 &p_with) const;\n160: \tBasis outer(const Vector3 &p_with) const;\n161: \t_FORCE_INLINE_ Vector3 get_any_perpendicular() const;\n162: \n163: \t_FORCE_INLINE_ Vector3 abs() const;\n164: \t_FORCE_INLINE_ Vector3 floor() const;\n165: \t_FORCE_INLINE_ Vector3 sign() const;\n166: \t_FORCE_INLINE_ Vector3 ceil() const;\n167: \t_FORCE_INLINE_ Vector3 round() const;\n168: \n169: \t_FORCE_INLINE_ real_t distance_to(const Vector3 &p_to) const;\n170: \t_FORCE_INLINE_ real_t distance_squared_to(const Vector3 &p_to) const;\n171: \n172: \t_FORCE_INLINE_ Vector3 posmod(real_t p_mod) const;\n173: \t_FORCE_INLINE_ Vector3 posmodv(const Vector3 &p_modv) const;"
+    },
+    {
+      "start_line": 165,
+      "end_line": 183,
+      "text": "165: \t_FORCE_INLINE_ Vector3 sign() const;\n166: \t_FORCE_INLINE_ Vector3 ceil() const;\n167: \t_FORCE_INLINE_ Vector3 round() const;\n168: \n169: \t_FORCE_INLINE_ real_t distance_to(const Vector3 &p_to) const;\n170: \t_FORCE_INLINE_ real_t distance_squared_to(const Vector3 &p_to) const;\n171: \n172: \t_FORCE_INLINE_ Vector3 posmod(real_t p_mod) const;\n173: \t_FORCE_INLINE_ Vector3 posmodv(const Vector3 &p_modv) const;\n174: \t_FORCE_INLINE_ Vector3 project(const Vector3 &p_to) const;\n175: \n176: \t_FORCE_INLINE_ real_t angle_to(const Vector3 &p_to) const;\n177: \t_FORCE_INLINE_ real_t signed_angle_to(const Vector3 &p_to, const Vector3 &p_axis) const;\n178: \t_FORCE_INLINE_ Vector3 direction_to(const Vector3 &p_to) const;\n179: \n180: \t_FORCE_INLINE_ Vector3 slide(const Vector3 &p_normal) const;\n181: \t_FORCE_INLINE_ Vector3 bounce(const Vector3 &p_normal) const;\n182: \t_FORCE_INLINE_ Vector3 reflect(const Vector3 &p_normal) const;\n183: "
+    },
+    {
+      "start_line": 222,
+      "end_line": 240,
+      "text": "222: \t}\n223: \n224: \tconstexpr Vector3() :\n225: \t\t\tx(0), y(0), z(0) {}\n226: \tconstexpr Vector3(real_t p_x, real_t p_y, real_t p_z) :\n227: \t\t\tx(p_x), y(p_y), z(p_z) {}\n228: };\n229: \n230: inline constexpr Vector3 Vector3::LEFT = { -1, 0, 0 };\n231: inline constexpr Vector3 Vector3::RIGHT = { 1, 0, 0 };\n232: inline constexpr Vector3 Vector3::UP = { 0, 1, 0 };\n233: inline constexpr Vector3 Vector3::DOWN = { 0, -1, 0 };\n234: inline constexpr Vector3 Vector3::FORWARD = { 0, 0, -1 };\n235: inline constexpr Vector3 Vector3::BACK = { 0, 0, 1 };\n236: inline constexpr Vector3 Vector3::MODEL_LEFT = { 1, 0, 0 };\n237: inline constexpr Vector3 Vector3::MODEL_RIGHT = { -1, 0, 0 };\n238: inline constexpr Vector3 Vector3::MODEL_TOP = { 0, 1, 0 };\n239: inline constexpr Vector3 Vector3::MODEL_BOTTOM = { 0, -1, 0 };\n240: inline constexpr Vector3 Vector3::MODEL_FRONT = { 0, 0, 1 };"
+    },
+    {
+      "start_line": 248,
+      "end_line": 266,
+      "text": "248: \n249: \treturn ret;\n250: }\n251: \n252: real_t Vector3::dot(const Vector3 &p_with) const {\n253: \treturn x * p_with.x + y * p_with.y + z * p_with.z;\n254: }\n255: \n256: Vector3 Vector3::abs() const {\n257: \treturn Vector3(Math::abs(x), Math::abs(y), Math::abs(z));\n258: }\n259: \n260: Vector3 Vector3::sign() const {\n261: \treturn Vector3(SIGN(x), SIGN(y), SIGN(z));\n262: }\n263: \n264: Vector3 Vector3::floor() const {\n265: \treturn Vector3(Math::floor(x), Math::floor(y), Math::floor(z));\n266: }"
+    },
+    {
+      "start_line": 283,
+      "end_line": 301,
+      "text": "283: \n284: Vector3 Vector3::slerp(const Vector3 &p_to, real_t p_weight) const {\n285: \t// This method seems more complicated than it really is, since we write out\n286: \t// the internals of some methods for efficiency (mainly, checking length).\n287: \treal_t start_length_sq = length_squared();\n288: \treal_t end_length_sq = p_to.length_squared();\n289: \tif (unlikely(start_length_sq == 0.0f || end_length_sq == 0.0f)) {\n290: \t\t// Zero length vectors have no angle, so the best we can do is either lerp or throw an error.\n291: \t\treturn lerp(p_to, p_weight);\n292: \t}\n293: \tVector3 axis = cross(p_to);\n294: \treal_t axis_length_sq = axis.length_squared();\n295: \tif (unlikely(axis_length_sq == 0.0f)) {\n296: \t\t// Colinear vectors have no rotation axis or angle between them, so the best we can do is lerp.\n297: \t\treturn lerp(p_to, p_weight);\n298: \t}\n299: \taxis /= Math::sqrt(axis_length_sq);\n300: \treal_t start_length = Math::sqrt(start_length_sq);\n301: \treal_t result_length = Math::lerp(start_length, Math::sqrt(end_length_sq), p_weight);"
+    },
+    {
+      "start_line": 284,
+      "end_line": 302,
+      "text": "284: Vector3 Vector3::slerp(const Vector3 &p_to, real_t p_weight) const {\n285: \t// This method seems more complicated than it really is, since we write out\n286: \t// the internals of some methods for efficiency (mainly, checking length).\n287: \treal_t start_length_sq = length_squared();\n288: \treal_t end_length_sq = p_to.length_squared();\n289: \tif (unlikely(start_length_sq == 0.0f || end_length_sq == 0.0f)) {\n290: \t\t// Zero length vectors have no angle, so the best we can do is either lerp or throw an error.\n291: \t\treturn lerp(p_to, p_weight);\n292: \t}\n293: \tVector3 axis = cross(p_to);\n294: \treal_t axis_length_sq = axis.length_squared();\n295: \tif (unlikely(axis_length_sq == 0.0f)) {\n296: \t\t// Colinear vectors have no rotation axis or angle between them, so the best we can do is lerp.\n297: \t\treturn lerp(p_to, p_weight);\n298: \t}\n299: \taxis /= Math::sqrt(axis_length_sq);\n300: \treal_t start_length = Math::sqrt(start_length_sq);\n301: \treal_t result_length = Math::lerp(start_length, Math::sqrt(end_length_sq), p_weight);\n302: \treal_t angle = angle_to(p_to);"
+    },
+    {
+      "start_line": 290,
+      "end_line": 308,
+      "text": "290: \t\t// Zero length vectors have no angle, so the best we can do is either lerp or throw an error.\n291: \t\treturn lerp(p_to, p_weight);\n292: \t}\n293: \tVector3 axis = cross(p_to);\n294: \treal_t axis_length_sq = axis.length_squared();\n295: \tif (unlikely(axis_length_sq == 0.0f)) {\n296: \t\t// Colinear vectors have no rotation axis or angle between them, so the best we can do is lerp.\n297: \t\treturn lerp(p_to, p_weight);\n298: \t}\n299: \taxis /= Math::sqrt(axis_length_sq);\n300: \treal_t start_length = Math::sqrt(start_length_sq);\n301: \treal_t result_length = Math::lerp(start_length, Math::sqrt(end_length_sq), p_weight);\n302: \treal_t angle = angle_to(p_to);\n303: \treturn rotated(axis, angle * p_weight) * (result_length / start_length);\n304: }\n305: \n306: Vector3 Vector3::cubic_interpolate(const Vector3 &p_b, const Vector3 &p_pre_a, const Vector3 &p_post_b, real_t p_weight) const {\n307: \tVector3 res = *this;\n308: \tres.x = Math::cubic_interpolate(res.x, p_b.x, p_pre_a.x, p_post_b.x, p_weight);"
+    },
+    {
+      "start_line": 334,
+      "end_line": 352,
+      "text": "334: \tres.z = Math::bezier_derivative(res.z, p_control_1.z, p_control_2.z, p_end.z, p_t);\n335: \treturn res;\n336: }\n337: \n338: real_t Vector3::distance_to(const Vector3 &p_to) const {\n339: \treturn (p_to - *this).length();\n340: }\n341: \n342: real_t Vector3::distance_squared_to(const Vector3 &p_to) const {\n343: \treturn (p_to - *this).length_squared();\n344: }\n345: \n346: Vector3 Vector3::posmod(real_t p_mod) const {\n347: \treturn Vector3(Math::fposmod(x, p_mod), Math::fposmod(y, p_mod), Math::fposmod(z, p_mod));\n348: }\n349: \n350: Vector3 Vector3::posmodv(const Vector3 &p_modv) const {\n351: \treturn Vector3(Math::fposmod(x, p_modv.x), Math::fposmod(y, p_modv.y), Math::fposmod(z, p_modv.z));\n352: }"
+    },
+    {
+      "start_line": 339,
+      "end_line": 357,
+      "text": "339: \treturn (p_to - *this).length();\n340: }\n341: \n342: real_t Vector3::distance_squared_to(const Vector3 &p_to) const {\n343: \treturn (p_to - *this).length_squared();\n344: }\n345: \n346: Vector3 Vector3::posmod(real_t p_mod) const {\n347: \treturn Vector3(Math::fposmod(x, p_mod), Math::fposmod(y, p_mod), Math::fposmod(z, p_mod));\n348: }\n349: \n350: Vector3 Vector3::posmodv(const Vector3 &p_modv) const {\n351: \treturn Vector3(Math::fposmod(x, p_modv.x), Math::fposmod(y, p_modv.y), Math::fposmod(z, p_modv.z));\n352: }\n353: \n354: Vector3 Vector3::project(const Vector3 &p_to) const {\n355: \treturn p_to * (dot(p_to) / p_to.length_squared());\n356: }\n357: "
+    },
+    {
+      "start_line": 351,
+      "end_line": 369,
+      "text": "351: \treturn Vector3(Math::fposmod(x, p_modv.x), Math::fposmod(y, p_modv.y), Math::fposmod(z, p_modv.z));\n352: }\n353: \n354: Vector3 Vector3::project(const Vector3 &p_to) const {\n355: \treturn p_to * (dot(p_to) / p_to.length_squared());\n356: }\n357: \n358: real_t Vector3::angle_to(const Vector3 &p_to) const {\n359: \treturn Math::atan2(cross(p_to).length(), dot(p_to));\n360: }\n361: \n362: real_t Vector3::signed_angle_to(const Vector3 &p_to, const Vector3 &p_axis) const {\n363: \tVector3 cross_to = cross(p_to);\n364: \treal_t unsigned_angle = Math::atan2(cross_to.length(), dot(p_to));\n365: \treal_t sign = cross_to.dot(p_axis);\n366: \treturn (sign < 0) ? -unsigned_angle : unsigned_angle;\n367: }\n368: \n369: Vector3 Vector3::direction_to(const Vector3 &p_to) const {"
+    },
+    {
+      "start_line": 355,
+      "end_line": 373,
+      "text": "355: \treturn p_to * (dot(p_to) / p_to.length_squared());\n356: }\n357: \n358: real_t Vector3::angle_to(const Vector3 &p_to) const {\n359: \treturn Math::atan2(cross(p_to).length(), dot(p_to));\n360: }\n361: \n362: real_t Vector3::signed_angle_to(const Vector3 &p_to, const Vector3 &p_axis) const {\n363: \tVector3 cross_to = cross(p_to);\n364: \treal_t unsigned_angle = Math::atan2(cross_to.length(), dot(p_to));\n365: \treal_t sign = cross_to.dot(p_axis);\n366: \treturn (sign < 0) ? -unsigned_angle : unsigned_angle;\n367: }\n368: \n369: Vector3 Vector3::direction_to(const Vector3 &p_to) const {\n370: \tVector3 ret(p_to.x - x, p_to.y - y, p_to.z - z);\n371: \tret.normalize();\n372: \treturn ret;\n373: }"
+    },
+    {
+      "start_line": 360,
+      "end_line": 378,
+      "text": "360: }\n361: \n362: real_t Vector3::signed_angle_to(const Vector3 &p_to, const Vector3 &p_axis) const {\n363: \tVector3 cross_to = cross(p_to);\n364: \treal_t unsigned_angle = Math::atan2(cross_to.length(), dot(p_to));\n365: \treal_t sign = cross_to.dot(p_axis);\n366: \treturn (sign < 0) ? -unsigned_angle : unsigned_angle;\n367: }\n368: \n369: Vector3 Vector3::direction_to(const Vector3 &p_to) const {\n370: \tVector3 ret(p_to.x - x, p_to.y - y, p_to.z - z);\n371: \tret.normalize();\n372: \treturn ret;\n373: }\n374: \n375: Vector3 Vector3::get_any_perpendicular() const {\n376: \t// Return the any perpendicular vector by cross product with the Vector3.RIGHT or Vector3.UP,\n377: \t// whichever has the greater angle to the current vector with the sign of each element positive.\n378: \t// The only essence is \"to avoid being parallel to the current vector\", and there is no mathematical basis for using Vector3.RIGHT and Vector3.UP,"
+    },
+    {
+      "start_line": 361,
+      "end_line": 379,
+      "text": "361: \n362: real_t Vector3::signed_angle_to(const Vector3 &p_to, const Vector3 &p_axis) const {\n363: \tVector3 cross_to = cross(p_to);\n364: \treal_t unsigned_angle = Math::atan2(cross_to.length(), dot(p_to));\n365: \treal_t sign = cross_to.dot(p_axis);\n366: \treturn (sign < 0) ? -unsigned_angle : unsigned_angle;\n367: }\n368: \n369: Vector3 Vector3::direction_to(const Vector3 &p_to) const {\n370: \tVector3 ret(p_to.x - x, p_to.y - y, p_to.z - z);\n371: \tret.normalize();\n372: \treturn ret;\n373: }\n374: \n375: Vector3 Vector3::get_any_perpendicular() const {\n376: \t// Return the any perpendicular vector by cross product with the Vector3.RIGHT or Vector3.UP,\n377: \t// whichever has the greater angle to the current vector with the sign of each element positive.\n378: \t// The only essence is \"to avoid being parallel to the current vector\", and there is no mathematical basis for using Vector3.RIGHT and Vector3.UP,\n379: \t// since it could be a different vector depending on the prior branching code Math::abs(x) <= Math::abs(y) && Math::abs(x) <= Math::abs(z)."
+    },
+    {
+      "start_line": 367,
+      "end_line": 385,
+      "text": "367: }\n368: \n369: Vector3 Vector3::direction_to(const Vector3 &p_to) const {\n370: \tVector3 ret(p_to.x - x, p_to.y - y, p_to.z - z);\n371: \tret.normalize();\n372: \treturn ret;\n373: }\n374: \n375: Vector3 Vector3::get_any_perpendicular() const {\n376: \t// Return the any perpendicular vector by cross product with the Vector3.RIGHT or Vector3.UP,\n377: \t// whichever has the greater angle to the current vector with the sign of each element positive.\n378: \t// The only essence is \"to avoid being parallel to the current vector\", and there is no mathematical basis for using Vector3.RIGHT and Vector3.UP,\n379: \t// since it could be a different vector depending on the prior branching code Math::abs(x) <= Math::abs(y) && Math::abs(x) <= Math::abs(z).\n380: \t// However, it would be reasonable to use any of the axes of the basis, as it is simpler to calculate.\n381: \tERR_FAIL_COND_V_MSG(is_zero_approx(), Vector3(0, 0, 0), \"The Vector3 must not be zero.\");\n382: \treturn cross((Math::abs(x) <= Math::abs(y) && Math::abs(x) <= Math::abs(z)) ? Vector3::RIGHT : Vector3::UP).normalized();\n383: }\n384: \n385: /* Operators */"
+    },
+    {
+      "start_line": 378,
+      "end_line": 396,
+      "text": "378: \t// The only essence is \"to avoid being parallel to the current vector\", and there is no mathematical basis for using Vector3.RIGHT and Vector3.UP,\n379: \t// since it could be a different vector depending on the prior branching code Math::abs(x) <= Math::abs(y) && Math::abs(x) <= Math::abs(z).\n380: \t// However, it would be reasonable to use any of the axes of the basis, as it is simpler to calculate.\n381: \tERR_FAIL_COND_V_MSG(is_zero_approx(), Vector3(0, 0, 0), \"The Vector3 must not be zero.\");\n382: \treturn cross((Math::abs(x) <= Math::abs(y) && Math::abs(x) <= Math::abs(z)) ? Vector3::RIGHT : Vector3::UP).normalized();\n383: }\n384: \n385: /* Operators */\n386: \n387: constexpr Vector3 &Vector3::operator+=(const Vector3 &p_v) {\n388: \tx += p_v.x;\n389: \ty += p_v.y;\n390: \tz += p_v.z;\n391: \treturn *this;\n392: }\n393: \n394: constexpr Vector3 Vector3::operator+(const Vector3 &p_v) const {\n395: \treturn Vector3(x + p_v.x, y + p_v.y, z + p_v.z);\n396: }"
+    },
+    {
+      "start_line": 524,
+      "end_line": 542,
+      "text": "524: _FORCE_INLINE_ Vector3 vec3_cross(const Vector3 &p_a, const Vector3 &p_b) {\n525: \treturn p_a.cross(p_b);\n526: }\n527: \n528: _FORCE_INLINE_ real_t vec3_dot(const Vector3 &p_a, const Vector3 &p_b) {\n529: \treturn p_a.dot(p_b);\n530: }\n531: \n532: real_t Vector3::length() const {\n533: \treal_t x2 = x * x;\n534: \treal_t y2 = y * y;\n535: \treal_t z2 = z * z;\n536: \n537: \treturn Math::sqrt(x2 + y2 + z2);\n538: }\n539: \n540: real_t Vector3::length_squared() const {\n541: \treal_t x2 = x * x;\n542: \treal_t y2 = y * y;"
+    },
+    {
+      "start_line": 525,
+      "end_line": 543,
+      "text": "525: \treturn p_a.cross(p_b);\n526: }\n527: \n528: _FORCE_INLINE_ real_t vec3_dot(const Vector3 &p_a, const Vector3 &p_b) {\n529: \treturn p_a.dot(p_b);\n530: }\n531: \n532: real_t Vector3::length() const {\n533: \treal_t x2 = x * x;\n534: \treal_t y2 = y * y;\n535: \treal_t z2 = z * z;\n536: \n537: \treturn Math::sqrt(x2 + y2 + z2);\n538: }\n539: \n540: real_t Vector3::length_squared() const {\n541: \treal_t x2 = x * x;\n542: \treal_t y2 = y * y;\n543: \treal_t z2 = z * z;"
+    },
+    {
+      "start_line": 536,
+      "end_line": 554,
+      "text": "536: \n537: \treturn Math::sqrt(x2 + y2 + z2);\n538: }\n539: \n540: real_t Vector3::length_squared() const {\n541: \treal_t x2 = x * x;\n542: \treal_t y2 = y * y;\n543: \treal_t z2 = z * z;\n544: \n545: \treturn x2 + y2 + z2;\n546: }\n547: \n548: void Vector3::normalize() {\n549: \tif (!is_finite()) {\n550: #ifdef MATH_CHECKS\n551: \t\tWARN_PRINT(\"Vector3 cannot be normalized, the elements must be finite. Making (0, 0, 0) as a fallback.\");\n552: #endif // MATH_CHECKS\n553: \t\tzero();\n554: \t\treturn;"
+    },
+    {
+      "start_line": 544,
+      "end_line": 562,
+      "text": "544: \n545: \treturn x2 + y2 + z2;\n546: }\n547: \n548: void Vector3::normalize() {\n549: \tif (!is_finite()) {\n550: #ifdef MATH_CHECKS\n551: \t\tWARN_PRINT(\"Vector3 cannot be normalized, the elements must be finite. Making (0, 0, 0) as a fallback.\");\n552: #endif // MATH_CHECKS\n553: \t\tzero();\n554: \t\treturn;\n555: \t}\n556: \n557: \treal_t l = length_squared();\n558: \tif (l == 0) {\n559: \t\tzero();\n560: \t} else {\n561: \t\tl = Math::sqrt(l);\n562: \t\tx /= l;"
+    },
+    {
+      "start_line": 553,
+      "end_line": 571,
+      "text": "553: \t\tzero();\n554: \t\treturn;\n555: \t}\n556: \n557: \treal_t l = length_squared();\n558: \tif (l == 0) {\n559: \t\tzero();\n560: \t} else {\n561: \t\tl = Math::sqrt(l);\n562: \t\tx /= l;\n563: \t\ty /= l;\n564: \t\tz /= l;\n565: \t}\n566: }\n567: \n568: Vector3 Vector3::normalized() const {\n569: \tVector3 v = *this;\n570: \tv.normalize();\n571: \treturn v;"
+    },
+    {
+      "start_line": 564,
+      "end_line": 582,
+      "text": "564: \t\tz /= l;\n565: \t}\n566: }\n567: \n568: Vector3 Vector3::normalized() const {\n569: \tVector3 v = *this;\n570: \tv.normalize();\n571: \treturn v;\n572: }\n573: \n574: bool Vector3::is_normalized() const {\n575: \t// use length_squared() instead of length() to avoid sqrt(), makes it more stringent.\n576: \treturn Math::is_equal_approx(length_squared(), 1, (real_t)UNIT_EPSILON);\n577: }\n578: \n579: Vector3 Vector3::inverse() const {\n580: \treturn Vector3(1.0f / x, 1.0f / y, 1.0f / z);\n581: }\n582: "
+    },
+    {
+      "start_line": 566,
+      "end_line": 584,
+      "text": "566: }\n567: \n568: Vector3 Vector3::normalized() const {\n569: \tVector3 v = *this;\n570: \tv.normalize();\n571: \treturn v;\n572: }\n573: \n574: bool Vector3::is_normalized() const {\n575: \t// use length_squared() instead of length() to avoid sqrt(), makes it more stringent.\n576: \treturn Math::is_equal_approx(length_squared(), 1, (real_t)UNIT_EPSILON);\n577: }\n578: \n579: Vector3 Vector3::inverse() const {\n580: \treturn Vector3(1.0f / x, 1.0f / y, 1.0f / z);\n581: }\n582: \n583: void Vector3::zero() {\n584: \tx = y = z = 0;"
+    },
+    {
+      "start_line": 570,
+      "end_line": 588,
+      "text": "570: \tv.normalize();\n571: \treturn v;\n572: }\n573: \n574: bool Vector3::is_normalized() const {\n575: \t// use length_squared() instead of length() to avoid sqrt(), makes it more stringent.\n576: \treturn Math::is_equal_approx(length_squared(), 1, (real_t)UNIT_EPSILON);\n577: }\n578: \n579: Vector3 Vector3::inverse() const {\n580: \treturn Vector3(1.0f / x, 1.0f / y, 1.0f / z);\n581: }\n582: \n583: void Vector3::zero() {\n584: \tx = y = z = 0;\n585: }\n586: \n587: // slide returns the component of the vector along the given plane, specified by its normal vector.\n588: Vector3 Vector3::slide(const Vector3 &p_normal) const {"
+    },
+    {
+      "start_line": 571,
+      "end_line": 589,
+      "text": "571: \treturn v;\n572: }\n573: \n574: bool Vector3::is_normalized() const {\n575: \t// use length_squared() instead of length() to avoid sqrt(), makes it more stringent.\n576: \treturn Math::is_equal_approx(length_squared(), 1, (real_t)UNIT_EPSILON);\n577: }\n578: \n579: Vector3 Vector3::inverse() const {\n580: \treturn Vector3(1.0f / x, 1.0f / y, 1.0f / z);\n581: }\n582: \n583: void Vector3::zero() {\n584: \tx = y = z = 0;\n585: }\n586: \n587: // slide returns the component of the vector along the given plane, specified by its normal vector.\n588: Vector3 Vector3::slide(const Vector3 &p_normal) const {\n589: #ifdef MATH_CHECKS"
+    },
+    {
+      "start_line": 572,
+      "end_line": 590,
+      "text": "572: }\n573: \n574: bool Vector3::is_normalized() const {\n575: \t// use length_squared() instead of length() to avoid sqrt(), makes it more stringent.\n576: \treturn Math::is_equal_approx(length_squared(), 1, (real_t)UNIT_EPSILON);\n577: }\n578: \n579: Vector3 Vector3::inverse() const {\n580: \treturn Vector3(1.0f / x, 1.0f / y, 1.0f / z);\n581: }\n582: \n583: void Vector3::zero() {\n584: \tx = y = z = 0;\n585: }\n586: \n587: // slide returns the component of the vector along the given plane, specified by its normal vector.\n588: Vector3 Vector3::slide(const Vector3 &p_normal) const {\n589: #ifdef MATH_CHECKS\n590: \tERR_FAIL_COND_V_MSG(!p_normal.is_normalized(), Vector3(), \"The normal Vector3 \" + p_normal.operator String() + \" must be normalized.\");"
+    },
+    {
+      "start_line": 586,
+      "end_line": 604,
+      "text": "586: \n587: // slide returns the component of the vector along the given plane, specified by its normal vector.\n588: Vector3 Vector3::slide(const Vector3 &p_normal) const {\n589: #ifdef MATH_CHECKS\n590: \tERR_FAIL_COND_V_MSG(!p_normal.is_normalized(), Vector3(), \"The normal Vector3 \" + p_normal.operator String() + \" must be normalized.\");\n591: #endif\n592: \treturn *this - p_normal * dot(p_normal);\n593: }\n594: \n595: Vector3 Vector3::bounce(const Vector3 &p_normal) const {\n596: \treturn -reflect(p_normal);\n597: }\n598: \n599: Vector3 Vector3::reflect(const Vector3 &p_normal) const {\n600: #ifdef MATH_CHECKS\n601: \tERR_FAIL_COND_V_MSG(!p_normal.is_normalized(), Vector3(), \"The normal Vector3 \" + p_normal.operator String() + \" must be normalized.\");\n602: #endif\n603: \treturn 2.0f * p_normal * dot(p_normal) - *this;\n604: }"
+    },
+    {
+      "start_line": 588,
+      "end_line": 606,
+      "text": "588: Vector3 Vector3::slide(const Vector3 &p_normal) const {\n589: #ifdef MATH_CHECKS\n590: \tERR_FAIL_COND_V_MSG(!p_normal.is_normalized(), Vector3(), \"The normal Vector3 \" + p_normal.operator String() + \" must be normalized.\");\n591: #endif\n592: \treturn *this - p_normal * dot(p_normal);\n593: }\n594: \n595: Vector3 Vector3::bounce(const Vector3 &p_normal) const {\n596: \treturn -reflect(p_normal);\n597: }\n598: \n599: Vector3 Vector3::reflect(const Vector3 &p_normal) const {\n600: #ifdef MATH_CHECKS\n601: \tERR_FAIL_COND_V_MSG(!p_normal.is_normalized(), Vector3(), \"The normal Vector3 \" + p_normal.operator String() + \" must be normalized.\");\n602: #endif\n603: \treturn 2.0f * p_normal * dot(p_normal) - *this;\n604: }\n605: \n606: template <>"
+    },
+    {
+      "start_line": 597,
+      "end_line": 607,
+      "text": "597: }\n598: \n599: Vector3 Vector3::reflect(const Vector3 &p_normal) const {\n600: #ifdef MATH_CHECKS\n601: \tERR_FAIL_COND_V_MSG(!p_normal.is_normalized(), Vector3(), \"The normal Vector3 \" + p_normal.operator String() + \" must be normalized.\");\n602: #endif\n603: \treturn 2.0f * p_normal * dot(p_normal) - *this;\n604: }\n605: \n606: template <>\n607: struct is_zero_constructible<Vector3> : std::true_type {};"
+    },
+    {
+      "start_line": 599,
+      "end_line": 607,
+      "text": "599: Vector3 Vector3::reflect(const Vector3 &p_normal) const {\n600: #ifdef MATH_CHECKS\n601: \tERR_FAIL_COND_V_MSG(!p_normal.is_normalized(), Vector3(), \"The normal Vector3 \" + p_normal.operator String() + \" must be normalized.\");\n602: #endif\n603: \treturn 2.0f * p_normal * dot(p_normal) - *this;\n604: }\n605: \n606: template <>\n607: struct is_zero_constructible<Vector3> : std::true_type {};"
+    }
+  ]
+}

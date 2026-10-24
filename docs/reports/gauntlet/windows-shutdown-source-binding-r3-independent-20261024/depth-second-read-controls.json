@@ -1,0 +1,302 @@
+{
+  "source": "ebc1a94133d4d73c3a553d528986c8fc40c740a9",
+  "cpu": [
+    4
+  ],
+  "native_invocations": 0,
+  "controls": 13,
+  "unmatched": [],
+  "results": [
+    {
+      "name": "unchanged",
+      "expected": "BIND",
+      "actual": "BIND",
+      "matched": true,
+      "receipt": {
+        "bytes": 15,
+        "sha256": "45c0b761a6c6640319e6cddeb492718532f70161ed9174c75ca7f1158c508b2f",
+        "canonical_sha256": "45c0b761a6c6640319e6cddeb492718532f70161ed9174c75ca7f1158c508b2f",
+        "canonical_mode": "100644",
+        "physical_mode": "100644",
+        "checkout_conversion": "none",
+        "read_observations": 2,
+        "change_metadata_scope": "POSIX st_ctime_ns",
+        "mode_scope": "POSIX owner executable bit"
+      },
+      "error": null,
+      "input_hex": "6f726967696e616c2062797465730a",
+      "mutated_hex": "6368616e676564212062797465730a",
+      "counts": {
+        "reads": 2
+      }
+    },
+    {
+      "name": "first_edit",
+      "expected": "REJECT",
+      "actual": "REJECT",
+      "matched": true,
+      "receipt": null,
+      "error": "ValueError: source changed during physical read: /tmp/tmpzva6g5mw/source.py",
+      "input_hex": "6f726967696e616c2062797465730a",
+      "mutated_hex": "6368616e676564212062797465730a",
+      "counts": {
+        "reads": 1
+      }
+    },
+    {
+      "name": "second_edit",
+      "expected": "REJECT",
+      "actual": "REJECT",
+      "matched": true,
+      "receipt": null,
+      "error": "ValueError: source changed during physical read: /tmp/tmpzva6g5mw/source.py",
+      "input_hex": "6f726967696e616c2062797465730a",
+      "mutated_hex": "6368616e676564212062797465730a",
+      "counts": {
+        "reads": 2
+      }
+    },
+    {
+      "name": "constant_metadata_edit",
+      "expected": "REJECT",
+      "actual": "REJECT",
+      "matched": true,
+      "receipt": null,
+      "error": "ValueError: source changed during physical read: /tmp/tmpzva6g5mw/source.py",
+      "input_hex": "6f726967696e616c2062797465730a",
+      "mutated_hex": "6368616e676564212062797465730a",
+      "counts": {
+        "reads": 2
+      }
+    },
+    {
+      "name": "second_error",
+      "expected": "REJECT",
+      "actual": "REJECT",
+      "matched": true,
+      "receipt": null,
+      "error": "OSError: injected second read error",
+      "input_hex": "6f726967696e616c2062797465730a",
+      "mutated_hex": "6368616e676564212062797465730a",
+      "counts": {
+        "reads": 2
+      }
+    },
+    {
+      "name": "second_delete",
+      "expected": "REJECT",
+      "actual": "REJECT",
+      "matched": true,
+      "receipt": null,
+      "error": "FileNotFoundError: [Errno 2] No such file or directory: '/tmp/tmpzva6g5mw/source.py'",
+      "input_hex": "6f726967696e616c2062797465730a",
+      "mutated_hex": "6368616e676564212062797465730a",
+      "counts": {
+        "reads": 2
+      }
+    },
+    {
+      "name": "final_st_ino",
+      "expected": "REJECT",
+      "actual": "REJECT",
+      "matched": true,
+      "receipt": null,
+      "error": "ValueError: source changed during physical read: /tmp/tmpzva6g5mw/source.py",
+      "metadata_before": {
+        "st_dev": 33,
+        "st_ino": 76297,
+        "st_size": 15,
+        "st_mtime_ns": 1792851476074746273,
+        "st_ctime_ns": 1792851476074746273,
+        "st_mode": 33188,
+        "st_atime_ns": 1792851476074715519
+      },
+      "metadata_final": {
+        "st_dev": 33,
+        "st_ino": 76298,
+        "st_size": 15,
+        "st_mtime_ns": 1792851476074746273,
+        "st_ctime_ns": 1792851476074746273,
+        "st_mode": 33188,
+        "st_atime_ns": 1792851476074715519
+      },
+      "calls": {
+        "lstat": 4
+      }
+    },
+    {
+      "name": "final_st_size",
+      "expected": "REJECT",
+      "actual": "REJECT",
+      "matched": true,
+      "receipt": null,
+      "error": "ValueError: source changed during physical read: /tmp/tmpzva6g5mw/source.py",
+      "metadata_before": {
+        "st_dev": 33,
+        "st_ino": 76297,
+        "st_size": 15,
+        "st_mtime_ns": 1792851476074866961,
+        "st_ctime_ns": 1792851476074866961,
+        "st_mode": 33188,
+        "st_atime_ns": 1792851476074782209
+      },
+      "metadata_final": {
+        "st_dev": 33,
+        "st_ino": 76297,
+        "st_size": 16,
+        "st_mtime_ns": 1792851476074866961,
+        "st_ctime_ns": 1792851476074866961,
+        "st_mode": 33188,
+        "st_atime_ns": 1792851476074782209
+      },
+      "calls": {
+        "lstat": 4
+      }
+    },
+    {
+      "name": "final_st_mtime_ns",
+      "expected": "REJECT",
+      "actual": "REJECT",
+      "matched": true,
+      "receipt": null,
+      "error": "ValueError: source changed during physical read: /tmp/tmpzva6g5mw/source.py",
+      "metadata_before": {
+        "st_dev": 33,
+        "st_ino": 76297,
+        "st_size": 15,
+        "st_mtime_ns": 1792851476075158848,
+        "st_ctime_ns": 1792851476075158848,
+        "st_mode": 33188,
+        "st_atime_ns": 1792851476074903406
+      },
+      "metadata_final": {
+        "st_dev": 33,
+        "st_ino": 76297,
+        "st_size": 15,
+        "st_mtime_ns": 1792851476075158849,
+        "st_ctime_ns": 1792851476075158848,
+        "st_mode": 33188,
+        "st_atime_ns": 1792851476074903406
+      },
+      "calls": {
+        "lstat": 4
+      }
+    },
+    {
+      "name": "final_st_ctime_ns",
+      "expected": "REJECT",
+      "actual": "REJECT",
+      "matched": true,
+      "receipt": null,
+      "error": "ValueError: source changed during physical read: /tmp/tmpzva6g5mw/source.py",
+      "metadata_before": {
+        "st_dev": 33,
+        "st_ino": 76297,
+        "st_size": 15,
+        "st_mtime_ns": 1792851476075228036,
+        "st_ctime_ns": 1792851476075228036,
+        "st_mode": 33188,
+        "st_atime_ns": 1792851476075206698
+      },
+      "metadata_final": {
+        "st_dev": 33,
+        "st_ino": 76297,
+        "st_size": 15,
+        "st_mtime_ns": 1792851476075228036,
+        "st_ctime_ns": 1792851476075228037,
+        "st_mode": 33188,
+        "st_atime_ns": 1792851476075206698
+      },
+      "calls": {
+        "lstat": 4
+      }
+    },
+    {
+      "name": "final_st_mode",
+      "expected": "REJECT",
+      "actual": "REJECT",
+      "matched": true,
+      "receipt": null,
+      "error": "ValueError: source changed during physical read: /tmp/tmpzva6g5mw/source.py",
+      "metadata_before": {
+        "st_dev": 33,
+        "st_ino": 76297,
+        "st_size": 15,
+        "st_mtime_ns": 1792851476075275705,
+        "st_ctime_ns": 1792851476075275705,
+        "st_mode": 33188,
+        "st_atime_ns": 1792851476075257405
+      },
+      "metadata_final": {
+        "st_dev": 33,
+        "st_ino": 76297,
+        "st_size": 15,
+        "st_mtime_ns": 1792851476075275705,
+        "st_ctime_ns": 1792851476075275705,
+        "st_mode": 33252,
+        "st_atime_ns": 1792851476075257405
+      },
+      "calls": {
+        "lstat": 4
+      }
+    },
+    {
+      "name": "final_st_atime_ns",
+      "expected": "BIND",
+      "actual": "BIND",
+      "matched": true,
+      "receipt": {
+        "bytes": 15,
+        "sha256": "45c0b761a6c6640319e6cddeb492718532f70161ed9174c75ca7f1158c508b2f",
+        "canonical_sha256": "45c0b761a6c6640319e6cddeb492718532f70161ed9174c75ca7f1158c508b2f",
+        "canonical_mode": "100644",
+        "physical_mode": "100644",
+        "checkout_conversion": "none",
+        "read_observations": 2,
+        "change_metadata_scope": "POSIX st_ctime_ns",
+        "mode_scope": "POSIX owner executable bit"
+      },
+      "error": null,
+      "metadata_before": {
+        "st_dev": 33,
+        "st_ino": 76297,
+        "st_size": 15,
+        "st_mtime_ns": 1792851476075316508,
+        "st_ctime_ns": 1792851476075316508,
+        "st_mode": 33188,
+        "st_atime_ns": 1792851476075300184
+      },
+      "metadata_final": {
+        "st_dev": 33,
+        "st_ino": 76297,
+        "st_size": 15,
+        "st_mtime_ns": 1792851476075316508,
+        "st_ctime_ns": 1792851476075316508,
+        "st_mode": 33188,
+        "st_atime_ns": 1792851476075300185
+      },
+      "calls": {
+        "lstat": 4
+      }
+    },
+    {
+      "name": "bounded_windows_scope",
+      "expected": "BIND",
+      "actual": "BIND",
+      "matched": true,
+      "receipt": {
+        "bytes": 13,
+        "sha256": "98ab4d3aeab1e120560e942e2df6a0db1147bf94bafcf1590000ffb3c2b6fc80",
+        "canonical_sha256": "e49c81e2d2f84e259d40e2fb8192f3bcd198b355184845d76d8f58807d0d78ee",
+        "canonical_mode": "100644",
+        "physical_mode": null,
+        "checkout_conversion": "Windows LF to CRLF",
+        "read_observations": 2,
+        "change_metadata_scope": "Windows NTFS ChangeTime unmeasured",
+        "mode_scope": "NTFS executable bits not measured"
+      },
+      "error": null,
+      "input_hex": "616c7068610d0a626574610d0a"
+    }
+  ]
+}

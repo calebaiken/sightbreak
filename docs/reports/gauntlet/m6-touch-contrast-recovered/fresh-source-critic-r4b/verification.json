@@ -1,0 +1,35 @@
+{
+  "source_freeze": "2ea23f947aec6085449bced53c9b061618a67029",
+  "handoff": "a4f942af1213f2d4a18a790adea624bcbcd3b7b5",
+  "scope": "SOURCE_PURE_ONLY",
+  "engine_invocations": 0,
+  "native_captures": 0,
+  "commands": [
+    {
+      "command": "PYTHONPATH=scripts python3 -m unittest -v test_touch_geometry_r4b test_touch_method_r4b",
+      "exit": 0,
+      "result": "47 tests pass in 5.585 seconds"
+    },
+    {
+      "command": "PYTHONPATH=scripts python3 scripts/test_touch_geometry_r4b.py --certificate <review>/reproduced-certificate.json",
+      "exit": 0,
+      "result": "Exact certificate reproduced: 32 cases, 2482 intervals"
+    },
+    {
+      "command": "python3 <review>/checks.py",
+      "exit": 0,
+      "result": "12 expected review findings reproduced; includes blocking negative receipt controls"
+    }
+  ],
+  "verdict": "REJECT_SOURCE_METHOD_READINESS_INVALID_BASELINE_OWNERSHIP_RECEIPT_FENCE",
+  "native_lane_released": false,
+  "artifacts": {
+    "REVIEW.md": "f42a4ad440a1016c5de032892a9cc216c31fc21aaaf6b0540fadbdfcabf96a3e",
+    "builder-controls.log": "64697601e75f535bdddd2c0fb46166d1fccd55e1af99ae75a154f42248438eb2",
+    "certificate-summary.json": "c26b2f68c3ee1e5ffd8c3f1be43c201b1cd151500473ed54f5214b75d2f88f99",
+    "certificate.log": "c050c1eec3a602056b8a25edf6eed435a7848f53d39ed8111089716b20d0fd6e",
+    "checks.json": "0eeaea86db8d1897d161484079da790bf800cb0e544bc29727e6cc76939e563a",
+    "checks.log": "1c579a4a82a9ceee9db2f245a0cb2b672aba6b60c14bc42b157d81aea4f28c51",
+    "checks.py": "82d9f52fca8e5af6c8296b3bc32ac6532df09cd69a2b912e9b7691c75b778266"
+  }
+}

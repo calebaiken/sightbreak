@@ -1,0 +1,180 @@
+{
+  "phase": "SOURCE_AND_PURE_ONLY_REVIEW_PENDING",
+  "round": "4B-R3",
+  "freeze_commit": "108d1cdc6cf471daa7390298c234bb1c087ae865",
+  "baseline_commit": "a52022169241df9ff662039547a375e1c46ac1c5",
+  "preregistration_commit": "439bd2597836d3bb881e8e2c7711eb44efca6cb8",
+  "product_commit": "108d1cdc6cf471daa7390298c234bb1c087ae865",
+  "r4b_rejection": "ce3510e3776c8fec42ef1de648b14a453c221724",
+  "correction_scope": "ONE product declaration annotation preserving expression; exact inferred/bool lexical helper accommodation only. Native analyzer, geometry/math/paint/ownership predicates and all thresholds unchanged.",
+  "r4_source_verdict": "NO_GO 6eb990f30fe005b46a763a014ba5e9d7cbbe09db",
+  "r3_result": "FAIL; immutable evidence 0f83243; independent verdict 39b5a9d/8a5f531",
+  "engine_invocations": 0,
+  "native_captures": 0,
+  "pure_controls": 60,
+  "expected_native_images_per_source": 2816,
+  "expected_group_rows_per_source": 304,
+  "expected_component_rows_per_source": 352,
+  "retained_intermediate_rows_per_source": 48,
+  "candidate_gated_rows_per_source": 608,
+  "fixtures": [
+    {
+      "name": "baseline",
+      "path": "/workspace/sightbreak-touch-contrast-fixture-recovered-r4b-r3/baseline",
+      "source_full": "a52022169241df9ff662039547a375e1c46ac1c5",
+      "manifest_sha256": "8769df11adb16daefd652d6694b2917cf4ecd95db59e77bccfb99cc5a651788f",
+      "paint_variant": "r3",
+      "original_touch_sha256": "5850ba805b44f99ce83c31d9ec607bb4b055f57fa85918d03a0e6fb0a222f398",
+      "original_paths": 323,
+      "original_bytes": 9924649
+    },
+    {
+      "name": "candidate",
+      "path": "/workspace/sightbreak-touch-contrast-fixture-recovered-r4b-r3/candidate",
+      "source_full": "108d1cdc6cf471daa7390298c234bb1c087ae865",
+      "manifest_sha256": "0c20422fbe00cad2179f02e7244fdbdb41c78bbf42b9f548cb4b89d3082383cc",
+      "paint_variant": "r4b",
+      "original_touch_sha256": "e0b7caeef4a2b8f7e176438be4bfd02af2e90da1b253ee2f88c1501ea3f246c9",
+      "original_paths": 323,
+      "original_bytes": 9929490
+    }
+  ],
+  "frozen_files": [
+    {
+      "path": "game/scripts/ui/touch_controls.gd",
+      "sha256": "e0b7caeef4a2b8f7e176438be4bfd02af2e90da1b253ee2f88c1501ea3f246c9",
+      "bytes": 13681
+    },
+    {
+      "path": "game/scripts/ui/touch_controls.gd.uid",
+      "sha256": "2f4e64596905c7df3561425084553306fd4810e06e68a34b6bab3c7402e938a0",
+      "bytes": 19
+    },
+    {
+      "path": "game/tests/touch_test.gd",
+      "sha256": "4d3eb093bd979ebbbf282664419f6656af7020ddb67dd79e7d73dcfba48a21ae",
+      "bytes": 10972
+    },
+    {
+      "path": "game/tests/touch_test.gd.uid",
+      "sha256": "bc663ea221175d2b3687021fefea65b4f86514667d8e6676c97704da54c9cb26",
+      "bytes": 20
+    },
+    {
+      "path": "scripts/prepare_touch_contrast_r4b.py",
+      "sha256": "559c22e831d1bdedd2167b094f4bd6b3c035020140186f185aad0fb33a5acea7",
+      "bytes": 9380
+    },
+    {
+      "path": "scripts/analyze_touch_contrast_r4b.py",
+      "sha256": "c47bb2fd7a3b8eab83765fd75ee76885815fc5ae467ffac6b99859e72be05141",
+      "bytes": 32823
+    },
+    {
+      "path": "scripts/touch_geometry_r4b.py",
+      "sha256": "3462bb2c11fa168949295f436d9b2e3d954893df3119af972e11324880cbaf89",
+      "bytes": 16568
+    },
+    {
+      "path": "scripts/test_touch_geometry_r4b.py",
+      "sha256": "1d5ba2f76e7752074bb11701dc30936a4a138033ce9118ab6af6a6eb9603f597",
+      "bytes": 5283
+    },
+    {
+      "path": "scripts/test_touch_method_r4b.py",
+      "sha256": "4f8967c47b561b6479c828e420fcab7f2a4ad88241846479ef8536cdb673fd02",
+      "bytes": 5445
+    },
+    {
+      "path": "scripts/test_touch_receipts_r4b_r2.py",
+      "sha256": "d3a1672d5e35f5e9568005343e9c111e54eb4cc35afb9506b76a0dc46d4f474e",
+      "bytes": 8117
+    },
+    {
+      "path": "scripts/analyze_touch_contrast.py",
+      "sha256": "2501fc714ca07d77aa883689d3003f06ae40db6210eba08f1002f33a1afda4ab",
+      "bytes": 15561
+    },
+    {
+      "path": "scripts/analyze_touch_contrast_r4.py",
+      "sha256": "ebb98982433348a146c4ae724770ffe5e7d93db56c4c3d249991d37c4fd54095",
+      "bytes": 25317
+    },
+    {
+      "path": "scripts/test_touch_contrast_method.py",
+      "sha256": "5046aa29730e68e6d7b207a3bb82a5c89e38a984e0c2da2a363e567451a32af4",
+      "bytes": 6911
+    },
+    {
+      "path": "scripts/prepare_touch_contrast.py",
+      "sha256": "3045fd88d938e6926dc7e08b7a9137c53fbb98036360fb23cd192c52d55949be",
+      "bytes": 6933
+    },
+    {
+      "path": "scripts/test_touch_contrast_r4_method.py",
+      "sha256": "3d71ed4743f51dcad92ed97b48483a184ff40a1bd9e01980d7936dabb5d474e1",
+      "bytes": 7843
+    },
+    {
+      "path": "scripts/prepare_touch_contrast_r4.py",
+      "sha256": "acb13c38a8daeb9935d89cd93131f1c70d11157970cfbb3bd7038f5d38cc8b43",
+      "bytes": 9026
+    },
+    {
+      "path": "scripts/test_touch_contrast_r4_receipts.py",
+      "sha256": "ffac0a36b1f81739f59225b7136c480ac51d5940acf6286f638fac2f677d0854",
+      "bytes": 12293
+    },
+    {
+      "path": "scripts/fixtures/touch_contrast_r4b/touch_contrast_capture.gd",
+      "sha256": "57aa4a56f7bda4f77e79ec0fd9e2be8439a0703e99b289f6a0bd941294d4e6ad",
+      "bytes": 10450
+    },
+    {
+      "path": "scripts/fixtures/touch_contrast_r4b/touch_contrast_capture.gd.uid",
+      "sha256": "6770e17017eecf6ab560b243eaaba4a7dd77700f05f1a750a87263e48ce260d5",
+      "bytes": 20
+    },
+    {
+      "path": "scripts/fixtures/touch_contrast_r4/r3_glyph_support.json",
+      "sha256": "a4fc3b3d3c9bb9d045f886becda42d5ba358bfc2a3c2fa6f2df1167a1321d8a9",
+      "bytes": 131632
+    },
+    {
+      "path": "docs/reports/gauntlet/m6-touch-contrast-recovered/R4B_PREREGISTRATION.md",
+      "sha256": "6d18ceff121aa65aafb15e156079e2af8a047360346c02da445f85777b88964e",
+      "bytes": 5737
+    },
+    {
+      "path": "docs/reports/gauntlet/m6-touch-contrast-recovered/R4B_R2_PREREGISTRATION.md",
+      "sha256": "60215cb541eaa8dfe96fe2791852d7aa3af8e74bae51eda1338425aa33ee5aae",
+      "bytes": 2833
+    },
+    {
+      "path": "scripts/test_touch_declaration_r4b_r3.py",
+      "sha256": "a783f8ee098d30cffc97e8f09e6a31ec4beef1fe1c020239ddbd4f66e502213c",
+      "bytes": 4086
+    },
+    {
+      "path": "docs/reports/gauntlet/m6-touch-contrast-recovered/R4B_R3_PREREGISTRATION.md",
+      "sha256": "f556add6adf272b7f6587f31ea096b640041e88d9eb92782d162630e8dba4ce1",
+      "bytes": 7058
+    }
+  ],
+  "staging_audit_sha256": "f500cd378c975d5ccbe1b6e9e56fb75e64a26f394ba853b1543dde6ed2a95796",
+  "pure_log_sha256": "5cef2c550016338ab39b47d64c488c987de46fc851827f318f34f2e46fa67b7a",
+  "geometry_equality_requirement": "AMENDED: validate each exact source function policy, plus actual winning action over every native component footprint",
+  "geometry_certificate_sha256": "6c8056d1362e81cf6a7a758a25cca1b6e57a4d0fb40f3a143283084519071850",
+  "unchanged_falsifier_sha256": "82d9f52fca8e5af6c8296b3bc32ac6532df09cd69a2b912e9b7691c75b778266",
+  "unchanged_falsifier_replay_sha256": "080a5541e769e716ca1dea9a93296c1971be3d8fa8c059ab7fb50b368de5b447",
+  "genuine_bad_baseline_positive_sha256": "71c1fe362bd90e92a2ab7c02487e3cb43088c5b43a2e1e0cdec5691634b3f55d",
+  "remaining": "Fresh independent source review, then separate explicit root native release. Explicit bool compilation, actual complete pixels/ownership/contrast, dark surround, occlusion, truthful affordance and blind actual images remain unobserved.",
+  "lexical_preregistration_commit": "08548776717f7ba942f79b722468caf4617bb1f9",
+  "prior_source_method": "b001fc5087960729535f63c896b40d6dc25bd272",
+  "prior_source_method_acceptance": "abb837b4",
+  "r4b_r2_native_handoff": "384d17d0b44c5e5c46178023e52009010bc280f7",
+  "r4b_r2_native_actual_verdict": "ACQUISITION FAIL / preservation ACCEPT 5c5837123a951ec12c3e2ea0f2c3ec76071e6413",
+  "source_delta_sha256": "6e1da9f31990e3a8ae571945689ecc8bcd02695f69ab5b69c21758bd1302c529",
+  "legacy_parser_rejection_sha256": "77c3d205bb66e1db2bdf2be403a84b33589a2211f0e3af3d73d2485c3d593551",
+  "geometry_certificate_scope": "Historical same-expression source certificate; no native or new continuous-certificate result claimed."
+}

@@ -1,0 +1,37 @@
+{
+  "scope": "One primitive-only pinned Linux math acquisition; not gameplay/performance/FOV/whole-release acceptance",
+  "admission": "ee47c7b4840a125a4298772790912cda38fc5b24",
+  "actual_criteria": "ACTUAL_REVIEW_PREREGISTRATION.md at admission",
+  "source": "550e96c9c2e3388a7e06e3df8aa31f973baeae59",
+  "handoff": "b99d21854139ba8acec5225e9343d30973d28d50",
+  "runtime": "/workspace/sightbreak-fov-math-runtime-550e96c9-r1",
+  "command": [
+    "taskset",
+    "-c",
+    "4",
+    "python3",
+    "scripts/acquire_fov_math_reference.py",
+    "--expected-source",
+    "550e96c9c2e3388a7e06e3df8aa31f973baeae59",
+    "--output",
+    "/workspace/fov-math-reference-550e96c9-r1-20261024"
+  ],
+  "output": "/workspace/fov-math-reference-550e96c9-r1-20261024",
+  "native_attempts_before_release": 0,
+  "native_attempts_authorized": 1,
+  "whole_seconds": 60,
+  "failure_cleanup_seconds": 5,
+  "supervisor_cpus": [
+    4
+  ],
+  "native_cpus": [
+    0,
+    1
+  ],
+  "stdout_cap": 8388608,
+  "stderr_cap": 1048576,
+  "engine_sha256": "8d106cbe6144c2dc7e881d61d2429c1a8a76e6b22ef48bd5e48dcf934953f71e",
+  "cases_sha256": "d3e3cbc53b89cd0f872d333262524e43a84155c2b8ae0aaab06850e1337dcbae",
+  "unmeasured_cases": "seven C geometry triples plus arbitrary inputs unresolved; no empirical epsilon or missing historical-bit recovery",
+  "retry_authorized": false
+}

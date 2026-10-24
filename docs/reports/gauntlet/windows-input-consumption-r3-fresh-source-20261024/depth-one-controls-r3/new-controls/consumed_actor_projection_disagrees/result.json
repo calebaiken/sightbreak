@@ -1,0 +1,128 @@
+{
+  "group": "new-controls",
+  "name": "consumed_actor_projection_disagrees",
+  "expected_complete": false,
+  "actual_complete": true,
+  "expectation_met": false,
+  "source_basis": "authority_tick assigns actors[id].input_state = command, then observes input_consumed. The actor input sequence and consumed command sequence must agree.",
+  "result": {
+    "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+    "diagnostic_complete": true,
+    "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+    "roles": {
+      "client": {
+        "records": 7,
+        "coverage": [
+          "client_attempt",
+          "client_connected",
+          "client_tick",
+          "input_send_called",
+          "ready",
+          "snapshot_applied",
+          "welcome_received"
+        ],
+        "counters": {
+          "ready": 1,
+          "client_attempt": 1,
+          "client_connected": 1,
+          "welcome_received": 1,
+          "client_tick": 2,
+          "snapshot_applied": 1,
+          "input_send_called": 1
+        },
+        "max_observation_gap_msec": 5000,
+        "max_snapshot_age_msec": 5600,
+        "pending_saturation_indices": [],
+        "accepted_events": [],
+        "consumed_events": [],
+        "expiry_events": [],
+        "disconnect_events": [],
+        "welcome_events": [
+          {
+            "transport_id": 71,
+            "local_attempt": 1,
+            "local_id": 4,
+            "wall_unix_msec": 106000
+          }
+        ],
+        "binding_events": [],
+        "local_attempts": 1
+      },
+      "authority": {
+        "records": 7,
+        "coverage": [
+          "authority_tick",
+          "input_accepted",
+          "input_consumed",
+          "input_received",
+          "peer_bound",
+          "peer_connected",
+          "ready"
+        ],
+        "counters": {
+          "ready": 1,
+          "peer_connected": 1,
+          "peer_bound": 1,
+          "input_received": 1,
+          "input_accepted": 1,
+          "input_consumed": 1,
+          "authority_tick": 1
+        },
+        "max_observation_gap_msec": 5000,
+        "max_snapshot_age_msec": -1,
+        "pending_saturation_indices": [],
+        "accepted_events": [
+          {
+            "index": 5,
+            "epoch": 7,
+            "count": 1,
+            "first": 21,
+            "last": 21,
+            "fire": 1,
+            "reload": 0,
+            "moving": 0,
+            "wall_msec": 8500
+          }
+        ],
+        "consumed_events": [
+          {
+            "index": 6,
+            "sequence": 21,
+            "fire": true,
+            "reload": false,
+            "move": [
+              0.0,
+              0.0
+            ],
+            "peer": 71,
+            "actor": 4,
+            "generation": 1,
+            "wall_msec": 9000
+          }
+        ],
+        "expiry_events": [],
+        "disconnect_events": [],
+        "welcome_events": [],
+        "binding_events": [
+          {
+            "peer": 71,
+            "generation": 1,
+            "bound_actor": 4,
+            "wall_unix_msec": 103000
+          }
+        ],
+        "local_attempts": 0
+      }
+    },
+    "errors": [],
+    "attempt_generation_links": [
+      {
+        "client_local_attempt": 1,
+        "peer": 71,
+        "generation": 1,
+        "bound_actor": 4,
+        "wall_unix_msec": 103000
+      }
+    ]
+  }
+}

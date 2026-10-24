@@ -1,0 +1,34 @@
+{
+  "candidate": "7d8ec7dda37764e0f45fd2ea1e8d330f84bc2508",
+  "source_root": "/workspace/reviews/windows-input-reader-r5-independent-20261024",
+  "reader_path": "docs/reports/gauntlet/windows-input-reader-r5-independent-20261024/controls/r4-analyze_input_consumption.py",
+  "reader_sha256": "207beebe124a1ad5928a154fb77c99d2e43864ce236751dc7ce985878181bcb2",
+  "cpu_affinity": [
+    4
+  ],
+  "cases": 30,
+  "passed": 11,
+  "false_accepts": [
+    "coalesced_single_already_acknowledged",
+    "coalesced_single_above_window",
+    "coalesced_accepted_wrong_epoch",
+    "coalesced_accepted_over_batch_cap",
+    "direct_single_command_inflates_queue_2",
+    "direct_single_command_inflates_queue_120",
+    "ack_advances_without_consumption",
+    "ack_zero_without_consumption",
+    "ack_clears_without_reset",
+    "queue_appears_without_acceptance",
+    "cached_snapshot_disappears",
+    "cached_snapshot_restamped",
+    "cached_snapshot_header_changes",
+    "cache_precedes_first_applied_counter",
+    "first_snapshot_time_3999",
+    "partial_rejected_state_survives_replacement",
+    "live_binding_cannot_reset_rejected_state",
+    "zero_peers_without_epoch_cannot_reset",
+    "coalesced_latest_time_offset_-1"
+  ],
+  "false_rejects": [],
+  "native_executed": false
+}

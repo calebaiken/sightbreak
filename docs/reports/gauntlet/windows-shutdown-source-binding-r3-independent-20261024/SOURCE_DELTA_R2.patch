@@ -1,0 +1,73 @@
+diff --git a/scripts/shutdown_study_retention.py b/scripts/shutdown_study_retention.py
+index 81b4c734..df0ff95b 100644
+--- a/scripts/shutdown_study_retention.py
++++ b/scripts/shutdown_study_retention.py
+@@ -44,8 +44,13 @@ def physical_source_file(path, expected, mode, *, windows=False):
+     require(mode in ('100644','100755'),'unsupported source mode: '+mode)
+     actual=path.read_bytes()
+     after=path.lstat()
+-    require((before.st_dev,before.st_ino,before.st_size,before.st_mtime_ns,before.st_mode)==
+-            (after.st_dev,after.st_ino,after.st_size,after.st_mtime_ns,after.st_mode),
++    def identity(value):
++        return (value.st_dev,value.st_ino,value.st_size,value.st_mtime_ns,value.st_ctime_ns,value.st_mode)
++    require(identity(before)==identity(after),
++            'source changed during physical read: '+str(path))
++    repeated=path.read_bytes()
++    final=path.lstat()
++    require(actual==repeated and identity(before)==identity(final),
+             'source changed during physical read: '+str(path))
+     conversion='none'
+     if actual!=expected:
+@@ -60,6 +65,7 @@ def physical_source_file(path, expected, mode, *, windows=False):
+     require(measured_mode is None or measured_mode==mode,'physical source executable mode differs: '+str(path))
+     return dict(bytes=len(actual),sha256=sha(actual),canonical_sha256=sha(expected),
+                 canonical_mode=mode,physical_mode=measured_mode,checkout_conversion=conversion,
++                read_observations=2,change_metadata_scope='Windows NTFS ChangeTime unmeasured' if windows else 'POSIX st_ctime_ns',
+                 mode_scope='NTFS executable bits not measured' if windows else 'POSIX owner executable bit')
+ 
+ 
+diff --git a/scripts/test_shutdown_source_binding.py b/scripts/test_shutdown_source_binding.py
+index 5d57bb14..56d36455 100644
+--- a/scripts/test_shutdown_source_binding.py
++++ b/scripts/test_shutdown_source_binding.py
+@@ -93,5 +93,40 @@ class PhysicalSourceControls(unittest.TestCase):
+         with patch.object(Path,'read_bytes',racing),self.assertRaisesRegex(ValueError,'changed during physical read'):
+             retention.physical_source_file(path,self.files['runtime/unlisted.py'],'100644')
+ 
++    def test_same_length_edit_with_restored_mtime_is_rejected(self):
++        path=self.root/'runtime/unlisted.py';before=path.stat();original=Path.read_bytes
++        count=0
++        def racing(target):
++            nonlocal count
++            data=original(target)
++            if target==path:
++                count+=1
++                if count==1:
++                    target.write_bytes(b'X'*len(data))
++                    os.utime(target,ns=(before.st_atime_ns,before.st_mtime_ns))
++            return data
++        with patch.object(Path,'read_bytes',racing),self.assertRaisesRegex(ValueError,'changed during physical read'):
++            retention.physical_source_file(path,self.files['runtime/unlisted.py'],'100644')
++        self.assertNotEqual(path.read_bytes(),self.files['runtime/unlisted.py'])
++
++    def test_second_bytes_reject_first_read_mutation_even_with_constant_metadata(self):
++        path=self.root/'runtime/unlisted.py';before=path.lstat();original=Path.read_bytes;count=0
++        def racing(target):
++            nonlocal count
++            data=original(target)
++            if target==path:
++                count+=1
++                if count==1:target.write_bytes(b'X'*len(data))
++            return data
++        with patch.object(Path,'read_bytes',racing),patch.object(Path,'lstat',return_value=before),self.assertRaisesRegex(ValueError,'changed during physical read'):
++            retention.physical_source_file(path,self.files['runtime/unlisted.py'],'100644',windows=True)
++        self.assertEqual(count,2)
++
++    def test_unchanged_double_read_reports_the_platform_observation_limit(self):
++        path=self.root/'runtime/unlisted.py'
++        record=retention.physical_source_file(path,self.files['runtime/unlisted.py'],'100644',windows=True)
++        self.assertEqual(record['read_observations'],2)
++        self.assertEqual(record['change_metadata_scope'],'Windows NTFS ChangeTime unmeasured')
++
+ 
+ if __name__=='__main__':unittest.main()

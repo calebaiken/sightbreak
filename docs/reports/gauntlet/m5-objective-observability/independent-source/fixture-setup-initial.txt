@@ -1,0 +1,17 @@
+Command: git -c uploadpack.allowFilter=true clone --depth 1 --filter=blob:none --no-checkout --branch codex/m5-objective-observability-20261023 file:///workspace/sightbreak-objective-observability /workspace/reviews/m5-objective-observability-depth-one
+Initial output: warning: filtering not recognized by server, ignoring
+Unified exec session 92223 still running at 1 second.
+Setup mistake: attempted dependent sparse-checkout before clone completion.
+Command: git sparse-checkout set --cone scripts game docs/reports/gauntlet/m5-objective-observability && git checkout && git remote remove origin && git rev-parse HEAD && git rev-parse --is-shallow-repository && git rev-list --count HEAD && git remote -v
+Exit: 128
+Output: fatal: You are on a branch yet to be born
+No tests ran in this failed setup attempt. Wait for original clone and initialize it sequentially; retain this error.
+
+Additional retained setup omission: initial clone command was not prefixed by taskset, contrary to CPU 4 scope. While the unchanged clone still ran, the exact owned clone/upload-pack/pack-objects/index-pack PIDs 156956,156959,156960,156961,156963 were constrained with taskset -apc 4. Subsequent source/pure commands are prefixed by taskset. No native work was started. A premature git rev-parse HEAD check also exited 128 with unknown revision; tests still did not run.
+
+Original clone cancellation reached exact identity-checked clone PID 156956 and upload-pack 156960, then raised RuntimeError at pack PID 156961 because it had already changed/terminated. The overall original clone ended exit 143, fatal: early EOF. The cancellation script exited 1 and did not write its intended receipt, so this append preserves the actual sequence. A corrected clone with exported uploadpack.allowFilter also reported filtering not recognized; it will be canceled and a bounded shallow object fixture used.
+
+Second unfiltered clone cancellation:
+157659: exact owned identity verified; SIGTERM; git clone --depth 1 --filter=blob:none --no-checkout --branch codex/m5-objective-observability-20261023 file:///workspace/sightbreak-objective-observability /workspace/reviews/m5-objective-observability-depth-one-corrected 
+157664: exact owned identity verified; SIGTERM; /usr/local/libexec/git-core/git --shallow-file  pack-objects --revs --thin --stdout --shallow --delta-base-offset --include-tag 
+157666: exact owned identity verified; SIGTERM; /usr/local/libexec/git-core/git --shallow-file /workspace/reviews/m5-objective-observability-depth-one-corrected/.git/shallow.lock index-pack --stdin --fix-thin --keep=fetch-pack 157659 on e3823b83b6a2 --promisor 

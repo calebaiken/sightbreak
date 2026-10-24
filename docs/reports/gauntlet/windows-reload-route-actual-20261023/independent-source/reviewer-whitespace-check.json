@@ -1,0 +1,10 @@
+{
+  "ordinary_check_exit": 2,
+  "ordinary_output_bytes": 4832048,
+  "ordinary_output_sha256": "03d963381aa933e1c71d3ec18697cd993a7e1b0850dafa53245ea1e24d45b0e1",
+  "retained_original_output": "reviewer-whitespace-original.log.gz",
+  "crlf_aware_check_exit": 0,
+  "crlf_aware_stdout": "",
+  "crlf_aware_stderr": "",
+  "reason": "Original Windows archive JSON uses CRLF. Preserve exact bytes; allow CR at end of line for the whitespace check. The original chained command skipped its inline manifest verifier after this check failed, then committed on the next shell line. The manifest verifier was run separately afterward."
+}

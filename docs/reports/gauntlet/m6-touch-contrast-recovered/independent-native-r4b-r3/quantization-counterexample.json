@@ -1,0 +1,44 @@
+{
+  "scope": "SYNTHETIC_QUANTIZATION_COUNTEREXAMPLE_ONLY_NOT_NATIVE_CAUSE_PROOF",
+  "latent_neutral_contribution_codes": 29.0,
+  "latent_underlay_rgb": [
+    191.25,
+    165.016592920354,
+    106.62610619469027
+  ],
+  "latent_black_rgb": [
+    169.5,
+    146.25,
+    94.5
+  ],
+  "latent_white_rgb": [
+    198.5,
+    175.25,
+    123.5
+  ],
+  "rounding": "nearest with ties to even",
+  "quantized_underlay_rgb": [
+    191,
+    165,
+    107
+  ],
+  "quantized_black_rgb": [
+    170,
+    146,
+    94
+  ],
+  "quantized_white_rgb": [
+    198,
+    175,
+    124
+  ],
+  "quantized_delta_rgb": [
+    28,
+    29,
+    30
+  ],
+  "channel_spread_codes": 2,
+  "registered_nonneutral_predicate": true,
+  "matches_actual_ready_count_UBW": true,
+  "interpretation": "A neutral latent contribution can reproduce the actual ready-count U/B/W and fail the registered one-code neutrality predicate. This does not identify the actual renderer rounding algorithm or waive the frozen result."
+}

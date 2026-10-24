@@ -1,0 +1,174 @@
+{
+  "source": "dce89495d04c9d3fefece0f8c7929e2e01b8e7df",
+  "cpu_affinity": [
+    4
+  ],
+  "views": [
+    {
+      "label": "own",
+      "path": "/workspace/reviews/m5-objective-observability-r2-fresh-source",
+      "head": "1c96187eded0ab5a284ce760b5a2a81b5c4f5b41",
+      "shallow": "false",
+      "reachable_commits": 849,
+      "remotes": "origin\thttps://github.com/calebaiken/sightbreak.git (fetch)\norigin\thttps://github.com/calebaiken/sightbreak.git (push)\n",
+      "alternates_present": false,
+      "git_alternate_object_directories_set": false,
+      "parent_object_exit": 0,
+      "parent_object_stderr": "",
+      "source_paths": 451,
+      "source_paths_modes_blobs_equal": true,
+      "working_source_files_equal": true,
+      "source_tree": {
+        "game": "d27f5a57cfc1e22d81d4cf584824d363ecc382d1",
+        "scripts": "bf8bab3e5821ea794468f0792c4d9af34443f244"
+      },
+      "source_untracked": []
+    },
+    {
+      "label": "depth-one",
+      "path": "/workspace/reviews/m5-objective-observability-r2-fresh-depth-one",
+      "head": "dce89495d04c9d3fefece0f8c7929e2e01b8e7df",
+      "shallow": "true",
+      "reachable_commits": 1,
+      "remotes": "",
+      "alternates_present": false,
+      "git_alternate_object_directories_set": false,
+      "parent_object_exit": 128,
+      "parent_object_stderr": "fatal: Not a valid object name 41aa040dd04a624cefd74dfef74c10bbcf95b44d^{commit}\n",
+      "source_paths": 451,
+      "source_paths_modes_blobs_equal": true,
+      "working_source_files_equal": true,
+      "source_tree": {
+        "game": "d27f5a57cfc1e22d81d4cf584824d363ecc382d1",
+        "scripts": "bf8bab3e5821ea794468f0792c4d9af34443f244"
+      },
+      "source_untracked": []
+    }
+  ],
+  "retained": [
+    {
+      "view": "own",
+      "name": "maintained",
+      "exit_code": 0,
+      "hashes_verified": true
+    },
+    {
+      "view": "own",
+      "name": "source-audit",
+      "exit_code": 0,
+      "hashes_verified": true
+    },
+    {
+      "view": "own",
+      "name": "original-rig",
+      "exit_code": 1,
+      "hashes_verified": true
+    },
+    {
+      "view": "own",
+      "name": "original-rig-adjudication",
+      "named_cases": 20,
+      "distinct_inputs": 19,
+      "actual_mutations": 18,
+      "actual_rejections": 18,
+      "positive_accepted": true,
+      "duplicate_noop_only_failed_expectation": true
+    },
+    {
+      "view": "own",
+      "name": "fresh-controls",
+      "distinct_inputs": 13,
+      "real_mutations": 12,
+      "actual_rejections": 0,
+      "false_passes": [
+        "freshness_complete_decision_for_wrong_actor",
+        "direct_perception_selects_target_without_candidates",
+        "nearest_defuser_ignores_device_destination",
+        "decision_role_not_produced_by_source",
+        "fabricated_target_score_navigation_and_bot_memory",
+        "in_range_in_fov_candidate_falsely_rejected_by_fov",
+        "forward_credits_added_without_kill_or_reward",
+        "forward_objective_plants_before_consumer_without_progress",
+        "forward_progress_injected_then_correctly_cleared",
+        "isolated_control_stationary_actor_teleports",
+        "isolated_control_match_rng_changes_without_bot_call",
+        "forward_action_phase_reassigns_actor_team"
+      ]
+    },
+    {
+      "view": "depth-one",
+      "name": "maintained",
+      "exit_code": 0,
+      "hashes_verified": true
+    },
+    {
+      "view": "depth-one",
+      "name": "source-audit",
+      "exit_code": 0,
+      "hashes_verified": true
+    },
+    {
+      "view": "depth-one",
+      "name": "original-rig",
+      "exit_code": 1,
+      "hashes_verified": true
+    },
+    {
+      "view": "depth-one",
+      "name": "original-rig-adjudication",
+      "named_cases": 20,
+      "distinct_inputs": 19,
+      "actual_mutations": 18,
+      "actual_rejections": 18,
+      "positive_accepted": true,
+      "duplicate_noop_only_failed_expectation": true
+    },
+    {
+      "view": "depth-one",
+      "name": "fresh-controls",
+      "distinct_inputs": 13,
+      "real_mutations": 12,
+      "actual_rejections": 0,
+      "false_passes": [
+        "freshness_complete_decision_for_wrong_actor",
+        "direct_perception_selects_target_without_candidates",
+        "nearest_defuser_ignores_device_destination",
+        "decision_role_not_produced_by_source",
+        "fabricated_target_score_navigation_and_bot_memory",
+        "in_range_in_fov_candidate_falsely_rejected_by_fov",
+        "forward_credits_added_without_kill_or_reward",
+        "forward_objective_plants_before_consumer_without_progress",
+        "forward_progress_injected_then_correctly_cleared",
+        "isolated_control_stationary_actor_teleports",
+        "isolated_control_match_rng_changes_without_bot_call",
+        "forward_action_phase_reassigns_actor_team"
+      ]
+    }
+  ],
+  "baseline_erasure_equals_exact_git": true,
+  "baseline_sha256": "742ae5c96becf4e27071423e0bdd604a13b528c201d38df52f837359fe9214cb",
+  "historical_equals_exact_git": true,
+  "historical_additions": [
+    "+ \tvar exhausted_sidearm_fallback := false",
+    "+ \tif bool(profile.get(\"sidearm_fallback\", true)) and [\"smg\", \"rifle\", \"marksman\"].has(actor.weapon_id) and actor.ammo == 0 and actor.reserve == 0 and actor.inventory.has(\"sidearm\") and not interact:",
+    "+ \t\t# Only a recorded holstered sidearm can extend the existing close fallback.",
+    "+ \t\tif actor._ammo_store.has(\"sidearm\"):",
+    "+ \t\t\tvar stored_sidearm: Vector2i = actor._ammo_store[\"sidearm\"]",
+    "+ \t\t\texhausted_sidearm_fallback = stored_sidearm.x > 0 or stored_sidearm.y > 0",
+    "+ \t\t\trequested_weapon = \"sidearm\"",
+    "+ \t\telif exhausted_sidearm_fallback and target_distance <= float(SBWeapons.get_weapon(\"sidearm\").range):",
+    "+ \t\tif exhausted_sidearm_fallback:",
+    "+ \t\t\trequested_weapon = \"sidearm\"",
+    "+ \t\t\t\t\t# Missing holstered state keeps the actor's normal equip defaults.",
+    "+ \t\t\t\t\tif actor._ammo_store.get(w_id, Vector2i(-1, -1)) == Vector2i.ZERO:",
+    "+ \t\t\t\t\t\tcontinue"
+  ],
+  "historical_removals": [],
+  "grammar": [
+    {
+      "passed": false,
+      "error": "No module named 'gdtoolkit'"
+    }
+  ],
+  "native_executed": false
+}

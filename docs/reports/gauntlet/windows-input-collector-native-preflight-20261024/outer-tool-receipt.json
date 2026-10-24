@@ -1,0 +1,44 @@
+{
+  "source": "c32415148db1f110bbc7eadfca3793d4693429ff",
+  "release": {
+    "source": "c32415148db1f110bbc7eadfca3793d4693429ff",
+    "preregistration": "15cdc599",
+    "wrapper_sha256": "1e3a8123a5c3adf4d3d379c3c6ff5703f514c9f7425a76e40cb2f5f52922b057",
+    "root_release_commit": "236413df815c9404b5a70726b210669f66edb3fa",
+    "authorized_single_invocation": true
+  },
+  "command": "taskset -c 4 python3 /workspace/reviews/windows-input-collector-native-preflight/docs/reports/gauntlet/windows-input-collector-native-preflight-20261024/run_once.py --release /workspace/collector-native-preflight-root-release-20261024.json",
+  "cwd": "/workspace/sightbreak-v1-recovered",
+  "tool_history": [
+    {
+      "phase": "initial",
+      "clock": {
+        "current_time": "2026-10-24 08:45:48 UTC"
+      },
+      "result": {
+        "chunk_id": "4a98bd",
+        "wall_time_seconds": 1.000839176,
+        "session_id": 83052,
+        "original_token_count": 0,
+        "output": ""
+      }
+    },
+    {
+      "phase": "poll",
+      "clock": {
+        "current_time": "2026-10-24 08:46:48 UTC"
+      },
+      "result": {
+        "chunk_id": "53626a",
+        "wall_time_seconds": 0.000030464,
+        "exit_code": 0,
+        "original_token_count": 621,
+        "output": "{\"cadence_target_seconds\": 0.1, \"cleanup\": {\"actions\": [], \"all_observed_identities_gone\": true, \"remaining\": [], \"scope\": \"Owned group/session and observed descendants only; finite sampling can miss short or escaped descendants\"}, \"cleanup_seconds\": 5, \"command\": [\"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3\", \"scripts/run_native_regressions.py\", \"--suites\", \"movement_prediction\", \"--output\", \"/workspace/sightbreak-collector-preflight-c324/builds/collector-native-preflight-c324-20261024/native\"], \"display_present\": false, \"environment_overrides\": {\"GODOT_BIN\": \"/workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64\", \"SIGHTBREAK_STATE_DIR\": \"/workspace/sightbreak-collector-preflight-c324/builds/collector-native-preflight-c324-20261024/state\", \"SIGHTBREAK_TOOLS_DIR\": \"/workspace/tools\", \"TMPDIR\": \"/workspace/sightbreak-collector-preflight-c324/builds/collector-native-preflight-c324-20261024/temporary\"}, \"execution_stop_observed_seconds\": 14.830052042998432, \"failure\": null, \"finished_utc\": \"2026-10-24T08:46:03.476077+00:00\", \"launch_count\": 1, \"maximum_sample_gap_seconds\": 0.10598833800031571, \"native_completion_within_whole_deadline\": true, \"observation_and_cleanup_elapsed_seconds\": 14.830067028000485, \"observed_identities\": [{\"pid\": 6283, \"start_ticks\": 1732134}, {\"pid\": 6284, \"start_ticks\": 1732144}, {\"pid\": 6287, \"start_ticks\": 1732153}, {\"pid\": 6297, \"start_ticks\": 1732185}, {\"pid\": 6534, \"start_ticks\": 1732824}, {\"pid\": 6544, \"start_ticks\": 1732846}, {\"pid\": 6554, \"start_ticks\": 1733499}], \"passed\": true, \"release_sha256\": \"28e8d9485d6ff930840599a9222e216fe08838b3ac76c5088890b5625f8d2b61\", \"runner_exit\": 0, \"runner_exit_observed_seconds\": 14.830052042998432, \"runner_exit_observed_utc\": \"2026-10-24T08:46:03.293726+00:00\", \"runner_pid\": 6283, \"runner_start_ticks\": 1732134, \"sample_count\": 141, \"source\": \"c32415148db1f110bbc7eadfca3793d4693429ff\", \"source_and_uids_unchanged\": true, \"started_utc\": \"2026-10-24T08:45:48.463677+00:00\", \"supervisor\": {\"argv\": [\"python3\", \"/workspace/reviews/windows-input-collector-native-preflight/docs/reports/gauntlet/windows-input-collector-native-preflight-20261024/run_once.py\", \"--release\", \"/workspace/collector-native-preflight-root-release-20261024.json\"], \"pgid\": 6238, \"pid\": 6238, \"ppid\": 445, \"sid\": 6238, \"start_ticks\": 1732055, \"state\": \"R\", \"threads\": {\"6238\": [4]}}, \"timed_out\": false, \"wall_seconds_including_cleanup\": 15.012425477998477, \"whole_seconds\": 420}\n"
+      }
+    }
+  ],
+  "terminal_observed_clock": {
+    "current_time": "2026-10-24 08:46:48 UTC"
+  },
+  "semantics": "Actual tool responses and available clock observations for exactly one wrapper invocation. Native boundaries are separately retained in wrapper/process receipts; poll wait duration is not execution time."
+}

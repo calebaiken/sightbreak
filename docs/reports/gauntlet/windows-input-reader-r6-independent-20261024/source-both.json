@@ -1,0 +1,2615 @@
+{
+  "base": "7d8ec7dda37764e0f45fd2ea1e8d330f84bc2508",
+  "source": "c8827e7d158431097a5413273b5a1e93715961b0",
+  "handoff": "abd5a57223ffe8c4481271f06884eb5fe883b96f",
+  "handoff_non_doc_identical": true,
+  "non_doc_union": 515,
+  "protected": 511,
+  "changed": [
+    "scripts/analyze_input_consumption.py",
+    "scripts/test_input_consumption_receipts.py",
+    "scripts/test_input_consumption_state.py",
+    "scripts/test_input_consumption_transitions.py"
+  ],
+  "all_modes_preserved": true,
+  "unique_union_blobs": 517,
+  "inherited_methods": 55,
+  "inherited_assertion_calls": 100,
+  "inherited_asts_exact": true,
+  "duplicate_fixture_only_registered_line": true,
+  "views": [
+    {
+      "root": ".",
+      "head": "3f75481b3fc796b93abae294b437c7c71d97f4e8",
+      "physical_non_doc_paths": 515,
+      "index_modes_blobs_and_physical_bytes_exact": true
+    },
+    {
+      "root": "/workspace/reviews/windows-input-reader-r6-independent-depth-one-20261024",
+      "head": "c8827e7d158431097a5413273b5a1e93715961b0",
+      "physical_non_doc_paths": 515,
+      "index_modes_blobs_and_physical_bytes_exact": true
+    }
+  ],
+  "files": {
+    ".claude/agents/gameplay-builder.md": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "ec6cc8aefa20fcc2acdc78c695bbc012844b0651"
+    },
+    ".claude/agents/harsh-critic.md": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "73d94d50fb382c369149b03598a24286207cb991"
+    },
+    ".claude/agents/integration-reviewer.md": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "bf0b2d562717a8fe6a69ee31b6f609488e9a70ee"
+    },
+    ".claude/agents/qa-regression.md": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "119512c09e5afb03fdfcbe78d2abed00ce5be265"
+    },
+    ".claude/agents/visual-ux-builder.md": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "56b74d0caa04505f0e5a6402079eb671ae77ddb0"
+    },
+    ".claude/settings.json": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "042ef7aa8fa3e75559d33b4fda2aefd16c0960c7"
+    },
+    ".claude/skills/gauntlet-loop/LICENSE": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "da6ab6cc8f333d7e89a99812866df8f24374d47c"
+    },
+    ".claude/skills/gauntlet-loop/PROVENANCE.md": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "6312604a6ded875aa3e910696e023d227b1f4fec"
+    },
+    ".claude/skills/gauntlet-loop/SKILL.md": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "5c33caa59ceeb553a064b952054a0112162e5a92"
+    },
+    ".claude/skills/no-ai-slop/LICENSE": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "644ebee1944d0e7d03c66a25977ff0a8a8e1c7ae"
+    },
+    ".claude/skills/no-ai-slop/PROVENANCE.md": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "82cc932acebb923124dd418981b77702f0ad9dc8"
+    },
+    ".claude/skills/no-ai-slop/SKILL.md": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "e2008aa08d688846b0373b83d7c3d33b85eaabdd"
+    },
+    ".claude/skills/no-ai-slop/eval.md": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "e912b3e9246ded24b14116682c23702a4d083dc7"
+    },
+    ".claude/skills/sightbreak-gauntlet/SKILL.md": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "94f9b506605c15935eed4d7ecdc32d857be180f6"
+    },
+    ".gitattributes": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "b2df72f173e03235a2b9130cdf826980910e70fc"
+    },
+    ".github/workflows/desktop-alpha.yml": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "eb24a4a19ca66aaa81ff3fe6d090a48d94b6ee2d"
+    },
+    ".github/workflows/engineering.yml": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "789d240fbf93d0005509268deb4dd775a0ad5a8d"
+    },
+    ".github/workflows/macos-render-diagnostic.yml": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "2790f4b000da6148c9c7983cd9c7621e710e2412"
+    },
+    ".github/workflows/market-refresh-pure.yml": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "a264bdaf701cd42e5e4273528f0835371b6a7bcc"
+    },
+    ".github/workflows/three-agent-artifacts.yml": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "1d838e522a5397474ddf75d9fc4e144607213cf0"
+    },
+    ".gitignore": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "2656be372697f84bda233de21b650d9d8308026c"
+    },
+    "AGENTS.md": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "418002deb671a28fa8f1d08c4af554b3e16f0bf6"
+    },
+    "CLAUDE.md": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "407c119656bae5701b333ba3e99fe7bdae19eaf4"
+    },
+    "README.md": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "657b11a8ee09e6e1ab111d76e845764600580dfd"
+    },
+    "backend/app.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "bb15f054d622fc4f6164248a2f4453d20a3e7fff"
+    },
+    "backend/bridge_fixture.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "b8ff2aebebb3bb2a2750c2b12284c25606962926"
+    },
+    "backend/config/economy.json": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "fe7f8e0c17cbae4ecd5177835de5e0a06db5bfa0"
+    },
+    "backend/config/simulation-baseline.json": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "0e3eb68eeb28e9583d1b4405c0ba20fe194ad252"
+    },
+    "backend/dev-api.sh": {
+      "mode": "100755",
+      "kind": "blob",
+      "blob": "8bb7360a131bab2ee70319879b0bb5b2ea53cd99"
+    },
+    "backend/dev-db.sh": {
+      "mode": "100755",
+      "kind": "blob",
+      "blob": "d3942005473723a2aa1362f78b028217661ff606"
+    },
+    "backend/migrate.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "4a7489172c94077e79df0b02cf19f80b9fe55170"
+    },
+    "backend/migrations/001_integrity.sql": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "7aaac12f4d22d4b9d4698c4e6ab9ef401a9b1e77"
+    },
+    "backend/migrations/002_game_tickets.sql": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "c37f018b9b536f96940bcfc7cad83329997c57f0"
+    },
+    "backend/migrations/003_loadouts.sql": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "9e70fd0529d3aaaa62e31346175297114ab86cea"
+    },
+    "backend/migrations/004_market_index.sql": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "c8bb739299510670c665ba687598d7a891608051"
+    },
+    "backend/models.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "8dc03d668a696f889d89b71c07602b02593befaa"
+    },
+    "backend/pyproject.toml": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "2069a235656320af83545cd56c57d55a99355ef5"
+    },
+    "backend/simulate.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "401b400d97e1b472629975c27fc64d67e76d4984"
+    },
+    "backend/tests/test_economy.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "2214ba53daec34713c1535aae5f194661e4b39bf"
+    },
+    "backend/uv.lock": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "cc63c8426301a44a0b13d82339b1177cd0f10b90"
+    },
+    "game/assets/environments/relay_sky.tres": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "654e47b1dc428895406969253a0b68d5eb7ccd25"
+    },
+    "game/assets/icon.svg": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "a9bf7a6ca6cd0cfdf61f963349c9715f88b9b04e"
+    },
+    "game/assets/icon.svg.import": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "a2a74038da270192cf33afe444c79696c3501661"
+    },
+    "game/assets/materials/asphalt.png": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "1091e72e72acae0deb7ff7f9a10be4ee0278dc64"
+    },
+    "game/assets/materials/asphalt.png.import": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "4b402576e114968dd34d107d9b2be07efac9d7e2"
+    },
+    "game/assets/materials/asphalt_normal.png": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "9806b05215a6a0a245118114dddfe865f615c8ef"
+    },
+    "game/assets/materials/asphalt_normal.png.import": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "2fa4160b4f91c6a1c184e2b10bbfb3dc7f5f5f9e"
+    },
+    "game/assets/materials/asphalt_roughness.png": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "c2eed56388067814d39babdcef0c0abdb98f1887"
+    },
+    "game/assets/materials/asphalt_roughness.png.import": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "c99b7e0c71c441e5c7b6b1c42aa72ffd7a929805"
+    },
+    "game/assets/materials/concrete.png": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "850af89a73cfda9c9a1cc8267e8c1270243a2f1e"
+    },
+    "game/assets/materials/concrete.png.import": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "90573851c1e392fbf0733576466c98cf7ef4758b"
+    },
+    "game/assets/materials/concrete_normal.png": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "6090a9c4118dc108e789e896c7f5127297484bc3"
+    },
+    "game/assets/materials/concrete_normal.png.import": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "58c20fa698c00ce4d414e309326c2aa8e717346a"
+    },
+    "game/assets/materials/concrete_roughness.png": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "dbff504516c3e1d2a4c3d8d1165c770b620bf949"
+    },
+    "game/assets/materials/concrete_roughness.png.import": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "ed003d9c08266c96f9d70acfa4bd9c18f7972ef6"
+    },
+    "game/assets/materials/painted_metal.png": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "fc37bd63c77b0fa6d682519b2464be74ba6c79cc"
+    },
+    "game/assets/materials/painted_metal.png.import": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "2812bae7da42111fec088d941f1b058e39434bdb"
+    },
+    "game/assets/materials/painted_metal_normal.png": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "e732a67ed77a5efc244625ee20b624011c43e1c0"
+    },
+    "game/assets/materials/painted_metal_normal.png.import": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "cf44c72ee5c58e4461627379cfd25ad665719071"
+    },
+    "game/assets/materials/painted_metal_roughness.png": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "7201e584dd7447de2026134a6cede3211255322f"
+    },
+    "game/assets/materials/painted_metal_roughness.png.import": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "a8d25424da6dc40629ea95c702a380adf3563e4f"
+    },
+    "game/assets/weapons/relay_ar/relay_ar.glb": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "5fede01d0bba4cadc477d75482589c4d9e9b6aad"
+    },
+    "game/assets/weapons/relay_ar/relay_ar.glb.import": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "4b4fb0f7edcc3e2d60b07fbd3256f81e16c3ecfa"
+    },
+    "game/assets/weapons/relay_ar/relay_ar_albedo.png": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "c268b3dbad0499710d1e3f64cc7f556a4a9672ef"
+    },
+    "game/assets/weapons/relay_ar/relay_ar_albedo.png.import": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "560754fe6a5b4114bf5262418d6c036fc02aef0f"
+    },
+    "game/assets/weapons/relay_ar/relay_ar_arms.glb": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "159af6a305f97e43658c61a6f9d279fba00f5411"
+    },
+    "game/assets/weapons/relay_ar/relay_ar_arms.glb.import": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "108572ee1a81251c7bcf4a2b097930220a849f2d"
+    },
+    "game/assets/weapons/relay_ar/relay_ar_arms_albedo.png": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "f0b41d0f3741eed77b27d8a16dfc72c346ea21b6"
+    },
+    "game/assets/weapons/relay_ar/relay_ar_arms_albedo.png.import": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "9bca2a701fcee90cd206215f3ad095034a23206e"
+    },
+    "game/assets/weapons/relay_ar/relay_ar_arms_normal.png": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "eccb6af12283cb99628f2235e5fd746e15bb7d1e"
+    },
+    "game/assets/weapons/relay_ar/relay_ar_arms_normal.png.import": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "8beca535f320d153bb69380ce2221321ff889bbf"
+    },
+    "game/assets/weapons/relay_ar/relay_ar_arms_orm.png": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "a5d567d87352f013485758b822faa4b06e420b0c"
+    },
+    "game/assets/weapons/relay_ar/relay_ar_arms_orm.png.import": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "c0831f44ce0de26f7f344f429f78c7a56d1f9b2f"
+    },
+    "game/assets/weapons/relay_ar/relay_ar_body.tres": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "9cf39175fa98184f63b7c42077d4482ca6d7f774"
+    },
+    "game/assets/weapons/relay_ar/relay_ar_hands.glb": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "69c69fa414f13acfc937c6f00780f28dd4d38a53"
+    },
+    "game/assets/weapons/relay_ar/relay_ar_hands.glb.import": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "8d4f293400fdd12c2a7744a9e88db0666cf659b2"
+    },
+    "game/assets/weapons/relay_ar/relay_ar_hands.tres": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "028a75a46a480cc4a534ea958380f85d249a292c"
+    },
+    "game/assets/weapons/relay_ar/relay_ar_hands_albedo.png": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "db6acd004e7e649c9d40064dec26cb724b39bece"
+    },
+    "game/assets/weapons/relay_ar/relay_ar_hands_albedo.png.import": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "cd392a06b97db889373a371993c73fc5982a2bb0"
+    },
+    "game/assets/weapons/relay_ar/relay_ar_hands_normal.png": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "94880e6aa9b5ced3a1e831f7255caff822fb1626"
+    },
+    "game/assets/weapons/relay_ar/relay_ar_hands_normal.png.import": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "b2d3dd92b81ed6ea35ced7d0062e8aaf0d6f76ed"
+    },
+    "game/assets/weapons/relay_ar/relay_ar_hands_orm.png": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "2f3630d72e8145d782c1d9c9f1daa3ab54b813be"
+    },
+    "game/assets/weapons/relay_ar/relay_ar_hands_orm.png.import": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "a6ffebc547f355455757e6690b84387c1a4c2ce0"
+    },
+    "game/assets/weapons/relay_ar/relay_ar_normal.png": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "9127c6eeedb31b94dbb6c2814dab6f3aed9adfe5"
+    },
+    "game/assets/weapons/relay_ar/relay_ar_normal.png.import": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "7eff2d0e1a0b3b8eaa9c9538c662809165273b0f"
+    },
+    "game/assets/weapons/relay_ar/relay_ar_orm.png": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "251e41cbc00341868e20769842474cd83ef6e066"
+    },
+    "game/assets/weapons/relay_ar/relay_ar_orm.png.import": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "fd9e341668dfe21ce99d6c4f1eed6600678bab94"
+    },
+    "game/export_presets.cfg": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "9abdc8c5baead637ab7ac26841c2e1fa2a9a5ca6"
+    },
+    "game/main.tscn": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "d5d17595a4f3ba40788c24a73fb903660affdfc6"
+    },
+    "game/project.godot": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "cdfef244f9afe3415dcb8c2c1f6f3d04a1967a56"
+    },
+    "game/scripts/gameplay/actor.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "430169676a1fedef687bd156d579e827cf0e6182"
+    },
+    "game/scripts/gameplay/actor.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "1f9255be4e01cbbe9694518e471d88f9693a486f"
+    },
+    "game/scripts/gameplay/arena.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "d70e4ac4f9a3f16948743849e5ea98cba7a7a5a9"
+    },
+    "game/scripts/gameplay/arena.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "c8f162af297a0118714b2a88e0dbf33d0d476b76"
+    },
+    "game/scripts/gameplay/bot_ai.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "403dd72df8dc5a9a9321ff8fb59aa545b4de7248"
+    },
+    "game/scripts/gameplay/bot_ai.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "9883e43bf0b5450d14f1bc243ff04302c12d183f"
+    },
+    "game/scripts/gameplay/combat_effects.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "690ac3d0b2ae370e375cd11615002c36a75966fb"
+    },
+    "game/scripts/gameplay/combat_effects.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "18d83ab1a71dbf9e51a935d4260b589a74b897a0"
+    },
+    "game/scripts/gameplay/match.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "1729e7de87726048e604d158d44430ea7306af1c"
+    },
+    "game/scripts/gameplay/match.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "3c9c1ecbcbfb0daab047a65480c145080e571bf1"
+    },
+    "game/scripts/gameplay/reload_audio.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "83624ffe5075b68b1f07f5dfe9b65dd2824c499d"
+    },
+    "game/scripts/gameplay/reload_audio.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "3a5c17b6e787eb456fab7c4cb5be7e6621682f89"
+    },
+    "game/scripts/gameplay/reload_phases.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "21c1c8046cb5182fce6233b7a81035753e10139e"
+    },
+    "game/scripts/gameplay/reload_phases.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "4b7a6492d6c84a3643f037860671a2b2a728fcef"
+    },
+    "game/scripts/gameplay/utility.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "4f61d29639f18761dbafde3ffa2f4f5fe434aa0e"
+    },
+    "game/scripts/gameplay/utility.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "5a3617a5dd255ac4c295f5c59713265d984b7653"
+    },
+    "game/scripts/gameplay/viewmodel_shading.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "00c64573c1f294e7895665bb79846b83e66380ef"
+    },
+    "game/scripts/gameplay/viewmodel_shading.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "742eaeb7df681aad1e16ae6a01f28daf39e9d25b"
+    },
+    "game/scripts/gameplay/weapon_model.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "e5ecdff0b8ef5f039e81233b9b8f79df41e8c2ae"
+    },
+    "game/scripts/gameplay/weapon_model.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "aac3b001612af78082334e19fa34603a28bf86f1"
+    },
+    "game/scripts/gameplay/weapons.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "89431953e3fc9c34341c43cdc24ca858bc2d44e2"
+    },
+    "game/scripts/gameplay/weapons.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "23819f565cb13b904a79ce7f2a4eda9512479f95"
+    },
+    "game/scripts/main.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "996edab146d70c72f654876259f2fb16eb5b5a65"
+    },
+    "game/scripts/main.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "6d84d705691de47fb1cea57d3d70034519423ca4"
+    },
+    "game/scripts/network/economy_bridge.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "870cba1d87c84ec5a714a7eeef6f9376ae4ccd03"
+    },
+    "game/scripts/network/economy_bridge.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "d3226d362a983d1125ef837d1ede6e5d8ea25fb9"
+    },
+    "game/scripts/network/hit_history.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "24fce18e94307ff5e4b908a24ec6a05050362e27"
+    },
+    "game/scripts/network/hit_history.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "cb99a1a2bced8afddba27e1590017b3435c72ecf"
+    },
+    "game/scripts/network/input_gate.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "bf23a5b8c6e634121fca9f5daeb2a4d731ff6538"
+    },
+    "game/scripts/network/input_gate.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "a28a8edabb6db1fe34ce9f7a5305a4b4eadc10d6"
+    },
+    "game/scripts/network/input_stream.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "f0516be1ab2416d36ba3b62f37083f371364f3a4"
+    },
+    "game/scripts/network/input_stream.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "e3e4a54c1e2265d10fb9183396d7e067507b7581"
+    },
+    "game/scripts/network/movement_prediction.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "f83dc4514c6c2f64f582b1860f0c3fd65ccd66cf"
+    },
+    "game/scripts/network/movement_prediction.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "7a7a4e134bb30b8e8a0a9eae0fca53aab3f1e937"
+    },
+    "game/scripts/network/movement_step.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "8350095e0096ab97c6098e9b982c596102af8ee5"
+    },
+    "game/scripts/network/movement_step.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "eabb524c069235b09395dfa75b38bc3a0f0e8583"
+    },
+    "game/scripts/network/peer_lifecycle.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "2ccaf99bc18f1f76ad94089190e4d31ece4a90eb"
+    },
+    "game/scripts/network/peer_lifecycle.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "d659d1b097be90fec9d835a3c5321f7e0bf9b742"
+    },
+    "game/scripts/network/reconnect_policy.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "6912de1d4309778bdcb707ace00465c001cea985"
+    },
+    "game/scripts/network/reconnect_policy.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "84d8057108554df36c2ce521b81800b724827912"
+    },
+    "game/scripts/network/result_outbox.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "5e66816d9e6092f955acb58ab17794b7ea0e3e99"
+    },
+    "game/scripts/network/result_outbox.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "cc3af4a907b31a9c4082e2ebc637a58b5c96d21d"
+    },
+    "game/scripts/network/snapshot_buffer.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "5787cd7dbac005085b85f40a5976c411a42364f9"
+    },
+    "game/scripts/network/snapshot_buffer.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "5c92879d26c803a69b6a5eec35a0a29b3c0b29c0"
+    },
+    "game/scripts/network/snapshot_schema.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "ffd4fde4a263aa9c656a39327dec39ebe421ba60"
+    },
+    "game/scripts/network/snapshot_schema.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "d3d3d86a0a5c0522bc61e22b3082e5d7e2876751"
+    },
+    "game/scripts/network/state_privacy.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "6bc4e5bbf0961034b4c32d25702983150d28567c"
+    },
+    "game/scripts/network/state_privacy.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "364e28b72b7fdfdd52ec28f57411627d0fde8cc3"
+    },
+    "game/scripts/offline_diagnostics.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "b5908b682731dcf45381a11eeb197e85b72dc7a1"
+    },
+    "game/scripts/offline_diagnostics.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "f8e89af0495e2891d89f299735b92e90d273619f"
+    },
+    "game/scripts/profile.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "f5d230e3bdcd9014d96bc2a108869c1c58624d0e"
+    },
+    "game/scripts/profile.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "8137e6fb6d4706532d754136f1088b357df1b9c1"
+    },
+    "game/scripts/ui/case_reveal.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "c45a380de27f353c190affe367d2cfccbb70adb3"
+    },
+    "game/scripts/ui/case_reveal.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "2a55813298c802b9f4e2243b158a81f208aaa23e"
+    },
+    "game/scripts/ui/confirm_sheet.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "8e8fd6d02db8bb3caf2838f76194ed2b68d2ba4e"
+    },
+    "game/scripts/ui/confirm_sheet.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "49f859d22d7b935d42186401055ee00bdd69bdb8"
+    },
+    "game/scripts/ui/cosmetic_material.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "483f05c3b66be720a660ccb044a929abcf1e2526"
+    },
+    "game/scripts/ui/cosmetic_material.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "be28b52007d1d4fe6864f5e0761441bbec5d474f"
+    },
+    "game/scripts/ui/design_tokens.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "544831bb702600249c7faa90e20bee87536ae0d1"
+    },
+    "game/scripts/ui/design_tokens.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "824e778229c64a8607e2379166ef4a3734966ff3"
+    },
+    "game/scripts/ui/display_models.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "22f85a3aa4073a23211f8e1b8d57d46dc3989df0"
+    },
+    "game/scripts/ui/display_models.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "02273a554e12be28d8ef17caf89dd792f0daaadf"
+    },
+    "game/scripts/ui/economy_api.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "595662a12bdc3828b78decb8b7c3c341faddb346"
+    },
+    "game/scripts/ui/economy_api.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "8e6a6fe0e603af8b278ba3ad2d8a7cd002cc32bd"
+    },
+    "game/scripts/ui/economy_ui.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "c482c553264781db2a66a373ab4e4496fb59531a"
+    },
+    "game/scripts/ui/economy_ui.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "36963dfa7b92525c9c560def0d6778714834a0fe"
+    },
+    "game/scripts/ui/item_inspector.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "834c08b346ae558c1d6f5bb2e961d164ea764d55"
+    },
+    "game/scripts/ui/item_inspector.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "e66d56b37a18e7d3d43ea62ee2dce61bb341e538"
+    },
+    "game/scripts/ui/radar.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "d17c52ee6be54438c52660e31b981753f76abeec"
+    },
+    "game/scripts/ui/radar.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "31f2402f7b1ae5115751553845e3981e788882f0"
+    },
+    "game/scripts/ui/safe_area.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "a05b2a13bdc78b9ba64e11343d88245178452473"
+    },
+    "game/scripts/ui/safe_area.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "bb31445f79b74a191b68bdad24a4ace5a251375a"
+    },
+    "game/scripts/ui/touch_controls.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "4c13c454f1935491110fc682058a36ee53c2c926"
+    },
+    "game/scripts/ui/touch_controls.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "00f6091a47f82f84a31b54b0b9785ccd79d836f4"
+    },
+    "game/scripts/ui/transaction_journal.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "cbac7a494f14c88127196c848a3f874892e7b94c"
+    },
+    "game/scripts/ui/transaction_journal.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "6b9eeeab5e36978a061ba51797c9aedf7264e5f3"
+    },
+    "game/scripts/ui/weapon_glyph.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "cfb16cf3b2c4533f1594de09649b195c58fb019d"
+    },
+    "game/scripts/ui/weapon_glyph.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "417bc046f46d268ef71720cc6cc6f9140b81e2d0"
+    },
+    "game/tests/account_match_probe.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "0d15d044e1f54d53945fa5d915cde8538f7386c3"
+    },
+    "game/tests/account_match_probe.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "0946950d1262217a71c68bc8b0a941aa3e4bfabe"
+    },
+    "game/tests/account_network_probe.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "ec511af01ed2c2a64c159ad3d4e4e1f0b13cd859"
+    },
+    "game/tests/account_network_probe.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "34b1ebb55945ff4b5849126e4cad4c5a1900a425"
+    },
+    "game/tests/activity_provenance_probe.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "a3767a311c09c04ab1502c18968180250ac8de93"
+    },
+    "game/tests/activity_provenance_probe.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "5b493c5537998ee0536ad0ca2f40a86b67b853bc"
+    },
+    "game/tests/activity_provenance_test.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "128c6a85d8c8100fc3f0f6462140bcb789b7d40b"
+    },
+    "game/tests/activity_provenance_test.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "8d577e09cd2c161a9da18d7562b156548fb3ab40"
+    },
+    "game/tests/actor_test.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "e4c1f41cfdda2a97b4ba778c1b9ab6658fe829d9"
+    },
+    "game/tests/actor_test.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "ea39fd4c70a0cd2128158d70fa4a971acad718ab"
+    },
+    "game/tests/admission_capacity_probe.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "42aa8abfd36ffe585bf0d59fa4c03cc0a63a2e6e"
+    },
+    "game/tests/admission_capacity_probe.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "2447ba36614fada2b788315eeae16e865bf8e637"
+    },
+    "game/tests/armory_state_test.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "a72df59ee032ff80591a12187cbff81de5cae344"
+    },
+    "game/tests/armory_state_test.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "b020178f497d687eefb40d7ad1e4f14a717fdff5"
+    },
+    "game/tests/armory_ui_test.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "1c588aa365c190875a5c5063fd1e4e993525602e"
+    },
+    "game/tests/armory_ui_test.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "903c2ea6c734a3defe2d6f716c257dc59e73cf83"
+    },
+    "game/tests/authority_order_test.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "dbad899a925f984e656c396eb0ec90e92d50f0a6"
+    },
+    "game/tests/authority_order_test.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "b9b6e1db195792eb3367d363c7a4c017833b4e68"
+    },
+    "game/tests/bot_ai_regression_test.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "76805cef0b4f547bcda09eb49911ffbc42de09bf"
+    },
+    "game/tests/bot_ai_regression_test.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "925c968e39d0108e44bd3e236c858e29b7676957"
+    },
+    "game/tests/bot_dry_weapon_test.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "5a287612402a53d231dd96b10d772da140c16846"
+    },
+    "game/tests/bot_dry_weapon_test.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "a584488847c7fa814d96a17d50344e5d3ae28dfa"
+    },
+    "game/tests/bot_exhausted_primary_probe.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "4b87b4f77dab76470120a71b69945cc072f196ae"
+    },
+    "game/tests/bot_exhausted_primary_probe.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "237e884deaca3407c9412f58a9cc8e31d970b8c0"
+    },
+    "game/tests/bot_exhausted_primary_test.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "5ec2a743b646ddf0f21b127fa50acf3f2bcb2f4b"
+    },
+    "game/tests/bot_exhausted_primary_test.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "b3a2ec6c4ef37374f0acdc05453747d77c870a5e"
+    },
+    "game/tests/bot_lifecycle_test.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "73c993a06b7a9f842eea9893a48bc6e9dc535909"
+    },
+    "game/tests/bot_lifecycle_test.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "8b7459a582b5127f55b1e8360b00b2552f39beb5"
+    },
+    "game/tests/bot_match_test.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "14066b9affc9714be70e7a6f8b6771c8fb3ec8b6"
+    },
+    "game/tests/bot_match_test.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "042f7689fda6da2f45b1d097fa77ad7f5562a968"
+    },
+    "game/tests/bot_squad_observation.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "369397a4b5a5b1ab1f310b1d00b24b67bbb0f402"
+    },
+    "game/tests/bot_squad_observation.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "a97ccb28034bd7e0cbbf343e5a9613e50e7f8e13"
+    },
+    "game/tests/bot_squad_symmetry_test.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "d4a22f832db01d640770560d5221ba80015bfe2e"
+    },
+    "game/tests/bot_squad_symmetry_test.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "cf52a74ae3d7601a9ab3b184e2d231d636a42a0a"
+    },
+    "game/tests/bridge_transport_test.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "24a6f33e3d2e71263095cb9d83b3023ea9463332"
+    },
+    "game/tests/bridge_transport_test.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "948de3e85901a981fda0a10577f1d3b414b4b583"
+    },
+    "game/tests/combat_presentation_capture.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "fdb8fb9bf1a9c2de78c19eb0d73a3690ff399679"
+    },
+    "game/tests/combat_presentation_capture.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "3175cbe9a9c3e57706a648f0d4e6faf7b7e4aa35"
+    },
+    "game/tests/connection_lifecycle_probe.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "1f0854b99481955f58dc6da80a36e0c99c4c13bb"
+    },
+    "game/tests/connection_lifecycle_probe.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "38bfa60fcf1f6e03ff6862f3881482e4561858a2"
+    },
+    "game/tests/cosmetic_lifecycle_test.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "2d0919efefc9ee1f417a8fd1b45e4d0888266bb1"
+    },
+    "game/tests/cosmetic_lifecycle_test.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "b62986af789f6f50ad0571c4d562fa9d980c6623"
+    },
+    "game/tests/cosmetic_presentation_test.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "06c36a0f8534b7f27a340645550cf21e4fe92c5b"
+    },
+    "game/tests/cosmetic_presentation_test.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "2af06435554d95c7e1cc333145b268ce0707c446"
+    },
+    "game/tests/economy_recovery_test.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "94e53cbae3cee5e355bae603b05b6578f18570b4"
+    },
+    "game/tests/economy_recovery_test.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "da94244ad9377cde44a9b8a424f950ee2c84f447"
+    },
+    "game/tests/economy_ui_test.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "d63703e9a69bda72d0c7e4278b24db82ead3d86c"
+    },
+    "game/tests/economy_ui_test.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "6f211f02341a3ea8721493f13bbf2abcd5b2be61"
+    },
+    "game/tests/environment_probe.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "aaf52f081d0fa885378614ee75e7b6f69899d932"
+    },
+    "game/tests/environment_probe.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "b88460f97b45dd30c32ee47bcad11292a6b378b2"
+    },
+    "game/tests/fixtures/backend_world.json": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "5bacf2d8c524eddd57ecdcbabf8df327cb4fc8b3"
+    },
+    "game/tests/gunplay_rules_probe.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "f9c29705fa6ad2f7e24274f33e0525ad178d53c0"
+    },
+    "game/tests/gunplay_rules_probe.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "e888ada968918528a256b944afd0acdbb3c3956f"
+    },
+    "game/tests/handshake_attack_probe.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "b06ad40e9344de015804f58a9025425ba8e7e1e2"
+    },
+    "game/tests/handshake_attack_probe.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "809c05b816cb64a19e3e439efe435bba59932946"
+    },
+    "game/tests/handshake_server_probe.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "7d80e89bd194f7b81ab0578db77608ed9b7ac863"
+    },
+    "game/tests/handshake_server_probe.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "f40bf7fb6b5b6afbd9da8152e37376796709c545"
+    },
+    "game/tests/hit_feedback_test.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "d312b02e63836e544ca25534c10d5e87611b1e90"
+    },
+    "game/tests/hit_feedback_test.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "3758990f741c9b478d44a19a23a46e72a8a2981e"
+    },
+    "game/tests/hit_history_test.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "02b09c9b6898fa5e65c98294e6cef670b76250f4"
+    },
+    "game/tests/hit_history_test.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "9db64f85877514fef0bb9d31325956140f0583cb"
+    },
+    "game/tests/hit_volume_test.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "971c5ac3d9743971341bb71a80b09b0e0516b912"
+    },
+    "game/tests/hit_volume_test.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "bf99de2bf117d1f4f319bf67a23a0d0a42f87a2b"
+    },
+    "game/tests/hud_objective_hint_test.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "69c52ab0c565a0960cf12b64b96e6fe5508c2d20"
+    },
+    "game/tests/hud_objective_hint_test.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "fe5a37af6b3d15493b0bc3a82006ad88db13290e"
+    },
+    "game/tests/hud_overflow_test.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "0f45f3446817d119a7012f0f747a5db7cea279e3"
+    },
+    "game/tests/hud_overflow_test.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "3f9c05020905b58ce7e182c89d7ac33fe22dc6cf"
+    },
+    "game/tests/independent_reconnect_review_test.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "77cd3773a1419eeab3c4160174a848b480c4b91e"
+    },
+    "game/tests/independent_reconnect_review_test.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "ae6c635b56cfa81e6e0115945f853640689cf036"
+    },
+    "game/tests/independent_resume_admission_test.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "aa2b42a2fd39eeeff7f553caa1997129ad2b6124"
+    },
+    "game/tests/independent_resume_admission_test.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "8f865e68653bf4f32c4d0f1c94cac878d8a390f0"
+    },
+    "game/tests/independent_resume_alias_test.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "3a7119c9612ca51f5546456912bdb81fc003b9b9"
+    },
+    "game/tests/independent_resume_alias_test.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "5bc379670f054babf1badb1a9df02d304f61dc81"
+    },
+    "game/tests/input_freshness_probe.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "273bc998ef6370f698bba71b7a9e3f27add785fc"
+    },
+    "game/tests/input_freshness_probe.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "5da43815513e284ec63fc1990d7cfbc33a5763d2"
+    },
+    "game/tests/input_lifecycle_test.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "b8767fbafe114a9b9b3bbb8f8e04fefca23c50a4"
+    },
+    "game/tests/input_lifecycle_test.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "8e39160ffd82960212c286af618b1d6cadfb8819"
+    },
+    "game/tests/input_mode_test.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "e720077619b4b77a4a63fdbd445c305e0cb7a9fa"
+    },
+    "game/tests/input_mode_test.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "488325abfeb7cf69bab03f1408dd0b7f18d48a73"
+    },
+    "game/tests/input_stream_test.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "58eb11d5fc981f2ef7f886bace5c447570942305"
+    },
+    "game/tests/input_stream_test.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "3e3baeac666a61f12018bf482463c2d2fe0d3cb3"
+    },
+    "game/tests/integration_actor_lifecycle_test.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "41649902feda54283f1a669864f85bb650884cb6"
+    },
+    "game/tests/integration_actor_lifecycle_test.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "f812b46ec0f4a25ec0d8dfb3d2ed96f5eada3f39"
+    },
+    "game/tests/integration_aspect_probe.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "93ce7396f2a56715b551536e97c14347ec41c00d"
+    },
+    "game/tests/integration_aspect_probe.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "976d0c797b77edd440e2d8e9432071f391c011c9"
+    },
+    "game/tests/integration_render_profile.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "d2a226bc73c0c39ee9a0caca0ce1eabcf15b6a81"
+    },
+    "game/tests/integration_render_profile.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "cbcc559fbcfa5428d0499528e4a54ca66c177a80"
+    },
+    "game/tests/landscape_ui_test.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "61332a14c0a252d9cb61f485d6cacbe47b2cdf99"
+    },
+    "game/tests/landscape_ui_test.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "03b2bec9be88c219762d957a801144ca4188c651"
+    },
+    "game/tests/lost_welcome_test.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "25a10368524115aa8d4870a845ef50a04f3f8c19"
+    },
+    "game/tests/lost_welcome_test.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "ed1998e9ff6c5ddba627370da0dfc5a9e2fedfe1"
+    },
+    "game/tests/main_test.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "f0d7a22b584985f30ce5797aee910666b898f3f5"
+    },
+    "game/tests/main_test.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "a53033d305d6144c77d60be002972b8ccb63460e"
+    },
+    "game/tests/match_test.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "3056d92afc3ce1c8e65c783728281aac6704828c"
+    },
+    "game/tests/match_test.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "412a448550910a46c92235e4bb61da718905efdc"
+    },
+    "game/tests/menu_capture.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "2f3f8fc73b92cd4be53798885ee5da06abfae478"
+    },
+    "game/tests/menu_capture.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "879eca2b09ef3fcdd3807dd61a6ad267a4dcfd9f"
+    },
+    "game/tests/menu_contrast_probe.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "f30e1f27fba4de2bf7d5c2dd946a5bf6b4d16b56"
+    },
+    "game/tests/menu_contrast_probe.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "288bfeb7cf9658da3d17f1ec205669f2004f62d6"
+    },
+    "game/tests/menu_focus_test.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "01292e5995f07ce927f18c6132d5a7e1b86a23c1"
+    },
+    "game/tests/menu_focus_test.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "e89d9f76a6085400d2f2aa6d01cec6b21b5d90d3"
+    },
+    "game/tests/menu_occlusion_probe.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "75e1fe48825b7687cdbc84eec8b7510b4e7c043e"
+    },
+    "game/tests/menu_occlusion_probe.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "f3aa1e6a8b95f202b1e82d6eabcfe3c8bf56c410"
+    },
+    "game/tests/menu_state_test.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "7162f3f15db1ab0b00fa697f6d6b25e97f57b37b"
+    },
+    "game/tests/menu_state_test.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "734cd066af339350b05a6164afaeab2f66466588"
+    },
+    "game/tests/movement_prediction_test.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "5fbdf8312624eae237203d73bb2831a5f1d0e7a7"
+    },
+    "game/tests/movement_prediction_test.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "177f61047f27205207026650066fc2d63605fe15"
+    },
+    "game/tests/native_economy_test.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "bbc5bed2b6097b585a1dd9bead28549ddc833270"
+    },
+    "game/tests/native_economy_test.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "157435345da115ccfbae8883b372e96391fac1ee"
+    },
+    "game/tests/network_probe.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "aa82cc5b3e325da9f43614109bec8ecfadd9733d"
+    },
+    "game/tests/network_probe.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "96eaca14b5e4775c07dcfde295890a10d425a189"
+    },
+    "game/tests/network_profile.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "466c2faab1c5a0c03770ac8758459926c8c8ccfa"
+    },
+    "game/tests/network_profile.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "51883a5fec1076868c35c14c2ddbc63bd47813bb"
+    },
+    "game/tests/network_simulation_probe.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "5594fc67a9a22480d817a365c0dc9d0be4262dd7"
+    },
+    "game/tests/network_simulation_probe.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "9f95aff3946d57c486d362bfd907c79e43102c28"
+    },
+    "game/tests/offline_diagnostics_test.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "8a61d5a0db19c4e1f944c09bbf26d3910964b4bb"
+    },
+    "game/tests/offline_diagnostics_test.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "67bb9cfbc9010c92f86bb3214128a17cf5d4e535"
+    },
+    "game/tests/paint_visibility_test.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "2238de6ca1133f00572715333b94d7b825560391"
+    },
+    "game/tests/paint_visibility_test.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "6e866606b146bc8bfe2a57ed7c412fa4ab520b20"
+    },
+    "game/tests/peer_lifecycle_test.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "fabf876f82f0c81a78503f4f342623543b5c2846"
+    },
+    "game/tests/peer_lifecycle_test.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "bc3b62bb6fc6ca1231374f7c42e19bb23b686f1c"
+    },
+    "game/tests/postgres_receipt_probe.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "ed1d8532ff1edd6666ca7e8fcf8cb00ed1e15142"
+    },
+    "game/tests/postgres_receipt_probe.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "940f06f1bcd806629efbfe25f8dcf8590b42fe51"
+    },
+    "game/tests/profile_test.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "ff21f56150dc2f504f315a629c9364889c5da434"
+    },
+    "game/tests/profile_test.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "23da56a730ef3fe60a1e40e8da992f2b4d5ebe54"
+    },
+    "game/tests/protocol_client_probe.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "e628cbbed5127d2b69ed4e2aed8a1036f20e9f52"
+    },
+    "game/tests/protocol_client_probe.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "78f0704d9845dd9225c5765edd11d75034e9cdc9"
+    },
+    "game/tests/receipt_lifecycle_probe.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "238d9215e4f421d38da16d2b625f5245bfec03d9"
+    },
+    "game/tests/receipt_lifecycle_probe.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "4a807f1f89cc2798502088c617f9773bf68e0fd1"
+    },
+    "game/tests/reconnect_policy_test.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "5f324808ad1313e3f4da0731d095588a56d8fb28"
+    },
+    "game/tests/reconnect_policy_test.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "a9facd4e049de7027db4cba25c81f224a8c1e5fe"
+    },
+    "game/tests/reload_audio_capture.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "fdd8601522b122320f9e23ebbd3c6e666b5306ac"
+    },
+    "game/tests/reload_audio_capture.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "fa66d4339785ba536510f4501dbaa7cf60133489"
+    },
+    "game/tests/reload_audio_test.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "b8e2bc74f7c39efd1cb4592ed4b3277d2125786d"
+    },
+    "game/tests/reload_audio_test.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "1670f1a6d54776cf69a18a3920dfd534df9313c6"
+    },
+    "game/tests/reload_discolour_probe.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "7da289a304ed44958bc49bb70fb403ad427f0a07"
+    },
+    "game/tests/reload_discolour_probe.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "fe2d1b81ac228bf5ea909c0fa1d4383f0e561320"
+    },
+    "game/tests/reload_legibility_probe.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "b394a5184e85dd180f9c34adf36b08e33a2b6f2d"
+    },
+    "game/tests/reload_legibility_probe.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "a1957647854059b3b86c05202fd15af73d89d739"
+    },
+    "game/tests/reload_perf_probe.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "5f9e948bc59449ec6ca576ead787800bebd9b703"
+    },
+    "game/tests/reload_perf_probe.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "8b7ae4e094654b547fd620467f7574253a719c28"
+    },
+    "game/tests/reload_sequence_capture.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "be240c59728e98e5c31ccfec5f3d94be12d8757b"
+    },
+    "game/tests/reload_sequence_capture.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "c4b32615ad83144c03ab0dcf317621eca33f5bbc"
+    },
+    "game/tests/reload_sequence_test.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "6a059d9352fcb3fe94e84876ec3697f85b8381a2"
+    },
+    "game/tests/reload_sequence_test.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "95a221c71325b5273d01ac0ce929ca0eb3ad1b4c"
+    },
+    "game/tests/reload_visibility_test.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "c2e14d404a60038f1d153c63d9be57c7eb693f8f"
+    },
+    "game/tests/reload_visibility_test.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "d4341577b2e8ad4532cba81f33d210663f3b8b63"
+    },
+    "game/tests/render_benchmark.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "69b90c06249b4c47fb0efcb9800d0b451a0ebe5b"
+    },
+    "game/tests/render_benchmark.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "7a075bd7b1b6418aecd5c06151fb26b3f9ca46b4"
+    },
+    "game/tests/render_budget_test.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "993a8acce12a79084775ff914f49bc93d82148d6"
+    },
+    "game/tests/render_budget_test.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "4ed8cc9351d60c18a5f95476ee049f0360cfea7f"
+    },
+    "game/tests/render_lifecycle_test.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "e7521c043ce4f6e9f6ed05615bc6e0af8951d969"
+    },
+    "game/tests/render_lifecycle_test.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "1cccbd3b89559e8a8c56c918998b13f4e0f76f99"
+    },
+    "game/tests/render_probe.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "c6ef90c797b6ff770b8f37c64a390946099f4ccb"
+    },
+    "game/tests/render_probe.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "eda0e1db1b698fbfd4cc4f5b71ac68d65b6aab15"
+    },
+    "game/tests/result_outbox_crash_probe.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "f83d72f077443b70f9c6558731e3c3fdc884c5eb"
+    },
+    "game/tests/result_outbox_crash_probe.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "f001e7e96ea66219355e19ee50a8f23f05b55ec9"
+    },
+    "game/tests/result_outbox_test.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "9728ba452d3d9e091be63961e4116ebd311ffa13"
+    },
+    "game/tests/result_outbox_test.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "e5ed88c9d3cb15f6363c8bb15a546515e1b1c7b5"
+    },
+    "game/tests/resume_auth_loss_test.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "f0920b3b6e1f42fe08bac14f69b4cb30c76ae9ed"
+    },
+    "game/tests/resume_auth_loss_test.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "37ac5bd850e0ba2c2582601b691194e29117652a"
+    },
+    "game/tests/reward_bridge_test.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "e8aaa062c80e2910cceda3107e4d3ed42a53b149"
+    },
+    "game/tests/reward_bridge_test.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "eb3caf9d5c43138f6e89c495afe26328628d4fb3"
+    },
+    "game/tests/smoke_presentation_test.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "3700d464b867c3ccb12b40bc8e865a6492ee7f97"
+    },
+    "game/tests/smoke_presentation_test.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "1ecc92d49b7b1f7eac20cf612a0e565ccf3b6097"
+    },
+    "game/tests/smoke_render_probe.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "e2216f72c8904251c22eab67582bd82c0f7ca9f7"
+    },
+    "game/tests/smoke_render_probe.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "4de7d64736456b64cd3f0104f80e9e9603115a4d"
+    },
+    "game/tests/smoke_visual_capture.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "80d657246aadb7bb86e7b03a246bef450b78f231"
+    },
+    "game/tests/smoke_visual_capture.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "b7efd7c415f7d4adac2741caa4548d4160ace133"
+    },
+    "game/tests/snapshot_buffer_test.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "cdc93e39a1fd0f0f4c0e503f160a782cf45cfb58"
+    },
+    "game/tests/snapshot_buffer_test.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "4168b85cf0c03305a123309f5341984769a01f60"
+    },
+    "game/tests/state_privacy_test.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "d1fda5b44bf71ad2c178db477df24eb40eb78637"
+    },
+    "game/tests/state_privacy_test.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "fc007ac84d79f3b9f93f100f697a28f35d4132c8"
+    },
+    "game/tests/touch_test.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "8315298878007e159ce60c0bc373977badd9f976"
+    },
+    "game/tests/touch_test.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "268e5dc001bde46b2eaeb59b5a6a5f70ef037840"
+    },
+    "game/tests/transaction_crash_probe.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "ede200db5a6f32c0aeba65b09be67cce8c1fa977"
+    },
+    "game/tests/transaction_crash_probe.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "9c53c471c8e3d2691f839938eb8400bb3e27a422"
+    },
+    "game/tests/transaction_journal_test.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "8ecb954c89972fda55e520e03b38eb4b966c9abc"
+    },
+    "game/tests/transaction_journal_test.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "13f346c682a35fa5800cfd3bd52897d9c3e7b339"
+    },
+    "game/tests/transaction_lock_probe.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "898adbead22757f25c5b63d7b4c89b995eb0c553"
+    },
+    "game/tests/transaction_lock_probe.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "18e624b5f08c9b7d9cae6377ed3bec2f9894090a"
+    },
+    "game/tests/ux_contract_test.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "8590c4b1b8d26cedb0e12428a6510ee150e3b946"
+    },
+    "game/tests/ux_contract_test.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "dce2ef3ff1ad2e2d24752ce3a22d7f1d2310ae47"
+    },
+    "game/tests/viewmodel_light_probe.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "cf37319b052fe4df32fab66e92c531aabd9b2644"
+    },
+    "game/tests/viewmodel_light_probe.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "3b20db0712fade35deb0873644026114751f4a84"
+    },
+    "game/tests/visual_scene.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "d4cdad0be8db065838e03a314910b5c3ee1a7996"
+    },
+    "game/tests/visual_scene.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "35e3642b3dddcd112c26a821f7abb0e02c877c9b"
+    },
+    "game/tests/weapon_art_capture.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "54790ae31b8b43222c9b91e0ba0a97b25a674032"
+    },
+    "game/tests/weapon_art_capture.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "92dfaa0bbdf1d8e460438b1348083b51139e88d6"
+    },
+    "game/tests/weapon_art_test.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "b75626ad3771c987089c34cf964b5b74b2467288"
+    },
+    "game/tests/weapon_art_test.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "ec742a3383ab19ed5886a3fb9c8df03a8fede008"
+    },
+    "game/tests/weapon_integrity_test.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "a2498927ff15c54199568f89449190a05208f091"
+    },
+    "game/tests/weapon_integrity_test.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "2c264b926df3c304882b477874b0fd4af461a49b"
+    },
+    "game/tests/weapon_motion_capture.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "6effad5c3dd2934164d74ea22059daa7deb0f067"
+    },
+    "game/tests/weapon_motion_capture.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "b7763d7e193ae7300b3bbcd89a553b787698ddba"
+    },
+    "game/tests/weapon_render_benchmark.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "c71d7fe5b5ba91d0886abdc85f405238468b92ef"
+    },
+    "game/tests/weapon_render_benchmark.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "b52d093359c73a18f12d18f571b07feecdeea2c6"
+    },
+    "game/tests/world_test.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "412d021c383c7bba7774be0d7398d9deee8a6c36"
+    },
+    "game/tests/world_test.gd.uid": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "a8dcb16c12c380d45bc66376e5cecad54896111c"
+    },
+    "scripts/analyze_input_consumption.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "b94011633e3ec796fe9ae4f0bbc8a8507963243e"
+    },
+    "scripts/build_manifest.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "3087a172f8a6194d0ce7b6ada078703653dbb626"
+    },
+    "scripts/capture_desktop_layouts.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "8a749bd9474fe27603e41b388cc4966ba0bbce74"
+    },
+    "scripts/capture_reload_matrix.sh": {
+      "mode": "100755",
+      "kind": "blob",
+      "blob": "40ad8175b25c1b90d1c86ca223dbeedf33f6d381"
+    },
+    "scripts/diagnose_macos_render.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "02cd54571acc098383abdea618b8ba360a908c97"
+    },
+    "scripts/diagnose_macos_startup.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "7e9d13ee0ba394a35e693d6b98c34e5c774e310d"
+    },
+    "scripts/diagnose_native_input_mode.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "07adeca365aead7d5b28d2b27810b11e75120e47"
+    },
+    "scripts/diagnostics/linux_profile_overhead.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "645b713e2d670f09aaea30ed0a6116086f0ec9f7"
+    },
+    "scripts/diagnostics/linux_profile_overhead.tscn": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "7173fa6746e961698cc980f70188b9973135a117"
+    },
+    "scripts/diagnostics/render_feature_probe.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "c83f164a81de623541453bd860210bbae18f3066"
+    },
+    "scripts/export.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "6d36a11a839c5eddd01e98effe229e824a220703"
+    },
+    "scripts/export.sh": {
+      "mode": "100755",
+      "kind": "blob",
+      "blob": "6280ac67df8f54b9c73cf3609fa7f0d029baf259"
+    },
+    "scripts/export_catalog_fixture.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "efdf852607b2b308b341e0e47dbbc4c507ed6a83"
+    },
+    "scripts/export_ios.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "a1c9cffbc5a73aa80c772ebf508064b392d4a6ef"
+    },
+    "scripts/fixtures/export_integration.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "75ee0adb6a44315fbd746ba2c91a71c2191cbacc"
+    },
+    "scripts/fixtures/macos_ordinary_source/default_capture_body.swift.txt": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "d9f969a4670a53d201623d4de602512016d668a8"
+    },
+    "scripts/fixtures/macos_ordinary_source/reference.json": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "913309766284102e53296a99c1bd238d19ad9bd0"
+    },
+    "scripts/fixtures/native_log/.gitattributes": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "b4a8de09425eed6f5ac606bf25dd02a0ac099af4"
+    },
+    "scripts/fixtures/native_log/input-mode.log": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "29fe318726e0519bc43130d289692e72e4be232b"
+    },
+    "scripts/fixtures/native_log/provenance.json": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "952f6829ec1e14ec2d0d7981cebafcffc06614b5"
+    },
+    "scripts/fixtures/network_soak.gd": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "cbd7213be8c2cd566556309628c87dfe4715687e"
+    },
+    "scripts/fixtures/offline_capture_observations.json": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "0d9bd7288f505e708ff883d681a3533085828e78"
+    },
+    "scripts/fixtures/offline_focus_observations.json": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "eab4fa14aeea2ef65e9ded227edc06fc94e6a9ff"
+    },
+    "scripts/generate_surfaces.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "c1208cc86e8b10deee85d0467dc3995cb0c40b40"
+    },
+    "scripts/godot.sh": {
+      "mode": "100755",
+      "kind": "blob",
+      "blob": "1c6f6c925d0f46b754028e358a81a582274eddcf"
+    },
+    "scripts/linux_frame_sampler.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "0e53d94919f9ada6c43d26e435fdfddcb06e2a6d"
+    },
+    "scripts/linux_profile_overhead.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "7f52e724c739918c79e1c8c0547fa897f5f18f03"
+    },
+    "scripts/macos_deploy_ocr.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "e02434fc9777b92cb6f945a8adc7ffe2a42aa6c9"
+    },
+    "scripts/macos_native_input.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "98990989c69393a55a0e6e9ff8f208cf8c321c78"
+    },
+    "scripts/macos_ordinary_input.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "9e11a896c1e4b60772ce4605749b0834b469109d"
+    },
+    "scripts/macos_window_capture.swift": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "0a95764f8531ea841e495695ecdbece2d642b31d"
+    },
+    "scripts/measure_bot_squad_symmetry.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "96ca40de764257d167341bac042aca2dead0ae91"
+    },
+    "scripts/native_approach.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "34493e63f4db62f78d0c880d0803cc17700c456d"
+    },
+    "scripts/native_focus_fence.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "f578b9f7b72ae50ae262fae883f708054fa1aa1d"
+    },
+    "scripts/native_log.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "4394d69d5813e33184f0e269e5b383061fc21c33"
+    },
+    "scripts/native_observation.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "8c36c7f3e30866c512923da9c94257ad175c857b"
+    },
+    "scripts/native_settings_route.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "9ccbe6c691577c17d744185321c62db4590dc39f"
+    },
+    "scripts/package_qa_receipts.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "0410baac440c7b5d31346daf86b484d7383d2aa0"
+    },
+    "scripts/postgres_receipt_oracle.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "343a698dedfbeb22139af136bb200e28bc511fb7"
+    },
+    "scripts/probe_macos_input.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "d4d1a5944446fe808dc6d10cb824e0473f1a31a5"
+    },
+    "scripts/profile_import.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "b6b6e9bf61d454d51de924bd4c1b75b16047f5ec"
+    },
+    "scripts/profile_render.sh": {
+      "mode": "100755",
+      "kind": "blob",
+      "blob": "3b65be9eaeca79442035d468925f6fe56c6ae801"
+    },
+    "scripts/qualify_ios_compile.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "67ced21eee201fe906a9bb376e8c2fc985a22114"
+    },
+    "scripts/reload_negative_controls.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "3f28ec5de194d36e642ff707c93122f5a7329b3d"
+    },
+    "scripts/run_native_regressions.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "843dba19da88a5b2d20bc5977031fbcd29ad776d"
+    },
+    "scripts/run_network_campaign.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "edd59163200ff036c559fd13381fd78b9fe696fe"
+    },
+    "scripts/serve-account-match.sh": {
+      "mode": "100755",
+      "kind": "blob",
+      "blob": "c626a3aeb838ed9c07cf2ed29c1abc7a051e60ee"
+    },
+    "scripts/session_brief.sh": {
+      "mode": "100755",
+      "kind": "blob",
+      "blob": "8ae0f172de0a5affdaa9f9bc6559afda606bcebf"
+    },
+    "scripts/setup-android.sh": {
+      "mode": "100755",
+      "kind": "blob",
+      "blob": "a1d19b0bff58d0b2b1483092655ba55817525d56"
+    },
+    "scripts/setup.sh": {
+      "mode": "100755",
+      "kind": "blob",
+      "blob": "c6320c8dc0b55e4988ec7a3cc4e9ca2a82a15d4f"
+    },
+    "scripts/simulate_network.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "199e2177828925065fed35f7a25e2863a9a933da"
+    },
+    "scripts/test_account_isolated.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "0ed38bc7a459074cb17635ca97bc3a1cfc1d3e83"
+    },
+    "scripts/test_account_match.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "bf2b10819f65cfc83a7726f4d7584e3e3a5be9b5"
+    },
+    "scripts/test_account_match_output.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "a5f9f5f87b64ca92df5575f229d78222b6d8eec6"
+    },
+    "scripts/test_account_network.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "afc28a50db874d10d1c4d28c7353c500cfb2c5c5"
+    },
+    "scripts/test_account_network_output.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "d59bdcf5c867693686a413ecfb0b9d58343b9db1"
+    },
+    "scripts/test_activity_provenance.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "08d7fd43dae9fa1670aac0674f20d3ece8cd8725"
+    },
+    "scripts/test_admission_capacity.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "a3e47e461d6685407476b580cf1a704895306505"
+    },
+    "scripts/test_bridge_transport.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "dcc118d8b434faa0e6f472c19f7ac6109ee9bd9c"
+    },
+    "scripts/test_build_manifest.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "763519e2bab83d8fc06aead292edc6139479537b"
+    },
+    "scripts/test_connection_lifecycle.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "f46affcfb98fec6a7bd10ee32086f3832656a5a9"
+    },
+    "scripts/test_diagnose_native_input_mode.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "2a57ea9bf1d7db58afb005043f0ec18750598d4e"
+    },
+    "scripts/test_focus_resume_timing.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "910905ca23c5aea320d578dfc07c51940d7d9cd6"
+    },
+    "scripts/test_full_account_reconnect.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "bf91f2d03439a7f074dfa871dd5907c40ab54391"
+    },
+    "scripts/test_handshake_hardening.sh": {
+      "mode": "100755",
+      "kind": "blob",
+      "blob": "be0962fc35aab7a30be572d3a23346abd46b54f0"
+    },
+    "scripts/test_hud_fixture_cleanup.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "b59b44b39628b53b191d742a3914c8d42d651be7"
+    },
+    "scripts/test_input_consumption_identity.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "815c86acb883f797aea511c49b86c2b96bda9800"
+    },
+    "scripts/test_input_consumption_lifecycle.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "3c64a08018f0171e758dcf296e229e09b9d9e5e5"
+    },
+    "scripts/test_input_consumption_observation.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "10cf685bad7711907c7712d580f1c1425283b444"
+    },
+    "scripts/test_input_consumption_receipts.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "77866a4900f7c744816200c780505bb2a6316d5a"
+    },
+    "scripts/test_input_consumption_state.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "be03d1e3e7d4f0f5c1f307bdd2721572f9ebd4d2"
+    },
+    "scripts/test_input_consumption_stream.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "e53c149c2c2b327df0f6689c32e101a1faac8d09"
+    },
+    "scripts/test_input_consumption_transitions.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "68acde5dc06b6164def9527188cb8ddf72d42ab2"
+    },
+    "scripts/test_input_freshness.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "83a7ba2c2038873bff46389f3a45b8a16d96aa4d"
+    },
+    "scripts/test_linux_frame_sampler.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "d4d57a75e396807e241ad65f3d26765b15187ca8"
+    },
+    "scripts/test_linux_gpu_profile.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "5e705dacb35a5bc67775234c954840c19aceb133"
+    },
+    "scripts/test_linux_profile_overhead.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "27a87a20511c3be27d049644da6eb2e03a418cc8"
+    },
+    "scripts/test_macos_deploy_ocr.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "fa6935caa24486bad70a521748d2b51201359334"
+    },
+    "scripts/test_macos_focus.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "c9d06c71fb0496bdf63c93b45c9b19039f911d37"
+    },
+    "scripts/test_macos_menu.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "096863d28d29324444ede8f01bb4954708398268"
+    },
+    "scripts/test_macos_ordinary.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "0ecc429464dfe2c05e87a03b28cf5c7f130d36c6"
+    },
+    "scripts/test_macos_ordinary_controller.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "380562c83018bcd4e8a158bc5dd7fac421a8e296"
+    },
+    "scripts/test_macos_ordinary_paths.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "063aa66aaba312540836d59c927587767519973c"
+    },
+    "scripts/test_macos_ordinary_startup.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "bf0148661819519a647296feef8408f7a2d6b601"
+    },
+    "scripts/test_macos_render_diagnostic.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "d3385b37bd225f30b8b5da5da6ccf5115380c2d0"
+    },
+    "scripts/test_macos_screen_identity.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "2f8ee27ad8eb78484dc4dc7c8698429d76ca33e1"
+    },
+    "scripts/test_native_approach.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "9b358f64564f0512ff34045beab1316d759bc38d"
+    },
+    "scripts/test_native_economy.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "d0c348f2e68b57a2bfafa4ebf750204f795f3376"
+    },
+    "scripts/test_native_first_leak.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "b49f35c745f0a77c2f32b1dcef31ac18d9824794"
+    },
+    "scripts/test_native_focus_fence.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "73e6004002d47f0ded509b80dfc5876f25e18b31"
+    },
+    "scripts/test_native_log.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "c316d4be50ad5d21c0e8c021fc5ddfe8ea9df094"
+    },
+    "scripts/test_native_observation.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "076e6da2d5b8eb402305a259e1a63e41585eecf4"
+    },
+    "scripts/test_native_route_pulse.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "32d54ceeee0f70d2b172281c45257e478cb29e06"
+    },
+    "scripts/test_native_settings_route.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "ec2bed259ef0eff4295503ed58a242a43e8837e9"
+    },
+    "scripts/test_native_suite_cleanup.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "3fec6a0b93ad0c34585cec72abdcc0e2dfbb8dfe"
+    },
+    "scripts/test_native_suite_isolation.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "ea55e62a86b8ad0a16502b9e69c0e1e202748d0f"
+    },
+    "scripts/test_native_window_lifetime.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "10d0451fd3e6b17c5e15e2965eee125065b805a1"
+    },
+    "scripts/test_network.sh": {
+      "mode": "100755",
+      "kind": "blob",
+      "blob": "0abe219e9b2809c100ba00248edffdb08fe6968a"
+    },
+    "scripts/test_network_soak.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "505c53c4d519e0ee11c586cacb9a6eaea1c0339d"
+    },
+    "scripts/test_offline_capture_fences.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "37066ca150d0bfdc5b1f88e4c019ec152e49a594"
+    },
+    "scripts/test_offline_export_ocr.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "b79391feb95e64fc83694ee02fd5c7dd1ccaf8e4"
+    },
+    "scripts/test_offline_role_guidance.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "8930acce08e02c3c4bab2ade0611c9223b118a90"
+    },
+    "scripts/test_package_qa_receipts.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "6980ddf5e74631c5601b6b32c2b088266e61122d"
+    },
+    "scripts/test_postgres_receipt_guards.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "9433ec19fe49868fa80400830561a443c13edc5e"
+    },
+    "scripts/test_postgres_receipt_oracle.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "9caf8f8b6358316b3c17664733b56e3b6ca0f56e"
+    },
+    "scripts/test_postgres_receipt_recovery.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "60a2ec8c46720b248868ca211b1fa980fd2d8f8a"
+    },
+    "scripts/test_postgres_receipt_refresh.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "6980feeb48bab86a2ad672354366113cfb735b4a"
+    },
+    "scripts/test_probe_macos_input.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "3ae39435dc16bd11b1f7abc22a23cca18a6cea5c"
+    },
+    "scripts/test_protocol_compat.sh": {
+      "mode": "100755",
+      "kind": "blob",
+      "blob": "f940354005035308ca2c5813cb3191fd1a605df4"
+    },
+    "scripts/test_qualify_ios_compile.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "ec384d960425e0682d8313b955842cd388f537d0"
+    },
+    "scripts/test_reload_contact.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "fd9a450a99d8396e7b1b48eb56476a36c118dec8"
+    },
+    "scripts/test_render.sh": {
+      "mode": "100755",
+      "kind": "blob",
+      "blob": "422c7598c034a9f7252d0a4b4c1b2f9cc96f2138"
+    },
+    "scripts/test_rendered_layout_hud.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "67caaf5fe483e0a8885fb78a5ab401fa48a3a289"
+    },
+    "scripts/test_result_outbox.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "b417a5f2187db6bd60bc5a37a01d223cbf7341ee"
+    },
+    "scripts/test_reward_bridge.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "2ecdb38b9d7ae52b96e0cc470468ddc0c411cb58"
+    },
+    "scripts/test_transaction_restart_oracle.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "eca6801a1e64a74e85b8c20ab11f6eec907d2ca2"
+    },
+    "scripts/toolchain.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "216e38b5c45bace1fef79519ffe99527267b911b"
+    },
+    "scripts/validate.sh": {
+      "mode": "100755",
+      "kind": "blob",
+      "blob": "f4165a43d74dfb10b0cd7340d19cbf314db2c7d4"
+    },
+    "scripts/validate_matrix.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "3c4de7f4e8768dcb5d66e1cc2af4f1fbae4c257e"
+    },
+    "scripts/validate_transaction_restart.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "eaab554bdf01968abf9dde8f30dae4213b16a138"
+    },
+    "scripts/verify_builds.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "f9b4b936c8327f1ab5dae7cff3a926ac5053ec9c"
+    },
+    "scripts/verify_integration_export.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "b7fab40228d8a37825fc33b80c7b303a0cd4e9cf"
+    },
+    "scripts/verify_macos_menu.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "b4a87bfa45de3515632c8f1ed2aeda2e5ea8b3d7"
+    },
+    "scripts/verify_macos_ordinary.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "e263e846bb3ba5240d8adc574baaea862f313e85"
+    },
+    "scripts/verify_offline_export.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "928de21452f10b906ee2da16ffd251f4e9fd0c63"
+    },
+    "scripts/verify_offline_match.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "e242ed83ddd332c0624df6f2ec59ad689d181b52"
+    },
+    "server/result_outbox.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "0fe0438c719109b4573eb1019b361e63375d7b4a"
+    },
+    "server/tests/test_result_outbox.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "370530d97c661fb8cdc2cdea49b45dcf826826bf"
+    },
+    "server/tests/test_supervision.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "2dd3e1ff5703d4e9e8bf203f9ccaef23be4304b3"
+    },
+    "tools/art/REFERENCES.md": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "79c2a6a80a4bf8d5484625a5b133e698f7e7651a"
+    },
+    "tools/art/arms_build.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "a62f90a1bdf2b00b70a56eb0bce48864736354ec"
+    },
+    "tools/art/bake.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "dd40e4adf1d315b40dc511c8d429612f1f3be4f0"
+    },
+    "tools/art/compare_stages.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "9244388f4c6eb0680d5836be454e10c7f3be42b2"
+    },
+    "tools/art/export.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "31c370f6eb61d2d2e1a5c7f9e9e09c9f20c8e33f"
+    },
+    "tools/art/hardsurface.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "e3b796dcf1f8a8e0049cc9d353a67d7839c22cd6"
+    },
+    "tools/art/motion_sheet.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "d38e3586ab69d27861e5a46d441f6ad431d60549"
+    },
+    "tools/art/patch_part_ao.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "2c83d829d87f4dc7ddc384d364a87733ccc2a53c"
+    },
+    "tools/art/preview_glove.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "351b623c17e299b75d0e55b9a5d61814febd0a21"
+    },
+    "tools/art/rebake_part_ao.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "8c33be215c4329a462cdb961e70070751b6e5004"
+    },
+    "tools/art/relay_ar.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "d95a88ccb8e04c4ac1ed4adfea9a3bfc8ce1169c"
+    },
+    "tools/art/relay_ar_arms.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "647137082a33c1534c2ab7f960548a026108d5dd"
+    },
+    "tools/art/relay_ar_hands.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "0fb2b5c69f5825824a7ef26c95e8d54fbf749b51"
+    },
+    "tools/art/render_arms.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "6b83d9dd611878a7422268973073cb39d2fc4e1f"
+    },
+    "tools/art/render_views.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "7ee50a6ee3b507f503a6dc5d7300aea08c175afc"
+    },
+    "tools/art/sdf.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "9ae3a6ae50e99572016f556877dc7b5ab7164825"
+    },
+    "tools/art/spectrogram.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "81fbaff47d15824a8734ea6506500b145a15c0d7"
+    },
+    "tools/art/textures.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "c9620899284a0964a53e88b8b7c6bb7c8e96038c"
+    },
+    "tools/art/viewmodel_fit.py": {
+      "mode": "100644",
+      "kind": "blob",
+      "blob": "12d30f654547747e1ee3fbde366a8044e4ed8d25"
+    }
+  },
+  "cpu_affinity": [
+    4
+  ],
+  "native_executed": false
+}

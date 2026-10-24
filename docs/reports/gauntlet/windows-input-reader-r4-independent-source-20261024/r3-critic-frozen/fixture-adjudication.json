@@ -1,0 +1,116 @@
+{
+  "scope": "Static source adjudication; original fixtures/results unchanged; not a new executable acceptance contract",
+  "old_positive_cases": [
+    {
+      "group": "independent-25",
+      "name": "coherent_independent_pipeline",
+      "historical_expected_complete": true,
+      "historical_expectation_preserved": true,
+      "source_contradictions": [
+        {
+          "index": 5,
+          "contradiction": "accepted queue_count0; source true accept leaves a nonempty queue"
+        },
+        {
+          "index": 6,
+          "contradiction": "consumed actor input differs from popped command"
+        }
+      ]
+    },
+    {
+      "group": "independent-25",
+      "name": "receive_wrong_epoch",
+      "historical_expected_complete": true,
+      "historical_expectation_preserved": true,
+      "source_contradictions": [
+        {
+          "index": 5,
+          "contradiction": "accepted queue_count0; source true accept leaves a nonempty queue"
+        },
+        {
+          "index": 6,
+          "contradiction": "consumed actor input differs from popped command"
+        }
+      ]
+    },
+    {
+      "group": "independent-25",
+      "name": "receive_impossible_sequence",
+      "historical_expected_complete": true,
+      "historical_expectation_preserved": true,
+      "source_contradictions": [
+        {
+          "index": 4,
+          "contradiction": "single-command received projection cannot have unequal endpoints, even prevalidation"
+        },
+        {
+          "index": 5,
+          "contradiction": "accepted queue_count0; source true accept leaves a nonempty queue"
+        },
+        {
+          "index": 6,
+          "contradiction": "consumed actor input differs from popped command"
+        }
+      ]
+    },
+    {
+      "group": "independent-25",
+      "name": "consumption_outside_accepted_batch",
+      "historical_expected_complete": true,
+      "historical_expectation_preserved": true,
+      "source_contradictions": [
+        {
+          "index": 5,
+          "contradiction": "accepted queue_count0; source true accept leaves a nonempty queue"
+        },
+        {
+          "index": 6,
+          "contradiction": "consumed sequence differs from immediate stream_ack"
+        },
+        {
+          "index": 6,
+          "contradiction": "consumed actor input differs from popped command"
+        }
+      ]
+    },
+    {
+      "group": "independent-25",
+      "name": "client_send_epoch_disagrees_with_authority",
+      "historical_expected_complete": true,
+      "historical_expectation_preserved": true,
+      "source_contradictions": [
+        {
+          "index": 5,
+          "contradiction": "accepted queue_count0; source true accept leaves a nonempty queue"
+        },
+        {
+          "index": 6,
+          "contradiction": "consumed actor input differs from popped command"
+        }
+      ]
+    },
+    {
+      "group": "additional-9",
+      "name": "coherent_control",
+      "historical_expected_complete": true,
+      "historical_expectation_preserved": true,
+      "source_contradictions": [
+        {
+          "index": 5,
+          "contradiction": "accepted queue_count0; source true accept leaves a nonempty queue"
+        },
+        {
+          "index": 6,
+          "contradiction": "consumed actor input differs from popped command"
+        }
+      ]
+    },
+    {
+      "group": "additional-9",
+      "name": "accepted_unordered_two_command_batch",
+      "historical_expected_complete": true,
+      "historical_expectation_preserved": true,
+      "source_contradictions": []
+    }
+  ]
+}

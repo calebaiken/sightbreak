@@ -1,0 +1,76 @@
+{
+  "scope": "CPU4 only; actual tool exits retained here; detailed results are in each immutable output tree",
+  "executions": [
+    {
+      "name": "own-fresh-controls",
+      "exit": 1,
+      "cases": 12,
+      "met": 7
+    },
+    {
+      "name": "depth-fresh-controls",
+      "exit": 1,
+      "cases": 12,
+      "met": 7
+    },
+    {
+      "name": "old-reader-fresh-controls",
+      "exit": 1,
+      "cases": 12,
+      "met": 6
+    },
+    {
+      "name": "own-fresh-controls-r2",
+      "exit": 1,
+      "cases": 13,
+      "met": 7
+    },
+    {
+      "name": "depth-fresh-controls-r2",
+      "exit": 1,
+      "cases": 13,
+      "met": 7
+    },
+    {
+      "name": "old-reader-fresh-controls-r2",
+      "exit": 1,
+      "cases": 13,
+      "met": 6
+    },
+    {
+      "name": "own-frozen-replay",
+      "exit": 0,
+      "cases": 92,
+      "required_met": 92,
+      "original_expectations_met": 86
+    },
+    {
+      "name": "depth-frozen-replay",
+      "exit": 0,
+      "cases": 92,
+      "required_met": 92,
+      "original_expectations_met": 86
+    },
+    {
+      "name": "own-maintained",
+      "exit": 0,
+      "methods": 197,
+      "skips": 3
+    },
+    {
+      "name": "depth-maintained",
+      "exit": 0,
+      "methods": 197,
+      "skips": 3
+    },
+    {
+      "name": "own-shell-syntax",
+      "exit": 0
+    },
+    {
+      "name": "depth-shell-syntax",
+      "exit": 0
+    }
+  ],
+  "setup_read_failure": "Guessed missing SCOPE_EXPANSION.md exited1; actual PREREGISTRATION.md including appended expansions was read."
+}

@@ -1,0 +1,210 @@
+{
+  "run_id": 39926044462,
+  "qualification_verdict": "FAIL",
+  "checks_of_failure_facts": {
+    "original_failed_diagnostic_retained": true,
+    "original_five_second_wait": true,
+    "timeout_then_failure_same_incomplete_reload": true,
+    "later_completion_does_not_erase_timeout": true,
+    "failed_owned_process_termination_retained": true,
+    "real_reload_input_reached_authority": true
+  },
+  "all_failure_fact_checks_passed": true,
+  "original_wait": {
+    "event": "wait_begin",
+    "seconds": 105.6099999999999,
+    "wall_unix_msec": 1792745197585,
+    "driver_held_keys": [],
+    "driver_fire_down": false,
+    "label": "Authority reload completion",
+    "budget_seconds": 5,
+    "native_state": {
+      "target_window": 459228,
+      "foreground_window": 459228,
+      "target_focused": true,
+      "lmb_down": false,
+      "keys_down": {
+        "r": false,
+        "d": false,
+        "w": false
+      },
+      "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+    }
+  },
+  "original_timeout": {
+    "event": "wait_timeout",
+    "seconds": 110.79699999999991,
+    "wall_unix_msec": 1792745202763,
+    "driver_held_keys": [],
+    "driver_fire_down": false,
+    "label": "Authority reload completion",
+    "authority": {
+      "ack": 970,
+      "alive": true,
+      "ammo": 26,
+      "authority_elapsed_seconds": 87.9499999999963,
+      "fire_input": false,
+      "fixture_elapsed_seconds": 87.9666666666647,
+      "joined_id": 1,
+      "peer_bound": true,
+      "peer_count": 1,
+      "phase": "live",
+      "reason": "periodic",
+      "reload_input": false,
+      "reload_remaining": 0.26666666666667,
+      "reserve": 90,
+      "shots": 4,
+      "simulation_tick": 5277,
+      "wall_elapsed_msec": 108051,
+      "wall_unix_msec": 1792745201286,
+      "weapon": "rifle",
+      "weapon_input": ""
+    },
+    "native_state": {
+      "target_window": 459228,
+      "foreground_window": 459228,
+      "target_focused": true,
+      "lmb_down": false,
+      "keys_down": {
+        "r": false,
+        "d": false,
+        "w": false
+      },
+      "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+    }
+  },
+  "original_failure": {
+    "event": "failure",
+    "seconds": 110.89099999999996,
+    "wall_unix_msec": 1792745202870,
+    "driver_held_keys": [],
+    "driver_fire_down": false,
+    "error": "Authority reload completion",
+    "authority": {
+      "ack": 970,
+      "alive": true,
+      "ammo": 26,
+      "authority_elapsed_seconds": 87.9499999999963,
+      "fire_input": false,
+      "fixture_elapsed_seconds": 87.9666666666647,
+      "joined_id": 1,
+      "peer_bound": true,
+      "peer_count": 1,
+      "phase": "live",
+      "reason": "periodic",
+      "reload_input": false,
+      "reload_remaining": 0.26666666666667,
+      "reserve": 90,
+      "shots": 4,
+      "simulation_tick": 5277,
+      "wall_elapsed_msec": 108051,
+      "wall_unix_msec": 1792745201286,
+      "weapon": "rifle",
+      "weapon_input": ""
+    },
+    "native_state": {
+      "target_window": 459228,
+      "foreground_window": 459228,
+      "target_focused": true,
+      "lmb_down": false,
+      "keys_down": {
+        "r": false,
+        "d": false,
+        "w": false
+      },
+      "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+    }
+  },
+  "first_later_complete_sample": {
+    "ack": 1046,
+    "alive": true,
+    "ammo": 30,
+    "authority_elapsed_seconds": 88.3499999999963,
+    "fire_input": false,
+    "fixture_elapsed_seconds": 88.375388999998,
+    "joined_id": 1,
+    "peer_bound": true,
+    "peer_count": 1,
+    "phase": "live",
+    "reason": "reload_completed",
+    "reload_input": false,
+    "reload_remaining": 0.0,
+    "reserve": 86,
+    "shots": 4,
+    "simulation_tick": 5301,
+    "wall_elapsed_msec": 109634,
+    "wall_unix_msec": 1792745202869,
+    "weapon": "rifle",
+    "weapon_input": ""
+  },
+  "original_final_authority": {
+    "first_reload_observation": "reload_input_present_at_first_active_sample",
+    "joined_id": 1,
+    "largest_ack": 1046,
+    "lowest_ammo": 26,
+    "passed": true,
+    "prediction_default": false,
+    "protocol": 6,
+    "reload_command_seen": true,
+    "reload_completed": true,
+    "reload_seen": true,
+    "reload_trigger": "native client input",
+    "scope": "source Godot authority fixture; client is actual exported desktop binary driven through native UI; no rewards",
+    "shots": 4
+  },
+  "diagnostic_exit": {
+    "command": [
+      "C:\\hostedtoolcache\\windows\\Python\\3.12.10\\x64\\python.EXE",
+      "scripts/verify_integration_export.py",
+      "--target",
+      "windows",
+      "--input-schedule",
+      "legacy",
+      "--fire-capture-delay",
+      "4",
+      "--timeout",
+      "240",
+      "--output",
+      "builds\\desktop-playability\\reload-legacy-delayed"
+    ],
+    "exit_code": 1,
+    "scope": "Controlled diagnostic: delays capture while original schedule still holds fire. Does not replace the normal undelayed gameplay gate."
+  },
+  "original_failed_processes": [
+    {
+      "name": "server",
+      "command": [
+        "D:\\a\\sightbreak\\tools\\godot-4.7.2\\Godot_v4.7.2-stable_win64.exe",
+        "--path",
+        "D:\\a\\sightbreak\\sightbreak\\game",
+        "--headless",
+        "--script",
+        "D:\\a\\sightbreak\\sightbreak\\scripts\\fixtures\\export_integration.gd",
+        "--",
+        "--output=D:\\a\\sightbreak\\sightbreak\\builds\\desktop-playability\\reload-legacy-delayed"
+      ],
+      "pid": 5408,
+      "started_seconds": 0.6719999999999118,
+      "exit_code": 1
+    },
+    {
+      "name": "client",
+      "command": [
+        "D:\\a\\sightbreak\\sightbreak\\builds\\desktop-playability\\windows\\SIGHTBREAK.exe",
+        "--audio-driver",
+        "Dummy",
+        "--position",
+        "0,0",
+        "--resolution",
+        "976x549"
+      ],
+      "pid": 7940,
+      "started_seconds": 1.5789999999999509,
+      "exit_code": 1
+    }
+  ],
+  "wait_observed_wall_seconds": 5.187000000000012,
+  "first_completion_after_timeout_msec": 106,
+  "actions_sha256": "17c33b084b5a7ed4484e390eee3d832313262b4f7a24e7f5df1c4518a25edcb1",
+  "scope": "Independent audit of original timeout and later completion. Wrapper step success cannot replace failed inner diagnostic; no missed-input or causal scheduling claim."
+}

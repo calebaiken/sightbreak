@@ -1,0 +1,35 @@
+{
+  "candidate": "c91d9b98a293ef8605d99ae6e83402d3af983519",
+  "native_executed": false,
+  "gate_source": "(match_node: Node, observation: Dictionary) -> bool:\n\treturn bool(observation.get(\"enabled\", false)) and OS.is_debug_build() and bool(match_node.get(\"_authority\")) and str(match_node.options.get(\"mode\", \"offline\")) == \"offline\"",
+  "early_return_precedes_first_output_write": true,
+  "has_observation_clear_or_erase": false,
+  "branch_specific_keys_not_invalidated": [
+    "navigation_destination",
+    "target_distance",
+    "aligned"
+  ],
+  "manual_finding": "Existing caller creates fresh dictionaries, but the optional production API does not invalidate reused output before dead/non-live/disabled calls or clear prior branch-only keys. This is source evidence, not a simulated engine execution.",
+  "candidate_manifest_matches": {
+    "game/scripts/gameplay/bot_ai.gd": true,
+    "game/tests/bot_objective_observation_probe.gd": true,
+    "game/tests/bot_objective_observation_probe.gd.uid": true,
+    "game/tests/fixtures/bot_objective_timeout.jsonl": true,
+    "scripts/verify_bot_objective_observation.py": true,
+    "scripts/test_bot_objective_observation.py": true
+  },
+  "audit_limit_controls": [
+    {
+      "name": "erasure_can_hide_rng_side_effect",
+      "audit_rejected": false
+    },
+    {
+      "name": "probe_body_not_bound_by_source_audit",
+      "audit_rejected": false
+    },
+    {
+      "name": "utility_dependency_not_bound_by_source_audit",
+      "audit_rejected": false
+    }
+  ]
+}

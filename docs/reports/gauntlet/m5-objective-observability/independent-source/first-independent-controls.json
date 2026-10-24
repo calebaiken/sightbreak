@@ -1,0 +1,129 @@
+{
+  "candidate": "c91d9b98a293ef8605d99ae6e83402d3af983519",
+  "fixture": "/workspace/reviews/m5-objective-observability-shallow-source",
+  "native_executed": false,
+  "total": 17,
+  "met_expectation": 6,
+  "unexpected_acceptances": 11,
+  "results": [
+    {
+      "name": "valid_maintained_synthetic_receipt",
+      "expected_rejection": false,
+      "rejected": false,
+      "accepted_scope": "component_reconstruction_not_historical_cause_or_G2_acceptance",
+      "met_expectation": true
+    },
+    {
+      "name": "forward_rows_have_no_dt_pose_command_objective_or_progress",
+      "expected_rejection": true,
+      "rejected": false,
+      "accepted_scope": "component_reconstruction_not_historical_cause_or_G2_acceptance",
+      "met_expectation": false
+    },
+    {
+      "name": "forward_negative_dt_and_impossible_objective_accepted",
+      "expected_rejection": true,
+      "rejected": false,
+      "accepted_scope": "component_reconstruction_not_historical_cause_or_G2_acceptance",
+      "met_expectation": false
+    },
+    {
+      "name": "forward_decision_not_bound_to_actor_or_tick_state",
+      "expected_rejection": true,
+      "rejected": false,
+      "accepted_scope": "component_reconstruction_not_historical_cause_or_G2_acceptance",
+      "met_expectation": false
+    },
+    {
+      "name": "missing_fire_reload_weapon_utility_command_fields",
+      "expected_rejection": true,
+      "rejected": false,
+      "accepted_scope": "component_reconstruction_not_historical_cause_or_G2_acceptance",
+      "met_expectation": false
+    },
+    {
+      "name": "plant_progress_jumps_then_resets_between_rows",
+      "expected_rejection": true,
+      "rejected": false,
+      "accepted_scope": "component_reconstruction_not_historical_cause_or_G2_acceptance",
+      "met_expectation": false
+    },
+    {
+      "name": "last_plant_row_keeps_impossible_negative_progress",
+      "expected_rejection": true,
+      "rejected": false,
+      "accepted_scope": "component_reconstruction_not_historical_cause_or_G2_acceptance",
+      "met_expectation": false
+    },
+    {
+      "name": "authority_rows_contradict_control_summary",
+      "expected_rejection": true,
+      "rejected": false,
+      "accepted_scope": "component_reconstruction_not_historical_cause_or_G2_acceptance",
+      "met_expectation": false
+    },
+    {
+      "name": "negative_dt_in_plant_with_same_total_duration",
+      "expected_rejection": true,
+      "rejected": false,
+      "accepted_scope": "component_reconstruction_not_historical_cause_or_G2_acceptance",
+      "met_expectation": false
+    },
+    {
+      "name": "plant_uses_two_1p5_second_steps_instead_of_stock_60hz",
+      "expected_rejection": true,
+      "rejected": false,
+      "accepted_scope": "component_reconstruction_not_historical_cause_or_G2_acceptance",
+      "met_expectation": false
+    },
+    {
+      "name": "paired_decision_pose_tick_plan_disagree_with_protected_state",
+      "expected_rejection": true,
+      "rejected": false,
+      "accepted_scope": "component_reconstruction_not_historical_cause_or_G2_acceptance",
+      "met_expectation": false
+    },
+    {
+      "name": "wrong_profile_not_bound_to_source",
+      "expected_rejection": true,
+      "rejected": false,
+      "accepted_scope": "component_reconstruction_not_historical_cause_or_G2_acceptance",
+      "met_expectation": false
+    },
+    {
+      "name": "wrong_protocol_is_rejected",
+      "expected_rejection": true,
+      "rejected": true,
+      "error": "ValueError: changed time scale or protocol",
+      "met_expectation": true
+    },
+    {
+      "name": "missing_terminal_is_rejected",
+      "expected_rejection": true,
+      "rejected": true,
+      "error": "ValueError: missing header or terminal result",
+      "met_expectation": true
+    },
+    {
+      "name": "changed_paired_ammo_is_rejected",
+      "expected_rejection": true,
+      "rejected": true,
+      "error": "ValueError: trace changed protected state",
+      "met_expectation": true
+    },
+    {
+      "name": "wrong_duration_is_rejected",
+      "expected_rejection": true,
+      "rejected": true,
+      "error": "ValueError: objective hold duration changed",
+      "met_expectation": true
+    },
+    {
+      "name": "negative_control_retained_progress_is_rejected",
+      "expected_rejection": true,
+      "rejected": true,
+      "error": "ValueError: invalid interaction did not reset",
+      "met_expectation": true
+    }
+  ]
+}

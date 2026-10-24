@@ -1,0 +1,439 @@
+{
+  "scope": "INDEPENDENT_ORIGINAL_METADATA_HASH_LOG_AUDIT_NO_ENGINE_NO_PIXEL_ORACLE_REPLAY",
+  "source": "108d1cdc6cf471daa7390298c234bb1c087ae865",
+  "handoff": "b9bd7e62c70d3f5a061c4177ede6c73c21dc9d35",
+  "time_utc": "2026-10-23T10:44:17.546214+00:00",
+  "checks": [
+    {
+      "name": "identity_release_engine_packet",
+      "pass": true,
+      "observation": {
+        "root_release_commit": "f312ee8c53b8a848c9db20a1b6ee9bd2f90a2386",
+        "admission_utc": "2026-10-23T09:59:27.374264+00:00",
+        "engine_archive_binary_member_exact": true,
+        "controller_exit": 0,
+        "recorded_acquisition_complete": true,
+        "template_pending_labels_retained_without_false_runtime_meaning": true
+      }
+    },
+    {
+      "name": "source_uid_all_fences",
+      "pass": true,
+      "observation": {
+        "frozen_files": 24,
+        "stages": [
+          {
+            "name": "baseline",
+            "source": "a52022169241df9ff662039547a375e1c46ac1c5",
+            "paths": 327,
+            "original_git_paths": 323,
+            "unique_uids": 138,
+            "fences": [
+              "backgrounds-after-baseline-source.json",
+              "backgrounds-before-baseline-source.json",
+              "controls-baseline-after-baseline-source.json",
+              "controls-baseline-before-baseline-source.json",
+              "import-baseline-after-baseline-source.json",
+              "import-baseline-before-baseline-source.json",
+              "initial-baseline-source.json",
+              "regression-baseline-input_mode-after-baseline-source.json",
+              "regression-baseline-input_mode-before-baseline-source.json",
+              "regression-baseline-touch-after-baseline-source.json",
+              "regression-baseline-touch-before-baseline-source.json"
+            ],
+            "all_original_paths_unchanged": true
+          },
+          {
+            "name": "candidate",
+            "source": "108d1cdc6cf471daa7390298c234bb1c087ae865",
+            "paths": 327,
+            "original_git_paths": 323,
+            "unique_uids": 138,
+            "fences": [
+              "controls-candidate-after-candidate-source.json",
+              "controls-candidate-before-candidate-source.json",
+              "import-candidate-after-candidate-source.json",
+              "import-candidate-before-candidate-source.json",
+              "initial-candidate-source.json",
+              "regression-candidate-input_mode-after-candidate-source.json",
+              "regression-candidate-input_mode-before-candidate-source.json",
+              "regression-candidate-touch-after-candidate-source.json",
+              "regression-candidate-touch-before-candidate-source.json"
+            ],
+            "all_original_paths_unchanged": true
+          }
+        ],
+        "post_source_errors": []
+      }
+    },
+    {
+      "name": "original_producers",
+      "pass": true,
+      "observation": {
+        "ordered_producers": [
+          {
+            "label": "engine-version",
+            "pid": 136008,
+            "exit": 0,
+            "wall_seconds": 0.06495260199881159,
+            "original_cap": 30
+          },
+          {
+            "label": "import-baseline",
+            "pid": 136011,
+            "exit": 0,
+            "wall_seconds": 6.559007849999034,
+            "original_cap": 300
+          },
+          {
+            "label": "import-candidate",
+            "pid": 136249,
+            "exit": 0,
+            "wall_seconds": 6.345033663001232,
+            "original_cap": 300
+          },
+          {
+            "label": "backgrounds",
+            "pid": 136513,
+            "exit": 0,
+            "wall_seconds": 27.24520974600091,
+            "original_cap": 300
+          },
+          {
+            "label": "controls-baseline",
+            "pid": 136564,
+            "exit": 0,
+            "wall_seconds": 453.5188521700002,
+            "original_cap": 600
+          },
+          {
+            "label": "controls-candidate",
+            "pid": 137406,
+            "exit": 0,
+            "wall_seconds": 457.945109616001,
+            "original_cap": 600
+          },
+          {
+            "label": "regression-baseline-touch",
+            "pid": 137599,
+            "exit": 0,
+            "wall_seconds": 0.3664704500006337,
+            "original_cap": 300
+          },
+          {
+            "label": "regression-baseline-input_mode",
+            "pid": 137610,
+            "exit": 0,
+            "wall_seconds": 5.131279564000579,
+            "original_cap": 300
+          },
+          {
+            "label": "regression-candidate-touch",
+            "pid": 137621,
+            "exit": 0,
+            "wall_seconds": 4.672903082999255,
+            "original_cap": 300
+          },
+          {
+            "label": "regression-candidate-input_mode",
+            "pid": 137632,
+            "exit": 0,
+            "wall_seconds": 6.743132907999097,
+            "original_cap": 300
+          }
+        ],
+        "original_analyzer_exit": 1,
+        "whole_operation_hard_timeout": false
+      }
+    },
+    {
+      "name": "complete_matrix_images_backgrounds",
+      "pass": true,
+      "observation": {
+        "sources": [
+          {
+            "name": "baseline",
+            "scenes": 32,
+            "pngs": 2816,
+            "all_image_hashes_dimensions": true,
+            "normal_original_equal": 32,
+            "renderer": "llvmpipe (LLVM 19.1.7, 256 bits)",
+            "engine": {
+              "build": "official",
+              "hash": "ed1daf0bf001b61586d9930840f2f1394092c079",
+              "hex": 263938,
+              "major": 4,
+              "minor": 7,
+              "patch": 2,
+              "status": "stable",
+              "string": "4.7.2-stable (official)",
+              "timestamp": 0
+            }
+          },
+          {
+            "name": "candidate",
+            "scenes": 32,
+            "pngs": 2816,
+            "all_image_hashes_dimensions": true,
+            "normal_original_equal": 32,
+            "renderer": "llvmpipe (LLVM 19.1.7, 256 bits)",
+            "engine": {
+              "build": "official",
+              "hash": "ed1daf0bf001b61586d9930840f2f1394092c079",
+              "hex": 263938,
+              "major": 4,
+              "minor": 7,
+              "patch": 2,
+              "status": "stable",
+              "string": "4.7.2-stable (official)",
+              "timestamp": 0
+            }
+          }
+        ],
+        "counts": {
+          "baseline": 2816,
+          "candidate": 2816,
+          "backgrounds": 16
+        },
+        "total_pngs": 5648,
+        "shared_backgrounds_checked": 17
+      }
+    },
+    {
+      "name": "strict_recursive_logs",
+      "pass": true,
+      "observation": {
+        "logs": [
+          {
+            "path": "analyzer.log",
+            "sha256": "a80ae35442d06894efad8c29b886e44da4fd29cd4e559a74dbfc56de5d81be67",
+            "matches": []
+          },
+          {
+            "path": "backgrounds.log",
+            "sha256": "3daba0caa3150513297f1c584f76a4b39495b943729275589c1fe945687b5535",
+            "matches": [
+              {
+                "line": 2,
+                "text": "WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver."
+              }
+            ]
+          },
+          {
+            "path": "controller.log",
+            "sha256": "8fce66b58bf022cd9548f063d161599075a6c3f6839f9b00f5736585fc82813f",
+            "matches": []
+          },
+          {
+            "path": "controls-baseline.log",
+            "sha256": "f9901c0fdcf7155f765a8c6888c738ef21c8dfba4251de663b856b1169e5bab3",
+            "matches": [
+              {
+                "line": 2,
+                "text": "WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver."
+              }
+            ]
+          },
+          {
+            "path": "controls-candidate.log",
+            "sha256": "f9901c0fdcf7155f765a8c6888c738ef21c8dfba4251de663b856b1169e5bab3",
+            "matches": [
+              {
+                "line": 2,
+                "text": "WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver."
+              }
+            ]
+          },
+          {
+            "path": "engine-version.log",
+            "sha256": "edff16c1721dd4ae989cadf29a01f574ae8d51b118221f664725bd6980bbba5d",
+            "matches": []
+          },
+          {
+            "path": "import-baseline.log",
+            "sha256": "7216789b886c69d1d1c4090cd2b31b7d932c0f8946f632886f5f50a2287a3851",
+            "matches": []
+          },
+          {
+            "path": "import-candidate.log",
+            "sha256": "7216789b886c69d1d1c4090cd2b31b7d932c0f8946f632886f5f50a2287a3851",
+            "matches": []
+          },
+          {
+            "path": "private-state/backgrounds/data/godot/app_userdata/SIGHTBREAK/logs/godot.log",
+            "sha256": "f8131c88d2e3bc009a07dec9011a7e53ca58bfbb7378244e557f33be4240fdbd",
+            "matches": [
+              {
+                "line": 2,
+                "text": "WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver."
+              }
+            ]
+          },
+          {
+            "path": "private-state/controls-baseline/data/godot/app_userdata/SIGHTBREAK/logs/godot.log",
+            "sha256": "7d7d07a046ebcdc8f65d2201b4de1a1ff6f655d179a8ffe08ee19676d6674f49",
+            "matches": [
+              {
+                "line": 2,
+                "text": "WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver."
+              }
+            ]
+          },
+          {
+            "path": "private-state/controls-candidate/data/godot/app_userdata/SIGHTBREAK/logs/godot.log",
+            "sha256": "7d7d07a046ebcdc8f65d2201b4de1a1ff6f655d179a8ffe08ee19676d6674f49",
+            "matches": [
+              {
+                "line": 2,
+                "text": "WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver."
+              }
+            ]
+          },
+          {
+            "path": "private-state/regression-baseline-input_mode/data/godot/app_userdata/SIGHTBREAK/logs/godot.log",
+            "sha256": "2a531851ecd04fa99a9af2051eba4851f6df4f83dd1de8c889f06cf86bfc6cc8",
+            "matches": []
+          },
+          {
+            "path": "private-state/regression-baseline-touch/data/godot/app_userdata/SIGHTBREAK/logs/godot.log",
+            "sha256": "687691b446bc7005574cdf6b7b3ef4bd6ab59bce5c686a78a9de81bcdf7c920e",
+            "matches": []
+          },
+          {
+            "path": "private-state/regression-candidate-input_mode/data/godot/app_userdata/SIGHTBREAK/logs/godot.log",
+            "sha256": "aba5a3fe8fe5508312a97c8dd5b4ab66fef54c3aa4c692ec9855f50b9f6ade4a",
+            "matches": []
+          },
+          {
+            "path": "private-state/regression-candidate-touch/data/godot/app_userdata/SIGHTBREAK/logs/godot.log",
+            "sha256": "015f1031b565403529f7af18d8e9e92d72a98823762fb5d6a2864e45862e5fe8",
+            "matches": []
+          },
+          {
+            "path": "regression-baseline-input_mode.log",
+            "sha256": "2a531851ecd04fa99a9af2051eba4851f6df4f83dd1de8c889f06cf86bfc6cc8",
+            "matches": []
+          },
+          {
+            "path": "regression-baseline-touch.log",
+            "sha256": "687691b446bc7005574cdf6b7b3ef4bd6ab59bce5c686a78a9de81bcdf7c920e",
+            "matches": []
+          },
+          {
+            "path": "regression-candidate-input_mode.log",
+            "sha256": "aba5a3fe8fe5508312a97c8dd5b4ab66fef54c3aa4c692ec9855f50b9f6ade4a",
+            "matches": []
+          },
+          {
+            "path": "regression-candidate-touch.log",
+            "sha256": "015f1031b565403529f7af18d8e9e92d72a98823762fb5d6a2864e45862e5fe8",
+            "matches": []
+          },
+          {
+            "path": "xvfb.log",
+            "sha256": "87e9572cf030493a1f7ba83d385129046b224374ca1414911674b30fc44276d7",
+            "matches": []
+          }
+        ],
+        "warning_error_match_count": 6,
+        "strict_log_clean": false,
+        "orphan_unclaimed_leak_matches": []
+      }
+    },
+    {
+      "name": "current_terminal_group_scan",
+      "pass": true,
+      "observation": {
+        "time_utc": "2026-10-23T10:44:17.546015+00:00",
+        "controller_leader_absence_receipts": [
+          {
+            "pid": 137632,
+            "exit_code": 0,
+            "was_running": false,
+            "proc_path_absent": true
+          },
+          {
+            "pid": 137621,
+            "exit_code": 0,
+            "was_running": false,
+            "proc_path_absent": true
+          },
+          {
+            "pid": 137610,
+            "exit_code": 0,
+            "was_running": false,
+            "proc_path_absent": true
+          },
+          {
+            "pid": 137599,
+            "exit_code": 0,
+            "was_running": false,
+            "proc_path_absent": true
+          },
+          {
+            "pid": 137406,
+            "exit_code": 0,
+            "was_running": false,
+            "proc_path_absent": true
+          },
+          {
+            "pid": 136564,
+            "exit_code": 0,
+            "was_running": false,
+            "proc_path_absent": true
+          },
+          {
+            "pid": 136513,
+            "exit_code": 0,
+            "was_running": false,
+            "proc_path_absent": true
+          },
+          {
+            "pid": 136512,
+            "exit_code": 0,
+            "was_running": true,
+            "proc_path_absent": true
+          },
+          {
+            "pid": 136249,
+            "exit_code": 0,
+            "was_running": false,
+            "proc_path_absent": true
+          },
+          {
+            "pid": 136011,
+            "exit_code": 0,
+            "was_running": false,
+            "proc_path_absent": true
+          },
+          {
+            "pid": 136008,
+            "exit_code": 0,
+            "was_running": false,
+            "proc_path_absent": true
+          }
+        ],
+        "current_group_members": [
+          {
+            "pid": 136526,
+            "comm": "dbus-launch",
+            "state": "Z",
+            "ppid": 1,
+            "pgid": 136513,
+            "sid": 136513,
+            "start_ticks": 2199755
+          }
+        ],
+        "unreadable_proc_records": [],
+        "display_socket_absent": true,
+        "display_lock_absent": true,
+        "complete_group_cleanup_pass": false,
+        "live_observer_terminal_descendant_retained_separately": true
+      }
+    }
+  ],
+  "metadata_checks_pass": true,
+  "wall_seconds": 12.091525785999693,
+  "numeric_quality_acceptance": false,
+  "archive_audit": "PENDING_PACKAGE_COMPLETION_AND_ROOT_LANE_CLEARANCE"
+}

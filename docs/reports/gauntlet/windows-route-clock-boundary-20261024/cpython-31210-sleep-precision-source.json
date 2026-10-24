@@ -1,0 +1,22 @@
+{
+  "url": "https://raw.githubusercontent.com/python/cpython/v3.12.10/Modules/timemodule.c",
+  "bytes": 66285,
+  "sha256": "81ce33b3f784a9abae1663576424faabb9c584d84f36daa4c27d0e16195c76b0",
+  "ranges": [
+    {
+      "start_line": 2270,
+      "end_line": 2283,
+      "text": "2270:         if (timeout < 0) {\n2271:             break;\n2272:         }\n2273:         /* retry with the recomputed delay */\n2274: #endif\n2275:     } while (1);\n2276: \n2277:     return 0;\n2278: #else  // MS_WINDOWS\n2279:     _PyTime_t timeout_100ns = _PyTime_As100Nanoseconds(timeout,\n2280:                                                        _PyTime_ROUND_CEILING);\n2281: \n2282:     // Maintain Windows Sleep() semantics for time.sleep(0)\n2283:     if (timeout_100ns == 0) {"
+    },
+    {
+      "start_line": 2294,
+      "end_line": 2314,
+      "text": "2294:     LARGE_INTEGER relative_timeout;\n2295:     // No need to check for integer overflow, both types are signed\n2296:     assert(sizeof(relative_timeout) == sizeof(timeout_100ns));\n2297:     // SetWaitableTimer(): a negative due time indicates relative time\n2298:     relative_timeout.QuadPart = -timeout_100ns;\n2299: \n2300:     HANDLE timer = CreateWaitableTimerExW(NULL, NULL, timer_flags,\n2301:                                           TIMER_ALL_ACCESS);\n2302:     if (timer == NULL) {\n2303:         PyErr_SetFromWindowsErr(0);\n2304:         return -1;\n2305:     }\n2306: \n2307:     if (!SetWaitableTimerEx(timer, &relative_timeout,\n2308:                             0, // no period; the timer is signaled once\n2309:                             NULL, NULL, // no completion routine\n2310:                             NULL,  // no wake context; do not resume from suspend\n2311:                             0)) // no tolerable delay for timer coalescing\n2312:     {\n2313:         PyErr_SetFromWindowsErr(0);\n2314:         goto error;"
+    },
+    {
+      "start_line": 2329,
+      "end_line": 2347,
+      "text": "2329:             HANDLE events[] = {timer, sigint_event};\n2330:             DWORD rc;\n2331: \n2332:             Py_BEGIN_ALLOW_THREADS\n2333:             rc = WaitForMultipleObjects(Py_ARRAY_LENGTH(events), events,\n2334:                                         // bWaitAll\n2335:                                         FALSE,\n2336:                                         // No wait timeout\n2337:                                         INFINITE);\n2338:             Py_END_ALLOW_THREADS\n2339: \n2340:             if (rc == WAIT_FAILED) {\n2341:                 PyErr_SetFromWindowsErr(0);\n2342:                 goto error;\n2343:             }\n2344: \n2345:             if (rc == WAIT_OBJECT_0) {\n2346:                 // Timer signaled: we are done\n2347:                 break;"
+    }
+  ]
+}

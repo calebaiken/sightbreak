@@ -1,0 +1,22 @@
+fatal: not a git repository (or any of the parent directories): .git
+Traceback (most recent call last):
+  File "/workspace/reviews/windows-combined-e28c8e9-source/docs/reports/gauntlet/windows-combined-e28c8e9-source-20261023/run_review.py", line 281, in <module>
+    main()
+  File "/workspace/reviews/windows-combined-e28c8e9-source/docs/reports/gauntlet/windows-combined-e28c8e9-source-20261023/run_review.py", line 149, in main
+    binding = source_binding()
+              ^^^^^^^^^^^^^^^^
+  File "/workspace/reviews/windows-combined-e28c8e9-source/docs/reports/gauntlet/windows-combined-e28c8e9-source-20261023/run_review.py", line 64, in source_binding
+    versions = {name: inventory(commit) for name, commit in
+                      ^^^^^^^^^^^^^^^^^
+  File "/workspace/reviews/windows-combined-e28c8e9-source/docs/reports/gauntlet/windows-combined-e28c8e9-source-20261023/run_review.py", line 54, in inventory
+    for row in git('ls-tree', '-r', '-z', commit, '--', 'scripts', '.github', 'game').split(b'\0'):
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/reviews/windows-combined-e28c8e9-source/docs/reports/gauntlet/windows-combined-e28c8e9-source-20261023/run_review.py", line 49, in git
+    def git(*args): return subprocess.check_output(['git', *args], cwd=ROOT)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 466, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['git', 'ls-tree', '-r', '-z', 'c838907cf4978e53c57423e08c23277c34f4496d', '--', 'scripts', '.github', 'game']' returned non-zero exit status 128.

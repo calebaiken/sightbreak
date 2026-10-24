@@ -1,0 +1,192 @@
+[
+  {
+    "group": "independent-25",
+    "name": "coherent_independent_pipeline",
+    "expected_complete": true
+  },
+  {
+    "group": "independent-25",
+    "name": "stale_receive",
+    "expected_complete": false
+  },
+  {
+    "group": "independent-25",
+    "name": "receive_wrong_epoch",
+    "expected_complete": true
+  },
+  {
+    "group": "independent-25",
+    "name": "receive_impossible_sequence",
+    "expected_complete": true
+  },
+  {
+    "group": "independent-25",
+    "name": "receive_missing_metadata",
+    "expected_complete": false
+  },
+  {
+    "group": "independent-25",
+    "name": "receive_unbound_different_peer",
+    "expected_complete": false
+  },
+  {
+    "group": "independent-25",
+    "name": "accepted_reversed_sequence_interval",
+    "expected_complete": false
+  },
+  {
+    "group": "independent-25",
+    "name": "consumption_outside_accepted_batch",
+    "expected_complete": true
+  },
+  {
+    "group": "independent-25",
+    "name": "consumption_before_receive_accept",
+    "expected_complete": false
+  },
+  {
+    "group": "independent-25",
+    "name": "client_send_different_transport",
+    "expected_complete": false
+  },
+  {
+    "group": "independent-25",
+    "name": "client_send_unwelcomed_attempt",
+    "expected_complete": false
+  },
+  {
+    "group": "independent-25",
+    "name": "client_send_different_actor",
+    "expected_complete": false
+  },
+  {
+    "group": "independent-25",
+    "name": "client_send_epoch_disagrees_with_authority",
+    "expected_complete": true
+  },
+  {
+    "group": "independent-25",
+    "name": "send_outside_pending_interval",
+    "expected_complete": false
+  },
+  {
+    "group": "independent-25",
+    "name": "missing_consumption",
+    "expected_complete": false
+  },
+  {
+    "group": "independent-25",
+    "name": "stale_consumption",
+    "expected_complete": false
+  },
+  {
+    "group": "independent-25",
+    "name": "consumption_wrong_generation",
+    "expected_complete": false
+  },
+  {
+    "group": "independent-25",
+    "name": "explicit_cap_truncation",
+    "expected_complete": false
+  },
+  {
+    "group": "independent-25",
+    "name": "index_gap",
+    "expected_complete": false
+  },
+  {
+    "group": "independent-25",
+    "name": "account_field",
+    "expected_complete": false
+  },
+  {
+    "group": "independent-25",
+    "name": "hidden_spatial_field",
+    "expected_complete": false
+  },
+  {
+    "group": "independent-25",
+    "name": "private_value_in_allowed_field",
+    "expected_complete": false
+  },
+  {
+    "group": "independent-25",
+    "name": "malformed_truncated_json",
+    "expected_complete": false
+  },
+  {
+    "group": "independent-25",
+    "name": "empty_logs",
+    "expected_complete": false
+  },
+  {
+    "group": "independent-25",
+    "name": "original_failed_windows_untraced",
+    "expected_complete": false
+  },
+  {
+    "group": "supplemental-4",
+    "name": "duplicate_index_record",
+    "expected_complete": false
+  },
+  {
+    "group": "supplemental-4",
+    "name": "duplicate_json_key",
+    "expected_complete": false
+  },
+  {
+    "group": "supplemental-4",
+    "name": "duplicate_consumption_sequence",
+    "expected_complete": false
+  },
+  {
+    "group": "supplemental-4",
+    "name": "authority_expiry_stage_in_client_role",
+    "expected_complete": false
+  },
+  {
+    "group": "additional-9",
+    "name": "coherent_control",
+    "expected_complete": true
+  },
+  {
+    "group": "additional-9",
+    "name": "bound_generation_never_connected",
+    "expected_complete": false
+  },
+  {
+    "group": "additional-9",
+    "name": "bound_peer_never_connected",
+    "expected_complete": false
+  },
+  {
+    "group": "additional-9",
+    "name": "binding_before_connection",
+    "expected_complete": false
+  },
+  {
+    "group": "additional-9",
+    "name": "same_generation_rebound_to_other_actor",
+    "expected_complete": false
+  },
+  {
+    "group": "additional-9",
+    "name": "first_accept_before_first_receive",
+    "expected_complete": false
+  },
+  {
+    "group": "additional-9",
+    "name": "one_command_two_sequence_endpoints",
+    "expected_complete": false
+  },
+  {
+    "group": "additional-9",
+    "name": "welcome_claims_unobserved_attempt",
+    "expected_complete": false
+  },
+  {
+    "group": "additional-9",
+    "name": "accepted_unordered_two_command_batch",
+    "expected_complete": true
+  }
+]

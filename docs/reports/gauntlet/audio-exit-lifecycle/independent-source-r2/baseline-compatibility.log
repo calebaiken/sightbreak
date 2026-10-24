@@ -1,0 +1,29 @@
+test_default_headless_dummy_context_should_be_reported (__main__.BaselineCompatibilityControls.test_default_headless_dummy_context_should_be_reported) ... ERROR
+test_original_arm_verbose_preamble_should_preserve_pinned_banner (__main__.BaselineCompatibilityControls.test_original_arm_verbose_preamble_should_preserve_pinned_banner) ... ERROR
+
+======================================================================
+ERROR: test_default_headless_dummy_context_should_be_reported (__main__.BaselineCompatibilityControls.test_default_headless_dummy_context_should_be_reported)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/audio-exit-lifecycle-r2-source/docs/reports/gauntlet/audio-exit-lifecycle/independent-source-r2/review_controls.py", line 133, in test_default_headless_dummy_context_should_be_reported
+    self.assertEqual(diagnostic.analyze(log(trace('Dummy')))['driver'], 'Dummy')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/reviews/audio-exit-lifecycle-r2-source/scripts/analyze_audio_lifecycle.py", line 125, in analyze
+    raise ValueError('Dummy audio cannot qualify this diagnostic')
+ValueError: Dummy audio cannot qualify this diagnostic
+
+======================================================================
+ERROR: test_original_arm_verbose_preamble_should_preserve_pinned_banner (__main__.BaselineCompatibilityControls.test_original_arm_verbose_preamble_should_preserve_pinned_banner)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/audio-exit-lifecycle-r2-source/docs/reports/gauntlet/audio-exit-lifecycle/independent-source-r2/review_controls.py", line 138, in test_original_arm_verbose_preamble_should_preserve_pinned_banner
+    self.assertTrue(diagnostic.analyze(log(trace(), preamble))['strict_raw_log_failed'])
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/reviews/audio-exit-lifecycle-r2-source/scripts/analyze_audio_lifecycle.py", line 123, in analyze
+    raise ValueError('Pinned engine banner or sole probe header is absent')
+ValueError: Pinned engine banner or sole probe header is absent
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.006s
+
+FAILED (errors=2)

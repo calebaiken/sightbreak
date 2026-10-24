@@ -1,0 +1,470 @@
+{
+  "checks": {
+    "all_source_receipts_exact_clean": true,
+    "one_complete_export": true,
+    "build_pinned_debug": true,
+    "manifest_payload_artifact_join": true,
+    "native_PCK_inspection_receipt": true,
+    "native_startup_receipts": true,
+    "startup_target_receipt_labels": true,
+    "startup_exact_three_labels": true,
+    "startup_exact_argv:windows-menu": true,
+    "startup_complete_log:windows-menu": true,
+    "startup_menu_ready:windows-menu": true,
+    "startup_exact_argv:windows-demo": true,
+    "startup_complete_log:windows-demo": true,
+    "startup_exact_argv:windows-graphical-menu": true,
+    "startup_complete_log:windows-graphical-menu": true,
+    "startup_menu_ready:windows-graphical-menu": true,
+    "startup_original_graphical_PNG_retained": false,
+    "required_build_source_receipt:windows/source.json": true,
+    "required_build_source_receipt:manifest.json": true,
+    "required_build_source_receipt:verification/results.json": true,
+    "required_runtime_identity_receipt:native-input": true,
+    "required_runtime_executable:native-input": true,
+    "required_runtime_source:native-input": true,
+    "required_runtime_artifact_source:native-input": true,
+    "required_runtime_identity_receipt:reload-release-first": true,
+    "required_runtime_executable:reload-release-first": true,
+    "required_runtime_source:reload-release-first": true,
+    "required_runtime_artifact_source:reload-release-first": true,
+    "required_runtime_identity_receipt:reload-legacy-delayed": true,
+    "required_runtime_executable:reload-legacy-delayed": true,
+    "required_runtime_source:reload-legacy-delayed": true,
+    "required_runtime_artifact_source:reload-legacy-delayed": true,
+    "required_runtime_identity_receipt:offline-input": true,
+    "required_runtime_executable:offline-input": true,
+    "required_runtime_source:offline-input": true,
+    "required_runtime_artifact_source:offline-input": true,
+    "required_runtime_identity_receipt:offline-plant": true,
+    "required_runtime_executable:offline-plant": true,
+    "required_runtime_source:offline-plant": true,
+    "required_runtime_artifact_source:offline-plant": true,
+    "required_runtime_identity_receipt:offline-defuse": true,
+    "required_runtime_executable:offline-defuse": true,
+    "required_runtime_source:offline-defuse": true,
+    "required_runtime_artifact_source:offline-defuse": true,
+    "required_runtime_identity_receipt:offline-full-match": true,
+    "required_runtime_executable:offline-full-match": true,
+    "required_runtime_source:offline-full-match": true,
+    "required_runtime_artifact_source:offline-full-match": true,
+    "executable_join:native-input/results.json": true,
+    "executable_join:offline-defuse/results.json": true,
+    "executable_join:offline-full-match/results.json": true,
+    "executable_join:offline-input/results.json": true,
+    "executable_join:offline-plant/results.json": true,
+    "executable_join:reload-legacy-delayed/results.json": true,
+    "executable_join:reload-release-first/results.json": true
+  },
+  "all_checks_passed": false,
+  "failed_checks": [
+    "startup_original_graphical_PNG_retained"
+  ],
+  "source_receipts": [
+    {
+      "path": "manifest.json",
+      "key": "top",
+      "matches": true,
+      "identity": {
+        "source_commit": "c32415148db1f110bbc7eadfca3793d4693429ff",
+        "source_game_tree": "bca627d5dc8e4482b63e263020a6382f2d36f33c",
+        "source_content_sha256": "43a71ef7ea38febc735b67e24337c8f975bf69d57e3e4b06f94d175170d56eb8",
+        "source_validation_sha256": "01ebd70c265e922f20d5ec794948fc7c456697d16f1e0472be846815131d556d",
+        "source_dirty": false,
+        "source_game_dirty": false
+      },
+      "sha256": "d045877b10d4d4607cee1c8cd97a2057e3d2303ecab1b348d5876308c4f8f774"
+    },
+    {
+      "path": "manifest.json",
+      "key": "exports[0]",
+      "matches": true,
+      "identity": {
+        "source_commit": "c32415148db1f110bbc7eadfca3793d4693429ff",
+        "source_game_tree": "bca627d5dc8e4482b63e263020a6382f2d36f33c",
+        "source_content_sha256": "43a71ef7ea38febc735b67e24337c8f975bf69d57e3e4b06f94d175170d56eb8",
+        "source_validation_sha256": "01ebd70c265e922f20d5ec794948fc7c456697d16f1e0472be846815131d556d",
+        "source_dirty": false,
+        "source_game_dirty": false
+      },
+      "sha256": "d045877b10d4d4607cee1c8cd97a2057e3d2303ecab1b348d5876308c4f8f774"
+    },
+    {
+      "path": "native-input/results.json",
+      "key": "authority_source",
+      "matches": true,
+      "identity": {
+        "source_commit": "c32415148db1f110bbc7eadfca3793d4693429ff",
+        "source_game_tree": "bca627d5dc8e4482b63e263020a6382f2d36f33c",
+        "source_content_sha256": "43a71ef7ea38febc735b67e24337c8f975bf69d57e3e4b06f94d175170d56eb8",
+        "source_validation_sha256": "01ebd70c265e922f20d5ec794948fc7c456697d16f1e0472be846815131d556d",
+        "source_dirty": false,
+        "source_game_dirty": false
+      },
+      "sha256": "d779b5d9b72735902b89bbdb62f964f477c2cb1c4db1d0769f8bfa6a3193d575"
+    },
+    {
+      "path": "native-input/results.json",
+      "key": "artifact_source",
+      "matches": true,
+      "identity": {
+        "source_commit": "c32415148db1f110bbc7eadfca3793d4693429ff",
+        "source_game_tree": "bca627d5dc8e4482b63e263020a6382f2d36f33c",
+        "source_content_sha256": "43a71ef7ea38febc735b67e24337c8f975bf69d57e3e4b06f94d175170d56eb8",
+        "source_validation_sha256": "01ebd70c265e922f20d5ec794948fc7c456697d16f1e0472be846815131d556d",
+        "source_dirty": false,
+        "source_game_dirty": false
+      },
+      "sha256": "d779b5d9b72735902b89bbdb62f964f477c2cb1c4db1d0769f8bfa6a3193d575"
+    },
+    {
+      "path": "offline-defuse/results.json",
+      "key": "source",
+      "matches": true,
+      "identity": {
+        "source_commit": "c32415148db1f110bbc7eadfca3793d4693429ff",
+        "source_game_tree": "bca627d5dc8e4482b63e263020a6382f2d36f33c",
+        "source_content_sha256": "43a71ef7ea38febc735b67e24337c8f975bf69d57e3e4b06f94d175170d56eb8",
+        "source_validation_sha256": "01ebd70c265e922f20d5ec794948fc7c456697d16f1e0472be846815131d556d",
+        "source_dirty": false,
+        "source_game_dirty": false
+      },
+      "sha256": "8c4d752f2e9098a2fa6a73be6aab4ae48f86c0239b1f576006a0eeeb1119dcfb"
+    },
+    {
+      "path": "offline-defuse/results.json",
+      "key": "artifact_source",
+      "matches": true,
+      "identity": {
+        "source_commit": "c32415148db1f110bbc7eadfca3793d4693429ff",
+        "source_game_tree": "bca627d5dc8e4482b63e263020a6382f2d36f33c",
+        "source_content_sha256": "43a71ef7ea38febc735b67e24337c8f975bf69d57e3e4b06f94d175170d56eb8",
+        "source_validation_sha256": "01ebd70c265e922f20d5ec794948fc7c456697d16f1e0472be846815131d556d",
+        "source_dirty": false,
+        "source_game_dirty": false
+      },
+      "sha256": "8c4d752f2e9098a2fa6a73be6aab4ae48f86c0239b1f576006a0eeeb1119dcfb"
+    },
+    {
+      "path": "offline-full-match/results.json",
+      "key": "source",
+      "matches": true,
+      "identity": {
+        "source_commit": "c32415148db1f110bbc7eadfca3793d4693429ff",
+        "source_game_tree": "bca627d5dc8e4482b63e263020a6382f2d36f33c",
+        "source_content_sha256": "43a71ef7ea38febc735b67e24337c8f975bf69d57e3e4b06f94d175170d56eb8",
+        "source_validation_sha256": "01ebd70c265e922f20d5ec794948fc7c456697d16f1e0472be846815131d556d",
+        "source_dirty": false,
+        "source_game_dirty": false
+      },
+      "sha256": "d0a45601e5e77fa5934f335adca93a300de28255b67e2336b1926195857b79d8"
+    },
+    {
+      "path": "offline-full-match/results.json",
+      "key": "artifact_source",
+      "matches": true,
+      "identity": {
+        "source_commit": "c32415148db1f110bbc7eadfca3793d4693429ff",
+        "source_game_tree": "bca627d5dc8e4482b63e263020a6382f2d36f33c",
+        "source_content_sha256": "43a71ef7ea38febc735b67e24337c8f975bf69d57e3e4b06f94d175170d56eb8",
+        "source_validation_sha256": "01ebd70c265e922f20d5ec794948fc7c456697d16f1e0472be846815131d556d",
+        "source_dirty": false,
+        "source_game_dirty": false
+      },
+      "sha256": "d0a45601e5e77fa5934f335adca93a300de28255b67e2336b1926195857b79d8"
+    },
+    {
+      "path": "offline-input/results.json",
+      "key": "source",
+      "matches": true,
+      "identity": {
+        "source_commit": "c32415148db1f110bbc7eadfca3793d4693429ff",
+        "source_game_tree": "bca627d5dc8e4482b63e263020a6382f2d36f33c",
+        "source_content_sha256": "43a71ef7ea38febc735b67e24337c8f975bf69d57e3e4b06f94d175170d56eb8",
+        "source_validation_sha256": "01ebd70c265e922f20d5ec794948fc7c456697d16f1e0472be846815131d556d",
+        "source_dirty": false,
+        "source_game_dirty": false
+      },
+      "sha256": "aa15085a6597d06b57011c1d866aa229c55b59feaa21c132dba1cb777f23160e"
+    },
+    {
+      "path": "offline-input/results.json",
+      "key": "artifact_source",
+      "matches": true,
+      "identity": {
+        "source_commit": "c32415148db1f110bbc7eadfca3793d4693429ff",
+        "source_game_tree": "bca627d5dc8e4482b63e263020a6382f2d36f33c",
+        "source_content_sha256": "43a71ef7ea38febc735b67e24337c8f975bf69d57e3e4b06f94d175170d56eb8",
+        "source_validation_sha256": "01ebd70c265e922f20d5ec794948fc7c456697d16f1e0472be846815131d556d",
+        "source_dirty": false,
+        "source_game_dirty": false
+      },
+      "sha256": "aa15085a6597d06b57011c1d866aa229c55b59feaa21c132dba1cb777f23160e"
+    },
+    {
+      "path": "offline-plant/results.json",
+      "key": "source",
+      "matches": true,
+      "identity": {
+        "source_commit": "c32415148db1f110bbc7eadfca3793d4693429ff",
+        "source_game_tree": "bca627d5dc8e4482b63e263020a6382f2d36f33c",
+        "source_content_sha256": "43a71ef7ea38febc735b67e24337c8f975bf69d57e3e4b06f94d175170d56eb8",
+        "source_validation_sha256": "01ebd70c265e922f20d5ec794948fc7c456697d16f1e0472be846815131d556d",
+        "source_dirty": false,
+        "source_game_dirty": false
+      },
+      "sha256": "bbbe361c503b9bcd060788bc2caa2d1e81f2508c9a3b5aa569dbc054bc00b939"
+    },
+    {
+      "path": "offline-plant/results.json",
+      "key": "artifact_source",
+      "matches": true,
+      "identity": {
+        "source_commit": "c32415148db1f110bbc7eadfca3793d4693429ff",
+        "source_game_tree": "bca627d5dc8e4482b63e263020a6382f2d36f33c",
+        "source_content_sha256": "43a71ef7ea38febc735b67e24337c8f975bf69d57e3e4b06f94d175170d56eb8",
+        "source_validation_sha256": "01ebd70c265e922f20d5ec794948fc7c456697d16f1e0472be846815131d556d",
+        "source_dirty": false,
+        "source_game_dirty": false
+      },
+      "sha256": "bbbe361c503b9bcd060788bc2caa2d1e81f2508c9a3b5aa569dbc054bc00b939"
+    },
+    {
+      "path": "reload-legacy-delayed/results.json",
+      "key": "authority_source",
+      "matches": true,
+      "identity": {
+        "source_commit": "c32415148db1f110bbc7eadfca3793d4693429ff",
+        "source_game_tree": "bca627d5dc8e4482b63e263020a6382f2d36f33c",
+        "source_content_sha256": "43a71ef7ea38febc735b67e24337c8f975bf69d57e3e4b06f94d175170d56eb8",
+        "source_validation_sha256": "01ebd70c265e922f20d5ec794948fc7c456697d16f1e0472be846815131d556d",
+        "source_dirty": false,
+        "source_game_dirty": false
+      },
+      "sha256": "6418451137ae88de148f30805ec66d90569e56830c2ff1a7f6ca5cf6ea40e95c"
+    },
+    {
+      "path": "reload-legacy-delayed/results.json",
+      "key": "artifact_source",
+      "matches": true,
+      "identity": {
+        "source_commit": "c32415148db1f110bbc7eadfca3793d4693429ff",
+        "source_game_tree": "bca627d5dc8e4482b63e263020a6382f2d36f33c",
+        "source_content_sha256": "43a71ef7ea38febc735b67e24337c8f975bf69d57e3e4b06f94d175170d56eb8",
+        "source_validation_sha256": "01ebd70c265e922f20d5ec794948fc7c456697d16f1e0472be846815131d556d",
+        "source_dirty": false,
+        "source_game_dirty": false
+      },
+      "sha256": "6418451137ae88de148f30805ec66d90569e56830c2ff1a7f6ca5cf6ea40e95c"
+    },
+    {
+      "path": "reload-release-first/results.json",
+      "key": "authority_source",
+      "matches": true,
+      "identity": {
+        "source_commit": "c32415148db1f110bbc7eadfca3793d4693429ff",
+        "source_game_tree": "bca627d5dc8e4482b63e263020a6382f2d36f33c",
+        "source_content_sha256": "43a71ef7ea38febc735b67e24337c8f975bf69d57e3e4b06f94d175170d56eb8",
+        "source_validation_sha256": "01ebd70c265e922f20d5ec794948fc7c456697d16f1e0472be846815131d556d",
+        "source_dirty": false,
+        "source_game_dirty": false
+      },
+      "sha256": "7b6bd7ae56514b38bc77b6369d3639a0abeb9000f03ca71ded11d4d3d651bdef"
+    },
+    {
+      "path": "reload-release-first/results.json",
+      "key": "artifact_source",
+      "matches": true,
+      "identity": {
+        "source_commit": "c32415148db1f110bbc7eadfca3793d4693429ff",
+        "source_game_tree": "bca627d5dc8e4482b63e263020a6382f2d36f33c",
+        "source_content_sha256": "43a71ef7ea38febc735b67e24337c8f975bf69d57e3e4b06f94d175170d56eb8",
+        "source_validation_sha256": "01ebd70c265e922f20d5ec794948fc7c456697d16f1e0472be846815131d556d",
+        "source_dirty": false,
+        "source_game_dirty": false
+      },
+      "sha256": "7b6bd7ae56514b38bc77b6369d3639a0abeb9000f03ca71ded11d4d3d651bdef"
+    },
+    {
+      "path": "verification/results.json",
+      "key": "top",
+      "matches": true,
+      "identity": {
+        "source_commit": "c32415148db1f110bbc7eadfca3793d4693429ff",
+        "source_game_tree": "bca627d5dc8e4482b63e263020a6382f2d36f33c",
+        "source_content_sha256": "43a71ef7ea38febc735b67e24337c8f975bf69d57e3e4b06f94d175170d56eb8",
+        "source_validation_sha256": "01ebd70c265e922f20d5ec794948fc7c456697d16f1e0472be846815131d556d",
+        "source_dirty": false,
+        "source_game_dirty": false
+      },
+      "sha256": "3630087c38cf6d0f8ffac8c6ba17ff3b7fd1581ff2a1373e41d79c8aa8d6a6d0"
+    },
+    {
+      "path": "windows/source.json",
+      "key": "top",
+      "matches": true,
+      "identity": {
+        "source_commit": "c32415148db1f110bbc7eadfca3793d4693429ff",
+        "source_game_tree": "bca627d5dc8e4482b63e263020a6382f2d36f33c",
+        "source_content_sha256": "43a71ef7ea38febc735b67e24337c8f975bf69d57e3e4b06f94d175170d56eb8",
+        "source_validation_sha256": "01ebd70c265e922f20d5ec794948fc7c456697d16f1e0472be846815131d556d",
+        "source_dirty": false,
+        "source_game_dirty": false
+      },
+      "sha256": "ee31252d0176ca934c376e657994f67bd327703e72a743a757f87f1378594559"
+    }
+  ],
+  "source_receipt_mismatches": [],
+  "artifact": {
+    "path": "windows/SIGHTBREAK.exe",
+    "bytes": 113581480,
+    "sha256": "35672b0d19dc3cb8bda429f71b0c4512e8184059a0f48176ace23411d1e46e70",
+    "mode": 511,
+    "archive_mode": 420
+  },
+  "exports": [
+    {
+      "source_dirty": false,
+      "source_validation_sha256": "01ebd70c265e922f20d5ec794948fc7c456697d16f1e0472be846815131d556d",
+      "source_commit": "c32415148db1f110bbc7eadfca3793d4693429ff",
+      "source_game_tree": "bca627d5dc8e4482b63e263020a6382f2d36f33c",
+      "source_content_sha256": "43a71ef7ea38febc735b67e24337c8f975bf69d57e3e4b06f94d175170d56eb8",
+      "source_game_dirty": false,
+      "target": "windows",
+      "version": "0.3.3-dev",
+      "build_number": 6,
+      "export_completed": true,
+      "built_at_utc": "2026-10-24T09:02:28.474691+00:00",
+      "artifact": {
+        "path": "windows/SIGHTBREAK.exe",
+        "bytes": 113581480,
+        "sha256": "35672b0d19dc3cb8bda429f71b0c4512e8184059a0f48176ace23411d1e46e70",
+        "mode": 511,
+        "archive_mode": 420
+      },
+      "payload": [
+        {
+          "path": "windows/GODOT-COPYRIGHT.txt",
+          "bytes": 102487,
+          "sha256": "7ae231c4b877ac30c39c2a95d0f3ad7548dfaa917c79ad8e4f43c151ebe2312a",
+          "mode": 438,
+          "archive_mode": 420
+        },
+        {
+          "path": "windows/GODOT-LICENSE.txt",
+          "bytes": 1169,
+          "sha256": "0cc27400b8da8c06bb35350422c14715647cd2632c138921fd49caa6610a1ef6",
+          "mode": 438,
+          "archive_mode": 420
+        },
+        {
+          "path": "windows/SIGHTBREAK.console.exe",
+          "bytes": 60928,
+          "sha256": "95542974cf4cc2e10d6198d837bb115c357b2ed8bb1850e327a3ef8c5e6bf4f2",
+          "mode": 511,
+          "archive_mode": 420
+        },
+        {
+          "path": "windows/SIGHTBREAK.exe",
+          "bytes": 113581480,
+          "sha256": "35672b0d19dc3cb8bda429f71b0c4512e8184059a0f48176ace23411d1e46e70",
+          "mode": 511,
+          "archive_mode": 420
+        }
+      ]
+    }
+  ],
+  "runtime_executable_joins": [
+    {
+      "path": "native-input/results.json",
+      "sha256": "35672b0d19dc3cb8bda429f71b0c4512e8184059a0f48176ace23411d1e46e70",
+      "matches": true
+    },
+    {
+      "path": "offline-defuse/results.json",
+      "sha256": "35672b0d19dc3cb8bda429f71b0c4512e8184059a0f48176ace23411d1e46e70",
+      "matches": true
+    },
+    {
+      "path": "offline-full-match/results.json",
+      "sha256": "35672b0d19dc3cb8bda429f71b0c4512e8184059a0f48176ace23411d1e46e70",
+      "matches": true
+    },
+    {
+      "path": "offline-input/results.json",
+      "sha256": "35672b0d19dc3cb8bda429f71b0c4512e8184059a0f48176ace23411d1e46e70",
+      "matches": true
+    },
+    {
+      "path": "offline-plant/results.json",
+      "sha256": "35672b0d19dc3cb8bda429f71b0c4512e8184059a0f48176ace23411d1e46e70",
+      "matches": true
+    },
+    {
+      "path": "reload-legacy-delayed/results.json",
+      "sha256": "35672b0d19dc3cb8bda429f71b0c4512e8184059a0f48176ace23411d1e46e70",
+      "matches": true
+    },
+    {
+      "path": "reload-release-first/results.json",
+      "sha256": "35672b0d19dc3cb8bda429f71b0c4512e8184059a0f48176ace23411d1e46e70",
+      "matches": true
+    }
+  ],
+  "controller_receipts": [
+    {
+      "path": "offline-defuse/results.json",
+      "controller_sha256": "f6f45ed28feceb1140e02bf5faffc6293c7d3cac96e83a5e1ab2d70dd07baabf"
+    },
+    {
+      "path": "offline-full-match/results.json",
+      "controller_sha256": "f6f45ed28feceb1140e02bf5faffc6293c7d3cac96e83a5e1ab2d70dd07baabf"
+    },
+    {
+      "path": "offline-plant/results.json",
+      "controller_sha256": "f6f45ed28feceb1140e02bf5faffc6293c7d3cac96e83a5e1ab2d70dd07baabf"
+    }
+  ],
+  "verification_runs": [
+    {
+      "label": "windows-menu",
+      "command": [
+        "D:\\a\\sightbreak\\sightbreak\\builds\\desktop-playability\\windows\\SIGHTBREAK.exe",
+        "--headless",
+        "--",
+        "--smoke"
+      ],
+      "exit_code": 0,
+      "clean_log": true
+    },
+    {
+      "label": "windows-demo",
+      "command": [
+        "D:\\a\\sightbreak\\sightbreak\\builds\\desktop-playability\\windows\\SIGHTBREAK.exe",
+        "--headless",
+        "--quit-after",
+        "120",
+        "--",
+        "--demo"
+      ],
+      "exit_code": 0,
+      "clean_log": true
+    },
+    {
+      "label": "windows-graphical-menu",
+      "command": [
+        "D:\\a\\sightbreak\\sightbreak\\builds\\desktop-playability\\windows\\SIGHTBREAK.exe",
+        "--audio-driver",
+        "Dummy",
+        "--",
+        "--smoke",
+        "--capture=D:\\a\\sightbreak\\sightbreak\\builds\\desktop-playability\\verification\\windows-menu.png"
+      ],
+      "exit_code": 0,
+      "clean_log": true
+    }
+  ],
+  "runner_PCK_resource_count": 134,
+  "independent_executable_reparse": "BLOCKED: official development artifact12554384657 is146423542bytes, above supported32MiB transfer limit; not requested or transferred. No binary/embedded-PCK reparse.",
+  "independent_PCK_and_PE_resources_reparse": "BLOCKED with executable transfer; runner receipts establish separate reported scope only."
+}

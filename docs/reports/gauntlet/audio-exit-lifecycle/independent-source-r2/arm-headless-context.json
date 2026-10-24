@@ -1,0 +1,55 @@
+{
+  "zip_sha256": "6452eac95a8f55fd84d1bcba9e62a50763fda7d419b7c453d25d009aa0f8dfb7",
+  "commands": [
+    {
+      "json_path": "regressions/results.json[6]",
+      "command": [
+        "/Users/runner/work/sightbreak/tools/godot-4.7.2/Godot.app/Contents/MacOS/Godot",
+        "--path",
+        "/var/folders/nj/vtw8zd2j31d1gdrtntc5y4600000gn/T/sightbreak-native-tests-nvdrw7wx/project",
+        "--headless",
+        "--script",
+        "res://tests/input_mode_test.gd"
+      ],
+      "exit_code": null,
+      "label": null
+    },
+    {
+      "json_path": "source-leak-verbose/repeat/results.json[0]",
+      "command": [
+        "/Users/runner/work/sightbreak/tools/godot-4.7.2/Godot.app/Contents/MacOS/Godot",
+        "--path",
+        "/var/folders/nj/vtw8zd2j31d1gdrtntc5y4600000gn/T/sightbreak-native-tests-km4cl7ak/project",
+        "--headless",
+        "--verbose",
+        "--script",
+        "res://tests/input_mode_test.gd"
+      ],
+      "exit_code": null,
+      "label": "input_mode"
+    }
+  ],
+  "logs": [
+    {
+      "path": "regressions/input_mode.log",
+      "bytes": 15413,
+      "sha256": "cbb864afdb8a55bd9f359c8309418090dd56e0d17548e7c64fcc28e2fd4cb6e8",
+      "first_lines": [
+        "Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org",
+        ""
+      ],
+      "audio_driver_literal_lines": []
+    },
+    {
+      "path": "source-leak-verbose/repeat/input_mode.log",
+      "bytes": 20746,
+      "sha256": "f51e5f285cd74732e25acdbfeab5446026a002d9ce04bcf4a3a83556f75becdd",
+      "first_lines": [
+        "WorkerThreadPool: 3 threads, 1 max low-priority.",
+        "Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org"
+      ],
+      "audio_driver_literal_lines": []
+    }
+  ],
+  "driver_evidence_scope": "Audio driver is derived from exact argv and pinned source; TextServer Dummy lines are not audio-driver telemetry."
+}

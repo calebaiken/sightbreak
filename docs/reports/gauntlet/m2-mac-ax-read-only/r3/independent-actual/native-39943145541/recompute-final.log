@@ -1,0 +1,102 @@
+{
+  "exact_source": "4854aed946d25d27482af66c332f84aa51cea8fb",
+  "actual_run_id": 39943145541,
+  "diagnostic_job_id": 120379229239,
+  "verdict": "FAILED_BEFORE_AX_OBSERVATION",
+  "cpu_affinity": [
+    4
+  ],
+  "bound_source_sha256": {
+    "verify_macos_ax_read_only.py": "862de0ac7d4d4a10ad2551a779aa4fefcb163eb5b33d80f2e6ad7368a81ec733",
+    "probe_macos_ax.py": "298bf62dbb60d324b006ab970683e6278464005b9af30917460fc8f49de8097e",
+    "macos_ax_contract.py": "fdf5acf120fdbf0c5e916d8efd3749ebd4722ef48fffdbf38cb92d8bc09aff8b",
+    "macos_ax_appkit.py": "be2c9969cdc084cb27980651da65b95e29a460ec1c2b7ef83536900b18f02e97",
+    "macos_window_capture.swift": "6b64561032d86b60dc1276aea1a642f427b48a1b5257934e89b71afb4269f71f"
+  },
+  "validation_digest_independently_recomputed": "d122b5fa927dba8910cb9749df34ac9bc0cc5e1be8723c85a1072f7539ed4d7b",
+  "validation_files": 321,
+  "validation_bytes": 2217366,
+  "content_digest_scope": "Native attestation plus exact Git game-tree binding; full asset bytes not rehashed here.",
+  "remote_source_control_commands": 12,
+  "remote_source_control_methods": 118,
+  "controller_stdout_equals_original_result": true,
+  "strict_logs": {
+    "qa/ax-read-only/00-startup-menu-1.log": true,
+    "qa/ax-read-only/client.log": true,
+    "qa/ax-read-only/compile-capture-helper.log": true,
+    "qa/ax-read-only/engine.log": true,
+    "qa/macos/export-run.json.log": true,
+    "qa/macos/export.log": true,
+    "qa/macos/import.log": true
+  },
+  "timing": {
+    "whole_seconds": 39.52825312499999,
+    "compile_conservative_upper_bound_seconds": 17.06477537500001,
+    "first_owned_window_from_whole_start_seconds": 25.598243458000013,
+    "capture_attempt_seconds": 1.6186484579999956,
+    "remaining_after_first_window_upper_bound_seconds": 13.930009666999979,
+    "close_and_finalization_upper_bound_from_capture_command_seconds": 13.845285166999986
+  },
+  "original_capture_failure": {
+    "code": 1,
+    "domain": "main.CaptureFailure",
+    "localized_description": "The operation couldn\u2019t be completed. (main.CaptureFailure error 1.)",
+    "message": "Captured pixel dimensions or owned-window bounds changed"
+  },
+  "original_images": 0,
+  "original_ax_observations": 0,
+  "geometry_inference": {
+    "source_bound_requested_dimensions": [
+      1024,
+      684
+    ],
+    "reported_image_dimensions": [
+      1024,
+      684
+    ],
+    "inference": "Both dimension predicates pass; under the exact helper source the failed predicate is the post-capture owned-window bounds comparison.",
+    "limit": "The reobserved post-capture bounds and cause of the geometry change were not retained."
+  },
+  "private_files_after_window": 24,
+  "private_files_final": 82,
+  "default_inventory_equal": true,
+  "recorded_groups": [
+    {
+      "name": "compile-capture-helper",
+      "pid": 3446,
+      "exit_code": 0,
+      "signals_sent": [],
+      "owned_group_gone": true
+    },
+    {
+      "name": "client",
+      "pid": 3602,
+      "exit_code": 0,
+      "signals_sent": [],
+      "owned_group_gone": true
+    },
+    {
+      "name": "00-startup-menu-1",
+      "pid": 3619,
+      "exit_code": 1,
+      "signals_sent": [],
+      "owned_group_gone": true
+    }
+  ],
+  "descendant_limit": "No complete parent/descendant telemetry. Three recorded groups are gone; runner orphan-cleanup line lists no process.",
+  "untransferred_payloads": [
+    "native executable",
+    "PCK",
+    "compiled capture helper",
+    "Python interpreter"
+  ],
+  "unobserved_ax_properties": [
+    "observer trust",
+    "no-value/null native handling",
+    "native CF lifetimes",
+    "individual AX call durations",
+    "permitted tree",
+    "Deploy semantics/frame"
+  ],
+  "retained_files_equal_across_original_artifacts": 11
+}

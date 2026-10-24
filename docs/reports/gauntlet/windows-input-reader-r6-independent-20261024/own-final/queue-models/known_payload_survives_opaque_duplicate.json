@@ -1,0 +1,414 @@
+{
+  "name": "known_payload_survives_opaque_duplicate",
+  "expected_model": "VALID",
+  "source_basis": "Existingkey1 fireTrue is never replaced by later duplicate payloads.",
+  "ground_truth": [
+    {
+      "event": "accept",
+      "peer": 9,
+      "commands": [
+        {
+          "sequence": 1,
+          "fire": true,
+          "reload": false,
+          "move": [
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "ack": -1,
+      "queue": {
+        "1": {
+          "sequence": 1,
+          "fire": true,
+          "reload": false,
+          "move": [
+            0.0,
+            0.0
+          ]
+        }
+      }
+    },
+    {
+      "event": "accept",
+      "peer": 9,
+      "commands": [
+        {
+          "sequence": 1,
+          "fire": false,
+          "reload": false,
+          "move": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "sequence": 2,
+          "fire": false,
+          "reload": false,
+          "move": [
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "sequence": 1,
+          "fire": false,
+          "reload": false,
+          "move": [
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "ack": -1,
+      "queue": {
+        "1": {
+          "sequence": 1,
+          "fire": true,
+          "reload": false,
+          "move": [
+            0.0,
+            0.0
+          ]
+        },
+        "2": {
+          "sequence": 2,
+          "fire": false,
+          "reload": false,
+          "move": [
+            0.0,
+            0.0
+          ]
+        }
+      }
+    },
+    {
+      "event": "pop",
+      "peer": 9,
+      "command": {
+        "sequence": 1,
+        "fire": true,
+        "reload": false,
+        "move": [
+          0.0,
+          0.0
+        ]
+      },
+      "ack": 1,
+      "queue": {
+        "2": {
+          "sequence": 2,
+          "fire": false,
+          "reload": false,
+          "move": [
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "skipped": 0
+    }
+  ],
+  "source_states": {
+    "9": {
+      "generation": 1,
+      "actor": 1,
+      "ack": 1,
+      "queue": {
+        "2": {
+          "sequence": 2,
+          "fire": false,
+          "reload": false,
+          "move": [
+            0.0,
+            0.0
+          ]
+        }
+      }
+    }
+  },
+  "projected_rows": [
+    {
+      "row": {
+        "role": "authority",
+        "reason": "peer_connected",
+        "peer": 9,
+        "generation": 1,
+        "bound_actor": 0,
+        "authority_epoch": 1,
+        "stream_ack": -1,
+        "queue_count": 0,
+        "stream_skipped": 0,
+        "counters": {
+          "peer_connected": 1
+        },
+        "latest": {}
+      },
+      "owners_before": []
+    },
+    {
+      "row": {
+        "role": "authority",
+        "reason": "peer_bound",
+        "peer": 9,
+        "generation": 1,
+        "bound_actor": 1,
+        "authority_epoch": 1,
+        "stream_ack": -1,
+        "queue_count": 0,
+        "stream_skipped": 0,
+        "counters": {
+          "peer_connected": 1,
+          "peer_bound": 1
+        },
+        "latest": {}
+      },
+      "owners_before": []
+    },
+    {
+      "row": {
+        "role": "authority",
+        "reason": "input_received",
+        "peer": 9,
+        "generation": 1,
+        "bound_actor": 1,
+        "authority_epoch": 1,
+        "stream_ack": -1,
+        "queue_count": 0,
+        "stream_skipped": 0,
+        "counters": {
+          "peer_connected": 1,
+          "peer_bound": 1,
+          "input_received": 1
+        },
+        "latest": {
+          "input_received": {
+            "epoch": 1,
+            "count": 1,
+            "first": 1,
+            "last": 1,
+            "fire": 1,
+            "reload": 0,
+            "moving": 0,
+            "wall_msec": 3
+          }
+        }
+      },
+      "owners_before": [
+        [
+          9,
+          1
+        ]
+      ]
+    },
+    {
+      "row": {
+        "role": "authority",
+        "reason": "input_accepted",
+        "peer": 9,
+        "generation": 1,
+        "bound_actor": 1,
+        "authority_epoch": 1,
+        "stream_ack": -1,
+        "queue_count": 1,
+        "stream_skipped": 0,
+        "counters": {
+          "peer_connected": 1,
+          "peer_bound": 1,
+          "input_received": 1,
+          "input_accepted": 1
+        },
+        "latest": {
+          "input_received": {
+            "epoch": 1,
+            "count": 1,
+            "first": 1,
+            "last": 1,
+            "fire": 1,
+            "reload": 0,
+            "moving": 0,
+            "wall_msec": 3
+          },
+          "input_accepted": {
+            "epoch": 1,
+            "count": 1,
+            "first": 1,
+            "last": 1,
+            "fire": 1,
+            "reload": 0,
+            "moving": 0,
+            "wall_msec": 4
+          }
+        }
+      },
+      "owners_before": [
+        [
+          9,
+          1
+        ]
+      ]
+    },
+    {
+      "row": {
+        "role": "authority",
+        "reason": "input_received",
+        "peer": 9,
+        "generation": 1,
+        "bound_actor": 1,
+        "authority_epoch": 1,
+        "stream_ack": -1,
+        "queue_count": 1,
+        "stream_skipped": 0,
+        "counters": {
+          "peer_connected": 1,
+          "peer_bound": 1,
+          "input_received": 2,
+          "input_accepted": 1
+        },
+        "latest": {
+          "input_received": {
+            "epoch": 1,
+            "count": 3,
+            "first": 1,
+            "last": 1,
+            "fire": 0,
+            "reload": 0,
+            "moving": 0,
+            "wall_msec": 5
+          },
+          "input_accepted": {
+            "epoch": 1,
+            "count": 1,
+            "first": 1,
+            "last": 1,
+            "fire": 1,
+            "reload": 0,
+            "moving": 0,
+            "wall_msec": 4
+          }
+        }
+      },
+      "owners_before": [
+        [
+          9,
+          1
+        ]
+      ]
+    },
+    {
+      "row": {
+        "role": "authority",
+        "reason": "input_accepted",
+        "peer": 9,
+        "generation": 1,
+        "bound_actor": 1,
+        "authority_epoch": 1,
+        "stream_ack": -1,
+        "queue_count": 2,
+        "stream_skipped": 0,
+        "counters": {
+          "peer_connected": 1,
+          "peer_bound": 1,
+          "input_received": 2,
+          "input_accepted": 2
+        },
+        "latest": {
+          "input_received": {
+            "epoch": 1,
+            "count": 3,
+            "first": 1,
+            "last": 1,
+            "fire": 0,
+            "reload": 0,
+            "moving": 0,
+            "wall_msec": 5
+          },
+          "input_accepted": {
+            "epoch": 1,
+            "count": 3,
+            "first": 1,
+            "last": 1,
+            "fire": 0,
+            "reload": 0,
+            "moving": 0,
+            "wall_msec": 6
+          }
+        }
+      },
+      "owners_before": [
+        [
+          9,
+          1
+        ]
+      ]
+    },
+    {
+      "row": {
+        "role": "authority",
+        "reason": "input_consumed",
+        "peer": 9,
+        "generation": 1,
+        "bound_actor": 1,
+        "authority_epoch": 1,
+        "stream_ack": 1,
+        "queue_count": 1,
+        "stream_skipped": 0,
+        "counters": {
+          "peer_connected": 1,
+          "peer_bound": 1,
+          "input_received": 2,
+          "input_accepted": 2,
+          "authority_tick": 1,
+          "input_consumed": 1
+        },
+        "latest": {
+          "input_received": {
+            "epoch": 1,
+            "count": 3,
+            "first": 1,
+            "last": 1,
+            "fire": 0,
+            "reload": 0,
+            "moving": 0,
+            "wall_msec": 5
+          },
+          "input_accepted": {
+            "epoch": 1,
+            "count": 3,
+            "first": 1,
+            "last": 1,
+            "fire": 0,
+            "reload": 0,
+            "moving": 0,
+            "wall_msec": 6
+          },
+          "input_consumed": {
+            "sequence": 1,
+            "fire": true,
+            "reload": false,
+            "move": [
+              0.0,
+              0.0
+            ],
+            "peer": 9,
+            "generation": 1,
+            "actor": 1,
+            "wall_msec": 8
+          }
+        }
+      },
+      "owners_before": [
+        [
+          9,
+          1
+        ]
+      ]
+    }
+  ],
+  "counterfactual": false,
+  "actual_model": "VALID",
+  "matches_expectation": true,
+  "error": null
+}

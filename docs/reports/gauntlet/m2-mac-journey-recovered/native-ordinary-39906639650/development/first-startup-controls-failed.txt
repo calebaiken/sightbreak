@@ -1,0 +1,40 @@
+test_churn_foreign_menu_or_invalid_mapping_cannot_reset_menu_deadline (__main__.StartupControls.test_churn_foreign_menu_or_invalid_mapping_cannot_reset_menu_deadline) ... 
+  test_churn_foreign_menu_or_invalid_mapping_cannot_reset_menu_deadline (__main__.StartupControls.test_churn_foreign_menu_or_invalid_mapping_cannot_reset_menu_deadline) (fault='startup_churn') ... FAIL
+  test_churn_foreign_menu_or_invalid_mapping_cannot_reset_menu_deadline (__main__.StartupControls.test_churn_foreign_menu_or_invalid_mapping_cannot_reset_menu_deadline) (fault='startup_foreign') ... FAIL
+  test_churn_foreign_menu_or_invalid_mapping_cannot_reset_menu_deadline (__main__.StartupControls.test_churn_foreign_menu_or_invalid_mapping_cannot_reset_menu_deadline) (fault='startup_mapping') ... FAIL
+test_foreign_or_ambiguous_windows_never_authorize_capture_selection (__main__.StartupControls.test_foreign_or_ambiguous_windows_never_authorize_capture_selection) ... ok
+test_late_focus_and_post_focus_change_fail_without_repeated_focus_or_input (__main__.StartupControls.test_late_focus_and_post_focus_change_fail_without_repeated_focus_or_input) ... ok
+test_late_ready_menu_and_any_existing_event_attempt_are_rejected (__main__.StartupControls.test_late_ready_menu_and_any_existing_event_attempt_are_rejected) ... ok
+test_no_cgevent_is_posted_before_pin_and_allocated_event_is_released (__main__.StartupControls.test_no_cgevent_is_posted_before_pin_and_allocated_event_is_released) ... ok
+test_pin_requires_exact_menu_identity_ownership_mapping_and_is_permanent (__main__.StartupControls.test_pin_requires_exact_menu_identity_ownership_mapping_and_is_permanent) ... ok
+test_post_input_geometry_change_is_strict_and_actual_decision_rows_are_retained (__main__.StartupControls.test_post_input_geometry_change_is_strict_and_actual_decision_rows_are_retained) ... ok
+test_splash_and_changed_startup_candidate_are_rejected_then_menu_is_pinned_once (__main__.StartupControls.test_splash_and_changed_startup_candidate_are_rejected_then_menu_is_pinned_once) ... ok
+
+======================================================================
+FAIL: test_churn_foreign_menu_or_invalid_mapping_cannot_reset_menu_deadline (__main__.StartupControls.test_churn_foreign_menu_or_invalid_mapping_cannot_reset_menu_deadline) (fault='startup_churn')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/test_macos_ordinary_startup.py", line 43, in test_churn_foreign_menu_or_invalid_mapping_cannot_reset_menu_deadline
+    self.assertLessEqual(report['seconds'], driver.BUDGETS['menu'])
+AssertionError: 60.84999999999994 not less than or equal to 60
+
+======================================================================
+FAIL: test_churn_foreign_menu_or_invalid_mapping_cannot_reset_menu_deadline (__main__.StartupControls.test_churn_foreign_menu_or_invalid_mapping_cannot_reset_menu_deadline) (fault='startup_foreign')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/test_macos_ordinary_startup.py", line 43, in test_churn_foreign_menu_or_invalid_mapping_cannot_reset_menu_deadline
+    self.assertLessEqual(report['seconds'], driver.BUDGETS['menu'])
+AssertionError: 60.84999999999994 not less than or equal to 60
+
+======================================================================
+FAIL: test_churn_foreign_menu_or_invalid_mapping_cannot_reset_menu_deadline (__main__.StartupControls.test_churn_foreign_menu_or_invalid_mapping_cannot_reset_menu_deadline) (fault='startup_mapping')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/test_macos_ordinary_startup.py", line 43, in test_churn_foreign_menu_or_invalid_mapping_cannot_reset_menu_deadline
+    self.assertLessEqual(report['seconds'], driver.BUDGETS['menu'])
+AssertionError: 60.84999999999994 not less than or equal to 60
+
+----------------------------------------------------------------------
+Ran 8 tests in 1.741s
+
+FAILED (failures=3)

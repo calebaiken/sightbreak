@@ -1,0 +1,105 @@
+{
+  "cpu_affinity": [
+    4
+  ],
+  "initialized": true,
+  "head": {
+    "command": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "exit_code": 0,
+    "stdout": "c32415148db1f110bbc7eadfca3793d4693429ff\n",
+    "stderr": ""
+  },
+  "shallow": {
+    "command": [
+      "git",
+      "rev-parse",
+      "--is-shallow-repository"
+    ],
+    "exit_code": 0,
+    "stdout": "true\n",
+    "stderr": ""
+  },
+  "reachable": {
+    "command": [
+      "git",
+      "rev-list",
+      "--count",
+      "HEAD"
+    ],
+    "exit_code": 0,
+    "stdout": "1\n",
+    "stderr": ""
+  },
+  "parent_lookup": {
+    "command": [
+      "git",
+      "rev-parse",
+      "--verify",
+      "HEAD^"
+    ],
+    "exit_code": 128,
+    "stdout": "",
+    "stderr": "fatal: Needed a single revision\n"
+  },
+  "direct_base_lookup": {
+    "command": [
+      "git",
+      "cat-file",
+      "-t",
+      "11c5773e"
+    ],
+    "exit_code": 0,
+    "stdout": "commit\n",
+    "stderr": ""
+  },
+  "status": {
+    "command": [
+      "git",
+      "status",
+      "--porcelain=v1"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "index_match": {
+    "command": [
+      "git",
+      "diff",
+      "--cached",
+      "--exit-code",
+      "HEAD"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "working_match": {
+    "command": [
+      "git",
+      "diff",
+      "--exit-code",
+      "HEAD"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "fsck": {
+    "command": [
+      "git",
+      "fsck",
+      "--connectivity-only",
+      "--no-reflogs"
+    ],
+    "exit_code": 0,
+    "stdout": "dangling commit 8100d350b0a7117e986a8d59a953c9bd33e47222\ndangling commit 4401ff81c240b09af5ef6f5870564c89c1a49bf9\ndangling commit 2a026e61cabee3c66334066d45e92eb3ec6c2641\ndangling commit 26095386e2cf64263e97c2eacf82a4c760316f1c\ndangling commit 700abf8c9d43279518c5257edfdbaee513569cea\ndangling commit 720cc69520e3f04d83255058eeba4f7e48d212a2\ndangling commit 1d0d161fafaff6f9b2929faf207a4c35800bd256\ndangling blob 5a0e5cf0fca4897b93ab4b013a45dc47e17eb4bc\ndangling commit 460fe42f5743f182164626d0f04b75e50a7e01cc\ndangling commit 800f60536263780c87a56b61827f45492a1323e2\ndangling commit c00f38a3fc58a7909f5f09c664b8023dfe6c2669\ndangling blob 9e111e65d9cbf85c95888eb6409f195f7eb794f6\ndangling commit f314385b6efab2dd12100e0397f14ae6900f4459\ndangling commit ea169525fc83dc04814ae43a58915f87ec3808e7\ndangling commit 1d17f27391194ec1b3fd1994a7a1f4e490dd5531\ndangling blob e71c0fd3c2b3992cce115ed6283b1485544b90d4\ndangling commit 8a1df18c8bcf8fc1856ab3b1ad6f8814af7719a9\ndangling commit 2020cfa9082fd68a46282a4e25b2f82549a2812d\ndangling commit 5820ca794c20c3a3ad2e8ed83c413ece965c64f2\ndangling commit e1221ba2ab391810005f63a3e43b58bc26d06e21\ndangling tree 1024b9f38b0498f7d84e1fd995b201c21cd83d8e\ndangling blob ea2454150c5aefe177b9a6f5121456267359811f\ndangling commit 49268b8702c44a6a19adfc743727f5aad2a10e8b\ndangling blob 4a29b19249384f89dc0c51af150e9678fcbd4b04\ndangling commit 9f2a67fa83df122f05e2e12b3294f579b23ac793\ndangling commit 342c3641ab2fccd1fc875c84188a8395a9b93a96\ndangling commit ab2ca960a2208b8de188a18765e49a5472ccc461\ndangling commit d134adfdcbb2cc6de73ad6898e029bc1d1d33da9\ndangling commit ce3510e3776c8fec42ef1de648b14a453c221724\ndangling blob 03394f1600f181ba08a37829dc29c0c540e3d8e7\ndangling commit 733986d3efdafb871e4a8b1b1d153f9d6297b6f2\ndangling blob a239cda46df0421f0afdc3a948dbfb208a452571\ndangling commit c339065c80e13a945b87c7f01a65655639be8281\ndangling commit 2a3bcdfa5347ae16edb76d4f40c1a6976d7d42c8\ndangling commit 0e3d9f5f1106e14111ac41819369392a12e1b1af\ndangling blob 1a3dfd64bad3feec4a002619b18cc3c06d61fc70\ndangling commit 2641ddf89265c5ded188a350eb39d95abfdae9c1\ndangling commit dd41563dd794443e07c27e8854b88f9db54559b8\ndangling blob 0c4761da788f1a33318f992d562efbf9f5399eef\ndangling commit bf47f7c9b15a5d8be8aa3dcc0f815fb3c60961f2\ndangling commit f947350ad0d6d1e5856c75862aba3437eff3a57e\ndangling blob 8e49e49e08509be6d6c1c4059f467faaf77eb68b\ndangling blob 90493877da706894b0e333924818b8e316ec550e\ndangling commit d549f54a85fc90cd65352edce83221cd6a6b4bfa\ndangling commit ff4cc71b1a81c073a92acea1b56007e4508282e7\ndangling commit 374da7235fc14f9163ef6667c398cbd03164c543\ndangling commit 114f22249d9fe9f8aad8869ff00688b438e4f194\ndangling blob e34f36a2e63874800e72fb6ff3cd92b6399bd5ca\ndangling commit d0514d84af13578a8730649c83546cbfdc41a711\ndangling blob 02537141b425c9c1756063a2eb60757cd0f1ec4d\ndangling commit e75476a965218d48ef64cff52dd01a45041aa335\ndangling blob 875668d18516d184d11f3aac2c279e432c24df9d\ndangling commit 5c5837123a951ec12c3e2ea0f2c3ec76071e6413\ndangling blob 8c580609977a7aa6cbde54ee1565286f2bc6836d\ndangling blob 155ae000243f782ed09294451b50a7ee95e700d1\ndangling commit 4b5b8cd383f5825308fcfecfb95fb6477d7a6678\ndangling commit 115ecbc07821815b30fdb1f82ed8d133c15495c8\ndangling commit 755ee542851ecdc85521cc76342c0527dd182745\ndangling commit 8a5f5311cbe67891801a2d04828bda68229ceb46\ndangling blob ba60852be74abb3f7a1a8d60514571971b20874d\ndangling commit f363e31077ad5aec79e901bff8d12bbaf9c27ddf\ndangling commit f8659bba3a6d3e1405230fdf85c2e300a037c218\ndangling blob 9a68f9c776a99eba351ff030eb584522955f0633\ndangling blob c168f54ed35d4d90e663d65ca14895c97ca6e938\ndangling commit ae6abe14f031bf40f25ba81f7428f6202166462e\ndangling commit 8b6bdaccfb8a8c8bc23c17d81667f709183eafbe\ndangling blob b36b6f07a32070e865d5f345f848302e81e98f50\ndangling commit e26b63013ca1918febcb881bc13596524d633b94\ndangling commit 146dc176f923568f34102e7a73742080f00a0db5\ndangling blob 136e9c97b5977cc679400132c95660cfdcf27ac7\ndangling commit 866e2e1f38461fa245557c9015b6c1a1a97ad745\ndangling blob 576fa3077ad6d3aa81a90170330a1bf135294a8a\ndangling commit 95703781009fe402b1ec9998c3be9c2fc3eeb512\ndangling tree 92711a02499b0e29dff806f2ab0aa0e4077db8eb\ndangling commit 97714ae602ec4372d8a1450675025b5a9eeac896\ndangling commit ca71aac4b1ef8e2c4be300ed446961cf2a9e636f\ndangling commit 02725f9cae95b884932e556ac29b2d0ba771b215\ndangling blob ab76fcaa2b8f114c1b3387b8669cf6dab5c81a1e\ndangling commit 99773c30f6224c84928713cc137f792f417bafd3\ndangling commit 4a7afae841ac55bf763991c09826fefe78f9390f\ndangling commit 617b348b13bb9daaabee5fa889b2ed7b864b3d9b\ndangling commit 337d82aa238a99e1def53c64b905ea2c35843d63\ndangling blob a97d05180cfba628019c658a355558d41e9f4ed1\ndangling commit 1b7eb2135a48651861876ae0c16c16520e8c5e91\ndangling commit c77fba469f88fca48b44856f479612e1e96009e9\ndangling commit 3d817fdd520a460cb03a3a5047bf75ba591b9e9f\ndangling tree a181c6e3f57d3309be5b5b2d343d5181d56f5c39\ndangling blob 2083de97d34e16d1deb8f1ee01d76bedb4b0bfa9\ndangling commit db846ac065ab67561bb6b84934df5988393f9559\ndangling commit 43854ff1d21963aa739519876516e47f5ce1a99e\ndangling blob 8a863af5aef6768d61c376ad840d576e78addbb3\ndangling commit e08b31323774c9810001549467545a8a357ff8cc\ndangling commit 4d8cdb33ce18a6adcf6e2af5556b6f083535536c\ndangling commit 778c89a6820e688d776c509854a077742cfdfb78\ndangling commit 228d20ea43adfc8e4fa361503a28556e435bf0d8\ndangling blob 768e936b33d6488ee5f9120a6d0ccd4f919d321f\ndangling tree 6091f0597918d5f281ed7bd7772360352620f92d\ndangling commit 37924d1531029b7429ee9289a266a497388001b4\ndangling tree 2c93bfd3d44293f24e0eade60b8dd4ef26cee5f8\ndangling tree eb93ee7b9e03b3e03e27ca936b2703842d3b7774\ndangling commit b696ca93a7556556c478d1c40c8d7bcb5fd71241\ndangling blob 499bc3550a7afd0d3f3cb6011819f00576531531\ndangling blob a19b31aa1a17a4e2b07e4b7241f866fef8dd7a14\ndangling commit fb9b113b9d4fad9631aea0e60b2011fcec033f83\ndangling commit 4e9ef3c34bbca1edb40c14e0e318cb254481825d\ndangling commit 8da2add4279f3087320d4708c047f500baffd0ee\ndangling commit e6a2de333928153c11314bae790ebabe55fdaabf\ndangling commit 45a6e5d13bc6f47c524a7fe8a8875f9c3bea657d\ndangling commit bca8b7fd809e3f1696a0ed51cce8bba53a8ca687\ndangling commit c3a89e535875716e73eff445a2be56f7e2a647ec\ndangling tree e2a897279e9c4cd6d306660efcd66f1e93887e24\ndangling blob 11a9d8e21ce19257a7d77331ed1d07febd67b9cd\ndangling commit 79a9591350854373076e62a4707ec84edc803756\ndangling commit 51add37cd801731016a2f52049e66b17fa90b393\ndangling commit 07b3d973d7e27a4815ab6a841a303ad3655f318e\ndangling blob 2bb49e7e9202333f956d71cdb3d0e70e55863307\ndangling commit fcb5276ca620c86a1a1342e9ac1dd32bec4eecff\ndangling tree 23b61a659c3be4b295fa71f8976a9b9cbe1dd5ec\ndangling commit 40b640d6db01f9ff1a51cafba3a411b8967288e6\ndangling commit 12b8881491e83255fead0703865e9e08fced9571\ndangling commit 0cb8239a88b59c57d889e0763a668a286cd1a57f\ndangling commit abb837b4e5b3e05f446a76928670cb40ad057f02\ndangling commit 6eb990f30fe005b46a763a014ba5e9d7cbbe09db\ndangling tree 3cbac09174aef7c895a6db956c8f63c0d3184b7e\ndangling commit 5cbbcd3c0e58a2b381c762d11cdbc0fe92936a5e\ndangling commit fcbb3ca1132a26672e69f9c973bbe137d9215af4\ndangling commit 0cbc3ae7a9a017aa179eaeff61cf902629de1c0d\ndangling blob 32bc42b1618656fcbf9e79ac504fad07e214b54a\ndangling blob f6bedb1593ce8f1f40b363a0a71fd22001027670\ndangling commit 5fbf3ac6d81a224635f51af0c2eabad06cfdb12f\ndangling commit c9c5c64d96d2010e0905953423b01b83e04384c1\ndangling commit 47c8600060bf4cd594f71d651aa9dbab9c02194a\ndangling commit 43c9440519c465467255d62b6295bb215763914f\ndangling commit c3c974e8235933a3f147d193e2cf5338b99be438\ndangling blob 7ecaa019f8521279582f532b09aef6b7df1fb32f\ndangling commit b8ccf8f27acfd37d2b1c14ed1d659eaf874fd88c\ndangling commit 56ceb00716397dd675c5052e139b0c52cb0729c5\ndangling commit a8cf0d06386a49a4aba05fc30a0a4e83ed9aab4a\ndangling blob f0d2b30892c04f6a7b45bae4b08a8ea2b0f8d09b\ndangling tree bbd39f945e11480a40b64eafb8c39f5572cbea91\ndangling commit 16d5766a4c1534280ef2a8bc8d4b439ded6c9008\ndangling commit 04d930b04bef7dd263c51015e2c93d9135356352\ndangling commit 43df8c44bd2532871b32d85bec26ae3cdb76c42c\ndangling commit b9e0461630a458fa5817bfa4201fbe34c4696868\ndangling blob b4e0b4b289147ffcb99924b8aa77d64ed0be6847\ndangling blob 4ee2ae3110ac29eb9c8cdd223621948d680bdead\ndangling commit d4e25303effc77b7038e32e458ee9f4abb410c0e\ndangling commit 19e399814e7574b7d207fb11d098c42a8a9134c7\ndangling blob e4e3df991fe548362855766c00e3a36fd970b746\ndangling commit bde551cb2a80a38b901d6c7b0ad5f8301947dcfb\ndangling commit e2e6a731bbf19691eb79455ab294d76e65a52073\ndangling commit 55e70340cef563a8f702a608ea52054d5c84dadf\ndangling commit bfe7b5a67c3fdaeacf5e8059c0004497cb57f747\ndangling commit 48eb0586e273f96dc20b346ed444d00ab0f3ac30\ndangling commit 75ebcccc9e33bc989f21d57f7f33f511fde622d6\ndangling commit 12ec93dd3ccfdaab63ab1d16facbfdb725d9c8b5\ndangling commit 12ecda91bd3b106f01e4d426a3e7ab040e791cb8\ndangling blob 97eeb61fb912d52ef87e6565d1c4bdba85da334b\ndangling commit 66f31a6778930fb16de41594ec0bd11b7a70189a\ndangling commit 2cf656f0736b6abf55133827ec6ce5661b81a82b\ndangling blob 1ef9083b1c05bd6434b5ac7a44e4c6f115dec81d\ndangling commit bcfc7c3c57b33ad373b0a9e787eb187bc38d463f\ndangling commit 2afe0bbd7df1015ee10115cf2876ccda7f582cdd\ndangling commit 7effe4c897c38b2df1c93acd09402ad1e3b0a1c3\n",
+    "stderr": ""
+  },
+  "alternates": "/workspace/sightbreak/.git/objects\n",
+  "storage_caveat": "Object alternate is required. Other commits can be addressed directly through the shared store; HEAD traversal is bounded by the explicit shallow boundary. This is not self-contained storage or object isolation."
+}

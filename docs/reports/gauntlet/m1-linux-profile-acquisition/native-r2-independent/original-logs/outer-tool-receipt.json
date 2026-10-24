@@ -1,0 +1,39 @@
+{
+  "release": "90a9cab61a554672306d5a630e15e25ea93c8dd0",
+  "source": "216d39ada8f9d11e2d8544d01fde42da49607b14",
+  "observer_start_verification": {
+    "chunk_id": "03570c",
+    "wall_time_seconds": 0.000028356,
+    "exit_code": 0,
+    "original_token_count": 353,
+    "output": "{\"cap_seconds\": 1440, \"discovery_cap_seconds\": 60, \"event\": \"start\", \"interval_seconds\": 0.1, \"monotonic\": 26841.660069248, \"observer\": {\"affinity\": [4], \"argv\": [\"python3\", \"-B\", \"docs/reports/gauntlet/m1-linux-profile-acquisition/native-r2-independent/observe_processes.py\", \"--root-release-ref\", \"90a9cab61a554672306d5a630e15e25ea93c8dd0\"], \"comm\": \"python3\", \"cwd\": \"/workspace/reviews/linux-profile-acquisition-r2-native\", \"exe\": \"/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12\", \"identity_revalidated\": true, \"nice\": 0, \"pgid\": 159705, \"pid\": 159705, \"ppid\": 561, \"scheduler\": 0, \"selected_environment\": {}, \"sid\": 159705, \"sockets\": [], \"start_ticks\": 2684156, \"state\": \"R\", \"threads\": {\"159705\": [4]}}, \"preexisting_listeners\": {\"/tmp/.X11-unix/X99127\": {\"exists\": false}, \"/tmp/.X99127-lock\": {\"exists\": false}, \"tcp\": [\"0: 00000000:0410 00000000:0000 0A 00000000:00000000 00:00000000 00000000  1000        0 1779 1 0000000095642f56 100 0 0 10 0\"], \"tcp6\": [], \"udp\": [], \"udp6\": [], \"unix_display_or_owned\": []}, \"release_reference\": \"90a9cab61a554672306d5a630e15e25ea93c8dd0\", \"semantics\": \"Read-only observations; no signals or children; no CPU utilization sampling\", \"source\": \"216d39ada8f9d11e2d8544d01fde42da49607b14\", \"source_path\": \"/workspace/sightbreak-linux-profile-fixture-native-types\", \"terminal_grace_seconds\": 10, \"utc\": \"2026-10-23T11:21:04.888317+00:00\"}\n"
+  },
+  "shell_setup_failure": {
+    "pre_command_clock": {
+      "current_time": "2026-10-23 11:21:25 UTC"
+    },
+    "actual_tool_response": {
+      "chunk_id": "754846",
+      "wall_time_seconds": 0.000029747,
+      "exit_code": 1,
+      "original_token_count": 25,
+      "output": "/bin/bash: line 1: .local/linux-profile-acquisition-r2-wrapper.stdout: No such file or directory\n"
+    },
+    "meaning": "Shell redirection failed before Python/supervisor/native execution because .local did not exist. No output/claim/native attempt was started."
+  },
+  "actual_supervisor_invocation": {
+    "pre_command_clock": {
+      "current_time": "2026-10-23 11:21:35 UTC"
+    },
+    "initial_tool_response": {
+      "chunk_id": "fa6784",
+      "wall_time_seconds": 1.000925212,
+      "session_id": 95035,
+      "original_token_count": 0,
+      "output": ""
+    }
+  },
+  "terminal_tool_response": {"chunk_id":"04b86a","wall_time_seconds":0.000022394,"exit_code":1,"original_token_count":0,"output":""},
+  "terminal_observed_clock": {"current_time":"2026-10-23 11:23:26 UTC"},
+  "meaning": "One actual supervisor invocation. Preserve the setup failure and do not infer inner success or whole duration from the shell/tool response."
+}

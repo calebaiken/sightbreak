@@ -1,0 +1,76 @@
+{
+  "verdict": "SCOPED_PASS",
+  "scope": "POSIX/source binding correction only; whole study REJECTED/BLOCKED",
+  "source": "ebc1a94133d4d73c3a553d528986c8fc40c740a9",
+  "handoff": "1add0f828b26b86b9bc2ec9e02c4208e31bb2e5a",
+  "cpu": [
+    4
+  ],
+  "native_invocations": 0,
+  "preflight_exit": 2,
+  "preflight_status": "BLOCKED",
+  "physical_non_doc": 513,
+  "protected_non_doc_original": 511,
+  "windows_ntfs_changetime": "UNMEASURED",
+  "tests": {
+    "own-new-tests": 11,
+    "own-old-tests": 28,
+    "depth-new-tests": 11,
+    "depth-old-tests": 28
+  },
+  "controls": {
+    "own-controls": {
+      "methods": 23,
+      "unmatched": []
+    },
+    "depth-controls": {
+      "methods": 23,
+      "unmatched": []
+    },
+    "own-second-read-controls": {
+      "methods": 13,
+      "unmatched": []
+    },
+    "depth-second-read-controls": {
+      "methods": 13,
+      "unmatched": []
+    },
+    "own-race-propagation": {
+      "expected": "REJECT",
+      "actual": "REJECT"
+    },
+    "depth-race-propagation": {
+      "expected": "REJECT",
+      "actual": "REJECT"
+    }
+  },
+  "views": [
+    {
+      "path": "/workspace/sightbreak-windows-shutdown-source-binding-r3",
+      "head": "1add0f828b26b86b9bc2ec9e02c4208e31bb2e5a",
+      "status": ""
+    },
+    {
+      "path": "/workspace/reviews/windows-shutdown-source-binding-r3-exact-20261024",
+      "head": "ebc1a94133d4d73c3a553d528986c8fc40c740a9",
+      "status": ""
+    },
+    {
+      "path": "/workspace/reviews/windows-shutdown-source-binding-r3-depth1-20261024",
+      "head": "ebc1a94133d4d73c3a553d528986c8fc40c740a9",
+      "status": ""
+    },
+    {
+      "path": "/workspace/reviews/windows-shutdown-study-independent-20261024",
+      "head": "75ddeb26948510186009a9d4fef2f51062395199",
+      "status": ""
+    },
+    {
+      "path": "/workspace/reviews/windows-shutdown-source-binding-r2-independent-20261024",
+      "head": "ee4f8d8add38739fa2f19eeff79652f92cc461a3",
+      "status": ""
+    }
+  ],
+  "preflight_double_read_receipts": 513,
+  "builder_members": 9
+}

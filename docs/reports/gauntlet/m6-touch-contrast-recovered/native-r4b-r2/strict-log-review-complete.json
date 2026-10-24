@@ -1,0 +1,52 @@
+{
+  "time": "2026-10-23T08:43:49.433830+00:00",
+  "pattern": "orphan|unclaimed|StringName|leak|resource.*(?:in use|still)|SCRIPT ERROR|Parse Error|ERROR:|WARNING:",
+  "scope": "Recursive scan of every original .log under raw, including private userdata; earlier top-level scan preserved separately.",
+  "logs": [
+    {
+      "path": "controller.log",
+      "sha256": "7e35a840f7117887dd88c41164a44816db93d1af8b8a2cdebfb75c7e9b0a2c99",
+      "matches": []
+    },
+    {
+      "path": "engine-version.log",
+      "sha256": "edff16c1721dd4ae989cadf29a01f574ae8d51b118221f664725bd6980bbba5d",
+      "matches": []
+    },
+    {
+      "path": "import-baseline.log",
+      "sha256": "7216789b886c69d1d1c4090cd2b31b7d932c0f8946f632886f5f50a2287a3851",
+      "matches": []
+    },
+    {
+      "path": "import-candidate.log",
+      "sha256": "52a2c9cf0e74ad19ddd4024a0d37302c971f67845fe13948e14450304f2fca48",
+      "matches": [
+        {
+          "line": 259,
+          "text": "SCRIPT ERROR: Parse Error: Cannot infer the type of \"compact\" variable because the value doesn't have a set type."
+        },
+        {
+          "line": 261,
+          "text": "SCRIPT ERROR: Compile Error: Failed to compile depended scripts."
+        },
+        {
+          "line": 263,
+          "text": "ERROR: Failed to load script \"res://scripts/main.gd\" with error \"Parse error\"."
+        }
+      ]
+    },
+    {
+      "path": "post-source.log",
+      "sha256": "0177ab97e0e9497293193e2906ccaae3d09e8e878d168150f7bb85baa011507c",
+      "matches": []
+    },
+    {
+      "path": "sightbreak-touch-contrast-native-recovered-r4b-r2-admission.log",
+      "sha256": "ba9b2d04d71b167a2eda394a4f2a74d1a4c3891f78d43e3302257d29987f0b6c",
+      "matches": []
+    }
+  ],
+  "strict_log_clean": false,
+  "orphan_unclaimed_leak_matches": []
+}

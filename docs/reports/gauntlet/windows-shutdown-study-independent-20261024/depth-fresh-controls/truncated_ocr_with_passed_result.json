@@ -1,0 +1,49 @@
+{
+  "actual": {
+    "result": {
+      "passed": true,
+      "ocr_commands": [
+        {
+          "stdout_complete": false,
+          "stdout_truncated": true
+        }
+      ]
+    },
+    "process_seed_initial_events": [
+      {
+        "process_trace": "initial-offline-trace",
+        "initial_event": null,
+        "provenance": "UNREACHED_OR_UNRESOLVED"
+      },
+      {
+        "process_trace": "restart-profile-trace",
+        "initial_event": null,
+        "provenance": "UNREACHED_OR_UNRESOLVED"
+      }
+    ],
+    "native_logs": [
+      {
+        "path": "reopened.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "strict_failure": false,
+        "stream": "original combined stdout/stderr, unmodified"
+      }
+    ],
+    "typed_leak_observations": [
+      {
+        "path": "reopened.log",
+        "instances": [],
+        "unparsed_instance_rows": [],
+        "resource_cache_rows": [],
+        "retaining_owner": "UNRESOLVED",
+        "allocation_stack": "UNAVAILABLE",
+        "old_failure_identity": "NOT_ATTRIBUTED"
+      }
+    ],
+    "original_stream_retention_complete": false,
+    "close_observations": [],
+    "strict_passed": false
+  },
+  "matched": true
+}

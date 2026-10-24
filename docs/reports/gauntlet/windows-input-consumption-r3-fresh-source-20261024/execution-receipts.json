@@ -1,0 +1,210 @@
+{
+  "working_directory": "/workspace/reviews/windows-input-consumption-r3-fresh-source",
+  "evidence": "Actual shell exit codes from exec tool returns; stdout/stderr retained separately",
+  "commands": [
+    {
+      "output": "full-r3-controls",
+      "command": [
+        "taskset",
+        "-c",
+        "4",
+        "python3",
+        "docs/reports/gauntlet/windows-input-consumption-r3-fresh-source-20261024/review_controls.py",
+        "--source",
+        ".",
+        "--output",
+        "docs/reports/gauntlet/windows-input-consumption-r3-fresh-source-20261024/full-r3-controls"
+      ],
+      "actual_exit_code": 1,
+      "stdout": "full-r3-controls.stdout",
+      "stderr": "full-r3-controls.stderr",
+      "note": "The actual command used review_controls.py; archived_executed_script preserves its exact bytes from that iteration.",
+      "archived_executed_script": "docs/reports/gauntlet/windows-input-consumption-r3-fresh-source-20261024/review_controls_r1_preserved.py"
+    },
+    {
+      "output": "full-r3-controls-r2",
+      "command": [
+        "taskset",
+        "-c",
+        "4",
+        "python3",
+        "docs/reports/gauntlet/windows-input-consumption-r3-fresh-source-20261024/review_controls.py",
+        "--source",
+        ".",
+        "--output",
+        "docs/reports/gauntlet/windows-input-consumption-r3-fresh-source-20261024/full-r3-controls-r2"
+      ],
+      "actual_exit_code": 1,
+      "stdout": "full-r3-controls-r2.stdout",
+      "stderr": "full-r3-controls-r2.stderr",
+      "note": "The actual command used review_controls.py; archived_executed_script preserves its exact bytes from that iteration.",
+      "archived_executed_script": "docs/reports/gauntlet/windows-input-consumption-r3-fresh-source-20261024/review_controls_r2_preserved.py"
+    },
+    {
+      "output": "full-r2-comparison",
+      "command": [
+        "taskset",
+        "-c",
+        "4",
+        "python3",
+        "docs/reports/gauntlet/windows-input-consumption-r3-fresh-source-20261024/review_controls.py",
+        "--source",
+        ".",
+        "--reader",
+        "docs/reports/gauntlet/windows-input-consumption-r3-fresh-source-20261024/r2-reader.py",
+        "--output",
+        "docs/reports/gauntlet/windows-input-consumption-r3-fresh-source-20261024/full-r2-comparison"
+      ],
+      "actual_exit_code": 1,
+      "stdout": "full-r2-comparison.stdout",
+      "stderr": "full-r2-comparison.stderr",
+      "note": "The actual command used review_controls.py; archived_executed_script preserves its exact bytes from that iteration.",
+      "archived_executed_script": "docs/reports/gauntlet/windows-input-consumption-r3-fresh-source-20261024/review_controls_r2_preserved.py"
+    },
+    {
+      "output": "full-pure",
+      "command": [
+        "taskset",
+        "-c",
+        "4",
+        "python3",
+        "docs/reports/gauntlet/windows-input-consumption-r3-fresh-source-20261024/builder-run_pure.py",
+        "--source",
+        ".",
+        "--output",
+        "docs/reports/gauntlet/windows-input-consumption-r3-fresh-source-20261024/full-pure"
+      ],
+      "actual_exit_code": 0,
+      "stdout": "full-pure.stdout",
+      "stderr": "full-pure.stderr",
+      "note": "Earlier preserved script filenames identify exact executed bytes; original commands used review_controls.py before later report-only refinements."
+    },
+    {
+      "output": "depth-one-controls",
+      "command": [
+        "taskset",
+        "-c",
+        "4",
+        "python3",
+        "docs/reports/gauntlet/windows-input-consumption-r3-fresh-source-20261024/review_controls.py",
+        "--source",
+        ".local/depth-one-source",
+        "--output",
+        "docs/reports/gauntlet/windows-input-consumption-r3-fresh-source-20261024/depth-one-controls"
+      ],
+      "actual_exit_code": 1,
+      "stdout": "depth-one-controls.stdout",
+      "stderr": "depth-one-controls.stderr",
+      "note": "The actual command used review_controls.py; archived_executed_script preserves its exact bytes from that iteration.",
+      "archived_executed_script": "docs/reports/gauntlet/windows-input-consumption-r3-fresh-source-20261024/review_controls_r2_preserved.py"
+    },
+    {
+      "output": "depth-one-pure",
+      "command": [
+        "taskset",
+        "-c",
+        "4",
+        "python3",
+        "docs/reports/gauntlet/windows-input-consumption-r3-fresh-source-20261024/builder-run_pure.py",
+        "--source",
+        ".local/depth-one-source",
+        "--output",
+        "docs/reports/gauntlet/windows-input-consumption-r3-fresh-source-20261024/depth-one-pure"
+      ],
+      "actual_exit_code": 0,
+      "stdout": "depth-one-pure.stdout",
+      "stderr": "depth-one-pure.stderr",
+      "note": "Earlier preserved script filenames identify exact executed bytes; original commands used review_controls.py before later report-only refinements."
+    },
+    {
+      "output": "full-r3-controls-r3",
+      "command": [
+        "taskset",
+        "-c",
+        "4",
+        "python3",
+        "docs/reports/gauntlet/windows-input-consumption-r3-fresh-source-20261024/review_controls.py",
+        "--source",
+        ".",
+        "--output",
+        "docs/reports/gauntlet/windows-input-consumption-r3-fresh-source-20261024/full-r3-controls-r3"
+      ],
+      "actual_exit_code": 1,
+      "stdout": "full-r3-controls-r3.stdout",
+      "stderr": "full-r3-controls-r3.stderr",
+      "note": "Earlier preserved script filenames identify exact executed bytes; original commands used review_controls.py before later report-only refinements."
+    },
+    {
+      "output": "full-r2-comparison-r3",
+      "command": [
+        "taskset",
+        "-c",
+        "4",
+        "python3",
+        "docs/reports/gauntlet/windows-input-consumption-r3-fresh-source-20261024/review_controls.py",
+        "--source",
+        ".",
+        "--reader",
+        "docs/reports/gauntlet/windows-input-consumption-r3-fresh-source-20261024/r2-reader.py",
+        "--output",
+        "docs/reports/gauntlet/windows-input-consumption-r3-fresh-source-20261024/full-r2-comparison-r3"
+      ],
+      "actual_exit_code": 1,
+      "stdout": "full-r2-comparison-r3.stdout",
+      "stderr": "full-r2-comparison-r3.stderr",
+      "note": "Earlier preserved script filenames identify exact executed bytes; original commands used review_controls.py before later report-only refinements."
+    },
+    {
+      "output": "depth-one-controls-r3",
+      "command": [
+        "taskset",
+        "-c",
+        "4",
+        "python3",
+        "docs/reports/gauntlet/windows-input-consumption-r3-fresh-source-20261024/review_controls.py",
+        "--source",
+        ".local/depth-one-source",
+        "--output",
+        "docs/reports/gauntlet/windows-input-consumption-r3-fresh-source-20261024/depth-one-controls-r3"
+      ],
+      "actual_exit_code": 1,
+      "stdout": "depth-one-controls-r3.stdout",
+      "stderr": "depth-one-controls-r3.stderr",
+      "note": "Earlier preserved script filenames identify exact executed bytes; original commands used review_controls.py before later report-only refinements."
+    },
+    {
+      "output": "full-source-bindings.json",
+      "command": [
+        "taskset",
+        "-c",
+        "4",
+        "python3",
+        "docs/reports/gauntlet/windows-input-consumption-r3-fresh-source-20261024/bind_source.py",
+        "--source",
+        ".",
+        "--output",
+        "docs/reports/gauntlet/windows-input-consumption-r3-fresh-source-20261024/full-source-bindings.json"
+      ],
+      "actual_exit_code": 0,
+      "stdout": "full-source-bindings.stdout",
+      "stderr": "full-source-bindings.stderr"
+    },
+    {
+      "output": "depth-one-source-bindings.json",
+      "command": [
+        "taskset",
+        "-c",
+        "4",
+        "python3",
+        "docs/reports/gauntlet/windows-input-consumption-r3-fresh-source-20261024/bind_source.py",
+        "--source",
+        ".local/depth-one-source",
+        "--output",
+        "docs/reports/gauntlet/windows-input-consumption-r3-fresh-source-20261024/depth-one-source-bindings.json"
+      ],
+      "actual_exit_code": 0,
+      "stdout": "depth-one-source-bindings.stdout",
+      "stderr": "depth-one-source-bindings.stderr"
+    }
+  ]
+}

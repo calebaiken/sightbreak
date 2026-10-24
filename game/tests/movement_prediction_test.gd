@@ -19,6 +19,7 @@ func block(parent: Node3D, at: Vector3, size: Vector3) -> void:
 func _initialize() -> void:
 	call_deferred("run")
 func run() -> void:
+	native_input_observation_controls() # INPUT_OBSERVATION_HOOK
 	var world := Node3D.new()
 	root.add_child(world)
 	var authority := SBActor.new()
@@ -74,3 +75,34 @@ func run() -> void:
 	await process_frame
 	print("MOVEMENT_PREDICTION_TEST checks=%d failures=%d maximum_error_m=%f" % [checks, failures, maximum])
 	quit(1 if failures else 0)
+# BEGIN INPUT OBSERVATION TESTS
+func native_input_observation_controls() -> void:
+	var requested := PackedStringArray(["--native-input-observation"])
+	var guest := {"mode": "client", "address": "127.0.0.1"}
+	check(TacticalMatch._native_input_allowed(guest, requested, true), "explicit debug guest loopback observer admitted")
+	check(not TacticalMatch._native_input_allowed(guest, requested, false), "release observer denied")
+	check(not TacticalMatch._native_input_allowed(guest, PackedStringArray(), true), "unrequested observer denied")
+	for patch: Dictionary in [{"address": "192.0.2.1"}, {"join_ticket": "fictional-test-ticket"}, {"require_accounts": true}, {"mode": "offline"}, {"mode": "server"}]:
+		check(not TacticalMatch._native_input_allowed(guest.merged(patch, true), requested, true), "remote/account/offline/normal-server observer denied")
+	check(TacticalMatch._native_input_allowed({"mode": "server", "_native_input_fixture": true}, requested, true), "explicit source guest fixture observer admitted")
+	check(not TacticalMatch._native_input_allowed({"mode": "server", "_native_input_fixture": true, "require_accounts": true}, requested, true), "account fixture observer denied")
+	var command := {"sequence": 7, "move": Vector2.LEFT, "look": Vector2(1, 1), "fire": true, "reload": false, "private_sentinel": "DO_NOT_PROJECT"}
+	var before := var_to_bytes(command)
+	var projected := TacticalMatch._native_input_controls(command)
+	check(var_to_bytes(command) == before and projected.size() == 4, "control projection preserves source and copies only declared fields")
+	check(projected.move == [-1.0, 0.0] and projected.fire and not projected.reload, "own input projection retains sampled intent")
+	check(not JSON.stringify(projected).contains("DO_NOT_PROJECT") and not projected.has("look"), "projection omits private and aim fields")
+	check(not TacticalMatch._native_input_controls({"fire": 1, "reload": "true"}).fire, "malformed flags cannot become observed fire")
+	var packet := {"epoch": 3, "commands": []}
+	for index in range(20): packet.commands.append(command.duplicate(true))
+	var packet_before := var_to_bytes(packet)
+	var header := TacticalMatch._native_input_packet(packet)
+	check(header.count == 20 and header.fire == 12 and header.moving == 12 and header.epoch == 3, "packet projection reports full count but bounds inspected commands")
+	check(var_to_bytes(packet) == packet_before and not JSON.stringify(header).contains("DO_NOT_PROJECT"), "packet projection is read-only and omits body")
+	var inactive := TacticalMatch.new()
+	inactive._local_input = command.duplicate(true)
+	var input_before := var_to_bytes(inactive._local_input)
+	inactive._native_input_observe("input_consumed", 42, command)
+	check(inactive._native_input_observation.is_empty() and var_to_bytes(inactive._local_input) == input_before and inactive._prediction.pending.is_empty() and inactive._input_stream.queues.is_empty(), "disabled observer collects nothing and changes no input/prediction/stream state")
+	inactive.free()
+# END INPUT OBSERVATION TESTS

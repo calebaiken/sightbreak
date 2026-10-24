@@ -128,6 +128,7 @@ class GuardTests(unittest.TestCase):
         handler.command, handler.path = "POST", "/auth/login"
         handler.headers = {"Content-Length": str(len(body)), "Authorization": "Bearer never-save-header"}
         handler.rfile, handler.wfile = io.BytesIO(body), io.BytesIO()
+        handler.connection = mock.Mock()
         handler.send_response = mock.Mock(); handler.send_header = mock.Mock(); handler.end_headers = mock.Mock()
         backend = mock.Mock()
         backend.status = 200

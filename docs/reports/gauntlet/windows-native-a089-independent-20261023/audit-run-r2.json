@@ -1,0 +1,45 @@
+[
+  {
+    "script": "audit_journey_ocr.py",
+    "argv": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "docs/reports/gauntlet/windows-native-a089-independent-20261023/audit_journey_ocr.py",
+      "builds/windows-native-a089-review/receipts",
+      "--output",
+      "docs/reports/gauntlet/windows-native-a089-independent-20261023/journey-OCR-recomputed.json"
+    ],
+    "exit": 0,
+    "stdout": "{\"all_checks_passed\": false, \"calls\": 13, \"LEAVE_call\": null}\n",
+    "stderr": ""
+  },
+  {
+    "script": "audit_phase_captures.py",
+    "argv": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "docs/reports/gauntlet/windows-native-a089-independent-20261023/audit_phase_captures.py",
+      "builds/windows-native-a089-review/receipts",
+      "--full",
+      "builds/windows-native-a089-review/full",
+      "--output",
+      "docs/reports/gauntlet/windows-native-a089-independent-20261023/phase-captures-recomputed.json"
+    ],
+    "exit": 0,
+    "stdout": "{\"all_native_bracket_checks_passed\": false, \"cases\": [{\"capture\": \"06c-next-round\", \"accepted\": true}, {\"capture\": \"10-reopened-loaded-settings\", \"accepted\": false}]}\n",
+    "stderr": ""
+  },
+  {
+    "script": "audit_runtime_complete.py",
+    "argv": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "docs/reports/gauntlet/windows-native-a089-independent-20261023/audit_runtime_complete.py",
+      "builds/windows-native-a089-review/receipts",
+      "builds/windows-native-a089-review/full",
+      "docs/reports/gauntlet/windows-native-a089-independent-20261023",
+      "--output",
+      "docs/reports/gauntlet/windows-native-a089-independent-20261023/runtime-completeness.json"
+    ],
+    "exit": 1,
+    "stdout": "{\"all_pure_receipt_checks_passed\": false, \"checks\": 28, \"native_log_count\": 138, \"failed\": [\"journey_all_independent_checks\", \"settings_transaction_all_independent_checks\", \"source-Windows-recomputed\", \"journey-OCR-recomputed\", \"both_original_phase_brackets\", \"current_windows_frame_readbacks:offline-input/restart-profile-trace/events.jsonl\"]}\n",
+    "stderr": ""
+  }
+]

@@ -1,0 +1,22 @@
+--- original-700abf8-run_once.py
++++ run_verbose_once.py
+@@ -2 +2 @@
+-"""One staged import, then at most one frozen baseline, with retained receipts."""
++"""One fresh verbose leak diagnostic; it never replaces baseline acceptance."""
+@@ -14 +14 @@
+-SOURCE = Path('/workspace/sightbreak-exhausted-primary-benchmark')
++SOURCE = Path('/workspace/sightbreak-exhausted-primary-verbose-r2')
+@@ -211,0 +212,2 @@
++               'diagnostic_purpose': 'Identify only this unchanged verbose run leaked object types; no acceptance replacement',
++               'original_failed_baseline_evidence': '700abf8c9d43279518c5257edfdbaee513569cea',
+@@ -268 +270 @@
+-    overall['import_qualified_to_attempt_baseline'] = import_ok
++    overall['import_qualified_to_attempt_diagnostic'] = import_ok
+@@ -270 +272 @@
+-        overall['baseline'] = run_phase('baseline-probe', [str(ENGINE), '--headless',
++        overall['verbose_diagnostic'] = run_phase('verbose-diagnostic-probe', [str(ENGINE), '--headless', '--verbose',
+@@ -274,2 +276,2 @@
+-        overall['baseline'] = None
+-        overall['baseline_skipped_reason'] = 'Preparation failed qualification or whole-wrapper deadline expired'
++        overall['verbose_diagnostic'] = None
++        overall['diagnostic_skipped_reason'] = 'Preparation failed qualification or whole-wrapper deadline expired'
