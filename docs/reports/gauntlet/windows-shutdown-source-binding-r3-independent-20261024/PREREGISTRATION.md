@@ -36,3 +36,22 @@ native/API/helper/proc trial, CI, acquisition, Mac/codec/FOV action, source edit
 to builder worktrees or approval transfer is authorized. All checks are pure
 model/static/source metadata only. Retain failures and exact inputs/outputs,
 seal the scoped report, commit/push own review and report to root.
+
+## Concrete fresh matrix, registered before execution
+
+Replay the prior23-case script and full-binding witness byte-for-byte except
+exact target/root/output constants. Their two former restored-mtime expected
+REJECT outcomes must now reject. Original assume/skip/filter/mode/path/CRLF cases
+stay required. Keep old ee4f outputs unchanged and copy the old scripts as
+provenance before parameter substitution.
+
+Additional actual-helper cases: two unchanging reads bind and report2; same-length
+mutation after first real read/restored mtime rejects; mutation after second real
+read/restored mtime rejects at final metadata; first-read mutation with a held-
+constant metadata view rejects on different second bytes; second-read failure
+or file deletion rejects. Metadata-only final inode/size/mtime/ctime/mode changes
+must reject; atime-only variation must bind because access-time changes do not
+alter executable bytes or the declared identity. Exact bounded Windows CRLF
+helper mode reports2 plus UNMEASURED NTFS ChangeTime/exec bits; no native Windows
+inference follows. These fault injections occur only in exclusive temporary files
+or controlled metadata views, never builder source/native processes.
