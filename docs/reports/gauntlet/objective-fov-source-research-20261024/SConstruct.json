@@ -1,0 +1,28 @@
+{
+  "path": "SConstruct",
+  "url": "https://raw.githubusercontent.com/godotengine/godot/ed1daf0bf/SConstruct",
+  "bytes": 53054,
+  "sha256": "b67bd31bf2d3bc1d91d4a1c5b2e4117c3d2dbd9c066ba3bb040cdd61226845f7",
+  "ranges": [
+    {
+      "start_line": 188,
+      "end_line": 206,
+      "text": "188: \n189: # Components\n190: opts.Add(BoolVariable(\"deprecated\", \"Enable compatibility code for deprecated and removed features\", True))\n191: opts.Add(\n192:     EnumVariable(\"precision\", \"Set the floating-point precision level\", \"single\", [\"single\", \"double\"], ignorecase=2)\n193: )\n194: opts.Add(BoolVariable(\"minizip\", \"Enable ZIP archive support using minizip\", True))\n195: opts.Add(BoolVariable(\"brotli\", \"Enable Brotli for decompression and WOFF2 fonts support\", True))\n196: opts.Add(BoolVariable(\"xaudio2\", \"Enable the XAudio2 audio driver on supported platforms\", False))\n197: opts.Add(BoolVariable(\"vulkan\", \"Enable the Vulkan rendering driver\", True))\n198: opts.Add(BoolVariable(\"opengl3\", \"Enable the OpenGL/GLES3 rendering driver\", True))\n199: opts.Add(BoolVariable(\"d3d12\", \"Enable the Direct3D 12 rendering driver on supported platforms\", False))\n200: opts.Add(BoolVariable(\"metal\", \"Enable the Metal rendering driver on supported platforms (Apple arm64 only)\", False))\n201: opts.Add(BoolVariable(\"use_volk\", \"Use the volk library to load the Vulkan loader dynamically\", True))\n202: opts.Add(BoolVariable(\"accesskit\", \"Enable the AccessKit driver for screen reader support\", True))\n203: opts.Add(BoolVariable(\"angle\", \"Enable the ANGLE rendering driver for OpenGL ES 3.0 on supported platforms\", True))\n204: opts.Add(BoolVariable(\"sdl\", \"Enable the SDL3 input driver\", True))\n205: opts.Add(\n206:     EnumVariable("
+    },
+    {
+      "start_line": 592,
+      "end_line": 610,
+      "text": "592: \n593: if not env[\"deprecated\"]:\n594:     env.Append(CPPDEFINES=[\"DISABLE_DEPRECATED\"])\n595: \n596: if env[\"precision\"] == \"double\":\n597:     env.Append(CPPDEFINES=[\"REAL_T_IS_DOUBLE\"])\n598: \n599: # Library Support\n600: if env[\"library_type\"] != \"executable\":\n601:     if \"library\" not in env.get(\"supported\", []):\n602:         print_error(f\"Library builds unsupported for {env['platform']}\")\n603:         Exit(255)\n604:     env.Append(CPPDEFINES=[\"LIBGODOT_ENABLED\"])\n605: \n606: # Default num_jobs to local cpu count if not user specified.\n607: # SCons has a peculiarity where user-specified options won't be overridden\n608: # by SetOption, so we can rely on this to know if we should use our default.\n609: initial_num_jobs = env.GetOption(\"num_jobs\")\n610: altered_num_jobs = initial_num_jobs + 1"
+    },
+    {
+      "start_line": 593,
+      "end_line": 611,
+      "text": "593: if not env[\"deprecated\"]:\n594:     env.Append(CPPDEFINES=[\"DISABLE_DEPRECATED\"])\n595: \n596: if env[\"precision\"] == \"double\":\n597:     env.Append(CPPDEFINES=[\"REAL_T_IS_DOUBLE\"])\n598: \n599: # Library Support\n600: if env[\"library_type\"] != \"executable\":\n601:     if \"library\" not in env.get(\"supported\", []):\n602:         print_error(f\"Library builds unsupported for {env['platform']}\")\n603:         Exit(255)\n604:     env.Append(CPPDEFINES=[\"LIBGODOT_ENABLED\"])\n605: \n606: # Default num_jobs to local cpu count if not user specified.\n607: # SCons has a peculiarity where user-specified options won't be overridden\n608: # by SetOption, so we can rely on this to know if we should use our default.\n609: initial_num_jobs = env.GetOption(\"num_jobs\")\n610: altered_num_jobs = initial_num_jobs + 1\n611: env.SetOption(\"num_jobs\", altered_num_jobs)"
+    },
+    {
+      "start_line": 1039,
+      "end_line": 1057,
+      "text": "1039: suffix += \".\" + env[\"target\"]\n1040: if env.dev_build:\n1041:     suffix += \".dev\"\n1042: \n1043: if env[\"precision\"] == \"double\":\n1044:     suffix += \".double\"\n1045: \n1046: suffix += \".\" + env[\"arch\"]\n1047: \n1048: if not env[\"threads\"]:\n1049:     suffix += \".nothreads\"\n1050: \n1051: suffix += env.extra_suffix\n1052: \n1053: sys.path.remove(tmppath)\n1054: sys.modules.pop(\"detect\")\n1055: \n1056: if env.editor_build:\n1057:     unsupported_opts = []"
+    }
+  ]
+}
