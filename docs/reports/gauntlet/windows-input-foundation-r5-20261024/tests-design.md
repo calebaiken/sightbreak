@@ -77,3 +77,58 @@ adjudication and retained original outcome; expectations are not adjusted to
 make the candidate pass. Exact retained R4/R3 corpora, historical baseline,
 unchanged focused methods and source-union checks are root-owned execution.
 No full-suite/native/207 replay readiness follows from these controls.
+
+## Additive operation-word registration before execution
+
+The initial eleven-method source is preserved at 9e0549b5. Root reports that
+the pinned initial candidate 644f8834 passed those methods, with original raw
+first-new-tests.* retained. This author has not executed candidate code. The
+following added method and expectations are frozen before its first execution;
+the preceding eleven methods and TimedAuthority constructor remain unchanged.
+
+Enumerate all words of lengths one, two and three over A0,A1,J0,J1. A means a
+successful same-epoch acceptance; J means the explicit wrong-epoch rejection;
+0/1 is the single command's fire flag. There are 4+16+64=84 words. For each word
+construct two independent forward witnesses, with outcome at the receive clock
+or one millisecond later. Position p starts at zero: command sequence=2+p,
+receive clock=11200+10*p, outcome clock=receive+phase. Each callback completes
+before the next callback begins. No pop is generated and at most three commands
+are queued. The final tick is fixed at 13200, more than 1000ms after every
+possible last control emission, so its row is explicitly emitted. Connection,
+admission, rate and idle bounds remain within the seed witness's source limits.
+
+These 168 operation witnesses each have three independently assessed variants:
+
+- Source-positive rows must be CONSISTENT or policy UNKNOWN, never INVALID.
+  A successful positive is not forced to certify anonymous activity or receipt
+  ownership, and diagnostic_complete must agree with its returned status.
+- A separate copy increments only the final cumulative RX counter by one.
+  The final row is an authority tick, so there is no pending synchronous RX.
+  Its excess R violates R=A+J and must be INVALID.
+- Another separate copy changes final stream_rejected to cumulative J+1.
+  There is no epoch reset or hidden uncounted reject operation in any witness.
+  The source's stream rejection count cannot exceed counted J and must be INVALID.
+
+This registers 504 outcome expectations. Word, phase and variant are separate
+subtest labels; failures remain visible while the other independent variants
+continue. No raw constructor input is retimed or repaired after a report result.
+Root owns execution, exact-input/result retention and reader pinning.
+
+Source inputs fixed at registration: amended declared helper SHA256
+af8d1f10482b9513a20f204eee8f17afb94ee4bb549df40b5cea4bd618f859cd;
+initial new-test file SHA256 f5847919a36c0541a47be701cdb938acbbf9a217fae5182d2b9664d18d82c848;
+PeerLifecycle SHA256 8a57cc07bdc007fe143a5e8c51c99238732fcc4acf9f209fd4718af937f22078;
+InputStream SHA256 b455205d827134830637f03457cc67e4e321721d91a7d840941fc74e1b26c88e;
+Match SHA256 80c1cc2fceeb44dd4bf8c9726a8f6a77124e649a8535a9e508ea6d904ec9f238.
+
+## Schema and semantic distinctions
+
+Some original negative controls change just first or last on a count1 packet.
+record_valid explicitly rejects unequal count1 endpoints before deterministic
+pipeline inference. Those subtests establish schema rejection, not an isolated
+R5 phase improvement. The original source and results remain unchanged. The
+paired action-aggregate changes, both-endpoint same-kind ordinal changes, and
+this added matrix's integer counter/rejection-count mutations remain structurally
+well-typed; their expected rejection follows source pairing or counter state.
+No claim that every negative specifically reaches the new phase is made without
+its retained actual error and schema-versus-semantic adjudication.

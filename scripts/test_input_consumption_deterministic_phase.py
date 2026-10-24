@@ -357,6 +357,40 @@ class DeterministicAuthorityPhaseControls(unittest.TestCase):
             with self.subTest(field=field):
                 self.status(altered, 'INVALID')
 
+    def test_generated_source_words_and_independent_counter_contradictions(self):
+        from itertools import product
+
+        # Frozen additive matrix: (4+16+64) words * 2 clock phases * 3 cases.
+        # Operations are completed synchronously before the next receive; the
+        # final emitted tick is outside every last control-event 1000ms window.
+        for length in range(1, 4):
+            for word in product(('A0', 'A1', 'J0', 'J1'), repeat=length):
+                for phase in (0, 1):
+                    model = TimedAuthority()
+                    for position, operation in enumerate(word):
+                        receive_at = 11200+position*10
+                        model.rpc(9, 2+position, receive_at, receive_at+phase,
+                                  fire=operation[1] == '1', reject=operation[0] == 'J')
+                    model.tick(13200)
+                    self.assertEqual(model.rows[-1]['reason'], 'authority_tick')
+                    self.assertLessEqual(len(model.queues[9]), 3)
+                    original = deepcopy(model.rows)
+                    with self.subTest(word=word, phase=phase, case='source-positive'):
+                        result = self.report(model.rows)
+                        self.assertIn(result['transition_status'], ('CONSISTENT', 'UNKNOWN'), result)
+                        self.assertEqual(result['diagnostic_complete'],
+                                         result['transition_status'] == 'CONSISTENT', result)
+                        self.assertEqual(model.rows, original)
+                    surplus_receive = deepcopy(original)
+                    surplus_receive[-1]['counters']['input_received'] += 1
+                    with self.subTest(word=word, phase=phase, case='receive-counter-surplus'):
+                        self.status(surplus_receive, 'INVALID')
+                    surplus_rejection = deepcopy(original)
+                    counted = surplus_rejection[-1]['counters'].get('input_stream_rejected', 0)
+                    surplus_rejection[-1]['stream_rejected'] = counted+1
+                    with self.subTest(word=word, phase=phase, case='stream-rejection-surplus'):
+                        self.status(surplus_rejection, 'INVALID')
+
 
 if __name__ == '__main__':
     unittest.main()
