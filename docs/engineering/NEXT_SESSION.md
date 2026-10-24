@@ -18,14 +18,90 @@ Godot compilation/API preflight. This report releases no native or CI run.
 
 # Next session
 
-Updated 2026-10-23, 12:05 UTC. Continue **SIGHTBREAK — Steam-Ready v1.0**,
+Updated 2026-10-24 08:40 UTC. Continue **SIGHTBREAK — Steam-Ready v1.0**,
 IN PROGRESS / PRIMARY, [issue #25](https://github.com/calebaiken/sightbreak/issues/25).
 No native goal creation/update API or goal ID is exposed; only stop-goal is
-available. The automatic goal remains active. Read AGENTS.md and the canonical
+available. No native goal ID has been verified. Read AGENTS.md and the canonical
 G1–G20 progress matrix. Reuse the installed original quality skills. Continue
 implementation after each verified increment; these corrections do not finish v1.
 
-## Active verification — 2026-10-23 11:54 UTC
+## Resumed execution — 2026-10-24
+
+Continue this same mission and environment. Local execution and fresh independent
+agents are available again. Do not switch accounts, models or environments to
+bypass a usage limit if it returns. The previous worker's usage-limit failure is
+historical; no background work is running on its behalf.
+
+Root remains `/workspace/sightbreak-v1-recovered`, branch
+`codex/v1-executor-recovery-20261023`. The resumed local and actual remote HEAD
+were `11c5773e`; current HEAD contains newer retained reviews. Main and contributor
+baseline remain `4d8cdb33`. Draft PR31 is open over PR27. The initial remote-tracking
+root ref was stale because the fetch configuration covers main; actual ls-remote
+and GitHub PR metadata agree. Never reset the newer local work to that stale ref.
+No shared merge, history rewrite, release or production deployment is authorized.
+
+**Next action: one separately admitted collector compilation/API preflight.**
+Collector-only source `c32415148db1f110bbc7eadfca3793d4693429ff`, reports handoff
+`c3c974e8`, branch `codex/windows-input-collector-20261023`, is independently
+ACCEPTED SOURCE ONLY by `a379a268` after preregistration `16d5766a`. Both source
+views pass 178 maintained methods (175 passes, three existing Windows skips),
+with full 507-path composition, exact four-file erasure, gating/privacy, adapter
+and accepted route controls. Historical obsolete ordinal controls still fail on
+both candidate and baseline; corrected named-stage evidence is preserved. No
+reader, enabled-emission, overhead, coverage, physical-input or native acceptance
+follows from source review.
+
+Frozen runtime checkout `/workspace/sightbreak-collector-preflight-c324` is clean,
+detached at exact c324; all 507 non-doc files are materialized and byte-bound.
+Initialization proof `/workspace/collector-preflight-c324-initialized.json` retains
+the first sparse tools omission and successful full repeat. No engine ran.
+Fresh actual critic `/root/collector_native_preflight_critic_20261024` has
+preregistered `15cdc599` and is finishing admission/one-run wrapper. Read its final
+handoff before a committed/pushed root release; no such release exists yet.
+Expected unchanged movement_prediction suite is 742 checks: 725 existing +17
+new collector gates/projection/disabled-state controls. Pinned Godot4.7.2,
+CPUs0,1 for child runtime, CPU4 for supervisor/analysis, original phase timeouts,
+whole420 seconds and owned cleanup5 seconds are binding. Output is fixed fresh
+`builds/collector-native-preflight-c324-20261024/native` under frozen checkout.
+No retry, graphical launch, export or CI is released. Enabled trace emission and
+actual Windows input still require later separate verification.
+
+**Executed correction: strict fingerprint boolean types.**
+Root finished interrupted preregistration `602980d7` in the same owned Linux
+checkout. Exact source `8da2add4279f3087320d4708c047f500baffd0ee` is pushed on
+`codex/linux-native-argument-readback-20261023`. Only validator, controller hash
+pin and existing test change. Original ten-method rig reproduces four numeric
+false passes; candidate passes all69 maintained plus unchanged10 methods.
+Fresh critic `3a0fcddb` after `4dbce79d` independently ACCEPTS SOURCE ONLY,
+repeating all methods in own/initialized depth-one views plus190 fresh cases.
+Source/45 old critic files/370 raw files/three outer records/377 archive members
+verify; the audit setup path failure and raw whitespace exception are retained.
+Shared-object dependence is explicit. No additional large clone was created.
+The old builder depth checkout remains at525b17f1; no result is attributed to it.
+The V-Sync driver warning remains a strict blocker. R4 output and release are
+absent; no performance, H1 or Linux gameplay acceptance.
+
+**Preserve the interrupted sibling work.**
+Windows readerR2 `86fe3cbe` remains REJECTED by `56ceb007`: seven further invalid
+traces pass and one valid unordered batch fails. ReaderR3 `342c3641` is frozen
+with uncommitted packaging results in `/workspace/sightbreak-windows-input-consumption-r2`,
+branch `codex/windows-input-consumption-r3-20261023`; no final independent verdict.
+The collector intentionally excludes that reader, its tests and validate changes.
+Mac `/workspace/sightbreak-mac-semantic-deploy` remains at preregistration
+`8b6bdacc` with uncommitted persistent-target/CI-recipe work. Do not overwrite it.
+Ordinary Mac gameplay is unverified despite the accepted read-only AX evidence.
+Bot objectiveR2 remains unqualified: the fresh review checkout is
+`/workspace/reviews/m5-objective-observability-r2-fresh-source` at4e9ef3c3;
+source-consistency negatives include wrong actor/target, objective transition and
+unearned credit acceptance. No native release. Touch numeric/strict/descendant
+cleanup failures remain binding, including the surviving child observation.
+
+All whole G1–G19, 8.5/category, human/physical, CS2 comparison, Intel Mac, mobile
+runtime and distribution/Steam gates remain open. After this native preflight,
+retain actual outputs/independent verdict, commit, update gates and continue.
+
+## Prior checkpoint — 2026-10-23 11:54 UTC
+
 
 Own root checkout `/workspace/sightbreak-v1-recovered`, branch
 `codex/v1-executor-recovery-20261023`. Read current HEAD/status and preserve newer

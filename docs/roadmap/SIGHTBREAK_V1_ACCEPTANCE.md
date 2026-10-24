@@ -115,3 +115,10 @@ before ready.json; synchronous render-thread readback and strict V-Sync warning
 remain unresolved. No complete condition or H1 exists. Explicit Mac targeting and
 Windows consumption traces are under fresh source reviews; neither has native
 acceptance. All whole gates and quality thresholds remain unchanged.
+
+At the 2026-10-24 resumption, independent source reviews accept isolated collector
+c3241514 and strict fingerprint-type correction8da2add4. These close bounded
+source-correctness requirements. Collector native compilation is being separately
+admitted; Linux V-Sync, ordinary Windows/Mac gameplay, touch descendant cleanup
+and all whole-release/external gates remain unverified or failed. Original
+schedules, deadlines, privacy and quality thresholds are unchanged.

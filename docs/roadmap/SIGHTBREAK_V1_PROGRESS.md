@@ -6,35 +6,27 @@ Statuses: `NOT STARTED`, `IN PROGRESS`, `FAILED`, `VERIFIED`, `BLOCKED EXTERNALL
 
 ## Current execution
 
-The mission remains IN PROGRESS / PRIMARY. Current root implementation includes
-two independently verified bot weapon fixes, strict native-log detection and the
-source-accepted initial Windows route pulse (`da7bc797`). The latest full
-headless aggregate at exact28a3e294 is independently verified; later source does
-not inherit whole-source acceptance. All whole G1–G19 and external gates stay open.
+Resumed 2026-10-24. Mission remains IN PROGRESS / PRIMARY; issue25 and the
+committed mission records persist it. Root resumes from11c5773e with all prior
+source fixes and evidence preserved. All whole G1–G19 remain open.
 
-Windows49ae54b0 actual final e6a2de33 (root74105549) FAILS ordinary reload/input
-and coarse living corridor before fine pulse. Separate16 suites/29,550 checks,
-both delayed schedules, real objectives/default restarts and11-round victory with
-exact120XP/325 earned offline-credit reopen pass. Initial-pulse correction has
-independent source/depth1 acceptance and29 root focused tests; native is unverified.
-New trace reader c073 was independently rejected; correction86fe3cbe and an
-explicit default-off dispatch adapter are under separate reviews.
-Mac d5277180 read-only diagnostic39946498627 is independently VERIFIED by
-d4e25303: full36-node AX tree, one enabled exact Deploy, zero input/prompts and
-recorded cleanup. Ordinary OCR/gameplay and earlier actual failures remain open.
-Linux ec6b34ce R3 clears import/export/artifact/seal in actual receipts but FAILS
-first OFF startup before ready.json on its synchronous render-thread readback.
-No complete condition or H1 result; final actual audit c9c5c64d preserves all raw/archive evidence. Readback source
-93f32edf is under fresh review; the strict software-driver warning remains an
-explicit environment blocker. R1/R2 failures stay intact.
+Collector-only c3241514 is independently ACCEPTED SOURCE ONLY by a379a268:
+full507-path composition and both178-method source runs verify, with three old
+Windows skips. The rejected optional reader remains separate. A fresh critic
+is preparing one native compilation/API preflight; no native release exists yet.
+Windows ordinary input and living/settings/focus failures remain unresolved.
 
-Touch original numeric/strict/full-cleanup FAIL is independently reproduced;
-source-bound capture/preservation and static ownership pass. All32 blind pairs
-give24 candidate preferences/eight ties, separate from numeric criteria. Bot
-objective observation sourcec91d9b98 is independently rejected; fresh-status and
-complete receipt-schema corrections are underway. The permanent
-[NEXT_SESSION](../engineering/NEXT_SESSION.md) has exact branches, commits,
-failures, tool receipts, blockers and next actions.
+Root completed strict fingerprint-type correction8da2add4, independently
+ACCEPTED SOURCE ONLY by3a0fcddb. All69 maintained plus10 original methods pass
+both views, plus190 new independent cases. Original370 files/three outer records/
+377-member archive remain exact. This fixes numeric masquerading as booleans in
+both hashed snapshots. The Linux V-Sync blocker persists; no R4/H1 result exists.
+
+Mac read-only d5277180 remains scoped VERIFIED, ordinary gameplay unverified;
+interrupted semantic-target work is preserved. Touch numeric/strict/full-cleanup
+FAIL remains binding. Bot objective and Windows reader corrections still require
+independent qualification. Exact branches, failures and next execution are in
+[NEXT_SESSION](../engineering/NEXT_SESSION.md).
 
 A separate future market-harness guard is independently accepted at
 `985a9d71`, [draft PR29](https://github.com/calebaiken/sightbreak/pull/29):
@@ -135,8 +127,8 @@ PR24 → PR23 → PR22 → PR16 dependencies and contributor ownership.
 | G8 | Visual quality at least 8.5/10 in each applicable category | FAILED | 0.3 aggregate 8.1 (geometry, materials, lighting, models, effects below 8.5). Fresh sequence review about 5.5. | Reported (AI reviewers, not human) | Per-category rounds after G4-G7. |
 | G9 | Audio: fire, reload, hit, objective cues consistent with animation | IN PROGRESS | ARM/playback-WAV leaks remain unresolved. Actual 26a1c59 independently REJECTS acquisition and FAILS strict shutdown: float mix rate rejected and 353 orphan StringNames missed. All original raw retained. [Review](../reports/gauntlet/audio-exit-lifecycle/independent-native-r1/REVIEW.md). Narrow parser/strict source correction accepted 4a7afae; only standalone strict matcher fbb439cf is integrated and independently accepted ca71aac4. | Fresh independent source and actual-output critics | Investigate instrumentation lifetime, retaining owner and supported teardown fix. Observer/analyzer remain separate; no native retry, causal leak-fix, listening or timing acceptance. |
 | G10 | Accessibility (contrast, text scale, reduced motion, controller/keyboard reach) | IN PROGRESS | R4B R3 source-bound capture/preservation/static ownership passes, but original numeric/strict/full-cleanup FAIL independently reproduces755ee542/root befe7cbb. Candidate ownership has zero wrong/unclaimed support samples. Locked32-pair visual review gives24 candidate preferences/eight ties. All original evidence retained. | Fresh actual critic and separate blind visual critic | Future attribution design accepted only as design19e39981; actual new label masks and renderer error model absent. Seven spread2/16 nominal glyph failures stay FAIL. Physical reach/live/custom HUD and whole accessibility remain open. |
-| G11 | Linux native package | IN PROGRESS | R1 import and R2 packed-import artifact FAIL retained. Fresh source correction ec6b34ce accepted12b88814. Sole R3 reaches actual artifact/seal then FAILS first OFF startup before ready.json: synchronous safe render-thread readback guard; V-Sync WARNING also retained. No complete condition/H1. | Fresh independent source critic; actual audit underway | Final R3 audit c9c5c64d verifies artifact/seal and preserves failed startup. Readback correction93f32edf is under fresh source review; unchanged driver warning is an explicit strict environment blocker. Fresh source/actual review and root release required before r4. No physical FPS, cause or gameplay fix. |
-| G12 | Windows native package | IN PROGRESS | Actual49ae54b0 final e6a2de33/root74105549 FAILS ordinary reload-start and coarse corridor before fine pulse; settings/focus unreached. Separate native/input/objective/full-match/persistence scopes pass,137 strict logs and originals retained. Initial-pulse source ea6c330a independently accepted fcbb3ca1, integrated da7bc797; all507 non-doc paths match and29 focused tests pass. | Fresh independent source and actual-output critics | Actual initial-pulse delivery/living route remains unverified. Separate opt-in connection/consumption trace source investigates disconnect/binding without wire changes. Fresh combined approval and actual release required; human/physical/package gates open. |
+| G11 | Linux native package | IN PROGRESS | R1/R2/R3 original failures retained. R3 artifact/seal preparation verifies but first OFF readiness fails. Strict snapshot-type correction8da2add4 independently accepted3a0fcddb;69 maintained+10 original methods and190 new cases pass both source views. Raw370/outer3/archive377 unchanged. | Fresh independent source and actual critics | V-Sync remains a strict environment blocker; R4/complete conditions/H1 and Linux gameplay remain unqualified. No native retry is released. |
+| G12 | Windows native package | IN PROGRESS | Actual49ae54b0 remains overall FAIL: ordinary reload/input and coarse living corridor. Separate full-match/objective/persistence scopes pass. Initial pulse source accepted; isolated collectorc3241514 independently source-accepted a379a268 with full507-path and178-method evidence. | Fresh independent source and actual critics | Separately admit native compilation/API preflight, then actual ordinary input under original schedules. ReaderR3 remains unqualified; settings/focus, human/physical and packaging gates open. |
 | G13 | macOS native package (Intel and Apple Silicon) | FAILED | Prior ordinary OCR/AXTitle/capture FAIL remain. Read-only d5277180 run39946498627 is independently VERIFIED scoped by d4e25303: seven same-read captures,36-node tree, one enabled exact Deploy, zero input/prompts and recorded cleanup. Ordinary OCR stays0.5 against0.8. | Fresh independent source and actual-output critics | Explicit owned-AX source d370774c was rejected1d17f273 and is being corrected; defaults unchanged, genuine OS input, no AX actions. New actual admission/release required. Audio, Intel, physical, binary reparse and whole gameplay remain open. |
 | G14 | Android and iOS keep building | IN PROGRESS | Fresh frozen 6a Android debug APK and unsigned iOS project export and structural inspection pass. Independent 48/49 package checks: simulator metadata claims ARM64+x86_64 but pinned debug archive contains x86_64 only; device archive is ARM64. [Evidence](../reports/gauntlet/m2-mobile-preservation/independent-package-critic/REPORT.md). Actual Xcode 16.4 / SDK 18.5 link fails on five iOS 26 framework globals. Reviewed SDK selection is integrated; retries39721286005 at2a2b732 and39727011693 ate7718ee pass independent unsigned-device compile review, with exact source/PCK and raw unsigned codesign evidence. Final binary reparse and runtime remain open. | Fresh independent mobile package critic | Preserve accepted exact-source unsigned compile; qualify simulator metadata, installation, older OS behavior and physical play. No credential/signing action is authorized. |
 | G15 | Packaging, build provenance, Steam staging procedure | IN PROGRESS | Source-bound manifests exist. `STEAM_RELEASE_READINESS.md` is design only: no SteamPipe template, no App ID, Steamworks docs not retrievable (host denied). | Reported | Owner approval is needed for any upload or account step. |
