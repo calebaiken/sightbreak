@@ -1,0 +1,64 @@
+{
+  "source": "8b52601ca29d807f54ed318114d10d849c267e83",
+  "reader_sha256": "104d998dc504e30fb6702426025b611aa5ee86390a1734f06142d92a3473e4d4",
+  "new_focused_methods": 14,
+  "new_focused_failures": 0,
+  "new_focused_errors": 0,
+  "generated": {
+    "source-positive": {
+      "cases": 168,
+      "statuses": {
+        "CONSISTENT": 78,
+        "UNKNOWN": 90
+      }
+    },
+    "receive-counter-surplus": {
+      "cases": 168,
+      "statuses": {
+        "INVALID": 168
+      }
+    },
+    "stream-rejection-surplus": {
+      "cases": 168,
+      "statuses": {
+        "INVALID": 168
+      }
+    }
+  },
+  "literal": {
+    "source": "/workspace/sightbreak-windows-input-consumption-r7",
+    "reader_sha256": "104d998dc504e30fb6702426025b611aa5ee86390a1734f06142d92a3473e4d4",
+    "methods": 149,
+    "failure_events": 45,
+    "errors": 1,
+    "skips": 0,
+    "captured_calls": 2868,
+    "raw_jsonl_sha256": "f195239229a852c87cebc9d6779c280e4bdfb93ec00f8714020569e593a7fbd1",
+    "gzip_sha256": "37e00522b0139c5b87c6b86d79c57e1324656ab40094d4d70bf464eb4cd13428",
+    "candidate_functions_or_test_assertions_replaced": false,
+    "cpu_affinity": [
+      4
+    ],
+    "native_executed": false,
+    "new207_replay_executed": false
+  },
+  "registered": {
+    "cases": 49,
+    "matches": 49,
+    "mismatches": []
+  },
+  "old_no_longer_failing": [
+    "test_input_consumption_observation.InputConsumptionControls.test_retired_generation_cannot_consume_even_when_actor_id_is_reused"
+  ],
+  "newly_failing": [
+    "test_input_consumption_foundation_enforcement.AuthorityFoundationEnforcement.test_definite_prefix_faults_are_not_hidden_by_unknown_lifecycle"
+  ],
+  "all_actual_failures_retained": true,
+  "old_methods_helpers_assertions_edited": false,
+  "historical_baseline_methods": 18,
+  "historical_candidate_credit": 0,
+  "constructor_proposal_methods": 1,
+  "constructor_proposal_maintained_credit": 0,
+  "approval": "Builder result only; different critic required",
+  "whole_reader_native_actual_replay": "BLOCKED"
+}

@@ -1,0 +1,33 @@
+{
+  "source": "f52d91d3a64f562d60b20371cdc3ac57a94f50a8",
+  "reader_sha256": "644f88340166e89301f49a5efe1883d4d09249ff069d85da71449b05a314ef3c",
+  "generated": {
+    "source-positive": {
+      "cases": 168,
+      "statuses": {
+        "CONSISTENT": 78,
+        "UNKNOWN": 90
+      }
+    },
+    "receive-counter-surplus": {
+      "cases": 168,
+      "statuses": {
+        "INVALID": 168
+      }
+    },
+    "stream-rejection-surplus": {
+      "cases": 168,
+      "statuses": {
+        "INVALID": 168
+      }
+    }
+  },
+  "old_no_longer_failing": [
+    "test_input_consumption_observation.InputConsumptionControls.test_retired_generation_cannot_consume_even_when_actor_id_is_reused"
+  ],
+  "newly_failing": [
+    "test_input_consumption_foundation_enforcement.AuthorityFoundationEnforcement.test_definite_prefix_faults_are_not_hidden_by_unknown_lifecycle"
+  ],
+  "original_r4_failures_retained": true,
+  "all_candidate_literal_failures_retained": true
+}
