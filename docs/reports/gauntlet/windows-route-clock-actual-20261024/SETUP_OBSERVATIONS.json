@@ -1,0 +1,25 @@
+{
+  "source_implementation_read_only_after_prereg_commit": "6cf7fb87",
+  "all_local_commands_cpu4": true,
+  "events": [
+    {
+      "tool_chunk": "bd60db",
+      "scope": "Own new no-checkout/index/sparse setup",
+      "observed": "Selected17 instructions absent and shown as deletions after index initialization/sparse selection",
+      "resolution": "Restored only those own instruction paths from exact HEAD; source implementation remained unmaterialized until preregistration was committed"
+    },
+    {
+      "tool_chunk": "595c2c",
+      "exit_code": 1,
+      "observed": "Initial cat AGENTS.md failed because selected file absent",
+      "resolution": "Exact own instruction restore; subsequent AGENTS read and clean status verified"
+    },
+    {
+      "tool_chunk": "7ed89e",
+      "exit_code": 1,
+      "observed": "Filename filter found no REVIEW.md in source-final commit, which only retained ignored logs",
+      "resolution": "Read REPORT.md and source summary from exact source-final snapshot; no source-review result discarded"
+    }
+  ],
+  "no_full_clone_shared_reset_native_or_cleanup": true
+}

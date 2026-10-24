@@ -1,6 +1,6 @@
 # Next session
 
-Updated 2026-10-24 10:40 UTC. **SIGHTBREAK — Steam-Ready v1.0**,
+Updated 2026-10-24 11:13 UTC. **SIGHTBREAK — Steam-Ready v1.0**,
 IN PROGRESS / PRIMARY, [issue #25](https://github.com/calebaiken/sightbreak/issues/25).
 No native goal creation/update API or goal ID is exposed; only stop-goal is
 available. No native goal ID has been verified. Read AGENTS.md and the canonical
@@ -21,6 +21,34 @@ baseline remain `4d8cdb33`. Draft PR31 is open over PR27. The initial remote-tra
 root ref was stale because the fetch configuration covers main; actual ls-remote
 and GitHub PR metadata agree. Never reset the newer local work to that stale ref.
 No shared merge, history rewrite, release or production deployment is authorized.
+
+**Next native action: one new-source request, only after pushed root release.**
+Source4cf6ac8e is independently ACCEPT SOURCE ONLY33212b18. Root integrated only
+helper/test as2f31bd70, all508 source paths/modes/blobs/physical bytes equal;41
+focused root tests pass. Qualifier `qualifier/windows-route-clock-4cf6ac8e-20261024`
+is created/read back exact4cf (e3849063 retains initial rejected update422 and
+supported create_branch success). Independent actual prereg6cf7fb87, forward
+ledgerf22d5cef and finaladmission90d68181 are retained in
+`docs/reports/gauntlet/windows-route-clock-actual-20261024`.
+ROOT_RELEASE.md in that directory authorizes ONE exact Windows workflow request
+AFTER committed/pushed release. No dispatch receipt exists at this checkpoint.
+After any interruption, query this fixed qualifier's actual runs first. Never
+redispatch a possibly accepted request. Inputs are lane=windows,
+observe_windows_input=true, verbose_reopened_shutdown=true; all original native
+conditions/timeouts and32MiB artifact cap remain. Predicted Windows validation
+e0e223328351507a02d6b63b845531324c2e432e29e86eebed07740c45a2c496 is bound.
+
+Objective decision componentbc9 is independently scoped-accepted e87aa165;
+whole reader remains rejected. Root began next handoff component in
+`/workspace/sightbreak-objective-observability-r4`, branch
+`codex/m5-objective-observability-r4-20261024`, sourcef48c8461/prereg2f09a04a.
+21 methods pass and original13-case rig meets11/13 (six handoff/four old decision
+negatives reject; two perception cases remain). Independent critic206e71fc
+identified mandatory carrier-drop omission; full-stream old-source false accept
+is preserved in3f7807ab after preregcf766006. Correction is pending; no component
+or native readiness claimed. Preserve all raw/source and finish that fix/review.
+Optional reader R5 builder has resumed in a separate own branch from642dd0e0;
+R4 finalad12f7ae remains REJECT with six new false accepts. No reader integrated.
 
 **Completed verbose diagnostic: INCONCLUSIVE; do not redispatch.**
 Run40083894472/job120842796227/attempt1 at exact7101350e completed FAILURE at

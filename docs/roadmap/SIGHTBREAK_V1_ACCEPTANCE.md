@@ -142,3 +142,8 @@ Objective R2 is REJECTED acbe3943; first R3 decision componentbc9f945d has bound
 passing tests and pending independent review, with eight other defects blocking
 readiness. A fixed-boundary route-clock implementation is active under separate
 source review; no new native admission. Whole gates and external blockers unchanged.
+
+At 2026-10-24 11:13 UTC, route-clock source4cf6ac8e is independently accepted33212b18
+(350/350 models in each view), integrated2f31bd70 with508-source equality and41
+root tests. Actualadmission90d68181 permits a separate pushed root one-request
+release only; no dispatch/result exists yet. Whole gates remain unchanged.
