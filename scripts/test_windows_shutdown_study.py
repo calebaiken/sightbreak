@@ -108,6 +108,15 @@ class StudyTests(unittest.TestCase):
         result,calls,_,_=self.run_generated(owner=Owner(fail='study/final'))
         self.assertEqual(len(calls),4);self.assertFalse(result['passed']);self.assertIn('final_ownership_error',result)
 
+    def test_failure_safety_budget_is_single_use_even_with_final_unknown(self):
+        class AlwaysUnknown(Owner):
+            def query(self,label):
+                self.queries.append(dict(label=label,verified=False,error='unknown'))
+                raise RuntimeError('unknown')
+        result,calls,owner,_=self.run_generated(owner=AlwaysUnknown())
+        self.assertFalse(result['passed']);self.assertFalse(calls)
+        self.assertEqual(owner.cleaned,1,'one failure-only5s budget for collection, never renewed')
+
     def test_current_preflight_blocks_before_owner_or_driver(self):
         check=dict(status='BLOCKED',execution_authorized=False)
         with patch.object(retention,'preflight',return_value=check),patch.object(study,'WindowsOwner') as owner,patch.object(study,'real_driver') as driver,patch.object(sys,'argv',['study','collect','--expected-source','a'*40,'--output','/unreached']):

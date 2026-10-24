@@ -243,6 +243,7 @@ def collect_trials(output,identity,owner,driver,*,identity_reader,load_evidence=
                 # replaced or retried. Ownership/source uncertainty stops all.
             except BaseException as error:
                 trial['stop_error']=type(error).__name__+': '+str(error)
+                report['failure_safety_used']=True
                 try:trial['failure_safety_cleanup']=owner.safety_cleanup()
                 except BaseException as cleanup_error:trial['failure_safety_cleanup']=dict(passed=False,error=str(cleanup_error))
                 report['stopped']=True;break
@@ -253,8 +254,12 @@ def collect_trials(output,identity,owner,driver,*,identity_reader,load_evidence=
         try:report['final_job']=owner.query('study/final');require(owner.baseline_only(report['final_job']),'final job not controller-only')
         except BaseException as error:
             report.update(passed=False,final_ownership_error=str(error))
-            try:report['final_failure_safety_cleanup']=owner.safety_cleanup()
-            except BaseException as cleanup_error:report['final_failure_safety_cleanup']=dict(passed=False,error=str(cleanup_error))
+            if not report.get('failure_safety_used'):
+                report['failure_safety_used']=True
+                try:report['final_failure_safety_cleanup']=owner.safety_cleanup()
+                except BaseException as cleanup_error:report['final_failure_safety_cleanup']=dict(passed=False,error=str(cleanup_error))
+            else:
+                report['final_safety_not_repeated']='One failure-only safety budget already consumed; unresolved ownership retained'
         report['job_queries']=owner.queries
         write(output/'study.json',report)
     return report
