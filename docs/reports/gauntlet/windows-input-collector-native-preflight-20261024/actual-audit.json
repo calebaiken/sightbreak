@@ -1,0 +1,487 @@
+{
+  "checks": 742,
+  "cleanup_elapsed_to_sample_seconds": 1.4985002053435892e-05,
+  "failures": 0,
+  "finite_samples": 141,
+  "limitations": [
+    "Enabled emitter/overhead unexecuted",
+    "Finite sampling can miss short or escaped processes",
+    "Version subprocess raw stdout/stderr not retained by existing runner",
+    "Removed private project bytes rely on source inventories and unchanged runner isolation contract"
+  ],
+  "logs": {
+    "native/movement_prediction-userdata/logs/godot.log": {
+      "bytes": 73,
+      "sha256": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e"
+    },
+    "native/movement_prediction-userdata/logs/godot2026-10-24T08.45.56.log": {
+      "bytes": 73,
+      "sha256": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e"
+    },
+    "native/movement_prediction-userdata/logs/godot2026-10-24T08.46.02.log": {
+      "bytes": 145,
+      "sha256": "8096f08009653ce72771dfcd57918eb1d451cb202bc0577c70042949f67561bd"
+    },
+    "native/movement_prediction.log": {
+      "bytes": 145,
+      "sha256": "8096f08009653ce72771dfcd57918eb1d451cb202bc0577c70042949f67561bd"
+    },
+    "native/private-import.log": {
+      "bytes": 16177,
+      "sha256": "7216789b886c69d1d1c4090cd2b31b7d932c0f8946f632886f5f50a2287a3851"
+    },
+    "native/producer-01-bootstrap.log": {
+      "bytes": 73,
+      "sha256": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e"
+    },
+    "native/producer-02-before-movement_prediction.log": {
+      "bytes": 73,
+      "sha256": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e"
+    },
+    "native/producer-03-after-movement_prediction.log": {
+      "bytes": 73,
+      "sha256": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e"
+    }
+  },
+  "maximum_error_m": 0.075834,
+  "maximum_sample_gap_seconds": 0.10598833800031571,
+  "native_producers": [
+    {
+      "custom_user_dir": "SIGHTBREAK-native-tests-d14a85b8845e44178c7f40cc5c6e3785/bootstrap",
+      "data_dir": "/workspace/sightbreak-collector-preflight-c324/builds/collector-native-preflight-c324-20261024/state/data",
+      "diagnostics_exist": false,
+      "os": "Linux",
+      "profile_exists": false,
+      "project_path": "/workspace/sightbreak-collector-preflight-c324/builds/collector-native-preflight-c324-20261024/temporary/sightbreak-native-tests-dlni4itu/project/",
+      "user_data_dir": "/workspace/sightbreak-collector-preflight-c324/builds/collector-native-preflight-c324-20261024/state/data/SIGHTBREAK-native-tests-d14a85b8845e44178c7f40cc5c6e3785/bootstrap",
+      "uses_custom_user_dir": true
+    },
+    {
+      "custom_user_dir": "SIGHTBREAK-native-tests-d14a85b8845e44178c7f40cc5c6e3785/movement_prediction",
+      "data_dir": "/workspace/sightbreak-collector-preflight-c324/builds/collector-native-preflight-c324-20261024/state/data",
+      "diagnostics_exist": false,
+      "os": "Linux",
+      "profile_exists": false,
+      "project_path": "/workspace/sightbreak-collector-preflight-c324/builds/collector-native-preflight-c324-20261024/temporary/sightbreak-native-tests-dlni4itu/project/",
+      "user_data_dir": "/workspace/sightbreak-collector-preflight-c324/builds/collector-native-preflight-c324-20261024/state/data/SIGHTBREAK-native-tests-d14a85b8845e44178c7f40cc5c6e3785/movement_prediction",
+      "uses_custom_user_dir": true
+    },
+    {
+      "custom_user_dir": "SIGHTBREAK-native-tests-d14a85b8845e44178c7f40cc5c6e3785/movement_prediction",
+      "data_dir": "/workspace/sightbreak-collector-preflight-c324/builds/collector-native-preflight-c324-20261024/state/data",
+      "diagnostics_exist": false,
+      "os": "Linux",
+      "profile_exists": false,
+      "project_path": "/workspace/sightbreak-collector-preflight-c324/builds/collector-native-preflight-c324-20261024/temporary/sightbreak-native-tests-dlni4itu/project/",
+      "user_data_dir": "/workspace/sightbreak-collector-preflight-c324/builds/collector-native-preflight-c324-20261024/state/data/SIGHTBREAK-native-tests-d14a85b8845e44178c7f40cc5c6e3785/movement_prediction",
+      "uses_custom_user_dir": true
+    }
+  ],
+  "observed_processes": [
+    {
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/run_native_regressions.py",
+        "--suites",
+        "movement_prediction",
+        "--output",
+        "/workspace/sightbreak-collector-preflight-c324/builds/collector-native-preflight-c324-20261024/native"
+      ],
+      "pgid": 6283,
+      "pid": 6283,
+      "ppid": 6238,
+      "sid": 6283,
+      "start_ticks": 1732134,
+      "state": "R",
+      "threads": {
+        "6283": [
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "argv": [
+        "/workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--version"
+      ],
+      "pgid": 6283,
+      "pid": 6284,
+      "ppid": 6283,
+      "sid": 6283,
+      "start_ticks": 1732144,
+      "state": "R",
+      "threads": {
+        "6284": [
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "argv": [
+        "/workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--path",
+        "/workspace/sightbreak-collector-preflight-c324/builds/collector-native-preflight-c324-20261024/temporary/sightbreak-native-tests-dlni4itu/project",
+        "--headless",
+        "--script",
+        "/workspace/sightbreak-collector-preflight-c324/builds/collector-native-preflight-c324-20261024/temporary/sightbreak-native-tests-dlni4itu/user_directory_probe.gd",
+        "--",
+        "--receipt=/workspace/sightbreak-collector-preflight-c324/builds/collector-native-preflight-c324-20261024/native/producer-01-bootstrap.json"
+      ],
+      "pgid": 6283,
+      "pid": 6287,
+      "ppid": 6283,
+      "sid": 6283,
+      "start_ticks": 1732153,
+      "state": "R",
+      "threads": {
+        "6287": [
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "argv": [
+        "/workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--path",
+        "/workspace/sightbreak-collector-preflight-c324/builds/collector-native-preflight-c324-20261024/temporary/sightbreak-native-tests-dlni4itu/project",
+        "--headless",
+        "--editor",
+        "--import",
+        "--quit"
+      ],
+      "pgid": 6283,
+      "pid": 6297,
+      "ppid": 6283,
+      "sid": 6283,
+      "start_ticks": 1732185,
+      "state": "R",
+      "threads": {
+        "6297": [
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "argv": [
+        "/workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--path",
+        "/workspace/sightbreak-collector-preflight-c324/builds/collector-native-preflight-c324-20261024/temporary/sightbreak-native-tests-dlni4itu/project",
+        "--headless",
+        "--script",
+        "/workspace/sightbreak-collector-preflight-c324/builds/collector-native-preflight-c324-20261024/temporary/sightbreak-native-tests-dlni4itu/user_directory_probe.gd",
+        "--",
+        "--receipt=/workspace/sightbreak-collector-preflight-c324/builds/collector-native-preflight-c324-20261024/native/producer-02-before-movement_prediction.json"
+      ],
+      "pgid": 6283,
+      "pid": 6534,
+      "ppid": 6283,
+      "sid": 6283,
+      "start_ticks": 1732824,
+      "state": "R",
+      "threads": {
+        "6534": [
+          0,
+          1
+        ],
+        "6536": [
+          0,
+          1
+        ],
+        "6537": [
+          0,
+          1
+        ],
+        "6538": [
+          0,
+          1
+        ],
+        "6539": [
+          0,
+          1
+        ],
+        "6540": [
+          0,
+          1
+        ],
+        "6541": [
+          0,
+          1
+        ],
+        "6542": [
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "argv": [
+        "/workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--path",
+        "/workspace/sightbreak-collector-preflight-c324/builds/collector-native-preflight-c324-20261024/temporary/sightbreak-native-tests-dlni4itu/project",
+        "--headless",
+        "--script",
+        "res://tests/movement_prediction_test.gd"
+      ],
+      "pgid": 6283,
+      "pid": 6544,
+      "ppid": 6283,
+      "sid": 6283,
+      "start_ticks": 1732846,
+      "state": "R",
+      "threads": {
+        "6544": [
+          0,
+          1
+        ],
+        "6546": [
+          0,
+          1
+        ],
+        "6547": [
+          0,
+          1
+        ],
+        "6548": [
+          0,
+          1
+        ],
+        "6549": [
+          0,
+          1
+        ],
+        "6550": [
+          0,
+          1
+        ],
+        "6551": [
+          0,
+          1
+        ],
+        "6552": [
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "argv": [
+        "/workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--path",
+        "/workspace/sightbreak-collector-preflight-c324/builds/collector-native-preflight-c324-20261024/temporary/sightbreak-native-tests-dlni4itu/project",
+        "--headless",
+        "--script",
+        "/workspace/sightbreak-collector-preflight-c324/builds/collector-native-preflight-c324-20261024/temporary/sightbreak-native-tests-dlni4itu/user_directory_probe.gd",
+        "--",
+        "--receipt=/workspace/sightbreak-collector-preflight-c324/builds/collector-native-preflight-c324-20261024/native/producer-03-after-movement_prediction.json"
+      ],
+      "pgid": 6283,
+      "pid": 6554,
+      "ppid": 6283,
+      "sid": 6283,
+      "start_ticks": 1733499,
+      "state": "R",
+      "threads": {
+        "6554": [
+          0,
+          1
+        ],
+        "6556": [
+          0,
+          1
+        ],
+        "6557": [
+          0,
+          1
+        ],
+        "6558": [
+          0,
+          1
+        ],
+        "6559": [
+          0,
+          1
+        ],
+        "6560": [
+          0,
+          1
+        ],
+        "6561": [
+          0,
+          1
+        ],
+        "6562": [
+          0,
+          1
+        ]
+      }
+    }
+  ],
+  "outer_receipt_sha256": "708abb1083929a5acd71d21eaab7c655725a2d0abe4b6e61d8a8dcf651a6e3f7",
+  "passed": true,
+  "postrun_identity_readback": [
+    {
+      "current_start_ticks": null,
+      "pid": 6283,
+      "start_ticks": 1732134
+    },
+    {
+      "current_start_ticks": null,
+      "pid": 6284,
+      "start_ticks": 1732144
+    },
+    {
+      "current_start_ticks": null,
+      "pid": 6287,
+      "start_ticks": 1732153
+    },
+    {
+      "current_start_ticks": null,
+      "pid": 6297,
+      "start_ticks": 1732185
+    },
+    {
+      "current_start_ticks": null,
+      "pid": 6534,
+      "start_ticks": 1732824
+    },
+    {
+      "current_start_ticks": null,
+      "pid": 6544,
+      "start_ticks": 1732846
+    },
+    {
+      "current_start_ticks": null,
+      "pid": 6554,
+      "start_ticks": 1733499
+    }
+  ],
+  "predicates": 2668,
+  "raw_inventory": {
+    "engine.json": {
+      "bytes": 450,
+      "sha256": "7167b0d4e623c29451fc439e89b52f6d6c61a12d2a945feabf6cbbf695dfa03a"
+    },
+    "native/isolation.json": {
+      "bytes": 36731,
+      "sha256": "3ffd48e4291fd5edb255fafe041e960097549362135795c79e5786db27fcfd0f"
+    },
+    "native/movement_prediction-userdata/logs/godot.log": {
+      "bytes": 73,
+      "sha256": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e"
+    },
+    "native/movement_prediction-userdata/logs/godot2026-10-24T08.45.56.log": {
+      "bytes": 73,
+      "sha256": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e"
+    },
+    "native/movement_prediction-userdata/logs/godot2026-10-24T08.46.02.log": {
+      "bytes": 145,
+      "sha256": "8096f08009653ce72771dfcd57918eb1d451cb202bc0577c70042949f67561bd"
+    },
+    "native/movement_prediction.log": {
+      "bytes": 145,
+      "sha256": "8096f08009653ce72771dfcd57918eb1d451cb202bc0577c70042949f67561bd"
+    },
+    "native/private-import.log": {
+      "bytes": 16177,
+      "sha256": "7216789b886c69d1d1c4090cd2b31b7d932c0f8946f632886f5f50a2287a3851"
+    },
+    "native/producer-01-bootstrap.json": {
+      "bytes": 685,
+      "sha256": "360f292ecb2016fa530eebd5e7e1691f670b825547818b967c62e05f4c929c81"
+    },
+    "native/producer-01-bootstrap.log": {
+      "bytes": 73,
+      "sha256": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e"
+    },
+    "native/producer-02-before-movement_prediction.json": {
+      "bytes": 705,
+      "sha256": "1ec6b5e6b864dd151476e1b17e082f3947b7876e0543233a5eca6e0b506c1b04"
+    },
+    "native/producer-02-before-movement_prediction.log": {
+      "bytes": 73,
+      "sha256": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e"
+    },
+    "native/producer-03-after-movement_prediction.json": {
+      "bytes": 705,
+      "sha256": "1ec6b5e6b864dd151476e1b17e082f3947b7876e0543233a5eca6e0b506c1b04"
+    },
+    "native/producer-03-after-movement_prediction.log": {
+      "bytes": 73,
+      "sha256": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e"
+    },
+    "native/results.json": {
+      "bytes": 4761,
+      "sha256": "0e69de81c0fd175af3ad70df8f5d23019cfa078a164ffd817b677436ebc73478"
+    },
+    "process-samples.jsonl": {
+      "bytes": 148207,
+      "sha256": "f852017615f19e64fdfcf4a1c65b144d64677649d94d812e3e5c2935fc64c3b4"
+    },
+    "root-release.json": {
+      "bytes": 289,
+      "sha256": "28e8d9485d6ff930840599a9222e216fe08838b3ac76c5088890b5625f8d2b61"
+    },
+    "runner.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "runner.stdout": {
+      "bytes": 123,
+      "sha256": "4309883f820866601fae9447eaece35898d563dd42c9d4ad7a9d296f584844c4"
+    },
+    "source-after.json": {
+      "bytes": 211382,
+      "sha256": "2de25dc3485210d4c8ed3009dd1428c540ff961288497a5e413270581460671f"
+    },
+    "source-before.json": {
+      "bytes": 211382,
+      "sha256": "2de25dc3485210d4c8ed3009dd1428c540ff961288497a5e413270581460671f"
+    },
+    "state/cache/fontconfig/3830d5c3ddfd5cd38a049b759396e72e-le64.cache-9": {
+      "bytes": 352,
+      "sha256": "1ce278d90e1b82e12924c1bb8e6434c796b0732c84ad48cc0901f101cc587bd1"
+    },
+    "state/cache/fontconfig/CACHEDIR.TAG": {
+      "bytes": 200,
+      "sha256": "05e7633fb31bf1f6f8d89020c16b9f24587fdf7638e951c9745b192f5fc3b682"
+    },
+    "state/cache/godot/editor_doc_cache-4.7.res": {
+      "bytes": 3269564,
+      "sha256": "9dae5cc4584c389ffa4c34eb4b097524ece209a934bd04d2519dce6d9b21a1ae"
+    },
+    "state/config/godot/editor_settings-4.7.tres": {
+      "bytes": 17747,
+      "sha256": "f99b40247506c5940de5507ee2722d30b215db195be95a89c253950131377e95"
+    },
+    "wrapper.json": {
+      "bytes": 2864,
+      "sha256": "fbf042ba351b3818958cf835fa869f04ba476cf9826e706a79dfc666b5f304d1"
+    }
+  },
+  "root_release": "236413df815c9404b5a70726b210669f66edb3fa",
+  "runner_exit_observed_seconds": 14.830052042998432,
+  "source": "c32415148db1f110bbc7eadfca3793d4693429ff",
+  "source_paths": 507,
+  "uids": 138,
+  "user_files": {
+    "logs/godot.log": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e",
+    "logs/godot2026-10-24T08.45.56.log": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e",
+    "logs/godot2026-10-24T08.46.02.log": "8096f08009653ce72771dfcd57918eb1d451cb202bc0577c70042949f67561bd"
+  },
+  "wall_seconds_including_cleanup": 15.012425477998477,
+  "warnings": {
+    "native/movement_prediction-userdata/logs/godot.log": [],
+    "native/movement_prediction-userdata/logs/godot2026-10-24T08.45.56.log": [],
+    "native/movement_prediction-userdata/logs/godot2026-10-24T08.46.02.log": [],
+    "native/movement_prediction.log": [],
+    "native/private-import.log": [],
+    "native/producer-01-bootstrap.log": [],
+    "native/producer-02-before-movement_prediction.log": [],
+    "native/producer-03-after-movement_prediction.log": []
+  }
+}
