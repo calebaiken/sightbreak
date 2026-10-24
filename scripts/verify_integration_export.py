@@ -436,7 +436,8 @@ class WinUI:
             raise RuntimeError('Cannot map native Windows key: ' + name)
         self._input(1, flags=0x8 | (0 if down else 0x2), scan=scan)
 
-    def key_pulse(self, names, seconds, *, deadline, receipt, clock=time.monotonic, sleep=time.sleep):
+    def key_pulse(self, names, seconds, *, deadline, receipt, clock=time.monotonic, sleep=time.sleep,
+                  elapsed_clock=time.perf_counter):
         """Route-only in-process dispatch; receipts are API/OS observations.
 
         All evidence stays in memory until attempted keys have been released.
@@ -450,23 +451,52 @@ class WinUI:
         attempted, failure = [], None
         pinned_window, pinned_pid = self.window, self.pid
 
+        last_clock = last_elapsed = watchdog_start = operation_remaining = None
+        watchdog_remaining = None
+
+        def checked_clock():
+            nonlocal last_clock
+            value = clock()
+            if (type(value) not in (int, float) or not float('-inf') < value < float('inf')
+                    or (last_clock is not None and value < last_clock)):
+                raise RuntimeError('Native route pulse clock is invalid or moved backward')
+            last_clock = value
+            return value
+
         def budget():
-            if clock() >= deadline:
+            nonlocal last_elapsed, watchdog_start, operation_remaining, watchdog_remaining
+            elapsed = elapsed_clock()
+            if (type(elapsed) not in (int, float) or not float('-inf') < elapsed < float('inf')
+                    or (last_elapsed is not None and elapsed < last_elapsed)):
+                raise RuntimeError('Native route pulse elapsed watchdog is invalid or moved backward')
+            last_elapsed = elapsed
+            now = checked_clock()
+            if watchdog_start is None:
+                watchdog_start = elapsed
+                operation_remaining = deadline - now
+                if not float('-inf') < operation_remaining < float('inf'):
+                    raise RuntimeError('Native route pulse operation budget is not finite')
+                receipt.update(operation_initial_monotonic=now,
+                               elapsed_watchdog_start=elapsed,
+                               elapsed_watchdog_budget_seconds=operation_remaining)
+            watchdog_remaining = operation_remaining - (elapsed - watchdog_start)
+            if now >= deadline or watchdog_remaining <= 0:
                 raise TimeoutError('Original route deadline expired during native key pulse')
+            return now
 
         def state(label, samples=None):
-            begin = clock()
+            begin = checked_clock()
             owner = C.c_uint32()
             visible = bool(self.window and self.user.IsWindowVisible(self.window))
             thread = self.user.GetWindowThreadProcessId(self.window, C.byref(owner)) if self.window else 0
             foreground = self.user.GetForegroundWindow()
-            value = {'label': label, 'read_begin_monotonic': begin, 'read_end_monotonic': clock(),
+            value = {'label': label, 'read_begin_monotonic': begin, 'read_end_monotonic': checked_clock(),
                      'target_window': self.window, 'expected_pid': self.pid, 'window_pid': owner.value,
                      'window_thread': thread, 'visible': visible, 'foreground_window': foreground,
                      'keys_down': {name: bool(self.user.GetAsyncKeyState(ord(name.upper())) & 0x8000)
                                    for name in ('w', 'a', 's', 'd')},
                      'lmb_down': bool(self.user.GetAsyncKeyState(0x01) & 0x8000)}
-            value['read_end_monotonic'] = clock()
+            value['read_end_monotonic'] = checked_clock()
             (receipt['os_states'] if samples is None else samples).append(value)
             if (self.window != pinned_window or self.pid != pinned_pid
                     or not visible or not thread or type(pinned_pid) is not int or pinned_pid <= 0
@@ -475,15 +505,30 @@ class WinUI:
             return value
 
         def edge(name, down):
-            row = {'key': name, 'down': down, 'before_monotonic': clock()}
+            row = {'key': name, 'down': down}
             receipt['edges'].append(row)
+            timing_failure = None
             try:
+                try:
+                    row['before_monotonic'] = checked_clock()
+                except BaseException as error:
+                    timing_failure = error
+                    row['before_clock_error'] = type(error).__name__ + ': ' + str(error)
+                    if down:
+                        raise
                 self.key(name, down)
             except BaseException as error:
                 row['error'] = type(error).__name__ + ': ' + str(error)
                 raise
             finally:
-                row['after_monotonic'] = clock()
+                try:
+                    row['after_monotonic'] = checked_clock()
+                except BaseException as error:
+                    row['after_clock_error'] = type(error).__name__ + ': ' + str(error)
+                    if timing_failure is None:
+                        timing_failure = error
+            if timing_failure is not None:
+                raise timing_failure
 
         try:
             if (not isinstance(names, (tuple, list)) or not 1 <= len(names) <= 2
@@ -498,12 +543,12 @@ class WinUI:
             if before['lmb_down'] or any(before['keys_down'].values()):
                 raise RuntimeError('Native route key pulse requires physically neutral controls')
             budget()
-            receipt['hold_until_monotonic'] = min(clock() + seconds, deadline)
+            receipt['hold_until_monotonic'] = min(budget() + seconds, deadline)
             try:
                 for name in names:
                     budget()
                     check = {'key': name, 'owned_keys': list(attempted), 'os_states': [],
-                             'read_begin_monotonic': clock(), 'status': 'IN_PROGRESS'}
+                             'read_begin_monotonic': checked_clock(), 'status': 'IN_PROGRESS'}
                     receipt['down_checks'].append(check)
                     try:
                         current = state('before_key_down', check['os_states'])
@@ -511,25 +556,37 @@ class WinUI:
                                                       for key, down in current['keys_down'].items())):
                             raise RuntimeError('Native route key pulse observed unowned controls before down')
                         budget()
-                        if clock() >= receipt['hold_until_monotonic']:
+                        if budget() >= receipt['hold_until_monotonic']:
                             raise TimeoutError('Native route checks exhausted its requested pulse window')
                         check['status'] = 'CHECKED'
                     except BaseException as error:
                         check.update(status='FAILED', error_type=type(error).__name__, error=str(error))
                         raise
                     finally:
-                        check['read_end_monotonic'] = clock()
+                        check['read_end_monotonic'] = checked_clock()
                     attempted.append(name)
                     receipt['attempted_keys'].append(name)
                     edge(name, True)
                 state('after_down')
                 budget()
-                wait = receipt['hold_until_monotonic'] - clock()
+                now = budget()
+                wait = receipt['hold_until_monotonic'] - now
                 if wait <= 0:
                     raise TimeoutError('Native route dispatch exhausted its requested pulse window')
-                sleep(wait)
-                if clock() < receipt['hold_until_monotonic']:
-                    raise RuntimeError('Native route pulse sleep returned before its requested boundary')
+                receipt['sleep_calls'] = 0
+                while wait > 0:
+                    # A relative timer can return before a coarse monotonic tick.
+                    # Keep the original boundary; never restart the requested hold.
+                    wait = min(wait, watchdog_remaining)
+                    sample = {'before_monotonic': now, 'requested_sleep_seconds': wait}
+                    receipt.setdefault('first_wait', sample)
+                    receipt['last_wait'] = sample
+                    receipt['sleep_calls'] += 1
+                    sleep(wait)
+                    now = budget()
+                    sample['after_monotonic'] = now
+                    wait = receipt['hold_until_monotonic'] - now
+
             except BaseException as error:
                 failure = error
             finally:
@@ -549,12 +606,16 @@ class WinUI:
                 raise failure
             if receipt['release_errors'] or not receipt['release_complete']:
                 raise RuntimeError('Native route pulse could not verify OS control release')
-            budget()
-            receipt.update(status='API_RETURNED_WITH_OS_RELEASE', finished_monotonic=clock())
+            finished = budget()
+            receipt.update(status='API_RETURNED_WITH_OS_RELEASE', finished_monotonic=finished)
             return receipt
         except BaseException as error:
-            receipt.update(status='FAILED', error_type=type(error).__name__, error=str(error),
-                           finished_monotonic=clock())
+            receipt.update(status='FAILED', error_type=type(error).__name__, error=str(error))
+            try:
+                receipt['finished_monotonic'] = checked_clock()
+            except BaseException as clock_error:
+                receipt['finished_monotonic'] = None
+                receipt['finished_clock_error'] = type(clock_error).__name__ + ': ' + str(clock_error)
             raise
 
     def button(self, down):
