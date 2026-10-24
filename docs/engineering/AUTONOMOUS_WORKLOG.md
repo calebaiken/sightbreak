@@ -642,3 +642,14 @@ Independent component review is active. Optional-reader R4 has six new independe
 false accepts; next iteration continues. Route-clock fixed-boundary implementation
 under prereg e46680e4 is active after the earlier-flow inconclusive native result.
 No native retry, deployment, merge, credential change or paid action.
+
+## 2026-10-24 11:25 UTC — Sole new-source native qualification actually requested
+
+Releasee5ff0c23 was committed/pushed/read back before11:14:49UTC and exactlyone
+request9ccd54, terminal26731a exits0. Actualrun40089125575/job120858007351/attempt1
+at4cf/fixedqualifier created11:14:51UTC is active. All tool/metadata and original
+release commit/push bytes are retained. Original schedules/gates/caps unchanged;
+no native result yet. Source508 equality/root41 pass are scoped engineering
+evidence only. Objective continuation102d79f2 addresses the independently
+reproduced missing carrier drop; final source tests are running, two perception
+gaps remain unqualified. Optional reader R5 source7d8ec7dd is in separate review.

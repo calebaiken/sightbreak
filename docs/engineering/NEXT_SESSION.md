@@ -1,6 +1,6 @@
 # Next session
 
-Updated 2026-10-24 11:13 UTC. **SIGHTBREAK — Steam-Ready v1.0**,
+Updated 2026-10-24 11:25 UTC. **SIGHTBREAK — Steam-Ready v1.0**,
 IN PROGRESS / PRIMARY, [issue #25](https://github.com/calebaiken/sightbreak/issues/25).
 No native goal creation/update API or goal ID is exposed; only stop-goal is
 available. No native goal ID has been verified. Read AGENTS.md and the canonical
@@ -22,21 +22,27 @@ root ref was stale because the fetch configuration covers main; actual ls-remote
 and GitHub PR metadata agree. Never reset the newer local work to that stale ref.
 No shared merge, history rewrite, release or production deployment is authorized.
 
-**Next native action: one new-source request, only after pushed root release.**
-Source4cf6ac8e is independently ACCEPT SOURCE ONLY33212b18. Root integrated only
-helper/test as2f31bd70, all508 source paths/modes/blobs/physical bytes equal;41
-focused root tests pass. Qualifier `qualifier/windows-route-clock-4cf6ac8e-20261024`
-is created/read back exact4cf (e3849063 retains initial rejected update422 and
-supported create_branch success). Independent actual prereg6cf7fb87, forward
-ledgerf22d5cef and finaladmission90d68181 are retained in
-`docs/reports/gauntlet/windows-route-clock-actual-20261024`.
-ROOT_RELEASE.md in that directory authorizes ONE exact Windows workflow request
-AFTER committed/pushed release. No dispatch receipt exists at this checkpoint.
-After any interruption, query this fixed qualifier's actual runs first. Never
-redispatch a possibly accepted request. Inputs are lane=windows,
-observe_windows_input=true, verbose_reopened_shutdown=true; all original native
-conditions/timeouts and32MiB artifact cap remain. Predicted Windows validation
-e0e223328351507a02d6b63b845531324c2e432e29e86eebed07740c45a2c496 is bound.
+**ACTIVE native run: review this existing attempt; never redispatch.**
+Run40089125575, job120858007351, attempt1, workflow_dispatch, created
+2026-10-24T11:14:51Z, source4cf6ac8e744603ed6af122a362036d276754cc76 on
+`qualifier/windows-route-clock-4cf6ac8e-20261024` is actually active.
+URL https://github.com/calebaiken/sightbreak/actions/runs/40089125575.
+Root releasee5ff0c23 was committed/pushed and remote-read back before11:14:49UTC
+request clock; request9ccd54/session16279, terminal26731a exits0, lookup4a2256,
+runmetadataf7a9bf confirmsattempt1. Exact tool/release originals are retained in
+`docs/reports/gauntlet/windows-route-clock-actual-20261024/ROOT_DISPATCH_RECEIPTS.json`
+and ROOT_RELEASE_ORIGINALS.json. This is the sole new-source request after
+prereg6cf7fb87/forwardf22d5cef/admission90d68181/sourceverdict33212b18.
+No second request, rerun, changed ref/payload or manual continuation is allowed.
+
+Root integration2f31bd70 proves508 exact source identities;41 focused tests pass.
+Inputs: lane=windows, observe_windows_input=true, verbose_reopened_shutdown=true.
+All original conditions/timeouts, ordinary undelayed input and32MiB artifact cap
+remain binding. Predicted Windows validation e0e223328351507a02d6b63b845531324c2e432e29e86eebed07740c45a2c496 is fixed.
+Independent actual critic `/root/reopened_verbose_actual_critic_20261024` is active
+in `/workspace/reviews/windows-route-clock-actual-20261024`. At11:22:04UTC job
+step29 was active with no failed summary; actual raw/gates remain unverified.
+After interruption, query this exact run/attempt and critic branch before any action.
 
 Objective decision componentbc9 is independently scoped-accepted e87aa165;
 whole reader remains rejected. Root began next handoff component in
@@ -45,8 +51,9 @@ whole reader remains rejected. Root began next handoff component in
 21 methods pass and original13-case rig meets11/13 (six handoff/four old decision
 negatives reject; two perception cases remain). Independent critic206e71fc
 identified mandatory carrier-drop omission; full-stream old-source false accept
-is preserved in3f7807ab after preregcf766006. Correction is pending; no component
-or native readiness claimed. Preserve all raw/source and finish that fix/review.
+is preserved in3f7807ab after preregcf766006. Correction102d79f2 is now frozen/pushed; final22-method and13-case/source replay
+checks are running on CPU4. Original full-stream failure/gzip remain exact. No
+component or native readiness claimed. Preserve all raw/source and finish that fix/review.
 Optional reader R5 builder has resumed in a separate own branch from642dd0e0;
 R4 finalad12f7ae remains REJECT with six new false accepts. No reader integrated.
 

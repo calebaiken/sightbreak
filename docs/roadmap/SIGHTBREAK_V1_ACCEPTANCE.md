@@ -147,3 +147,7 @@ At 2026-10-24 11:13 UTC, route-clock source4cf6ac8e is independently accepted332
 (350/350 models in each view), integrated2f31bd70 with508-source equality and41
 root tests. Actualadmission90d68181 permits a separate pushed root one-request
 release only; no dispatch/result exists yet. Whole gates remain unchanged.
+
+At 2026-10-24 11:25 UTC, actual Windows40089125575/job120858007351/attempt1 is active
+at4cf after pushed releasee5ff0c23. Original gates/timeouts/32MiB cap remain; no
+native acceptance follows from request/status. No rerun. Prior failures remain.
