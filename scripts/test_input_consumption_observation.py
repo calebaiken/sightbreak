@@ -84,6 +84,14 @@ def declared_rows(role):
             'counters': deepcopy(counters), 'latest': deepcopy(latest),
             'actor': {'id': 1, 'alive': True, 'ammo': 30, 'reserve': 90, 'reload': 0.0, 'input': control(1, True) if role == 'authority' and index >= 6 else control()} if bound or role == 'client' else {},
         })
+    if role == 'authority':
+        # Exact ten-field timer amendment adjudicated in 4ee3cb10. All other
+        # fields remain synthetic; this is not a complete emitter fixture.
+        timers = [(-1, -1), (0, 20000), (0, 19000), (5000, 14000),
+                  (0, 13000), (1000, 12000), (2000, 11000)]
+        for row, (age, remaining) in zip(rows, timers):
+            row['input_age_msec'] = age
+            row['deadline_remaining_msec'] = remaining
     return rows
 
 

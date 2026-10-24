@@ -1,0 +1,23 @@
+test_adjudicated_authority_positive_keeps_stage_results_distinct (test_input_consumption_foundation_enforcement.AuthorityFoundationEnforcement.test_adjudicated_authority_positive_keeps_stage_results_distinct) ... ok
+test_all_eight_preserved_source_contradictions_are_invalid (test_input_consumption_foundation_enforcement.AuthorityFoundationEnforcement.test_all_eight_preserved_source_contradictions_are_invalid) ... ok
+test_anonymous_global_activity_cannot_certify_this_peer (test_input_consumption_foundation_enforcement.AuthorityFoundationEnforcement.test_anonymous_global_activity_cannot_certify_this_peer) ... ok
+test_every_concrete_model_timer_witness_remains_possible (test_input_consumption_foundation_enforcement.AuthorityFoundationEnforcement.test_every_concrete_model_timer_witness_remains_possible) ... ok
+test_no_connect_absence_and_ready_cannot_invent_live_fields (test_input_consumption_foundation_enforcement.AuthorityFoundationEnforcement.test_no_connect_absence_and_ready_cannot_invent_live_fields) ... ok
+test_selected_peer_sticky_actor_disconnect_and_new_generation (test_input_consumption_foundation_enforcement.AuthorityFoundationEnforcement.test_selected_peer_sticky_actor_disconnect_and_new_generation) ... ok
+test_tick_cannot_switch_selected_peer_or_sticky_actor (test_input_consumption_foundation_enforcement.AuthorityFoundationEnforcement.test_tick_cannot_switch_selected_peer_or_sticky_actor) ... ok
+test_timer_contradiction_precedes_packet_origin_unknown (test_input_consumption_foundation_enforcement.AuthorityFoundationEnforcement.test_timer_contradiction_precedes_packet_origin_unknown) ... FAIL
+test_unsupported_capacity_callback_is_unknown (test_input_consumption_foundation_enforcement.AuthorityFoundationEnforcement.test_unsupported_capacity_callback_is_unknown) ... ok
+test_unsupported_failed_duplicate_connection_is_unknown (test_input_consumption_foundation_enforcement.AuthorityFoundationEnforcement.test_unsupported_failed_duplicate_connection_is_unknown) ... ok
+
+======================================================================
+FAIL: test_timer_contradiction_precedes_packet_origin_unknown (test_input_consumption_foundation_enforcement.AuthorityFoundationEnforcement.test_timer_contradiction_precedes_packet_origin_unknown)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-r7/scripts/test_input_consumption_foundation_enforcement.py", line 101, in test_timer_contradiction_precedes_packet_origin_unknown
+    self.assertTrue(any('lifecycle history' in error for error in report['errors']), report)
+AssertionError: False is not true : {'scope': 'Debug read-only stage observations; no qualification, physical latency or unobserved cause claim', 'diagnostic_complete': False, 'transition_status': 'INVALID', 'cause_status': 'UNRESOLVED; observations identify executed stages and gaps only', 'roles': {'client': {'records': 7, 'coverage': ['client_attempt', 'client_connected', 'client_tick', 'input_send_called', 'ready', 'snapshot_applied', 'welcome_received'], 'counters': {'ready': 1, 'client_attempt': 1, 'client_connected': 1, 'welcome_received': 1, 'client_tick': 2, 'snapshot_applied': 1, 'input_send_called': 1}, 'max_observation_gap_msec': 1000, 'max_snapshot_age_msec': 3000, 'pending_saturation_indices': [], 'accepted_events': [], 'consumed_events': [], 'expiry_events': [], 'disconnect_events': [], 'welcome_events': [{'transport_id': 9, 'local_attempt': 1, 'local_id': 1, 'wall_unix_msec': 104000}], 'binding_events': [], 'local_attempts': 1}}, 'errors': ['authority: invalid bounded packet action counts']}
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.179s
+
+FAILED (failures=1)

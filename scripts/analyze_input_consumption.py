@@ -769,6 +769,98 @@ def parse_log(text):
     return rows
 
 
+def authority_lifecycle_foundation(rows):
+    """Check observed authority identity/timer histories before packet inference.
+
+    This proves only this projection. Unsupported failed-connect callbacks and
+    anonymous activity allocations remain incomplete; raw rows are never repaired.
+    """
+    need(rows[0]['reason'] == 'ready', 'authority lifecycle lacks its fresh ready cut')
+    peers, actors, histories = {}, {}, {}
+    generation = last_peer = last_actor = 0
+    known_actors, previous_counters = {0}, {}
+    unknown = []
+    absent = dict(generation=-1, joined=False, input_age_msec=-1,
+                  deadline_remaining_msec=-1, bound_actor=0, peer_bound=False)
+    named = ROLE_STAGES['authority'] - {'ready', 'authority_tick'}
+    hidden_stages = named - LIFECYCLE_STAGES
+    for ordinal, row in enumerate(rows):
+        reason, peer = row['reason'], row['peer']
+        hidden_calls = sum(max(0, row['counters'].get(stage, 0)
+                               - previous_counters.get(stage, 0)) for stage in hidden_stages)
+        hidden_calls -= int(reason in hidden_stages)
+        previous_counters = row['counters']
+        if reason == 'ready':
+            need(ordinal == 0 and peer == 0 and row['last_bound_actor'] == 0
+                 and all(row[key] == value for key, value in absent.items()),
+                 'fresh authority ready has a live lifecycle projection')
+            continue
+        if reason in named:
+            if peer > 0:
+                last_peer = peer
+            else:
+                need(last_peer == 0, 'named authority hook lost its selected peer')
+        else:
+            if peer != last_peer:
+                need(hidden_calls > 0, 'authority tick changed selected peer without a hook')
+                unknown.append('coalesced input hooks leave selected-peer ownership unresolved')
+                last_peer = peer
+        identity = (peer, row['generation'])
+        if reason == 'peer_connected':
+            if peer in peers or len(peers) >= 10:
+                unknown.append('failed duplicate/capacity connection callback is outside the proved caller scope')
+            else:
+                need(peer > 0 and row['generation'] == generation + 1,
+                     'successful connection skipped or reused the global generation')
+                now, age, remaining = (row[key] for key in
+                                       ('wall_msec', 'input_age_msec', 'deadline_remaining_msec'))
+                need(0 <= age <= now and age + remaining == 20000
+                     and not row['joined'] and not row['peer_bound'] and row['bound_actor'] == 0,
+                     'successful connection has an impossible initial lifecycle projection')
+                generation = row['generation']
+                peers[peer] = generation
+                histories[identity] = LifecycleHypotheses(row)
+        if reason == 'peer_bound':
+            need(peers.get(peer) == row['generation'] and identity in histories
+                 and peer not in actors and row['bound_actor'] > 0
+                 and row['bound_actor'] not in actors.values(),
+                 'authority admission lacks a fresh unbound peer generation')
+            actors[peer] = row['bound_actor']
+            known_actors.add(row['bound_actor'])
+        actor = actors.get(peer, 0)
+        if reason in named and actor:
+            last_actor = actor
+            need(row['last_bound_actor'] == last_actor,
+                 'named bound-peer hook disagrees with its sticky actor')
+        elif row['last_bound_actor'] != last_actor:
+            need(row['last_bound_actor'] in known_actors - {0} and hidden_calls > 0,
+                 'authority sticky actor changed without a bound-peer hook')
+            unknown.append('coalesced input hooks leave sticky-actor ownership unresolved')
+            last_actor = row['last_bound_actor']
+        if peer not in peers:
+            need(all(row[key] == value for key, value in absent.items()),
+                 'absent authority peer retains a live lifecycle projection')
+        else:
+            need(peers[peer] == row['generation'] and identity in histories,
+                 'selected authority peer changed its live generation')
+            history = histories[identity]
+            if reason != 'peer_connected':
+                history.observe(row, actor)
+            need(not history.errors and bool(history.states),
+                 'authority lifecycle history is impossible: ' + '; '.join(history.errors))
+            if any(state['uncertain'] for state in history.states):
+                unknown.append('anonymous accepted calls cannot prove this peer lifecycle')
+        if reason == 'input_accepted':
+            for other, history in histories.items():
+                if other != identity:
+                    history.other_accepted()
+        if reason == 'peer_disconnected':
+            peers.pop(peer, None)
+            actors.pop(peer, None)
+    if unknown:
+        raise UnknownTransition('; '.join(dict.fromkeys(unknown)))
+
+
 def analyze_role(rows, role):
     need(bool(rows), 'no observation records for ' + role)
     for row in rows:
@@ -777,6 +869,8 @@ def analyze_role(rows, role):
     need(REQUIRED[role] <= coverage, 'missing pipeline stages: ' + ','.join(sorted(REQUIRED[role] - coverage)))
     observed_events = {row['reason'] for row in rows}
     need(REQUIRED[role] - {'snapshot_applied'} <= observed_events, 'missing direct pipeline event records')
+    if role == 'authority':
+        authority_lifecycle_foundation(rows)
     prior, bindings, ended, consumed_sequences = None, {}, set(), {}
     live_peers, binding_accept_counts, lifecycle_counts = {}, {}, {}
     live_bindings = set()
