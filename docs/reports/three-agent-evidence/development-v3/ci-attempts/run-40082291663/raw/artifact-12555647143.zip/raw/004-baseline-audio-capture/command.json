@@ -1,0 +1,26 @@
+{
+  "command": [
+    "/home/runner/work/_temp/sightbreak-v3-controls/scripts/godot.sh",
+    "--headless",
+    "--audio-driver",
+    "Dummy",
+    "--script",
+    "res://tests/reload_audio_capture.gd",
+    "--",
+    "--scenario=reload",
+    "--out=/home/runner/work/sightbreak/sightbreak/builds/v3-audio-controls/raw/004-baseline-audio-capture/capture"
+  ],
+  "cwd": "/home/runner/work/_temp/sightbreak-v3-controls",
+  "timeout": 900,
+  "role": "baseline",
+  "control": null,
+  "environment_overrides": {
+    "DISPLAY": ":99",
+    "SIGHTBREAK_TOOLS_DIR": "/home/runner/work/_temp/sightbreak-control-tools",
+    "SIGHTBREAK_STATE_DIR": "/home/runner/work/_temp/sightbreak-control-state",
+    "XDG_DATA_HOME": "/home/runner/work/_temp/sightbreak-control-state/data",
+    "XDG_CONFIG_HOME": "/home/runner/work/_temp/sightbreak-control-state/config",
+    "XDG_CACHE_HOME": "/home/runner/work/_temp/sightbreak-control-state/cache",
+    "ANDROID_USER_HOME": "/home/runner/work/_temp/sightbreak-control-state/android"
+  }
+}

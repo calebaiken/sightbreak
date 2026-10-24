@@ -1,0 +1,10 @@
+{
+  "utc": "2026-10-23T01:13:41.552699+00:00",
+  "first_attempt_exit": 1,
+  "first_attempt_passed": 829,
+  "first_attempt_failed": 1,
+  "false_positive_check": "match.hit_history_only_two_references",
+  "cause": "Substring count also counted record_hit_history option key; requested semantic check is exact _hit_history identifier references",
+  "correction": "Use word-boundary identifier regex; preserve failed attempt and original verifier; rerun using already captured immutable Git blobs with Git blob SHA revalidation",
+  "source_or_runtime_modified": false
+}

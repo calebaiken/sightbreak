@@ -1,0 +1,25 @@
+{
+  "scope": "pure tooling controls on uncommitted source",
+  "checks": [
+    {
+      "command": [
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-tools\\python\\cpython-3.13.15-windows-x86_64-none\\python.exe",
+        "-X",
+        "faulthandler",
+        "scripts/test_source_identity.py",
+        "-v"
+      ],
+      "exit": 0
+    },
+    {
+      "command": [
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-tools\\python\\cpython-3.13.15-windows-x86_64-none\\python.exe",
+        "-X",
+        "faulthandler",
+        "scripts/test_godot_process.py",
+        "-v"
+      ],
+      "exit": 0
+    }
+  ]
+}

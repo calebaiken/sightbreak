@@ -1,0 +1,46 @@
+[
+  {
+    "args": [
+      "git",
+      "rev-parse",
+      "--git-path",
+      "index"
+    ],
+    "returncode": 0,
+    "stdout": "C:/Users/blith/AppData/Local/Temp/opencode/sightbreak/.git/worktrees/sol-visual-b83f76-p/index\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "git",
+      "config",
+      "--show-origin",
+      "--get-regexp",
+      "^(core\\.(sparsecheckout|worktree)|extensions\\.worktreeconfig)$"
+    ],
+    "returncode": 0,
+    "stdout": "file:C:/Users/blith/AppData/Local/Temp/opencode/sightbreak/.git/config\textensions.worktreeconfig true\nfile:C:/Users/blith/AppData/Local/Temp/opencode/sightbreak/.git/worktrees/sol-visual-b83f76-p/config.worktree\tcore.sparsecheckout true\n",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "git",
+      "status",
+      "--porcelain=v1"
+    ],
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "args": [
+      "git",
+      "ls-files",
+      "-t",
+      ".github/workflows/engineering.yml"
+    ],
+    "returncode": 0,
+    "stdout": "S .github/workflows/engineering.yml\n",
+    "stderr": ""
+  }
+]

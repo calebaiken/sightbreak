@@ -1,0 +1,521 @@
+{
+  "metadata_captured_utc": "2026-10-19T19:25:52.6539154Z",
+  "limitation": "Process timestamps are original receipts; file timestamps are later-observed NTFS metadata, not signed read events. Pre-claim ordering and non-consumption are reviewer attestations in the unchanged neutral assessment.",
+  "original_file_metadata": [
+    {
+      "external_path": "neutral-first-assessment.md",
+      "sha256": "b39d394fb3a6e337f8225af0b58430ecfe6e4ce6952b2aa569d75ef55575fbf5",
+      "creation_utc": "2026-10-19T18:57:36.2493789Z",
+      "last_write_utc": "2026-10-19T18:57:36.2493789Z"
+    },
+    {
+      "external_path": "sealed-source-manifest.json",
+      "sha256": "cd1c70205d5fae2f0ad00b1c6ec5bcbb03871b694930eaf5e52eee8185d376d7",
+      "creation_utc": "2026-10-19T18:54:22.7319153Z",
+      "last_write_utc": "2026-10-19T18:54:22.7319153Z"
+    },
+    {
+      "external_path": "logs/candidate-commit-claims.stdout.log",
+      "sha256": "1ba280eeba9b75af105601646ad33c644f35869c75a1db5b98f63dde3092b201",
+      "creation_utc": "2026-10-19T18:58:04.1335068Z",
+      "last_write_utc": "2026-10-19T18:58:04.3510891Z"
+    }
+  ],
+  "command_events": [
+    {
+      "original_ledger": "evidence/commands.jsonl",
+      "original_line": 2,
+      "receipt": {
+        "name": "engine-version",
+        "started_utc": "2026-10-19T18:53:44.1975536Z",
+        "executable": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+        "arguments": [
+          "--version"
+        ],
+        "working_directory": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-evidence-20261019",
+        "timeout_seconds": 180,
+        "stdout": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-evidence-20261019\\logs\\engine-version.stdout.log",
+        "stderr": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-evidence-20261019\\logs\\engine-version.stderr.log",
+        "finished_utc": "2026-10-19T18:53:45.3723146Z",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout_sha256": "bf8803022b574250bb04dea65053a46b7c58570725316c1f7fe2aa6735706498",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "original_ledger": "evidence/commands.jsonl",
+      "original_line": 54,
+      "receipt": {
+        "name": "north-import",
+        "started_utc": "2026-10-19T18:54:22.7843523Z",
+        "executable": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+        "arguments": [
+          "--headless",
+          "--path",
+          "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-north-20261019\\game",
+          "--editor",
+          "--import"
+        ],
+        "working_directory": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-north-20261019",
+        "timeout_seconds": 300,
+        "stdout": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-evidence-20261019\\logs\\north-import.stdout.log",
+        "stderr": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-evidence-20261019\\logs\\north-import.stderr.log",
+        "finished_utc": "2026-10-19T18:54:48.2980330Z",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout_sha256": "90ffabb4816ea3716884face8b96241833b8b51ae8896f389bcf69e5af5a8c12",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "original_ledger": "evidence/commands.jsonl",
+      "original_line": 61,
+      "receipt": {
+        "name": "south-import",
+        "started_utc": "2026-10-19T18:54:48.3285839Z",
+        "executable": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+        "arguments": [
+          "--headless",
+          "--path",
+          "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-south-20261019\\game",
+          "--editor",
+          "--import"
+        ],
+        "working_directory": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-south-20261019",
+        "timeout_seconds": 300,
+        "stdout": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-evidence-20261019\\logs\\south-import.stdout.log",
+        "stderr": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-evidence-20261019\\logs\\south-import.stderr.log",
+        "finished_utc": "2026-10-19T18:55:02.2208329Z",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout_sha256": "fb8022ed4c6dcfc21f87e0700a7e9d4b66593ad1eeb45d91ec975adc73db5310",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "original_ledger": "evidence/runtime-south/commands.jsonl",
+      "original_line": 1,
+      "receipt": {
+        "name": "module_probe",
+        "started_utc": "2026-10-19T18:55:48.7552208Z",
+        "executable": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+        "arguments": [
+          "--headless",
+          "--path",
+          "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-south-20261019\\game",
+          "--fixed-fps",
+          "60",
+          "--script",
+          "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-evidence-20261019\\retained-v2\\module_probe.gd"
+        ],
+        "working_directory": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-south-20261019",
+        "timeout_seconds": 600,
+        "stdout": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-evidence-20261019\\runtime-south\\logs\\module_probe.stdout.log",
+        "stderr": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-evidence-20261019\\runtime-south\\logs\\module_probe.stderr.log",
+        "finished_utc": "2026-10-19T18:55:54.8605430Z",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout_sha256": "83cf0b082206af2aa236c83064fbcfa76be1e00a4aa3558574b2f65965d9481c",
+        "stderr_sha256": "f6a2e8147753f12f16a36a0f262fd5de568c6ebfa7bfcac8110444f2c1de4deb"
+      }
+    },
+    {
+      "original_ledger": "evidence/runtime-north/commands.jsonl",
+      "original_line": 1,
+      "receipt": {
+        "name": "module_probe",
+        "started_utc": "2026-10-19T18:55:48.7579553Z",
+        "executable": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+        "arguments": [
+          "--headless",
+          "--path",
+          "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-north-20261019\\game",
+          "--fixed-fps",
+          "60",
+          "--script",
+          "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-evidence-20261019\\retained-v2\\module_probe.gd"
+        ],
+        "working_directory": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-north-20261019",
+        "timeout_seconds": 600,
+        "stdout": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-evidence-20261019\\runtime-north\\logs\\module_probe.stdout.log",
+        "stderr": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-evidence-20261019\\runtime-north\\logs\\module_probe.stderr.log",
+        "finished_utc": "2026-10-19T18:55:56.3234218Z",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout_sha256": "74814d855726b3ff477e874af35fe9e854ac69734e8cdc919e2142191f45f513",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "original_ledger": "evidence/runtime-south/commands.jsonl",
+      "original_line": 2,
+      "receipt": {
+        "name": "authority_contract_probe",
+        "started_utc": "2026-10-19T18:55:55.0307936Z",
+        "executable": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+        "arguments": [
+          "--headless",
+          "--path",
+          "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-south-20261019\\game",
+          "--fixed-fps",
+          "60",
+          "--script",
+          "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-evidence-20261019\\retained-v2\\authority_contract_probe.gd"
+        ],
+        "working_directory": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-south-20261019",
+        "timeout_seconds": 600,
+        "stdout": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-evidence-20261019\\runtime-south\\logs\\authority_contract_probe.stdout.log",
+        "stderr": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-evidence-20261019\\runtime-south\\logs\\authority_contract_probe.stderr.log",
+        "finished_utc": "2026-10-19T18:55:55.9360916Z",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout_sha256": "a890877dec6d6a105514747180f932003cdc3f38009131f621e7c5954bb82541",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "original_ledger": "evidence/runtime-south/commands.jsonl",
+      "original_line": 3,
+      "receipt": {
+        "name": "integration_controls",
+        "started_utc": "2026-10-19T18:55:55.9837835Z",
+        "executable": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+        "arguments": [
+          "--headless",
+          "--path",
+          "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-south-20261019\\game",
+          "--fixed-fps",
+          "60",
+          "--script",
+          "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-evidence-20261019\\retained-v2\\integration_controls.gd"
+        ],
+        "working_directory": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-south-20261019",
+        "timeout_seconds": 600,
+        "stdout": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-evidence-20261019\\runtime-south\\logs\\integration_controls.stdout.log",
+        "stderr": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-evidence-20261019\\runtime-south\\logs\\integration_controls.stderr.log",
+        "finished_utc": "2026-10-19T18:55:56.4862351Z",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout_sha256": "83cf0b082206af2aa236c83064fbcfa76be1e00a4aa3558574b2f65965d9481c",
+        "stderr_sha256": "9bd928a31c2aa2fb1c1e9618889cea95f52110fc4120c4f5b3bac7c4a7a1a06b"
+      }
+    },
+    {
+      "original_ledger": "evidence/runtime-north/commands.jsonl",
+      "original_line": 2,
+      "receipt": {
+        "name": "authority_contract_probe",
+        "started_utc": "2026-10-19T18:55:56.4376330Z",
+        "executable": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+        "arguments": [
+          "--headless",
+          "--path",
+          "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-north-20261019\\game",
+          "--fixed-fps",
+          "60",
+          "--script",
+          "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-evidence-20261019\\retained-v2\\authority_contract_probe.gd"
+        ],
+        "working_directory": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-north-20261019",
+        "timeout_seconds": 600,
+        "stdout": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-evidence-20261019\\runtime-north\\logs\\authority_contract_probe.stdout.log",
+        "stderr": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-evidence-20261019\\runtime-north\\logs\\authority_contract_probe.stderr.log",
+        "finished_utc": "2026-10-19T18:55:57.6035907Z",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout_sha256": "a890877dec6d6a105514747180f932003cdc3f38009131f621e7c5954bb82541",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "original_ledger": "evidence/runtime-south/commands.jsonl",
+      "original_line": 4,
+      "receipt": {
+        "name": "objective_controls",
+        "started_utc": "2026-10-19T18:55:56.5196272Z",
+        "executable": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+        "arguments": [
+          "--headless",
+          "--path",
+          "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-south-20261019\\game",
+          "--fixed-fps",
+          "60",
+          "--script",
+          "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-evidence-20261019\\retained-v2\\objective_controls.gd"
+        ],
+        "working_directory": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-south-20261019",
+        "timeout_seconds": 600,
+        "stdout": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-evidence-20261019\\runtime-south\\logs\\objective_controls.stdout.log",
+        "stderr": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-evidence-20261019\\runtime-south\\logs\\objective_controls.stderr.log",
+        "finished_utc": "2026-10-19T18:55:57.0420701Z",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout_sha256": "83cf0b082206af2aa236c83064fbcfa76be1e00a4aa3558574b2f65965d9481c",
+        "stderr_sha256": "2c607126898349d37385d142bc9155dbc996cf2aab8560401523f02c09226d1a"
+      }
+    },
+    {
+      "original_ledger": "evidence/runtime-south/commands.jsonl",
+      "original_line": 5,
+      "receipt": {
+        "name": "native_comparison_extended",
+        "started_utc": "2026-10-19T18:55:57.0826224Z",
+        "executable": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+        "arguments": [
+          "--headless",
+          "--path",
+          "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-south-20261019\\game",
+          "--fixed-fps",
+          "60",
+          "--script",
+          "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-evidence-20261019\\retained-v2\\native_comparison_extended.gd"
+        ],
+        "working_directory": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-south-20261019",
+        "timeout_seconds": 600,
+        "stdout": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-evidence-20261019\\runtime-south\\logs\\native_comparison_extended.stdout.log",
+        "stderr": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-evidence-20261019\\runtime-south\\logs\\native_comparison_extended.stderr.log",
+        "finished_utc": "2026-10-19T18:55:57.7017450Z",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout_sha256": "83cf0b082206af2aa236c83064fbcfa76be1e00a4aa3558574b2f65965d9481c",
+        "stderr_sha256": "da6b1545533ac3e1ddfa7e699f93ccee1d9cb7f9b33fd29609250b5fe2e04ef9"
+      }
+    },
+    {
+      "original_ledger": "evidence/runtime-north/commands.jsonl",
+      "original_line": 3,
+      "receipt": {
+        "name": "integration_controls",
+        "started_utc": "2026-10-19T18:55:57.6240188Z",
+        "executable": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+        "arguments": [
+          "--headless",
+          "--path",
+          "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-north-20261019\\game",
+          "--fixed-fps",
+          "60",
+          "--script",
+          "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-evidence-20261019\\retained-v2\\integration_controls.gd"
+        ],
+        "working_directory": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-north-20261019",
+        "timeout_seconds": 600,
+        "stdout": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-evidence-20261019\\runtime-north\\logs\\integration_controls.stdout.log",
+        "stderr": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-evidence-20261019\\runtime-north\\logs\\integration_controls.stderr.log",
+        "finished_utc": "2026-10-19T18:56:00.1252872Z",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout_sha256": "a6554a22e8e85340c3d24b88e1484bea6a4eb1346880339459dffae79084a6ef",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "original_ledger": "evidence/runtime-north/commands.jsonl",
+      "original_line": 4,
+      "receipt": {
+        "name": "objective_controls",
+        "started_utc": "2026-10-19T18:56:00.1597719Z",
+        "executable": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+        "arguments": [
+          "--headless",
+          "--path",
+          "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-north-20261019\\game",
+          "--fixed-fps",
+          "60",
+          "--script",
+          "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-evidence-20261019\\retained-v2\\objective_controls.gd"
+        ],
+        "working_directory": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-north-20261019",
+        "timeout_seconds": 600,
+        "stdout": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-evidence-20261019\\runtime-north\\logs\\objective_controls.stdout.log",
+        "stderr": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-evidence-20261019\\runtime-north\\logs\\objective_controls.stderr.log",
+        "finished_utc": "2026-10-19T18:56:02.4906154Z",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout_sha256": "bef04fe361bd5f4d74d4b3ad279cbbe15afbaa533c675bc03bc9eadd117db030",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "original_ledger": "evidence/runtime-north/commands.jsonl",
+      "original_line": 5,
+      "receipt": {
+        "name": "native_comparison_extended",
+        "started_utc": "2026-10-19T18:56:02.5233639Z",
+        "executable": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+        "arguments": [
+          "--headless",
+          "--path",
+          "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-north-20261019\\game",
+          "--fixed-fps",
+          "60",
+          "--script",
+          "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-evidence-20261019\\retained-v2\\native_comparison_extended.gd"
+        ],
+        "working_directory": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-north-20261019",
+        "timeout_seconds": 600,
+        "stdout": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-evidence-20261019\\runtime-north\\logs\\native_comparison_extended.stdout.log",
+        "stderr": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-evidence-20261019\\runtime-north\\logs\\native_comparison_extended.stderr.log",
+        "finished_utc": "2026-10-19T18:57:21.8167726Z",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout_sha256": "315b314250fbcb919f633fab22bfeb1f279035cd8667fcdb3d2749d5700dfc11",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "original_ledger": "evidence/commands.jsonl",
+      "original_line": 62,
+      "receipt": {
+        "name": "exact-diff-stat",
+        "started_utc": "2026-10-19T18:58:01.3020348Z",
+        "executable": "C:\\Program Files\\Git\\cmd\\git.exe",
+        "arguments": [
+          "diff",
+          "--stat",
+          "701ce2c",
+          "48eb0586e273f96dc20b346ed444d00ab0f3ac30"
+        ],
+        "working_directory": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak",
+        "timeout_seconds": 180,
+        "stdout": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-evidence-20261019\\logs\\exact-diff-stat.stdout.log",
+        "stderr": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-evidence-20261019\\logs\\exact-diff-stat.stderr.log",
+        "finished_utc": "2026-10-19T18:58:03.4472124Z",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout_sha256": "19caddb033bd6c418e7f97dcb999e5a53f846a7744dfa49ec8884cb04b7f6757",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "original_ledger": "evidence/commands.jsonl",
+      "original_line": 63,
+      "receipt": {
+        "name": "exact-diff-names",
+        "started_utc": "2026-10-19T18:58:03.5730533Z",
+        "executable": "C:\\Program Files\\Git\\cmd\\git.exe",
+        "arguments": [
+          "diff",
+          "--name-status",
+          "701ce2c",
+          "48eb0586e273f96dc20b346ed444d00ab0f3ac30"
+        ],
+        "working_directory": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak",
+        "timeout_seconds": 180,
+        "stdout": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-evidence-20261019\\logs\\exact-diff-names.stdout.log",
+        "stderr": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-evidence-20261019\\logs\\exact-diff-names.stderr.log",
+        "finished_utc": "2026-10-19T18:58:03.7782929Z",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout_sha256": "35a3fc3473917620424fd91321e8109c1275562aa7968a8feff6ea8bd15b9e82",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "original_ledger": "evidence/commands.jsonl",
+      "original_line": 64,
+      "receipt": {
+        "name": "exact-ai-diff",
+        "started_utc": "2026-10-19T18:58:03.8316413Z",
+        "executable": "C:\\Program Files\\Git\\cmd\\git.exe",
+        "arguments": [
+          "diff",
+          "701ce2c",
+          "48eb0586e273f96dc20b346ed444d00ab0f3ac30",
+          "--",
+          "game/scripts/gameplay/bot_ai.gd",
+          "game/scripts/gameplay/match.gd",
+          "game/scripts/gameplay/actor.gd",
+          "game/scripts/gameplay/arena.gd",
+          "game/scripts/gameplay/weapons.gd",
+          "game/tests/bot_ai_regression_test.gd"
+        ],
+        "working_directory": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak",
+        "timeout_seconds": 180,
+        "stdout": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-evidence-20261019\\logs\\exact-ai-diff.stdout.log",
+        "stderr": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-evidence-20261019\\logs\\exact-ai-diff.stderr.log",
+        "finished_utc": "2026-10-19T18:58:04.0526419Z",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout_sha256": "6155a852ccd2e0854fd31d704251e1b9a7450a247ae849272b784c44757bc53c",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "original_ledger": "evidence/commands.jsonl",
+      "original_line": 65,
+      "receipt": {
+        "name": "candidate-commit-claims",
+        "started_utc": "2026-10-19T18:58:04.1290189Z",
+        "executable": "C:\\Program Files\\Git\\cmd\\git.exe",
+        "arguments": [
+          "show",
+          "--no-patch",
+          "--format=fuller",
+          "48eb0586e273f96dc20b346ed444d00ab0f3ac30"
+        ],
+        "working_directory": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak",
+        "timeout_seconds": 180,
+        "stdout": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-evidence-20261019\\logs\\candidate-commit-claims.stdout.log",
+        "stderr": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-evidence-20261019\\logs\\candidate-commit-claims.stderr.log",
+        "finished_utc": "2026-10-19T18:58:04.3512589Z",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout_sha256": "1ba280eeba9b75af105601646ad33c644f35869c75a1db5b98f63dde3092b201",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "original_ledger": "evidence/commands.jsonl",
+      "original_line": 93,
+      "receipt": {
+        "name": "north-match-check-only",
+        "started_utc": "2026-10-19T19:08:12.1370977Z",
+        "executable": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+        "arguments": [
+          "--headless",
+          "--path",
+          "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-north-20261019\\game",
+          "--check-only",
+          "--script",
+          "res://scripts/gameplay/match.gd"
+        ],
+        "working_directory": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-north-20261019",
+        "timeout_seconds": 180,
+        "stdout": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-evidence-20261019\\logs\\north-match-check-only.stdout.log",
+        "stderr": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-evidence-20261019\\logs\\north-match-check-only.stderr.log",
+        "finished_utc": "2026-10-19T19:08:13.7717557Z",
+        "exit_code": 0,
+        "timed_out": false,
+        "stdout_sha256": "83cf0b082206af2aa236c83064fbcfa76be1e00a4aa3558574b2f65965d9481c",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "original_ledger": "evidence/commands.jsonl",
+      "original_line": 94,
+      "receipt": {
+        "name": "south-match-check-only",
+        "started_utc": "2026-10-19T19:08:15.5809779Z",
+        "executable": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+        "arguments": [
+          "--headless",
+          "--path",
+          "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-south-20261019\\game",
+          "--check-only",
+          "--script",
+          "res://scripts/gameplay/match.gd"
+        ],
+        "working_directory": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-south-20261019",
+        "timeout_seconds": 180,
+        "stdout": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-evidence-20261019\\logs\\south-match-check-only.stdout.log",
+        "stderr": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ai-evidence-20261019\\logs\\south-match-check-only.stderr.log",
+        "finished_utc": "2026-10-19T19:08:16.2638817Z",
+        "exit_code": 1,
+        "timed_out": false,
+        "stdout_sha256": "83cf0b082206af2aa236c83064fbcfa76be1e00a4aa3558574b2f65965d9481c",
+        "stderr_sha256": "85d8944b464d8f9d82a62a31b4378c0de33aec1a7717874957155ca071c9fa69"
+      }
+    }
+  ]
+}

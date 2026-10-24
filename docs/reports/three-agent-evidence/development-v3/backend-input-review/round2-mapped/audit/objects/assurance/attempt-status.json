@@ -1,0 +1,37 @@
+{
+  "attempt-1": {
+    "freeze": "8dc8e3715dcaeb99fe6e3544243ee591d68c337b",
+    "overall_exit": 1,
+    "targeted_passes": 2,
+    "expected_mutant_failures": 2,
+    "current_fixture_controls_completed": 2,
+    "stop_reason": "First historical replay imported CRLF-converted git-archive bytes; expected original LF fixture hash was rejected.",
+    "later_historical_probes_executed": false
+  },
+  "attempt-2": {
+    "freeze": "3e7ce7409322766d07afe504d97f47c5b3614875",
+    "overall_exit": 0,
+    "completion": {
+      "completed": true,
+      "freeze_commit": "3e7ce7409322766d07afe504d97f47c5b3614875",
+      "candidate_targeted_passes": 2,
+      "mutant_direct_bound_failures": 2,
+      "current_fixture_positive": 1,
+      "fixture_mismatch_rejected": 1,
+      "posthoc_pinned_import_matches": 4,
+      "posthoc_is_original_capture": false,
+      "shipping_and_test_source_bytes_unchanged_during_controls": true,
+      "all_created_databases_dropped": true,
+      "server_stop_or_reconfiguration": false,
+      "full_suites_or_seven_workload_benchmarks_executed": false,
+      "sol_synthetic_controls_counted_as_executed": false
+    }
+  },
+  "coverage_counting": "Report the completed second attempt; earlier outcomes remain archived, not additional coverage.",
+  "four_unique_test_databases_dropped": [
+    "sightbreak_trade_assurance_6b263a046f0b_test",
+    "sightbreak_trade_assurance_46d937edf133_test",
+    "sightbreak_trade_assurance_3651e3636140_test",
+    "sightbreak_trade_assurance_6f6b46d2692f_test"
+  ]
+}

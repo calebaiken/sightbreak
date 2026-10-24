@@ -1,0 +1,64 @@
+[
+  {
+    "argv": [
+      "git",
+      "merge-base",
+      "--is-ancestor",
+      "e67f2c86777d98d3cb3ad6bc7e851ef1826af26d",
+      "HEAD"
+    ],
+    "returncode": 0,
+    "log": "git-08.log",
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "git",
+      "merge-base",
+      "--is-ancestor",
+      "89c0e997c9f706d91b02e5ac412853c4d35cd112",
+      "HEAD"
+    ],
+    "returncode": 0,
+    "log": "git-09.log",
+    "stdout": "",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "git",
+      "for-each-ref",
+      "--contains=e67f2c86777d98d3cb3ad6bc7e851ef1826af26d",
+      "--format=%(refname)"
+    ],
+    "returncode": 0,
+    "log": "git-10.log",
+    "stdout": "refs/heads/gemini/tactical-bot-intelligence-v1\nrefs/heads/integration/sightbreak-v3-validation\nrefs/remotes/origin/astra/backend-trade-read-v3\nrefs/remotes/origin/astra/network-input-freshness-v3\nrefs/remotes/origin/astra/prediction-reconciliation-v3\nrefs/remotes/origin/astra/systems-v3-recovery\nrefs/remotes/origin/claude/cs2-fidelity-art-production\nrefs/remotes/origin/claude/design-research-synthesis\nrefs/remotes/origin/claude/independent-audit-visual-v04\nrefs/remotes/origin/claude/native-ui-production-v1\nrefs/remotes/origin/claude/reconcile-v10-on-pr16\nrefs/remotes/origin/claude/wip-gauntlet-T1-sunmetal\nrefs/remotes/origin/claude/wip-gauntlet-T2-lowlight\nrefs/remotes/origin/codex/combat-history-foundation\nrefs/remotes/origin/codex/competitive-network-systems\nrefs/remotes/origin/codex/durable-match-results\nrefs/remotes/origin/codex/market-expected-price\nrefs/remotes/origin/codex/network-lifecycle-v2\nrefs/remotes/origin/codex/network-movement-v2\nrefs/remotes/origin/codex/network-validation-builds\nrefs/remotes/origin/codex/reconnect-recovery\nrefs/remotes/origin/codex/state-privacy-v2\nrefs/remotes/origin/gemini/tactical-bot-intelligence-v1\nrefs/remotes/origin/integration/sightbreak-network-art-preview\nrefs/remotes/origin/integration/sightbreak-reliability-refresh\nrefs/remotes/origin/integration/sightbreak-three-agent-alpha\nrefs/remotes/origin/integration/sightbreak-three-agent-artifacts\nrefs/remotes/origin/main\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "git",
+      "for-each-ref",
+      "--contains=89c0e997c9f706d91b02e5ac412853c4d35cd112",
+      "--format=%(refname)"
+    ],
+    "returncode": 0,
+    "log": "git-11.log",
+    "stdout": "refs/heads/integration/sightbreak-v3-validation\nrefs/remotes/origin/astra/backend-trade-read-v3\nrefs/remotes/origin/astra/network-input-freshness-v3\nrefs/remotes/origin/astra/prediction-reconciliation-v3\nrefs/remotes/origin/astra/systems-v3-recovery\nrefs/remotes/origin/claude/reconcile-v10-on-pr16\nrefs/remotes/origin/codex/market-expected-price\nrefs/remotes/origin/codex/network-validation-builds\nrefs/remotes/origin/integration/sightbreak-network-art-preview\nrefs/remotes/origin/integration/sightbreak-reliability-refresh\nrefs/remotes/origin/integration/sightbreak-three-agent-alpha\nrefs/remotes/origin/integration/sightbreak-three-agent-artifacts\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "git",
+      "config",
+      "--get",
+      "core.autocrlf"
+    ],
+    "returncode": 0,
+    "log": "git-12.log",
+    "stdout": "true\n",
+    "stderr": ""
+  }
+]

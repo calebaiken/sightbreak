@@ -1,0 +1,88 @@
+{
+  "schema": 1,
+  "published_utc": "2026-10-24T09:29:14.7853579Z",
+  "operation": "Filesystem copy and hash/ledger preservation only; no frozen program reexecution.",
+  "copied_files": 272,
+  "copied_bytes": 2859287,
+  "all_copy_hashes_and_lengths_match_sources": true,
+  "all_external_source_files_preserved_before_and_after_copy": true,
+  "external_groups": [
+    {
+      "root_id": "native",
+      "external_root": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-recovery-contract-controls-20261024T0909404264087Z",
+      "inventory_scope": "All files in completed external bundle.",
+      "external_file_count": 36,
+      "copied_file_count": 36,
+      "copied_bytes": 408982,
+      "omitted_file_count": 0,
+      "omitted_bytes": 0
+    },
+    {
+      "root_id": "blocked",
+      "external_root": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-recovery-contract-controls-20261024T0857266917001Z",
+      "inventory_scope": "All files in completed external bundle.",
+      "external_file_count": 22,
+      "copied_file_count": 16,
+      "copied_bytes": 48589,
+      "omitted_file_count": 6,
+      "omitted_bytes": 110269
+    },
+    {
+      "root_id": "verdict",
+      "external_root": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-recovery-neutral-verdict-20261024T084528998636Z",
+      "inventory_scope": "All files in completed external bundle.",
+      "external_file_count": 16,
+      "copied_file_count": 16,
+      "copied_bytes": 459118,
+      "omitted_file_count": 0,
+      "omitted_bytes": 0
+    },
+    {
+      "root_id": "source_review",
+      "external_root": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-recovery-review-20261022T205225Z",
+      "inventory_scope": "All files in completed external bundle.",
+      "external_file_count": 491,
+      "copied_file_count": 202,
+      "copied_bytes": 1933368,
+      "omitted_file_count": 289,
+      "omitted_bytes": 3167747
+    },
+    {
+      "root_id": "restoration",
+      "external_root": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\engine-reacquire-20261024\\attempt",
+      "inventory_scope": "Two explicitly selected completed receipt/checksum files only; not entire restoration directory.",
+      "external_file_count": 2,
+      "copied_file_count": 2,
+      "copied_bytes": 9230,
+      "omitted_file_count": 0,
+      "omitted_bytes": 0
+    }
+  ],
+  "pinned_hashes": {
+    "verdict_freeze": "a94e9c716e8892fbc445fce5f4e4e3442b354ad24727081f275f31f82732aadc",
+    "verdict_report": "b2243cfd62ab8fe2b79ad39d4f3a9defc44b140c6ffe2648777346f681a7dc8b",
+    "native_final_ledger": "7666f0f5c87425e3664e60270d33e68891cd66fa6e8e00b28da62a656567a9c4",
+    "blocked_final_ledger": "698aa56f757a68deeba0092bbff810b4e75bf1ec38bbe127d7324c00a76367b4"
+  },
+  "completed_ledgers_checked": {
+    "native": 35,
+    "blocked": 21,
+    "frozen_verdict_artifacts": 14,
+    "source_review": 490,
+    "frozen_neutral_input_files": 179,
+    "original_raw_publication_objects": 237
+  },
+  "scoped_attributes": {
+    "paths_checked": 281,
+    "attribute_records_checked": 1124,
+    "text": "unset",
+    "filter": "unset",
+    "ident": "unset",
+    "working-tree-encoding": "unset",
+    "ignored_paths": 0
+  },
+  "size_cap_bytes": 3145728,
+  "size_receipt": "Publisher computes exact final bytes and fails closed before final ledger/checksum creation if cap would be exceeded; returned final byte total is the final receipt.",
+  "no_staging_commit_push_github_or_runtime_work": true,
+  "publication_metadata_correction": "publication-history/initial-size-check-failure.json; initial COPY_VERIFICATION.json retained verbatim. Aggregate counters corrected only; all copied/frozen evidence remains unchanged."
+}

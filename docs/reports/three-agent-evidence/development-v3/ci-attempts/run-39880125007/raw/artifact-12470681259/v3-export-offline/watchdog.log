@@ -1,0 +1,21 @@
+01-menu
+02-offline-spawn
+03-requisition
+04-move-aim
+05-after-fire
+06-after-reload
+Traceback (most recent call last):
+  File "/home/runner/work/sightbreak/sightbreak/scripts/verify_offline_export.py", line 225, in <module>
+    raise SystemExit(entry(main, __file__))
+                     ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/sightbreak/sightbreak/scripts/export_flow.py", line 121, in entry
+    main(supervised=True)
+  File "/home/runner/work/sightbreak/sightbreak/scripts/verify_offline_export.py", line 180, in main
+    reloaded_hud = read_hud('06-after-reload')
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/sightbreak/sightbreak/scripts/verify_offline_export.py", line 119, in read_hud
+    return parse_hud_text(status, ammo_text)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/sightbreak/sightbreak/scripts/offline_hud.py", line 10, in parse_hud_text
+    raise ValueError('Rendered positive-health/ammunition check failed: ' + repr((status, ammunition)))
+ValueError: Rendered positive-health/ammunition check failed: ('800 - FUNDS\nELIMINATED - SPECTATING\n', 'RELOADING 0.1s\nFRAG x1 SMOKE x1\n')

@@ -1,0 +1,357 @@
+{
+  "repository": "calebaiken/sightbreak",
+  "run_id": 39880125007,
+  "expected_source": "2a026e61cabee3c66334066d45e92eb3ec6c2641",
+  "started_utc": "2026-10-23T01:17:58.258763+00:00",
+  "collector_sha256": "58fca8d163a76b4ad192eb47f9658e9710ce388865c797d6870a499b306c6437",
+  "collection_complete": true,
+  "validation_accepted": false,
+  "scope": "Read-only CI evidence retention; collection is not native or release acceptance.",
+  "run_conclusion": "failure",
+  "jobs": [
+    {
+      "id": 120175223273,
+      "run_id": 39880125007,
+      "workflow_name": "V3 frozen development validation",
+      "head_branch": "integration/sightbreak-v3-validation",
+      "run_url": "https://api.github.com/repos/calebaiken/sightbreak/actions/runs/39880125007",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOVGugjc8AAAAb-wBh6Q",
+      "head_sha": "2a026e61cabee3c66334066d45e92eb3ec6c2641",
+      "url": "https://api.github.com/repos/calebaiken/sightbreak/actions/jobs/120175223273",
+      "html_url": "https://github.com/calebaiken/sightbreak/actions/runs/39880125007/job/120175223273",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-10-23T00:46:39Z",
+      "started_at": "2026-10-23T00:46:42Z",
+      "completed_at": "2026-10-23T00:53:59Z",
+      "name": "native-development-packages",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-23T00:46:43Z",
+          "completed_at": "2026-10-23T00:46:43Z"
+        },
+        {
+          "name": "Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-10-23T00:46:43Z",
+          "completed_at": "2026-10-23T00:46:55Z"
+        },
+        {
+          "name": "Prepare exact-source build toolchain",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-10-23T00:46:55Z",
+          "completed_at": "2026-10-23T00:47:39Z"
+        },
+        {
+          "name": "Export frozen commit (development only)",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-10-23T00:47:39Z",
+          "completed_at": "2026-10-23T00:48:15Z"
+        },
+        {
+          "name": "Inspect and package actual exports",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-10-23T00:48:15Z",
+          "completed_at": "2026-10-23T00:48:40Z"
+        },
+        {
+          "name": "Drive actual exported network client",
+          "status": "completed",
+          "conclusion": "failure",
+          "number": 6,
+          "started_at": "2026-10-23T00:48:40Z",
+          "completed_at": "2026-10-23T00:52:40Z"
+        },
+        {
+          "name": "Drive actual exported living-player offline client",
+          "status": "completed",
+          "conclusion": "failure",
+          "number": 7,
+          "started_at": "2026-10-23T00:52:40Z",
+          "completed_at": "2026-10-23T00:53:29Z"
+        },
+        {
+          "name": "Retain development artifacts and all attempted-flow evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-10-23T00:53:29Z",
+          "completed_at": "2026-10-23T00:53:57Z"
+        },
+        {
+          "name": "Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 16,
+          "started_at": "2026-10-23T00:53:57Z",
+          "completed_at": "2026-10-23T00:53:57Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 17,
+          "started_at": "2026-10-23T00:53:57Z",
+          "completed_at": "2026-10-23T00:53:57Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/calebaiken/sightbreak/check-runs/120175223273",
+      "labels": [
+        "ubuntu-24.04"
+      ],
+      "runner_id": 1000000155,
+      "runner_name": "GitHub Actions 1000000155",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    {
+      "id": 120175223634,
+      "run_id": 39880125007,
+      "workflow_name": "V3 frozen development validation",
+      "head_branch": "integration/sightbreak-v3-validation",
+      "run_url": "https://api.github.com/repos/calebaiken/sightbreak/actions/runs/39880125007",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOVGugjc8AAAAb-wBjUg",
+      "head_sha": "2a026e61cabee3c66334066d45e92eb3ec6c2641",
+      "url": "https://api.github.com/repos/calebaiken/sightbreak/actions/jobs/120175223634",
+      "html_url": "https://github.com/calebaiken/sightbreak/actions/runs/39880125007/job/120175223634",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-10-23T00:46:39Z",
+      "started_at": "2026-10-23T00:46:42Z",
+      "completed_at": "2026-10-23T01:16:12Z",
+      "name": "full-matrix-and-network",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-23T00:46:43Z",
+          "completed_at": "2026-10-23T00:46:43Z"
+        },
+        {
+          "name": "Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-10-23T00:46:43Z",
+          "completed_at": "2026-10-23T00:46:55Z"
+        },
+        {
+          "name": "Prepare pinned native engine and isolated backend",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-10-23T00:46:55Z",
+          "completed_at": "2026-10-23T00:47:28Z"
+        },
+        {
+          "name": "Full maintained matrix; retain every failure",
+          "status": "completed",
+          "conclusion": "failure",
+          "number": 4,
+          "started_at": "2026-10-23T00:47:28Z",
+          "completed_at": "2026-10-23T01:10:41Z"
+        },
+        {
+          "name": "Separate twelve-condition ten-client campaign",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-10-23T01:10:41Z",
+          "completed_at": "2026-10-23T01:16:03Z"
+        },
+        {
+          "name": "Retain raw validation evidence even on failure",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-10-23T01:16:03Z",
+          "completed_at": "2026-10-23T01:16:11Z"
+        },
+        {
+          "name": "Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12,
+          "started_at": "2026-10-23T01:16:11Z",
+          "completed_at": "2026-10-23T01:16:11Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-10-23T01:16:11Z",
+          "completed_at": "2026-10-23T01:16:11Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/calebaiken/sightbreak/check-runs/120175223634",
+      "labels": [
+        "ubuntu-24.04"
+      ],
+      "runner_id": 1000000157,
+      "runner_name": "GitHub Actions 1000000157",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    {
+      "id": 120175223672,
+      "run_id": 39880125007,
+      "workflow_name": "V3 frozen development validation",
+      "head_branch": "integration/sightbreak-v3-validation",
+      "run_url": "https://api.github.com/repos/calebaiken/sightbreak/actions/runs/39880125007",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOVGugjc8AAAAb-wBjeA",
+      "head_sha": "2a026e61cabee3c66334066d45e92eb3ec6c2641",
+      "url": "https://api.github.com/repos/calebaiken/sightbreak/actions/jobs/120175223672",
+      "html_url": "https://github.com/calebaiken/sightbreak/actions/runs/39880125007/job/120175223672",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-10-23T00:46:39Z",
+      "started_at": "2026-10-23T00:46:42Z",
+      "completed_at": "2026-10-23T00:51:27Z",
+      "name": "adversarial-audio-controls",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-23T00:46:43Z",
+          "completed_at": "2026-10-23T00:46:43Z"
+        },
+        {
+          "name": "Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-10-23T00:46:43Z",
+          "completed_at": "2026-10-23T00:46:55Z"
+        },
+        {
+          "name": "Declare isolated control paths at runtime",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-10-23T00:46:55Z",
+          "completed_at": "2026-10-23T00:46:55Z"
+        },
+        {
+          "name": "Prepare a separate exact-commit mutation checkout",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-10-23T00:46:55Z",
+          "completed_at": "2026-10-23T00:47:20Z"
+        },
+        {
+          "name": "Import and record the untouched baseline first",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-10-23T00:47:20Z",
+          "completed_at": "2026-10-23T00:47:28Z"
+        },
+        {
+          "name": "Require the broad baseline then catch A5 A6 A7 without changing thresholds",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-10-23T00:47:28Z",
+          "completed_at": "2026-10-23T00:51:23Z"
+        },
+        {
+          "name": "Audit source restoration without discarding any evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-10-23T00:51:23Z",
+          "completed_at": "2026-10-23T00:51:23Z"
+        },
+        {
+          "name": "Retain baseline failures mutant raw logs and audio captures",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-10-23T00:51:23Z",
+          "completed_at": "2026-10-23T00:51:24Z"
+        },
+        {
+          "name": "Post Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 16,
+          "started_at": "2026-10-23T00:51:24Z",
+          "completed_at": "2026-10-23T00:51:25Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 17,
+          "started_at": "2026-10-23T00:51:25Z",
+          "completed_at": "2026-10-23T00:51:25Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/calebaiken/sightbreak/check-runs/120175223672",
+      "labels": [
+        "ubuntu-24.04"
+      ],
+      "runner_id": 1000000156,
+      "runner_name": "GitHub Actions 1000000156",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    }
+  ],
+  "artifacts": [
+    {
+      "id": 12470965068,
+      "name": "sightbreak-v3-audio-controls-2a026e61cabee3c66334066d45e92eb3ec6c2641",
+      "bytes": 215325,
+      "sha256": "b0d7719a389bbbb270659563ee256ee441c583f74d9b5af40d852314baa12917",
+      "published_digest": "sha256:b0d7719a389bbbb270659563ee256ee441c583f74d9b5af40d852314baa12917",
+      "transport_digest_verified": true,
+      "members": 90,
+      "selected_receipts": 2,
+      "inspection": "selected JSON only; nested development ZIP execution/validation is separate"
+    },
+    {
+      "id": 12470739875,
+      "name": "sightbreak-v3-validation-2a026e61cabee3c66334066d45e92eb3ec6c2641",
+      "bytes": 88023940,
+      "sha256": "06497a564fd04ed13c10a0c92a323b4f0c1ed223017298f924ee751e5d16488a",
+      "published_digest": "sha256:06497a564fd04ed13c10a0c92a323b4f0c1ed223017298f924ee751e5d16488a",
+      "transport_digest_verified": true,
+      "members": 1998,
+      "selected_receipts": 20,
+      "inspection": "selected JSON only; nested development ZIP execution/validation is separate"
+    },
+    {
+      "id": 12470681259,
+      "name": "sightbreak-v3-development-2a026e61cabee3c66334066d45e92eb3ec6c2641",
+      "bytes": 522826604,
+      "sha256": "531a83b8407fdea9e26579a3df6fdefd0ad1e77dd461aee549073082a03ebe00",
+      "published_digest": "sha256:531a83b8407fdea9e26579a3df6fdefd0ad1e77dd461aee549073082a03ebe00",
+      "transport_digest_verified": true,
+      "members": 592,
+      "selected_receipts": 5,
+      "inspection": "selected JSON only; nested development ZIP execution/validation is separate"
+    }
+  ],
+  "finished_utc": "2026-10-23T01:20:28.403134+00:00"
+}

@@ -1,0 +1,102 @@
+{
+  "attestations": [
+    {
+      "check_count": 33,
+      "engine": {
+        "build": "official",
+        "hash": "ed1daf0bf001b61586d9930840f2f1394092c079",
+        "hex": 263938,
+        "major": 4,
+        "minor": 7,
+        "patch": 2,
+        "status": "stable",
+        "string": "4.7.2-stable (official)",
+        "timestamp": 0
+      },
+      "exact_json_to_engine_log": true,
+      "name": "native-A-ready.json",
+      "pid": 12368
+    },
+    {
+      "check_count": 36,
+      "engine": {
+        "build": "official",
+        "hash": "ed1daf0bf001b61586d9930840f2f1394092c079",
+        "hex": 263938,
+        "major": 4,
+        "minor": 7,
+        "patch": 2,
+        "status": "stable",
+        "string": "4.7.2-stable (official)",
+        "timestamp": 0
+      },
+      "exact_json_to_engine_log": true,
+      "name": "native-A.json",
+      "pid": 12368
+    },
+    {
+      "check_count": 6,
+      "engine": {
+        "build": "official",
+        "hash": "ed1daf0bf001b61586d9930840f2f1394092c079",
+        "hex": 263938,
+        "major": 4,
+        "minor": 7,
+        "patch": 2,
+        "status": "stable",
+        "string": "4.7.2-stable (official)",
+        "timestamp": 0
+      },
+      "exact_json_to_engine_log": true,
+      "name": "native-B-blocked.json",
+      "pid": 16660
+    },
+    {
+      "check_count": 13,
+      "engine": {
+        "build": "official",
+        "hash": "ed1daf0bf001b61586d9930840f2f1394092c079",
+        "hex": 263938,
+        "major": 4,
+        "minor": 7,
+        "patch": 2,
+        "status": "stable",
+        "string": "4.7.2-stable (official)",
+        "timestamp": 0
+      },
+      "exact_json_to_engine_log": true,
+      "name": "native-B.json",
+      "pid": 16660
+    }
+  ],
+  "claims_verified": true,
+  "commit": "7b6f379a3f8c809d0985a64e883cbadfdd78d135",
+  "complete": true,
+  "failures": [],
+  "finished_utc": "2026-10-24T09:11:10.240195+00:00",
+  "limitations": [
+    "No full UI/_send_transaction/client/backend test; no forged backend-response claim or authority contract.",
+    "Invalid-empty stage only; oversize/unwritable early returns are source review, not independently executed.",
+    "No HTTP or backend; do not report measured network count 0.",
+    "Positive fixtures are synthetic legitimate shapes, not live/backend receipts.",
+    "Published positive-control receipt left intact; no private release or clear call.",
+    "No broad recovery-safety or performance conclusion."
+  ],
+  "native_exit_codes": {
+    "A": 0,
+    "B": 0
+  },
+  "native_process_count": 2,
+  "native_processes_alive_after_run": false,
+  "owner_status_unchanged": true,
+  "published_positive_receipt": {
+    "path": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-recovery-contract-controls-20261024T0909404264087Z\\state\\pending_transaction.json",
+    "sha256": "edad5580569295be12e51a65f9395457ef150b5b42710ee45b0f1e29c3309a01",
+    "size": 278
+  },
+  "scope": "S1 native predicates; S2 complete journal cross-process control",
+  "source_inference_only": [
+    "EconomyUI 559-563 and 584-586 permit clear after accepted success body, conditional on clear succeeding; not invoked.",
+    "EconomyUI 543-550 returns before _send_transaction on stage failure; network count is not independently measured."
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "row": {
+    "mode": "network",
+    "fault": "source-mutated-at-native-init",
+    "control_passed": true,
+    "error": {
+      "type": "RuntimeError",
+      "message": "Frozen source changed during verification"
+    },
+    "controller_passed": false,
+    "synthetic_control_not_native_evidence": true
+  },
+  "trace": [
+    {
+      "t": 0.0,
+      "event": "launch",
+      "name": "xvfb",
+      "command": [
+        "synthetic-xvfb",
+        ":99998",
+        "-screen",
+        "0",
+        "1280x720x24",
+        "-nolisten",
+        "tcp"
+      ]
+    },
+    {
+      "t": 0.0,
+      "event": "launch",
+      "name": "server",
+      "command": [
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ci-repair-critic-20261024T085242Z\\controls\\network-source-mutated-at-native-init\\scripts\\godot.sh",
+        "--headless",
+        "--script",
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ci-repair-critic-20261024T085242Z\\controls\\network-source-mutated-at-native-init\\scripts\\fixtures\\export_integration.gd",
+        "--",
+        "--output=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ci-repair-critic-20261024T085242Z\\controls\\network-source-mutated-at-native-init\\evidence"
+      ]
+    },
+    {
+      "t": 0.0,
+      "event": "native-init-atoms-and-sync",
+      "display": ":99998"
+    },
+    {
+      "t": 0.0,
+      "event": "close-display"
+    },
+    {
+      "t": 0.0,
+      "event": "terminate",
+      "name": "server"
+    },
+    {
+      "t": 0.0,
+      "event": "terminate",
+      "name": "xvfb"
+    },
+    {
+      "t": 0.0,
+      "event": "wait",
+      "name": "server",
+      "timeout": 5
+    },
+    {
+      "t": 0.0,
+      "event": "wait",
+      "name": "xvfb",
+      "timeout": 5
+    }
+  ]
+}

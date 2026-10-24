@@ -1,0 +1,404 @@
+{
+  "synthetic_only": true,
+  "controllers": [
+    {
+      "mode": "network",
+      "fault": "none",
+      "control_passed": true,
+      "error": null,
+      "controller_passed": true,
+      "synthetic_control_not_native_evidence": true
+    },
+    {
+      "mode": "network",
+      "fault": "source-mutated-at-native-init",
+      "control_passed": true,
+      "error": {
+        "type": "RuntimeError",
+        "message": "Frozen source changed during verification"
+      },
+      "controller_passed": false,
+      "synthetic_control_not_native_evidence": true
+    },
+    {
+      "mode": "network",
+      "fault": "source-mutated-before-final-audit",
+      "control_passed": true,
+      "error": {
+        "type": "RuntimeError",
+        "message": "Frozen source changed during verification"
+      },
+      "controller_passed": false,
+      "synthetic_control_not_native_evidence": true
+    },
+    {
+      "mode": "network",
+      "fault": "unadvertised-close",
+      "control_passed": true,
+      "error": {
+        "type": "RuntimeError",
+        "message": "Exported window does not advertise the prepared WM_DELETE_WINDOW"
+      },
+      "controller_passed": false,
+      "synthetic_control_not_native_evidence": true
+    },
+    {
+      "mode": "network",
+      "fault": "native-close-hang",
+      "control_passed": true,
+      "error": {
+        "type": "TimeoutExpired",
+        "message": "Command 'synthetic client close' timed out after 289.8 seconds"
+      },
+      "controller_passed": false,
+      "synthetic_control_not_native_evidence": true
+    },
+    {
+      "mode": "network",
+      "fault": "native-close-exit7",
+      "control_passed": true,
+      "error": {
+        "type": "RuntimeError",
+        "message": "Native authority or clean-exit check failed"
+      },
+      "controller_passed": false,
+      "synthetic_control_not_native_evidence": true
+    },
+    {
+      "mode": "network",
+      "fault": "native-log-leak",
+      "control_passed": true,
+      "error": {
+        "type": "RuntimeError",
+        "message": "client: error or resource leak; inspect log"
+      },
+      "controller_passed": false,
+      "synthetic_control_not_native_evidence": true
+    },
+    {
+      "mode": "network",
+      "fault": "early-zero-exit-before-close",
+      "control_passed": true,
+      "error": {
+        "type": "RuntimeError",
+        "message": "Client exited before completion-driven native close"
+      },
+      "controller_passed": false,
+      "synthetic_control_not_native_evidence": true
+    },
+    {
+      "mode": "network",
+      "fault": "server-exit7",
+      "control_passed": true,
+      "error": {
+        "type": "RuntimeError",
+        "message": "Native authority or clean-exit check failed"
+      },
+      "controller_passed": false,
+      "synthetic_control_not_native_evidence": true
+    },
+    {
+      "mode": "network",
+      "fault": "authority-false",
+      "control_passed": true,
+      "error": {
+        "type": "RuntimeError",
+        "message": "Native authority or clean-exit check failed"
+      },
+      "controller_passed": false,
+      "synthetic_control_not_native_evidence": true
+    },
+    {
+      "mode": "offline",
+      "fault": "none",
+      "control_passed": true,
+      "error": null,
+      "controller_passed": true,
+      "synthetic_control_not_native_evidence": true
+    },
+    {
+      "mode": "offline",
+      "fault": "source-mutated-at-native-init",
+      "control_passed": true,
+      "error": {
+        "type": "RuntimeError",
+        "message": "Frozen source changed during verification"
+      },
+      "controller_passed": false,
+      "synthetic_control_not_native_evidence": true
+    },
+    {
+      "mode": "offline",
+      "fault": "source-mutated-before-final-audit",
+      "control_passed": true,
+      "error": {
+        "type": "RuntimeError",
+        "message": "Frozen source changed during verification"
+      },
+      "controller_passed": false,
+      "synthetic_control_not_native_evidence": true
+    },
+    {
+      "mode": "offline",
+      "fault": "unadvertised-close",
+      "control_passed": true,
+      "error": {
+        "type": "RuntimeError",
+        "message": "Exported window does not advertise the prepared WM_DELETE_WINDOW"
+      },
+      "controller_passed": false,
+      "synthetic_control_not_native_evidence": true
+    },
+    {
+      "mode": "offline",
+      "fault": "native-close-hang",
+      "control_passed": true,
+      "error": {
+        "type": "TimeoutExpired",
+        "message": "Command 'synthetic client close' timed out after 254.9 seconds"
+      },
+      "controller_passed": false,
+      "synthetic_control_not_native_evidence": true
+    },
+    {
+      "mode": "offline",
+      "fault": "native-close-exit7",
+      "control_passed": true,
+      "error": {
+        "type": "RuntimeError",
+        "message": "Export failed clean termination or native log gate"
+      },
+      "controller_passed": false,
+      "synthetic_control_not_native_evidence": true
+    },
+    {
+      "mode": "offline",
+      "fault": "native-log-leak",
+      "control_passed": true,
+      "error": {
+        "type": "RuntimeError",
+        "message": "Export failed clean termination or native log gate"
+      },
+      "controller_passed": false,
+      "synthetic_control_not_native_evidence": true
+    },
+    {
+      "mode": "offline",
+      "fault": "early-zero-exit-before-close",
+      "control_passed": true,
+      "error": {
+        "type": "RuntimeError",
+        "message": "Client exited before completion-driven native close"
+      },
+      "controller_passed": false,
+      "synthetic_control_not_native_evidence": true
+    },
+    {
+      "mode": "offline",
+      "fault": "pause-not-consumed",
+      "control_passed": true,
+      "error": {
+        "type": "ValueError",
+        "message": "Rendered offline pause confirmation missing: 'unpaused live HUD'"
+      },
+      "controller_passed": false,
+      "synthetic_control_not_native_evidence": true
+    },
+    {
+      "mode": "offline",
+      "fault": "network-pause-label",
+      "control_passed": true,
+      "error": {
+        "type": "ValueError",
+        "message": "Rendered offline pause confirmation missing: 'FIELD MENU\\nThe match continues while this menu is open.\\n'"
+      },
+      "controller_passed": false,
+      "synthetic_control_not_native_evidence": true
+    },
+    {
+      "mode": "offline",
+      "fault": "resume-not-consumed",
+      "control_passed": true,
+      "error": {
+        "type": "RuntimeError",
+        "message": "Native offline reload did not conserve rendered ammunition"
+      },
+      "controller_passed": false,
+      "synthetic_control_not_native_evidence": true
+    },
+    {
+      "mode": "offline",
+      "fault": "reload-input-ignored",
+      "control_passed": true,
+      "error": {
+        "type": "RuntimeError",
+        "message": "Native offline reload did not conserve rendered ammunition"
+      },
+      "controller_passed": false,
+      "synthetic_control_not_native_evidence": true
+    },
+    {
+      "mode": "offline",
+      "fault": "eliminated-after-fire",
+      "control_passed": true,
+      "error": {
+        "type": "ValueError",
+        "message": "Rendered positive-health/ammunition check failed: ('ELIMINATED - SPECTATING\\n', 'SIDEARM 13/60\\n')"
+      },
+      "controller_passed": false,
+      "synthetic_control_not_native_evidence": true
+    },
+    {
+      "mode": "offline",
+      "fault": "eliminated-after-reload",
+      "control_passed": true,
+      "error": {
+        "type": "ValueError",
+        "message": "Rendered positive-health/ammunition check failed: ('ELIMINATED - SPECTATING\\n', 'SIDEARM 15/58\\n')"
+      },
+      "controller_passed": false,
+      "synthetic_control_not_native_evidence": true
+    },
+    {
+      "mode": "offline",
+      "fault": "zero-health-after-reload",
+      "control_passed": true,
+      "error": {
+        "type": "ValueError",
+        "message": "Rendered positive-health/ammunition check failed: ('000 HEALTH\\n', 'SIDEARM 15/58\\n')"
+      },
+      "controller_passed": false,
+      "synthetic_control_not_native_evidence": true
+    },
+    {
+      "mode": "offline",
+      "fault": "ammo-not-conserved",
+      "control_passed": true,
+      "error": {
+        "type": "RuntimeError",
+        "message": "Native offline reload did not conserve rendered ammunition"
+      },
+      "controller_passed": false,
+      "synthetic_control_not_native_evidence": true
+    }
+  ],
+  "protocols": [
+    {
+      "control": "wm-protocols-empty",
+      "passed": true,
+      "atoms": [],
+      "error": null,
+      "frees": 1
+    },
+    {
+      "control": "wm-protocols-failed-with-allocation",
+      "passed": true,
+      "atoms": null,
+      "error": "RuntimeError",
+      "frees": 1
+    },
+    {
+      "control": "wm-protocols-valid",
+      "passed": true,
+      "atoms": [
+        8,
+        9
+      ],
+      "error": null,
+      "frees": 1
+    },
+    {
+      "control": "LP64-client-message-layout-model",
+      "passed": true,
+      "sizeof": 96,
+      "offsets": {
+        "type": 0,
+        "serial": 8,
+        "send_event": 16,
+        "display": 24,
+        "window": 32,
+        "message_type": 40,
+        "format": 48,
+        "data": 56
+      },
+      "limitation": "Model only; Windows native c_long is 32-bit"
+    }
+  ],
+  "original_failure_controls": {
+    "hud_controls": [
+      {
+        "phase": "05-after-fire",
+        "texts": [
+          "800 - FUNDS\n100 - HEALTH\n",
+          "ee 14/60\nFRAG x1 SMOKE x1\n"
+        ],
+        "parsed": {
+          "health": 100,
+          "ammo": 14,
+          "reserve": 60,
+          "status_ocr": "800 - FUNDS\n100 - HEALTH\n",
+          "ammo_ocr": "ee 14/60\nFRAG x1 SMOKE x1\n"
+        },
+        "error": null,
+        "control_passed": true,
+        "files": [
+          {
+            "path": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v3-evidence\\ci-39880125007\\flow-screens-20261024\\05-after-fire-status-ocr.stdout.txt",
+            "sha256": "580d24b609cf3cf44147a9dcb5c5461fe39f518e3acce8710a0129a693eae070"
+          },
+          {
+            "path": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v3-evidence\\ci-39880125007\\flow-screens-20261024\\05-after-fire-ammo-ocr.stdout.txt",
+            "sha256": "e6f8c471f6aeb3385c221213a876258c07eb2087c5f9dd8e4d3c9c4a0f6908fe"
+          }
+        ]
+      },
+      {
+        "phase": "06-after-reload",
+        "texts": [
+          "800 - FUNDS\nELIMINATED - SPECTATING\n",
+          "RELOADING 0.1s\nFRAG x1 SMOKE x1\n"
+        ],
+        "parsed": null,
+        "error": "Rendered positive-health/ammunition check failed: ('800 - FUNDS\\nELIMINATED - SPECTATING\\n', 'RELOADING 0.1s\\nFRAG x1 SMOKE x1\\n')",
+        "control_passed": true,
+        "files": [
+          {
+            "path": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v3-evidence\\ci-39880125007\\flow-screens-20261024\\06-after-reload-status-ocr.stdout.txt",
+            "sha256": "f6df3e3be13140f6cddffe09b14b950ba06db0ba2cb8c42b8bc14bb12b075da5"
+          },
+          {
+            "path": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v3-evidence\\ci-39880125007\\flow-screens-20261024\\06-after-reload-ammo-ocr.stdout.txt",
+            "sha256": "8ba5a7068580ae17c68f608af1bbc235f2bde84dd17f190a366dd9cacce10441"
+          }
+        ]
+      }
+    ],
+    "selected_archive_members": {
+      "v3-export-network/authority.json": {
+        "bytes": 374,
+        "sha256": "222dadde1475aed7c2276d7c8919ced1fca533f7744d5646468a955a8877cded",
+        "text": "{\n\t\"joined_id\": 1,\n\t\"largest_ack\": 95,\n\t\"lowest_ammo\": 24,\n\t\"passed\": true,\n\t\"prediction_default\": false,\n\t\"protocol\": 6,\n\t\"reload_command_seen\": true,\n\t\"reload_completed\": true,\n\t\"reload_seen\": true,\n\t\"reload_trigger\": \"native client input\",\n\t\"scope\": \"source Godot authority fixture; client is actual exported Linux ELF driven through native UI; no rewards\",\n\t\"shots\": 6\n}"
+      },
+      "v3-export-network/watchdog.log": {
+        "bytes": 804,
+        "sha256": "e26ad94cef6bc80ecb9127215c618a1a7bfcc0c074728c41bf11ac07c899cbe5",
+        "text": "HARNESS_ERROR Command '['/home/runner/work/sightbreak/sightbreak/.venv/bin/python', '-B', '/home/runner/work/sightbreak/sightbreak/scripts/verify_integration_export.py', '--_export-flow-worker', '--display', ':106', '--visit-armory', '--reload-mode', 'keyboard', '--timeout', '240', '--output', 'builds/v3-export-network']' timed out after 239.99949081899996 seconds\n\nHARNESS_ERROR Command '['/home/runner/work/sightbreak/sightbreak/.venv/bin/python', '-B', '/home/runner/work/sightbreak/sightbreak/scripts/verify_integration_export.py', '--_export-flow-worker', '--display', ':106', '--visit-armory', '--reload-mode', 'keyboard', '--timeout', '240', '--output', 'builds/v3-export-network']' timed out after 239.99949081899996 seconds\n\nHARNESS_ERROR hard wall-clock watchdog exceeded (including cleanup)\n"
+      },
+      "v3-export-network/watchdog.process.json": {
+        "bytes": 448,
+        "sha256": "cc82b11ab451f3396f98912a5960a76a67d282b1301e1cf37a3386f1649c11c2",
+        "text": "{\n  \"complete\": true,\n  \"exit\": 1,\n  \"errors\": [\n    \"Command '['/home/runner/work/sightbreak/sightbreak/.venv/bin/python', '-B', '/home/runner/work/sightbreak/sightbreak/scripts/verify_integration_export.py', '--_export-flow-worker', '--display', ':106', '--visit-armory', '--reload-mode', 'keyboard', '--timeout', '240', '--output', 'builds/v3-export-network']' timed out after 239.99949081899996 seconds\"\n  ],\n  \"posix_cleanup_verified\": true\n}\n"
+      },
+      "v3-export-offline/watchdog.log": {
+        "bytes": 1164,
+        "sha256": "f0913678279373959f18528f56d1adc38cc0bc11bc0d556c1b45bec520973a75",
+        "text": "01-menu\n02-offline-spawn\n03-requisition\n04-move-aim\n05-after-fire\n06-after-reload\nTraceback (most recent call last):\n  File \"/home/runner/work/sightbreak/sightbreak/scripts/verify_offline_export.py\", line 225, in <module>\n    raise SystemExit(entry(main, __file__))\n                     ^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/work/sightbreak/sightbreak/scripts/export_flow.py\", line 121, in entry\n    main(supervised=True)\n  File \"/home/runner/work/sightbreak/sightbreak/scripts/verify_offline_export.py\", line 180, in main\n    reloaded_hud = read_hud('06-after-reload')\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/work/sightbreak/sightbreak/scripts/verify_offline_export.py\", line 119, in read_hud\n    return parse_hud_text(status, ammo_text)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/work/sightbreak/sightbreak/scripts/offline_hud.py\", line 10, in parse_hud_text\n    raise ValueError('Rendered positive-health/ammunition check failed: ' + repr((status, ammunition)))\nValueError: Rendered positive-health/ammunition check failed: ('800 - FUNDS\\nELIMINATED - SPECTATING\\n', 'RELOADING 0.1s\\nFRAG x1 SMOKE x1\\n')\n"
+      },
+      "v3-export-network/08-settled.png": {
+        "bytes": 624694,
+        "crc32": 1557821041,
+        "image_not_extracted": true
+      }
+    }
+  }
+}

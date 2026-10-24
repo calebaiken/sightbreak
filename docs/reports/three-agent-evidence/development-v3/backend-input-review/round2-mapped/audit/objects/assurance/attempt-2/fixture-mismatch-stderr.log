@@ -1,0 +1,11 @@
+C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-backend-trade-env\venv312\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+  from starlette.testclient import TestClient as TestClient  # noqa
+Traceback (most recent call last):
+  File "C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-backend-trade-read-v3\scripts\check_trade_read_assurance.py", line 247, in <module>
+    fixture_probe(args.probe_fixture.resolve(), args.fixture_root.resolve(), args.expected_fixture_sha)
+  File "C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-backend-trade-read-v3\scripts\check_trade_read_assurance.py", line 87, in fixture_probe
+    receipt['checked_identity'] = benchmark.fixture_identity(fixture, expected)
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-backend-trade-read-v3\scripts\benchmark_trade_reads.py", line 41, in fixture_identity
+    raise RuntimeError('Imported fixture byte mismatch: ' + json.dumps(identity, sort_keys=True))
+RuntimeError: Imported fixture byte mismatch: {"expected_sha256": "5eb5d4a45484b26514edddf214e8ae81e7ab9186f262857fe64845abe215e595", "module": "test_trade_reads", "module_file": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\trade-assurance-r3-4e16a7a9422e-scratch-f27e6958\\fixture-mismatch\\backend\\tests\\test_trade_reads.py", "resolved_path": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\trade-assurance-r3-4e16a7a9422e-scratch-f27e6958\\fixture-mismatch\\backend\\tests\\test_trade_reads.py", "sha256": "a2d93bdeed15293bf2541fdddeed3ccacf6e038994156ac6842112ba5a586206"}

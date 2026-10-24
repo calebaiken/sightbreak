@@ -1,0 +1,171 @@
+{
+  "controller_only": true,
+  "instruction": "Do not supply this file/directory before the critic saves the blind verdict.",
+  "source_evidence_commit": "4a7ba36216bf354d266b508222aea4cfea30bfea",
+  "source_manifest_path": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-backend-trade-read-v3\\docs\\reports\\backend-trade-read-v3\\SHA256SUMS.txt",
+  "source_manifest_sha256": "4d5bd6158360cb2fcaf39c0c9531b795e7f48606dcc6a926855d9b3419944935",
+  "packet_path": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\blind-trade-read-f12a80a71bbd\\packet",
+  "randomization": "One cryptographic SystemRandom shuffle of the two original input filenames; no preferred label.",
+  "transformation": "Copy every original workload row unchanged; preserve common environment/completion flags; remove original identities/timestamps/database IDs/top-level code fingerprints; mark absent state hashes explicitly.",
+  "state_hashes_retained_in_inputs": false,
+  "application_tests_rerun": false,
+  "database_accessed": false,
+  "variants": {
+    "K": {
+      "original_role": "candidate",
+      "original_file_path": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-backend-trade-read-v3\\docs\\reports\\backend-trade-read-v3\\candidate-measurement\\measurement.json",
+      "original_git_path": "docs/reports/backend-trade-read-v3/candidate-measurement/measurement.json",
+      "original_sha256": "93d25da3b5c74a2c997a038f05556431c353c2cbdd5b675a1bc5a89473761b94",
+      "neutral_file": "K/measurement.json",
+      "neutral_sha256": "63d17ce528241f32a4b0f864c4eea83b6e7e2db42dcf2e31212cf055a2f18985",
+      "all_raw_workload_rows_preserved": true,
+      "withheld_original_header": {
+        "started_at": "2026-10-19T19:17:33.763095+00:00",
+        "source": {
+          "commit": "4a8e9ea73aa8b286d9f1751b0a6b485479737294",
+          "backend_tree": "4ef756639c2e90037bce79a30e2867aebcc798a7",
+          "backend_dirty": "",
+          "backend_files": {
+            "backend/app.py": "9f94a55f1b19858eec3ac54036601b5c26a330749454a6cb89650d51e298f020",
+            "backend/bridge_fixture.py": "00548df28d2ad6a8fdca9eeaed34af39e30bebbb205fb9b69b2d7112434b29db",
+            "backend/migrate.py": "0f06597968c1e0de8461083448306496f4cc53e6a0f3d94dbc0f1b0c003f1d58",
+            "backend/models.py": "5fa4e0ac4157e4ad883d4c2bf1df06d915a395c5303c063a1004aaabd071e09a",
+            "backend/pyproject.toml": "9fd253aaaa3d39616eeb076d991cd2836c4cddcc8f56d72f31776cd134ab0190",
+            "backend/simulate.py": "218299e27743c58eac64f2d5820f3320945321d3d58bdd2caee5d195c536afa2",
+            "backend/uv.lock": "c66ef08d0ef36424da51008f59e3905f544d15dbd602ed6e204c588b4ca93db5",
+            "backend/config/economy.json": "8d85944aff0a6531b8a022350cbe0562295573aff5f3bd96e474e06f192aec7a",
+            "backend/config/simulation-baseline.json": "0a7965dd37a68fd2960d6b6912dffb635fcb26ffa6f251b92a7872c688755a16",
+            "backend/migrations/001_integrity.sql": "83189d1d06cbec62db325dbcf376476bc3aa7c0984d7439bb8048360ff737392",
+            "backend/migrations/002_game_tickets.sql": "c063f4376339b013fc79cda3e6f7782c61654d51fe6e479c658f2e30a1eddd7e",
+            "backend/migrations/003_loadouts.sql": "cc8acafba73b07889b25f2b9ee594cd09094d0ff8fd34d64767e6fcde62ee017",
+            "backend/migrations/004_market_index.sql": "cc51bd7647a6bd6abb272efd9564e089c0cc3d7afa0e76586503b3225535a5af",
+            "backend/tests/test_economy.py": "d3ada3e8590fb30a5a5e812525ccaea4be3778af50903eb2d02de41e201d528a",
+            "backend/tests/test_trade_reads.py": "7106ccbbf657058087ed4b717143cdcea760513d8a513432b3445a2131a69eb1"
+          }
+        },
+        "harness_sha256": "6e4aac58ad913144e2c41455124afd6756e500c5d795636e15ba52b1aa5a3b19",
+        "fixture_sha256": "7106ccbbf657058087ed4b717143cdcea760513d8a513432b3445a2131a69eb1",
+        "platform": "Windows-11-10.0.26200-SP0",
+        "python": "3.12.14 (main, Sep  1 2026, 14:17:39) [MSC v.1944 64 bit (AMD64)]",
+        "packages": {
+          "sqlalchemy": "2.1.4",
+          "psycopg": "3.3.6",
+          "psycopg-binary": "3.3.6",
+          "fastapi": "0.143.0",
+          "starlette": "1.7.0",
+          "httpx": "0.28.1",
+          "pytest": "9.1.1"
+        },
+        "database": "sightbreak_trade_read_29db8d9c2062_test",
+        "completed": true,
+        "postgresql": "PostgreSQL 17.11 on x86_64-windows, compiled by msvc-19.44.35229, 64-bit",
+        "final_source": {
+          "commit": "4a8e9ea73aa8b286d9f1751b0a6b485479737294",
+          "backend_tree": "4ef756639c2e90037bce79a30e2867aebcc798a7",
+          "backend_dirty": "",
+          "backend_files": {
+            "backend/app.py": "9f94a55f1b19858eec3ac54036601b5c26a330749454a6cb89650d51e298f020",
+            "backend/bridge_fixture.py": "00548df28d2ad6a8fdca9eeaed34af39e30bebbb205fb9b69b2d7112434b29db",
+            "backend/migrate.py": "0f06597968c1e0de8461083448306496f4cc53e6a0f3d94dbc0f1b0c003f1d58",
+            "backend/models.py": "5fa4e0ac4157e4ad883d4c2bf1df06d915a395c5303c063a1004aaabd071e09a",
+            "backend/pyproject.toml": "9fd253aaaa3d39616eeb076d991cd2836c4cddcc8f56d72f31776cd134ab0190",
+            "backend/simulate.py": "218299e27743c58eac64f2d5820f3320945321d3d58bdd2caee5d195c536afa2",
+            "backend/uv.lock": "c66ef08d0ef36424da51008f59e3905f544d15dbd602ed6e204c588b4ca93db5",
+            "backend/config/economy.json": "8d85944aff0a6531b8a022350cbe0562295573aff5f3bd96e474e06f192aec7a",
+            "backend/config/simulation-baseline.json": "0a7965dd37a68fd2960d6b6912dffb635fcb26ffa6f251b92a7872c688755a16",
+            "backend/migrations/001_integrity.sql": "83189d1d06cbec62db325dbcf376476bc3aa7c0984d7439bb8048360ff737392",
+            "backend/migrations/002_game_tickets.sql": "c063f4376339b013fc79cda3e6f7782c61654d51fe6e479c658f2e30a1eddd7e",
+            "backend/migrations/003_loadouts.sql": "cc8acafba73b07889b25f2b9ee594cd09094d0ff8fd34d64767e6fcde62ee017",
+            "backend/migrations/004_market_index.sql": "cc51bd7647a6bd6abb272efd9564e089c0cc3d7afa0e76586503b3225535a5af",
+            "backend/tests/test_economy.py": "d3ada3e8590fb30a5a5e812525ccaea4be3778af50903eb2d02de41e201d528a",
+            "backend/tests/test_trade_reads.py": "7106ccbbf657058087ed4b717143cdcea760513d8a513432b3445a2131a69eb1"
+          }
+        },
+        "database_dropped": true
+      }
+    },
+    "R": {
+      "original_role": "baseline",
+      "original_file_path": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-backend-trade-read-v3\\docs\\reports\\backend-trade-read-v3\\baseline-measurement\\measurement.json",
+      "original_git_path": "docs/reports/backend-trade-read-v3/baseline-measurement/measurement.json",
+      "original_sha256": "dbe47d0a3d1dd5567344c37283e59570cfed01a3edb68f40b24d411b23ab4f93",
+      "neutral_file": "R/measurement.json",
+      "neutral_sha256": "38d0d1f01c77f90067d10587311bd3ce9c1418e71055d44e287db4b5fa521f20",
+      "all_raw_workload_rows_preserved": true,
+      "withheld_original_header": {
+        "started_at": "2026-10-19T19:13:37.473495+00:00",
+        "source": {
+          "commit": "701ce2c4d7f8b2872cf1fefa64cb6edd0cd1a3fd",
+          "backend_tree": "67027b4fa17674ef067c84401af76eb1524419ac",
+          "backend_dirty": "",
+          "backend_files": {
+            "backend/app.py": "78816607ee70fe47ae1f1c97f48d4d2a360eebe7c0e64ac73c296dfd53fb8121",
+            "backend/bridge_fixture.py": "00548df28d2ad6a8fdca9eeaed34af39e30bebbb205fb9b69b2d7112434b29db",
+            "backend/migrate.py": "0f06597968c1e0de8461083448306496f4cc53e6a0f3d94dbc0f1b0c003f1d58",
+            "backend/models.py": "5fa4e0ac4157e4ad883d4c2bf1df06d915a395c5303c063a1004aaabd071e09a",
+            "backend/pyproject.toml": "9fd253aaaa3d39616eeb076d991cd2836c4cddcc8f56d72f31776cd134ab0190",
+            "backend/simulate.py": "218299e27743c58eac64f2d5820f3320945321d3d58bdd2caee5d195c536afa2",
+            "backend/uv.lock": "c66ef08d0ef36424da51008f59e3905f544d15dbd602ed6e204c588b4ca93db5",
+            "backend/config/economy.json": "8d85944aff0a6531b8a022350cbe0562295573aff5f3bd96e474e06f192aec7a",
+            "backend/config/simulation-baseline.json": "0a7965dd37a68fd2960d6b6912dffb635fcb26ffa6f251b92a7872c688755a16",
+            "backend/migrations/001_integrity.sql": "83189d1d06cbec62db325dbcf376476bc3aa7c0984d7439bb8048360ff737392",
+            "backend/migrations/002_game_tickets.sql": "c063f4376339b013fc79cda3e6f7782c61654d51fe6e479c658f2e30a1eddd7e",
+            "backend/migrations/003_loadouts.sql": "cc8acafba73b07889b25f2b9ee594cd09094d0ff8fd34d64767e6fcde62ee017",
+            "backend/migrations/004_market_index.sql": "cc51bd7647a6bd6abb272efd9564e089c0cc3d7afa0e76586503b3225535a5af",
+            "backend/tests/test_economy.py": "d3ada3e8590fb30a5a5e812525ccaea4be3778af50903eb2d02de41e201d528a"
+          }
+        },
+        "harness_sha256": "6e4aac58ad913144e2c41455124afd6756e500c5d795636e15ba52b1aa5a3b19",
+        "fixture_sha256": "7106ccbbf657058087ed4b717143cdcea760513d8a513432b3445a2131a69eb1",
+        "platform": "Windows-11-10.0.26200-SP0",
+        "python": "3.12.14 (main, Sep  1 2026, 14:17:39) [MSC v.1944 64 bit (AMD64)]",
+        "packages": {
+          "sqlalchemy": "2.1.4",
+          "psycopg": "3.3.6",
+          "psycopg-binary": "3.3.6",
+          "fastapi": "0.143.0",
+          "starlette": "1.7.0",
+          "httpx": "0.28.1",
+          "pytest": "9.1.1"
+        },
+        "database": "sightbreak_trade_read_7dc9f23704e7_test",
+        "completed": true,
+        "postgresql": "PostgreSQL 17.11 on x86_64-windows, compiled by msvc-19.44.35229, 64-bit",
+        "final_source": {
+          "commit": "701ce2c4d7f8b2872cf1fefa64cb6edd0cd1a3fd",
+          "backend_tree": "67027b4fa17674ef067c84401af76eb1524419ac",
+          "backend_dirty": "",
+          "backend_files": {
+            "backend/app.py": "78816607ee70fe47ae1f1c97f48d4d2a360eebe7c0e64ac73c296dfd53fb8121",
+            "backend/bridge_fixture.py": "00548df28d2ad6a8fdca9eeaed34af39e30bebbb205fb9b69b2d7112434b29db",
+            "backend/migrate.py": "0f06597968c1e0de8461083448306496f4cc53e6a0f3d94dbc0f1b0c003f1d58",
+            "backend/models.py": "5fa4e0ac4157e4ad883d4c2bf1df06d915a395c5303c063a1004aaabd071e09a",
+            "backend/pyproject.toml": "9fd253aaaa3d39616eeb076d991cd2836c4cddcc8f56d72f31776cd134ab0190",
+            "backend/simulate.py": "218299e27743c58eac64f2d5820f3320945321d3d58bdd2caee5d195c536afa2",
+            "backend/uv.lock": "c66ef08d0ef36424da51008f59e3905f544d15dbd602ed6e204c588b4ca93db5",
+            "backend/config/economy.json": "8d85944aff0a6531b8a022350cbe0562295573aff5f3bd96e474e06f192aec7a",
+            "backend/config/simulation-baseline.json": "0a7965dd37a68fd2960d6b6912dffb635fcb26ffa6f251b92a7872c688755a16",
+            "backend/migrations/001_integrity.sql": "83189d1d06cbec62db325dbcf376476bc3aa7c0984d7439bb8048360ff737392",
+            "backend/migrations/002_game_tickets.sql": "c063f4376339b013fc79cda3e6f7782c61654d51fe6e479c658f2e30a1eddd7e",
+            "backend/migrations/003_loadouts.sql": "cc8acafba73b07889b25f2b9ee594cd09094d0ff8fd34d64767e6fcde62ee017",
+            "backend/migrations/004_market_index.sql": "cc51bd7647a6bd6abb272efd9564e089c0cc3d7afa0e76586503b3225535a5af",
+            "backend/tests/test_economy.py": "d3ada3e8590fb30a5a5e812525ccaea4be3778af50903eb2d02de41e201d528a"
+          }
+        },
+        "database_dropped": true
+      }
+    }
+  },
+  "packet_manifest_sha256": "d9a6ea8e0721d573bea5437e84fcc25b899d7b8172f092c4ae7d1415b3c56c36",
+  "packet_files": {
+    "equivalence.json": "3f80d419fc02b6d7a886540ffe61c684ea753f3e8fc705a7e6ef73a586b17632",
+    "METHOD.md": "d06c8f3a55b97d729f5bdb37f94c0e5b19c0eba17689016d8eb4785e7fb119a4",
+    "README.md": "417f3e82a97946d0560a375c415ce0bcb0afe020458ddb7cacabfa75223f806c",
+    "REVIEW_QUESTIONS.md": "fae22533831bf7a0d315d4cbd0e1ac175c8fa52fcff6b382db85614316d31363",
+    "SHA256SUMS.txt": "d9a6ea8e0721d573bea5437e84fcc25b899d7b8172f092c4ae7d1415b3c56c36",
+    "verify_packet.py": "babc2f4657c0002bad0129ec3373e6750119b38783d1b5bd2174adfda5322c18",
+    "K/measurement.json": "63d17ce528241f32a4b0f864c4eea83b6e7e2db42dcf2e31212cf055a2f18985",
+    "R/measurement.json": "38d0d1f01c77f90067d10587311bd3ce9c1418e71055d44e287db4b5fa521f20"
+  },
+  "generator_sha256": "16ff1a945e47d0c0a0159b756470cf23419ef4c1b752311cd315d1bf6744047e"
+}

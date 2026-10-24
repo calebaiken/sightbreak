@@ -1,0 +1,142 @@
+{
+  "closure_scripts_tree": "3111af5423d229b9b04b958de9588c4ab537c1ee",
+  "harness_to_closure_source_delta": "",
+  "original_to_closure_scoped_docs_delta": "M\tdocs/reports/ack-cache-boundary-v3/README.md\nM\tdocs/reports/ack-cache-boundary-v3/checksums.json\nA\tdocs/reports/ack-cache-boundary-v3/controller/README.md\nA\tdocs/reports/ack-cache-boundary-v3/controller/capture.json\nA\tdocs/reports/ack-cache-boundary-v3/controller/mapping.json\nA\tdocs/reports/ack-cache-boundary-v3/controller/release-receipt.json\n",
+  "all_shipping_gd_reference_scan": {
+    "prediction_calls": [
+      {
+        "path": "game/scripts/gameplay/match.gd",
+        "line": 779,
+        "text": "\t\t\t_prediction.reconcile(actor, _pending_reconciliation.state, int(_pending_reconciliation.epoch), previous_position, _prediction_enabled)"
+      },
+      {
+        "path": "game/scripts/gameplay/match.gd",
+        "line": 784,
+        "text": "\t\t_prediction.predict(actor, controls, _replica_buffer.epoch, _prediction_enabled)"
+      }
+    ],
+    "helper_references": [
+      {
+        "path": "game/scripts/network/movement_prediction.gd",
+        "line": 5,
+        "text": "const AckSnapshotDiagnostics := preload(\"res://scripts/network/ack_snapshot_diagnostics.gd\")"
+      },
+      {
+        "path": "game/scripts/network/movement_prediction.gd",
+        "line": 6,
+        "text": "var snapshot_diagnostics := AckSnapshotDiagnostics.new()"
+      },
+      {
+        "path": "game/scripts/network/movement_prediction.gd",
+        "line": 18,
+        "text": "\tsnapshot_diagnostics.clear()"
+      },
+      {
+        "path": "game/scripts/network/movement_prediction.gd",
+        "line": 28,
+        "text": "\t\tsnapshot_diagnostics.begin_epoch(current_epoch)"
+      },
+      {
+        "path": "game/scripts/network/movement_prediction.gd",
+        "line": 53,
+        "text": "\tsnapshot_diagnostics.observe(state, current_epoch, enabled)"
+      }
+    ],
+    "hit_history_uses": [
+      {
+        "path": "game/scripts/gameplay/match.gd",
+        "line": 57,
+        "text": "var _hit_history := SBHitHistory.new()"
+      },
+      {
+        "path": "game/scripts/gameplay/match.gd",
+        "line": 279,
+        "text": "\t\t_hit_history.record(_simulation_tick, _snapshot_generation, actors)"
+      },
+      {
+        "path": "game/scripts/network/hit_history.gd",
+        "line": 1,
+        "text": "class_name SBHitHistory"
+      }
+    ],
+    "protocol_default_and_coalescing": [
+      {
+        "path": "game/scripts/gameplay/match.gd",
+        "line": 13,
+        "text": "const PROTOCOL_VERSION := 6"
+      },
+      {
+        "path": "game/scripts/gameplay/match.gd",
+        "line": 61,
+        "text": "var _prediction_enabled := false"
+      },
+      {
+        "path": "game/scripts/gameplay/match.gd",
+        "line": 106,
+        "text": "\t_prediction_enabled = bool(options.get(\"prediction\", OS.get_cmdline_user_args().has(\"--network-prediction\")))"
+      },
+      {
+        "path": "game/scripts/gameplay/match.gd",
+        "line": 206,
+        "text": "func _physics_process(delta: float) -> void:"
+      },
+      {
+        "path": "game/scripts/gameplay/match.gd",
+        "line": 211,
+        "text": "\t\t_client_tick(delta)"
+      },
+      {
+        "path": "game/scripts/gameplay/match.gd",
+        "line": 278,
+        "text": "\tif options.get(\"mode\", \"offline\") == \"server\" and bool(options.get(\"record_hit_history\", false)):"
+      },
+      {
+        "path": "game/scripts/gameplay/match.gd",
+        "line": 771,
+        "text": "func _client_tick(delta: float) -> void:"
+      },
+      {
+        "path": "game/scripts/gameplay/match.gd",
+        "line": 1140,
+        "text": "\t\t\t\t_pending_reconciliation = {\"state\": presentation, \"epoch\": int(data.epoch)}"
+      },
+      {
+        "path": "game/scripts/gameplay/utility.gd",
+        "line": 207,
+        "text": "func _physics_process(delta: float) -> void:"
+      },
+      {
+        "path": "game/scripts/main.gd",
+        "line": 1151,
+        "text": "func _physics_process(delta: float) -> void:"
+      }
+    ],
+    "ack_origin": [
+      {
+        "path": "game/scripts/network/ack_snapshot_diagnostics.gd",
+        "line": 38,
+        "text": "\tif not state.get(\"move_ack\") is int or int(state.move_ack) < 0 or not state.get(\"position\") is Vector3 or not (state.position as Vector3).is_finite() or (state.position as Vector3).length() >= 1024:"
+      },
+      {
+        "path": "game/scripts/network/ack_snapshot_diagnostics.gd",
+        "line": 43,
+        "text": "\tvar ack: int = state.move_ack"
+      },
+      {
+        "path": "game/scripts/network/movement_prediction.gd",
+        "line": 54,
+        "text": "\tvar ack: int = state.get(\"move_ack\", 0)"
+      },
+      {
+        "path": "game/scripts/network/snapshot_schema.gd",
+        "line": 52,
+        "text": "\t\tif state.has(\"move_ack\") and (not state.move_ack is int or state.move_ack < 0):"
+      },
+      {
+        "path": "game/scripts/network/state_privacy.gd",
+        "line": 157,
+        "text": "\t\t\tstate.move_ack = int(match_node._last_input_sequence.get(recipient_id, 0))"
+      }
+    ]
+  }
+}

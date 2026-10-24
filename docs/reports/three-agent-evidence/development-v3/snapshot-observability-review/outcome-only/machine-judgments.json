@@ -1,0 +1,113 @@
+{
+  "schema": "sol-independent-neutral-cache-boundary-verdict-v1",
+  "input_sha256": "70a15c1f330c7e9e51bf50fc52673243dd3cbe62dd030acdc60081eba6443517",
+  "input_bytes": 11660,
+  "requester_associated_git_commit_not_inspected": "d5c738d367f3ba80f3cfc679e104a009d0a72183",
+  "verdict_scope": "Bounded outcome-only diagnostic observation comparison, not gameplay accuracy or release approval",
+  "release_approval": false,
+  "diagnostic_information_comparison": {
+    "outcome": "win",
+    "winner_neutral_label": "sample-T",
+    "basis": "121 available diagnostic rows satisfy supplied first-eviction boundary and anchor/delta bar; sample-M provides no helper data",
+    "not_a_source_identity_or_gameplay_accuracy_claim": true
+  },
+  "captured_legacy_and_nondiagnostic_comparison": {
+    "outcome": "tie",
+    "legacy_exact_rows": 121,
+    "nondiagnostic_exact_rows": 121,
+    "rows_compared": 121,
+    "strict_types": true,
+    "numeric_tolerance": 0,
+    "raw_value_bytes_equal_for_all_rows": ["ack", "epoch", "insertion", "legacy", "received_position"],
+    "entire_documents_equal": false,
+    "uncaptured_state_parity_verified": false
+  },
+  "sample-M": {
+    "diagnostic_available_rows": 0,
+    "diagnostic_null_rows": 121,
+    "cache_boundary_correctness": "N/A",
+    "helper_absence_is_failure": false,
+    "captured_legacy_parity": "pass"
+  },
+  "sample-T": {
+    "diagnostic_available_rows": 121,
+    "cache_boundary_correctness": "pass_for_supplied_rows",
+    "capacity_bar": 120,
+    "explicit_capacity_json_field_present": false,
+    "actual_api_capacity_declaration_verified": false,
+    "all_raw_windows_checked": true,
+    "final_observed_count": 121,
+    "final_retained_size": 120,
+    "final_eviction_count": 1,
+    "final_retained_ids": {"first": 2, "last": 121, "length": 120, "contiguous": true},
+    "evicted_ids_at_121": [1],
+    "original_anchor": [3.0, 0.0625, -2.0],
+    "oldest_retained_position_at_121": [3.03125, 0.0625, -2.0],
+    "latest_position_at_121": [6.75, 0.0625, -2.0],
+    "first_observation_drift_at_121_m": 3.75,
+    "previous_observation_delta_at_121_m": 0.03125,
+    "latest_to_oldest_retained_distance_at_121_m": 3.71875,
+    "original_anchor_survives_first_row_eviction": true,
+    "first_anchor_is_consumption_time_ground_truth": false
+  },
+  "independent_verification": {
+    "status": "pass",
+    "checks": 8367,
+    "passed": 8367,
+    "failed": 0,
+    "exit_code": 0,
+    "zip_members": 3,
+    "zip_crc": "pass",
+    "json_documents": 2,
+    "rows_total": 242,
+    "duplicates_or_nonfinite_numbers": false,
+    "ordinals_spacing_windows_evictions_and_metrics": "pass",
+    "producer_check_counts_used_as_proof": false,
+    "details": "auditraw/03-independent-result.json",
+    "per_check_raw": "auditraw/03-independent-checks.jsonl",
+    "interpreter": "CPython 3.13.15",
+    "execution": "isolated, serial, offline, standard-library-only"
+  },
+  "legacy_observations": {
+    "error_samples_m_every_row": [0.5],
+    "large_correction_records_every_row": 1,
+    "corrections_counter_first": 1,
+    "corrections_counter_last": 121,
+    "hard_corrections_every_row": 0,
+    "pending_history_every_row": [],
+    "pre_first_row_pending_command_reality_independently_proved": false
+  },
+  "semantic_limits": {
+    "ack": 1,
+    "epoch": 7,
+    "prediction_enabled": true,
+    "observation_position_formula": "[3+(n-1)/32, 0.0625, -2], n=1..121",
+    "spatial_step_m": 0.03125,
+    "timing_spacing_verified": false,
+    "ack_consumption_timing_verified": false
+  },
+  "gaps": [
+    "Actual API/source binding and runtime capture provenance pending; requested Git revision not inspected",
+    "All recorded pending histories empty; nonempty replay and pre-first-row command provenance unverified",
+    "Fixed epoch 7, ACK 1, prediction-enabled-only fixture; transitions, regressions, invalid inputs and helper runtime failures untested",
+    "Only first eviction at 121; later wraps, long runs, mixed/wider workloads and resets unverified",
+    "Declared API capacity constant, internal allocations, temporary overshoot, retained bytes, memory allocation peak and CPU cost unverified",
+    "Transport, timestamps, snapshot coalescing, scheduling, host/client and physics-time behavior unverified",
+    "Gunplay, hit registration, gameplay accuracy and broader gameplay behavior unverified",
+    "Exact parity limited to captured nondiagnostic row fields, not all runtime state or side effects"
+  ],
+  "blinding": {
+    "mapping_opened": false,
+    "identity_source_inspected": false,
+    "source_identity_inferred_or_asserted": false,
+    "behavioral_variant_distinguishability": true,
+    "perfect_blinding_claimed": false
+  },
+  "freeze": {
+    "utc_marker": "FROZENUTC.txt",
+    "ledger": "SHA256-LEDGER.json",
+    "receipt": "FREEZE-RECEIPT.json",
+    "written_before_identity_inspection": true,
+    "filesystem_immutability_claimed": false
+  }
+}

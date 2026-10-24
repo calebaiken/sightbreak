@@ -1,0 +1,285 @@
+{
+  "run_url": "https://github.com/calebaiken/sightbreak/actions/runs/39880125007",
+  "run_id": 39880125007,
+  "run_attempt": 1,
+  "source_commit": "2a026e61cabee3c66334066d45e92eb3ec6c2641",
+  "run_conclusion": "failure",
+  "job_conclusions": {
+    "native-development-packages": "failure",
+    "full-matrix-and-network": "failure",
+    "adversarial-audio-controls": "success"
+  },
+  "downloaded_artifact_metadata_matches": [
+    {
+      "id": 12470965068,
+      "name": "sightbreak-v3-audio-controls-2a026e61cabee3c66334066d45e92eb3ec6c2641",
+      "bytes": 215325,
+      "sha256": "b0d7719a389bbbb270659563ee256ee441c583f74d9b5af40d852314baa12917",
+      "digest_matches_downloaded_GitHub_metadata": true,
+      "workflow_source_matches": true,
+      "url": "https://api.github.com/repos/calebaiken/sightbreak/actions/artifacts/12470965068",
+      "zip_url": "https://api.github.com/repos/calebaiken/sightbreak/actions/artifacts/12470965068/zip",
+      "browser_url": "https://github.com/calebaiken/sightbreak/actions/runs/39880125007/artifacts/12470965068",
+      "expires_at_as_recorded": "2026-11-06T00:51:23Z"
+    },
+    {
+      "id": 12470739875,
+      "name": "sightbreak-v3-validation-2a026e61cabee3c66334066d45e92eb3ec6c2641",
+      "bytes": 88023940,
+      "sha256": "06497a564fd04ed13c10a0c92a323b4f0c1ed223017298f924ee751e5d16488a",
+      "digest_matches_downloaded_GitHub_metadata": true,
+      "workflow_source_matches": true,
+      "url": "https://api.github.com/repos/calebaiken/sightbreak/actions/artifacts/12470739875",
+      "zip_url": "https://api.github.com/repos/calebaiken/sightbreak/actions/artifacts/12470739875/zip",
+      "browser_url": "https://github.com/calebaiken/sightbreak/actions/runs/39880125007/artifacts/12470739875",
+      "expires_at_as_recorded": "2026-11-06T01:16:04Z"
+    },
+    {
+      "id": 12470681259,
+      "name": "sightbreak-v3-development-2a026e61cabee3c66334066d45e92eb3ec6c2641",
+      "bytes": 522826604,
+      "sha256": "531a83b8407fdea9e26579a3df6fdefd0ad1e77dd461aee549073082a03ebe00",
+      "digest_matches_downloaded_GitHub_metadata": true,
+      "workflow_source_matches": true,
+      "url": "https://api.github.com/repos/calebaiken/sightbreak/actions/artifacts/12470681259",
+      "zip_url": "https://api.github.com/repos/calebaiken/sightbreak/actions/artifacts/12470681259/zip",
+      "browser_url": "https://github.com/calebaiken/sightbreak/actions/runs/39880125007/artifacts/12470681259",
+      "expires_at_as_recorded": "2026-11-06T00:53:30Z"
+    }
+  ],
+  "checkout_logs_contain_frozen_commit": true,
+  "network": {
+    "passed": false,
+    "status": "incomplete",
+    "wall_seconds": 240.141,
+    "authority_substep": {
+      "joined_id": 1,
+      "largest_ack": 95,
+      "lowest_ammo": 24,
+      "passed": true,
+      "prediction_default": false,
+      "protocol": 6,
+      "reload_command_seen": true,
+      "reload_completed": true,
+      "reload_seen": true,
+      "reload_trigger": "native client input",
+      "scope": "source Godot authority fixture; client is actual exported Linux ELF driven through native UI; no rewards",
+      "shots": 6
+    },
+    "process_receipt": {
+      "complete": true,
+      "exit": 1,
+      "errors": [
+        "Command '['/home/runner/work/sightbreak/sightbreak/.venv/bin/python', '-B', '/home/runner/work/sightbreak/sightbreak/scripts/verify_integration_export.py', '--_export-flow-worker', '--display', ':106', '--visit-armory', '--reload-mode', 'keyboard', '--timeout', '240', '--output', 'builds/v3-export-network']' timed out after 239.99949081899996 seconds"
+      ],
+      "posix_cleanup_verified": true
+    },
+    "controller_source_hash_matches": true,
+    "limit": "No final client/server clean-exit/unchanged-export success receipt. Screenshots and source-authority success are not overall flow acceptance. Stalled stage/cause not proven by offline evidence."
+  },
+  "offline": {
+    "passed": false,
+    "wall_seconds": 48.805,
+    "process_receipt": {
+      "complete": true,
+      "exit": 1,
+      "errors": [],
+      "posix_cleanup_verified": true
+    },
+    "controller_source_hash_matches": true,
+    "ocr_raw": {
+      "05-after-fire-status": "800 - FUNDS\n100 - HEALTH\n",
+      "05-after-fire-ammo": "ee 14/60\nFRAG x1 SMOKE x1\n",
+      "06-after-reload-status": "800 - FUNDS\nELIMINATED - SPECTATING\n",
+      "06-after-reload-ammo": "RELOADING 0.1s\nFRAG x1 SMOKE x1\n"
+    },
+    "visual_review": "05 shows 100 HEALTH and SIDEARM 14 / 60; 06 shows ELIMINATED SPECTATING, RELOADING 0.1s. Actual rendered death, not a mistaken positive-health parser failure.",
+    "limit": "No completed living-player fire/reload/movement flow or final source/clean-exit success receipt."
+  },
+  "screenshots": [
+    {
+      "member": "v3-export-network/01-exported-menu.png",
+      "bytes": 383487,
+      "sha256": "8a0fb0f6d648ab5ba43323039f317796ed50ec3fdd50451318f123ec2d928a23",
+      "dimensions": [
+        1280,
+        720
+      ]
+    },
+    {
+      "member": "v3-export-network/01b-exported-inventory.png",
+      "bytes": 72201,
+      "sha256": "74decaa24f554372d5556fa5b8360ac3a2277cc069c597efcab20cd73b34699e",
+      "dimensions": [
+        1280,
+        720
+      ]
+    },
+    {
+      "member": "v3-export-network/01c-exported-menu-return.png",
+      "bytes": 376091,
+      "sha256": "be612a5c70cf2f5aee866145250e0b9b5db23b7981946d6140c1c5d7509aafe3",
+      "dimensions": [
+        1280,
+        720
+      ]
+    },
+    {
+      "member": "v3-export-network/02-exported-connect.png",
+      "bytes": 116272,
+      "sha256": "7559814841647d653832b21ccef874d3bf664fbfbec87abf32a19b1f1f602a44",
+      "dimensions": [
+        1280,
+        720
+      ]
+    },
+    {
+      "member": "v3-export-network/03-exported-network-rifle.png",
+      "bytes": 623761,
+      "sha256": "923033edce4c37b568c406e84c62673bf40ade14231622d90abe8bd4ba87066b",
+      "dimensions": [
+        1280,
+        720
+      ]
+    },
+    {
+      "member": "v3-export-network/04-fire-input.png",
+      "bytes": 623761,
+      "sha256": "923033edce4c37b568c406e84c62673bf40ade14231622d90abe8bd4ba87066b",
+      "dimensions": [
+        1280,
+        720
+      ]
+    },
+    {
+      "member": "v3-export-network/05-after-fire-input.png",
+      "bytes": 623746,
+      "sha256": "49db47c5735f45435c31c46b4e1a0fb39e058041e5f31a7e2efa362e26b770d2",
+      "dimensions": [
+        1280,
+        720
+      ]
+    },
+    {
+      "member": "v3-export-network/06-after-authority-reload-start.png",
+      "bytes": 626642,
+      "sha256": "6b755c2320a9194c5d0967f95feaca9b79536a752f203ba123087a3b59f3cf97",
+      "dimensions": [
+        1280,
+        720
+      ]
+    },
+    {
+      "member": "v3-export-network/07-after-authority-reload-completion.png",
+      "bytes": 667129,
+      "sha256": "496b8a3779a3373db9616f67be35e3cb79c4f4219034167d03f8069728756cde",
+      "dimensions": [
+        1280,
+        720
+      ]
+    },
+    {
+      "member": "v3-export-network/08-settled.png",
+      "bytes": 624694,
+      "sha256": "53346f059b4ed8fb40d183784398cc7fee32887ac6aae153e77018bbc1f19180",
+      "dimensions": [
+        1280,
+        720
+      ]
+    },
+    {
+      "member": "v3-export-offline/01-menu.png",
+      "bytes": 383121,
+      "sha256": "b62d726856cd2760c12ea682d2e19a4444a7fd638a4b4e363eab5853c87468f4",
+      "dimensions": [
+        1280,
+        720
+      ]
+    },
+    {
+      "member": "v3-export-offline/02-offline-spawn.png",
+      "bytes": 765526,
+      "sha256": "79a5c778df478778214d25a1892a5aeb3096a9357c5965af1d3dc8efd9430e5d",
+      "dimensions": [
+        1280,
+        720
+      ]
+    },
+    {
+      "member": "v3-export-offline/03-requisition.png",
+      "bytes": 317649,
+      "sha256": "abb436b22ea02587097aa8f093e4f0a3ff4d5927151992aa9f62fc270ec00a2e",
+      "dimensions": [
+        1280,
+        720
+      ]
+    },
+    {
+      "member": "v3-export-offline/04-move-aim.png",
+      "bytes": 765637,
+      "sha256": "6e61c59a54996de037d5c7309437fddd8de77cd1fae7932d282f5730ede3fb9f",
+      "dimensions": [
+        1280,
+        720
+      ]
+    },
+    {
+      "member": "v3-export-offline/05-after-fire-ammo-ocr.input.png",
+      "bytes": 100113,
+      "sha256": "cd1c2df533e385ed791f5d9d6cfe67adc4ee5baf69f69d4740c6f8883d9327e7",
+      "dimensions": [
+        900,
+        255
+      ]
+    },
+    {
+      "member": "v3-export-offline/05-after-fire-status-ocr.input.png",
+      "bytes": 126070,
+      "sha256": "f7a024b54ad160a2c9644cf72ca1511fb62e6c28c0650560b6168e30227c903c",
+      "dimensions": [
+        1350,
+        270
+      ]
+    },
+    {
+      "member": "v3-export-offline/05-after-fire.png",
+      "bytes": 804603,
+      "sha256": "d595667a30d9d42eb5a4c04a1a200f7ad6986b40bd8b13493dc0e02bcd19890a",
+      "dimensions": [
+        1280,
+        720
+      ]
+    },
+    {
+      "member": "v3-export-offline/06-after-reload-ammo-ocr.input.png",
+      "bytes": 133510,
+      "sha256": "f62311e5e49843b43bcac023e538e2ddbd3de6deb36de4408874c48fcefdea96",
+      "dimensions": [
+        900,
+        255
+      ]
+    },
+    {
+      "member": "v3-export-offline/06-after-reload-status-ocr.input.png",
+      "bytes": 188860,
+      "sha256": "facae5e38b4b0ee398549aa243a4cc66655f4ac2f8f609f398cc60422a4333fb",
+      "dimensions": [
+        1350,
+        270
+      ]
+    },
+    {
+      "member": "v3-export-offline/06-after-reload.png",
+      "bytes": 825069,
+      "sha256": "4d48f7c86cda5cd79698e4042d580aa3b3d9ae9c9f44eb330931850ca7a1487e",
+      "dimensions": [
+        1280,
+        720
+      ]
+    }
+  ],
+  "python_path": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-tools\\python\\cpython-3.13.15-windows-x86_64-none\\python.exe",
+  "python_sha256": "d7d8f0813d9d4002839b775ed13fc7eb57a756bdcb102e85ab61537003ef8616",
+  "audit_execution_scope": "Only approved CPython stdlib parsing/hashing and read-only git inspections. No imported project modules, native game/SDK jobs, DB, sockets/network/GitHub requests, staging, commits or owner branch mutations.",
+  "provenance_limit": "Comparison against already downloaded GitHub metadata and logs; offline audit does not independently authenticate the remote service or re-observe CI execution."
+}

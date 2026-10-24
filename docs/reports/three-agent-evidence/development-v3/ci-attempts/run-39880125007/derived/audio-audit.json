@@ -1,0 +1,637 @@
+{
+  "baseline_groups": 10,
+  "baseline_checks": 386,
+  "baseline_failures": 0,
+  "attempts": 13,
+  "controls_caught": 3,
+  "mutant_assertion_failures": 8,
+  "captures": 15,
+  "wav_files": 5,
+  "eight_source_snapshots_four_tool_hashes_match_git": true,
+  "source_restored": true,
+  "thresholds": {
+    "onset_level": 0.012,
+    "timing_tolerance_ms": 90,
+    "silent": 0.0008,
+    "cancel_fraction": 0.63,
+    "max_latency_seconds": 0.12
+  },
+  "mutations": [
+    {
+      "control": "A5",
+      "edit_chain_matches_frozen_source": true,
+      "edits": [
+        {
+          "path": "/home/runner/work/_temp/sightbreak-v3-controls/game/scripts/gameplay/reload_audio.gd",
+          "old": "\tvoice.volume_db = -15.0 + float(LEVELS.get(event, 0.0))",
+          "new": "\tvoice.volume_db = -95.0",
+          "matches": 1,
+          "newlines": "LF",
+          "before_sha256": "984446b54bbdfa74d3bd27ed07e3bac335a7959b8fb5cfacbe5e9609f421ef34",
+          "after_sha256": "6ac79ec9042784d294028069496785791588b7bd08bd5f7b9e3ea079b3726cf7"
+        }
+      ]
+    },
+    {
+      "control": "A6",
+      "edit_chain_matches_frozen_source": true,
+      "edits": [
+        {
+          "path": "/home/runner/work/_temp/sightbreak-v3-controls/game/scripts/gameplay/actor.gd",
+          "old": "\t_reload_audio.stop_all() # a weapon change cancels a reload: nothing of it keeps sounding",
+          "new": "\tpass",
+          "matches": 1,
+          "newlines": "LF",
+          "before_sha256": "7904d351c5da8574f060fa823c6bcd8840a42e98bb121c9c84cf92e814383c13",
+          "after_sha256": "5d2bcb1f1891e226ca0128dd31e5cb7a8dc958b27c70e1df56f9eb78917173d2"
+        },
+        {
+          "path": "/home/runner/work/_temp/sightbreak-v3-controls/game/scripts/gameplay/actor.gd",
+          "old": "\telif _reload_visual_active and not _reload_fired.has(\"seat\"):\n\t\t_reload_audio.stop_all() # cancelled before the seat: the sounds that were playing stop with it\n",
+          "new": "",
+          "matches": 1,
+          "newlines": "LF",
+          "before_sha256": "5d2bcb1f1891e226ca0128dd31e5cb7a8dc958b27c70e1df56f9eb78917173d2",
+          "after_sha256": "6e96f0e2316f7263aa6f137dc9327c575592f0b61e2dcf4778cfbdfd086cc82e"
+        }
+      ]
+    },
+    {
+      "control": "A7",
+      "edit_chain_matches_frozen_source": true,
+      "edits": [
+        {
+          "path": "/home/runner/work/_temp/sightbreak-v3-controls/game/tests/reload_audio_capture.gd",
+          "old": "\tactor.start_reload()\n",
+          "new": "\taudio._voices[0].stream = SBReloadAudio._streams[\"unlatch\"][1]\n\taudio._voices[0].play()\n\tactor.start_reload()\n",
+          "matches": 1,
+          "newlines": "LF",
+          "before_sha256": "8d37c5b390d537cb49c542f2fe49348bab3dfc9c9cc0f6e6057652bd6f798013",
+          "after_sha256": "64ee916d0fba36d889024d7d624176bae157564713a80e75b94157f38fde826a"
+        }
+      ]
+    }
+  ],
+  "rows": [
+    {
+      "attempt": "raw/001-baseline-sequence",
+      "name": "sequence",
+      "control": null,
+      "role": "baseline",
+      "checks": 92,
+      "failures": 0,
+      "exit": 0,
+      "independent_classification": "baseline pass",
+      "containment_clean": true,
+      "captures": [],
+      "wav_observations": null
+    },
+    {
+      "attempt": "raw/002-baseline-weapon-art",
+      "name": "weapon-art",
+      "control": null,
+      "role": "baseline",
+      "checks": 179,
+      "failures": 0,
+      "exit": 0,
+      "independent_classification": "baseline pass",
+      "containment_clean": true,
+      "captures": [],
+      "wav_observations": null
+    },
+    {
+      "attempt": "raw/003-baseline-audio",
+      "name": "audio",
+      "control": null,
+      "role": "baseline",
+      "checks": 29,
+      "failures": 0,
+      "exit": 0,
+      "independent_classification": "baseline pass",
+      "containment_clean": true,
+      "captures": [],
+      "wav_observations": null
+    },
+    {
+      "attempt": "raw/004-baseline-audio-capture",
+      "name": "audio capture",
+      "control": null,
+      "role": "baseline",
+      "checks": 14,
+      "failures": 0,
+      "exit": 0,
+      "independent_classification": "baseline pass",
+      "containment_clean": true,
+      "captures": [
+        {
+          "name": "mix_reload.wav",
+          "sha256": "47d1b7db8e910d7694297af86dc40533bccc00e52d11aa6a01ed278c16318675",
+          "bytes": 278572
+        },
+        {
+          "name": "voices_reload.csv",
+          "sha256": "ebdfbdd27748eb328b01856c83fb8134abdee52c12a92dee784cf4a4ab999076",
+          "bytes": 310
+        },
+        {
+          "name": "report_reload.txt",
+          "sha256": "9c8a2cadfd837aea36ae8d092d90717a4b2f228d2f1893c6e74dbfa5098e3252",
+          "bytes": 1957
+        }
+      ],
+      "wav_observations": {
+        "frames": 139264,
+        "rate": 44100,
+        "mono_pcm16": true,
+        "duration_seconds": 3.1579138321995464,
+        "peak": 0.14172795800653096,
+        "early_window_end_frame": 21930,
+        "early_mix_peak": 0.0,
+        "voices": [
+          {
+            "event": "unlatch",
+            "voice": "0",
+            "variant": "1",
+            "cue_wall_ms": "780",
+            "cue_capture_frame": "24576",
+            "onset_capture_frame": "24823",
+            "latency_ms": "5.6",
+            "peak": "0.066"
+          },
+          {
+            "event": "extract",
+            "voice": "1",
+            "variant": "1",
+            "cue_wall_ms": "829",
+            "cue_capture_frame": "24576",
+            "onset_capture_frame": "25515",
+            "latency_ms": "2.0",
+            "peak": "0.078"
+          },
+          {
+            "event": "pouch",
+            "voice": "2",
+            "variant": "1",
+            "cue_wall_ms": "1360",
+            "cue_capture_frame": "49152",
+            "onset_capture_frame": "50594",
+            "latency_ms": "32.7",
+            "peak": "0.053"
+          },
+          {
+            "event": "land",
+            "voice": "3",
+            "variant": "1",
+            "cue_wall_ms": "1560",
+            "cue_capture_frame": "57344",
+            "onset_capture_frame": "57791",
+            "latency_ms": "10.0",
+            "peak": "0.032"
+          },
+          {
+            "event": "enter",
+            "voice": "0",
+            "variant": "1",
+            "cue_wall_ms": "1898",
+            "cue_capture_frame": "73728",
+            "onset_capture_frame": "74199",
+            "latency_ms": "3.6",
+            "peak": "0.085"
+          },
+          {
+            "event": "seat",
+            "voice": "1",
+            "variant": "1",
+            "cue_wall_ms": "2029",
+            "cue_capture_frame": "77824",
+            "onset_capture_frame": "78061",
+            "latency_ms": "5.4",
+            "peak": "0.132"
+          }
+        ]
+      }
+    },
+    {
+      "attempt": "raw/005-baseline-audio-capture-cancel",
+      "name": "audio capture (cancel)",
+      "control": null,
+      "role": "baseline",
+      "checks": 11,
+      "failures": 0,
+      "exit": 0,
+      "independent_classification": "baseline pass",
+      "containment_clean": true,
+      "captures": [
+        {
+          "name": "mix_cancel.wav",
+          "sha256": "c7a6cb9afa81e4d6b1fda2449c52279f93139894a98a7a7170287080dc9b7a94",
+          "bytes": 270380
+        },
+        {
+          "name": "voices_cancel.csv",
+          "sha256": "ff0b40efd290d0012e2b11a45c2a539761c353e86a7768e229d9dd5f44b86542",
+          "bytes": 237
+        },
+        {
+          "name": "report_cancel.txt",
+          "sha256": "aaaaa779627d59d69c0519b56d6511eca3471070cce0ab05d254dbb3e6111ab5",
+          "bytes": 1465
+        }
+      ],
+      "wav_observations": {
+        "frames": 135168,
+        "rate": 44100,
+        "mono_pcm16": true,
+        "duration_seconds": 3.0650340136054424,
+        "peak": 0.07751701406903287,
+        "early_window_end_frame": 21930,
+        "early_mix_peak": 0.0,
+        "voices": [
+          {
+            "event": "unlatch",
+            "voice": "0",
+            "variant": "1",
+            "cue_wall_ms": "779",
+            "cue_capture_frame": "24576",
+            "onset_capture_frame": "24823",
+            "latency_ms": "5.6",
+            "peak": "0.066"
+          },
+          {
+            "event": "extract",
+            "voice": "1",
+            "variant": "1",
+            "cue_wall_ms": "827",
+            "cue_capture_frame": "24576",
+            "onset_capture_frame": "25515",
+            "latency_ms": "2.0",
+            "peak": "0.078"
+          },
+          {
+            "event": "pouch",
+            "voice": "2",
+            "variant": "1",
+            "cue_wall_ms": "1359",
+            "cue_capture_frame": "49152",
+            "onset_capture_frame": "50594",
+            "latency_ms": "32.7",
+            "peak": "0.053"
+          },
+          {
+            "event": "land",
+            "voice": "3",
+            "variant": "1",
+            "cue_wall_ms": "1559",
+            "cue_capture_frame": "57344",
+            "onset_capture_frame": "57791",
+            "latency_ms": "10.0",
+            "peak": "0.032"
+          }
+        ]
+      }
+    },
+    {
+      "attempt": "raw/006-baseline-visibility",
+      "name": "visibility",
+      "control": null,
+      "role": "baseline",
+      "checks": 15,
+      "failures": 0,
+      "exit": 0,
+      "independent_classification": "baseline pass",
+      "containment_clean": true,
+      "captures": [],
+      "wav_observations": null
+    },
+    {
+      "attempt": "raw/007-baseline-visibility-reduced-motion",
+      "name": "visibility (reduced motion)",
+      "control": null,
+      "role": "baseline",
+      "checks": 15,
+      "failures": 0,
+      "exit": 0,
+      "independent_classification": "baseline pass",
+      "containment_clean": true,
+      "captures": [],
+      "wav_observations": null
+    },
+    {
+      "attempt": "raw/008-baseline-finish-stability",
+      "name": "finish stability",
+      "control": null,
+      "role": "baseline",
+      "checks": 3,
+      "failures": 0,
+      "exit": 0,
+      "independent_classification": "baseline pass",
+      "containment_clean": true,
+      "captures": [],
+      "wav_observations": null
+    },
+    {
+      "attempt": "raw/009-baseline-light-separation",
+      "name": "light separation",
+      "control": null,
+      "role": "baseline",
+      "checks": 4,
+      "failures": 0,
+      "exit": 0,
+      "independent_classification": "baseline pass",
+      "containment_clean": true,
+      "captures": [],
+      "wav_observations": null
+    },
+    {
+      "attempt": "raw/010-baseline-contact",
+      "name": "contact",
+      "control": null,
+      "role": "baseline",
+      "checks": 24,
+      "failures": 0,
+      "exit": 0,
+      "independent_classification": "baseline pass",
+      "containment_clean": true,
+      "captures": [],
+      "wav_observations": null
+    },
+    {
+      "attempt": "raw/011-mutant-A5-audio-capture",
+      "name": "audio capture",
+      "control": "A5",
+      "role": "mutant",
+      "checks": 14,
+      "failures": 6,
+      "exit": 1,
+      "independent_classification": "expected assertion catch",
+      "containment_clean": true,
+      "captures": [
+        {
+          "name": "mix_reload.wav",
+          "sha256": "53ca753a316fcb5cb243712d8ccf79532f22bc40b38c59955aca6ef0c17e0d63",
+          "bytes": 270380
+        },
+        {
+          "name": "voices_reload.csv",
+          "sha256": "3075108fbbee3bfdece6ced3a3dfe6b003814b0d71c77a1e89067001bee54220",
+          "bytes": 312
+        },
+        {
+          "name": "report_reload.txt",
+          "sha256": "7c60e7957dc52e7b8b7547416110585adaa002d368de3722ac6c189e6dcdf139",
+          "bytes": 1960
+        }
+      ],
+      "wav_observations": {
+        "frames": 135168,
+        "rate": 44100,
+        "mono_pcm16": true,
+        "duration_seconds": 3.0650340136054424,
+        "peak": 0.0,
+        "early_window_end_frame": 17834,
+        "early_mix_peak": 0.0,
+        "voices": [
+          {
+            "event": "unlatch",
+            "voice": "0",
+            "variant": "1",
+            "cue_wall_ms": "761",
+            "cue_capture_frame": "20480",
+            "onset_capture_frame": "-1",
+            "latency_ms": "-464.4",
+            "peak": "0.000"
+          },
+          {
+            "event": "extract",
+            "voice": "1",
+            "variant": "1",
+            "cue_wall_ms": "830",
+            "cue_capture_frame": "24576",
+            "onset_capture_frame": "-1",
+            "latency_ms": "-576.6",
+            "peak": "0.000"
+          },
+          {
+            "event": "pouch",
+            "voice": "2",
+            "variant": "1",
+            "cue_wall_ms": "1362",
+            "cue_capture_frame": "49152",
+            "onset_capture_frame": "-1",
+            "latency_ms": "-1114.6",
+            "peak": "0.000"
+          },
+          {
+            "event": "land",
+            "voice": "3",
+            "variant": "1",
+            "cue_wall_ms": "1562",
+            "cue_capture_frame": "57344",
+            "onset_capture_frame": "-1",
+            "latency_ms": "-1300.5",
+            "peak": "0.000"
+          },
+          {
+            "event": "enter",
+            "voice": "0",
+            "variant": "1",
+            "cue_wall_ms": "1893",
+            "cue_capture_frame": "73728",
+            "onset_capture_frame": "-1",
+            "latency_ms": "-1678.9",
+            "peak": "0.000"
+          },
+          {
+            "event": "seat",
+            "voice": "1",
+            "variant": "1",
+            "cue_wall_ms": "2024",
+            "cue_capture_frame": "77824",
+            "onset_capture_frame": "-1",
+            "latency_ms": "-1764.7",
+            "peak": "0.000"
+          }
+        ]
+      }
+    },
+    {
+      "attempt": "raw/012-mutant-A6-audio-capture-cancel",
+      "name": "audio capture (cancel)",
+      "control": "A6",
+      "role": "mutant",
+      "checks": 11,
+      "failures": 1,
+      "exit": 1,
+      "independent_classification": "expected assertion catch",
+      "containment_clean": true,
+      "captures": [
+        {
+          "name": "mix_cancel.wav",
+          "sha256": "4061b4d92256222587544edfec94e6b9cce165f60f9f9d93aca090133fc4c98e",
+          "bytes": 278572
+        },
+        {
+          "name": "voices_cancel.csv",
+          "sha256": "36cb89ac99282588e5844c690010fa442d4606269736b69171dc3064e4366aba",
+          "bytes": 237
+        },
+        {
+          "name": "report_cancel.txt",
+          "sha256": "92bfaf32886b1af722003a4e45816aae6a4a2b6e9246a6e6dd83482aefc230f1",
+          "bytes": 1471
+        }
+      ],
+      "wav_observations": {
+        "frames": 139264,
+        "rate": 44100,
+        "mono_pcm16": true,
+        "duration_seconds": 3.1579138321995464,
+        "peak": 0.07751701406903287,
+        "early_window_end_frame": 17834,
+        "early_mix_peak": 0.0,
+        "voices": [
+          {
+            "event": "unlatch",
+            "voice": "0",
+            "variant": "1",
+            "cue_wall_ms": "764",
+            "cue_capture_frame": "20480",
+            "onset_capture_frame": "20727",
+            "latency_ms": "5.6",
+            "peak": "0.066"
+          },
+          {
+            "event": "extract",
+            "voice": "1",
+            "variant": "1",
+            "cue_wall_ms": "826",
+            "cue_capture_frame": "24576",
+            "onset_capture_frame": "25515",
+            "latency_ms": "2.0",
+            "peak": "0.078"
+          },
+          {
+            "event": "pouch",
+            "voice": "2",
+            "variant": "1",
+            "cue_wall_ms": "1364",
+            "cue_capture_frame": "49152",
+            "onset_capture_frame": "50594",
+            "latency_ms": "32.7",
+            "peak": "0.053"
+          },
+          {
+            "event": "land",
+            "voice": "3",
+            "variant": "1",
+            "cue_wall_ms": "1564",
+            "cue_capture_frame": "57344",
+            "onset_capture_frame": "57791",
+            "latency_ms": "10.0",
+            "peak": "0.032"
+          }
+        ]
+      }
+    },
+    {
+      "attempt": "raw/013-mutant-A7-audio-capture",
+      "name": "audio capture",
+      "control": "A7",
+      "role": "mutant",
+      "checks": 14,
+      "failures": 1,
+      "exit": 1,
+      "independent_classification": "expected assertion catch",
+      "containment_clean": true,
+      "captures": [
+        {
+          "name": "mix_reload.wav",
+          "sha256": "2085bc5f97362f376226417bbbaa394d9bab3f313f217b608782839c2cfabb0d",
+          "bytes": 270380
+        },
+        {
+          "name": "voices_reload.csv",
+          "sha256": "b07aa8f46c1628530036e024e8675c61bb8b12b41d54ac41d813defee0ba9f9f",
+          "bytes": 310
+        },
+        {
+          "name": "report_reload.txt",
+          "sha256": "d4b4c55f8bdd8e79b24c2034e5a51dde4b02496c20fa2800d07d2a5fa55fabee",
+          "bytes": 1961
+        }
+      ],
+      "wav_observations": {
+        "frames": 135168,
+        "rate": 44100,
+        "mono_pcm16": true,
+        "duration_seconds": 3.0650340136054424,
+        "peak": 0.14172795800653096,
+        "early_window_end_frame": 17834,
+        "early_mix_peak": 0.030610065004425185,
+        "voices": [
+          {
+            "event": "unlatch",
+            "voice": "0",
+            "variant": "1",
+            "cue_wall_ms": "763",
+            "cue_capture_frame": "20480",
+            "onset_capture_frame": "20727",
+            "latency_ms": "5.6",
+            "peak": "0.066"
+          },
+          {
+            "event": "extract",
+            "voice": "1",
+            "variant": "1",
+            "cue_wall_ms": "832",
+            "cue_capture_frame": "24576",
+            "onset_capture_frame": "25515",
+            "latency_ms": "2.0",
+            "peak": "0.078"
+          },
+          {
+            "event": "pouch",
+            "voice": "2",
+            "variant": "1",
+            "cue_wall_ms": "1349",
+            "cue_capture_frame": "49152",
+            "onset_capture_frame": "50594",
+            "latency_ms": "32.7",
+            "peak": "0.053"
+          },
+          {
+            "event": "land",
+            "voice": "3",
+            "variant": "1",
+            "cue_wall_ms": "1549",
+            "cue_capture_frame": "57344",
+            "onset_capture_frame": "57791",
+            "latency_ms": "10.0",
+            "peak": "0.032"
+          },
+          {
+            "event": "enter",
+            "voice": "0",
+            "variant": "1",
+            "cue_wall_ms": "1894",
+            "cue_capture_frame": "73728",
+            "onset_capture_frame": "74199",
+            "latency_ms": "3.6",
+            "peak": "0.085"
+          },
+          {
+            "event": "seat",
+            "voice": "1",
+            "variant": "1",
+            "cue_wall_ms": "2032",
+            "cue_capture_frame": "77824",
+            "onset_capture_frame": "78061",
+            "latency_ms": "5.4",
+            "peak": "0.132"
+          }
+        ]
+      }
+    }
+  ],
+  "limits": "Only summed mono PCM16 WAVs retained, not all per-voice float arrays or cancel-frame counters. Cannot independently recompute every per-voice assertion or A6 exact post-cancel window. Raw reports/voice CSV/native logs and exact mutation/restoration hashes corroborate original catches. No listening, speaker, physical output-latency or subjective audio-quality acceptance."
+}

@@ -1,0 +1,22 @@
+{
+  "commit": "fixture",
+  "dirty": true,
+  "source": {
+    "source_dirty": true
+  },
+  "validation_source": {
+    "dirty": true
+  },
+  "platform": "fixture-platform",
+  "python": "3.13.15",
+  "checks": [
+    {
+      "name": "frozen-source-precondition",
+      "source_commit": "fixture",
+      "passed": false,
+      "unavailable": true,
+      "reason": "Commit all source and validation tooling before running a matrix.",
+      "log": "frozen-source-precondition.log"
+    }
+  ]
+}

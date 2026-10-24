@@ -1,0 +1,183 @@
+INFO:     Started server process [7950]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8183 (Press CTRL+C to quit)
+INFO:     127.0.0.1:53026 - "POST /server/matches HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/home/runner/work/sightbreak/sightbreak/.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 149, in __init__
+    self._dbapi_connection = engine.raw_connection()
+                             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/sightbreak/sightbreak/.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3287, in raw_connection
+    return self.pool.connect()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/sightbreak/sightbreak/.venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 445, in connect
+    return _ConnectionFairy._checkout(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/sightbreak/sightbreak/.venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 1303, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/sightbreak/sightbreak/.venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 709, in checkout
+    rec = pool._do_get()
+          ^^^^^^^^^^^^^^
+  File "/home/runner/work/sightbreak/sightbreak/.venv/lib/python3.12/site-packages/sqlalchemy/pool/impl.py", line 176, in _do_get
+    with util.safe_reraise():
+  File "/home/runner/work/sightbreak/sightbreak/.venv/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/runner/work/sightbreak/sightbreak/.venv/lib/python3.12/site-packages/sqlalchemy/pool/impl.py", line 174, in _do_get
+    return self._create_connection()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/sightbreak/sightbreak/.venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 386, in _create_connection
+    return _ConnectionRecord(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/sightbreak/sightbreak/.venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 671, in __init__
+    self.__connect()
+  File "/home/runner/work/sightbreak/sightbreak/.venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 906, in __connect
+    with util.safe_reraise():
+  File "/home/runner/work/sightbreak/sightbreak/.venv/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/runner/work/sightbreak/sightbreak/.venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 902, in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/sightbreak/sightbreak/.venv/lib/python3.12/site-packages/sqlalchemy/engine/create.py", line 645, in connect
+    return dialect.connect(*cargs_tup, **cparams)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/sightbreak/sightbreak/.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 869, in connect
+    return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/sightbreak/sightbreak/.venv/lib/python3.12/site-packages/psycopg/connection.py", line 126, in connect
+    raise last_ex.with_traceback(None)
+psycopg.OperationalError: connection failed: connection to server at "127.0.0.1", port 55432 failed: FATAL:  database "sightbreak_outbox_0de17ee4_test" is not currently accepting connections
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/runner/work/sightbreak/sightbreak/.venv/lib/python3.12/site-packages/uvicorn/protocols/http/h11_impl.py", line 411, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/sightbreak/sightbreak/.venv/lib/python3.12/site-packages/uvicorn/middleware/proxy_headers.py", line 63, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/sightbreak/sightbreak/.venv/lib/python3.12/site-packages/fastapi/applications.py", line 1216, in __call__
+    await super().__call__(scope, receive, send)
+  File "/home/runner/work/sightbreak/sightbreak/.venv/lib/python3.12/site-packages/starlette/applications.py", line 96, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/runner/work/sightbreak/sightbreak/.venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/home/runner/work/sightbreak/sightbreak/.venv/lib/python3.12/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/home/runner/work/sightbreak/sightbreak/.venv/lib/python3.12/site-packages/fastapi/telemetry/_asgi.py", line 151, in __call__
+    await self.app(scope, receive, send)
+  File "/home/runner/work/sightbreak/sightbreak/.venv/lib/python3.12/site-packages/starlette/middleware/exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/home/runner/work/sightbreak/sightbreak/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/runner/work/sightbreak/sightbreak/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/runner/work/sightbreak/sightbreak/.venv/lib/python3.12/site-packages/fastapi/middleware/asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "/home/runner/work/sightbreak/sightbreak/.venv/lib/python3.12/site-packages/starlette/routing.py", line 676, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/home/runner/work/sightbreak/sightbreak/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 2786, in app
+    await route.handle(scope, receive, send)
+  File "/home/runner/work/sightbreak/sightbreak/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 1310, in handle
+    await super().handle(scope, receive, send)
+  File "/home/runner/work/sightbreak/sightbreak/.venv/lib/python3.12/site-packages/starlette/routing.py", line 282, in handle
+    await self.app(scope, receive, send)
+  File "/home/runner/work/sightbreak/sightbreak/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 165, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/home/runner/work/sightbreak/sightbreak/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "/home/runner/work/sightbreak/sightbreak/.venv/lib/python3.12/site-packages/starlette/_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "/home/runner/work/sightbreak/sightbreak/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 151, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "/home/runner/work/sightbreak/sightbreak/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 727, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/sightbreak/sightbreak/.venv/lib/python3.12/site-packages/fastapi/routing.py", line 362, in run_endpoint_function
+    return await run_in_threadpool(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/sightbreak/sightbreak/.venv/lib/python3.12/site-packages/starlette/concurrency.py", line 34, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/sightbreak/sightbreak/.venv/lib/python3.12/site-packages/anyio/to_thread.py", line 65, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/sightbreak/sightbreak/.venv/lib/python3.12/site-packages/anyio/_backends/_asyncio.py", line 2706, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "/home/runner/work/sightbreak/sightbreak/.venv/lib/python3.12/site-packages/anyio/_backends/_asyncio.py", line 1100, in run
+    result = context.run(func, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/sightbreak/sightbreak/.venv/lib/python3.12/site-packages/fastapi/telemetry/_api.py", line 244, in _run_sync_endpoint
+    return function(**arguments)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/sightbreak/sightbreak/backend/app.py", line 402, in match_result
+    rate(request,'server',120)
+  File "/home/runner/work/sightbreak/sightbreak/backend/app.py", line 55, in rate
+    with engine.begin() as db:
+  File "/usr/lib/python3.12/contextlib.py", line 137, in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+  File "/home/runner/work/sightbreak/sightbreak/.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3227, in begin
+    with self.connect() as conn:
+         ^^^^^^^^^^^^^^
+  File "/home/runner/work/sightbreak/sightbreak/.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3263, in connect
+    return self._connection_cls(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/sightbreak/sightbreak/.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 151, in __init__
+    Connection._handle_dbapi_exception_noconnection(
+  File "/home/runner/work/sightbreak/sightbreak/.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 2420, in _handle_dbapi_exception_noconnection
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "/home/runner/work/sightbreak/sightbreak/.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 149, in __init__
+    self._dbapi_connection = engine.raw_connection()
+                             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/sightbreak/sightbreak/.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py", line 3287, in raw_connection
+    return self.pool.connect()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/sightbreak/sightbreak/.venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 445, in connect
+    return _ConnectionFairy._checkout(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/sightbreak/sightbreak/.venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 1303, in _checkout
+    fairy = _ConnectionRecord.checkout(pool)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/sightbreak/sightbreak/.venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 709, in checkout
+    rec = pool._do_get()
+          ^^^^^^^^^^^^^^
+  File "/home/runner/work/sightbreak/sightbreak/.venv/lib/python3.12/site-packages/sqlalchemy/pool/impl.py", line 176, in _do_get
+    with util.safe_reraise():
+  File "/home/runner/work/sightbreak/sightbreak/.venv/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/runner/work/sightbreak/sightbreak/.venv/lib/python3.12/site-packages/sqlalchemy/pool/impl.py", line 174, in _do_get
+    return self._create_connection()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/sightbreak/sightbreak/.venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 386, in _create_connection
+    return _ConnectionRecord(self)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/sightbreak/sightbreak/.venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 671, in __init__
+    self.__connect()
+  File "/home/runner/work/sightbreak/sightbreak/.venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 906, in __connect
+    with util.safe_reraise():
+  File "/home/runner/work/sightbreak/sightbreak/.venv/lib/python3.12/site-packages/sqlalchemy/util/langhelpers.py", line 166, in __exit__
+    raise exc_value.with_traceback(exc_tb)
+  File "/home/runner/work/sightbreak/sightbreak/.venv/lib/python3.12/site-packages/sqlalchemy/pool/base.py", line 902, in __connect
+    self.dbapi_connection = connection = pool._invoke_creator(self)
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/sightbreak/sightbreak/.venv/lib/python3.12/site-packages/sqlalchemy/engine/create.py", line 645, in connect
+    return dialect.connect(*cargs_tup, **cparams)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/sightbreak/sightbreak/.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py", line 869, in connect
+    return self.loaded_dbapi.connect(*cargs, **cparams)  # type: ignore[no-any-return]  # NOQA: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/sightbreak/sightbreak/.venv/lib/python3.12/site-packages/psycopg/connection.py", line 126, in connect
+    raise last_ex.with_traceback(None)
+sqlalchemy.exc.OperationalError: (psycopg.OperationalError) connection failed: connection to server at "127.0.0.1", port 55432 failed: FATAL:  database "sightbreak_outbox_0de17ee4_test" is not currently accepting connections
+(Background on this error at: https://sqlalche.me/e/21/e3q8)
+INFO:     127.0.0.1:53028 - "POST /server/matches HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53038 - "POST /server/matches HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [7950]

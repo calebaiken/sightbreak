@@ -1,0 +1,62 @@
+{
+  "recommendation": "Retain as source-pinned automated development-candidate evidence only; all listed scope limits/open findings remain.",
+  "unconditional_acceptance": false,
+  "release_approved": false,
+  "blocking_audited_runtime_contract_contradictions": [],
+  "primary_static_predicates": 309,
+  "supplemental_static_predicates": 10,
+  "total_static_predicates": 319,
+  "failed_final_predicates": [],
+  "findings": [
+    {
+      "id": "OS-CHILD-RECEIPTS",
+      "kind": "unresolved_observability_limit",
+      "severity": "scope-limiting",
+      "observed": "132 campaign native reports/logs, 12 parent OS receipts, zero per-child numeric OS exit receipts.",
+      "effect": "No claim of 132 independently retained numeric exits; pinned harness enforces child zero exits before root success."
+    },
+    {
+      "id": "OS-AUDIO-ROOT",
+      "kind": "unresolved_observability_limit",
+      "severity": "scope-limiting",
+      "observed": "Direct Bash-e CI step success and root/result exit0; no standalone root process receipt."
+    },
+    {
+      "id": "UI-POST-SOURCE",
+      "kind": "receipt_granularity_limit",
+      "severity": "scope-limiting",
+      "observed": "Post-run unchanged source/executable checks enforced by exact pinned controllers; no separate after-source UI snapshot."
+    },
+    {
+      "id": "VISIBLE-VERSION",
+      "kind": "confirmed_product_inconsistency",
+      "severity": "minor-open",
+      "observed": "Original menu displays 0.3.0-dev; actual package manifest/APK metadata says 0.3.2-dev. Frozen main.gd:266 contains old label.",
+      "effect": "No hash/source mismatch, but version-label correctness is not accepted or fixed by this audit."
+    },
+    {
+      "id": "RENDER-AUTHORITY-LAG",
+      "kind": "confirmed_evidence_limit",
+      "severity": "scope-limiting",
+      "observed": "Authority-completion-named original network screenshot is still RELOADING 0.5s; settled frame later shows30/84."
+    },
+    {
+      "id": "STRICT-LOG-EXCEPTIONS",
+      "kind": "classified_nonclean_logs",
+      "severity": "disclosed",
+      "observed": "402 logs, nine matching files /27 lines: audio expected assertions, injected DB outage, incompatible protocol errors/mirrors, historical archived texture leaks.",
+      "effect": "No unclassified marker; no blanket error-free-archive claim."
+    }
+  ],
+  "unverified_gates": [
+    "Human uninterrupted full match",
+    "Subjective gunplay/aim/listening",
+    "Touch/gyro usability",
+    "Physical Android install/play/performance",
+    "macOS/Xcode iOS build/signing/physical install",
+    "Sustained device FPS/latency/thermal/battery",
+    "Production deployment/reliability",
+    "Security review",
+    "Every applicable8.5-per-category art/quality gate"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "control": "A5",
+  "description": "the reload sounds play 80 dB down (the voices are muted)",
+  "edits": [
+    {
+      "path": "/home/runner/work/_temp/sightbreak-v3-controls/game/scripts/gameplay/reload_audio.gd",
+      "old": "\tvoice.volume_db = -15.0 + float(LEVELS.get(event, 0.0))",
+      "new": "\tvoice.volume_db = -95.0",
+      "matches": 1,
+      "newlines": "LF",
+      "before_sha256": "984446b54bbdfa74d3bd27ed07e3bac335a7959b8fb5cfacbe5e9609f421ef34",
+      "after_sha256": "6ac79ec9042784d294028069496785791588b7bd08bd5f7b9e3ea079b3726cf7"
+    }
+  ]
+}

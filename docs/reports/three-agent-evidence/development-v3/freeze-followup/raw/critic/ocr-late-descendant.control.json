@@ -1,0 +1,24 @@
+{
+  "name": "ocr-late-descendant",
+  "command": [
+    "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-tools\\python\\cpython-3.13.15-windows-x86_64-none\\python.exe",
+    "-B",
+    "-c",
+    "import pathlib, subprocess, sys, time; p=subprocess.Popen([sys.executable, \"-B\", \"-c\", 'import pathlib, time; pathlib.Path(\\'C:\\\\\\\\Users\\\\\\\\blith\\\\\\\\AppData\\\\\\\\Local\\\\\\\\Temp\\\\\\\\opencode\\\\\\\\sol-freeze-final-critic-20261023T002632558647Z\\\\\\\\descendant-ready.txt\\').write_text(\"ready\"); time.sleep(1.2); pathlib.Path(\\'C:\\\\\\\\Users\\\\\\\\blith\\\\\\\\AppData\\\\\\\\Local\\\\\\\\Temp\\\\\\\\opencode\\\\\\\\sol-freeze-final-critic-20261023T002632558647Z\\\\\\\\descendant-late.txt\\').write_text(\"escaped descendant\")'], creationflags=subprocess.CREATE_NEW_PROCESS_GROUP); ready=pathlib.Path('C:\\\\Users\\\\blith\\\\AppData\\\\Local\\\\Temp\\\\opencode\\\\sol-freeze-final-critic-20261023T002632558647Z\\\\descendant-ready.txt'); deadline=time.monotonic()+2; \nwhile not ready.exists() and time.monotonic()<deadline: time.sleep(.01)\nassert ready.exists(); print(\"100 HEALTH\", flush=True)"
+  ],
+  "budget": 5,
+  "seconds": 0.9542518999951426,
+  "returned_text": null,
+  "error": {
+    "type": "RuntimeError",
+    "message": "Offline OCR containment or process audit failed: HARNESS_ERROR descendants survived command exit\n\nHARNESS_ERROR descendants survived command exit\n\nHARNESS_ERROR descendants survived the process supervisor\n"
+  },
+  "receipt": {
+    "complete": true,
+    "exit": 0,
+    "errors": [
+      "descendants survived command exit"
+    ]
+  },
+  "control_passed": true
+}

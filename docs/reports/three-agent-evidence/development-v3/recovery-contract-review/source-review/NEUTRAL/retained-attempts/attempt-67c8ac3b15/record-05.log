@@ -1,0 +1,16 @@
+2026-10-22 20:33:34.474 EDT [4252] LOG:  starting PostgreSQL 17.11 on x86_64-windows, compiled by msvc-19.44.35229, 64-bit
+2026-10-22 20:33:34.476 EDT [4252] LOG:  listening on IPv4 address "127.0.0.1", port 55439
+2026-10-22 20:33:34.668 EDT [4920] LOG:  database system was interrupted; last known up at 2026-10-19 16:20:16 EDT
+2026-10-22 20:33:43.366 EDT [4920] LOG:  database system was not properly shut down; automatic recovery in progress
+2026-10-22 20:33:43.392 EDT [4920] LOG:  redo starts at 0/7E35A20
+2026-10-22 20:33:43.393 EDT [4920] LOG:  invalid record length at 0/7E35B28: expected at least 24, got 0
+2026-10-22 20:33:43.394 EDT [4920] LOG:  redo done at 0/7E35AF0 system usage: CPU: user: 0.00 s, system: 0.00 s, elapsed: 0.00 s
+2026-10-22 20:33:43.463 EDT [11000] LOG:  checkpoint starting: end-of-recovery immediate wait
+2026-10-22 20:33:43.581 EDT [11000] LOG:  checkpoint complete: wrote 3 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.013 s, sync=0.011 s, total=0.170 s; sync files=2, longest=0.007 s, average=0.006 s; distance=0 kB, estimate=0 kB; lsn=0/7E35B28, redo lsn=0/7E35B28
+2026-10-22 20:33:43.721 EDT [4252] LOG:  database system is ready to accept connections
+2026-10-22 20:34:30.833 EDT [4252] LOG:  server process (PID 8848) was terminated by exception 0xC0000142
+2026-10-22 20:34:30.833 EDT [4252] HINT:  See C include file "ntstatus.h" for a description of the hexadecimal value.
+2026-10-22 20:34:30.833 EDT [4252] LOG:  terminating any other active server processes
+2026-10-22 20:34:30.893 EDT [4252] LOG:  all server processes terminated; reinitializing
+2026-10-22 20:34:31.103 EDT [4252] LOG:  shutting down due to startup process failure
+2026-10-22 20:34:31.106 EDT [4252] LOG:  database system is shut down

@@ -1,0 +1,12 @@
+COMMAND git status --short --untracked-files=all -- .github/workflows/v3-development.yml .github/workflows/engineering.yml scripts/matrix_process.py scripts/godot_process.py scripts/validate_matrix.py scripts/run_network_campaign.py scripts/setup.sh scripts/godot.sh scripts/export.sh scripts/setup-android.sh scripts/build_manifest.py scripts/test_protocol_compat.sh scripts/validate.sh backend/dev-db.sh .gitignore
+EXIT 0
+STDOUT
+ M .github/workflows/engineering.yml
+ M scripts/build_manifest.py
+ M scripts/run_network_campaign.py
+ M scripts/validate_matrix.py
+?? .github/workflows/v3-development.yml
+?? scripts/godot_process.py
+?? scripts/matrix_process.py
+
+STDERR

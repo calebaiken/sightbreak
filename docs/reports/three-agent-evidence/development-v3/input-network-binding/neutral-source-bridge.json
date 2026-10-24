@@ -1,0 +1,4488 @@
+{
+  "neutral_payloads_verified": 362,
+  "safe_zip_members": 363,
+  "artifact_binding_counts": {
+    "direct_raw_exact": 278,
+    "capture_redactions_exact": 32,
+    "timeline_indexes_bound": 32,
+    "run_manifest_linked": 1,
+    "canonical_sources_exact": 7,
+    "source_excerpts_exact": 4
+  },
+  "new_admin_artifacts": [
+    ".gitattributes",
+    "CLOCKS_AND_LIMITS.md",
+    "README.md",
+    "failure_retention_index.json",
+    "provenance.json",
+    "schedule.json",
+    "shared/source_context.json",
+    "verify_packet.py"
+  ],
+  "all_payload_records": [
+    {
+      "neutral_path": "sample-H/case-01/barrier/start.json",
+      "bytes": 29,
+      "sha256": "e36601cd3488f3393b1cd7c062d1fe64f7fa638ba07bf76f33d0fec1414842af",
+      "original_counterpart_ids": [
+        "O0004"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/1-steady-prediction-off/barrier/start.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-01/barrier/stop",
+      "bytes": 30,
+      "sha256": "6a47549065877e56660f8db101d9176145460eae4bba59ec5fe5b78a1f579e08",
+      "original_counterpart_ids": [
+        "O0005"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/1-steady-prediction-off/barrier/stop",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-01/client.json",
+      "bytes": 60971,
+      "sha256": "ff606de90e21e2187ab080525c69269f19edc63b578511f5bb7c0996deb33f51",
+      "original_counterpart_ids": [
+        "O0006"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/1-steady-prediction-off/client.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-01/client.json.ready",
+      "bytes": 5,
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+      "original_counterpart_ids": [
+        "O0007"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/1-steady-prediction-off/client.json.ready",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-01/client.log",
+      "bytes": 179,
+      "sha256": "12570ce6d1ffbe0c12aad9860db09070748b236a42b551c9c7b46e7d73b7adea",
+      "original_counterpart_ids": [
+        "O0008"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/1-steady-prediction-off/client.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-01/server.json",
+      "bytes": 115208,
+      "sha256": "6d33c2cf3df6b318d288ebbecaab88d323bd4f95e4f734428f646b79eb1e7ffb",
+      "original_counterpart_ids": [
+        "O0009"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/1-steady-prediction-off/server.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-01/server.json.ready",
+      "bytes": 5,
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+      "original_counterpart_ids": [
+        "O0010"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/1-steady-prediction-off/server.json.ready",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-01/server.log",
+      "bytes": 215,
+      "sha256": "bf363d461c125e3fd85af1de41a8603299ce71ccbf21f978b9080340a9ee3526",
+      "original_counterpart_ids": [
+        "O0011"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/1-steady-prediction-off/server.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-01/capture.json",
+      "bytes": 1675,
+      "sha256": "12dc70bd84371cf5ce3bf1c602f1090f85f73971070b75a28df0dee3b7f04d1d",
+      "original_counterpart_ids": [
+        "O0012"
+      ],
+      "declared_transformation": "JSON reserialization; command-path placeholders; aggregate verdict fields removed; all captured numeric metrics/return codes retained",
+      "status": "independent exact JSON reserialization and command redaction",
+      "removed_policy_fields": [
+        "improvement_gate",
+        "recovery_and_edges_pass",
+        "transport_authority_privacy_pass"
+      ]
+    },
+    {
+      "neutral_path": "sample-H/case-01/timeline_index.json",
+      "bytes": 140529,
+      "sha256": "010e112d12b594a4cfe2b763198d0caaa8a947bc267c17517fd54b24397bcfba",
+      "original_counterpart_ids": [
+        "O0009",
+        "O0006",
+        "O0012"
+      ],
+      "declared_transformation": "new offline descriptive index with raw row references; clocks, x-axis rest and control clearing kept distinct; no comparative verdict",
+      "status": "derived index bound to exact raw counterparts and immutable original independent all-field recomputation"
+    },
+    {
+      "neutral_path": "sample-H/case-02/barrier/start.json",
+      "bytes": 27,
+      "sha256": "4d771f5c6be9e11e6d7f7d01d506cd643e831b731cbb94974614ebc97f723163",
+      "original_counterpart_ids": [
+        "O0013"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/1-steady-prediction-on/barrier/start.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-02/barrier/stop",
+      "bytes": 30,
+      "sha256": "6a47549065877e56660f8db101d9176145460eae4bba59ec5fe5b78a1f579e08",
+      "original_counterpart_ids": [
+        "O0014"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/1-steady-prediction-on/barrier/stop",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-02/client.json",
+      "bytes": 61148,
+      "sha256": "1e145169ff001dbe08d896b1c8784d17d6901861f50e9f99a8cd130a00695dc2",
+      "original_counterpart_ids": [
+        "O0015"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/1-steady-prediction-on/client.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-02/client.json.ready",
+      "bytes": 5,
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+      "original_counterpart_ids": [
+        "O0016"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/1-steady-prediction-on/client.json.ready",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-02/client.log",
+      "bytes": 179,
+      "sha256": "12570ce6d1ffbe0c12aad9860db09070748b236a42b551c9c7b46e7d73b7adea",
+      "original_counterpart_ids": [
+        "O0017"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/1-steady-prediction-on/client.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-02/server.json",
+      "bytes": 115249,
+      "sha256": "0f0fc9e8975224068b9fe564169a113959e078cd74f5da95e7eaad825eebd511",
+      "original_counterpart_ids": [
+        "O0018"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/1-steady-prediction-on/server.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-02/server.json.ready",
+      "bytes": 5,
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+      "original_counterpart_ids": [
+        "O0019"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/1-steady-prediction-on/server.json.ready",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-02/server.log",
+      "bytes": 215,
+      "sha256": "3d817a10b090c944959d4a1e4348f11a734c0ed39b21f995254606dcd171183e",
+      "original_counterpart_ids": [
+        "O0020"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/1-steady-prediction-on/server.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-02/capture.json",
+      "bytes": 1717,
+      "sha256": "0450e70df59066815fa5a9600fe67183e3e7a394f9d37170d43b9bffd74c320f",
+      "original_counterpart_ids": [
+        "O0021"
+      ],
+      "declared_transformation": "JSON reserialization; command-path placeholders; aggregate verdict fields removed; all captured numeric metrics/return codes retained",
+      "status": "independent exact JSON reserialization and command redaction",
+      "removed_policy_fields": [
+        "improvement_gate",
+        "recovery_and_edges_pass",
+        "transport_authority_privacy_pass"
+      ]
+    },
+    {
+      "neutral_path": "sample-H/case-02/timeline_index.json",
+      "bytes": 142551,
+      "sha256": "e6b6cc537fda0c29d200137723acc9c9fa2f2826a0dbe9d11eafce993dd47030",
+      "original_counterpart_ids": [
+        "O0018",
+        "O0015",
+        "O0021"
+      ],
+      "declared_transformation": "new offline descriptive index with raw row references; clocks, x-axis rest and control clearing kept distinct; no comparative verdict",
+      "status": "derived index bound to exact raw counterparts and immutable original independent all-field recomputation"
+    },
+    {
+      "neutral_path": "sample-H/case-03/barrier/start.json",
+      "bytes": 29,
+      "sha256": "c2ceb300e158dd9d9546fb31a3f0a677378eebcc50098b0a3d655de1c9b0852d",
+      "original_counterpart_ids": [
+        "O0022"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/1-input-gap-prediction-off/barrier/start.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-03/barrier/stop",
+      "bytes": 30,
+      "sha256": "6a47549065877e56660f8db101d9176145460eae4bba59ec5fe5b78a1f579e08",
+      "original_counterpart_ids": [
+        "O0023"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/1-input-gap-prediction-off/barrier/stop",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-03/client.json",
+      "bytes": 61071,
+      "sha256": "1a532be3c1cb8e1baa440838577e14b4ad68de20d8143ef705be04029af0e3d6",
+      "original_counterpart_ids": [
+        "O0024"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/1-input-gap-prediction-off/client.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-03/client.json.ready",
+      "bytes": 5,
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+      "original_counterpart_ids": [
+        "O0025"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/1-input-gap-prediction-off/client.json.ready",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-03/client.log",
+      "bytes": 182,
+      "sha256": "747edfc1fa95026122cc7500614f26290756f3b0d4e451d4c1e6404cb0a97193",
+      "original_counterpart_ids": [
+        "O0026"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/1-input-gap-prediction-off/client.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-03/server.json",
+      "bytes": 115134,
+      "sha256": "ab417f02fc6a725b2daef92092ec46250eb0a7934dc7592ee0252da804c63128",
+      "original_counterpart_ids": [
+        "O0027"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/1-input-gap-prediction-off/server.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-03/server.json.ready",
+      "bytes": 5,
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+      "original_counterpart_ids": [
+        "O0028"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/1-input-gap-prediction-off/server.json.ready",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-03/server.log",
+      "bytes": 218,
+      "sha256": "e8cba414cf95846173551526431c19e7863672f1a65361458ebaaba9c3c1c6b6",
+      "original_counterpart_ids": [
+        "O0029"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/1-input-gap-prediction-off/server.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-03/capture.json",
+      "bytes": 1684,
+      "sha256": "a278b1f46cc823290870ac2383ca517481411736a62172b548d41c768eaa1522",
+      "original_counterpart_ids": [
+        "O0030"
+      ],
+      "declared_transformation": "JSON reserialization; command-path placeholders; aggregate verdict fields removed; all captured numeric metrics/return codes retained",
+      "status": "independent exact JSON reserialization and command redaction",
+      "removed_policy_fields": [
+        "improvement_gate",
+        "recovery_and_edges_pass",
+        "transport_authority_privacy_pass"
+      ]
+    },
+    {
+      "neutral_path": "sample-H/case-03/timeline_index.json",
+      "bytes": 141329,
+      "sha256": "1dc0ea9342dc17563c2a2bd78c99ed0dba4177bde5792456ae47d9caba711118",
+      "original_counterpart_ids": [
+        "O0027",
+        "O0024",
+        "O0030"
+      ],
+      "declared_transformation": "new offline descriptive index with raw row references; clocks, x-axis rest and control clearing kept distinct; no comparative verdict",
+      "status": "derived index bound to exact raw counterparts and immutable original independent all-field recomputation"
+    },
+    {
+      "neutral_path": "sample-H/case-04/barrier/start.json",
+      "bytes": 28,
+      "sha256": "504d382fc8c32caf79e2925044a599c32b73832534f50170e7a7a9b2f247270d",
+      "original_counterpart_ids": [
+        "O0031"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/1-input-gap-prediction-on/barrier/start.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-04/barrier/stop",
+      "bytes": 30,
+      "sha256": "6a47549065877e56660f8db101d9176145460eae4bba59ec5fe5b78a1f579e08",
+      "original_counterpart_ids": [
+        "O0032"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/1-input-gap-prediction-on/barrier/stop",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-04/client.json",
+      "bytes": 61103,
+      "sha256": "5d43747e331d05a31c2c9513d8639be3185a3f93b4b8c5571adce0b990f4f8f0",
+      "original_counterpart_ids": [
+        "O0033"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/1-input-gap-prediction-on/client.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-04/client.json.ready",
+      "bytes": 5,
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+      "original_counterpart_ids": [
+        "O0034"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/1-input-gap-prediction-on/client.json.ready",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-04/client.log",
+      "bytes": 182,
+      "sha256": "747edfc1fa95026122cc7500614f26290756f3b0d4e451d4c1e6404cb0a97193",
+      "original_counterpart_ids": [
+        "O0035"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/1-input-gap-prediction-on/client.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-04/server.json",
+      "bytes": 115219,
+      "sha256": "0462905da12e22d4bcfacf80ec5dfcb20531e6c2a4705edb9db93097211f1d8d",
+      "original_counterpart_ids": [
+        "O0036"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/1-input-gap-prediction-on/server.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-04/server.json.ready",
+      "bytes": 5,
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+      "original_counterpart_ids": [
+        "O0037"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/1-input-gap-prediction-on/server.json.ready",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-04/server.log",
+      "bytes": 218,
+      "sha256": "b4ef645cb5a6319a496e06971c1e6662b2019a2a28bed4ae2a1277558b148d6a",
+      "original_counterpart_ids": [
+        "O0038"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/1-input-gap-prediction-on/server.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-04/capture.json",
+      "bytes": 1725,
+      "sha256": "1d874a79adfd649b03cb47fe701113b5a27b63471e3f0df9d16522deceb4ff0b",
+      "original_counterpart_ids": [
+        "O0039"
+      ],
+      "declared_transformation": "JSON reserialization; command-path placeholders; aggregate verdict fields removed; all captured numeric metrics/return codes retained",
+      "status": "independent exact JSON reserialization and command redaction",
+      "removed_policy_fields": [
+        "improvement_gate",
+        "recovery_and_edges_pass",
+        "transport_authority_privacy_pass"
+      ]
+    },
+    {
+      "neutral_path": "sample-H/case-04/timeline_index.json",
+      "bytes": 142924,
+      "sha256": "9fd97edefd4f97fa3c950fad172339702e677499778d9a37e57efd61e4e1844e",
+      "original_counterpart_ids": [
+        "O0036",
+        "O0033",
+        "O0039"
+      ],
+      "declared_transformation": "new offline descriptive index with raw row references; clocks, x-axis rest and control clearing kept distinct; no comparative verdict",
+      "status": "derived index bound to exact raw counterparts and immutable original independent all-field recomputation"
+    },
+    {
+      "neutral_path": "sample-H/case-05/barrier/start.json",
+      "bytes": 28,
+      "sha256": "c3e9a71805c6b540c7ce274ae7c03b044d6d85b4f8a8b05033e78908f04cfada",
+      "original_counterpart_ids": [
+        "O0040"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/1-snapshot-gap-prediction-off/barrier/start.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-05/barrier/stop",
+      "bytes": 30,
+      "sha256": "6a47549065877e56660f8db101d9176145460eae4bba59ec5fe5b78a1f579e08",
+      "original_counterpart_ids": [
+        "O0041"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/1-snapshot-gap-prediction-off/barrier/stop",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-05/client.json",
+      "bytes": 61907,
+      "sha256": "707180674ad06ae84b82cba4f7195b8b7975b5147bc6ae1078d0842b20948761",
+      "original_counterpart_ids": [
+        "O0042"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/1-snapshot-gap-prediction-off/client.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-05/client.json.ready",
+      "bytes": 5,
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+      "original_counterpart_ids": [
+        "O0043"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/1-snapshot-gap-prediction-off/client.json.ready",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-05/client.log",
+      "bytes": 185,
+      "sha256": "e12f389ec151a6211aa32afdba686dbae5335a2686838b15bd6beb9e6c5ae592",
+      "original_counterpart_ids": [
+        "O0044"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/1-snapshot-gap-prediction-off/client.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-05/server.json",
+      "bytes": 115023,
+      "sha256": "3d29d1bf2d81b3a1ab219847d0fe24c555f7bfbc081d08f1a43e98d7536dc907",
+      "original_counterpart_ids": [
+        "O0045"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/1-snapshot-gap-prediction-off/server.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-05/server.json.ready",
+      "bytes": 5,
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+      "original_counterpart_ids": [
+        "O0046"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/1-snapshot-gap-prediction-off/server.json.ready",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-05/server.log",
+      "bytes": 221,
+      "sha256": "650a820e90a8a1b5ccc1181486764fbd10f6b72463e46f1a2626a0d6360b4b0a",
+      "original_counterpart_ids": [
+        "O0047"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/1-snapshot-gap-prediction-off/server.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-05/capture.json",
+      "bytes": 1712,
+      "sha256": "1abd0bccb99e338209ac9b86c6807d2ff0d69e47a8d50006cf7f187a1d3f80f5",
+      "original_counterpart_ids": [
+        "O0048"
+      ],
+      "declared_transformation": "JSON reserialization; command-path placeholders; aggregate verdict fields removed; all captured numeric metrics/return codes retained",
+      "status": "independent exact JSON reserialization and command redaction",
+      "removed_policy_fields": [
+        "improvement_gate",
+        "recovery_and_edges_pass",
+        "transport_authority_privacy_pass"
+      ]
+    },
+    {
+      "neutral_path": "sample-H/case-05/timeline_index.json",
+      "bytes": 118482,
+      "sha256": "9153f02e29ebe2b78fb7ab4b8f5f6bae9e7e2f0c6a44a024cf06531208d17f32",
+      "original_counterpart_ids": [
+        "O0045",
+        "O0042",
+        "O0048"
+      ],
+      "declared_transformation": "new offline descriptive index with raw row references; clocks, x-axis rest and control clearing kept distinct; no comparative verdict",
+      "status": "derived index bound to exact raw counterparts and immutable original independent all-field recomputation"
+    },
+    {
+      "neutral_path": "sample-H/case-06/barrier/start.json",
+      "bytes": 28,
+      "sha256": "b8b4252452e41c2a6ac418997b1c5723f4654c75a28553b50bc25580f7390f08",
+      "original_counterpart_ids": [
+        "O0049"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/1-snapshot-gap-prediction-on/barrier/start.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-06/barrier/stop",
+      "bytes": 30,
+      "sha256": "6a47549065877e56660f8db101d9176145460eae4bba59ec5fe5b78a1f579e08",
+      "original_counterpart_ids": [
+        "O0050"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/1-snapshot-gap-prediction-on/barrier/stop",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-06/client.json",
+      "bytes": 61480,
+      "sha256": "782c6cb3b8640bb379308ed9f7a0b66a4fb4eaeb6b8067f13e03dd9130a09bf0",
+      "original_counterpart_ids": [
+        "O0051"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/1-snapshot-gap-prediction-on/client.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-06/client.json.ready",
+      "bytes": 5,
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+      "original_counterpart_ids": [
+        "O0052"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/1-snapshot-gap-prediction-on/client.json.ready",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-06/client.log",
+      "bytes": 185,
+      "sha256": "e12f389ec151a6211aa32afdba686dbae5335a2686838b15bd6beb9e6c5ae592",
+      "original_counterpart_ids": [
+        "O0053"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/1-snapshot-gap-prediction-on/client.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-06/server.json",
+      "bytes": 114735,
+      "sha256": "c1c105e024066bc5d7dfc42f7f1d205049acef62272eeb962c5a86b5cdb8259e",
+      "original_counterpart_ids": [
+        "O0054"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/1-snapshot-gap-prediction-on/server.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-06/server.json.ready",
+      "bytes": 5,
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+      "original_counterpart_ids": [
+        "O0055"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/1-snapshot-gap-prediction-on/server.json.ready",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-06/server.log",
+      "bytes": 221,
+      "sha256": "0f30a039f576cb27b82fbfba30177990534fae940cb59361949b962ee768dede",
+      "original_counterpart_ids": [
+        "O0056"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/1-snapshot-gap-prediction-on/server.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-06/capture.json",
+      "bytes": 1755,
+      "sha256": "5dd75d1794704e674e3a27339b55552c79036168681867f61298ad885ee87d0b",
+      "original_counterpart_ids": [
+        "O0057"
+      ],
+      "declared_transformation": "JSON reserialization; command-path placeholders; aggregate verdict fields removed; all captured numeric metrics/return codes retained",
+      "status": "independent exact JSON reserialization and command redaction",
+      "removed_policy_fields": [
+        "improvement_gate",
+        "recovery_and_edges_pass",
+        "transport_authority_privacy_pass"
+      ]
+    },
+    {
+      "neutral_path": "sample-H/case-06/timeline_index.json",
+      "bytes": 117521,
+      "sha256": "d251d4c9f5b97c0b5a53842a4104b281f526ad6b74f93c6df5a80cabc880e87f",
+      "original_counterpart_ids": [
+        "O0054",
+        "O0051",
+        "O0057"
+      ],
+      "declared_transformation": "new offline descriptive index with raw row references; clocks, x-axis rest and control clearing kept distinct; no comparative verdict",
+      "status": "derived index bound to exact raw counterparts and immutable original independent all-field recomputation"
+    },
+    {
+      "neutral_path": "sample-H/case-07/barrier/start.json",
+      "bytes": 29,
+      "sha256": "e42b3dfd9bf4c27d59fe4e950d7727a93d2172229a419742ef9f26b55679274e",
+      "original_counterpart_ids": [
+        "O0058"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/1-stale-replay-prediction-off/barrier/start.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-07/barrier/stop",
+      "bytes": 30,
+      "sha256": "6a47549065877e56660f8db101d9176145460eae4bba59ec5fe5b78a1f579e08",
+      "original_counterpart_ids": [
+        "O0059"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/1-stale-replay-prediction-off/barrier/stop",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-07/client.json",
+      "bytes": 260974,
+      "sha256": "664d735ba8f3771b2c123f4f931d8eb6f508bf981ef6c26f0ee4afeec1faee3d",
+      "original_counterpart_ids": [
+        "O0060"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/1-stale-replay-prediction-off/client.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-07/client.json.ready",
+      "bytes": 5,
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+      "original_counterpart_ids": [
+        "O0061"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/1-stale-replay-prediction-off/client.json.ready",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-07/client.log",
+      "bytes": 185,
+      "sha256": "dc496764e380565a0bea4c0aca361bacad6aac03925abb0b93d2142dc35a0ed6",
+      "original_counterpart_ids": [
+        "O0062"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/1-stale-replay-prediction-off/client.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-07/server.json",
+      "bytes": 457070,
+      "sha256": "edeb983df6aa130f03fb8acdda032e8994521df90a9ae417b9ab30234cc67181",
+      "original_counterpart_ids": [
+        "O0063"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/1-stale-replay-prediction-off/server.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-07/server.json.ready",
+      "bytes": 5,
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+      "original_counterpart_ids": [
+        "O0064"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/1-stale-replay-prediction-off/server.json.ready",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-07/server.log",
+      "bytes": 221,
+      "sha256": "672e8471c80fdb80de540a6fbb514ecb5a8102af857c8bb8a7e08cb0131cb8e3",
+      "original_counterpart_ids": [
+        "O0065"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/1-stale-replay-prediction-off/server.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-07/capture.json",
+      "bytes": 1687,
+      "sha256": "a4137363a6476f60a1b30a0058045417ed9ef4f019b31014b6e0a414dd553fbe",
+      "original_counterpart_ids": [
+        "O0066"
+      ],
+      "declared_transformation": "JSON reserialization; command-path placeholders; aggregate verdict fields removed; all captured numeric metrics/return codes retained",
+      "status": "independent exact JSON reserialization and command redaction",
+      "removed_policy_fields": [
+        "improvement_gate",
+        "transport_authority_privacy_pass"
+      ]
+    },
+    {
+      "neutral_path": "sample-H/case-07/timeline_index.json",
+      "bytes": 151827,
+      "sha256": "a9f9dc534a7fdd0b622c995495abb2cc7d1dcf82cee22708b08c231ac6d36fe2",
+      "original_counterpart_ids": [
+        "O0063",
+        "O0060",
+        "O0066"
+      ],
+      "declared_transformation": "new offline descriptive index with raw row references; clocks, x-axis rest and control clearing kept distinct; no comparative verdict",
+      "status": "derived index bound to exact raw counterparts and immutable original independent all-field recomputation"
+    },
+    {
+      "neutral_path": "sample-H/case-08/barrier/start.json",
+      "bytes": 28,
+      "sha256": "36ad378a81bd63b6634fd4db6f5876d41763af58d48c124b4d93fb716ad64077",
+      "original_counterpart_ids": [
+        "O0067"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/1-stale-replay-prediction-on/barrier/start.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-08/barrier/stop",
+      "bytes": 30,
+      "sha256": "6a47549065877e56660f8db101d9176145460eae4bba59ec5fe5b78a1f579e08",
+      "original_counterpart_ids": [
+        "O0068"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/1-stale-replay-prediction-on/barrier/stop",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-08/client.json",
+      "bytes": 261150,
+      "sha256": "b6655f50c87cc78aae3510375e90a466e172610db8ec84c62b5e77c33dac877f",
+      "original_counterpart_ids": [
+        "O0069"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/1-stale-replay-prediction-on/client.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-08/client.json.ready",
+      "bytes": 5,
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+      "original_counterpart_ids": [
+        "O0070"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/1-stale-replay-prediction-on/client.json.ready",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-08/client.log",
+      "bytes": 185,
+      "sha256": "dc496764e380565a0bea4c0aca361bacad6aac03925abb0b93d2142dc35a0ed6",
+      "original_counterpart_ids": [
+        "O0071"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/1-stale-replay-prediction-on/client.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-08/server.json",
+      "bytes": 457449,
+      "sha256": "fa35d30ce7ec7bc9a6ffa9e4f1976bd400f39d205b23c94696241aab848c5bff",
+      "original_counterpart_ids": [
+        "O0072"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/1-stale-replay-prediction-on/server.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-08/server.json.ready",
+      "bytes": 5,
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+      "original_counterpart_ids": [
+        "O0073"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/1-stale-replay-prediction-on/server.json.ready",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-08/server.log",
+      "bytes": 221,
+      "sha256": "c6a6586badd6f7ef4501c8016446deb6d0269601f5d9b7e825303098c81ddf49",
+      "original_counterpart_ids": [
+        "O0074"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/1-stale-replay-prediction-on/server.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-08/capture.json",
+      "bytes": 1729,
+      "sha256": "d7e5a50b093d49a83f011accb68ff6f3c1bf8e44fdad98113ee3815c4fc3bd2a",
+      "original_counterpart_ids": [
+        "O0075"
+      ],
+      "declared_transformation": "JSON reserialization; command-path placeholders; aggregate verdict fields removed; all captured numeric metrics/return codes retained",
+      "status": "independent exact JSON reserialization and command redaction",
+      "removed_policy_fields": [
+        "improvement_gate",
+        "transport_authority_privacy_pass"
+      ]
+    },
+    {
+      "neutral_path": "sample-H/case-08/timeline_index.json",
+      "bytes": 152529,
+      "sha256": "b337f01b57e6da05aedfb469f44d4083aa019c14f3549b1842347fd7d0b39914",
+      "original_counterpart_ids": [
+        "O0072",
+        "O0069",
+        "O0075"
+      ],
+      "declared_transformation": "new offline descriptive index with raw row references; clocks, x-axis rest and control clearing kept distinct; no comparative verdict",
+      "status": "derived index bound to exact raw counterparts and immutable original independent all-field recomputation"
+    },
+    {
+      "neutral_path": "sample-H/case-09/barrier/start.json",
+      "bytes": 29,
+      "sha256": "6d628c3e89d3686f66f773131a2d2b3f65bb478cda028875d23fc9cab4ac0994",
+      "original_counterpart_ids": [
+        "O0076"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/2-steady-prediction-off/barrier/start.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-09/barrier/stop",
+      "bytes": 30,
+      "sha256": "6a47549065877e56660f8db101d9176145460eae4bba59ec5fe5b78a1f579e08",
+      "original_counterpart_ids": [
+        "O0077"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/2-steady-prediction-off/barrier/stop",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-09/client.json",
+      "bytes": 61084,
+      "sha256": "f1140ef778628519b04a2efef5a7feb071a675b1308f1cec2f90cb0251acaa8b",
+      "original_counterpart_ids": [
+        "O0078"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/2-steady-prediction-off/client.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-09/client.json.ready",
+      "bytes": 5,
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+      "original_counterpart_ids": [
+        "O0079"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/2-steady-prediction-off/client.json.ready",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-09/client.log",
+      "bytes": 179,
+      "sha256": "12570ce6d1ffbe0c12aad9860db09070748b236a42b551c9c7b46e7d73b7adea",
+      "original_counterpart_ids": [
+        "O0080"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/2-steady-prediction-off/client.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-09/server.json",
+      "bytes": 115213,
+      "sha256": "1cc918a931fbd2c93af3f81de37e87cae596affde607a7dee23081895a33900c",
+      "original_counterpart_ids": [
+        "O0081"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/2-steady-prediction-off/server.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-09/server.json.ready",
+      "bytes": 5,
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+      "original_counterpart_ids": [
+        "O0082"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/2-steady-prediction-off/server.json.ready",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-09/server.log",
+      "bytes": 215,
+      "sha256": "acb069eb152609986cadbb723f938d2623df77dbda34b53478beff243a2948ca",
+      "original_counterpart_ids": [
+        "O0083"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/2-steady-prediction-off/server.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-09/capture.json",
+      "bytes": 1675,
+      "sha256": "de5c09db9749c7064eb0e129e2a46eae78ef8c08798ec4959f0aa96bae73e98f",
+      "original_counterpart_ids": [
+        "O0084"
+      ],
+      "declared_transformation": "JSON reserialization; command-path placeholders; aggregate verdict fields removed; all captured numeric metrics/return codes retained",
+      "status": "independent exact JSON reserialization and command redaction",
+      "removed_policy_fields": [
+        "improvement_gate",
+        "recovery_and_edges_pass",
+        "transport_authority_privacy_pass"
+      ]
+    },
+    {
+      "neutral_path": "sample-H/case-09/timeline_index.json",
+      "bytes": 144032,
+      "sha256": "81fe51c70295f2d0ce3ee058125168378dd0dd04a5ede42c70f626bd8188420e",
+      "original_counterpart_ids": [
+        "O0081",
+        "O0078",
+        "O0084"
+      ],
+      "declared_transformation": "new offline descriptive index with raw row references; clocks, x-axis rest and control clearing kept distinct; no comparative verdict",
+      "status": "derived index bound to exact raw counterparts and immutable original independent all-field recomputation"
+    },
+    {
+      "neutral_path": "sample-H/case-10/barrier/start.json",
+      "bytes": 29,
+      "sha256": "dfceede2cf69c43f95c7655a8610cec2e2754ac78d45e1ea7f9811f1d2d4b951",
+      "original_counterpart_ids": [
+        "O0085"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/2-steady-prediction-on/barrier/start.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-10/barrier/stop",
+      "bytes": 30,
+      "sha256": "6a47549065877e56660f8db101d9176145460eae4bba59ec5fe5b78a1f579e08",
+      "original_counterpart_ids": [
+        "O0086"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/2-steady-prediction-on/barrier/stop",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-10/client.json",
+      "bytes": 61111,
+      "sha256": "c36d33ff244d8922f802663ec5a0d448c1b4b9529f26edfa463be143ecf16103",
+      "original_counterpart_ids": [
+        "O0087"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/2-steady-prediction-on/client.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-10/client.json.ready",
+      "bytes": 5,
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+      "original_counterpart_ids": [
+        "O0088"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/2-steady-prediction-on/client.json.ready",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-10/client.log",
+      "bytes": 179,
+      "sha256": "12570ce6d1ffbe0c12aad9860db09070748b236a42b551c9c7b46e7d73b7adea",
+      "original_counterpart_ids": [
+        "O0089"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/2-steady-prediction-on/client.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-10/server.json",
+      "bytes": 115232,
+      "sha256": "5e22b4eb318038a2f67cb91ec6fb7c25a424b9a598805c18f0a49ac9d444ee9b",
+      "original_counterpart_ids": [
+        "O0090"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/2-steady-prediction-on/server.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-10/server.json.ready",
+      "bytes": 5,
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+      "original_counterpart_ids": [
+        "O0091"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/2-steady-prediction-on/server.json.ready",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-10/server.log",
+      "bytes": 215,
+      "sha256": "0d7e7a1eb492c616163726196ab13fd110657a068adab8a2e062f828710a7643",
+      "original_counterpart_ids": [
+        "O0092"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/2-steady-prediction-on/server.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-10/capture.json",
+      "bytes": 1717,
+      "sha256": "555b4522c4a4cf9422565dbb98df90614a9b385f5ba4c4c91b2b09bf97ece618",
+      "original_counterpart_ids": [
+        "O0093"
+      ],
+      "declared_transformation": "JSON reserialization; command-path placeholders; aggregate verdict fields removed; all captured numeric metrics/return codes retained",
+      "status": "independent exact JSON reserialization and command redaction",
+      "removed_policy_fields": [
+        "improvement_gate",
+        "recovery_and_edges_pass",
+        "transport_authority_privacy_pass"
+      ]
+    },
+    {
+      "neutral_path": "sample-H/case-10/timeline_index.json",
+      "bytes": 145287,
+      "sha256": "c7ff8c9fb993aaa402a1379267c2f3c9178137b47002ef8ca95a1d910241d9df",
+      "original_counterpart_ids": [
+        "O0090",
+        "O0087",
+        "O0093"
+      ],
+      "declared_transformation": "new offline descriptive index with raw row references; clocks, x-axis rest and control clearing kept distinct; no comparative verdict",
+      "status": "derived index bound to exact raw counterparts and immutable original independent all-field recomputation"
+    },
+    {
+      "neutral_path": "sample-H/case-11/barrier/start.json",
+      "bytes": 28,
+      "sha256": "ec3fa70736ac6e12f8e297874a4de30d2c36953242ea607facde0644d59f307e",
+      "original_counterpart_ids": [
+        "O0094"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/2-input-gap-prediction-off/barrier/start.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-11/barrier/stop",
+      "bytes": 30,
+      "sha256": "6a47549065877e56660f8db101d9176145460eae4bba59ec5fe5b78a1f579e08",
+      "original_counterpart_ids": [
+        "O0095"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/2-input-gap-prediction-off/barrier/stop",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-11/client.json",
+      "bytes": 61114,
+      "sha256": "22d80d0fea738933ba0c2111f61da112b25668365746302ea6bd6d221be2da7a",
+      "original_counterpart_ids": [
+        "O0096"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/2-input-gap-prediction-off/client.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-11/client.json.ready",
+      "bytes": 5,
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+      "original_counterpart_ids": [
+        "O0097"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/2-input-gap-prediction-off/client.json.ready",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-11/client.log",
+      "bytes": 182,
+      "sha256": "747edfc1fa95026122cc7500614f26290756f3b0d4e451d4c1e6404cb0a97193",
+      "original_counterpart_ids": [
+        "O0098"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/2-input-gap-prediction-off/client.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-11/server.json",
+      "bytes": 115198,
+      "sha256": "54ea4428b2d5f7319ad3966a8235188f0162846635565d8a22f6d67291c5c6f4",
+      "original_counterpart_ids": [
+        "O0099"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/2-input-gap-prediction-off/server.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-11/server.json.ready",
+      "bytes": 5,
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+      "original_counterpart_ids": [
+        "O0100"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/2-input-gap-prediction-off/server.json.ready",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-11/server.log",
+      "bytes": 218,
+      "sha256": "d6c7606b36c60448769ec067e29e7087a341a7369e6c757f41d45068ac4b41d0",
+      "original_counterpart_ids": [
+        "O0101"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/2-input-gap-prediction-off/server.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-11/capture.json",
+      "bytes": 1683,
+      "sha256": "8d564ec44a2d849043ff91965f80f1fea912576ec40fcd642084c7ad844cd643",
+      "original_counterpart_ids": [
+        "O0102"
+      ],
+      "declared_transformation": "JSON reserialization; command-path placeholders; aggregate verdict fields removed; all captured numeric metrics/return codes retained",
+      "status": "independent exact JSON reserialization and command redaction",
+      "removed_policy_fields": [
+        "improvement_gate",
+        "recovery_and_edges_pass",
+        "transport_authority_privacy_pass"
+      ]
+    },
+    {
+      "neutral_path": "sample-H/case-11/timeline_index.json",
+      "bytes": 142652,
+      "sha256": "c07b47232452d655b5d11075a5aaff709d0066a37311bc58aaa2f90c3bc83bc4",
+      "original_counterpart_ids": [
+        "O0099",
+        "O0096",
+        "O0102"
+      ],
+      "declared_transformation": "new offline descriptive index with raw row references; clocks, x-axis rest and control clearing kept distinct; no comparative verdict",
+      "status": "derived index bound to exact raw counterparts and immutable original independent all-field recomputation"
+    },
+    {
+      "neutral_path": "sample-H/case-12/barrier/start.json",
+      "bytes": 29,
+      "sha256": "898c3ae98b771fde0ce4d6b5ac574cc628f3aeb6d4144d8ddffc0ce6ff614b23",
+      "original_counterpart_ids": [
+        "O0103"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/2-input-gap-prediction-on/barrier/start.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-12/barrier/stop",
+      "bytes": 30,
+      "sha256": "6a47549065877e56660f8db101d9176145460eae4bba59ec5fe5b78a1f579e08",
+      "original_counterpart_ids": [
+        "O0104"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/2-input-gap-prediction-on/barrier/stop",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-12/client.json",
+      "bytes": 61104,
+      "sha256": "21b5fa6bf3d92f0bc64a94e15d4af33b331fcaa35091f96457d4f36a7e27988e",
+      "original_counterpart_ids": [
+        "O0105"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/2-input-gap-prediction-on/client.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-12/client.json.ready",
+      "bytes": 5,
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+      "original_counterpart_ids": [
+        "O0106"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/2-input-gap-prediction-on/client.json.ready",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-12/client.log",
+      "bytes": 182,
+      "sha256": "747edfc1fa95026122cc7500614f26290756f3b0d4e451d4c1e6404cb0a97193",
+      "original_counterpart_ids": [
+        "O0107"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/2-input-gap-prediction-on/client.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-12/server.json",
+      "bytes": 115131,
+      "sha256": "bd293cc2283f8c5a0c9c848408393f8bf13da86adebf4362df0cf6d7b3402c96",
+      "original_counterpart_ids": [
+        "O0108"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/2-input-gap-prediction-on/server.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-12/server.json.ready",
+      "bytes": 5,
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+      "original_counterpart_ids": [
+        "O0109"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/2-input-gap-prediction-on/server.json.ready",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-12/server.log",
+      "bytes": 218,
+      "sha256": "cb9707e336f5cb869717aa02dfaaef836df8bdd4647bf30fb37789e953446c45",
+      "original_counterpart_ids": [
+        "O0110"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/2-input-gap-prediction-on/server.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-12/capture.json",
+      "bytes": 1726,
+      "sha256": "68ab0350bb919e6cf26dc70b3de2d2b767fbe6cc7df6fe675123ebf73d85be45",
+      "original_counterpart_ids": [
+        "O0111"
+      ],
+      "declared_transformation": "JSON reserialization; command-path placeholders; aggregate verdict fields removed; all captured numeric metrics/return codes retained",
+      "status": "independent exact JSON reserialization and command redaction",
+      "removed_policy_fields": [
+        "improvement_gate",
+        "recovery_and_edges_pass",
+        "transport_authority_privacy_pass"
+      ]
+    },
+    {
+      "neutral_path": "sample-H/case-12/timeline_index.json",
+      "bytes": 142517,
+      "sha256": "3f2e455b52113d5d150b5d00defaea65ab476e75d85042c38f2e0cfb052fe753",
+      "original_counterpart_ids": [
+        "O0108",
+        "O0105",
+        "O0111"
+      ],
+      "declared_transformation": "new offline descriptive index with raw row references; clocks, x-axis rest and control clearing kept distinct; no comparative verdict",
+      "status": "derived index bound to exact raw counterparts and immutable original independent all-field recomputation"
+    },
+    {
+      "neutral_path": "sample-H/case-13/barrier/start.json",
+      "bytes": 29,
+      "sha256": "74e80b5fe7e0593f1fdce390348398f0df1aa16ae2a2e53e7f6e383e8af47965",
+      "original_counterpart_ids": [
+        "O0112"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/2-snapshot-gap-prediction-off/barrier/start.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-13/barrier/stop",
+      "bytes": 30,
+      "sha256": "6a47549065877e56660f8db101d9176145460eae4bba59ec5fe5b78a1f579e08",
+      "original_counterpart_ids": [
+        "O0113"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/2-snapshot-gap-prediction-off/barrier/stop",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-13/client.json",
+      "bytes": 61833,
+      "sha256": "8817b3fc60d3533c4c69895ea803616c83b24fccd96ba126e7f6493b3f8916ed",
+      "original_counterpart_ids": [
+        "O0114"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/2-snapshot-gap-prediction-off/client.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-13/client.json.ready",
+      "bytes": 5,
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+      "original_counterpart_ids": [
+        "O0115"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/2-snapshot-gap-prediction-off/client.json.ready",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-13/client.log",
+      "bytes": 185,
+      "sha256": "e12f389ec151a6211aa32afdba686dbae5335a2686838b15bd6beb9e6c5ae592",
+      "original_counterpart_ids": [
+        "O0116"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/2-snapshot-gap-prediction-off/client.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-13/server.json",
+      "bytes": 115076,
+      "sha256": "f39c25a3a03f1f21e7fd53e7354910120a3bf6d344ed311d350bafc98c18c334",
+      "original_counterpart_ids": [
+        "O0117"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/2-snapshot-gap-prediction-off/server.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-13/server.json.ready",
+      "bytes": 5,
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+      "original_counterpart_ids": [
+        "O0118"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/2-snapshot-gap-prediction-off/server.json.ready",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-13/server.log",
+      "bytes": 221,
+      "sha256": "c9cb0cc4bbc4b042ec12d4ccc08324265d7fa1aff9a64d3a1716afeda9ca2940",
+      "original_counterpart_ids": [
+        "O0119"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/2-snapshot-gap-prediction-off/server.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-13/capture.json",
+      "bytes": 1713,
+      "sha256": "30433b2707703a859699d966282a20225ef1bae61958913e747634fbc8756843",
+      "original_counterpart_ids": [
+        "O0120"
+      ],
+      "declared_transformation": "JSON reserialization; command-path placeholders; aggregate verdict fields removed; all captured numeric metrics/return codes retained",
+      "status": "independent exact JSON reserialization and command redaction",
+      "removed_policy_fields": [
+        "improvement_gate",
+        "recovery_and_edges_pass",
+        "transport_authority_privacy_pass"
+      ]
+    },
+    {
+      "neutral_path": "sample-H/case-13/timeline_index.json",
+      "bytes": 118594,
+      "sha256": "a36b6c29156ccba0ccbf05dc1916ed8f69946edbd13d46b33fbfd6511bba2c8d",
+      "original_counterpart_ids": [
+        "O0117",
+        "O0114",
+        "O0120"
+      ],
+      "declared_transformation": "new offline descriptive index with raw row references; clocks, x-axis rest and control clearing kept distinct; no comparative verdict",
+      "status": "derived index bound to exact raw counterparts and immutable original independent all-field recomputation"
+    },
+    {
+      "neutral_path": "sample-H/case-14/barrier/start.json",
+      "bytes": 29,
+      "sha256": "46c814c9b4549178fa064a5b108c013d3260289fae5e663d22289a08efe86843",
+      "original_counterpart_ids": [
+        "O0121"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/2-snapshot-gap-prediction-on/barrier/start.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-14/barrier/stop",
+      "bytes": 30,
+      "sha256": "6a47549065877e56660f8db101d9176145460eae4bba59ec5fe5b78a1f579e08",
+      "original_counterpart_ids": [
+        "O0122"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/2-snapshot-gap-prediction-on/barrier/stop",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-14/client.json",
+      "bytes": 61574,
+      "sha256": "de400a572ce2bcb2943f094620d0fd06c92699036317b157ae7fe7c78dcbd12f",
+      "original_counterpart_ids": [
+        "O0123"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/2-snapshot-gap-prediction-on/client.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-14/client.json.ready",
+      "bytes": 5,
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+      "original_counterpart_ids": [
+        "O0124"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/2-snapshot-gap-prediction-on/client.json.ready",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-14/client.log",
+      "bytes": 185,
+      "sha256": "e12f389ec151a6211aa32afdba686dbae5335a2686838b15bd6beb9e6c5ae592",
+      "original_counterpart_ids": [
+        "O0125"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/2-snapshot-gap-prediction-on/client.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-14/server.json",
+      "bytes": 115011,
+      "sha256": "2cecf9173c895aa628a4386cb3a525c37fa440ee44302f0173ed038bf9502288",
+      "original_counterpart_ids": [
+        "O0126"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/2-snapshot-gap-prediction-on/server.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-14/server.json.ready",
+      "bytes": 5,
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+      "original_counterpart_ids": [
+        "O0127"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/2-snapshot-gap-prediction-on/server.json.ready",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-14/server.log",
+      "bytes": 221,
+      "sha256": "54f5596c1a2328f43fff92575b0f85603594f141a9d792350092b13ed8d74bb4",
+      "original_counterpart_ids": [
+        "O0128"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/2-snapshot-gap-prediction-on/server.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-14/capture.json",
+      "bytes": 1754,
+      "sha256": "2c507d605363ac22e66e6e03e47948159dc0496ceb9e9c0442f3f7fb5820f8fa",
+      "original_counterpart_ids": [
+        "O0129"
+      ],
+      "declared_transformation": "JSON reserialization; command-path placeholders; aggregate verdict fields removed; all captured numeric metrics/return codes retained",
+      "status": "independent exact JSON reserialization and command redaction",
+      "removed_policy_fields": [
+        "improvement_gate",
+        "recovery_and_edges_pass",
+        "transport_authority_privacy_pass"
+      ]
+    },
+    {
+      "neutral_path": "sample-H/case-14/timeline_index.json",
+      "bytes": 118674,
+      "sha256": "ef479c9e88977c289c8012a7aaa9aa8a1f9f7bfa5496ddd73bb47453e02a28d8",
+      "original_counterpart_ids": [
+        "O0126",
+        "O0123",
+        "O0129"
+      ],
+      "declared_transformation": "new offline descriptive index with raw row references; clocks, x-axis rest and control clearing kept distinct; no comparative verdict",
+      "status": "derived index bound to exact raw counterparts and immutable original independent all-field recomputation"
+    },
+    {
+      "neutral_path": "sample-H/case-15/barrier/start.json",
+      "bytes": 28,
+      "sha256": "fe9200c5f3127ad0b13784eba16cba8905f45bd20a504b4a27114f63172e7622",
+      "original_counterpart_ids": [
+        "O0130"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/2-stale-replay-prediction-off/barrier/start.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-15/barrier/stop",
+      "bytes": 30,
+      "sha256": "6a47549065877e56660f8db101d9176145460eae4bba59ec5fe5b78a1f579e08",
+      "original_counterpart_ids": [
+        "O0131"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/2-stale-replay-prediction-off/barrier/stop",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-15/client.json",
+      "bytes": 260873,
+      "sha256": "2f45c4058054655473e547ae7fef66faac64020dd558ad77039f897bd3a349e8",
+      "original_counterpart_ids": [
+        "O0132"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/2-stale-replay-prediction-off/client.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-15/client.json.ready",
+      "bytes": 5,
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+      "original_counterpart_ids": [
+        "O0133"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/2-stale-replay-prediction-off/client.json.ready",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-15/client.log",
+      "bytes": 185,
+      "sha256": "dc496764e380565a0bea4c0aca361bacad6aac03925abb0b93d2142dc35a0ed6",
+      "original_counterpart_ids": [
+        "O0134"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/2-stale-replay-prediction-off/client.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-15/server.json",
+      "bytes": 456952,
+      "sha256": "03fcdc1c572418617d8c0e444d67e556d067e11a6937aabc47a98313a2921645",
+      "original_counterpart_ids": [
+        "O0135"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/2-stale-replay-prediction-off/server.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-15/server.json.ready",
+      "bytes": 5,
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+      "original_counterpart_ids": [
+        "O0136"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/2-stale-replay-prediction-off/server.json.ready",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-15/server.log",
+      "bytes": 221,
+      "sha256": "01a6b14c8de95888873fdfa99aa75803abbada639a2610709e8ad9cd9baa23d1",
+      "original_counterpart_ids": [
+        "O0137"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/2-stale-replay-prediction-off/server.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-15/capture.json",
+      "bytes": 1688,
+      "sha256": "4b69b616994840d36208efd4e1b53878282255846a279168044e049f591fc35e",
+      "original_counterpart_ids": [
+        "O0138"
+      ],
+      "declared_transformation": "JSON reserialization; command-path placeholders; aggregate verdict fields removed; all captured numeric metrics/return codes retained",
+      "status": "independent exact JSON reserialization and command redaction",
+      "removed_policy_fields": [
+        "improvement_gate",
+        "transport_authority_privacy_pass"
+      ]
+    },
+    {
+      "neutral_path": "sample-H/case-15/timeline_index.json",
+      "bytes": 152165,
+      "sha256": "cf097fc5ce7e7b8171269892c56d13419c4859039e0c8de96e343382b09ee240",
+      "original_counterpart_ids": [
+        "O0135",
+        "O0132",
+        "O0138"
+      ],
+      "declared_transformation": "new offline descriptive index with raw row references; clocks, x-axis rest and control clearing kept distinct; no comparative verdict",
+      "status": "derived index bound to exact raw counterparts and immutable original independent all-field recomputation"
+    },
+    {
+      "neutral_path": "sample-H/case-16/barrier/start.json",
+      "bytes": 29,
+      "sha256": "71129b8803130030e9f21545d9c1bcbc6461576e2bf9a14f351365c0a76cbd00",
+      "original_counterpart_ids": [
+        "O0139"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/2-stale-replay-prediction-on/barrier/start.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-16/barrier/stop",
+      "bytes": 30,
+      "sha256": "6a47549065877e56660f8db101d9176145460eae4bba59ec5fe5b78a1f579e08",
+      "original_counterpart_ids": [
+        "O0140"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/2-stale-replay-prediction-on/barrier/stop",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-16/client.json",
+      "bytes": 261039,
+      "sha256": "987fa5a675a2756778b59fa9bd41321ce7865fd90f8c2cbfbb16d0c8369c4b7b",
+      "original_counterpart_ids": [
+        "O0141"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/2-stale-replay-prediction-on/client.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-16/client.json.ready",
+      "bytes": 5,
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+      "original_counterpart_ids": [
+        "O0142"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/2-stale-replay-prediction-on/client.json.ready",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-16/client.log",
+      "bytes": 185,
+      "sha256": "dc496764e380565a0bea4c0aca361bacad6aac03925abb0b93d2142dc35a0ed6",
+      "original_counterpart_ids": [
+        "O0143"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/2-stale-replay-prediction-on/client.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-16/server.json",
+      "bytes": 456976,
+      "sha256": "3006054527707fef6254bd7e275d32559875fd759fb1a7ff777e6ddc1b5e999a",
+      "original_counterpart_ids": [
+        "O0144"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/2-stale-replay-prediction-on/server.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-16/server.json.ready",
+      "bytes": 5,
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+      "original_counterpart_ids": [
+        "O0145"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/2-stale-replay-prediction-on/server.json.ready",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-16/server.log",
+      "bytes": 221,
+      "sha256": "0980da9b555cb432c1c6f3919735eb78e64f81a8ed7094190853f8afe7bbfe13",
+      "original_counterpart_ids": [
+        "O0146"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/2-stale-replay-prediction-on/server.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/case-16/capture.json",
+      "bytes": 1729,
+      "sha256": "f02a3f5bcfdf9004296e62e96a56bd852f026edb3bf5a9fcaea0aff64d533210",
+      "original_counterpart_ids": [
+        "O0147"
+      ],
+      "declared_transformation": "JSON reserialization; command-path placeholders; aggregate verdict fields removed; all captured numeric metrics/return codes retained",
+      "status": "independent exact JSON reserialization and command redaction",
+      "removed_policy_fields": [
+        "improvement_gate",
+        "transport_authority_privacy_pass"
+      ]
+    },
+    {
+      "neutral_path": "sample-H/case-16/timeline_index.json",
+      "bytes": 152228,
+      "sha256": "1d232ef81859fda2431a378fe67a2a00bf89ad34881f3b6d0adcda67f4f2e3a3",
+      "original_counterpart_ids": [
+        "O0144",
+        "O0141",
+        "O0147"
+      ],
+      "declared_transformation": "new offline descriptive index with raw row references; clocks, x-axis rest and control clearing kept distinct; no comparative verdict",
+      "status": "derived index bound to exact raw counterparts and immutable original independent all-field recomputation"
+    },
+    {
+      "neutral_path": "sample-H/gates/input_stream_test.log",
+      "bytes": 115,
+      "sha256": "21887e80be562ec31162930487b1a0aaa1484ec94d7874cf0de8b6021b575239",
+      "original_counterpart_ids": [
+        "O0148"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/input_stream_test.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/gates/input_lifecycle_test.log",
+      "bytes": 282,
+      "sha256": "63c1b06356ce798fc081809199ba429e64613758bae9e345fc79c67c13dc7f0f",
+      "original_counterpart_ids": [
+        "O0149"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/input_lifecycle_test.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/gates/peer_lifecycle_test.log",
+      "bytes": 117,
+      "sha256": "c80bcc74f7610d31e8b5259f46bf154fec85209761fd20a3c351b9e5a39308b7",
+      "original_counterpart_ids": [
+        "O0150"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/peer_lifecycle_test.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/gates/reconnect_policy_test.log",
+      "bytes": 119,
+      "sha256": "c0fa8ce86170e226ebfc27478bac7488c5d96663dd0df6f2fa7c67bdcc177071",
+      "original_counterpart_ids": [
+        "O0151"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/reconnect_policy_test.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/gates/snapshot_buffer_test.log",
+      "bytes": 118,
+      "sha256": "25745989ae341792d00f54900353f78c561819ac0ef65bf2a2ec4f7169d5cec4",
+      "original_counterpart_ids": [
+        "O0152"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/snapshot_buffer_test.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/gates/movement_prediction_test.log",
+      "bytes": 148,
+      "sha256": "92ca6ded08d9d0fc5ed2972e2ef5a1dfae9c45bc6b0205d3609cc0b9e0383c73",
+      "original_counterpart_ids": [
+        "O0153"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/movement_prediction_test.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/gates/state_privacy_test.log",
+      "bytes": 116,
+      "sha256": "fc8683297ef17193297e4f08d73436fd664469ea848b6abe2928f7567e66058b",
+      "original_counterpart_ids": [
+        "O0154"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/state_privacy_test.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/gates/integration_actor_lifecycle_test.log",
+      "bytes": 127,
+      "sha256": "01e0ddc9bfa475a822eb9f3094df81499768fa671cc5e2b3ec523c47604ff9b4",
+      "original_counterpart_ids": [
+        "O0155"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/integration_actor_lifecycle_test.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/gates/hit_history_test.log",
+      "bytes": 115,
+      "sha256": "380ffeece21c83e896fde572a7c4ca65256c9e95da15565a93d62a2f2dd62c4a",
+      "original_counterpart_ids": [
+        "O0156"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "candidate-r2/hit_history_test.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/gates/independent_resume_alias_test.log",
+      "bytes": 1861,
+      "sha256": "14ff9ca40bd4346b8c2da226e038ff22e56c3341086c0d0cd254bd4e7885ae66",
+      "original_counterpart_ids": [
+        "O0157"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "resume-gates/candidate-independent_resume_alias_test.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-H/gates/lost_welcome_test.log",
+      "bytes": 416,
+      "sha256": "71a0a7e00e7a432447ec2f5726d14f60b456574d7e50b27c1669c5a613b52b7e",
+      "original_counterpart_ids": [
+        "O0158"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "resume-gates/candidate-lost_welcome_test.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-01/barrier/start.json",
+      "bytes": 29,
+      "sha256": "9d10cdab72fac338d1c3244bb88584b588b3043f455014190158881eef2e85c0",
+      "original_counterpart_ids": [
+        "O0161"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/1-steady-prediction-off/barrier/start.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-01/barrier/stop",
+      "bytes": 30,
+      "sha256": "6a47549065877e56660f8db101d9176145460eae4bba59ec5fe5b78a1f579e08",
+      "original_counterpart_ids": [
+        "O0162"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/1-steady-prediction-off/barrier/stop",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-01/client.json",
+      "bytes": 61061,
+      "sha256": "0096844ecfcde4429387066dbc584433c29adc4eb3af610cccb7ba78c4940072",
+      "original_counterpart_ids": [
+        "O0163"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/1-steady-prediction-off/client.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-01/client.json.ready",
+      "bytes": 5,
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+      "original_counterpart_ids": [
+        "O0164"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/1-steady-prediction-off/client.json.ready",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-01/client.log",
+      "bytes": 179,
+      "sha256": "12570ce6d1ffbe0c12aad9860db09070748b236a42b551c9c7b46e7d73b7adea",
+      "original_counterpart_ids": [
+        "O0165"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/1-steady-prediction-off/client.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-01/server.json",
+      "bytes": 114983,
+      "sha256": "6e3eeef87345f69e51789644f66efa0852d3f0e3b7da36dade67b00686b74145",
+      "original_counterpart_ids": [
+        "O0166"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/1-steady-prediction-off/server.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-01/server.json.ready",
+      "bytes": 5,
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+      "original_counterpart_ids": [
+        "O0167"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/1-steady-prediction-off/server.json.ready",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-01/server.log",
+      "bytes": 215,
+      "sha256": "4e6aba09391e5d3bd2da64fb17ce3af35ccfd5b8e7da0e8091971b214e14097c",
+      "original_counterpart_ids": [
+        "O0168"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/1-steady-prediction-off/server.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-01/capture.json",
+      "bytes": 1672,
+      "sha256": "32f270ef22c2b2be52d120bbb895a5216d2d7faf1398507aebc7c26f47a34e95",
+      "original_counterpart_ids": [
+        "O0169"
+      ],
+      "declared_transformation": "JSON reserialization; command-path placeholders; aggregate verdict fields removed; all captured numeric metrics/return codes retained",
+      "status": "independent exact JSON reserialization and command redaction",
+      "removed_policy_fields": [
+        "improvement_gate",
+        "recovery_and_edges_pass",
+        "transport_authority_privacy_pass"
+      ]
+    },
+    {
+      "neutral_path": "sample-T/case-01/timeline_index.json",
+      "bytes": 145202,
+      "sha256": "67dcb66059b15337d7ac95164eb8329ba1d4f0dc4675607473f6f0e1e20eadfb",
+      "original_counterpart_ids": [
+        "O0166",
+        "O0163",
+        "O0169"
+      ],
+      "declared_transformation": "new offline descriptive index with raw row references; clocks, x-axis rest and control clearing kept distinct; no comparative verdict",
+      "status": "derived index bound to exact raw counterparts and immutable original independent all-field recomputation"
+    },
+    {
+      "neutral_path": "sample-T/case-02/barrier/start.json",
+      "bytes": 29,
+      "sha256": "87f398945ac19c9f2656ee0a761f0e591bfe9dcf8e27c3d7d35dfe06e3a03dfa",
+      "original_counterpart_ids": [
+        "O0170"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/1-steady-prediction-on/barrier/start.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-02/barrier/stop",
+      "bytes": 30,
+      "sha256": "6a47549065877e56660f8db101d9176145460eae4bba59ec5fe5b78a1f579e08",
+      "original_counterpart_ids": [
+        "O0171"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/1-steady-prediction-on/barrier/stop",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-02/client.json",
+      "bytes": 61096,
+      "sha256": "e11125c3834a911b0062a9021b802b6d79fc6e3c60e2a6642f1c9efb4fbceba3",
+      "original_counterpart_ids": [
+        "O0172"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/1-steady-prediction-on/client.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-02/client.json.ready",
+      "bytes": 5,
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+      "original_counterpart_ids": [
+        "O0173"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/1-steady-prediction-on/client.json.ready",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-02/client.log",
+      "bytes": 179,
+      "sha256": "12570ce6d1ffbe0c12aad9860db09070748b236a42b551c9c7b46e7d73b7adea",
+      "original_counterpart_ids": [
+        "O0174"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/1-steady-prediction-on/client.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-02/server.json",
+      "bytes": 114566,
+      "sha256": "9fcdb441d0e39e9bcb1620d801e3bdb8ea949887b5dfc09f80aa39aaf2b9378f",
+      "original_counterpart_ids": [
+        "O0175"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/1-steady-prediction-on/server.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-02/server.json.ready",
+      "bytes": 5,
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+      "original_counterpart_ids": [
+        "O0176"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/1-steady-prediction-on/server.json.ready",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-02/server.log",
+      "bytes": 215,
+      "sha256": "af87fc3640ba59e2af85a0c2553f9897b7262c93c9f4260b109a5015b24dd744",
+      "original_counterpart_ids": [
+        "O0177"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/1-steady-prediction-on/server.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-02/capture.json",
+      "bytes": 1716,
+      "sha256": "2011840a0374da6500564d97ef66a1e3781f17bf7f4e486f7d8166be9f0d9c3e",
+      "original_counterpart_ids": [
+        "O0178"
+      ],
+      "declared_transformation": "JSON reserialization; command-path placeholders; aggregate verdict fields removed; all captured numeric metrics/return codes retained",
+      "status": "independent exact JSON reserialization and command redaction",
+      "removed_policy_fields": [
+        "improvement_gate",
+        "recovery_and_edges_pass",
+        "transport_authority_privacy_pass"
+      ]
+    },
+    {
+      "neutral_path": "sample-T/case-02/timeline_index.json",
+      "bytes": 145088,
+      "sha256": "415a66aeecb154a118890103b455a7723751cf5013665c4acad59ccaee67269a",
+      "original_counterpart_ids": [
+        "O0175",
+        "O0172",
+        "O0178"
+      ],
+      "declared_transformation": "new offline descriptive index with raw row references; clocks, x-axis rest and control clearing kept distinct; no comparative verdict",
+      "status": "derived index bound to exact raw counterparts and immutable original independent all-field recomputation"
+    },
+    {
+      "neutral_path": "sample-T/case-03/barrier/start.json",
+      "bytes": 29,
+      "sha256": "8f5c53529dc623a2635433806342a5e05726cb5663407c07bb6359bd5a643ded",
+      "original_counterpart_ids": [
+        "O0179"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/1-input-gap-prediction-off/barrier/start.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-03/barrier/stop",
+      "bytes": 30,
+      "sha256": "6a47549065877e56660f8db101d9176145460eae4bba59ec5fe5b78a1f579e08",
+      "original_counterpart_ids": [
+        "O0180"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/1-input-gap-prediction-off/barrier/stop",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-03/client.json",
+      "bytes": 61087,
+      "sha256": "a7ae6ae650764c50ea1f055d4dbf2393bbc98eaf5bff26dd1902f084209b5a44",
+      "original_counterpart_ids": [
+        "O0181"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/1-input-gap-prediction-off/client.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-03/client.json.ready",
+      "bytes": 5,
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+      "original_counterpart_ids": [
+        "O0182"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/1-input-gap-prediction-off/client.json.ready",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-03/client.log",
+      "bytes": 182,
+      "sha256": "747edfc1fa95026122cc7500614f26290756f3b0d4e451d4c1e6404cb0a97193",
+      "original_counterpart_ids": [
+        "O0183"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/1-input-gap-prediction-off/client.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-03/server.json",
+      "bytes": 114781,
+      "sha256": "438489d9db7fd8d4a25448b8ff7c61df6a57e4e5312f29969e408ea9a8c2f676",
+      "original_counterpart_ids": [
+        "O0184"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/1-input-gap-prediction-off/server.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-03/server.json.ready",
+      "bytes": 5,
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+      "original_counterpart_ids": [
+        "O0185"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/1-input-gap-prediction-off/server.json.ready",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-03/server.log",
+      "bytes": 218,
+      "sha256": "5d4263e9b9bd9bfad1d4179ccd8b805b5c7143a194c19a189f0a0673821a0ed8",
+      "original_counterpart_ids": [
+        "O0186"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/1-input-gap-prediction-off/server.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-03/capture.json",
+      "bytes": 1683,
+      "sha256": "78914982b144a186f7b4111165bfada73fdb89694b89722f7d1052f1a9abafe1",
+      "original_counterpart_ids": [
+        "O0187"
+      ],
+      "declared_transformation": "JSON reserialization; command-path placeholders; aggregate verdict fields removed; all captured numeric metrics/return codes retained",
+      "status": "independent exact JSON reserialization and command redaction",
+      "removed_policy_fields": [
+        "improvement_gate",
+        "recovery_and_edges_pass",
+        "transport_authority_privacy_pass"
+      ]
+    },
+    {
+      "neutral_path": "sample-T/case-03/timeline_index.json",
+      "bytes": 142852,
+      "sha256": "a241fea6e1a02c6e901d8518d4a44d1eb150aee429ec4504f317c41d7e4746ce",
+      "original_counterpart_ids": [
+        "O0184",
+        "O0181",
+        "O0187"
+      ],
+      "declared_transformation": "new offline descriptive index with raw row references; clocks, x-axis rest and control clearing kept distinct; no comparative verdict",
+      "status": "derived index bound to exact raw counterparts and immutable original independent all-field recomputation"
+    },
+    {
+      "neutral_path": "sample-T/case-04/barrier/start.json",
+      "bytes": 29,
+      "sha256": "dccfb8f9b7b9513531a06e78d0418fee4d9851b38ed1496436a7399930446ec3",
+      "original_counterpart_ids": [
+        "O0188"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/1-input-gap-prediction-on/barrier/start.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-04/barrier/stop",
+      "bytes": 30,
+      "sha256": "6a47549065877e56660f8db101d9176145460eae4bba59ec5fe5b78a1f579e08",
+      "original_counterpart_ids": [
+        "O0189"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/1-input-gap-prediction-on/barrier/stop",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-04/client.json",
+      "bytes": 60970,
+      "sha256": "064b08887de9ba1b142ea352e2b87fccad7ae01655ca0b410d0e91f752b31a24",
+      "original_counterpart_ids": [
+        "O0190"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/1-input-gap-prediction-on/client.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-04/client.json.ready",
+      "bytes": 5,
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+      "original_counterpart_ids": [
+        "O0191"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/1-input-gap-prediction-on/client.json.ready",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-04/client.log",
+      "bytes": 182,
+      "sha256": "747edfc1fa95026122cc7500614f26290756f3b0d4e451d4c1e6404cb0a97193",
+      "original_counterpart_ids": [
+        "O0192"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/1-input-gap-prediction-on/client.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-04/server.json",
+      "bytes": 114758,
+      "sha256": "7281bb87bfef0b191ee2bece28fce3f6f40e12c1a9c590840fc75cd6ffd73698",
+      "original_counterpart_ids": [
+        "O0193"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/1-input-gap-prediction-on/server.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-04/server.json.ready",
+      "bytes": 5,
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+      "original_counterpart_ids": [
+        "O0194"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/1-input-gap-prediction-on/server.json.ready",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-04/server.log",
+      "bytes": 218,
+      "sha256": "7ebaa9dd419c38640cbef6f5386a143865f8ef2baae344971547dc39d7ca416c",
+      "original_counterpart_ids": [
+        "O0195"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/1-input-gap-prediction-on/server.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-04/capture.json",
+      "bytes": 1726,
+      "sha256": "aea59737ff4d5cfe423d27088b188ddcbb1dea246355b6e046ff4f3edab5e4fa",
+      "original_counterpart_ids": [
+        "O0196"
+      ],
+      "declared_transformation": "JSON reserialization; command-path placeholders; aggregate verdict fields removed; all captured numeric metrics/return codes retained",
+      "status": "independent exact JSON reserialization and command redaction",
+      "removed_policy_fields": [
+        "improvement_gate",
+        "recovery_and_edges_pass",
+        "transport_authority_privacy_pass"
+      ]
+    },
+    {
+      "neutral_path": "sample-T/case-04/timeline_index.json",
+      "bytes": 137025,
+      "sha256": "5c4490aac7423bbf4919525fd68bf8f9566770bff741918959b7544869750cea",
+      "original_counterpart_ids": [
+        "O0193",
+        "O0190",
+        "O0196"
+      ],
+      "declared_transformation": "new offline descriptive index with raw row references; clocks, x-axis rest and control clearing kept distinct; no comparative verdict",
+      "status": "derived index bound to exact raw counterparts and immutable original independent all-field recomputation"
+    },
+    {
+      "neutral_path": "sample-T/case-05/barrier/start.json",
+      "bytes": 29,
+      "sha256": "34d73841a5659886a14e721d18d6be6962ad0673a84bf5d24d0bde639647f3a1",
+      "original_counterpart_ids": [
+        "O0197"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/1-snapshot-gap-prediction-off/barrier/start.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-05/barrier/stop",
+      "bytes": 30,
+      "sha256": "6a47549065877e56660f8db101d9176145460eae4bba59ec5fe5b78a1f579e08",
+      "original_counterpart_ids": [
+        "O0198"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/1-snapshot-gap-prediction-off/barrier/stop",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-05/client.json",
+      "bytes": 61842,
+      "sha256": "0ee2ed92b065f85a4f113654c2838dab1ea5f9ac5beb6b35d7fd111cdba02970",
+      "original_counterpart_ids": [
+        "O0199"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/1-snapshot-gap-prediction-off/client.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-05/client.json.ready",
+      "bytes": 5,
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+      "original_counterpart_ids": [
+        "O0200"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/1-snapshot-gap-prediction-off/client.json.ready",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-05/client.log",
+      "bytes": 185,
+      "sha256": "e12f389ec151a6211aa32afdba686dbae5335a2686838b15bd6beb9e6c5ae592",
+      "original_counterpart_ids": [
+        "O0201"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/1-snapshot-gap-prediction-off/client.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-05/server.json",
+      "bytes": 117559,
+      "sha256": "4b09d10e57554cd25244cf74ce2ad96b783addabe2540a729e470be24f97252e",
+      "original_counterpart_ids": [
+        "O0202"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/1-snapshot-gap-prediction-off/server.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-05/server.json.ready",
+      "bytes": 5,
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+      "original_counterpart_ids": [
+        "O0203"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/1-snapshot-gap-prediction-off/server.json.ready",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-05/server.log",
+      "bytes": 221,
+      "sha256": "677720bc56681c1d76dc72410fae6cd4bdab20ce591ab45ae2b1627bb7b59742",
+      "original_counterpart_ids": [
+        "O0204"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/1-snapshot-gap-prediction-off/server.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-05/capture.json",
+      "bytes": 1725,
+      "sha256": "c683e31a154a23c8e926936115cffb850dea4acd3b62638f53d0b37d110e79d6",
+      "original_counterpart_ids": [
+        "O0205"
+      ],
+      "declared_transformation": "JSON reserialization; command-path placeholders; aggregate verdict fields removed; all captured numeric metrics/return codes retained",
+      "status": "independent exact JSON reserialization and command redaction",
+      "removed_policy_fields": [
+        "improvement_gate",
+        "recovery_and_edges_pass",
+        "transport_authority_privacy_pass"
+      ]
+    },
+    {
+      "neutral_path": "sample-T/case-05/timeline_index.json",
+      "bytes": 127190,
+      "sha256": "fbbae001d8184a11f7473a9856af95479407d1e66737f599991816e39fd358e9",
+      "original_counterpart_ids": [
+        "O0202",
+        "O0199",
+        "O0205"
+      ],
+      "declared_transformation": "new offline descriptive index with raw row references; clocks, x-axis rest and control clearing kept distinct; no comparative verdict",
+      "status": "derived index bound to exact raw counterparts and immutable original independent all-field recomputation"
+    },
+    {
+      "neutral_path": "sample-T/case-06/barrier/start.json",
+      "bytes": 29,
+      "sha256": "451751381ceeb5f25545f13be0cf2210898ab785b5190cc7488a7a15c3df93c9",
+      "original_counterpart_ids": [
+        "O0206"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/1-snapshot-gap-prediction-on/barrier/start.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-06/barrier/stop",
+      "bytes": 30,
+      "sha256": "6a47549065877e56660f8db101d9176145460eae4bba59ec5fe5b78a1f579e08",
+      "original_counterpart_ids": [
+        "O0207"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/1-snapshot-gap-prediction-on/barrier/stop",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-06/client.json",
+      "bytes": 61707,
+      "sha256": "2258d536b82789bb63bf040dddcdda3701f485e988f6b65a6d95cf0b1291dd30",
+      "original_counterpart_ids": [
+        "O0208"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/1-snapshot-gap-prediction-on/client.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-06/client.json.ready",
+      "bytes": 5,
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+      "original_counterpart_ids": [
+        "O0209"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/1-snapshot-gap-prediction-on/client.json.ready",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-06/client.log",
+      "bytes": 185,
+      "sha256": "e12f389ec151a6211aa32afdba686dbae5335a2686838b15bd6beb9e6c5ae592",
+      "original_counterpart_ids": [
+        "O0210"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/1-snapshot-gap-prediction-on/client.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-06/server.json",
+      "bytes": 117085,
+      "sha256": "e250c79b854d0880f980406dc8f123075828e10547fb74c34386feedf191e7ab",
+      "original_counterpart_ids": [
+        "O0211"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/1-snapshot-gap-prediction-on/server.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-06/server.json.ready",
+      "bytes": 5,
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+      "original_counterpart_ids": [
+        "O0212"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/1-snapshot-gap-prediction-on/server.json.ready",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-06/server.log",
+      "bytes": 221,
+      "sha256": "18e9ba433de76de20706dad43e013cfb2872b3cf0b65502511484928547ae128",
+      "original_counterpart_ids": [
+        "O0213"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/1-snapshot-gap-prediction-on/server.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-06/capture.json",
+      "bytes": 1766,
+      "sha256": "1d65dc549dd3f2096cb0b3d1b881962db0f3e7e579d58c4f1f678c1260a1aabd",
+      "original_counterpart_ids": [
+        "O0214"
+      ],
+      "declared_transformation": "JSON reserialization; command-path placeholders; aggregate verdict fields removed; all captured numeric metrics/return codes retained",
+      "status": "independent exact JSON reserialization and command redaction",
+      "removed_policy_fields": [
+        "improvement_gate",
+        "recovery_and_edges_pass",
+        "transport_authority_privacy_pass"
+      ]
+    },
+    {
+      "neutral_path": "sample-T/case-06/timeline_index.json",
+      "bytes": 129157,
+      "sha256": "53d9748541ed7d72b3dabd460796c65ac15e0c2568d4d30ccb3a651af68a47c7",
+      "original_counterpart_ids": [
+        "O0211",
+        "O0208",
+        "O0214"
+      ],
+      "declared_transformation": "new offline descriptive index with raw row references; clocks, x-axis rest and control clearing kept distinct; no comparative verdict",
+      "status": "derived index bound to exact raw counterparts and immutable original independent all-field recomputation"
+    },
+    {
+      "neutral_path": "sample-T/case-07/barrier/start.json",
+      "bytes": 28,
+      "sha256": "1d6ce8d6e80bed3bb5460ab76c9f84d22b15276584c2bf7e634eaef5c116d4a8",
+      "original_counterpart_ids": [
+        "O0215"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/1-stale-replay-prediction-off/barrier/start.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-07/barrier/stop",
+      "bytes": 30,
+      "sha256": "6a47549065877e56660f8db101d9176145460eae4bba59ec5fe5b78a1f579e08",
+      "original_counterpart_ids": [
+        "O0216"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/1-stale-replay-prediction-off/barrier/stop",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-07/client.json",
+      "bytes": 260121,
+      "sha256": "5a766a582c2e21d01d96ba7ac7e8cf58f6ae9b35798afdc472ad5ce34170de6b",
+      "original_counterpart_ids": [
+        "O0217"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/1-stale-replay-prediction-off/client.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-07/client.json.ready",
+      "bytes": 5,
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+      "original_counterpart_ids": [
+        "O0218"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/1-stale-replay-prediction-off/client.json.ready",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-07/client.log",
+      "bytes": 185,
+      "sha256": "dc496764e380565a0bea4c0aca361bacad6aac03925abb0b93d2142dc35a0ed6",
+      "original_counterpart_ids": [
+        "O0219"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/1-stale-replay-prediction-off/client.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-07/server.json",
+      "bytes": 505366,
+      "sha256": "bd8b20639e9830c704f8f0a532f9015e4ee776bd2b67be219f7e4790995ad9bc",
+      "original_counterpart_ids": [
+        "O0220"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/1-stale-replay-prediction-off/server.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-07/server.json.ready",
+      "bytes": 5,
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+      "original_counterpart_ids": [
+        "O0221"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/1-stale-replay-prediction-off/server.json.ready",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-07/server.log",
+      "bytes": 221,
+      "sha256": "5655bc09b6029385347e5ff3e2f15712f2b0133aba1666e6666a14b421c19712",
+      "original_counterpart_ids": [
+        "O0222"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/1-stale-replay-prediction-off/server.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-07/capture.json",
+      "bytes": 1720,
+      "sha256": "fa2fcbc3a1714517bf2744a3e69c469c32ea8cc6a1d7f27c2f058d9adc50fa70",
+      "original_counterpart_ids": [
+        "O0223"
+      ],
+      "declared_transformation": "JSON reserialization; command-path placeholders; aggregate verdict fields removed; all captured numeric metrics/return codes retained",
+      "status": "independent exact JSON reserialization and command redaction",
+      "removed_policy_fields": [
+        "improvement_gate",
+        "transport_authority_privacy_pass"
+      ]
+    },
+    {
+      "neutral_path": "sample-T/case-07/timeline_index.json",
+      "bytes": 336111,
+      "sha256": "1f889f4f84b07feb1e652de56d4d1d5bff3fa04697b126e123b9fc4b5af8a221",
+      "original_counterpart_ids": [
+        "O0220",
+        "O0217",
+        "O0223"
+      ],
+      "declared_transformation": "new offline descriptive index with raw row references; clocks, x-axis rest and control clearing kept distinct; no comparative verdict",
+      "status": "derived index bound to exact raw counterparts and immutable original independent all-field recomputation"
+    },
+    {
+      "neutral_path": "sample-T/case-08/barrier/start.json",
+      "bytes": 28,
+      "sha256": "29b1f27708327149338314fa9d25b5a65468b215fa92239f36455d531bd4f40b",
+      "original_counterpart_ids": [
+        "O0224"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/1-stale-replay-prediction-on/barrier/start.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-08/barrier/stop",
+      "bytes": 30,
+      "sha256": "6a47549065877e56660f8db101d9176145460eae4bba59ec5fe5b78a1f579e08",
+      "original_counterpart_ids": [
+        "O0225"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/1-stale-replay-prediction-on/barrier/stop",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-08/client.json",
+      "bytes": 260058,
+      "sha256": "d0741fa1916ea87a165d2562d3aea977a335b01b6c9269b9fe270e9fd3dcf14a",
+      "original_counterpart_ids": [
+        "O0226"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/1-stale-replay-prediction-on/client.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-08/client.json.ready",
+      "bytes": 5,
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+      "original_counterpart_ids": [
+        "O0227"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/1-stale-replay-prediction-on/client.json.ready",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-08/client.log",
+      "bytes": 185,
+      "sha256": "dc496764e380565a0bea4c0aca361bacad6aac03925abb0b93d2142dc35a0ed6",
+      "original_counterpart_ids": [
+        "O0228"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/1-stale-replay-prediction-on/client.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-08/server.json",
+      "bytes": 505685,
+      "sha256": "1b897b93e9b77c80292c7c199433688821a7a4a6e2a0d2c35f290dd6b077117f",
+      "original_counterpart_ids": [
+        "O0229"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/1-stale-replay-prediction-on/server.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-08/server.json.ready",
+      "bytes": 5,
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+      "original_counterpart_ids": [
+        "O0230"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/1-stale-replay-prediction-on/server.json.ready",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-08/server.log",
+      "bytes": 221,
+      "sha256": "3f6f3efa8e95b2f4d17819098558f4ae85742d53a2d596b9b79e4c0e9ec649bb",
+      "original_counterpart_ids": [
+        "O0231"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/1-stale-replay-prediction-on/server.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-08/capture.json",
+      "bytes": 1764,
+      "sha256": "8415cd5b1a2a241b3a23bdf238acaa414e514a3161ee9a1e9f25ac9cb33d41d3",
+      "original_counterpart_ids": [
+        "O0232"
+      ],
+      "declared_transformation": "JSON reserialization; command-path placeholders; aggregate verdict fields removed; all captured numeric metrics/return codes retained",
+      "status": "independent exact JSON reserialization and command redaction",
+      "removed_policy_fields": [
+        "improvement_gate",
+        "transport_authority_privacy_pass"
+      ]
+    },
+    {
+      "neutral_path": "sample-T/case-08/timeline_index.json",
+      "bytes": 330585,
+      "sha256": "44c78b475d9b7f9feac6005a2d7aebcd725d38e9e582e86292f39add3279e562",
+      "original_counterpart_ids": [
+        "O0229",
+        "O0226",
+        "O0232"
+      ],
+      "declared_transformation": "new offline descriptive index with raw row references; clocks, x-axis rest and control clearing kept distinct; no comparative verdict",
+      "status": "derived index bound to exact raw counterparts and immutable original independent all-field recomputation"
+    },
+    {
+      "neutral_path": "sample-T/case-09/barrier/start.json",
+      "bytes": 28,
+      "sha256": "d5efd0d0eb3564ba7393d95f450a1d034c9f1244fd47be49b55fc1c8e085ae26",
+      "original_counterpart_ids": [
+        "O0233"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/2-steady-prediction-off/barrier/start.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-09/barrier/stop",
+      "bytes": 30,
+      "sha256": "6a47549065877e56660f8db101d9176145460eae4bba59ec5fe5b78a1f579e08",
+      "original_counterpart_ids": [
+        "O0234"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/2-steady-prediction-off/barrier/stop",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-09/client.json",
+      "bytes": 61035,
+      "sha256": "c8bf1948b6489b949e9fe18e73ab351df5f6701f64cee88937f35fc97fccb3e5",
+      "original_counterpart_ids": [
+        "O0235"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/2-steady-prediction-off/client.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-09/client.json.ready",
+      "bytes": 5,
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+      "original_counterpart_ids": [
+        "O0236"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/2-steady-prediction-off/client.json.ready",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-09/client.log",
+      "bytes": 179,
+      "sha256": "12570ce6d1ffbe0c12aad9860db09070748b236a42b551c9c7b46e7d73b7adea",
+      "original_counterpart_ids": [
+        "O0237"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/2-steady-prediction-off/client.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-09/server.json",
+      "bytes": 115070,
+      "sha256": "57043037a0b85e10fd077ce6c7e44c3953cb07603761d6b88dddf281b2f7a30f",
+      "original_counterpart_ids": [
+        "O0238"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/2-steady-prediction-off/server.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-09/server.json.ready",
+      "bytes": 5,
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+      "original_counterpart_ids": [
+        "O0239"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/2-steady-prediction-off/server.json.ready",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-09/server.log",
+      "bytes": 215,
+      "sha256": "f4419d7779ec54d822e5667a66ed6a23b58aed7824878b7e874b3e443da7bde9",
+      "original_counterpart_ids": [
+        "O0240"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/2-steady-prediction-off/server.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-09/capture.json",
+      "bytes": 1674,
+      "sha256": "f4a060bbcd92ed500d5f45e1921758f30758fbd9b75e7388a4056a1927a4ace6",
+      "original_counterpart_ids": [
+        "O0241"
+      ],
+      "declared_transformation": "JSON reserialization; command-path placeholders; aggregate verdict fields removed; all captured numeric metrics/return codes retained",
+      "status": "independent exact JSON reserialization and command redaction",
+      "removed_policy_fields": [
+        "improvement_gate",
+        "recovery_and_edges_pass",
+        "transport_authority_privacy_pass"
+      ]
+    },
+    {
+      "neutral_path": "sample-T/case-09/timeline_index.json",
+      "bytes": 145409,
+      "sha256": "2ca40e34af437d7b00fb063a504bfe2cef70fcac1e99438edf9a50855c741d73",
+      "original_counterpart_ids": [
+        "O0238",
+        "O0235",
+        "O0241"
+      ],
+      "declared_transformation": "new offline descriptive index with raw row references; clocks, x-axis rest and control clearing kept distinct; no comparative verdict",
+      "status": "derived index bound to exact raw counterparts and immutable original independent all-field recomputation"
+    },
+    {
+      "neutral_path": "sample-T/case-10/barrier/start.json",
+      "bytes": 28,
+      "sha256": "826e890aeb72a5781c55de1ee3da82aeadd485aeaaf062f9f7325ec6342b0ddc",
+      "original_counterpart_ids": [
+        "O0242"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/2-steady-prediction-on/barrier/start.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-10/barrier/stop",
+      "bytes": 30,
+      "sha256": "6a47549065877e56660f8db101d9176145460eae4bba59ec5fe5b78a1f579e08",
+      "original_counterpart_ids": [
+        "O0243"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/2-steady-prediction-on/barrier/stop",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-10/client.json",
+      "bytes": 61053,
+      "sha256": "280fd272f6565185f0a7c6ca5b32f763fc24043f8becdb956ee2bd40b875ce85",
+      "original_counterpart_ids": [
+        "O0244"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/2-steady-prediction-on/client.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-10/client.json.ready",
+      "bytes": 5,
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+      "original_counterpart_ids": [
+        "O0245"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/2-steady-prediction-on/client.json.ready",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-10/client.log",
+      "bytes": 179,
+      "sha256": "12570ce6d1ffbe0c12aad9860db09070748b236a42b551c9c7b46e7d73b7adea",
+      "original_counterpart_ids": [
+        "O0246"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/2-steady-prediction-on/client.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-10/server.json",
+      "bytes": 114748,
+      "sha256": "2ef5828ae5fe2f7a83245e3c1874957f0461409e76c29a8bd032ea53cd3a44a1",
+      "original_counterpart_ids": [
+        "O0247"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/2-steady-prediction-on/server.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-10/server.json.ready",
+      "bytes": 5,
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+      "original_counterpart_ids": [
+        "O0248"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/2-steady-prediction-on/server.json.ready",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-10/server.log",
+      "bytes": 215,
+      "sha256": "005242177977c29ca4424cb6a77979f635215e571294b412c3cbb771bca2c50b",
+      "original_counterpart_ids": [
+        "O0249"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/2-steady-prediction-on/server.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-10/capture.json",
+      "bytes": 1716,
+      "sha256": "1311a118558b1592242b010f6ddce079afd804b2d26468e89c0f2b5a44633073",
+      "original_counterpart_ids": [
+        "O0250"
+      ],
+      "declared_transformation": "JSON reserialization; command-path placeholders; aggregate verdict fields removed; all captured numeric metrics/return codes retained",
+      "status": "independent exact JSON reserialization and command redaction",
+      "removed_policy_fields": [
+        "improvement_gate",
+        "recovery_and_edges_pass",
+        "transport_authority_privacy_pass"
+      ]
+    },
+    {
+      "neutral_path": "sample-T/case-10/timeline_index.json",
+      "bytes": 144951,
+      "sha256": "4d496a45e9d08653302153d47ceb6aa2dcc48727bd858949903d4b18ded7d985",
+      "original_counterpart_ids": [
+        "O0247",
+        "O0244",
+        "O0250"
+      ],
+      "declared_transformation": "new offline descriptive index with raw row references; clocks, x-axis rest and control clearing kept distinct; no comparative verdict",
+      "status": "derived index bound to exact raw counterparts and immutable original independent all-field recomputation"
+    },
+    {
+      "neutral_path": "sample-T/case-11/barrier/start.json",
+      "bytes": 29,
+      "sha256": "81498923c2d323f3f11a03b4d5a6e47c011b13c5cde774906f8497918062cab9",
+      "original_counterpart_ids": [
+        "O0251"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/2-input-gap-prediction-off/barrier/start.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-11/barrier/stop",
+      "bytes": 30,
+      "sha256": "6a47549065877e56660f8db101d9176145460eae4bba59ec5fe5b78a1f579e08",
+      "original_counterpart_ids": [
+        "O0252"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/2-input-gap-prediction-off/barrier/stop",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-11/client.json",
+      "bytes": 61059,
+      "sha256": "bd69ead35ce2c1caf21373aaa1b06d39fd820e9aed1702bc63901417d8cb8ded",
+      "original_counterpart_ids": [
+        "O0253"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/2-input-gap-prediction-off/client.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-11/client.json.ready",
+      "bytes": 5,
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+      "original_counterpart_ids": [
+        "O0254"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/2-input-gap-prediction-off/client.json.ready",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-11/client.log",
+      "bytes": 182,
+      "sha256": "747edfc1fa95026122cc7500614f26290756f3b0d4e451d4c1e6404cb0a97193",
+      "original_counterpart_ids": [
+        "O0255"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/2-input-gap-prediction-off/client.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-11/server.json",
+      "bytes": 114630,
+      "sha256": "d7a4a3593911c3e871994c682be791f48186bb8a81661193e6110d89a06da144",
+      "original_counterpart_ids": [
+        "O0256"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/2-input-gap-prediction-off/server.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-11/server.json.ready",
+      "bytes": 5,
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+      "original_counterpart_ids": [
+        "O0257"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/2-input-gap-prediction-off/server.json.ready",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-11/server.log",
+      "bytes": 218,
+      "sha256": "ab0e4e718c791ebea535e10a4e69fe492f86c94a2440891383daf5e8d78075e5",
+      "original_counterpart_ids": [
+        "O0258"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/2-input-gap-prediction-off/server.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-11/capture.json",
+      "bytes": 1682,
+      "sha256": "e12cbe6ecf0868033e961adec41071265d8cdfd052a2daed20481acbcab4fd0b",
+      "original_counterpart_ids": [
+        "O0259"
+      ],
+      "declared_transformation": "JSON reserialization; command-path placeholders; aggregate verdict fields removed; all captured numeric metrics/return codes retained",
+      "status": "independent exact JSON reserialization and command redaction",
+      "removed_policy_fields": [
+        "improvement_gate",
+        "recovery_and_edges_pass",
+        "transport_authority_privacy_pass"
+      ]
+    },
+    {
+      "neutral_path": "sample-T/case-11/timeline_index.json",
+      "bytes": 142229,
+      "sha256": "2acb44b9db6b7a6749fb877d99f48fa3af81fcf1000f2699e889aee9380aa271",
+      "original_counterpart_ids": [
+        "O0256",
+        "O0253",
+        "O0259"
+      ],
+      "declared_transformation": "new offline descriptive index with raw row references; clocks, x-axis rest and control clearing kept distinct; no comparative verdict",
+      "status": "derived index bound to exact raw counterparts and immutable original independent all-field recomputation"
+    },
+    {
+      "neutral_path": "sample-T/case-12/barrier/start.json",
+      "bytes": 29,
+      "sha256": "c0961ebcd2bb5b30ebafcef53f7ef48c790aa7f0de7d6ee92f7d98362e034442",
+      "original_counterpart_ids": [
+        "O0260"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/2-input-gap-prediction-on/barrier/start.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-12/barrier/stop",
+      "bytes": 30,
+      "sha256": "6a47549065877e56660f8db101d9176145460eae4bba59ec5fe5b78a1f579e08",
+      "original_counterpart_ids": [
+        "O0261"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/2-input-gap-prediction-on/barrier/stop",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-12/client.json",
+      "bytes": 61152,
+      "sha256": "cc2b7a818b38c6c34c663874e78267fc119c0f24f75e77505148d9258b46450a",
+      "original_counterpart_ids": [
+        "O0262"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/2-input-gap-prediction-on/client.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-12/client.json.ready",
+      "bytes": 5,
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+      "original_counterpart_ids": [
+        "O0263"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/2-input-gap-prediction-on/client.json.ready",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-12/client.log",
+      "bytes": 182,
+      "sha256": "747edfc1fa95026122cc7500614f26290756f3b0d4e451d4c1e6404cb0a97193",
+      "original_counterpart_ids": [
+        "O0264"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/2-input-gap-prediction-on/client.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-12/server.json",
+      "bytes": 114800,
+      "sha256": "558e26e5aea450df749c974b27a56d13023aa893e266ef2ac0f69933d677007b",
+      "original_counterpart_ids": [
+        "O0265"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/2-input-gap-prediction-on/server.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-12/server.json.ready",
+      "bytes": 5,
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+      "original_counterpart_ids": [
+        "O0266"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/2-input-gap-prediction-on/server.json.ready",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-12/server.log",
+      "bytes": 218,
+      "sha256": "9fcef2429688a0bd45746a304ecbe13dc6bfec8fadd7dcdaf34309f3ce38022d",
+      "original_counterpart_ids": [
+        "O0267"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/2-input-gap-prediction-on/server.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-12/capture.json",
+      "bytes": 1725,
+      "sha256": "b34faca61d8be159d6499269fb8b06458c65257c99b560e32f6f49a3ac4bb6bb",
+      "original_counterpart_ids": [
+        "O0268"
+      ],
+      "declared_transformation": "JSON reserialization; command-path placeholders; aggregate verdict fields removed; all captured numeric metrics/return codes retained",
+      "status": "independent exact JSON reserialization and command redaction",
+      "removed_policy_fields": [
+        "improvement_gate",
+        "recovery_and_edges_pass",
+        "transport_authority_privacy_pass"
+      ]
+    },
+    {
+      "neutral_path": "sample-T/case-12/timeline_index.json",
+      "bytes": 142602,
+      "sha256": "a2e27166d1ad0450b92ab445cdf96b90c9a64ae01d8308f497223bbddb395ce7",
+      "original_counterpart_ids": [
+        "O0265",
+        "O0262",
+        "O0268"
+      ],
+      "declared_transformation": "new offline descriptive index with raw row references; clocks, x-axis rest and control clearing kept distinct; no comparative verdict",
+      "status": "derived index bound to exact raw counterparts and immutable original independent all-field recomputation"
+    },
+    {
+      "neutral_path": "sample-T/case-13/barrier/start.json",
+      "bytes": 29,
+      "sha256": "62be3bff89b03b7118a87479b32d281e96a98703058665799c14687be20a05e5",
+      "original_counterpart_ids": [
+        "O0269"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/2-snapshot-gap-prediction-off/barrier/start.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-13/barrier/stop",
+      "bytes": 30,
+      "sha256": "6a47549065877e56660f8db101d9176145460eae4bba59ec5fe5b78a1f579e08",
+      "original_counterpart_ids": [
+        "O0270"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/2-snapshot-gap-prediction-off/barrier/stop",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-13/client.json",
+      "bytes": 61895,
+      "sha256": "623603878bf706781c2ce54c30ba2160fa0a61a1bafac33484a9f42b645c4423",
+      "original_counterpart_ids": [
+        "O0271"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/2-snapshot-gap-prediction-off/client.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-13/client.json.ready",
+      "bytes": 5,
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+      "original_counterpart_ids": [
+        "O0272"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/2-snapshot-gap-prediction-off/client.json.ready",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-13/client.log",
+      "bytes": 185,
+      "sha256": "e12f389ec151a6211aa32afdba686dbae5335a2686838b15bd6beb9e6c5ae592",
+      "original_counterpart_ids": [
+        "O0273"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/2-snapshot-gap-prediction-off/client.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-13/server.json",
+      "bytes": 117335,
+      "sha256": "28444f03b23eb3bd77123ed6177de30d67c5883351c7f155603300ae6f7593d9",
+      "original_counterpart_ids": [
+        "O0274"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/2-snapshot-gap-prediction-off/server.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-13/server.json.ready",
+      "bytes": 5,
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+      "original_counterpart_ids": [
+        "O0275"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/2-snapshot-gap-prediction-off/server.json.ready",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-13/server.log",
+      "bytes": 221,
+      "sha256": "bd0f49af9a621422370c8ffee2488c4aa470864d301f320b01344d2a4b1b452a",
+      "original_counterpart_ids": [
+        "O0276"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/2-snapshot-gap-prediction-off/server.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-13/capture.json",
+      "bytes": 1723,
+      "sha256": "103f3df8abd91a56a57d6303b3fd224cf232492e96d82908095aeb04710a61c0",
+      "original_counterpart_ids": [
+        "O0277"
+      ],
+      "declared_transformation": "JSON reserialization; command-path placeholders; aggregate verdict fields removed; all captured numeric metrics/return codes retained",
+      "status": "independent exact JSON reserialization and command redaction",
+      "removed_policy_fields": [
+        "improvement_gate",
+        "recovery_and_edges_pass",
+        "transport_authority_privacy_pass"
+      ]
+    },
+    {
+      "neutral_path": "sample-T/case-13/timeline_index.json",
+      "bytes": 129557,
+      "sha256": "542a74b753ecf40e8b4f398fdd977acb62884665b561c343f5e3341d0c5a9d5a",
+      "original_counterpart_ids": [
+        "O0274",
+        "O0271",
+        "O0277"
+      ],
+      "declared_transformation": "new offline descriptive index with raw row references; clocks, x-axis rest and control clearing kept distinct; no comparative verdict",
+      "status": "derived index bound to exact raw counterparts and immutable original independent all-field recomputation"
+    },
+    {
+      "neutral_path": "sample-T/case-14/barrier/start.json",
+      "bytes": 29,
+      "sha256": "efe82ec142dd239c76c1d55e6073ad9dcf1ed566afa85b2438c834df8aa4a717",
+      "original_counterpart_ids": [
+        "O0278"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/2-snapshot-gap-prediction-on/barrier/start.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-14/barrier/stop",
+      "bytes": 30,
+      "sha256": "6a47549065877e56660f8db101d9176145460eae4bba59ec5fe5b78a1f579e08",
+      "original_counterpart_ids": [
+        "O0279"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/2-snapshot-gap-prediction-on/barrier/stop",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-14/client.json",
+      "bytes": 61531,
+      "sha256": "556cad5e58c6652847dab84800af25f83ea118d4e64e29fd215fe818306e2135",
+      "original_counterpart_ids": [
+        "O0280"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/2-snapshot-gap-prediction-on/client.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-14/client.json.ready",
+      "bytes": 5,
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+      "original_counterpart_ids": [
+        "O0281"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/2-snapshot-gap-prediction-on/client.json.ready",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-14/client.log",
+      "bytes": 185,
+      "sha256": "e12f389ec151a6211aa32afdba686dbae5335a2686838b15bd6beb9e6c5ae592",
+      "original_counterpart_ids": [
+        "O0282"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/2-snapshot-gap-prediction-on/client.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-14/server.json",
+      "bytes": 117272,
+      "sha256": "3dbb4fd57ee1d54633da85d6434f4459e0f2e26ec72ba873a98ad97994f0db1b",
+      "original_counterpart_ids": [
+        "O0283"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/2-snapshot-gap-prediction-on/server.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-14/server.json.ready",
+      "bytes": 5,
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+      "original_counterpart_ids": [
+        "O0284"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/2-snapshot-gap-prediction-on/server.json.ready",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-14/server.log",
+      "bytes": 221,
+      "sha256": "ea77298cebf57656fac25cd7155c08a51ef896673b0f7531edd6120884a4eeec",
+      "original_counterpart_ids": [
+        "O0285"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/2-snapshot-gap-prediction-on/server.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-14/capture.json",
+      "bytes": 1767,
+      "sha256": "f2de997c170c5e8588fe964aa878552a1a99a1d387a830b901c121d6c7cf0e6c",
+      "original_counterpart_ids": [
+        "O0286"
+      ],
+      "declared_transformation": "JSON reserialization; command-path placeholders; aggregate verdict fields removed; all captured numeric metrics/return codes retained",
+      "status": "independent exact JSON reserialization and command redaction",
+      "removed_policy_fields": [
+        "improvement_gate",
+        "recovery_and_edges_pass",
+        "transport_authority_privacy_pass"
+      ]
+    },
+    {
+      "neutral_path": "sample-T/case-14/timeline_index.json",
+      "bytes": 129537,
+      "sha256": "fa28601f28fc466fbeeabb94056b2fc9e9eb6e045b7b883f5460de9a8f0c5349",
+      "original_counterpart_ids": [
+        "O0283",
+        "O0280",
+        "O0286"
+      ],
+      "declared_transformation": "new offline descriptive index with raw row references; clocks, x-axis rest and control clearing kept distinct; no comparative verdict",
+      "status": "derived index bound to exact raw counterparts and immutable original independent all-field recomputation"
+    },
+    {
+      "neutral_path": "sample-T/case-15/barrier/start.json",
+      "bytes": 29,
+      "sha256": "b6e2afd4d889b52c4a6822738d8b4c03fd8005da0e0444e86bc05a71c3122b2a",
+      "original_counterpart_ids": [
+        "O0287"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/2-stale-replay-prediction-off/barrier/start.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-15/barrier/stop",
+      "bytes": 30,
+      "sha256": "6a47549065877e56660f8db101d9176145460eae4bba59ec5fe5b78a1f579e08",
+      "original_counterpart_ids": [
+        "O0288"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/2-stale-replay-prediction-off/barrier/stop",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-15/client.json",
+      "bytes": 260592,
+      "sha256": "3fae5e7aa89e5a91cbb2babc50fa5e064272a652edb54166b5068ebb90a33530",
+      "original_counterpart_ids": [
+        "O0289"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/2-stale-replay-prediction-off/client.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-15/client.json.ready",
+      "bytes": 5,
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+      "original_counterpart_ids": [
+        "O0290"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/2-stale-replay-prediction-off/client.json.ready",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-15/client.log",
+      "bytes": 185,
+      "sha256": "dc496764e380565a0bea4c0aca361bacad6aac03925abb0b93d2142dc35a0ed6",
+      "original_counterpart_ids": [
+        "O0291"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/2-stale-replay-prediction-off/client.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-15/server.json",
+      "bytes": 505541,
+      "sha256": "811d219fecd8e961fef09207d6d1f5950b93ad285fa0ec4a82965112352555d0",
+      "original_counterpart_ids": [
+        "O0292"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/2-stale-replay-prediction-off/server.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-15/server.json.ready",
+      "bytes": 5,
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+      "original_counterpart_ids": [
+        "O0293"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/2-stale-replay-prediction-off/server.json.ready",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-15/server.log",
+      "bytes": 221,
+      "sha256": "0f5a6f96af7986d2f10c2c3481759d7e237e65790d1665b5021aefda5d39968f",
+      "original_counterpart_ids": [
+        "O0294"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/2-stale-replay-prediction-off/server.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-15/capture.json",
+      "bytes": 1722,
+      "sha256": "d6157583acb956c069eb83d39867386073164008870fe0dbd226c576ff7c81fa",
+      "original_counterpart_ids": [
+        "O0295"
+      ],
+      "declared_transformation": "JSON reserialization; command-path placeholders; aggregate verdict fields removed; all captured numeric metrics/return codes retained",
+      "status": "independent exact JSON reserialization and command redaction",
+      "removed_policy_fields": [
+        "improvement_gate",
+        "transport_authority_privacy_pass"
+      ]
+    },
+    {
+      "neutral_path": "sample-T/case-15/timeline_index.json",
+      "bytes": 341722,
+      "sha256": "d5beb517e3b94f17741f75d9ab0438f598140d9f511f6b32fe8c6508ca48b1a7",
+      "original_counterpart_ids": [
+        "O0292",
+        "O0289",
+        "O0295"
+      ],
+      "declared_transformation": "new offline descriptive index with raw row references; clocks, x-axis rest and control clearing kept distinct; no comparative verdict",
+      "status": "derived index bound to exact raw counterparts and immutable original independent all-field recomputation"
+    },
+    {
+      "neutral_path": "sample-T/case-16/barrier/start.json",
+      "bytes": 28,
+      "sha256": "1521083ba81115a3bb05b64ced5434fd7ead9d8ec09418d727c009e74ffad7b7",
+      "original_counterpart_ids": [
+        "O0296"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/2-stale-replay-prediction-on/barrier/start.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-16/barrier/stop",
+      "bytes": 30,
+      "sha256": "6a47549065877e56660f8db101d9176145460eae4bba59ec5fe5b78a1f579e08",
+      "original_counterpart_ids": [
+        "O0297"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/2-stale-replay-prediction-on/barrier/stop",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-16/client.json",
+      "bytes": 260254,
+      "sha256": "381997373ce9dc06ac7ddda150c941519ecb995383a9e19051000d29d2960caa",
+      "original_counterpart_ids": [
+        "O0298"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/2-stale-replay-prediction-on/client.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-16/client.json.ready",
+      "bytes": 5,
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+      "original_counterpart_ids": [
+        "O0299"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/2-stale-replay-prediction-on/client.json.ready",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-16/client.log",
+      "bytes": 185,
+      "sha256": "dc496764e380565a0bea4c0aca361bacad6aac03925abb0b93d2142dc35a0ed6",
+      "original_counterpart_ids": [
+        "O0300"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/2-stale-replay-prediction-on/client.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-16/server.json",
+      "bytes": 505126,
+      "sha256": "bdc227dbbe29ea81d6b8ffe03c9f937974b03b5c4f34ef8c4426ed689751ec5c",
+      "original_counterpart_ids": [
+        "O0301"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/2-stale-replay-prediction-on/server.json",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-16/server.json.ready",
+      "bytes": 5,
+      "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+      "original_counterpart_ids": [
+        "O0302"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/2-stale-replay-prediction-on/server.json.ready",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-16/server.log",
+      "bytes": 221,
+      "sha256": "efcf8e77a6f8f23041d2f4661afac079ae146eae79ea1b362a9f94f6feb1e94f",
+      "original_counterpart_ids": [
+        "O0303"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/2-stale-replay-prediction-on/server.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/case-16/capture.json",
+      "bytes": 1763,
+      "sha256": "f4fb530e5efc9ad58b4ecef453851061d87a0df1f3a5f940bf300526567e85b6",
+      "original_counterpart_ids": [
+        "O0304"
+      ],
+      "declared_transformation": "JSON reserialization; command-path placeholders; aggregate verdict fields removed; all captured numeric metrics/return codes retained",
+      "status": "independent exact JSON reserialization and command redaction",
+      "removed_policy_fields": [
+        "improvement_gate",
+        "transport_authority_privacy_pass"
+      ]
+    },
+    {
+      "neutral_path": "sample-T/case-16/timeline_index.json",
+      "bytes": 341579,
+      "sha256": "a84ce4da6ad83d1fd5394718c6f142d18834bca4464bdf078d944b8c47d8f02c",
+      "original_counterpart_ids": [
+        "O0301",
+        "O0298",
+        "O0304"
+      ],
+      "declared_transformation": "new offline descriptive index with raw row references; clocks, x-axis rest and control clearing kept distinct; no comparative verdict",
+      "status": "derived index bound to exact raw counterparts and immutable original independent all-field recomputation"
+    },
+    {
+      "neutral_path": "sample-T/gates/input_stream_test.log",
+      "bytes": 115,
+      "sha256": "c6a43431b2f319332a51faa92530b0bd6a9ec90594169df288f4d375de2576e5",
+      "original_counterpart_ids": [
+        "O0305"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/input_stream_test.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/gates/input_lifecycle_test.log",
+      "bytes": 282,
+      "sha256": "63c1b06356ce798fc081809199ba429e64613758bae9e345fc79c67c13dc7f0f",
+      "original_counterpart_ids": [
+        "O0306"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/input_lifecycle_test.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/gates/peer_lifecycle_test.log",
+      "bytes": 117,
+      "sha256": "c80bcc74f7610d31e8b5259f46bf154fec85209761fd20a3c351b9e5a39308b7",
+      "original_counterpart_ids": [
+        "O0307"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/peer_lifecycle_test.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/gates/reconnect_policy_test.log",
+      "bytes": 119,
+      "sha256": "c0fa8ce86170e226ebfc27478bac7488c5d96663dd0df6f2fa7c67bdcc177071",
+      "original_counterpart_ids": [
+        "O0308"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/reconnect_policy_test.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/gates/snapshot_buffer_test.log",
+      "bytes": 118,
+      "sha256": "25745989ae341792d00f54900353f78c561819ac0ef65bf2a2ec4f7169d5cec4",
+      "original_counterpart_ids": [
+        "O0309"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/snapshot_buffer_test.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/gates/movement_prediction_test.log",
+      "bytes": 148,
+      "sha256": "92ca6ded08d9d0fc5ed2972e2ef5a1dfae9c45bc6b0205d3609cc0b9e0383c73",
+      "original_counterpart_ids": [
+        "O0310"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/movement_prediction_test.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/gates/state_privacy_test.log",
+      "bytes": 116,
+      "sha256": "fc8683297ef17193297e4f08d73436fd664469ea848b6abe2928f7567e66058b",
+      "original_counterpart_ids": [
+        "O0311"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/state_privacy_test.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/gates/integration_actor_lifecycle_test.log",
+      "bytes": 127,
+      "sha256": "01e0ddc9bfa475a822eb9f3094df81499768fa671cc5e2b3ec523c47604ff9b4",
+      "original_counterpart_ids": [
+        "O0312"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/integration_actor_lifecycle_test.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/gates/hit_history_test.log",
+      "bytes": 115,
+      "sha256": "380ffeece21c83e896fde572a7c4ca65256c9e95da15565a93d62a2f2dd62c4a",
+      "original_counterpart_ids": [
+        "O0313"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "baseline-r3/hit_history_test.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/gates/independent_resume_alias_test.log",
+      "bytes": 1861,
+      "sha256": "14ff9ca40bd4346b8c2da226e038ff22e56c3341086c0d0cd254bd4e7885ae66",
+      "original_counterpart_ids": [
+        "O0314"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "resume-gates/baseline-independent_resume_alias_test.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "sample-T/gates/lost_welcome_test.log",
+      "bytes": 416,
+      "sha256": "71a0a7e00e7a432447ec2f5726d14f60b456574d7e50b27c1669c5a613b52b7e",
+      "original_counterpart_ids": [
+        "O0315"
+      ],
+      "declared_transformation": "byte-for-byte copy; location renamed only",
+      "original_name": "resume-gates/baseline-lost_welcome_test.log",
+      "status": "independent exact counterpart bytes"
+    },
+    {
+      "neutral_path": "run_manifest.json",
+      "bytes": 26987,
+      "sha256": "a7449c7a67b34fe3b11e5df6b0be25bd80c3be4e6b90abac2610675fbbe42acc",
+      "original_counterpart_ids": [
+        "O0002",
+        "O0159",
+        "O0001",
+        "O0160",
+        "O0003"
+      ],
+      "declared_transformation": "selected completed receipts only; source clean fields retained; commit/tree/module/arm/command-path identities and aggregate/policy verdicts withheld; case IDs relabeled",
+      "status": "selected structured controller receipts, identity withheld; independently linked below"
+    },
+    {
+      "neutral_path": "shared/measurement_probe.gd",
+      "bytes": 7979,
+      "sha256": "ec6ed6a056d8a50c1b6554d0a741742802ec42fb26c056711be5790e2dbf9f97",
+      "original_counterpart_ids": [
+        "S001"
+      ],
+      "declared_transformation": "canonical committed source bytes; source identity withheld; not a newly captured execution",
+      "status": "exact canonical committed source bytes"
+    },
+    {
+      "neutral_path": "shared/controller_excerpt.txt",
+      "bytes": 4500,
+      "sha256": "8293d312f7adc636ef983e72527343db7faf3f270cdcd8a5cb391f416517db93",
+      "original_counterpart_ids": [
+        "S002"
+      ],
+      "declared_transformation": "verbatim line excerpts plus range headers from shared source; full original counterpart withheld with identity map",
+      "status": "exact selected line bytes/range headers from canonical source"
+    },
+    {
+      "neutral_path": "shared/authority_context.txt",
+      "bytes": 5801,
+      "sha256": "d3432a694a7ce74bdfee0aa68cfd48b79abc035964fe32b62a9804e8d56c2a27",
+      "original_counterpart_ids": [
+        "S003"
+      ],
+      "declared_transformation": "verbatim line excerpts plus range headers from shared source; full original counterpart withheld with identity map",
+      "status": "exact selected line bytes/range headers from canonical source"
+    },
+    {
+      "neutral_path": "shared/actor_edges_context.txt",
+      "bytes": 1799,
+      "sha256": "a6cb64e69c9da3d343105afdd1665eddcbc21d018770b2d4babda599bad88678",
+      "original_counterpart_ids": [
+        "S004"
+      ],
+      "declared_transformation": "verbatim line excerpts plus range headers from shared source; full original counterpart withheld with identity map",
+      "status": "exact selected line bytes/range headers from canonical source"
+    },
+    {
+      "neutral_path": "shared/movement_step.gd",
+      "bytes": 1839,
+      "sha256": "b87767729428b3b8af30bcf07c429094460f3b9a64f9087c9edcf40f0bb1e769",
+      "original_counterpart_ids": [
+        "S005"
+      ],
+      "declared_transformation": "canonical committed source bytes; source identity withheld; not a newly captured execution",
+      "status": "exact canonical committed source bytes"
+    },
+    {
+      "neutral_path": "shared/peer_lifecycle.gd",
+      "bytes": 2321,
+      "sha256": "8a57cc07bdc007fe143a5e8c51c99238732fcc4acf9f209fd4718af937f22078",
+      "original_counterpart_ids": [
+        "S006"
+      ],
+      "declared_transformation": "canonical committed source bytes; source identity withheld; not a newly captured execution",
+      "status": "exact canonical committed source bytes"
+    },
+    {
+      "neutral_path": "shared/history_context.txt",
+      "bytes": 1530,
+      "sha256": "af5da8721b248e9fb9c1de552e6f7d5e9e23833501757efbb6c87929fb40fb39",
+      "original_counterpart_ids": [
+        "S007"
+      ],
+      "declared_transformation": "verbatim line excerpts plus range headers from shared source; full original counterpart withheld with identity map",
+      "status": "exact selected line bytes/range headers from canonical source"
+    },
+    {
+      "neutral_path": "shared/independent_resume_alias_test.gd",
+      "bytes": 6515,
+      "sha256": "e69c019036c4a56ec86a1f7d9ce7f21a1ca7525f5334969f1bbb4e2090a7e8e4",
+      "original_counterpart_ids": [
+        "S008"
+      ],
+      "declared_transformation": "canonical committed source bytes; source identity withheld; not a newly captured execution",
+      "status": "exact canonical committed source bytes"
+    },
+    {
+      "neutral_path": "shared/lost_welcome_test.gd",
+      "bytes": 3102,
+      "sha256": "1b873f5376f054f854e0ef57e6481c034c22627bec25af4c648a974681e6bd60",
+      "original_counterpart_ids": [
+        "S009"
+      ],
+      "declared_transformation": "canonical committed source bytes; source identity withheld; not a newly captured execution",
+      "status": "exact canonical committed source bytes"
+    },
+    {
+      "neutral_path": "shared/input_lifecycle_test.gd",
+      "bytes": 3450,
+      "sha256": "ab35db57f1627d0261c3df062d325225afa884e8435c2148831d1caade3ad6a0",
+      "original_counterpart_ids": [
+        "S010"
+      ],
+      "declared_transformation": "canonical committed source bytes; source identity withheld; not a newly captured execution",
+      "status": "exact canonical committed source bytes"
+    },
+    {
+      "neutral_path": "shared/state_privacy_test.gd",
+      "bytes": 6530,
+      "sha256": "a6bd9fcafc3b375691dacfeb60ad319a126ece72ebe77b2b800df1dc26604575",
+      "original_counterpart_ids": [
+        "S011"
+      ],
+      "declared_transformation": "canonical committed source bytes; source identity withheld; not a newly captured execution",
+      "status": "exact canonical committed source bytes"
+    },
+    {
+      "neutral_path": ".gitattributes",
+      "bytes": 85,
+      "sha256": "b20b64ff2e4dde570af712a9d3cb1645d9cc23f294aa0a2a8e9c194715b36c7b",
+      "status": "new pinned administrative/descriptive/export-verifier artifact; no raw counterpart identity claimed"
+    },
+    {
+      "neutral_path": "CLOCKS_AND_LIMITS.md",
+      "bytes": 6299,
+      "sha256": "573d170de0d1c8ce847b19c83182723e642c690d720e2176b2fbf4357144565d",
+      "status": "new pinned administrative/descriptive/export-verifier artifact; no raw counterpart identity claimed"
+    },
+    {
+      "neutral_path": "README.md",
+      "bytes": 5399,
+      "sha256": "463a879ec22667ad0e8697f4d1943a19106d36f24c5c820e7da5519b7059b991",
+      "status": "new pinned administrative/descriptive/export-verifier artifact; no raw counterpart identity claimed"
+    },
+    {
+      "neutral_path": "failure_retention_index.json",
+      "bytes": 3474,
+      "sha256": "e34aab59a1ddd99eb7b72f5fff97f884c204eb3a12aea74ce5c6eec94e09e2e8",
+      "status": "new pinned administrative/descriptive/export-verifier artifact; no raw counterpart identity claimed"
+    },
+    {
+      "neutral_path": "provenance.json",
+      "bytes": 104287,
+      "sha256": "8a92286eae4886d184cbb82eca428c723bb213cda9dc8825f135c583869419c6",
+      "status": "new pinned administrative/descriptive/export-verifier artifact; no raw counterpart identity claimed"
+    },
+    {
+      "neutral_path": "schedule.json",
+      "bytes": 1955,
+      "sha256": "0a1d0a2934a16f844cbae02ceff53b8c4585bf3ff79a87ffa341485519c37583",
+      "status": "new pinned administrative/descriptive/export-verifier artifact; no raw counterpart identity claimed"
+    },
+    {
+      "neutral_path": "shared/source_context.json",
+      "bytes": 2043,
+      "sha256": "187ae816dab2d2d0221500d98cf4af3b3fe65917c7e3dc0af4daa23d8fc9866b",
+      "status": "new pinned administrative/descriptive/export-verifier artifact; no raw counterpart identity claimed"
+    },
+    {
+      "neutral_path": "verify_packet.py",
+      "bytes": 11632,
+      "sha256": "0488e94da35b288918822440d8b76ed278e5fafafe822b9961603f08d5ef5230",
+      "status": "new pinned administrative/descriptive/export-verifier artifact; no raw counterpart identity claimed"
+    }
+  ],
+  "sample_controller_bindings": [
+    {
+      "sample": "sample-H",
+      "mapped_run": "candidate-r2",
+      "executed_commit": "77f204083ab5bea4dc9149d3179daf540a994de4",
+      "source_before_after_equal_recorded": true,
+      "recorded_game_tree_verified": "d286cfff30fcbd98c7f13429f48b580523da0bbc",
+      "cases": 16,
+      "controller_receipt_exact": true,
+      "controller_argv": [
+        "python",
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\scripts\\test_input_freshness.py",
+        "--godot",
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+        "--source",
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3",
+        "--out",
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2",
+        "--skip-import",
+        "--checks",
+        "--repeats",
+        "2",
+        "--barrier-control",
+        "--expect-fixed"
+      ],
+      "controller_exit": 0,
+      "author_recorded_expect_fixed": true,
+      "import_cache_scope": {
+        "scope": "previously prepared native import cache; --skip-import"
+      }
+    },
+    {
+      "sample": "sample-T",
+      "mapped_run": "baseline-r3",
+      "executed_commit": "701ce2c4d7f8b2872cf1fefa64cb6edd0cd1a3fd",
+      "source_before_after_equal_recorded": true,
+      "recorded_game_tree_verified": "2d2b174c2145e9755ddfc78a1369e74443fcc400",
+      "cases": 16,
+      "controller_receipt_exact": true,
+      "controller_argv": [
+        "python",
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\scripts\\test_input_freshness.py",
+        "--godot",
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+        "--source",
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-input-freshness-baseline701",
+        "--out",
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\baseline-r3",
+        "--skip-import",
+        "--checks",
+        "--repeats",
+        "2",
+        "--barrier-control"
+      ],
+      "controller_exit": 0,
+      "author_recorded_expect_fixed": false,
+      "import_cache_scope": {
+        "scope": "previously prepared native import cache; --skip-import"
+      }
+    }
+  ],
+  "focused_gate_receipt_bindings": [
+    {
+      "sample": "sample-H",
+      "gate": "input_stream_test",
+      "original_exit": 0,
+      "duration_and_log_hash_exact": true,
+      "normalized_command_exact": true
+    },
+    {
+      "sample": "sample-H",
+      "gate": "input_lifecycle_test",
+      "original_exit": 0,
+      "duration_and_log_hash_exact": true,
+      "normalized_command_exact": true
+    },
+    {
+      "sample": "sample-H",
+      "gate": "peer_lifecycle_test",
+      "original_exit": 0,
+      "duration_and_log_hash_exact": true,
+      "normalized_command_exact": true
+    },
+    {
+      "sample": "sample-H",
+      "gate": "reconnect_policy_test",
+      "original_exit": 0,
+      "duration_and_log_hash_exact": true,
+      "normalized_command_exact": true
+    },
+    {
+      "sample": "sample-H",
+      "gate": "snapshot_buffer_test",
+      "original_exit": 0,
+      "duration_and_log_hash_exact": true,
+      "normalized_command_exact": true
+    },
+    {
+      "sample": "sample-H",
+      "gate": "movement_prediction_test",
+      "original_exit": 0,
+      "duration_and_log_hash_exact": true,
+      "normalized_command_exact": true
+    },
+    {
+      "sample": "sample-H",
+      "gate": "state_privacy_test",
+      "original_exit": 0,
+      "duration_and_log_hash_exact": true,
+      "normalized_command_exact": true
+    },
+    {
+      "sample": "sample-H",
+      "gate": "integration_actor_lifecycle_test",
+      "original_exit": 0,
+      "duration_and_log_hash_exact": true,
+      "normalized_command_exact": true
+    },
+    {
+      "sample": "sample-H",
+      "gate": "hit_history_test",
+      "original_exit": 0,
+      "duration_and_log_hash_exact": true,
+      "normalized_command_exact": true
+    },
+    {
+      "sample": "sample-H",
+      "gate": "independent_resume_alias_test",
+      "original_exit": 0,
+      "duration_and_log_hash_exact": true,
+      "normalized_command_exact": true
+    },
+    {
+      "sample": "sample-H",
+      "gate": "lost_welcome_test",
+      "original_exit": 0,
+      "duration_and_log_hash_exact": true,
+      "normalized_command_exact": true
+    },
+    {
+      "sample": "sample-T",
+      "gate": "input_stream_test",
+      "original_exit": 0,
+      "duration_and_log_hash_exact": true,
+      "normalized_command_exact": true
+    },
+    {
+      "sample": "sample-T",
+      "gate": "input_lifecycle_test",
+      "original_exit": 0,
+      "duration_and_log_hash_exact": true,
+      "normalized_command_exact": true
+    },
+    {
+      "sample": "sample-T",
+      "gate": "peer_lifecycle_test",
+      "original_exit": 0,
+      "duration_and_log_hash_exact": true,
+      "normalized_command_exact": true
+    },
+    {
+      "sample": "sample-T",
+      "gate": "reconnect_policy_test",
+      "original_exit": 0,
+      "duration_and_log_hash_exact": true,
+      "normalized_command_exact": true
+    },
+    {
+      "sample": "sample-T",
+      "gate": "snapshot_buffer_test",
+      "original_exit": 0,
+      "duration_and_log_hash_exact": true,
+      "normalized_command_exact": true
+    },
+    {
+      "sample": "sample-T",
+      "gate": "movement_prediction_test",
+      "original_exit": 0,
+      "duration_and_log_hash_exact": true,
+      "normalized_command_exact": true
+    },
+    {
+      "sample": "sample-T",
+      "gate": "state_privacy_test",
+      "original_exit": 0,
+      "duration_and_log_hash_exact": true,
+      "normalized_command_exact": true
+    },
+    {
+      "sample": "sample-T",
+      "gate": "integration_actor_lifecycle_test",
+      "original_exit": 0,
+      "duration_and_log_hash_exact": true,
+      "normalized_command_exact": true
+    },
+    {
+      "sample": "sample-T",
+      "gate": "hit_history_test",
+      "original_exit": 0,
+      "duration_and_log_hash_exact": true,
+      "normalized_command_exact": true
+    },
+    {
+      "sample": "sample-T",
+      "gate": "independent_resume_alias_test",
+      "original_exit": 0,
+      "duration_and_log_hash_exact": true,
+      "normalized_command_exact": true
+    },
+    {
+      "sample": "sample-T",
+      "gate": "lost_welcome_test",
+      "original_exit": 0,
+      "duration_and_log_hash_exact": true,
+      "normalized_command_exact": true
+    }
+  ],
+  "retained_failure_inventory_bindings": [
+    {
+      "id": "retention-01",
+      "file_count": 11,
+      "inventory_hash_exact": true,
+      "canonical_encoding": [
+        {
+          "paths": "fullpaths",
+          "sort_keys": false,
+          "indent": 2,
+          "final_newline": true
+        },
+        {
+          "paths": "fullpaths",
+          "sort_keys": true,
+          "indent": 2,
+          "final_newline": true
+        }
+      ],
+      "original_contents_checked_in_this_binding": false,
+      "git_reference_prefix": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/",
+      "limit": "If no digest profile matched, the exact released inventory remains pinned but its neutral canonical-hash serialization is not independently reconstructed."
+    },
+    {
+      "id": "retention-02",
+      "file_count": 20,
+      "inventory_hash_exact": true,
+      "canonical_encoding": [
+        {
+          "paths": "fullpaths",
+          "sort_keys": false,
+          "indent": 2,
+          "final_newline": true
+        },
+        {
+          "paths": "fullpaths",
+          "sort_keys": true,
+          "indent": 2,
+          "final_newline": true
+        }
+      ],
+      "original_contents_checked_in_this_binding": false,
+      "git_reference_prefix": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/",
+      "limit": "If no digest profile matched, the exact released inventory remains pinned but its neutral canonical-hash serialization is not independently reconstructed."
+    },
+    {
+      "id": "retention-03",
+      "file_count": 154,
+      "inventory_hash_exact": true,
+      "canonical_encoding": [
+        {
+          "paths": "fullpaths",
+          "sort_keys": false,
+          "indent": 2,
+          "final_newline": true
+        },
+        {
+          "paths": "fullpaths",
+          "sort_keys": true,
+          "indent": 2,
+          "final_newline": true
+        }
+      ],
+      "original_contents_checked_in_this_binding": false,
+      "git_reference_prefix": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/",
+      "limit": "If no digest profile matched, the exact released inventory remains pinned but its neutral canonical-hash serialization is not independently reconstructed."
+    },
+    {
+      "id": "retention-04",
+      "file_count": 154,
+      "inventory_hash_exact": true,
+      "canonical_encoding": [
+        {
+          "paths": "fullpaths",
+          "sort_keys": false,
+          "indent": 2,
+          "final_newline": true
+        },
+        {
+          "paths": "fullpaths",
+          "sort_keys": true,
+          "indent": 2,
+          "final_newline": true
+        }
+      ],
+      "original_contents_checked_in_this_binding": false,
+      "git_reference_prefix": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/",
+      "limit": "If no digest profile matched, the exact released inventory remains pinned but its neutral canonical-hash serialization is not independently reconstructed."
+    },
+    {
+      "id": "retention-05",
+      "file_count": 7,
+      "inventory_hash_exact": true,
+      "canonical_encoding": [
+        {
+          "paths": "fullpaths",
+          "sort_keys": false,
+          "indent": 2,
+          "final_newline": true
+        },
+        {
+          "paths": "fullpaths",
+          "sort_keys": true,
+          "indent": 2,
+          "final_newline": true
+        }
+      ],
+      "original_contents_checked_in_this_binding": false,
+      "git_reference_prefix": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/",
+      "limit": "If no digest profile matched, the exact released inventory remains pinned but its neutral canonical-hash serialization is not independently reconstructed."
+    },
+    {
+      "id": "retention-06",
+      "file_count": 10,
+      "inventory_hash_exact": true,
+      "canonical_encoding": [
+        {
+          "paths": "fullpaths",
+          "sort_keys": false,
+          "indent": 2,
+          "final_newline": true
+        },
+        {
+          "paths": "fullpaths",
+          "sort_keys": true,
+          "indent": 2,
+          "final_newline": true
+        }
+      ],
+      "original_contents_checked_in_this_binding": false,
+      "git_reference_prefix": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/",
+      "limit": "If no digest profile matched, the exact released inventory remains pinned but its neutral canonical-hash serialization is not independently reconstructed."
+    },
+    {
+      "id": "retention-07",
+      "file_count": 13,
+      "inventory_hash_exact": true,
+      "canonical_encoding": [
+        {
+          "paths": "fullpaths",
+          "sort_keys": false,
+          "indent": 2,
+          "final_newline": true
+        },
+        {
+          "paths": "fullpaths",
+          "sort_keys": true,
+          "indent": 2,
+          "final_newline": true
+        }
+      ],
+      "original_contents_checked_in_this_binding": false,
+      "git_reference_prefix": "1627a9a0ca2a954fe8f246c42ff2f205c578b5c5:docs/reports/network-input-freshness-v3-evidence/",
+      "limit": "If no digest profile matched, the exact released inventory remains pinned but its neutral canonical-hash serialization is not independently reconstructed."
+    }
+  ],
+  "unused_original_counterpart_ids": [
+    "O0316"
+  ],
+  "unexplained_payload_transform_mismatches": [],
+  "limits": "New administrative artifacts verified against frozen manifest, not claimed original execution records. 32 timeline indexes use already-frozen independent recomputation, not a new native run. Retention369 content blobs not reread; exact inventories/commit refs preserved."
+}

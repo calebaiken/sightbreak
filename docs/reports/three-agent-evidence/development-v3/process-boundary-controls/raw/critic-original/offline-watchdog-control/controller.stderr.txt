@@ -1,0 +1,25 @@
+Traceback (most recent call last):
+  File "C:\Users\blith\AppData\Local\Temp\opencode\critic-current-20261019T191820649592Z\control_export_boundaries.py", line 242, in <module>
+    watchdog_child(Path(sys.argv[2]))
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\blith\AppData\Local\Temp\opencode\critic-current-20261019T191820649592Z\control_export_boundaries.py", line 197, in watchdog_child
+    offline.main()
+    ~~~~~~~~~~~~^^
+  File "C:\Users\blith\AppData\Local\Temp\opencode\critic-current-20261019T191820649592Z\source\scripts\verify_offline_export.py", line 140, in main
+    fired_hud = read_hud('05-after-fire')
+  File "C:\Users\blith\AppData\Local\Temp\opencode\critic-current-20261019T191820649592Z\source\scripts\verify_offline_export.py", line 86, in read_hud
+    status = text((0, 630, 450, 720))
+  File "C:\Users\blith\AppData\Local\Temp\opencode\critic-current-20261019T191820649592Z\source\scripts\verify_offline_export.py", line 85, in text
+    return subprocess.check_output([args.tesseract, 'stdin', 'stdout', '--psm', '6'], input=data.getvalue(), stderr=subprocess.DEVNULL).decode()
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\blith\AppData\Local\Temp\opencode\critic-current-20261019T191820649592Z\control_export_boundaries.py", line 190, in blocked_ocr
+    return REAL_CHECK_OUTPUT([sys.executable, "-B", "-c", child], **kwargs)
+  File "C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-tools\python\cpython-3.13.15-windows-x86_64-none\Lib\subprocess.py", line 472, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+           ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+               **kwargs).stdout
+               ^^^^^^^^^
+  File "C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-tools\python\cpython-3.13.15-windows-x86_64-none\Lib\subprocess.py", line 577, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-tools\\python\\cpython-3.13.15-windows-x86_64-none\\python.exe', '-B', '-c', "from pathlib import Path; import json, os, time; Path('C:\\\\Users\\\\blith\\\\AppData\\\\Local\\\\Temp\\\\opencode\\\\critic-current-20261019T191820649592Z\\\\offline-watchdog-control\\\\ocr-child.json').write_text(json.dumps({'pid':os.getpid()})); time.sleep(20); print('100 HEALTH')"]' returned non-zero exit status 15.

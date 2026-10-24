@@ -1,0 +1,93 @@
+﻿2026-10-24T09:34:07.2964857Z ##[group]Run .venv/bin/python scripts/verify_offline_export.py --display :107 --timeout 300 --output builds/v3-export-offline
+2026-10-24T09:34:07.2965811Z [36;1m.venv/bin/python scripts/verify_offline_export.py --display :107 --timeout 300 --output builds/v3-export-offline[0m
+2026-10-24T09:34:07.3027060Z shell: /usr/bin/bash -e {0}
+2026-10-24T09:34:07.3027454Z ##[endgroup]
+2026-10-24T09:34:57.5490625Z {
+2026-10-24T09:34:57.5491052Z   "source": {
+2026-10-24T09:34:57.5491510Z     "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+2026-10-24T09:34:57.5492165Z     "source_game_tree": "9624d64bab5da8fc32b74c79b3d2997ac2eabf3f",
+2026-10-24T09:34:57.5492983Z     "source_content_sha256": "f3c1e5681180640b391da1ca811b4b9be9b07045ff035d27f126c4b5a3bfeb4d",
+2026-10-24T09:34:57.5494010Z     "source_validation_sha256": "90c81de87900ef776a68fbcac37f17bc0e74e7ed135154bf40a014ec992e68c5",
+2026-10-24T09:34:57.5494779Z     "source_game_dirty": false,
+2026-10-24T09:34:57.5495178Z     "source_dirty": false
+2026-10-24T09:34:57.5497141Z   },
+2026-10-24T09:34:57.5497972Z   "executable_sha256": "638b86b04c68174b96c3c7e8cef50d978c0deaf331fda190ca40052d38ca105e",
+2026-10-24T09:34:57.5498649Z   "events": [
+2026-10-24T09:34:57.5498944Z     "01-menu",
+2026-10-24T09:34:57.5499240Z     "02-offline-spawn",
+2026-10-24T09:34:57.5499560Z     "03-requisition",
+2026-10-24T09:34:57.5499873Z     "04-move-aim",
+2026-10-24T09:34:57.5500170Z     "05-after-fire",
+2026-10-24T09:34:57.5500503Z     "05-inspection-pause",
+2026-10-24T09:34:57.5500843Z     "05b-resumed",
+2026-10-24T09:34:57.5501143Z     "06-after-reload",
+2026-10-24T09:34:57.5501465Z     "06-inspection-pause",
+2026-10-24T09:34:57.5501794Z     "07-field-menu",
+2026-10-24T09:34:57.5502097Z     "08-return-menu"
+2026-10-24T09:34:57.5502391Z   ],
+2026-10-24T09:34:57.5502648Z   "exit": 0,
+2026-10-24T09:34:57.5502931Z   "clean_exit": true,
+2026-10-24T09:34:57.5503248Z   "passed": true,
+2026-10-24T09:34:57.5503546Z   "fired_hud": {
+2026-10-24T09:34:57.5503835Z     "health": 100,
+2026-10-24T09:34:57.5504145Z     "ammo": 14,
+2026-10-24T09:34:57.5504439Z     "reserve": 60,
+2026-10-24T09:34:57.5504797Z     "status_ocr": "800 - FUNDS\n100 - HEALTH .\n",
+2026-10-24T09:34:57.5505325Z     "ammo_ocr": "SIDEARM 14/60\nFRAG x1 SMOKE <1\n"
+2026-10-24T09:34:57.5505773Z   },
+2026-10-24T09:34:57.5506048Z   "reloaded_hud": {
+2026-10-24T09:34:57.5506349Z     "health": 100,
+2026-10-24T09:34:57.5506649Z     "ammo": 15,
+2026-10-24T09:34:57.5506939Z     "reserve": 59,
+2026-10-24T09:34:57.5507278Z     "status_ocr": "800 - FUNDS\n100 - HEALTH .\n",
+2026-10-24T09:34:57.5507960Z     "ammo_ocr": "SIDEARM 15/59\nFRAG x1 SMOKE <1\n"
+2026-10-24T09:34:57.5508384Z   },
+2026-10-24T09:34:57.5508652Z   "ocr_inspection": {
+2026-10-24T09:34:57.5509184Z     "method": "Native offline Escape pause; live HUD frames captured before pause",
+2026-10-24T09:34:57.5509781Z     "pauses": [
+2026-10-24T09:34:57.5510066Z       {
+2026-10-24T09:34:57.5510369Z         "image": "05-inspection-pause.png",
+2026-10-24T09:34:57.5510864Z         "pause_ocr": "FIELD MENU\nTraining is paused.\n"
+2026-10-24T09:34:57.5511610Z       },
+2026-10-24T09:34:57.5511872Z       {
+2026-10-24T09:34:57.5512177Z         "image": "06-inspection-pause.png",
+2026-10-24T09:34:57.5512716Z         "pause_ocr": "FIELD MENU\nTraining is paused.\n"
+2026-10-24T09:34:57.5513167Z       }
+2026-10-24T09:34:57.5513429Z     ]
+2026-10-24T09:34:57.5513684Z   },
+2026-10-24T09:34:57.5514207Z   "exit_method": "completion-driven native WM_DELETE_WINDOW; separate wall-clock watchdog",
+2026-10-24T09:34:57.5514894Z   "window_close": {
+2026-10-24T09:34:57.5515200Z     "window": 4194307,
+2026-10-24T09:34:57.5515531Z     "protocols_atom": 228,
+2026-10-24T09:34:57.5515879Z     "delete_atom": 229,
+2026-10-24T09:34:57.5516230Z     "advertised_protocols": [
+2026-10-24T09:34:57.5516591Z       229
+2026-10-24T09:34:57.5516860Z     ],
+2026-10-24T09:34:57.5517181Z     "method": "WM_DELETE_WINDOW ClientMessage"
+2026-10-24T09:34:57.5517825Z   },
+2026-10-24T09:34:57.5518129Z   "premature_exit_control_frames": 0,
+2026-10-24T09:34:57.5519041Z   "controller_sha256": "91b13f29c2e82f5ff0c80b099a3743474792638630dcec7c3ddd0424efabc7df",
+2026-10-24T09:34:57.5520595Z   "limits": "Screenshots require visual review; offline inspection uses the ordinary pause menu, not continuous-match play; no private authority instrumentation or mobile performance claim.",
+2026-10-24T09:34:57.5521868Z   "watchdog": {
+2026-10-24T09:34:57.5522190Z     "passed": true,
+2026-10-24T09:34:57.5522508Z     "status": "passed",
+2026-10-24T09:34:57.5522835Z     "command": [
+2026-10-24T09:34:57.5523273Z       "/home/runner/work/sightbreak/sightbreak/.venv/bin/python",
+2026-10-24T09:34:57.5523801Z       "-B",
+2026-10-24T09:34:57.5524312Z       "/home/runner/work/sightbreak/sightbreak/scripts/verify_offline_export.py",
+2026-10-24T09:34:57.5525005Z       "--_export-flow-worker",
+2026-10-24T09:34:57.5525377Z       "--display",
+2026-10-24T09:34:57.5525674Z       ":107",
+2026-10-24T09:34:57.5526016Z       "--timeout",
+2026-10-24T09:34:57.5526312Z       "300",
+2026-10-24T09:34:57.5526604Z       "--output",
+2026-10-24T09:34:57.5526939Z       "builds/v3-export-offline"
+2026-10-24T09:34:57.5527316Z     ],
+2026-10-24T09:34:57.5527817Z     "timeout_seconds": 300.0,
+2026-10-24T09:34:57.5528278Z     "process_receipt": "watchdog.process.json",
+2026-10-24T09:34:57.5529049Z     "controller_sha256": "91b13f29c2e82f5ff0c80b099a3743474792638630dcec7c3ddd0424efabc7df",
+2026-10-24T09:34:57.5529768Z     "worker_exit": 0,
+2026-10-24T09:34:57.5530113Z     "seconds": 50.191,
+2026-10-24T09:34:57.5530447Z     "error": null
+2026-10-24T09:34:57.5530780Z   }
+2026-10-24T09:34:57.5531050Z }

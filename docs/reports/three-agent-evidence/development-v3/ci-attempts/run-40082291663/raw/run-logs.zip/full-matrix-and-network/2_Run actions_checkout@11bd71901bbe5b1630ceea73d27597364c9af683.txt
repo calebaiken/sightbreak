@@ -1,0 +1,257 @@
+﻿2026-10-24T09:31:32.1871081Z ##[group]Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+2026-10-24T09:31:32.1872125Z with:
+2026-10-24T09:31:32.1872685Z   fetch-depth: 0
+2026-10-24T09:31:32.1873227Z   repository: calebaiken/sightbreak
+2026-10-24T09:31:32.1877225Z   token: ***
+2026-10-24T09:31:32.1877754Z   ssh-strict: true
+2026-10-24T09:31:32.1878311Z   ssh-user: git
+2026-10-24T09:31:32.1878853Z   persist-credentials: true
+2026-10-24T09:31:32.1879544Z   clean: true
+2026-10-24T09:31:32.1880085Z   sparse-checkout-cone-mode: true
+2026-10-24T09:31:32.1880713Z   fetch-tags: false
+2026-10-24T09:31:32.1881248Z   show-progress: true
+2026-10-24T09:31:32.1881770Z   lfs: false
+2026-10-24T09:31:32.1882276Z   submodules: false
+2026-10-24T09:31:32.1882798Z   set-safe-directory: true
+2026-10-24T09:31:32.1883544Z ##[endgroup]
+2026-10-24T09:31:32.2963123Z Syncing repository: calebaiken/sightbreak
+2026-10-24T09:31:32.2966008Z ##[group]Getting Git version info
+2026-10-24T09:31:32.2967256Z Working directory is '/home/runner/work/sightbreak/sightbreak'
+2026-10-24T09:31:32.2969060Z [command]/usr/bin/git version
+2026-10-24T09:31:32.3032033Z git version 2.55.0
+2026-10-24T09:31:32.3051573Z ##[endgroup]
+2026-10-24T09:31:32.3061773Z Temporarily overriding HOME='/home/runner/work/_temp/e0450274-95a3-40b6-b50e-57e3f13741a0' before making global git config changes
+2026-10-24T09:31:32.3063784Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-24T09:31:32.3066074Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/sightbreak/sightbreak
+2026-10-24T09:31:32.3120109Z Deleting the contents of '/home/runner/work/sightbreak/sightbreak'
+2026-10-24T09:31:32.3123721Z ##[group]Initializing the repository
+2026-10-24T09:31:32.3128828Z [command]/usr/bin/git init /home/runner/work/sightbreak/sightbreak
+2026-10-24T09:31:32.3249337Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-24T09:31:32.3251078Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-24T09:31:32.3253089Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-24T09:31:32.3254318Z hint: call:
+2026-10-24T09:31:32.3254988Z hint:
+2026-10-24T09:31:32.3256268Z hint: 	git config --global init.defaultBranch <name>
+2026-10-24T09:31:32.3257251Z hint:
+2026-10-24T09:31:32.3258343Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-24T09:31:32.3259981Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-24T09:31:32.3261160Z hint:
+2026-10-24T09:31:32.3261941Z hint: 	git branch -m <name>
+2026-10-24T09:31:32.3262720Z hint:
+2026-10-24T09:31:32.3263736Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-24T09:31:32.3270021Z Initialized empty Git repository in /home/runner/work/sightbreak/sightbreak/.git/
+2026-10-24T09:31:32.3290830Z [command]/usr/bin/git remote add origin https://github.com/calebaiken/sightbreak
+2026-10-24T09:31:32.3332085Z ##[endgroup]
+2026-10-24T09:31:32.3333488Z ##[group]Disabling automatic garbage collection
+2026-10-24T09:31:32.3335223Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-24T09:31:32.3366823Z ##[endgroup]
+2026-10-24T09:31:32.3368098Z ##[group]Setting up auth
+2026-10-24T09:31:32.3373180Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-24T09:31:32.3404128Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-24T09:31:32.3857786Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-24T09:31:32.3904556Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-24T09:31:32.4106668Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-24T09:31:32.4148720Z ##[endgroup]
+2026-10-24T09:31:32.4151306Z ##[group]Fetching the repository
+2026-10-24T09:31:32.4159969Z [command]/usr/bin/git -c protocol.version=2 fetch --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/*
+2026-10-24T09:32:37.4261906Z From https://github.com/calebaiken/sightbreak
+2026-10-24T09:32:37.4267968Z  * [new branch]        astra/backend-trade-read-v3 -> origin/astra/backend-trade-read-v3
+2026-10-24T09:32:37.4269663Z  * [new branch]        astra/network-input-freshness-v3 -> origin/astra/network-input-freshness-v3
+2026-10-24T09:32:37.4271144Z  * [new branch]        astra/pr18-journal-only-restart -> origin/astra/pr18-journal-only-restart
+2026-10-24T09:32:37.4272310Z  * [new branch]        astra/pr18-native-pg-evidence -> origin/astra/pr18-native-pg-evidence
+2026-10-24T09:32:37.4273669Z  * [new branch]        astra/pr18-native-transaction-restart -> origin/astra/pr18-native-transaction-restart
+2026-10-24T09:32:37.4275399Z  * [new branch]        astra/prediction-reconciliation-v3 -> origin/astra/prediction-reconciliation-v3
+2026-10-24T09:32:37.4276700Z  * [new branch]        astra/systems-v3-recovery -> origin/astra/systems-v3-recovery
+2026-10-24T09:32:37.4278028Z  * [new branch]        claude/cs2-fidelity-art-production -> origin/claude/cs2-fidelity-art-production
+2026-10-24T09:32:37.4280079Z  * [new branch]        claude/design-research-synthesis -> origin/claude/design-research-synthesis
+2026-10-24T09:32:37.4281170Z  * [new branch]        claude/fair-actor-order-v1 -> origin/claude/fair-actor-order-v1
+2026-10-24T09:32:37.4282685Z  * [new branch]        claude/g22-qualify-two-phase-v1 -> origin/claude/g22-qualify-two-phase-v1
+2026-10-24T09:32:37.4283954Z  * [new branch]        claude/gunplay-metrics-v1 -> origin/claude/gunplay-metrics-v1
+2026-10-24T09:32:37.4285121Z  * [new branch]        claude/gunplay-v1-stack -> origin/claude/gunplay-v1-stack
+2026-10-24T09:32:37.4286813Z  * [new branch]        claude/independent-audit-visual-v04 -> origin/claude/independent-audit-visual-v04
+2026-10-24T09:32:37.4288035Z  * [new branch]        claude/mission-foundation-v1 -> origin/claude/mission-foundation-v1
+2026-10-24T09:32:37.4289519Z  * [new branch]        claude/native-ui-production-v1 -> origin/claude/native-ui-production-v1
+2026-10-24T09:32:37.4290696Z  * [new branch]        claude/reconcile-v10-on-pr16 -> origin/claude/reconcile-v10-on-pr16
+2026-10-24T09:32:37.4291895Z  * [new branch]        claude/relay-yard-tactical-layout-v1 -> origin/claude/relay-yard-tactical-layout-v1
+2026-10-24T09:32:37.4293098Z  * [new branch]        claude/wip-gauntlet-T1-sunmetal -> origin/claude/wip-gauntlet-T1-sunmetal
+2026-10-24T09:32:37.4294766Z  * [new branch]        claude/wip-gauntlet-T2-lowlight -> origin/claude/wip-gauntlet-T2-lowlight
+2026-10-24T09:32:37.4296192Z  * [new branch]        codex/aggregate-combined-28a3e294-20261023 -> origin/codex/aggregate-combined-28a3e294-20261023
+2026-10-24T09:32:37.4297776Z  * [new branch]        codex/aggregate-combined-28a3e294-critic-20261023 -> origin/codex/aggregate-combined-28a3e294-critic-20261023
+2026-10-24T09:32:37.4299505Z  * [new branch]        codex/aggregate-recovered-critic-20261023 -> origin/codex/aggregate-recovered-critic-20261023
+2026-10-24T09:32:37.4301006Z  * [new branch]        codex/audio-acquisition-fresh-source-20261023 -> origin/codex/audio-acquisition-fresh-source-20261023
+2026-10-24T09:32:37.4302554Z  * [new branch]        codex/audio-acquisition-r2-fresh-source-20261023 -> origin/codex/audio-acquisition-r2-fresh-source-20261023
+2026-10-24T09:32:37.4303941Z  * [new branch]        codex/audio-exit-lifecycle-20261023 -> origin/codex/audio-exit-lifecycle-20261023
+2026-10-24T09:32:37.4305434Z  * [new branch]        codex/audio-exit-lifecycle-r2-source-critic-20261023 -> origin/codex/audio-exit-lifecycle-r2-source-critic-20261023
+2026-10-24T09:32:37.4307125Z  * [new branch]        codex/audio-exit-lifecycle-r3-source-critic-20261023 -> origin/codex/audio-exit-lifecycle-r3-source-critic-20261023
+2026-10-24T09:32:37.4309011Z  * [new branch]        codex/audio-exit-lifecycle-source-critic-20261023 -> origin/codex/audio-exit-lifecycle-source-critic-20261023
+2026-10-24T09:32:37.4310804Z  * [new branch]        codex/audio-native-serialization-strict-20261023 -> origin/codex/audio-native-serialization-strict-20261023
+2026-10-24T09:32:37.4312591Z  * [new branch]        codex/audio-native-serialization-strict-fresh-critic-20261023 -> origin/codex/audio-native-serialization-strict-fresh-critic-20261023
+2026-10-24T09:32:37.4314232Z  * [new branch]        codex/audio-owner-r1-native-critic-20261023 -> origin/codex/audio-owner-r1-native-critic-20261023
+2026-10-24T09:32:37.4315461Z  * [new branch]        codex/combat-history-foundation -> origin/codex/combat-history-foundation
+2026-10-24T09:32:37.4316613Z  * [new branch]        codex/competitive-network-systems -> origin/codex/competitive-network-systems
+2026-10-24T09:32:37.4317987Z  * [new branch]        codex/critic-collector-native-preflight-20261024 -> origin/codex/critic-collector-native-preflight-20261024
+2026-10-24T09:32:37.4319707Z  * [new branch]        codex/critic-linux-effective-thread-source-20261023 -> origin/codex/critic-linux-effective-thread-source-20261023
+2026-10-24T09:32:37.4321253Z  * [new branch]        codex/critic-linux-profile-native-r3-20261023 -> origin/codex/critic-linux-profile-native-r3-20261023
+2026-10-24T09:32:37.4322823Z  * [new branch]        codex/critic-m5-objective-r2-fresh-source-20261023 -> origin/codex/critic-m5-objective-r2-fresh-source-20261023
+2026-10-24T09:32:37.4324314Z  * [new branch]        codex/critic-mac-semantic-resumed-20261024 -> origin/codex/critic-mac-semantic-resumed-20261024
+2026-10-24T09:32:37.4325713Z  * [new branch]        codex/critic-touch-r4b-fresh-source -> origin/codex/critic-touch-r4b-fresh-source
+2026-10-24T09:32:37.4326938Z  * [new branch]        codex/critic-touch-r4b-native-fresh -> origin/codex/critic-touch-r4b-native-fresh
+2026-10-24T09:32:37.4328398Z  * [new branch]        codex/critic-touch-r4b-r2-source -> origin/codex/critic-touch-r4b-r2-source
+2026-10-24T09:32:37.4330054Z  * [new branch]        codex/critic-touch-r4b-r3-native-fresh -> origin/codex/critic-touch-r4b-r3-native-fresh
+2026-10-24T09:32:37.4331332Z  * [new branch]        codex/critic-touch-r4b-r3-source -> origin/codex/critic-touch-r4b-r3-source
+2026-10-24T09:32:37.4332814Z  * [new branch]        codex/critic-windows-collector-actual-20261024 -> origin/codex/critic-windows-collector-actual-20261024
+2026-10-24T09:32:37.4334460Z  * [new branch]        codex/critic-windows-input-collector-final-20261024 -> origin/codex/critic-windows-input-collector-final-20261024
+2026-10-24T09:32:37.4336253Z  * [new branch]        codex/critic-windows-trace-combined-source-20261023 -> origin/codex/critic-windows-trace-combined-source-20261023
+2026-10-24T09:32:37.4338027Z  * [new branch]        codex/desktop-playability-p1 -> origin/codex/desktop-playability-p1
+2026-10-24T09:32:37.4339508Z  * [new branch]        codex/desktop-steam-readiness -> origin/codex/desktop-steam-readiness
+2026-10-24T09:32:37.4340674Z  * [new branch]        codex/durable-match-results -> origin/codex/durable-match-results
+2026-10-24T09:32:37.4342091Z  * [new branch]        codex/linux-native-argument-readback-20261023 -> origin/codex/linux-native-argument-readback-20261023
+2026-10-24T09:32:37.4344247Z  * [new branch]        codex/linux-native-fingerprint-types-fresh-critic-20261024 -> origin/codex/linux-native-fingerprint-types-fresh-critic-20261024
+2026-10-24T09:32:37.4345951Z  * [new branch]        codex/linux-packed-import-boundary-20261023 -> origin/codex/linux-packed-import-boundary-20261023
+2026-10-24T09:32:37.4347510Z  * [new branch]        codex/linux-packed-import-fresh-source-critic-20261023 -> origin/codex/linux-packed-import-fresh-source-critic-20261023
+2026-10-24T09:32:37.4348932Z  * [new branch]        codex/m2-mac-ax-fresh-source-critic -> origin/codex/m2-mac-ax-fresh-source-critic
+2026-10-24T09:32:37.4350391Z  * [new branch]        codex/m2-mac-ax-r2-fresh-source-critic -> origin/codex/m2-mac-ax-r2-fresh-source-critic
+2026-10-24T09:32:37.4351651Z  * [new branch]        codex/m2-mac-ax-read-only -> origin/codex/m2-mac-ax-read-only
+2026-10-24T09:32:37.4352667Z  * [new branch]        codex/m2-mac-ax-read-only-r2 -> origin/codex/m2-mac-ax-read-only-r2
+2026-10-24T09:32:37.4353735Z  * [new branch]        codex/m2-mac-ax-untitled-r3 -> origin/codex/m2-mac-ax-untitled-r3
+2026-10-24T09:32:37.4354708Z  * [new branch]        codex/m2-mac-derived-ocr -> origin/codex/m2-mac-derived-ocr
+2026-10-24T09:32:37.4355804Z  * [new branch]        codex/m2-mac-journey-recovered -> origin/codex/m2-mac-journey-recovered
+2026-10-24T09:32:37.4356995Z  * [new branch]        codex/m2-mac-semantic-deploy-20261023 -> origin/codex/m2-mac-semantic-deploy-20261023
+2026-10-24T09:32:37.4358655Z  * [new branch]        codex/m2-mac-semantic-deploy-fresh-source-critic-20261023 -> origin/codex/m2-mac-semantic-deploy-fresh-source-critic-20261023
+2026-10-24T09:32:37.4360299Z  * [new branch]        codex/m2-mac-semantic-research -> origin/codex/m2-mac-semantic-research
+2026-10-24T09:32:37.4361550Z  * [new branch]        codex/m2-mac-startup-capture-stability -> origin/codex/m2-mac-startup-capture-stability
+2026-10-24T09:32:37.4362974Z  * [new branch]        codex/m3-market-refresh-critic-20261023-0342 -> origin/codex/m3-market-refresh-critic-20261023-0342
+2026-10-24T09:32:37.4364485Z  * [new branch]        codex/m3-market-refresh-guard-20261023-0322 -> origin/codex/m3-market-refresh-guard-20261023-0322
+2026-10-24T09:32:37.4366069Z  * [new branch]        codex/m5-acquisition-source-critic-20261023 -> origin/codex/m5-acquisition-source-critic-20261023
+2026-10-24T09:32:37.4367632Z  * [new branch]        codex/m5-acquisition-source-critic-r2-20261023 -> origin/codex/m5-acquisition-source-critic-r2-20261023
+2026-10-24T09:32:37.4369006Z  * [new branch]        codex/m5-dry-weapon-recovered -> origin/codex/m5-dry-weapon-recovered
+2026-10-24T09:32:37.4370661Z  * [new branch]        codex/m5-exhausted-primary-benchmark -> origin/codex/m5-exhausted-primary-benchmark
+2026-10-24T09:32:37.4372112Z  * [new branch]        codex/m5-exhausted-primary-selection-20261023 -> origin/codex/m5-exhausted-primary-selection-20261023
+2026-10-24T09:32:37.4373769Z  * [new branch]        codex/m5-objective-observability-20261023 -> origin/codex/m5-objective-observability-20261023
+2026-10-24T09:32:37.4375346Z  * [new branch]        codex/m5-objective-observability-r2-20261023 -> origin/codex/m5-objective-observability-r2-20261023
+2026-10-24T09:32:37.4377182Z  * [new branch]        codex/m5-selection-native-critic-20261023 -> origin/codex/m5-selection-native-critic-20261023
+2026-10-24T09:32:37.4379179Z  * [new branch]        codex/m6-shipped-hud-reference-recovered -> origin/codex/m6-shipped-hud-reference-recovered
+2026-10-24T09:32:37.4382576Z  * [new branch]        codex/m6-touch-contrast-recovered -> origin/codex/m6-touch-contrast-recovered
+2026-10-24T09:32:37.4386932Z  * [new branch]        codex/m6-touch-contrast-recovered-critic -> origin/codex/m6-touch-contrast-recovered-critic
+2026-10-24T09:32:37.4390599Z  * [new branch]        codex/m6-touch-label-edge-r5 -> origin/codex/m6-touch-label-edge-r5
+2026-10-24T09:32:37.4391629Z  * [new branch]        codex/market-expected-price -> origin/codex/market-expected-price
+2026-10-24T09:32:37.4392496Z  * [new branch]        codex/network-lifecycle-v2 -> origin/codex/network-lifecycle-v2
+2026-10-24T09:32:37.4393143Z  * [new branch]        codex/network-movement-v2 -> origin/codex/network-movement-v2
+2026-10-24T09:32:37.4393845Z  * [new branch]        codex/network-validation-builds -> origin/codex/network-validation-builds
+2026-10-24T09:32:37.4394531Z  * [new branch]        codex/qa-artifact-slices -> origin/codex/qa-artifact-slices
+2026-10-24T09:32:37.4395152Z  * [new branch]        codex/reconnect-recovery -> origin/codex/reconnect-recovery
+2026-10-24T09:32:37.4395884Z  * [new branch]        codex/review-exhausted-primary-fixture -> origin/codex/review-exhausted-primary-fixture
+2026-10-24T09:32:37.4397100Z  * [new branch]        codex/review-exhausted-primary-selection-source-20261023 -> origin/codex/review-exhausted-primary-selection-source-20261023
+2026-10-24T09:32:37.4398080Z  * [new branch]        codex/review-mac-combined-c838907-20261023 -> origin/codex/review-mac-combined-c838907-20261023
+2026-10-24T09:32:37.4398987Z  * [new branch]        codex/review-mac-derived-ocr-corrected-20261023 -> origin/codex/review-mac-derived-ocr-corrected-20261023
+2026-10-24T09:32:37.4400332Z  * [new branch]        codex/review-mac-derived-ocr-fresh-20261023 -> origin/codex/review-mac-derived-ocr-fresh-20261023
+2026-10-24T09:32:37.4401234Z  * [new branch]        codex/review-mac-native-c088-20261023 -> origin/codex/review-mac-native-c088-20261023
+2026-10-24T09:32:37.4402114Z  * [new branch]        codex/review-mac-native-c838907-20261023 -> origin/codex/review-mac-native-c838907-20261023
+2026-10-24T09:32:37.4403240Z  * [new branch]        codex/review-strict-native-log-integration-20261023 -> origin/codex/review-strict-native-log-integration-20261023
+2026-10-24T09:32:37.4404163Z  * [new branch]        codex/review-touch-r4-source -> origin/codex/review-touch-r4-source
+2026-10-24T09:32:37.4405222Z  * [new branch]        codex/review-win-native-a089-20261023 -> origin/codex/review-win-native-a089-20261023
+2026-10-24T09:32:37.4406225Z  * [new branch]        codex/review-win-native-e28c8e9-20261023 -> origin/codex/review-win-native-e28c8e9-20261023
+2026-10-24T09:32:37.4407131Z  * [new branch]        codex/review-windows-route-pulse-20261023 -> origin/codex/review-windows-route-pulse-20261023
+2026-10-24T09:32:37.4408058Z  * [new branch]        codex/review-windows-route-pulse-r2-20261023 -> origin/codex/review-windows-route-pulse-r2-20261023
+2026-10-24T09:32:37.4408884Z  * [new branch]        codex/state-privacy-v2  -> origin/codex/state-privacy-v2
+2026-10-24T09:32:37.4410007Z  * [new branch]        codex/strict-native-log-integration-20261023 -> origin/codex/strict-native-log-integration-20261023
+2026-10-24T09:32:37.4412031Z  * [new branch]        codex/v1-executor-recovery-20261023 -> origin/codex/v1-executor-recovery-20261023
+2026-10-24T09:32:37.4413968Z  * [new branch]        codex/v1-mission-playability -> origin/codex/v1-mission-playability
+2026-10-24T09:32:37.4415678Z  * [new branch]        codex/v1-qualify-b2e0293 -> origin/codex/v1-qualify-b2e0293
+2026-10-24T09:32:37.4417124Z  * [new branch]        codex/v1-qualify-mac-c08889b -> origin/codex/v1-qualify-mac-c08889b
+2026-10-24T09:32:37.4418645Z  * [new branch]        codex/v1-qualify-mac-c838907 -> origin/codex/v1-qualify-mac-c838907
+2026-10-24T09:32:37.4420345Z  * [new branch]        codex/v1-qualify-win-49ae54b0 -> origin/codex/v1-qualify-win-49ae54b0
+2026-10-24T09:32:37.4421545Z  * [new branch]        codex/v1-qualify-win-a089473 -> origin/codex/v1-qualify-win-a089473
+2026-10-24T09:32:37.4422221Z  * [new branch]        codex/v1-qualify-win-e28c8e9 -> origin/codex/v1-qualify-win-e28c8e9
+2026-10-24T09:32:37.4423046Z  * [new branch]        codex/v1-resume-checkpoint-20261023-0338 -> origin/codex/v1-resume-checkpoint-20261023-0338
+2026-10-24T09:32:37.4423930Z  * [new branch]        codex/windows-combined-e28c8e9-source-20261023 -> origin/codex/windows-combined-e28c8e9-source-20261023
+2026-10-24T09:32:37.4424914Z  * [new branch]        codex/windows-cover-independent-source-20261023 -> origin/codex/windows-cover-independent-source-20261023
+2026-10-24T09:32:37.4425885Z  * [new branch]        codex/windows-fire-ack-validation -> origin/codex/windows-fire-ack-validation
+2026-10-24T09:32:37.4427185Z  * [new branch]        codex/windows-focus-liveness-critic-20261023 -> origin/codex/windows-focus-liveness-critic-20261023
+2026-10-24T09:32:37.4428335Z  * [new branch]        codex/windows-focus-liveness-fence-20261023 -> origin/codex/windows-focus-liveness-fence-20261023
+2026-10-24T09:32:37.4429626Z  * [new branch]        codex/windows-initial-pulse-fresh-source-critic-20261023 -> origin/codex/windows-initial-pulse-fresh-source-critic-20261023
+2026-10-24T09:32:37.4430908Z  * [new branch]        codex/windows-input-collector-20261023 -> origin/codex/windows-input-collector-20261023
+2026-10-24T09:32:37.4432776Z  * [new branch]        codex/windows-input-consumption-diagnostic-20261023 -> origin/codex/windows-input-consumption-diagnostic-20261023
+2026-10-24T09:32:37.4434676Z  * [new branch]        codex/windows-input-consumption-fresh-source-critic-20261023 -> origin/codex/windows-input-consumption-fresh-source-critic-20261023
+2026-10-24T09:32:37.4436612Z  * [new branch]        codex/windows-input-consumption-r2-20261023 -> origin/codex/windows-input-consumption-r2-20261023
+2026-10-24T09:32:37.4437677Z  * [new branch]        codex/windows-input-consumption-r2-fresh-source-critic-20261023 -> origin/codex/windows-input-consumption-r2-fresh-source-critic-20261023
+2026-10-24T09:32:37.4438612Z  * [new branch]        codex/windows-observation-probe -> origin/codex/windows-observation-probe
+2026-10-24T09:32:37.4439686Z  * [new branch]        codex/windows-ocr-diagnosis -> origin/codex/windows-ocr-diagnosis
+2026-10-24T09:32:37.4440761Z  * [new branch]        codex/windows-playability-diagnosis -> origin/codex/windows-playability-diagnosis
+2026-10-24T09:32:37.4441806Z  * [new branch]        codex/windows-priority-playability-validation -> origin/codex/windows-priority-playability-validation
+2026-10-24T09:32:37.4443029Z  * [new branch]        codex/windows-pulse-combined-source-critic-20261023 -> origin/codex/windows-pulse-combined-source-critic-20261023
+2026-10-24T09:32:37.4444201Z  * [new branch]        codex/windows-reload-route-actual-20261023 -> origin/codex/windows-reload-route-actual-20261023
+2026-10-24T09:32:37.4445207Z  * [new branch]        codex/windows-route-pulse-e28-20261023 -> origin/codex/windows-route-pulse-e28-20261023
+2026-10-24T09:32:37.4446093Z  * [new branch]        codex/windows-settings-exposure-a089-20261023 -> origin/codex/windows-settings-exposure-a089-20261023
+2026-10-24T09:32:37.4447133Z  * [new branch]        critic/exhausted-primary-baseline-actual -> origin/critic/exhausted-primary-baseline-actual
+2026-10-24T09:32:37.4448084Z  * [new branch]        critic/exhausted-primary-r2 -> origin/critic/exhausted-primary-r2
+2026-10-24T09:32:37.4448795Z  * [new branch]        critic/linux-gles-profile-corrected -> origin/critic/linux-gles-profile-corrected
+2026-10-24T09:32:37.4449818Z  * [new branch]        critic/linux-gles-profile-native -> origin/critic/linux-gles-profile-native
+2026-10-24T09:32:37.4450595Z  * [new branch]        critic/linux-gles-profile-recovered -> origin/critic/linux-gles-profile-recovered
+2026-10-24T09:32:37.4451448Z  * [new branch]        critic/linux-profile-acquisition-correction-r1 -> origin/critic/linux-profile-acquisition-correction-r1
+2026-10-24T09:32:37.4452430Z  * [new branch]        critic/linux-profile-acquisition-correction-r2 -> origin/critic/linux-profile-acquisition-correction-r2
+2026-10-24T09:32:37.4453370Z  * [new branch]        critic/linux-profile-acquisition-fresh-source -> origin/critic/linux-profile-acquisition-fresh-source
+2026-10-24T09:32:37.4454216Z  * [new branch]        critic/linux-profile-fixture -> origin/critic/linux-profile-fixture
+2026-10-24T09:32:37.4455035Z  * [new branch]        critic/linux-profile-fixture-native-types-fresh -> origin/critic/linux-profile-fixture-native-types-fresh
+2026-10-24T09:32:37.4455865Z  * [new branch]        critic/linux-profile-fixture-r1 -> origin/critic/linux-profile-fixture-r1
+2026-10-24T09:32:37.4456650Z  * [new branch]        critic/linux-profile-overhead-plan -> origin/critic/linux-profile-overhead-plan
+2026-10-24T09:32:37.4457432Z  * [new branch]        critic/mac-startup-combined-20261023 -> origin/critic/mac-startup-combined-20261023
+2026-10-24T09:32:37.4458601Z  * [new branch]        critic/mac-startup-corrected-20261023 -> origin/critic/mac-startup-corrected-20261023
+2026-10-24T09:32:37.4459711Z  * [new branch]        critic/mac-startup-fresh-20261023 -> origin/critic/mac-startup-fresh-20261023
+2026-10-24T09:32:37.4460523Z  * [new branch]        critic/windows-combined-recovered -> origin/critic/windows-combined-recovered
+2026-10-24T09:32:37.4461543Z  * [new branch]        diagnostic/linux-gles-profile-recovered -> origin/diagnostic/linux-gles-profile-recovered
+2026-10-24T09:32:37.4462479Z  * [new branch]        diagnostic/linux-opaque-cost-preregistration -> origin/diagnostic/linux-opaque-cost-preregistration
+2026-10-24T09:32:37.4463508Z  * [new branch]        diagnostic/linux-profile-acquisition-wrapper -> origin/diagnostic/linux-profile-acquisition-wrapper
+2026-10-24T09:32:37.4464749Z  * [new branch]        diagnostic/linux-profile-fixture-native-types -> origin/diagnostic/linux-profile-fixture-native-types
+2026-10-24T09:32:37.4465857Z  * [new branch]        diagnostic/linux-profile-overhead-fixture -> origin/diagnostic/linux-profile-overhead-fixture
+2026-10-24T09:32:37.4466827Z  * [new branch]        gemini/tactical-bot-intelligence-v1 -> origin/gemini/tactical-bot-intelligence-v1
+2026-10-24T09:32:37.4467780Z  * [new branch]        integration/sightbreak-network-art-preview -> origin/integration/sightbreak-network-art-preview
+2026-10-24T09:32:37.4468794Z  * [new branch]        integration/sightbreak-reliability-refresh -> origin/integration/sightbreak-reliability-refresh
+2026-10-24T09:32:37.4470087Z  * [new branch]        integration/sightbreak-three-agent-alpha -> origin/integration/sightbreak-three-agent-alpha
+2026-10-24T09:32:37.4471442Z  * [new branch]        integration/sightbreak-three-agent-artifacts -> origin/integration/sightbreak-three-agent-artifacts
+2026-10-24T09:32:37.4472444Z  * [new branch]        integration/sightbreak-v3-validation -> origin/integration/sightbreak-v3-validation
+2026-10-24T09:32:37.4473138Z  * [new branch]        main                    -> origin/main
+2026-10-24T09:32:37.4474027Z  * [new branch]        qualifier/m2-mac-ax-r2-read-only-d6cb78aa -> origin/qualifier/m2-mac-ax-r2-read-only-d6cb78aa
+2026-10-24T09:32:37.4474870Z  * [new branch]        qualifier/m2-mac-ax-r3-read-only-4854aed9 -> origin/qualifier/m2-mac-ax-r3-read-only-4854aed9
+2026-10-24T09:32:37.4475762Z  * [new branch]        qualifier/m2-mac-guard-r1-d5277180 -> origin/qualifier/m2-mac-guard-r1-d5277180
+2026-10-24T09:32:37.4476563Z  * [new branch]        qualifier/windows-collector-c324-20261024 -> origin/qualifier/windows-collector-c324-20261024
+2026-10-24T09:32:37.4477569Z  * [new branch]        review/linux-profile-acquisition-native-20261023 -> origin/review/linux-profile-acquisition-native-20261023
+2026-10-24T09:32:37.4478970Z  * [new branch]        review/linux-profile-acquisition-r2-actual-20261023 -> origin/review/linux-profile-acquisition-r2-actual-20261023
+2026-10-24T09:32:37.4480217Z  * [new branch]        review/m2-mac-ax-r2-actual-independent -> origin/review/m2-mac-ax-r2-actual-independent
+2026-10-24T09:32:37.4481116Z  * [new branch]        review/m2-mac-ax-r3-independent-actual -> origin/review/m2-mac-ax-r3-independent-actual
+2026-10-24T09:32:37.4482005Z  * [new branch]        review/m2-mac-capture-guard-fresh-source -> origin/review/m2-mac-capture-guard-fresh-source
+2026-10-24T09:32:37.4482963Z  * [new branch]        review/m2-mac-capture-guard-independent-actual -> origin/review/m2-mac-capture-guard-independent-actual
+2026-10-24T09:32:37.4483807Z  * [new branch]        review/m5-dry-weapon-recovered -> origin/review/m5-dry-weapon-recovered
+2026-10-24T09:32:37.4484606Z  * [new branch]        review/mac-ax-untitled-r3-fresh-source -> origin/review/mac-ax-untitled-r3-fresh-source
+2026-10-24T09:32:37.4485453Z  * [new branch]        review/windows-pulse-native-fresh-20261023 -> origin/review/windows-pulse-native-fresh-20261023
+2026-10-24T09:32:37.4487161Z [command]/usr/bin/git branch --list --remote origin/integration/sightbreak-v3-validation
+2026-10-24T09:32:37.4487795Z   origin/integration/sightbreak-v3-validation
+2026-10-24T09:32:37.4488810Z [command]/usr/bin/git rev-parse refs/remotes/origin/integration/sightbreak-v3-validation
+2026-10-24T09:32:37.4489573Z 4099facb21a9242d41df79fd9e75bbbea031f2e0
+2026-10-24T09:32:37.4490905Z ##[endgroup]
+2026-10-24T09:32:37.4491518Z ##[group]Determining the checkout info
+2026-10-24T09:32:37.4492259Z ##[endgroup]
+2026-10-24T09:32:37.4492630Z [command]/usr/bin/git sparse-checkout disable
+2026-10-24T09:32:37.4493796Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-24T09:32:37.4495025Z ##[group]Checking out the ref
+2026-10-24T09:32:37.4495747Z [command]/usr/bin/git checkout --progress --force -B integration/sightbreak-v3-validation refs/remotes/origin/integration/sightbreak-v3-validation
+2026-10-24T09:32:38.5030370Z Updating files:  87% (8196/9350)
+2026-10-24T09:32:38.5855442Z Updating files:  88% (8228/9350)
+2026-10-24T09:32:38.6687370Z Updating files:  89% (8322/9350)
+2026-10-24T09:32:38.6810663Z Updating files:  90% (8415/9350)
+2026-10-24T09:32:38.6862121Z Updating files:  91% (8509/9350)
+2026-10-24T09:32:38.6895267Z Updating files:  92% (8602/9350)
+2026-10-24T09:32:38.6931009Z Updating files:  93% (8696/9350)
+2026-10-24T09:32:38.7082972Z Updating files:  94% (8789/9350)
+2026-10-24T09:32:38.7715191Z Updating files:  95% (8883/9350)
+2026-10-24T09:32:38.8033992Z Updating files:  96% (8976/9350)
+2026-10-24T09:32:38.8068025Z Updating files:  97% (9070/9350)
+2026-10-24T09:32:38.8098210Z Updating files:  98% (9163/9350)
+2026-10-24T09:32:38.8142915Z Updating files:  99% (9257/9350)
+2026-10-24T09:32:38.8143639Z Updating files: 100% (9350/9350)
+2026-10-24T09:32:38.8144615Z Updating files: 100% (9350/9350), done.
+2026-10-24T09:32:38.8369430Z Switched to a new branch 'integration/sightbreak-v3-validation'
+2026-10-24T09:32:38.8371099Z branch 'integration/sightbreak-v3-validation' set up to track 'origin/integration/sightbreak-v3-validation'.
+2026-10-24T09:32:38.8445347Z ##[endgroup]
+2026-10-24T09:32:38.8481672Z [command]/usr/bin/git log -1 --format=%H
+2026-10-24T09:32:38.8504629Z 4099facb21a9242d41df79fd9e75bbbea031f2e0

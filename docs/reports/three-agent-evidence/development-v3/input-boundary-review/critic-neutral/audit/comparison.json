@@ -1,0 +1,513 @@
+{
+  "schema": 1,
+  "scope": "Independent source-identity-blinded component evidence critique only, not Match/lifecycle/timer/UDP/actor behavior",
+  "samples": [
+    "sample-bd249c",
+    "sample-05ec6c"
+  ],
+  "behaviorally_equivalent": false,
+  "component_freshness_signal_advantage": "sample-bd249c",
+  "global_network_or_release_winner": null,
+  "distinctive_events": [
+    {
+      "event": "fully_acked_identical_replay",
+      "before_ack": 2,
+      "packet_sequences": [
+        1,
+        2
+      ],
+      "accepted": [
+        false,
+        true
+      ],
+      "rejected_delta": [
+        1,
+        0
+      ]
+    },
+    {
+      "event": "fully_acked_altered_replay",
+      "before_ack": 2,
+      "packet_sequences": [
+        1,
+        2
+      ],
+      "accepted": [
+        false,
+        true
+      ],
+      "rejected_delta": [
+        1,
+        0
+      ]
+    }
+  ],
+  "event_comparison": [
+    {
+      "event_index": 0,
+      "event": "fresh_batch",
+      "capture_monotonic_ms": [
+        329,
+        327
+      ],
+      "behavior_differences": [],
+      "queue_ack_rate_equivalent": true
+    },
+    {
+      "event_index": 1,
+      "event": "identical_queued_retry",
+      "capture_monotonic_ms": [
+        329,
+        328
+      ],
+      "behavior_differences": [],
+      "queue_ack_rate_equivalent": true
+    },
+    {
+      "event_index": 2,
+      "event": "altered_queued_retry",
+      "capture_monotonic_ms": [
+        330,
+        328
+      ],
+      "behavior_differences": [],
+      "queue_ack_rate_equivalent": true
+    },
+    {
+      "event_index": 3,
+      "event": "consume_first",
+      "capture_monotonic_ms": [
+        330,
+        328
+      ],
+      "behavior_differences": [],
+      "queue_ack_rate_equivalent": true
+    },
+    {
+      "event_index": 4,
+      "event": "partially_acked_retry",
+      "capture_monotonic_ms": [
+        330,
+        328
+      ],
+      "behavior_differences": [],
+      "queue_ack_rate_equivalent": true
+    },
+    {
+      "event_index": 5,
+      "event": "consume_second",
+      "capture_monotonic_ms": [
+        330,
+        328
+      ],
+      "behavior_differences": [],
+      "queue_ack_rate_equivalent": true
+    },
+    {
+      "event_index": 6,
+      "event": "fully_acked_identical_replay",
+      "capture_monotonic_ms": [
+        330,
+        329
+      ],
+      "behavior_differences": [
+        {
+          "path": "/accepted",
+          "bd249c": false,
+          "05ec6c": true
+        },
+        {
+          "path": "/after/rejected",
+          "bd249c": 1,
+          "05ec6c": 0
+        }
+      ],
+      "queue_ack_rate_equivalent": true
+    },
+    {
+      "event_index": 7,
+      "event": "fully_acked_altered_replay",
+      "capture_monotonic_ms": [
+        330,
+        329
+      ],
+      "behavior_differences": [
+        {
+          "path": "/accepted",
+          "bd249c": false,
+          "05ec6c": true
+        },
+        {
+          "path": "/after/rejected",
+          "bd249c": 2,
+          "05ec6c": 0
+        },
+        {
+          "path": "/before/rejected",
+          "bd249c": 1,
+          "05ec6c": 0
+        }
+      ],
+      "queue_ack_rate_equivalent": true
+    },
+    {
+      "event_index": 8,
+      "event": "mixed_acked_and_new_intent",
+      "capture_monotonic_ms": [
+        330,
+        329
+      ],
+      "behavior_differences": [
+        {
+          "path": "/after/rejected",
+          "bd249c": 2,
+          "05ec6c": 0
+        },
+        {
+          "path": "/before/rejected",
+          "bd249c": 2,
+          "05ec6c": 0
+        }
+      ],
+      "queue_ack_rate_equivalent": true
+    },
+    {
+      "event_index": 9,
+      "event": "new_intent_queued_retry",
+      "capture_monotonic_ms": [
+        331,
+        329
+      ],
+      "behavior_differences": [
+        {
+          "path": "/after/rejected",
+          "bd249c": 2,
+          "05ec6c": 0
+        },
+        {
+          "path": "/before/rejected",
+          "bd249c": 2,
+          "05ec6c": 0
+        }
+      ],
+      "queue_ack_rate_equivalent": true
+    },
+    {
+      "event_index": 10,
+      "event": "consume_new_intent",
+      "capture_monotonic_ms": [
+        331,
+        329
+      ],
+      "behavior_differences": [
+        {
+          "path": "/after/rejected",
+          "bd249c": 2,
+          "05ec6c": 0
+        },
+        {
+          "path": "/before/rejected",
+          "bd249c": 2,
+          "05ec6c": 0
+        }
+      ],
+      "queue_ack_rate_equivalent": true
+    },
+    {
+      "event_index": 11,
+      "event": "no_duplicate_simulation",
+      "capture_monotonic_ms": [
+        331,
+        329
+      ],
+      "behavior_differences": [
+        {
+          "path": "/after/rejected",
+          "bd249c": 2,
+          "05ec6c": 0
+        },
+        {
+          "path": "/before/rejected",
+          "bd249c": 2,
+          "05ec6c": 0
+        }
+      ],
+      "queue_ack_rate_equivalent": true
+    },
+    {
+      "event_index": 12,
+      "event": "old_epoch",
+      "capture_monotonic_ms": [
+        331,
+        329
+      ],
+      "behavior_differences": [
+        {
+          "path": "/after/rejected",
+          "bd249c": 3,
+          "05ec6c": 1
+        },
+        {
+          "path": "/before/rejected",
+          "bd249c": 2,
+          "05ec6c": 0
+        }
+      ],
+      "queue_ack_rate_equivalent": true
+    },
+    {
+      "event_index": 13,
+      "event": "beyond_ahead_limit",
+      "capture_monotonic_ms": [
+        331,
+        329
+      ],
+      "behavior_differences": [
+        {
+          "path": "/after/rejected",
+          "bd249c": 4,
+          "05ec6c": 2
+        },
+        {
+          "path": "/before/rejected",
+          "bd249c": 3,
+          "05ec6c": 1
+        }
+      ],
+      "queue_ack_rate_equivalent": true
+    },
+    {
+      "event_index": 14,
+      "event": "malformed_acked_command_with_new_intent",
+      "capture_monotonic_ms": [
+        331,
+        329
+      ],
+      "behavior_differences": [
+        {
+          "path": "/after/rejected",
+          "bd249c": 5,
+          "05ec6c": 3
+        },
+        {
+          "path": "/before/rejected",
+          "bd249c": 4,
+          "05ec6c": 2
+        }
+      ],
+      "queue_ack_rate_equivalent": true
+    }
+  ],
+  "component_summaries": {
+    "sample-bd249c": {
+      "accept_attempts": 11,
+      "accepted_true": 6,
+      "accepted_false": 5,
+      "pop_attempts": 4,
+      "nonempty_pops": 3,
+      "popped_original_payloads": [
+        {
+          "crouch": false,
+          "fire": true,
+          "grenade": false,
+          "interact": false,
+          "jump": false,
+          "look": [
+            0.0,
+            0.0
+          ],
+          "move": [
+            1.0,
+            0.0
+          ],
+          "reload": false,
+          "sequence": 1,
+          "smoke": false,
+          "weapon": ""
+        },
+        {
+          "crouch": false,
+          "fire": false,
+          "grenade": false,
+          "interact": false,
+          "jump": false,
+          "look": [
+            0.0,
+            0.0
+          ],
+          "move": [
+            1.0,
+            0.0
+          ],
+          "reload": false,
+          "sequence": 2,
+          "smoke": false,
+          "weapon": ""
+        },
+        {
+          "crouch": false,
+          "fire": true,
+          "grenade": false,
+          "interact": false,
+          "jump": false,
+          "look": [
+            0.0,
+            0.0
+          ],
+          "move": [
+            -1.0,
+            0.0
+          ],
+          "reload": false,
+          "sequence": 3,
+          "smoke": false,
+          "weapon": ""
+        }
+      ],
+      "fire_payload_values": [
+        true,
+        false,
+        true
+      ],
+      "hypothetical_rising_edges_if_simple_latch_consumed_once": [
+        1,
+        3
+      ],
+      "hypothetical_edges_are_not_actor_shots": true,
+      "final_component_state": {
+        "ack": 3,
+        "queue": {},
+        "rate": {
+          "count": 11,
+          "start": 1000
+        },
+        "rejected": 5
+      },
+      "capture_clock_min_max_ms": [
+        329,
+        331
+      ],
+      "capture_clock_span_ms": 2,
+      "supplied_rate_clock_min_max_ms": [
+        1000,
+        1600
+      ],
+      "supplied_rate_clock_span_ms": 600,
+      "rate_bucket_start": 1000,
+      "rate_bucket_final_count": 11,
+      "disconnect_evidence_present": false,
+      "live_activity_clock_evidence_present": false,
+      "reported_checks": 21,
+      "reported_failures": 0,
+      "reported_counts_independently_reproduced_as_original_assertions": false
+    },
+    "sample-05ec6c": {
+      "accept_attempts": 11,
+      "accepted_true": 8,
+      "accepted_false": 3,
+      "pop_attempts": 4,
+      "nonempty_pops": 3,
+      "popped_original_payloads": [
+        {
+          "crouch": false,
+          "fire": true,
+          "grenade": false,
+          "interact": false,
+          "jump": false,
+          "look": [
+            0.0,
+            0.0
+          ],
+          "move": [
+            1.0,
+            0.0
+          ],
+          "reload": false,
+          "sequence": 1,
+          "smoke": false,
+          "weapon": ""
+        },
+        {
+          "crouch": false,
+          "fire": false,
+          "grenade": false,
+          "interact": false,
+          "jump": false,
+          "look": [
+            0.0,
+            0.0
+          ],
+          "move": [
+            1.0,
+            0.0
+          ],
+          "reload": false,
+          "sequence": 2,
+          "smoke": false,
+          "weapon": ""
+        },
+        {
+          "crouch": false,
+          "fire": true,
+          "grenade": false,
+          "interact": false,
+          "jump": false,
+          "look": [
+            0.0,
+            0.0
+          ],
+          "move": [
+            -1.0,
+            0.0
+          ],
+          "reload": false,
+          "sequence": 3,
+          "smoke": false,
+          "weapon": ""
+        }
+      ],
+      "fire_payload_values": [
+        true,
+        false,
+        true
+      ],
+      "hypothetical_rising_edges_if_simple_latch_consumed_once": [
+        1,
+        3
+      ],
+      "hypothetical_edges_are_not_actor_shots": true,
+      "final_component_state": {
+        "ack": 3,
+        "queue": {},
+        "rate": {
+          "count": 11,
+          "start": 1000
+        },
+        "rejected": 3
+      },
+      "capture_clock_min_max_ms": [
+        327,
+        329
+      ],
+      "capture_clock_span_ms": 2,
+      "supplied_rate_clock_min_max_ms": [
+        1000,
+        1600
+      ],
+      "supplied_rate_clock_span_ms": 600,
+      "rate_bucket_start": 1000,
+      "rate_bucket_final_count": 11,
+      "disconnect_evidence_present": false,
+      "live_activity_clock_evidence_present": false,
+      "reported_checks": 21,
+      "reported_failures": 0,
+      "reported_counts_independently_reproduced_as_original_assertions": false
+    }
+  },
+  "unique_variant_packets": 7,
+  "serialized_packet_instances_decoded": 22,
+  "source_identity_blinding": "Keys/source modules/parent driver/main verdict/owner claims were not inspected; neutral labels only. Prior large-packet review exists but no identity mapping was opened or used.",
+  "behavioral_blinding": "Not behavior-blind: raw acceptance/rejection outputs reveal the behavior under test; neutral source identities do not hide behavioral differences. No source guesses or correspondence to prior labels are made.",
+  "authenticity": "Unsigned local historical receipts/logs, no external supplied hash pin, binary custody/signature/path/PID/command/duration not established. Complete/exit0/banner/result agreement are internal corroboration, not authenticated native execution.",
+  "large_packet_freeze": "No file from the previous large-packet freeze was opened or modified in this follow-up."
+}

@@ -20,6 +20,10 @@ import statistics
 import subprocess
 import time
 
+from godot_process import (cleanup_processes, godot_command, godot_environment, native_process_failures,
+                           prepare_output, process_group_options, resource_measurement,
+                           sample_process_resources, source_failures, source_snapshot)
+
 ROOT = Path(__file__).resolve().parents[1]
 
 
@@ -40,7 +44,7 @@ def main():
     parser.add_argument('--out', type=Path, required=True)
     parser.add_argument('--no-prediction', action='store_true')
     parser.add_argument('--account-tickets', type=Path, help='Private fixture JSON with one ticket per client; never included in evidence')
-    parser.add_argument('--render-client', type=int, default=-1, help='One native rendered client index; -1 keeps all headless (requires DISPLAY)')
+    parser.add_argument('--render-client', type=int, default=-1, help='One native rendered client index; -1 keeps all headless (requires a desktop display)')
     parser.add_argument('--blackout-at', type=float, default=-1, help='Seconds after shared measurement start; -1 disables')
     parser.add_argument('--blackout-seconds', type=float, default=0)
     parser.add_argument('--reconnect-at', type=float, default=-1, help='Explicitly close each connected client and exercise its resume token at this elapsed time')
@@ -55,10 +59,10 @@ def main():
         parser.error('render-client must identify a launched client or be -1')
     if not (0 <= args.blackout_seconds <= 60 and -1 <= args.blackout_at <= args.seconds and -1 <= args.reconnect_at <= args.seconds and 0 <= args.loss < 1 and 0 <= args.reorder <= 1 and args.rtt_ms >= 0 and args.jitter_ms >= 0 and 5 <= args.seconds <= 600):
         parser.error('invalid impairment bounds')
-    args.out = args.out.resolve()
-    args.out.mkdir(parents=True, exist_ok=True)
-    if any(args.out.glob('*.json')):
-        parser.error('output directory must not contain previous JSON evidence')
+    try:
+        args.out = prepare_output(args.out)
+    except FileExistsError as error:
+        parser.error(str(error))
     barrier = args.out / 'barrier'
     barrier.mkdir()
     measurement_start = None
@@ -72,19 +76,21 @@ def main():
     samples = {}
     resource_timeline = []
     last_resource_sample = 0.0
-    source = {'commit': subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip(),
-              'dirty': bool(subprocess.check_output(['git', 'status', '--porcelain'], cwd=ROOT, text=True).strip()),
-              'platform': platform.platform(), 'python': platform.python_version()}
+    source_before = source_snapshot(root=ROOT)
+    source = {**source_before, 'platform': platform.platform(), 'python': platform.python_version()}
+    resource_method = resource_measurement()
+    failures = []
+    start = time.monotonic()
 
     def blackout(now):
         return measurement_start is not None and args.blackout_at >= 0 and args.blackout_at <= now - measurement_start < args.blackout_at + args.blackout_seconds
     serial = 0
 
     def launch(role, name, port, seconds):
-        log = (args.out / (name + '.log')).open('w')
+        log = (args.out / (name + '.log')).open('x', encoding='utf-8')
         logs.append(log)
         display = ['--audio-driver', 'Dummy'] if name == 'client-' + str(args.render_client) else ['--headless']
-        cmd = [str(ROOT / 'scripts/godot.sh'), *display, '--max-fps', '60', '--script', 'res://tests/network_simulation_probe.gd', '--',
+        cmd = [*display, '--max-fps', '60', '--script', 'res://tests/network_simulation_probe.gd', '--',
                '--role=' + role, '--port=' + str(port), '--seconds=' + str(seconds), '--output=' + str((args.out / (name + '.json')).resolve()), '--barrier=' + str(barrier)]
         if args.no_prediction:
             cmd.append('--no-prediction')
@@ -98,15 +104,19 @@ def main():
             child_env.pop('SIGHTBREAK_RESULT_SPOOL', None)
             if tickets:
                 child_env['SIGHTBREAK_JOIN_TICKET'] = tickets[int(name.split('-')[1])]
-        process = subprocess.Popen(cmd, cwd=ROOT, env=child_env, stdout=log, stderr=subprocess.STDOUT)
+        child_env = godot_environment(root=ROOT, env=child_env)
+        process = subprocess.Popen(godot_command(cmd, root=ROOT, env=child_env), cwd=ROOT, env=child_env,
+                                   stdout=log, stderr=subprocess.STDOUT, **process_group_options())
         processes.append((name, process))
-        samples[name] = {'rss_peak_kib': 0, 'cpu_seconds': 0.0}
+        samples[name] = {'rss_peak_kib': None, 'rss_current_kib': None, 'cpu_seconds': None}
         return process
 
     try:
+        if source_before['dirty']:
+            raise RuntimeError('source must be clean and frozen before simulation')
         server = launch('server', 'server', args.port, args.seconds)
         for _ in range(200):
-            if 'SIGHTBREAK_SERVER_READY' in (args.out / 'server.log').read_text():
+            if 'SIGHTBREAK_SERVER_READY' in (args.out / 'server.log').read_text(encoding='utf-8', errors='replace'):
                 break
             if server.poll() is not None:
                 raise RuntimeError('server startup failed')
@@ -178,25 +188,53 @@ def main():
                 serial += 1
                 heapq.heappush(queue, (now + delay, serial, sock, destination, packet, direction, route))
             for name, process in processes:
-                try:
-                    status = Path(f'/proc/{process.pid}/status').read_text()
-                    rss = next(int(line.split()[1]) for line in status.splitlines() if line.startswith('VmRSS:'))
-                    stat = Path(f'/proc/{process.pid}/stat').read_text().rsplit(')', 1)[1].split()
-                    cpu = (int(stat[11]) + int(stat[12])) / os.sysconf('SC_CLK_TCK')
-                    samples[name]['rss_peak_kib'] = max(samples[name]['rss_peak_kib'], rss)
-                    samples[name]['rss_current_kib'] = rss
-                    samples[name]['cpu_seconds'] = max(samples[name]['cpu_seconds'], cpu)
-                except (OSError, StopIteration):
-                    pass
+                sample = sample_process_resources(process.pid) if resource_method['available'] else None
+                if sample is not None:
+                    samples[name]['rss_peak_kib'] = max(samples[name]['rss_peak_kib'] or 0, sample['rss_current_kib'])
+                    samples[name]['rss_current_kib'] = sample['rss_current_kib']
+                    samples[name]['cpu_seconds'] = max(samples[name]['cpu_seconds'] or 0, sample['cpu_seconds'])
             if now - last_resource_sample >= 1:
                 resource_timeline.append({'seconds': now-start, 'peak_samples': {name: dict(row) for name, row in samples.items()}})
                 last_resource_sample = now
-        failures = [name for name, process in processes if process.poll() != 0]
-        for name, _ in processes:
-            text = (args.out / (name + '.log')).read_text()
-            if 'SCRIPT ERROR' in text or 'ERROR:' in text:
-                failures.append(name + ': logged error')
-        server_report = json.loads((args.out / 'server.json').read_text()) if (args.out / 'server.json').exists() else {}
+        if any(process.poll() is None for _, process in processes):
+            failures.append('simulation deadline exceeded')
+        if measurement_start is None or not stop_written:
+            failures.append('shared measurement start/stop was not reached')
+    except (Exception, KeyboardInterrupt) as error:
+        failures.append(type(error).__name__ + ': ' + str(error))
+    finally:
+        failures.extend(cleanup_processes(processes))
+        for log in logs:
+            log.close()
+        selector.close()
+        for sock in sockets:
+            sock.close()
+
+    # Scan only after process-tree cleanup, including warnings emitted at exit.
+    failures.extend(native_process_failures(processes, args.out))
+
+    def read_report(name):
+        try:
+            data = json.loads((args.out / (name + '.json')).read_text(encoding='utf-8'))
+            if not isinstance(data, dict) or not data:
+                raise ValueError('expected a nonempty JSON object')
+            return data
+        except (OSError, ValueError) as error:
+            failures.append(name + ': missing or invalid report: ' + str(error))
+            return {}
+
+    report = {'conditions': {k: (bool(tickets) if k == 'account_tickets' else str(v) if isinstance(v, Path) else v) for k, v in vars(args).items()},
+              'scope': 'loopback real Godot processes; added RTT simulation; no device/cellular claim',
+              'source': source, 'traffic': traffic, 'processes': samples,
+              'resource_measurement': resource_method, 'resource_peak_timeline': resource_timeline,
+              'per_client_traffic': [route['traffic'] for route in routes],
+              'traffic_window_seconds': time.monotonic() - start,
+              'traffic_window_scope': 'whole proxy lifetime including startup, measurement and report/exit drain',
+              'measurement_start_epoch': measurement_epoch,
+              'startup_seconds': measurement_start-start if measurement_start else None,
+              'measurement_duration_seconds': args.seconds, 'shared_stop_reached': stop_written}
+    try:
+        server_report = read_report('server')
         occupancy = server_report.get('occupancy', [])
         for row in occupancy:
             ids = [binding['actor'] for binding in row['bindings']]
@@ -215,11 +253,9 @@ def main():
         first_movement = []
         final_client_states = []
         for index in range(args.clients):
-            path = args.out / f'client-{index}.json'
-            if not path.exists():
-                failures.append('client-' + str(index) + ': missing report')
+            data = read_report('client-' + str(index))
+            if not data:
                 continue
-            data = json.loads(path.read_text())
             first_movement.append(data.get("first_movement_seconds"))
             final_client_states.append({"client": index, "state": data.get("state"), "last_snapshot_age_seconds": data.get("last_snapshot_age_seconds"),
                                         "accepted_snapshots": data.get('accepted_snapshots'), "last_accepted_age_seconds": data.get('last_accepted_age_seconds'),
@@ -242,19 +278,8 @@ def main():
                 previous[pose['id']] = [pose[a] for a in ['x', 'y', 'z']]
         ticks = server_report.get('tick_usec', [])
         intervals = server_report.get('tick_intervals_usec', [])
-        report = {'conditions': {k: (bool(tickets) if k == 'account_tickets' else str(v) if isinstance(v, Path) else v) for k, v in vars(args).items()},
-                  'scope': 'loopback real Godot processes; added RTT simulation; no device/cellular claim',
-                  'source': source,
-                  'traffic_window_seconds': time.monotonic() - start,
-                  'traffic_window_scope': 'whole proxy lifetime including startup, measurement and report/exit drain',
-                  'measurement_start_epoch': measurement_epoch,
-                  'startup_seconds': measurement_start-start if measurement_start else None,
-                  'measurement_duration_seconds': args.seconds,
-                  'shared_stop_reached': stop_written,
-                  'max_enet_occupancy': max((len(row['enet']) for row in occupancy), default=0),
+        report.update({'max_enet_occupancy': max((len(row['enet']) for row in occupancy), default=0),
                   'final_authority': occupancy[-1]['bindings'] if occupancy else [],
-                  'failures': failures, 'traffic': traffic, 'processes': samples,
-                  'per_client_traffic': [route['traffic'] for route in routes], 'resource_peak_timeline': resource_timeline,
                   'skipped_commands': server_report.get('skipped_commands', 0),
                   'tick_usec_p50': percentile(ticks, .5), 'tick_usec_p95': percentile(ticks, .95), 'tick_usec_max': max(ticks, default=0),
                   'tick_interval_usec_p50': percentile(intervals, .5), 'tick_interval_usec_p95': percentile(intervals, .95), 'tick_interval_usec_max': max(intervals, default=0),
@@ -263,25 +288,22 @@ def main():
                   'prediction_error_at_ack_p50_m': percentile(prediction_errors, .5), 'prediction_error_at_ack_p95_m': percentile(prediction_errors, .95),
                   'first_movement_seconds': first_movement, 'final_client_states': final_client_states,
                   'corrections': corrections, 'hard_corrections': hard_corrections,
-                  'render_step_p95_m': percentile(rendered_steps, .95), 'render_samples_compared': len(errors)}
-        (args.out / 'summary.json').write_text(json.dumps(report, indent=2) + '\n')
-        print(json.dumps(report, indent=2))
-        return 1 if failures else 0
-    finally:
-        for _, process in processes:
-            if process.poll() is None:
-                process.terminate()
-        for _, process in processes:
-            try:
-                process.wait(timeout=5)
-            except subprocess.TimeoutExpired:
-                process.kill()
-                process.wait()
-        for log in logs:
-            log.close()
-        selector.close()
-        for sock in sockets:
-            sock.close()
+                  'render_step_p95_m': percentile(rendered_steps, .95), 'render_samples_compared': len(errors)})
+    except (Exception, KeyboardInterrupt) as error:
+        failures.append('report analysis failed: ' + type(error).__name__ + ': ' + str(error))
+    try:
+        source_after = source_snapshot(root=ROOT)
+        failures.extend(source_failures(source_before, source_after))
+    except (OSError, subprocess.SubprocessError) as error:
+        source_after = None
+        failures.append('source verification failed: ' + str(error))
+    report.update({'source': source, 'source_before': source_before, 'source_after': source_after,
+                   'source_unchanged': source_before == source_after, 'passed': not failures,
+                   'failures': failures})
+    with (args.out / 'summary.json').open('x', encoding='utf-8') as output:
+        output.write(json.dumps(report, indent=2) + '\n')
+    print(json.dumps(report, indent=2))
+    return 1 if failures else 0
 
 
 if __name__ == '__main__':

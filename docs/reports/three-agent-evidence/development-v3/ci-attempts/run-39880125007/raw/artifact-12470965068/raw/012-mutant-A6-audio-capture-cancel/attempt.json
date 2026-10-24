@@ -1,0 +1,26 @@
+{
+  "name": "audio capture (cancel)",
+  "role": "mutant",
+  "control": "A6",
+  "command": [
+    "/home/runner/work/_temp/sightbreak-v3-controls/scripts/godot.sh",
+    "--headless",
+    "--audio-driver",
+    "Dummy",
+    "--script",
+    "res://tests/reload_audio_capture.gd",
+    "--",
+    "--scenario=cancel",
+    "--out=/home/runner/work/sightbreak/sightbreak/builds/v3-audio-controls/raw/012-mutant-A6-audio-capture-cancel/capture"
+  ],
+  "exit": 1,
+  "seconds": 4.021,
+  "log": "native.log",
+  "process_receipt": "process.json",
+  "containment_and_artifact_errors": [],
+  "capture_sha256": {
+    "mix_cancel.wav": "4061b4d92256222587544edfec94e6b9cce165f60f9f9d93aca090133fc4c98e",
+    "voices_cancel.csv": "36cb89ac99282588e5844c690010fa442d4606269736b69171dc3064e4366aba",
+    "report_cancel.txt": "92bfaf32886b1af722003a4e45816aae6a4a2b6e9246a6e6dd83482aefc230f1"
+  }
+}

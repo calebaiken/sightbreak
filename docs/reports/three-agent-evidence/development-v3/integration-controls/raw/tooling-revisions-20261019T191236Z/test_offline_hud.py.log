@@ -1,0 +1,19 @@
+test_actual_v2_ocr_is_recognized (__main__.LivingHUDTests.test_actual_v2_ocr_is_recognized) ... ok
+test_blank_zero_unreadable_and_ambiguous_health_fail_closed (__main__.LivingHUDTests.test_blank_zero_unreadable_and_ambiguous_health_fail_closed) ... ok
+test_positive_damaged_player_is_recognized (__main__.LivingHUDTests.test_positive_damaged_player_is_recognized) ... ok
+test_unreadable_or_ambiguous_ammunition_rejected (__main__.LivingHUDTests.test_unreadable_or_ambiguous_ammunition_rejected) ... 
+  test_unreadable_or_ambiguous_ammunition_rejected (__main__.LivingHUDTests.test_unreadable_or_ambiguous_ammunition_rejected) (text='SIDEARM l2/6O') ... FAIL
+
+======================================================================
+FAIL: test_unreadable_or_ambiguous_ammunition_rejected (__main__.LivingHUDTests.test_unreadable_or_ambiguous_ammunition_rejected) (text='SIDEARM l2/6O')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-v3\scripts\test_offline_hud.py", line 23, in test_unreadable_or_ambiguous_ammunition_rejected
+    with self.subTest(text=text), self.assertRaises(ValueError):
+                                  ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.006s
+
+FAILED (failures=1)

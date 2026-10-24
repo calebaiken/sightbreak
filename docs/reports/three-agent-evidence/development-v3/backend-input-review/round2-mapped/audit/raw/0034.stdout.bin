@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-backend-trade-read-v3\scripts\verify_trade_read_artifacts.py", line 85, in <module>
+    print(json.dumps(verify(parser.parse_args().directory), indent=2))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-backend-trade-read-v3\scripts\verify_trade_read_artifacts.py", line 59, in verify
+    raw = load(response['raw'])
+          ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-backend-trade-read-v3\scripts\verify_trade_read_artifacts.py", line 29, in load
+    assert hashlib.sha256(data).hexdigest() == descriptor['sha256'], descriptor['file']
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: workloads/02-1-2/responses/a2a2bd83c0c257059dce6550d8272088642a27f02fc384e6092e74efa40cd464.json

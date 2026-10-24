@@ -1,0 +1,191 @@
+{
+  "S1": {
+    "all_controls_passed": true,
+    "finding_acceptances": [
+      {
+        "actual": true,
+        "body": {
+          "credits": 0,
+          "fee": 0,
+          "item": {
+            "id": "unrelated"
+          }
+        },
+        "expected": true,
+        "kind": "finding",
+        "name": "market_minimal_unrelated_body",
+        "path": "/market/requested-listing/buy"
+      },
+      {
+        "actual": true,
+        "body": {
+          "item": {
+            "id": "partial"
+          },
+          "roll": 0,
+          "table_version": "anything"
+        },
+        "expected": true,
+        "kind": "finding",
+        "name": "case_minimal_partial_body",
+        "path": "/cases/open"
+      }
+    ],
+    "http_status_tested": false,
+    "integer_helper_controls": 3,
+    "shape_counts": {
+      "finding": 2,
+      "negative": 17,
+      "positive": 3
+    },
+    "total_predicate_controls": 25
+  },
+  "S2": {
+    "A_invalid_stage": {
+      "code": 30,
+      "name": "ERR_INVALID_DATA",
+      "new_guard_retained": true,
+      "no_published_or_tmp_file": true
+    },
+    "B_same_valid_stage_after_A_exit": {
+      "code": 0,
+      "exact_load_pending_equality": true,
+      "name": "OK"
+    },
+    "B_valid_stage_while_A_alive": {
+      "both_native_pids_alive": true,
+      "code": 22,
+      "name": "ERR_ALREADY_IN_USE"
+    },
+    "oversize_unwritable_runtime_tested": false,
+    "published_positive_receipt_preserved": {
+      "path": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-recovery-contract-controls-20261024T0909404264087Z\\state\\pending_transaction.json",
+      "sha256": "edad5580569295be12e51a65f9395457ef150b5b42710ee45b0f1e29c3309a01",
+      "size": 278
+    }
+  },
+  "commit": "7b6f379a3f8c809d0985a64e883cbadfdd78d135",
+  "engine_logs_and_json_required_even_if_stdout_empty": true,
+  "engine_sha256": "ab1824f85bfd8e0e4128182c000c4003a3e042245b2967848d089b2a04b22424",
+  "exact_native_json_log_checks": [
+    {
+      "assertion_count": 33,
+      "complete": true,
+      "exact_persisted_json_to_engine_log": true,
+      "file": "native-A-ready.json",
+      "pid": 12368,
+      "role": "A"
+    },
+    {
+      "assertion_count": 36,
+      "complete": true,
+      "exact_persisted_json_to_engine_log": true,
+      "file": "native-A.json",
+      "pid": 12368,
+      "role": "A"
+    },
+    {
+      "assertion_count": 6,
+      "complete": true,
+      "exact_persisted_json_to_engine_log": true,
+      "file": "native-B-blocked.json",
+      "pid": 16660,
+      "role": "B"
+    },
+    {
+      "assertion_count": 13,
+      "complete": true,
+      "exact_persisted_json_to_engine_log": true,
+      "file": "native-B.json",
+      "pid": 16660,
+      "role": "B"
+    }
+  ],
+  "limitations": [
+    "No full UI/_send_transaction/client/backend test; no forged backend-response claim or authority contract.",
+    "Invalid-empty stage only; oversize/unwritable early returns are source review, not independently executed.",
+    "No HTTP or backend; do not report measured network count 0.",
+    "Positive fixtures are synthetic legitimate shapes, not live/backend receipts.",
+    "Published positive-control receipt left intact; no private release or clear call.",
+    "No broad recovery-safety or performance conclusion."
+  ],
+  "native_pids": {
+    "A": 12368,
+    "B": 16660
+  },
+  "native_process_count_total": 2,
+  "original_driver_results_preserved": {
+    "path": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-recovery-contract-controls-20261024T0909404264087Z\\results.json",
+    "sha256": "fb455d816fce5129d0d9351305757b5e79bcd91ab6aa2c12f69e710b1f0da7ad",
+    "size": 3265
+  },
+  "owned_native_processes_still_alive": false,
+  "passed": true,
+  "preflights": [
+    {
+      "commit_free_bytes": 3191660544,
+      "commit_limit_bytes": 14370918400,
+      "committed_bytes": 11179257856,
+      "disk_free_bytes": 26222960640,
+      "label": "before-A",
+      "minimums": {
+        "commit_free_bytes": 1610612736,
+        "disk_free_bytes": 536870912,
+        "physical_free_bytes": 805306368
+      },
+      "physical_free_bytes": 1398054912,
+      "physical_total_bytes": 7928467456,
+      "policy": "tiny headless scripts only; at most two Godot processes, 15s each",
+      "safe_to_launch": true,
+      "utc": "2026-10-24T09:11:08.750184+00:00"
+    },
+    {
+      "commit_free_bytes": 3127607296,
+      "commit_limit_bytes": 14370918400,
+      "committed_bytes": 11243311104,
+      "disk_free_bytes": 26222940160,
+      "label": "before-B-while-A-alive",
+      "minimums": {
+        "commit_free_bytes": 1610612736,
+        "disk_free_bytes": 536870912,
+        "physical_free_bytes": 805306368
+      },
+      "physical_free_bytes": 1320165376,
+      "physical_total_bytes": 7928467456,
+      "policy": "tiny headless scripts only; at most two Godot processes, 15s each",
+      "safe_to_launch": true,
+      "utc": "2026-10-24T09:11:09.242272+00:00"
+    }
+  ],
+  "previous_blocked_bundle_unchanged": true,
+  "probe_and_config_unchanged": true,
+  "same_B_used_before_and_after_A_exit": true,
+  "scope": "Bounded source-PR reproduction: native exact predicate component + complete unfiltered journal",
+  "source": [
+    {
+      "byte_equal_to_exact_git": true,
+      "git_blob_oid": "c482c553264781db2a66a373ab4e4496fb59531a",
+      "path": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-recovery-contract-controls-20261024T0909404264087Z\\source\\economy_ui.gd",
+      "sha256": "a6580d176216af48c447eacaf3d293d7862fb8af0f56db7a4a3b9fd4398f450b",
+      "size": 77874,
+      "source_path": "game/scripts/ui/economy_ui.gd"
+    },
+    {
+      "byte_equal_to_exact_git": true,
+      "git_blob_oid": "cbac7a494f14c88127196c848a3f874892e7b94c",
+      "path": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-recovery-contract-controls-20261024T0909404264087Z\\project\\transaction_journal.gd",
+      "sha256": "3a7e060f7d5c3a65f4b983edf3c56d008cb070a8948bdcb128681bd4ce562d03",
+      "size": 6138,
+      "source_path": "game/scripts/ui/transaction_journal.gd"
+    }
+  ],
+  "source_inference_only": [
+    "EconomyUI 559-563 and 584-586 permit clear after accepted success body, conditional on clear succeeding; not invoked.",
+    "EconomyUI 543-550 returns before _send_transaction on stage failure; network count is not independently measured."
+  ],
+  "stdout_sizes_bytes": {
+    "A": 0,
+    "B": 0
+  },
+  "utc": "2026-10-24T09:15:05.327297+00:00"
+}

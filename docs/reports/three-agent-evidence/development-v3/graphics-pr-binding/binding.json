@@ -1,0 +1,519 @@
+{
+  "created_utc": "2026-10-19T19:53:49.411457+00:00",
+  "baseline": "701ce2c4d7f8b2872cf1fefa64cb6edd0cd1a3fd",
+  "captured_candidate": "79a9591350854373076e62a4707ec84edc803756",
+  "github_pr2_head_observed": "bb5212dd596571653bd37eb85a4594a72bfd1abc",
+  "prior_invalid_token": "2bb5212dd596571653bd37eb85a4594a72bfd1abc",
+  "prior_packet_unchanged": true,
+  "scope": "Only baseline-to-candidate game delta plus arms builder; not whole-game equality",
+  "all_11_scoped_blobs_equal": true,
+  "whole_game_equal": false,
+  "rows": [
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_arms.glb",
+      "candidate_blob": "4893a9ba12433ab36d4ebc263fb1474428f44097",
+      "pr_blob": "4893a9ba12433ab36d4ebc263fb1474428f44097",
+      "equal": true
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_arms_albedo.png",
+      "candidate_blob": "2c2e450dde061a5d963984f75bed783c0434214c",
+      "pr_blob": "2c2e450dde061a5d963984f75bed783c0434214c",
+      "equal": true
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_arms_normal.png",
+      "candidate_blob": "4607d2e67ebb984267d83a83c59939692007a9b2",
+      "pr_blob": "4607d2e67ebb984267d83a83c59939692007a9b2",
+      "equal": true
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_arms_orm.png",
+      "candidate_blob": "6cb107df3aa5b2bddbfed8911d578dd31bc740ed",
+      "pr_blob": "6cb107df3aa5b2bddbfed8911d578dd31bc740ed",
+      "equal": true
+    },
+    {
+      "path": "game/scripts/gameplay/viewmodel_shading.gd",
+      "candidate_blob": "ec7b33d1ace39df1e3ddbbcd29bc4ea3dab642fc",
+      "pr_blob": "ec7b33d1ace39df1e3ddbbcd29bc4ea3dab642fc",
+      "equal": true
+    },
+    {
+      "path": "game/scripts/gameplay/weapon_model.gd",
+      "candidate_blob": "a57059afca863b69ec0824de08720f19017d8e52",
+      "pr_blob": "a57059afca863b69ec0824de08720f19017d8e52",
+      "equal": true
+    },
+    {
+      "path": "game/tests/reload_continuity_test.gd",
+      "candidate_blob": "e8e2393dca72b634c5ffd7ebe4c4defbba46be7c",
+      "pr_blob": "e8e2393dca72b634c5ffd7ebe4c4defbba46be7c",
+      "equal": true
+    },
+    {
+      "path": "game/tests/reload_continuity_test.gd.uid",
+      "candidate_blob": "7db534d42c4d307650e6bbdb2da982f1f32c60bd",
+      "pr_blob": "7db534d42c4d307650e6bbdb2da982f1f32c60bd",
+      "equal": true
+    },
+    {
+      "path": "game/tests/viewmodel_light_probe.gd",
+      "candidate_blob": "1320f5878d53bef54376d358dfc4ecfce67455e9",
+      "pr_blob": "1320f5878d53bef54376d358dfc4ecfce67455e9",
+      "equal": true
+    },
+    {
+      "path": "game/tests/weapon_art_test.gd",
+      "candidate_blob": "ce969ed2f185f357eeec5debdeda0b4f3f225f4a",
+      "pr_blob": "ce969ed2f185f357eeec5debdeda0b4f3f225f4a",
+      "equal": true
+    },
+    {
+      "path": "tools/art/arms_build.py",
+      "candidate_blob": "46a56f4877f16af03aeeae44d4d7f1b5b28743f1",
+      "pr_blob": "46a56f4877f16af03aeeae44d4d7f1b5b28743f1",
+      "equal": true
+    }
+  ],
+  "whole_game_diff": [
+    "M\tgame/export_presets.cfg",
+    "M\tgame/project.godot",
+    "M\tgame/scripts/gameplay/actor.gd",
+    "M\tgame/scripts/gameplay/arena.gd",
+    "D\tgame/scripts/gameplay/bot_ai.gd",
+    "D\tgame/scripts/gameplay/bot_ai.gd.uid",
+    "M\tgame/scripts/gameplay/match.gd",
+    "M\tgame/scripts/gameplay/utility.gd",
+    "M\tgame/scripts/main.gd",
+    "M\tgame/scripts/network/economy_bridge.gd",
+    "D\tgame/scripts/network/hit_history.gd",
+    "D\tgame/scripts/network/hit_history.gd.uid",
+    "D\tgame/scripts/network/input_stream.gd",
+    "D\tgame/scripts/network/input_stream.gd.uid",
+    "D\tgame/scripts/network/movement_prediction.gd",
+    "D\tgame/scripts/network/movement_prediction.gd.uid",
+    "D\tgame/scripts/network/movement_step.gd",
+    "D\tgame/scripts/network/movement_step.gd.uid",
+    "D\tgame/scripts/network/peer_lifecycle.gd",
+    "D\tgame/scripts/network/peer_lifecycle.gd.uid",
+    "D\tgame/scripts/network/reconnect_policy.gd",
+    "D\tgame/scripts/network/reconnect_policy.gd.uid",
+    "D\tgame/scripts/network/result_outbox.gd",
+    "D\tgame/scripts/network/result_outbox.gd.uid",
+    "D\tgame/scripts/network/snapshot_buffer.gd",
+    "D\tgame/scripts/network/snapshot_buffer.gd.uid",
+    "D\tgame/scripts/network/snapshot_schema.gd",
+    "D\tgame/scripts/network/snapshot_schema.gd.uid",
+    "D\tgame/scripts/network/state_privacy.gd",
+    "D\tgame/scripts/network/state_privacy.gd.uid",
+    "M\tgame/scripts/profile.gd",
+    "D\tgame/scripts/ui/confirm_sheet.gd",
+    "D\tgame/scripts/ui/confirm_sheet.gd.uid",
+    "M\tgame/scripts/ui/design_tokens.gd",
+    "M\tgame/scripts/ui/economy_api.gd",
+    "M\tgame/scripts/ui/economy_ui.gd",
+    "M\tgame/scripts/ui/safe_area.gd",
+    "D\tgame/scripts/ui/weapon_glyph.gd",
+    "D\tgame/scripts/ui/weapon_glyph.gd.uid",
+    "M\tgame/tests/account_network_probe.gd",
+    "D\tgame/tests/admission_capacity_probe.gd",
+    "D\tgame/tests/admission_capacity_probe.gd.uid",
+    "D\tgame/tests/armory_state_test.gd",
+    "D\tgame/tests/armory_state_test.gd.uid",
+    "D\tgame/tests/armory_ui_test.gd",
+    "D\tgame/tests/armory_ui_test.gd.uid",
+    "D\tgame/tests/bot_ai_regression_test.gd",
+    "D\tgame/tests/bot_ai_regression_test.gd.uid",
+    "M\tgame/tests/bot_lifecycle_test.gd",
+    "D\tgame/tests/connection_lifecycle_probe.gd",
+    "D\tgame/tests/connection_lifecycle_probe.gd.uid",
+    "D\tgame/tests/fixtures/backend_world.json",
+    "D\tgame/tests/hit_history_test.gd",
+    "D\tgame/tests/hit_history_test.gd.uid",
+    "D\tgame/tests/independent_reconnect_review_test.gd",
+    "D\tgame/tests/independent_reconnect_review_test.gd.uid",
+    "D\tgame/tests/independent_resume_admission_test.gd",
+    "D\tgame/tests/independent_resume_admission_test.gd.uid",
+    "D\tgame/tests/independent_resume_alias_test.gd",
+    "D\tgame/tests/independent_resume_alias_test.gd.uid",
+    "D\tgame/tests/input_lifecycle_test.gd",
+    "D\tgame/tests/input_lifecycle_test.gd.uid",
+    "D\tgame/tests/input_stream_test.gd",
+    "D\tgame/tests/input_stream_test.gd.uid",
+    "D\tgame/tests/integration_actor_lifecycle_test.gd",
+    "D\tgame/tests/integration_actor_lifecycle_test.gd.uid",
+    "D\tgame/tests/integration_aspect_probe.gd",
+    "D\tgame/tests/integration_aspect_probe.gd.uid",
+    "D\tgame/tests/integration_render_profile.gd",
+    "D\tgame/tests/integration_render_profile.gd.uid",
+    "D\tgame/tests/lost_welcome_test.gd",
+    "D\tgame/tests/lost_welcome_test.gd.uid",
+    "D\tgame/tests/menu_capture.gd",
+    "D\tgame/tests/menu_capture.gd.uid",
+    "D\tgame/tests/menu_contrast_probe.gd",
+    "D\tgame/tests/menu_contrast_probe.gd.uid",
+    "D\tgame/tests/menu_state_test.gd",
+    "D\tgame/tests/menu_state_test.gd.uid",
+    "D\tgame/tests/movement_prediction_test.gd",
+    "D\tgame/tests/movement_prediction_test.gd.uid",
+    "M\tgame/tests/native_economy_test.gd",
+    "M\tgame/tests/network_probe.gd",
+    "D\tgame/tests/network_profile.gd",
+    "D\tgame/tests/network_profile.gd.uid",
+    "D\tgame/tests/network_simulation_probe.gd",
+    "D\tgame/tests/network_simulation_probe.gd.uid",
+    "D\tgame/tests/peer_lifecycle_test.gd",
+    "D\tgame/tests/peer_lifecycle_test.gd.uid",
+    "D\tgame/tests/reconnect_policy_test.gd",
+    "D\tgame/tests/reconnect_policy_test.gd.uid",
+    "D\tgame/tests/result_outbox_crash_probe.gd",
+    "D\tgame/tests/result_outbox_crash_probe.gd.uid",
+    "D\tgame/tests/result_outbox_test.gd",
+    "D\tgame/tests/result_outbox_test.gd.uid",
+    "D\tgame/tests/resume_auth_loss_test.gd",
+    "D\tgame/tests/resume_auth_loss_test.gd.uid",
+    "D\tgame/tests/snapshot_buffer_test.gd",
+    "D\tgame/tests/snapshot_buffer_test.gd.uid",
+    "D\tgame/tests/state_privacy_test.gd",
+    "D\tgame/tests/state_privacy_test.gd.uid",
+    "M\tgame/tests/ux_contract_test.gd"
+  ],
+  "commands": [
+    {
+      "argv": [
+        "git",
+        "--no-optional-locks",
+        "rev-parse",
+        "--verify",
+        "701ce2c4d7f8b2872cf1fefa64cb6edd0cd1a3fd^{commit}"
+      ],
+      "cwd": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v3",
+      "exit": 0,
+      "stdout": "command-00.stdout.txt",
+      "stderr": "command-00.stderr.txt"
+    },
+    {
+      "argv": [
+        "git",
+        "--no-optional-locks",
+        "rev-parse",
+        "--verify",
+        "79a9591350854373076e62a4707ec84edc803756^{commit}"
+      ],
+      "cwd": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v3",
+      "exit": 0,
+      "stdout": "command-01.stdout.txt",
+      "stderr": "command-01.stderr.txt"
+    },
+    {
+      "argv": [
+        "git",
+        "--no-optional-locks",
+        "rev-parse",
+        "--verify",
+        "bb5212dd596571653bd37eb85a4594a72bfd1abc^{commit}"
+      ],
+      "cwd": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v3",
+      "exit": 0,
+      "stdout": "command-02.stdout.txt",
+      "stderr": "command-02.stderr.txt"
+    },
+    {
+      "argv": [
+        "git",
+        "--no-optional-locks",
+        "diff",
+        "--name-only",
+        "701ce2c4d7f8b2872cf1fefa64cb6edd0cd1a3fd",
+        "79a9591350854373076e62a4707ec84edc803756",
+        "--",
+        "game"
+      ],
+      "cwd": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v3",
+      "exit": 0,
+      "stdout": "command-03.stdout.txt",
+      "stderr": "command-03.stderr.txt"
+    },
+    {
+      "argv": [
+        "git",
+        "--no-optional-locks",
+        "rev-parse",
+        "79a9591350854373076e62a4707ec84edc803756:game/assets/weapons/relay_ar/relay_ar_arms.glb"
+      ],
+      "cwd": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v3",
+      "exit": 0,
+      "stdout": "command-04.stdout.txt",
+      "stderr": "command-04.stderr.txt"
+    },
+    {
+      "argv": [
+        "git",
+        "--no-optional-locks",
+        "rev-parse",
+        "bb5212dd596571653bd37eb85a4594a72bfd1abc:game/assets/weapons/relay_ar/relay_ar_arms.glb"
+      ],
+      "cwd": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v3",
+      "exit": 0,
+      "stdout": "command-05.stdout.txt",
+      "stderr": "command-05.stderr.txt"
+    },
+    {
+      "argv": [
+        "git",
+        "--no-optional-locks",
+        "rev-parse",
+        "79a9591350854373076e62a4707ec84edc803756:game/assets/weapons/relay_ar/relay_ar_arms_albedo.png"
+      ],
+      "cwd": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v3",
+      "exit": 0,
+      "stdout": "command-06.stdout.txt",
+      "stderr": "command-06.stderr.txt"
+    },
+    {
+      "argv": [
+        "git",
+        "--no-optional-locks",
+        "rev-parse",
+        "bb5212dd596571653bd37eb85a4594a72bfd1abc:game/assets/weapons/relay_ar/relay_ar_arms_albedo.png"
+      ],
+      "cwd": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v3",
+      "exit": 0,
+      "stdout": "command-07.stdout.txt",
+      "stderr": "command-07.stderr.txt"
+    },
+    {
+      "argv": [
+        "git",
+        "--no-optional-locks",
+        "rev-parse",
+        "79a9591350854373076e62a4707ec84edc803756:game/assets/weapons/relay_ar/relay_ar_arms_normal.png"
+      ],
+      "cwd": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v3",
+      "exit": 0,
+      "stdout": "command-08.stdout.txt",
+      "stderr": "command-08.stderr.txt"
+    },
+    {
+      "argv": [
+        "git",
+        "--no-optional-locks",
+        "rev-parse",
+        "bb5212dd596571653bd37eb85a4594a72bfd1abc:game/assets/weapons/relay_ar/relay_ar_arms_normal.png"
+      ],
+      "cwd": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v3",
+      "exit": 0,
+      "stdout": "command-09.stdout.txt",
+      "stderr": "command-09.stderr.txt"
+    },
+    {
+      "argv": [
+        "git",
+        "--no-optional-locks",
+        "rev-parse",
+        "79a9591350854373076e62a4707ec84edc803756:game/assets/weapons/relay_ar/relay_ar_arms_orm.png"
+      ],
+      "cwd": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v3",
+      "exit": 0,
+      "stdout": "command-10.stdout.txt",
+      "stderr": "command-10.stderr.txt"
+    },
+    {
+      "argv": [
+        "git",
+        "--no-optional-locks",
+        "rev-parse",
+        "bb5212dd596571653bd37eb85a4594a72bfd1abc:game/assets/weapons/relay_ar/relay_ar_arms_orm.png"
+      ],
+      "cwd": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v3",
+      "exit": 0,
+      "stdout": "command-11.stdout.txt",
+      "stderr": "command-11.stderr.txt"
+    },
+    {
+      "argv": [
+        "git",
+        "--no-optional-locks",
+        "rev-parse",
+        "79a9591350854373076e62a4707ec84edc803756:game/scripts/gameplay/viewmodel_shading.gd"
+      ],
+      "cwd": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v3",
+      "exit": 0,
+      "stdout": "command-12.stdout.txt",
+      "stderr": "command-12.stderr.txt"
+    },
+    {
+      "argv": [
+        "git",
+        "--no-optional-locks",
+        "rev-parse",
+        "bb5212dd596571653bd37eb85a4594a72bfd1abc:game/scripts/gameplay/viewmodel_shading.gd"
+      ],
+      "cwd": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v3",
+      "exit": 0,
+      "stdout": "command-13.stdout.txt",
+      "stderr": "command-13.stderr.txt"
+    },
+    {
+      "argv": [
+        "git",
+        "--no-optional-locks",
+        "rev-parse",
+        "79a9591350854373076e62a4707ec84edc803756:game/scripts/gameplay/weapon_model.gd"
+      ],
+      "cwd": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v3",
+      "exit": 0,
+      "stdout": "command-14.stdout.txt",
+      "stderr": "command-14.stderr.txt"
+    },
+    {
+      "argv": [
+        "git",
+        "--no-optional-locks",
+        "rev-parse",
+        "bb5212dd596571653bd37eb85a4594a72bfd1abc:game/scripts/gameplay/weapon_model.gd"
+      ],
+      "cwd": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v3",
+      "exit": 0,
+      "stdout": "command-15.stdout.txt",
+      "stderr": "command-15.stderr.txt"
+    },
+    {
+      "argv": [
+        "git",
+        "--no-optional-locks",
+        "rev-parse",
+        "79a9591350854373076e62a4707ec84edc803756:game/tests/reload_continuity_test.gd"
+      ],
+      "cwd": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v3",
+      "exit": 0,
+      "stdout": "command-16.stdout.txt",
+      "stderr": "command-16.stderr.txt"
+    },
+    {
+      "argv": [
+        "git",
+        "--no-optional-locks",
+        "rev-parse",
+        "bb5212dd596571653bd37eb85a4594a72bfd1abc:game/tests/reload_continuity_test.gd"
+      ],
+      "cwd": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v3",
+      "exit": 0,
+      "stdout": "command-17.stdout.txt",
+      "stderr": "command-17.stderr.txt"
+    },
+    {
+      "argv": [
+        "git",
+        "--no-optional-locks",
+        "rev-parse",
+        "79a9591350854373076e62a4707ec84edc803756:game/tests/reload_continuity_test.gd.uid"
+      ],
+      "cwd": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v3",
+      "exit": 0,
+      "stdout": "command-18.stdout.txt",
+      "stderr": "command-18.stderr.txt"
+    },
+    {
+      "argv": [
+        "git",
+        "--no-optional-locks",
+        "rev-parse",
+        "bb5212dd596571653bd37eb85a4594a72bfd1abc:game/tests/reload_continuity_test.gd.uid"
+      ],
+      "cwd": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v3",
+      "exit": 0,
+      "stdout": "command-19.stdout.txt",
+      "stderr": "command-19.stderr.txt"
+    },
+    {
+      "argv": [
+        "git",
+        "--no-optional-locks",
+        "rev-parse",
+        "79a9591350854373076e62a4707ec84edc803756:game/tests/viewmodel_light_probe.gd"
+      ],
+      "cwd": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v3",
+      "exit": 0,
+      "stdout": "command-20.stdout.txt",
+      "stderr": "command-20.stderr.txt"
+    },
+    {
+      "argv": [
+        "git",
+        "--no-optional-locks",
+        "rev-parse",
+        "bb5212dd596571653bd37eb85a4594a72bfd1abc:game/tests/viewmodel_light_probe.gd"
+      ],
+      "cwd": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v3",
+      "exit": 0,
+      "stdout": "command-21.stdout.txt",
+      "stderr": "command-21.stderr.txt"
+    },
+    {
+      "argv": [
+        "git",
+        "--no-optional-locks",
+        "rev-parse",
+        "79a9591350854373076e62a4707ec84edc803756:game/tests/weapon_art_test.gd"
+      ],
+      "cwd": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v3",
+      "exit": 0,
+      "stdout": "command-22.stdout.txt",
+      "stderr": "command-22.stderr.txt"
+    },
+    {
+      "argv": [
+        "git",
+        "--no-optional-locks",
+        "rev-parse",
+        "bb5212dd596571653bd37eb85a4594a72bfd1abc:game/tests/weapon_art_test.gd"
+      ],
+      "cwd": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v3",
+      "exit": 0,
+      "stdout": "command-23.stdout.txt",
+      "stderr": "command-23.stderr.txt"
+    },
+    {
+      "argv": [
+        "git",
+        "--no-optional-locks",
+        "rev-parse",
+        "79a9591350854373076e62a4707ec84edc803756:tools/art/arms_build.py"
+      ],
+      "cwd": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v3",
+      "exit": 0,
+      "stdout": "command-24.stdout.txt",
+      "stderr": "command-24.stderr.txt"
+    },
+    {
+      "argv": [
+        "git",
+        "--no-optional-locks",
+        "rev-parse",
+        "bb5212dd596571653bd37eb85a4594a72bfd1abc:tools/art/arms_build.py"
+      ],
+      "cwd": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v3",
+      "exit": 0,
+      "stdout": "command-25.stdout.txt",
+      "stderr": "command-25.stderr.txt"
+    },
+    {
+      "argv": [
+        "git",
+        "--no-optional-locks",
+        "diff",
+        "--name-status",
+        "79a9591350854373076e62a4707ec84edc803756",
+        "bb5212dd596571653bd37eb85a4594a72bfd1abc",
+        "--",
+        "game"
+      ],
+      "cwd": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v3",
+      "exit": 0,
+      "stdout": "command-26.stdout.txt",
+      "stderr": "command-26.stderr.txt"
+    }
+  ]
+}

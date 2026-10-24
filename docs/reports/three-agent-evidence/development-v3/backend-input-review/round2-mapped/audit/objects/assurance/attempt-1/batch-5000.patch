@@ -1,0 +1,17 @@
+--- frozen/backend/app.py
++++ isolated-control/backend/app.py
+@@ -317,10 +317,10 @@
+         player_ids=list({pid for t in rows for pid in (t.a,t.b)})
+         items={}; names={}
+         # Bound parameter lists even when a long trade history exceeds one batch.
+-        for start in range(0,len(item_ids),500):
+-            items.update((item.id,item) for item in db.scalars(select(Item).where(Item.id.in_(item_ids[start:start+500]))))
+-        for start in range(0,len(player_ids),500):
+-            names.update(db.execute(select(Player.id,Player.display_name).where(Player.id.in_(player_ids[start:start+500]))).all())
++        for start in range(0,len(item_ids),5000):
++            items.update((item.id,item) for item in db.scalars(select(Item).where(Item.id.in_(item_ids[start:start+5000]))))
++        for start in range(0,len(player_ids),5000):
++            names.update(db.execute(select(Player.id,Player.display_name).where(Player.id.in_(player_ids[start:start+5000]))).all())
+         return {'trades':[trade_json(t,items,names) for t in rows]}
+ @app.post('/trades',status_code=201)
+ def new_trade(body:NewTrade,request:Request,authorization:Auth=None):

@@ -16,14 +16,15 @@ jobs:
     timeout-minutes: 40
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          fetch-depth: 0
       - name: Prepare pinned engine and local PostgreSQL
         run: |
           sudo apt-get update
           sudo apt-get install -y libgl1 libvulkan1 xvfb ripgrep unzip openjdk-17-jdk
           scripts/setup.sh
           python3 -m pip install uv==0.12.23
-          uv sync --project backend --locked --group dev
-          ln -s backend/.venv .venv
+          UV_PROJECT_ENVIRONMENT="$PWD/.venv" uv sync --project backend --locked --group dev
           backend/dev-db.sh
       - name: Complete matrix (retains failures)
         run: xvfb-run -a .venv/bin/python scripts/validate_matrix.py --backend --protocol --render --out builds/ci-regressions
@@ -44,4 +45,6 @@ jobs:
             builds/ci-regressions/
             builds/linux/
             builds/android/
+            .local/validation/
+          include-hidden-files: true
           retention-days: 7

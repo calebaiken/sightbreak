@@ -1,0 +1,983 @@
+{
+  "not_runtime_replay": true,
+  "runs": [
+    {
+      "input_directory": "r9/baseline/run-1",
+      "price": 400,
+      "basis_points": 300,
+      "fee_floor": 12,
+      "timeline_count": 62,
+      "order": [
+        {
+          "line": 20,
+          "event": "response_held_before_any_client_headers",
+          "wall_ns": 1792440902582482600,
+          "monotonic_ns": 259184281000000
+        },
+        {
+          "line": 21,
+          "event": "postgresql_snapshot",
+          "wall_ns": 1792440902672990800,
+          "monotonic_ns": 259184375000000
+        },
+        {
+          "line": 22,
+          "event": "kill_requested",
+          "wall_ns": 1792440902675316300,
+          "monotonic_ns": 259184375000000
+        },
+        {
+          "line": 24,
+          "event": "kill_confirmed",
+          "wall_ns": 1792440902700649300,
+          "monotonic_ns": 259184406000000
+        },
+        {
+          "line": 26,
+          "event": "held_response_discarded",
+          "wall_ns": 1792440902796256800,
+          "monotonic_ns": 259184500000000
+        }
+      ],
+      "hold_to_kill_ns": 94000000,
+      "order_strict_lines_and_nondecreasing_monotonic": true,
+      "sql_connection_pid_distinct_from_native_and_harness": true,
+      "sql_pid": 19876,
+      "sql_clock_timestamp": "2026-10-19 16:15:02.632906-04:00",
+      "response_status": 200,
+      "sent_bytes_at_hold": 0,
+      "no_recorded_delivery_of_held_response": true,
+      "kill_pid_matches_send": true,
+      "killed_process_completed_marker_count": 0,
+      "native_pids": [
+        11516,
+        16844,
+        14204
+      ],
+      "three_distinct_native_pids": true,
+      "three_successful_fresh_login_response_records": true,
+      "three_fresh_tokens_match_sql_session_rows": true,
+      "native_completion_counts": {
+        "send": 0,
+        "recovery": 1,
+        "second-restart": 1
+      },
+      "native_recovery_result_equals_original_semantic_json": false,
+      "recovery_request_count": 0,
+      "recovery_original_body_int_and_key": false,
+      "initial_request_original_body_int_and_key": true,
+      "recovery_request_raw_bytes_equal_initial": false,
+      "recovery_response_semantic_json_equal_initial": false,
+      "recovery_response_raw_bytes_equal_initial": false,
+      "third_process_purchase_request_count": 0,
+      "committed_vs_later_economic_state_equal": {
+        "03-after-kill": true,
+        "04-after-recovery": true,
+        "05-after-second-restart": true
+      },
+      "state_digest_rederivation": {
+        "01-before": true,
+        "02-committed-before-kill": true,
+        "03-after-kill": true,
+        "04-after-recovery": true,
+        "05-after-second-restart": true
+      },
+      "initial_economic_delta_counts": {
+        "audit": {
+          "added": 1,
+          "removed": 0,
+          "changed": 0
+        },
+        "items": {
+          "added": 0,
+          "removed": 0,
+          "changed": 1
+        },
+        "ledger": {
+          "added": 2,
+          "removed": 0,
+          "changed": 0
+        },
+        "listings": {
+          "added": 0,
+          "removed": 0,
+          "changed": 1
+        },
+        "loadouts": {
+          "added": 0,
+          "removed": 0,
+          "changed": 0
+        },
+        "operations": {
+          "added": 1,
+          "removed": 0,
+          "changed": 0
+        },
+        "players": {
+          "added": 0,
+          "removed": 0,
+          "changed": 2
+        },
+        "rewards": {
+          "added": 0,
+          "removed": 0,
+          "changed": 0
+        },
+        "trades": {
+          "added": 0,
+          "removed": 0,
+          "changed": 0
+        }
+      },
+      "economic_checks": {
+        "one_operation_exact_actor_route_key_canonical_body_hash_and_response": true,
+        "two_ledger_rows_exact": true,
+        "one_audit_exact": true,
+        "buyer_debit_exact": true,
+        "seller_credit_exact": true,
+        "total_fee_burn_exact": true,
+        "item_owner_unreserved_not_consumed_count_stable": true,
+        "listing_sold_exact_parties_price": true,
+        "response_item_credits_fee_exact": true,
+        "unrelated_tables_unchanged": true
+      },
+      "journal_metadata_equal_at_kill": true,
+      "journal_raw_validation": {
+        "before-kill": {
+          "raw_artifact": "not published",
+          "metadata_exists": false,
+          "metadata_bytes": 0
+        },
+        "after-kill": {
+          "raw_artifact": "not published",
+          "metadata_exists": false,
+          "metadata_bytes": 0
+        }
+      },
+      "limits": [
+        "Stored-author-captured record re-analysis, no native/DB replay",
+        "No packet capture: sent_bytes is instrumentation corroborated by frozen proxy source, not an independent wire measurement",
+        "Missing journal existence is a recorded observation, not a present-day filesystem check",
+        "Nine economic tables; sessions separately checked; rate_buckets/game_tickets are not in snapshots",
+        "JSON semantic equality is not byte equality or numeric-type equality of Godot events"
+      ]
+    },
+    {
+      "input_directory": "r9/baseline/run-2",
+      "price": 401,
+      "basis_points": 300,
+      "fee_floor": 12,
+      "timeline_count": 62,
+      "order": [
+        {
+          "line": 20,
+          "event": "response_held_before_any_client_headers",
+          "wall_ns": 1792440907131026600,
+          "monotonic_ns": 259188828000000
+        },
+        {
+          "line": 21,
+          "event": "postgresql_snapshot",
+          "wall_ns": 1792440907213350400,
+          "monotonic_ns": 259188906000000
+        },
+        {
+          "line": 22,
+          "event": "kill_requested",
+          "wall_ns": 1792440907215324100,
+          "monotonic_ns": 259188906000000
+        },
+        {
+          "line": 24,
+          "event": "kill_confirmed",
+          "wall_ns": 1792440907235886300,
+          "monotonic_ns": 259188937000000
+        },
+        {
+          "line": 26,
+          "event": "held_response_discarded",
+          "wall_ns": 1792440907320704200,
+          "monotonic_ns": 259189015000000
+        }
+      ],
+      "hold_to_kill_ns": 78000000,
+      "order_strict_lines_and_nondecreasing_monotonic": true,
+      "sql_connection_pid_distinct_from_native_and_harness": true,
+      "sql_pid": 12708,
+      "sql_clock_timestamp": "2026-10-19 16:15:07.176508-04:00",
+      "response_status": 200,
+      "sent_bytes_at_hold": 0,
+      "no_recorded_delivery_of_held_response": true,
+      "kill_pid_matches_send": true,
+      "killed_process_completed_marker_count": 0,
+      "native_pids": [
+        22392,
+        8528,
+        23872
+      ],
+      "three_distinct_native_pids": true,
+      "three_successful_fresh_login_response_records": true,
+      "three_fresh_tokens_match_sql_session_rows": true,
+      "native_completion_counts": {
+        "send": 0,
+        "recovery": 1,
+        "second-restart": 1
+      },
+      "native_recovery_result_equals_original_semantic_json": false,
+      "recovery_request_count": 0,
+      "recovery_original_body_int_and_key": false,
+      "initial_request_original_body_int_and_key": true,
+      "recovery_request_raw_bytes_equal_initial": false,
+      "recovery_response_semantic_json_equal_initial": false,
+      "recovery_response_raw_bytes_equal_initial": false,
+      "third_process_purchase_request_count": 0,
+      "committed_vs_later_economic_state_equal": {
+        "03-after-kill": true,
+        "04-after-recovery": true,
+        "05-after-second-restart": true
+      },
+      "state_digest_rederivation": {
+        "01-before": true,
+        "02-committed-before-kill": true,
+        "03-after-kill": true,
+        "04-after-recovery": true,
+        "05-after-second-restart": true
+      },
+      "initial_economic_delta_counts": {
+        "audit": {
+          "added": 1,
+          "removed": 0,
+          "changed": 0
+        },
+        "items": {
+          "added": 0,
+          "removed": 0,
+          "changed": 1
+        },
+        "ledger": {
+          "added": 2,
+          "removed": 0,
+          "changed": 0
+        },
+        "listings": {
+          "added": 0,
+          "removed": 0,
+          "changed": 1
+        },
+        "loadouts": {
+          "added": 0,
+          "removed": 0,
+          "changed": 0
+        },
+        "operations": {
+          "added": 1,
+          "removed": 0,
+          "changed": 0
+        },
+        "players": {
+          "added": 0,
+          "removed": 0,
+          "changed": 2
+        },
+        "rewards": {
+          "added": 0,
+          "removed": 0,
+          "changed": 0
+        },
+        "trades": {
+          "added": 0,
+          "removed": 0,
+          "changed": 0
+        }
+      },
+      "economic_checks": {
+        "one_operation_exact_actor_route_key_canonical_body_hash_and_response": true,
+        "two_ledger_rows_exact": true,
+        "one_audit_exact": true,
+        "buyer_debit_exact": true,
+        "seller_credit_exact": true,
+        "total_fee_burn_exact": true,
+        "item_owner_unreserved_not_consumed_count_stable": true,
+        "listing_sold_exact_parties_price": true,
+        "response_item_credits_fee_exact": true,
+        "unrelated_tables_unchanged": true
+      },
+      "journal_metadata_equal_at_kill": true,
+      "journal_raw_validation": {
+        "before-kill": {
+          "raw_artifact": "not published",
+          "metadata_exists": false,
+          "metadata_bytes": 0
+        },
+        "after-kill": {
+          "raw_artifact": "not published",
+          "metadata_exists": false,
+          "metadata_bytes": 0
+        }
+      },
+      "limits": [
+        "Stored-author-captured record re-analysis, no native/DB replay",
+        "No packet capture: sent_bytes is instrumentation corroborated by frozen proxy source, not an independent wire measurement",
+        "Missing journal existence is a recorded observation, not a present-day filesystem check",
+        "Nine economic tables; sessions separately checked; rate_buckets/game_tickets are not in snapshots",
+        "JSON semantic equality is not byte equality or numeric-type equality of Godot events"
+      ]
+    },
+    {
+      "input_directory": "r9/baseline/run-3",
+      "price": 10000000,
+      "basis_points": 300,
+      "fee_floor": 300000,
+      "timeline_count": 62,
+      "order": [
+        {
+          "line": 20,
+          "event": "response_held_before_any_client_headers",
+          "wall_ns": 1792440912273017600,
+          "monotonic_ns": 259193968000000
+        },
+        {
+          "line": 21,
+          "event": "postgresql_snapshot",
+          "wall_ns": 1792440912354202300,
+          "monotonic_ns": 259194046000000
+        },
+        {
+          "line": 22,
+          "event": "kill_requested",
+          "wall_ns": 1792440912356231100,
+          "monotonic_ns": 259194062000000
+        },
+        {
+          "line": 24,
+          "event": "kill_confirmed",
+          "wall_ns": 1792440912380070100,
+          "monotonic_ns": 259194078000000
+        },
+        {
+          "line": 26,
+          "event": "held_response_discarded",
+          "wall_ns": 1792440912463495800,
+          "monotonic_ns": 259194156000000
+        }
+      ],
+      "hold_to_kill_ns": 94000000,
+      "order_strict_lines_and_nondecreasing_monotonic": true,
+      "sql_connection_pid_distinct_from_native_and_harness": true,
+      "sql_pid": 8244,
+      "sql_clock_timestamp": "2026-10-19 16:15:12.318155-04:00",
+      "response_status": 200,
+      "sent_bytes_at_hold": 0,
+      "no_recorded_delivery_of_held_response": true,
+      "kill_pid_matches_send": true,
+      "killed_process_completed_marker_count": 0,
+      "native_pids": [
+        21492,
+        21856,
+        20904
+      ],
+      "three_distinct_native_pids": true,
+      "three_successful_fresh_login_response_records": true,
+      "three_fresh_tokens_match_sql_session_rows": true,
+      "native_completion_counts": {
+        "send": 0,
+        "recovery": 1,
+        "second-restart": 1
+      },
+      "native_recovery_result_equals_original_semantic_json": false,
+      "recovery_request_count": 0,
+      "recovery_original_body_int_and_key": false,
+      "initial_request_original_body_int_and_key": true,
+      "recovery_request_raw_bytes_equal_initial": false,
+      "recovery_response_semantic_json_equal_initial": false,
+      "recovery_response_raw_bytes_equal_initial": false,
+      "third_process_purchase_request_count": 0,
+      "committed_vs_later_economic_state_equal": {
+        "03-after-kill": true,
+        "04-after-recovery": true,
+        "05-after-second-restart": true
+      },
+      "state_digest_rederivation": {
+        "01-before": true,
+        "02-committed-before-kill": true,
+        "03-after-kill": true,
+        "04-after-recovery": true,
+        "05-after-second-restart": true
+      },
+      "initial_economic_delta_counts": {
+        "audit": {
+          "added": 1,
+          "removed": 0,
+          "changed": 0
+        },
+        "items": {
+          "added": 0,
+          "removed": 0,
+          "changed": 1
+        },
+        "ledger": {
+          "added": 2,
+          "removed": 0,
+          "changed": 0
+        },
+        "listings": {
+          "added": 0,
+          "removed": 0,
+          "changed": 1
+        },
+        "loadouts": {
+          "added": 0,
+          "removed": 0,
+          "changed": 0
+        },
+        "operations": {
+          "added": 1,
+          "removed": 0,
+          "changed": 0
+        },
+        "players": {
+          "added": 0,
+          "removed": 0,
+          "changed": 2
+        },
+        "rewards": {
+          "added": 0,
+          "removed": 0,
+          "changed": 0
+        },
+        "trades": {
+          "added": 0,
+          "removed": 0,
+          "changed": 0
+        }
+      },
+      "economic_checks": {
+        "one_operation_exact_actor_route_key_canonical_body_hash_and_response": true,
+        "two_ledger_rows_exact": true,
+        "one_audit_exact": true,
+        "buyer_debit_exact": true,
+        "seller_credit_exact": true,
+        "total_fee_burn_exact": true,
+        "item_owner_unreserved_not_consumed_count_stable": true,
+        "listing_sold_exact_parties_price": true,
+        "response_item_credits_fee_exact": true,
+        "unrelated_tables_unchanged": true
+      },
+      "journal_metadata_equal_at_kill": true,
+      "journal_raw_validation": {
+        "before-kill": {
+          "raw_artifact": "not published",
+          "metadata_exists": false,
+          "metadata_bytes": 0
+        },
+        "after-kill": {
+          "raw_artifact": "not published",
+          "metadata_exists": false,
+          "metadata_bytes": 0
+        }
+      },
+      "limits": [
+        "Stored-author-captured record re-analysis, no native/DB replay",
+        "No packet capture: sent_bytes is instrumentation corroborated by frozen proxy source, not an independent wire measurement",
+        "Missing journal existence is a recorded observation, not a present-day filesystem check",
+        "Nine economic tables; sessions separately checked; rate_buckets/game_tickets are not in snapshots",
+        "JSON semantic equality is not byte equality or numeric-type equality of Godot events"
+      ]
+    },
+    {
+      "input_directory": "r10/candidate-7b6f379/run-1",
+      "price": 400,
+      "basis_points": 300,
+      "fee_floor": 12,
+      "timeline_count": 77,
+      "order": [
+        {
+          "line": 20,
+          "event": "response_held_before_any_client_headers",
+          "wall_ns": 1792715863047789400,
+          "monotonic_ns": 253619390000000
+        },
+        {
+          "line": 21,
+          "event": "postgresql_snapshot",
+          "wall_ns": 1792715863215748300,
+          "monotonic_ns": 253619546000000
+        },
+        {
+          "line": 22,
+          "event": "kill_requested",
+          "wall_ns": 1792715863220625200,
+          "monotonic_ns": 253619562000000
+        },
+        {
+          "line": 24,
+          "event": "kill_confirmed",
+          "wall_ns": 1792715863282637900,
+          "monotonic_ns": 253619625000000
+        },
+        {
+          "line": 26,
+          "event": "held_response_discarded",
+          "wall_ns": 1792715863446702500,
+          "monotonic_ns": 253619781000000
+        }
+      ],
+      "hold_to_kill_ns": 172000000,
+      "order_strict_lines_and_nondecreasing_monotonic": true,
+      "sql_connection_pid_distinct_from_native_and_harness": true,
+      "sql_pid": 19404,
+      "sql_clock_timestamp": "2026-10-22 20:37:43.153954-04:00",
+      "response_status": 200,
+      "sent_bytes_at_hold": 0,
+      "no_recorded_delivery_of_held_response": true,
+      "kill_pid_matches_send": true,
+      "killed_process_completed_marker_count": 0,
+      "native_pids": [
+        22304,
+        24420,
+        22552
+      ],
+      "three_distinct_native_pids": true,
+      "three_successful_fresh_login_response_records": true,
+      "three_fresh_tokens_match_sql_session_rows": true,
+      "native_completion_counts": {
+        "send": 0,
+        "recovery": 1,
+        "second-restart": 1
+      },
+      "native_recovery_result_equals_original_semantic_json": true,
+      "recovery_request_count": 1,
+      "recovery_original_body_int_and_key": true,
+      "initial_request_original_body_int_and_key": true,
+      "recovery_request_raw_bytes_equal_initial": true,
+      "recovery_response_semantic_json_equal_initial": true,
+      "recovery_response_raw_bytes_equal_initial": false,
+      "third_process_purchase_request_count": 0,
+      "committed_vs_later_economic_state_equal": {
+        "03-after-kill": true,
+        "04-after-recovery": true,
+        "05-after-second-restart": true
+      },
+      "state_digest_rederivation": {
+        "01-before": true,
+        "02-committed-before-kill": true,
+        "03-after-kill": true,
+        "04-after-recovery": true,
+        "05-after-second-restart": true
+      },
+      "initial_economic_delta_counts": {
+        "audit": {
+          "added": 1,
+          "removed": 0,
+          "changed": 0
+        },
+        "items": {
+          "added": 0,
+          "removed": 0,
+          "changed": 1
+        },
+        "ledger": {
+          "added": 2,
+          "removed": 0,
+          "changed": 0
+        },
+        "listings": {
+          "added": 0,
+          "removed": 0,
+          "changed": 1
+        },
+        "loadouts": {
+          "added": 0,
+          "removed": 0,
+          "changed": 0
+        },
+        "operations": {
+          "added": 1,
+          "removed": 0,
+          "changed": 0
+        },
+        "players": {
+          "added": 0,
+          "removed": 0,
+          "changed": 2
+        },
+        "rewards": {
+          "added": 0,
+          "removed": 0,
+          "changed": 0
+        },
+        "trades": {
+          "added": 0,
+          "removed": 0,
+          "changed": 0
+        }
+      },
+      "economic_checks": {
+        "one_operation_exact_actor_route_key_canonical_body_hash_and_response": true,
+        "two_ledger_rows_exact": true,
+        "one_audit_exact": true,
+        "buyer_debit_exact": true,
+        "seller_credit_exact": true,
+        "total_fee_burn_exact": true,
+        "item_owner_unreserved_not_consumed_count_stable": true,
+        "listing_sold_exact_parties_price": true,
+        "response_item_credits_fee_exact": true,
+        "unrelated_tables_unchanged": true
+      },
+      "journal_metadata_equal_at_kill": true,
+      "journal_raw_validation": {
+        "before-kill": {
+          "bytes_match_metadata": true,
+          "digest_matches_metadata": true,
+          "parsed_record_matches_metadata": true,
+          "saved_transaction_exact": true,
+          "raw_secret_field_scan": true
+        },
+        "after-kill": {
+          "bytes_match_metadata": true,
+          "digest_matches_metadata": true,
+          "parsed_record_matches_metadata": true,
+          "saved_transaction_exact": true,
+          "raw_secret_field_scan": true
+        }
+      },
+      "limits": [
+        "Stored-author-captured record re-analysis, no native/DB replay",
+        "No packet capture: sent_bytes is instrumentation corroborated by frozen proxy source, not an independent wire measurement",
+        "Missing journal existence is a recorded observation, not a present-day filesystem check",
+        "Nine economic tables; sessions separately checked; rate_buckets/game_tickets are not in snapshots",
+        "JSON semantic equality is not byte equality or numeric-type equality of Godot events"
+      ]
+    },
+    {
+      "input_directory": "r10/candidate-7b6f379/run-2",
+      "price": 401,
+      "basis_points": 300,
+      "fee_floor": 12,
+      "timeline_count": 77,
+      "order": [
+        {
+          "line": 20,
+          "event": "response_held_before_any_client_headers",
+          "wall_ns": 1792715870799174400,
+          "monotonic_ns": 253627140000000
+        },
+        {
+          "line": 21,
+          "event": "postgresql_snapshot",
+          "wall_ns": 1792715870961878400,
+          "monotonic_ns": 253627296000000
+        },
+        {
+          "line": 22,
+          "event": "kill_requested",
+          "wall_ns": 1792715870967491900,
+          "monotonic_ns": 253627296000000
+        },
+        {
+          "line": 24,
+          "event": "kill_confirmed",
+          "wall_ns": 1792715871027315400,
+          "monotonic_ns": 253627359000000
+        },
+        {
+          "line": 26,
+          "event": "held_response_discarded",
+          "wall_ns": 1792715871192207300,
+          "monotonic_ns": 253627531000000
+        }
+      ],
+      "hold_to_kill_ns": 156000000,
+      "order_strict_lines_and_nondecreasing_monotonic": true,
+      "sql_connection_pid_distinct_from_native_and_harness": true,
+      "sql_pid": 2492,
+      "sql_clock_timestamp": "2026-10-22 20:37:50.906674-04:00",
+      "response_status": 200,
+      "sent_bytes_at_hold": 0,
+      "no_recorded_delivery_of_held_response": true,
+      "kill_pid_matches_send": true,
+      "killed_process_completed_marker_count": 0,
+      "native_pids": [
+        14060,
+        2368,
+        21868
+      ],
+      "three_distinct_native_pids": true,
+      "three_successful_fresh_login_response_records": true,
+      "three_fresh_tokens_match_sql_session_rows": true,
+      "native_completion_counts": {
+        "send": 0,
+        "recovery": 1,
+        "second-restart": 1
+      },
+      "native_recovery_result_equals_original_semantic_json": true,
+      "recovery_request_count": 1,
+      "recovery_original_body_int_and_key": true,
+      "initial_request_original_body_int_and_key": true,
+      "recovery_request_raw_bytes_equal_initial": true,
+      "recovery_response_semantic_json_equal_initial": true,
+      "recovery_response_raw_bytes_equal_initial": false,
+      "third_process_purchase_request_count": 0,
+      "committed_vs_later_economic_state_equal": {
+        "03-after-kill": true,
+        "04-after-recovery": true,
+        "05-after-second-restart": true
+      },
+      "state_digest_rederivation": {
+        "01-before": true,
+        "02-committed-before-kill": true,
+        "03-after-kill": true,
+        "04-after-recovery": true,
+        "05-after-second-restart": true
+      },
+      "initial_economic_delta_counts": {
+        "audit": {
+          "added": 1,
+          "removed": 0,
+          "changed": 0
+        },
+        "items": {
+          "added": 0,
+          "removed": 0,
+          "changed": 1
+        },
+        "ledger": {
+          "added": 2,
+          "removed": 0,
+          "changed": 0
+        },
+        "listings": {
+          "added": 0,
+          "removed": 0,
+          "changed": 1
+        },
+        "loadouts": {
+          "added": 0,
+          "removed": 0,
+          "changed": 0
+        },
+        "operations": {
+          "added": 1,
+          "removed": 0,
+          "changed": 0
+        },
+        "players": {
+          "added": 0,
+          "removed": 0,
+          "changed": 2
+        },
+        "rewards": {
+          "added": 0,
+          "removed": 0,
+          "changed": 0
+        },
+        "trades": {
+          "added": 0,
+          "removed": 0,
+          "changed": 0
+        }
+      },
+      "economic_checks": {
+        "one_operation_exact_actor_route_key_canonical_body_hash_and_response": true,
+        "two_ledger_rows_exact": true,
+        "one_audit_exact": true,
+        "buyer_debit_exact": true,
+        "seller_credit_exact": true,
+        "total_fee_burn_exact": true,
+        "item_owner_unreserved_not_consumed_count_stable": true,
+        "listing_sold_exact_parties_price": true,
+        "response_item_credits_fee_exact": true,
+        "unrelated_tables_unchanged": true
+      },
+      "journal_metadata_equal_at_kill": true,
+      "journal_raw_validation": {
+        "before-kill": {
+          "bytes_match_metadata": true,
+          "digest_matches_metadata": true,
+          "parsed_record_matches_metadata": true,
+          "saved_transaction_exact": true,
+          "raw_secret_field_scan": true
+        },
+        "after-kill": {
+          "bytes_match_metadata": true,
+          "digest_matches_metadata": true,
+          "parsed_record_matches_metadata": true,
+          "saved_transaction_exact": true,
+          "raw_secret_field_scan": true
+        }
+      },
+      "limits": [
+        "Stored-author-captured record re-analysis, no native/DB replay",
+        "No packet capture: sent_bytes is instrumentation corroborated by frozen proxy source, not an independent wire measurement",
+        "Missing journal existence is a recorded observation, not a present-day filesystem check",
+        "Nine economic tables; sessions separately checked; rate_buckets/game_tickets are not in snapshots",
+        "JSON semantic equality is not byte equality or numeric-type equality of Godot events"
+      ]
+    },
+    {
+      "input_directory": "r10/candidate-7b6f379/run-3",
+      "price": 10000000,
+      "basis_points": 300,
+      "fee_floor": 300000,
+      "timeline_count": 77,
+      "order": [
+        {
+          "line": 20,
+          "event": "response_held_before_any_client_headers",
+          "wall_ns": 1792715878819608300,
+          "monotonic_ns": 253635156000000
+        },
+        {
+          "line": 21,
+          "event": "postgresql_snapshot",
+          "wall_ns": 1792715878975980100,
+          "monotonic_ns": 253635312000000
+        },
+        {
+          "line": 22,
+          "event": "kill_requested",
+          "wall_ns": 1792715878981484000,
+          "monotonic_ns": 253635312000000
+        },
+        {
+          "line": 24,
+          "event": "kill_confirmed",
+          "wall_ns": 1792715879077654200,
+          "monotonic_ns": 253635406000000
+        },
+        {
+          "line": 26,
+          "event": "held_response_discarded",
+          "wall_ns": 1792715879241916600,
+          "monotonic_ns": 253635578000000
+        }
+      ],
+      "hold_to_kill_ns": 156000000,
+      "order_strict_lines_and_nondecreasing_monotonic": true,
+      "sql_connection_pid_distinct_from_native_and_harness": true,
+      "sql_pid": 23424,
+      "sql_clock_timestamp": "2026-10-22 20:37:58.920635-04:00",
+      "response_status": 200,
+      "sent_bytes_at_hold": 0,
+      "no_recorded_delivery_of_held_response": true,
+      "kill_pid_matches_send": true,
+      "killed_process_completed_marker_count": 0,
+      "native_pids": [
+        16160,
+        19404,
+        21184
+      ],
+      "three_distinct_native_pids": true,
+      "three_successful_fresh_login_response_records": true,
+      "three_fresh_tokens_match_sql_session_rows": true,
+      "native_completion_counts": {
+        "send": 0,
+        "recovery": 1,
+        "second-restart": 1
+      },
+      "native_recovery_result_equals_original_semantic_json": true,
+      "recovery_request_count": 1,
+      "recovery_original_body_int_and_key": true,
+      "initial_request_original_body_int_and_key": true,
+      "recovery_request_raw_bytes_equal_initial": true,
+      "recovery_response_semantic_json_equal_initial": true,
+      "recovery_response_raw_bytes_equal_initial": false,
+      "third_process_purchase_request_count": 0,
+      "committed_vs_later_economic_state_equal": {
+        "03-after-kill": true,
+        "04-after-recovery": true,
+        "05-after-second-restart": true
+      },
+      "state_digest_rederivation": {
+        "01-before": true,
+        "02-committed-before-kill": true,
+        "03-after-kill": true,
+        "04-after-recovery": true,
+        "05-after-second-restart": true
+      },
+      "initial_economic_delta_counts": {
+        "audit": {
+          "added": 1,
+          "removed": 0,
+          "changed": 0
+        },
+        "items": {
+          "added": 0,
+          "removed": 0,
+          "changed": 1
+        },
+        "ledger": {
+          "added": 2,
+          "removed": 0,
+          "changed": 0
+        },
+        "listings": {
+          "added": 0,
+          "removed": 0,
+          "changed": 1
+        },
+        "loadouts": {
+          "added": 0,
+          "removed": 0,
+          "changed": 0
+        },
+        "operations": {
+          "added": 1,
+          "removed": 0,
+          "changed": 0
+        },
+        "players": {
+          "added": 0,
+          "removed": 0,
+          "changed": 2
+        },
+        "rewards": {
+          "added": 0,
+          "removed": 0,
+          "changed": 0
+        },
+        "trades": {
+          "added": 0,
+          "removed": 0,
+          "changed": 0
+        }
+      },
+      "economic_checks": {
+        "one_operation_exact_actor_route_key_canonical_body_hash_and_response": true,
+        "two_ledger_rows_exact": true,
+        "one_audit_exact": true,
+        "buyer_debit_exact": true,
+        "seller_credit_exact": true,
+        "total_fee_burn_exact": true,
+        "item_owner_unreserved_not_consumed_count_stable": true,
+        "listing_sold_exact_parties_price": true,
+        "response_item_credits_fee_exact": true,
+        "unrelated_tables_unchanged": true
+      },
+      "journal_metadata_equal_at_kill": true,
+      "journal_raw_validation": {
+        "before-kill": {
+          "bytes_match_metadata": true,
+          "digest_matches_metadata": true,
+          "parsed_record_matches_metadata": true,
+          "saved_transaction_exact": true,
+          "raw_secret_field_scan": true
+        },
+        "after-kill": {
+          "bytes_match_metadata": true,
+          "digest_matches_metadata": true,
+          "parsed_record_matches_metadata": true,
+          "saved_transaction_exact": true,
+          "raw_secret_field_scan": true
+        }
+      },
+      "limits": [
+        "Stored-author-captured record re-analysis, no native/DB replay",
+        "No packet capture: sent_bytes is instrumentation corroborated by frozen proxy source, not an independent wire measurement",
+        "Missing journal existence is a recorded observation, not a present-day filesystem check",
+        "Nine economic tables; sessions separately checked; rate_buckets/game_tickets are not in snapshots",
+        "JSON semantic equality is not byte equality or numeric-type equality of Godot events"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,2661 @@
+{
+  "schema": "trade-read-retained-artifacts-v2",
+  "started_at": "2026-10-19T19:43:28.587454+00:00",
+  "source": {
+    "commit": "701ce2c4d7f8b2872cf1fefa64cb6edd0cd1a3fd",
+    "backend_tree": "67027b4fa17674ef067c84401af76eb1524419ac",
+    "backend_dirty": "",
+    "backend_files": {
+      "backend/app.py": "78816607ee70fe47ae1f1c97f48d4d2a360eebe7c0e64ac73c296dfd53fb8121",
+      "backend/bridge_fixture.py": "00548df28d2ad6a8fdca9eeaed34af39e30bebbb205fb9b69b2d7112434b29db",
+      "backend/migrate.py": "0f06597968c1e0de8461083448306496f4cc53e6a0f3d94dbc0f1b0c003f1d58",
+      "backend/models.py": "5fa4e0ac4157e4ad883d4c2bf1df06d915a395c5303c063a1004aaabd071e09a",
+      "backend/pyproject.toml": "9fd253aaaa3d39616eeb076d991cd2836c4cddcc8f56d72f31776cd134ab0190",
+      "backend/simulate.py": "218299e27743c58eac64f2d5820f3320945321d3d58bdd2caee5d195c536afa2",
+      "backend/uv.lock": "c66ef08d0ef36424da51008f59e3905f544d15dbd602ed6e204c588b4ca93db5",
+      "backend/config/economy.json": "8d85944aff0a6531b8a022350cbe0562295573aff5f3bd96e474e06f192aec7a",
+      "backend/config/simulation-baseline.json": "0a7965dd37a68fd2960d6b6912dffb635fcb26ffa6f251b92a7872c688755a16",
+      "backend/migrations/001_integrity.sql": "83189d1d06cbec62db325dbcf376476bc3aa7c0984d7439bb8048360ff737392",
+      "backend/migrations/002_game_tickets.sql": "c063f4376339b013fc79cda3e6f7782c61654d51fe6e479c658f2e30a1eddd7e",
+      "backend/migrations/003_loadouts.sql": "cc8acafba73b07889b25f2b9ee594cd09094d0ff8fd34d64767e6fcde62ee017",
+      "backend/migrations/004_market_index.sql": "cc51bd7647a6bd6abb272efd9564e089c0cc3d7afa0e76586503b3225535a5af",
+      "backend/tests/test_economy.py": "d3ada3e8590fb30a5a5e812525ccaea4be3778af50903eb2d02de41e201d528a"
+    }
+  },
+  "runtime_reference": {
+    "commit": "701ce2c4d7f8b2872cf1fefa64cb6edd0cd1a3fd",
+    "backend_tree": "67027b4fa17674ef067c84401af76eb1524419ac"
+  },
+  "harness_commit": "8070436f53dd98e9529e8c21ea7b0f7e3ecb6daf",
+  "harness_sha256": "416cc212d3200b9351036b7ec205a5bb488748f19c09d7ea0ef1edc24d683dbd",
+  "artifact_verifier_sha256": "06b5f522c9bdae065ddc44482a666566772bcece9efa29c43e6ceac9792ef62b",
+  "fixture_sha256": "7106ccbbf657058087ed4b717143cdcea760513d8a513432b3445a2131a69eb1",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "python": "3.12.14 (main, Sep  1 2026, 14:17:39) [MSC v.1944 64 bit (AMD64)]",
+  "packages": {
+    "sqlalchemy": "2.1.4",
+    "psycopg": "3.3.6",
+    "psycopg-binary": "3.3.6",
+    "fastapi": "0.143.0",
+    "starlette": "1.7.0",
+    "httpx": "0.28.1",
+    "pytest": "9.1.1"
+  },
+  "database": "sightbreak_trade_read_e431b2817453_test",
+  "rows": [
+    {
+      "trades": 0,
+      "items_per_side": 0,
+      "samples": [
+        {
+          "milliseconds": 8.1144,
+          "statements": 3,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/00-0-0/responses/f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd.json",
+              "sha256": "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd"
+            },
+            "canonical": {
+              "file": "workloads/00-0-0/canonical-responses/f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd.json",
+              "sha256": "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 8.5008,
+          "statements": 3,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/00-0-0/responses/f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd.json",
+              "sha256": "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd"
+            },
+            "canonical": {
+              "file": "workloads/00-0-0/canonical-responses/f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd.json",
+              "sha256": "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 7.2584,
+          "statements": 3,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/00-0-0/responses/f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd.json",
+              "sha256": "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd"
+            },
+            "canonical": {
+              "file": "workloads/00-0-0/canonical-responses/f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd.json",
+              "sha256": "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 7.8641,
+          "statements": 3,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/00-0-0/responses/f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd.json",
+              "sha256": "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd"
+            },
+            "canonical": {
+              "file": "workloads/00-0-0/canonical-responses/f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd.json",
+              "sha256": "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 7.9183,
+          "statements": 3,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/00-0-0/responses/f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd.json",
+              "sha256": "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd"
+            },
+            "canonical": {
+              "file": "workloads/00-0-0/canonical-responses/f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd.json",
+              "sha256": "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 7.1468,
+          "statements": 3,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/00-0-0/responses/f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd.json",
+              "sha256": "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd"
+            },
+            "canonical": {
+              "file": "workloads/00-0-0/canonical-responses/f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd.json",
+              "sha256": "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 7.8509,
+          "statements": 3,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/00-0-0/responses/f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd.json",
+              "sha256": "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd"
+            },
+            "canonical": {
+              "file": "workloads/00-0-0/canonical-responses/f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd.json",
+              "sha256": "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 7.7591,
+          "statements": 3,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/00-0-0/responses/f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd.json",
+              "sha256": "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd"
+            },
+            "canonical": {
+              "file": "workloads/00-0-0/canonical-responses/f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd.json",
+              "sha256": "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 8.7919,
+          "statements": 3,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/00-0-0/responses/f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd.json",
+              "sha256": "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd"
+            },
+            "canonical": {
+              "file": "workloads/00-0-0/canonical-responses/f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd.json",
+              "sha256": "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 6.7058,
+          "statements": 3,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/00-0-0/responses/f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd.json",
+              "sha256": "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd"
+            },
+            "canonical": {
+              "file": "workloads/00-0-0/canonical-responses/f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd.json",
+              "sha256": "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd"
+            },
+            "matches_expected": true
+          }
+        }
+      ],
+      "warmups": [
+        {
+          "status": 200,
+          "raw": {
+            "file": "workloads/00-0-0/responses/f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd.json",
+            "sha256": "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd"
+          },
+          "canonical": {
+            "file": "workloads/00-0-0/canonical-responses/f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd.json",
+            "sha256": "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd"
+          },
+          "matches_expected": true
+        },
+        {
+          "status": 200,
+          "raw": {
+            "file": "workloads/00-0-0/responses/f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd.json",
+            "sha256": "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd"
+          },
+          "canonical": {
+            "file": "workloads/00-0-0/canonical-responses/f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd.json",
+            "sha256": "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd"
+          },
+          "matches_expected": true
+        }
+      ],
+      "expected_response": {
+        "file": "workloads/00-0-0/expected-response.json",
+        "sha256": "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd"
+      },
+      "state_before": {
+        "sha256": "5c6dbbeb49f4c9303320515d28ed999ead0cb724b75d788999875d1b28e2d71c",
+        "representation": "full_rows_per_table",
+        "tables": {
+          "audit": {
+            "file": "workloads/00-0-0/state/before/audit.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "game_tickets": {
+            "file": "workloads/00-0-0/state/before/game_tickets.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "items": {
+            "file": "workloads/00-0-0/state/before/items.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "ledger": {
+            "file": "workloads/00-0-0/state/before/ledger.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "listings": {
+            "file": "workloads/00-0-0/state/before/listings.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "loadouts": {
+            "file": "workloads/00-0-0/state/before/loadouts.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "operations": {
+            "file": "workloads/00-0-0/state/before/operations.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "players": {
+            "file": "workloads/00-0-0/state/before/players.json",
+            "sha256": "5e3cdae52724dd596d586e90d997c289a60b536fca42e258ce7104a5e83c57bd",
+            "row_count": 3,
+            "representation": "full_rows"
+          },
+          "rate_buckets": {
+            "file": "workloads/00-0-0/state/before/rate_buckets.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "rewards": {
+            "file": "workloads/00-0-0/state/before/rewards.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "sessions": {
+            "file": "workloads/00-0-0/state/before/sessions.json",
+            "sha256": "9ae703420a8f035ec821096102fa5133d5ea2734eac9196c598842cd6a63a650",
+            "row_count": 2,
+            "representation": "full_rows"
+          },
+          "trades": {
+            "file": "workloads/00-0-0/state/before/trades.json",
+            "sha256": "49541f9faaa942f01e546addaa1dda77501e92d059e4162f7c1344ec59296712",
+            "row_count": 1,
+            "representation": "full_rows"
+          }
+        }
+      },
+      "budget": 3,
+      "sql_shapes": [
+        "SELECT sessions.token_hash, sessions.player_id, sessions.expires_at \nFROM sessions \nWHERE sessions.token_hash = %(pk_1)s::VARCHAR",
+        "SELECT players.id, players.username, players.display_name, players.password_hash, players.credits, players.xp, players.active, players.last_trade \nFROM players \nWHERE players.id = %(pk_1)s::VARCHAR",
+        "SELECT trades.id, trades.a, trades.b, trades.revision, trades.offers, trades.confirmations, trades.state \nFROM trades \nWHERE trades.a = %(a_1)s::VARCHAR OR trades.b = %(b_1)s::VARCHAR"
+      ],
+      "expected_response_sha256": "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd",
+      "actual_response_sha256s": [
+        "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd"
+      ],
+      "state_after": {
+        "sha256": "5c6dbbeb49f4c9303320515d28ed999ead0cb724b75d788999875d1b28e2d71c",
+        "representation": "full_rows_per_table",
+        "tables": {
+          "audit": {
+            "file": "workloads/00-0-0/state/after/audit.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "game_tickets": {
+            "file": "workloads/00-0-0/state/after/game_tickets.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "items": {
+            "file": "workloads/00-0-0/state/after/items.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "ledger": {
+            "file": "workloads/00-0-0/state/after/ledger.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "listings": {
+            "file": "workloads/00-0-0/state/after/listings.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "loadouts": {
+            "file": "workloads/00-0-0/state/after/loadouts.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "operations": {
+            "file": "workloads/00-0-0/state/after/operations.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "players": {
+            "file": "workloads/00-0-0/state/after/players.json",
+            "sha256": "5e3cdae52724dd596d586e90d997c289a60b536fca42e258ce7104a5e83c57bd",
+            "row_count": 3,
+            "representation": "full_rows"
+          },
+          "rate_buckets": {
+            "file": "workloads/00-0-0/state/after/rate_buckets.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "rewards": {
+            "file": "workloads/00-0-0/state/after/rewards.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "sessions": {
+            "file": "workloads/00-0-0/state/after/sessions.json",
+            "sha256": "9ae703420a8f035ec821096102fa5133d5ea2734eac9196c598842cd6a63a650",
+            "row_count": 2,
+            "representation": "full_rows"
+          },
+          "trades": {
+            "file": "workloads/00-0-0/state/after/trades.json",
+            "sha256": "49541f9faaa942f01e546addaa1dda77501e92d059e4162f7c1344ec59296712",
+            "row_count": 1,
+            "representation": "full_rows"
+          }
+        }
+      },
+      "read_only": true,
+      "median_ms": 7.8575,
+      "p95_ms": 8.7919,
+      "query_counts": [
+        3
+      ]
+    },
+    {
+      "trades": 1,
+      "items_per_side": 0,
+      "samples": [
+        {
+          "milliseconds": 10.0854,
+          "statements": 4,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/01-1-0/responses/b5f7a46350cbd0d7cf845cb29737a3644530339ffb74d1a60c743f5e2b2bb6d6.json",
+              "sha256": "b5f7a46350cbd0d7cf845cb29737a3644530339ffb74d1a60c743f5e2b2bb6d6"
+            },
+            "canonical": {
+              "file": "workloads/01-1-0/canonical-responses/08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4.json",
+              "sha256": "08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 10.5666,
+          "statements": 4,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/01-1-0/responses/b5f7a46350cbd0d7cf845cb29737a3644530339ffb74d1a60c743f5e2b2bb6d6.json",
+              "sha256": "b5f7a46350cbd0d7cf845cb29737a3644530339ffb74d1a60c743f5e2b2bb6d6"
+            },
+            "canonical": {
+              "file": "workloads/01-1-0/canonical-responses/08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4.json",
+              "sha256": "08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 9.9833,
+          "statements": 4,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/01-1-0/responses/b5f7a46350cbd0d7cf845cb29737a3644530339ffb74d1a60c743f5e2b2bb6d6.json",
+              "sha256": "b5f7a46350cbd0d7cf845cb29737a3644530339ffb74d1a60c743f5e2b2bb6d6"
+            },
+            "canonical": {
+              "file": "workloads/01-1-0/canonical-responses/08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4.json",
+              "sha256": "08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 9.7532,
+          "statements": 4,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/01-1-0/responses/b5f7a46350cbd0d7cf845cb29737a3644530339ffb74d1a60c743f5e2b2bb6d6.json",
+              "sha256": "b5f7a46350cbd0d7cf845cb29737a3644530339ffb74d1a60c743f5e2b2bb6d6"
+            },
+            "canonical": {
+              "file": "workloads/01-1-0/canonical-responses/08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4.json",
+              "sha256": "08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 8.9518,
+          "statements": 4,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/01-1-0/responses/b5f7a46350cbd0d7cf845cb29737a3644530339ffb74d1a60c743f5e2b2bb6d6.json",
+              "sha256": "b5f7a46350cbd0d7cf845cb29737a3644530339ffb74d1a60c743f5e2b2bb6d6"
+            },
+            "canonical": {
+              "file": "workloads/01-1-0/canonical-responses/08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4.json",
+              "sha256": "08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 10.8182,
+          "statements": 4,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/01-1-0/responses/b5f7a46350cbd0d7cf845cb29737a3644530339ffb74d1a60c743f5e2b2bb6d6.json",
+              "sha256": "b5f7a46350cbd0d7cf845cb29737a3644530339ffb74d1a60c743f5e2b2bb6d6"
+            },
+            "canonical": {
+              "file": "workloads/01-1-0/canonical-responses/08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4.json",
+              "sha256": "08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 7.9069,
+          "statements": 4,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/01-1-0/responses/b5f7a46350cbd0d7cf845cb29737a3644530339ffb74d1a60c743f5e2b2bb6d6.json",
+              "sha256": "b5f7a46350cbd0d7cf845cb29737a3644530339ffb74d1a60c743f5e2b2bb6d6"
+            },
+            "canonical": {
+              "file": "workloads/01-1-0/canonical-responses/08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4.json",
+              "sha256": "08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 8.2525,
+          "statements": 4,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/01-1-0/responses/b5f7a46350cbd0d7cf845cb29737a3644530339ffb74d1a60c743f5e2b2bb6d6.json",
+              "sha256": "b5f7a46350cbd0d7cf845cb29737a3644530339ffb74d1a60c743f5e2b2bb6d6"
+            },
+            "canonical": {
+              "file": "workloads/01-1-0/canonical-responses/08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4.json",
+              "sha256": "08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 8.951,
+          "statements": 4,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/01-1-0/responses/b5f7a46350cbd0d7cf845cb29737a3644530339ffb74d1a60c743f5e2b2bb6d6.json",
+              "sha256": "b5f7a46350cbd0d7cf845cb29737a3644530339ffb74d1a60c743f5e2b2bb6d6"
+            },
+            "canonical": {
+              "file": "workloads/01-1-0/canonical-responses/08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4.json",
+              "sha256": "08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 8.7276,
+          "statements": 4,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/01-1-0/responses/b5f7a46350cbd0d7cf845cb29737a3644530339ffb74d1a60c743f5e2b2bb6d6.json",
+              "sha256": "b5f7a46350cbd0d7cf845cb29737a3644530339ffb74d1a60c743f5e2b2bb6d6"
+            },
+            "canonical": {
+              "file": "workloads/01-1-0/canonical-responses/08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4.json",
+              "sha256": "08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4"
+            },
+            "matches_expected": true
+          }
+        }
+      ],
+      "warmups": [
+        {
+          "status": 200,
+          "raw": {
+            "file": "workloads/01-1-0/responses/b5f7a46350cbd0d7cf845cb29737a3644530339ffb74d1a60c743f5e2b2bb6d6.json",
+            "sha256": "b5f7a46350cbd0d7cf845cb29737a3644530339ffb74d1a60c743f5e2b2bb6d6"
+          },
+          "canonical": {
+            "file": "workloads/01-1-0/canonical-responses/08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4.json",
+            "sha256": "08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4"
+          },
+          "matches_expected": true
+        },
+        {
+          "status": 200,
+          "raw": {
+            "file": "workloads/01-1-0/responses/b5f7a46350cbd0d7cf845cb29737a3644530339ffb74d1a60c743f5e2b2bb6d6.json",
+            "sha256": "b5f7a46350cbd0d7cf845cb29737a3644530339ffb74d1a60c743f5e2b2bb6d6"
+          },
+          "canonical": {
+            "file": "workloads/01-1-0/canonical-responses/08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4.json",
+            "sha256": "08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4"
+          },
+          "matches_expected": true
+        }
+      ],
+      "expected_response": {
+        "file": "workloads/01-1-0/expected-response.json",
+        "sha256": "08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4"
+      },
+      "state_before": {
+        "sha256": "80544ae4bb1a53c6d17f2bff9753b8495bc56dcfc2f5c8b1ed2f4472a071bfd7",
+        "representation": "full_rows_per_table",
+        "tables": {
+          "audit": {
+            "file": "workloads/01-1-0/state/before/audit.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "game_tickets": {
+            "file": "workloads/01-1-0/state/before/game_tickets.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "items": {
+            "file": "workloads/01-1-0/state/before/items.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "ledger": {
+            "file": "workloads/01-1-0/state/before/ledger.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "listings": {
+            "file": "workloads/01-1-0/state/before/listings.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "loadouts": {
+            "file": "workloads/01-1-0/state/before/loadouts.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "operations": {
+            "file": "workloads/01-1-0/state/before/operations.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "players": {
+            "file": "workloads/01-1-0/state/before/players.json",
+            "sha256": "e0a4d75a0c105ef3795167dd33d3946594fe83d48dbf2074fe3b93ed7a6fa627",
+            "row_count": 4,
+            "representation": "full_rows"
+          },
+          "rate_buckets": {
+            "file": "workloads/01-1-0/state/before/rate_buckets.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "rewards": {
+            "file": "workloads/01-1-0/state/before/rewards.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "sessions": {
+            "file": "workloads/01-1-0/state/before/sessions.json",
+            "sha256": "0a9545e9273074ef3b5322ab7bfd95a04d2e1c3bf2c98029430035970832ccea",
+            "row_count": 2,
+            "representation": "full_rows"
+          },
+          "trades": {
+            "file": "workloads/01-1-0/state/before/trades.json",
+            "sha256": "a44789a9a8ef956c8d9d2fe6ce0623a655a8a31e8bf5be3ced4a776f4a62c9fd",
+            "row_count": 2,
+            "representation": "full_rows"
+          }
+        }
+      },
+      "budget": 4,
+      "sql_shapes": [
+        "SELECT sessions.token_hash, sessions.player_id, sessions.expires_at \nFROM sessions \nWHERE sessions.token_hash = %(pk_1)s::VARCHAR",
+        "SELECT players.id, players.username, players.display_name, players.password_hash, players.credits, players.xp, players.active, players.last_trade \nFROM players \nWHERE players.id = %(pk_1)s::VARCHAR",
+        "SELECT trades.id, trades.a, trades.b, trades.revision, trades.offers, trades.confirmations, trades.state \nFROM trades \nWHERE trades.a = %(a_1)s::VARCHAR OR trades.b = %(b_1)s::VARCHAR"
+      ],
+      "expected_response_sha256": "08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4",
+      "actual_response_sha256s": [
+        "08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4"
+      ],
+      "state_after": {
+        "sha256": "80544ae4bb1a53c6d17f2bff9753b8495bc56dcfc2f5c8b1ed2f4472a071bfd7",
+        "representation": "full_rows_per_table",
+        "tables": {
+          "audit": {
+            "file": "workloads/01-1-0/state/after/audit.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "game_tickets": {
+            "file": "workloads/01-1-0/state/after/game_tickets.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "items": {
+            "file": "workloads/01-1-0/state/after/items.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "ledger": {
+            "file": "workloads/01-1-0/state/after/ledger.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "listings": {
+            "file": "workloads/01-1-0/state/after/listings.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "loadouts": {
+            "file": "workloads/01-1-0/state/after/loadouts.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "operations": {
+            "file": "workloads/01-1-0/state/after/operations.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "players": {
+            "file": "workloads/01-1-0/state/after/players.json",
+            "sha256": "e0a4d75a0c105ef3795167dd33d3946594fe83d48dbf2074fe3b93ed7a6fa627",
+            "row_count": 4,
+            "representation": "full_rows"
+          },
+          "rate_buckets": {
+            "file": "workloads/01-1-0/state/after/rate_buckets.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "rewards": {
+            "file": "workloads/01-1-0/state/after/rewards.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "sessions": {
+            "file": "workloads/01-1-0/state/after/sessions.json",
+            "sha256": "0a9545e9273074ef3b5322ab7bfd95a04d2e1c3bf2c98029430035970832ccea",
+            "row_count": 2,
+            "representation": "full_rows"
+          },
+          "trades": {
+            "file": "workloads/01-1-0/state/after/trades.json",
+            "sha256": "a44789a9a8ef956c8d9d2fe6ce0623a655a8a31e8bf5be3ced4a776f4a62c9fd",
+            "row_count": 2,
+            "representation": "full_rows"
+          }
+        }
+      },
+      "read_only": true,
+      "median_ms": 9.3525,
+      "p95_ms": 10.8182,
+      "query_counts": [
+        4
+      ]
+    },
+    {
+      "trades": 1,
+      "items_per_side": 2,
+      "samples": [
+        {
+          "milliseconds": 17.7664,
+          "statements": 8,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/02-1-2/responses/a2a2bd83c0c257059dce6550d8272088642a27f02fc384e6092e74efa40cd464.json",
+              "sha256": "a2a2bd83c0c257059dce6550d8272088642a27f02fc384e6092e74efa40cd464"
+            },
+            "canonical": {
+              "file": "workloads/02-1-2/canonical-responses/d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b.json",
+              "sha256": "d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 19.1847,
+          "statements": 8,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/02-1-2/responses/a2a2bd83c0c257059dce6550d8272088642a27f02fc384e6092e74efa40cd464.json",
+              "sha256": "a2a2bd83c0c257059dce6550d8272088642a27f02fc384e6092e74efa40cd464"
+            },
+            "canonical": {
+              "file": "workloads/02-1-2/canonical-responses/d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b.json",
+              "sha256": "d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 14.8511,
+          "statements": 8,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/02-1-2/responses/a2a2bd83c0c257059dce6550d8272088642a27f02fc384e6092e74efa40cd464.json",
+              "sha256": "a2a2bd83c0c257059dce6550d8272088642a27f02fc384e6092e74efa40cd464"
+            },
+            "canonical": {
+              "file": "workloads/02-1-2/canonical-responses/d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b.json",
+              "sha256": "d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 16.178,
+          "statements": 8,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/02-1-2/responses/a2a2bd83c0c257059dce6550d8272088642a27f02fc384e6092e74efa40cd464.json",
+              "sha256": "a2a2bd83c0c257059dce6550d8272088642a27f02fc384e6092e74efa40cd464"
+            },
+            "canonical": {
+              "file": "workloads/02-1-2/canonical-responses/d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b.json",
+              "sha256": "d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 15.7602,
+          "statements": 8,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/02-1-2/responses/a2a2bd83c0c257059dce6550d8272088642a27f02fc384e6092e74efa40cd464.json",
+              "sha256": "a2a2bd83c0c257059dce6550d8272088642a27f02fc384e6092e74efa40cd464"
+            },
+            "canonical": {
+              "file": "workloads/02-1-2/canonical-responses/d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b.json",
+              "sha256": "d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 16.5441,
+          "statements": 8,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/02-1-2/responses/a2a2bd83c0c257059dce6550d8272088642a27f02fc384e6092e74efa40cd464.json",
+              "sha256": "a2a2bd83c0c257059dce6550d8272088642a27f02fc384e6092e74efa40cd464"
+            },
+            "canonical": {
+              "file": "workloads/02-1-2/canonical-responses/d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b.json",
+              "sha256": "d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 16.4803,
+          "statements": 8,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/02-1-2/responses/a2a2bd83c0c257059dce6550d8272088642a27f02fc384e6092e74efa40cd464.json",
+              "sha256": "a2a2bd83c0c257059dce6550d8272088642a27f02fc384e6092e74efa40cd464"
+            },
+            "canonical": {
+              "file": "workloads/02-1-2/canonical-responses/d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b.json",
+              "sha256": "d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 15.1317,
+          "statements": 8,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/02-1-2/responses/a2a2bd83c0c257059dce6550d8272088642a27f02fc384e6092e74efa40cd464.json",
+              "sha256": "a2a2bd83c0c257059dce6550d8272088642a27f02fc384e6092e74efa40cd464"
+            },
+            "canonical": {
+              "file": "workloads/02-1-2/canonical-responses/d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b.json",
+              "sha256": "d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 15.111,
+          "statements": 8,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/02-1-2/responses/a2a2bd83c0c257059dce6550d8272088642a27f02fc384e6092e74efa40cd464.json",
+              "sha256": "a2a2bd83c0c257059dce6550d8272088642a27f02fc384e6092e74efa40cd464"
+            },
+            "canonical": {
+              "file": "workloads/02-1-2/canonical-responses/d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b.json",
+              "sha256": "d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 15.8921,
+          "statements": 8,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/02-1-2/responses/a2a2bd83c0c257059dce6550d8272088642a27f02fc384e6092e74efa40cd464.json",
+              "sha256": "a2a2bd83c0c257059dce6550d8272088642a27f02fc384e6092e74efa40cd464"
+            },
+            "canonical": {
+              "file": "workloads/02-1-2/canonical-responses/d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b.json",
+              "sha256": "d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b"
+            },
+            "matches_expected": true
+          }
+        }
+      ],
+      "warmups": [
+        {
+          "status": 200,
+          "raw": {
+            "file": "workloads/02-1-2/responses/a2a2bd83c0c257059dce6550d8272088642a27f02fc384e6092e74efa40cd464.json",
+            "sha256": "a2a2bd83c0c257059dce6550d8272088642a27f02fc384e6092e74efa40cd464"
+          },
+          "canonical": {
+            "file": "workloads/02-1-2/canonical-responses/d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b.json",
+            "sha256": "d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b"
+          },
+          "matches_expected": true
+        },
+        {
+          "status": 200,
+          "raw": {
+            "file": "workloads/02-1-2/responses/a2a2bd83c0c257059dce6550d8272088642a27f02fc384e6092e74efa40cd464.json",
+            "sha256": "a2a2bd83c0c257059dce6550d8272088642a27f02fc384e6092e74efa40cd464"
+          },
+          "canonical": {
+            "file": "workloads/02-1-2/canonical-responses/d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b.json",
+            "sha256": "d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b"
+          },
+          "matches_expected": true
+        }
+      ],
+      "expected_response": {
+        "file": "workloads/02-1-2/expected-response.json",
+        "sha256": "d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b"
+      },
+      "state_before": {
+        "sha256": "814c8eee24a84542e22018901dc269cf7ad6d550966160ee1bbd9dab3089aff8",
+        "representation": "full_rows_per_table",
+        "tables": {
+          "audit": {
+            "file": "workloads/02-1-2/state/before/audit.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "game_tickets": {
+            "file": "workloads/02-1-2/state/before/game_tickets.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "items": {
+            "file": "workloads/02-1-2/state/before/items.json",
+            "sha256": "6ef8a72cbfa9b928b70977ff80d86b62a43ab07ec8bfee871b1da7160ac22999",
+            "row_count": 4,
+            "representation": "full_rows"
+          },
+          "ledger": {
+            "file": "workloads/02-1-2/state/before/ledger.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "listings": {
+            "file": "workloads/02-1-2/state/before/listings.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "loadouts": {
+            "file": "workloads/02-1-2/state/before/loadouts.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "operations": {
+            "file": "workloads/02-1-2/state/before/operations.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "players": {
+            "file": "workloads/02-1-2/state/before/players.json",
+            "sha256": "e0a4d75a0c105ef3795167dd33d3946594fe83d48dbf2074fe3b93ed7a6fa627",
+            "row_count": 4,
+            "representation": "full_rows"
+          },
+          "rate_buckets": {
+            "file": "workloads/02-1-2/state/before/rate_buckets.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "rewards": {
+            "file": "workloads/02-1-2/state/before/rewards.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "sessions": {
+            "file": "workloads/02-1-2/state/before/sessions.json",
+            "sha256": "43eae6f12ca5ff8f24d919ef5d9d492ab29d271d1bb4ebdddc575573fcab8d73",
+            "row_count": 2,
+            "representation": "full_rows"
+          },
+          "trades": {
+            "file": "workloads/02-1-2/state/before/trades.json",
+            "sha256": "45b642830dd53b7ea02496af50b8d193dae36475c74ccd8116e128a5653ba53e",
+            "row_count": 2,
+            "representation": "full_rows"
+          }
+        }
+      },
+      "budget": 5,
+      "sql_shapes": [
+        "SELECT sessions.token_hash, sessions.player_id, sessions.expires_at \nFROM sessions \nWHERE sessions.token_hash = %(pk_1)s::VARCHAR",
+        "SELECT players.id, players.username, players.display_name, players.password_hash, players.credits, players.xp, players.active, players.last_trade \nFROM players \nWHERE players.id = %(pk_1)s::VARCHAR",
+        "SELECT trades.id, trades.a, trades.b, trades.revision, trades.offers, trades.confirmations, trades.state \nFROM trades \nWHERE trades.a = %(a_1)s::VARCHAR OR trades.b = %(b_1)s::VARCHAR",
+        "SELECT items.id, items.owner_id, items.definition_id, items.rarity, items.pattern_seed, items.wear, items.variant, items.reservation, items.consumed, items.acquired_at \nFROM items \nWHERE items.id = %(pk_1)s::VARCHAR"
+      ],
+      "expected_response_sha256": "d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b",
+      "actual_response_sha256s": [
+        "d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b"
+      ],
+      "state_after": {
+        "sha256": "814c8eee24a84542e22018901dc269cf7ad6d550966160ee1bbd9dab3089aff8",
+        "representation": "full_rows_per_table",
+        "tables": {
+          "audit": {
+            "file": "workloads/02-1-2/state/after/audit.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "game_tickets": {
+            "file": "workloads/02-1-2/state/after/game_tickets.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "items": {
+            "file": "workloads/02-1-2/state/after/items.json",
+            "sha256": "6ef8a72cbfa9b928b70977ff80d86b62a43ab07ec8bfee871b1da7160ac22999",
+            "row_count": 4,
+            "representation": "full_rows"
+          },
+          "ledger": {
+            "file": "workloads/02-1-2/state/after/ledger.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "listings": {
+            "file": "workloads/02-1-2/state/after/listings.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "loadouts": {
+            "file": "workloads/02-1-2/state/after/loadouts.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "operations": {
+            "file": "workloads/02-1-2/state/after/operations.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "players": {
+            "file": "workloads/02-1-2/state/after/players.json",
+            "sha256": "e0a4d75a0c105ef3795167dd33d3946594fe83d48dbf2074fe3b93ed7a6fa627",
+            "row_count": 4,
+            "representation": "full_rows"
+          },
+          "rate_buckets": {
+            "file": "workloads/02-1-2/state/after/rate_buckets.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "rewards": {
+            "file": "workloads/02-1-2/state/after/rewards.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "sessions": {
+            "file": "workloads/02-1-2/state/after/sessions.json",
+            "sha256": "43eae6f12ca5ff8f24d919ef5d9d492ab29d271d1bb4ebdddc575573fcab8d73",
+            "row_count": 2,
+            "representation": "full_rows"
+          },
+          "trades": {
+            "file": "workloads/02-1-2/state/after/trades.json",
+            "sha256": "45b642830dd53b7ea02496af50b8d193dae36475c74ccd8116e128a5653ba53e",
+            "row_count": 2,
+            "representation": "full_rows"
+          }
+        }
+      },
+      "read_only": true,
+      "median_ms": 16.03505,
+      "p95_ms": 19.1847,
+      "query_counts": [
+        8
+      ]
+    },
+    {
+      "trades": 10,
+      "items_per_side": 1,
+      "samples": [
+        {
+          "milliseconds": 52.3113,
+          "statements": 33,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/03-10-1/responses/a88aef75e3400baa879f0cbc2e9f3ae96a5beb9b3399270c368af890b8b8d5cd.json",
+              "sha256": "a88aef75e3400baa879f0cbc2e9f3ae96a5beb9b3399270c368af890b8b8d5cd"
+            },
+            "canonical": {
+              "file": "workloads/03-10-1/canonical-responses/6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34.json",
+              "sha256": "6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 49.8989,
+          "statements": 33,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/03-10-1/responses/a88aef75e3400baa879f0cbc2e9f3ae96a5beb9b3399270c368af890b8b8d5cd.json",
+              "sha256": "a88aef75e3400baa879f0cbc2e9f3ae96a5beb9b3399270c368af890b8b8d5cd"
+            },
+            "canonical": {
+              "file": "workloads/03-10-1/canonical-responses/6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34.json",
+              "sha256": "6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 44.5897,
+          "statements": 33,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/03-10-1/responses/a88aef75e3400baa879f0cbc2e9f3ae96a5beb9b3399270c368af890b8b8d5cd.json",
+              "sha256": "a88aef75e3400baa879f0cbc2e9f3ae96a5beb9b3399270c368af890b8b8d5cd"
+            },
+            "canonical": {
+              "file": "workloads/03-10-1/canonical-responses/6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34.json",
+              "sha256": "6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 50.6028,
+          "statements": 33,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/03-10-1/responses/a88aef75e3400baa879f0cbc2e9f3ae96a5beb9b3399270c368af890b8b8d5cd.json",
+              "sha256": "a88aef75e3400baa879f0cbc2e9f3ae96a5beb9b3399270c368af890b8b8d5cd"
+            },
+            "canonical": {
+              "file": "workloads/03-10-1/canonical-responses/6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34.json",
+              "sha256": "6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 64.4656,
+          "statements": 33,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/03-10-1/responses/a88aef75e3400baa879f0cbc2e9f3ae96a5beb9b3399270c368af890b8b8d5cd.json",
+              "sha256": "a88aef75e3400baa879f0cbc2e9f3ae96a5beb9b3399270c368af890b8b8d5cd"
+            },
+            "canonical": {
+              "file": "workloads/03-10-1/canonical-responses/6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34.json",
+              "sha256": "6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 54.3591,
+          "statements": 33,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/03-10-1/responses/a88aef75e3400baa879f0cbc2e9f3ae96a5beb9b3399270c368af890b8b8d5cd.json",
+              "sha256": "a88aef75e3400baa879f0cbc2e9f3ae96a5beb9b3399270c368af890b8b8d5cd"
+            },
+            "canonical": {
+              "file": "workloads/03-10-1/canonical-responses/6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34.json",
+              "sha256": "6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 63.2224,
+          "statements": 33,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/03-10-1/responses/a88aef75e3400baa879f0cbc2e9f3ae96a5beb9b3399270c368af890b8b8d5cd.json",
+              "sha256": "a88aef75e3400baa879f0cbc2e9f3ae96a5beb9b3399270c368af890b8b8d5cd"
+            },
+            "canonical": {
+              "file": "workloads/03-10-1/canonical-responses/6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34.json",
+              "sha256": "6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 53.8242,
+          "statements": 33,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/03-10-1/responses/a88aef75e3400baa879f0cbc2e9f3ae96a5beb9b3399270c368af890b8b8d5cd.json",
+              "sha256": "a88aef75e3400baa879f0cbc2e9f3ae96a5beb9b3399270c368af890b8b8d5cd"
+            },
+            "canonical": {
+              "file": "workloads/03-10-1/canonical-responses/6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34.json",
+              "sha256": "6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 66.6315,
+          "statements": 33,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/03-10-1/responses/a88aef75e3400baa879f0cbc2e9f3ae96a5beb9b3399270c368af890b8b8d5cd.json",
+              "sha256": "a88aef75e3400baa879f0cbc2e9f3ae96a5beb9b3399270c368af890b8b8d5cd"
+            },
+            "canonical": {
+              "file": "workloads/03-10-1/canonical-responses/6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34.json",
+              "sha256": "6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 54.6123,
+          "statements": 33,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/03-10-1/responses/a88aef75e3400baa879f0cbc2e9f3ae96a5beb9b3399270c368af890b8b8d5cd.json",
+              "sha256": "a88aef75e3400baa879f0cbc2e9f3ae96a5beb9b3399270c368af890b8b8d5cd"
+            },
+            "canonical": {
+              "file": "workloads/03-10-1/canonical-responses/6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34.json",
+              "sha256": "6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34"
+            },
+            "matches_expected": true
+          }
+        }
+      ],
+      "warmups": [
+        {
+          "status": 200,
+          "raw": {
+            "file": "workloads/03-10-1/responses/a88aef75e3400baa879f0cbc2e9f3ae96a5beb9b3399270c368af890b8b8d5cd.json",
+            "sha256": "a88aef75e3400baa879f0cbc2e9f3ae96a5beb9b3399270c368af890b8b8d5cd"
+          },
+          "canonical": {
+            "file": "workloads/03-10-1/canonical-responses/6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34.json",
+            "sha256": "6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34"
+          },
+          "matches_expected": true
+        },
+        {
+          "status": 200,
+          "raw": {
+            "file": "workloads/03-10-1/responses/a88aef75e3400baa879f0cbc2e9f3ae96a5beb9b3399270c368af890b8b8d5cd.json",
+            "sha256": "a88aef75e3400baa879f0cbc2e9f3ae96a5beb9b3399270c368af890b8b8d5cd"
+          },
+          "canonical": {
+            "file": "workloads/03-10-1/canonical-responses/6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34.json",
+            "sha256": "6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34"
+          },
+          "matches_expected": true
+        }
+      ],
+      "expected_response": {
+        "file": "workloads/03-10-1/expected-response.json",
+        "sha256": "6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34"
+      },
+      "state_before": {
+        "sha256": "922579a4131b69f4d3b8725f7656d640535c7573416f65e9a9f0aa2c1dc845d1",
+        "representation": "full_rows_per_table",
+        "tables": {
+          "audit": {
+            "file": "workloads/03-10-1/state/before/audit.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "game_tickets": {
+            "file": "workloads/03-10-1/state/before/game_tickets.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "items": {
+            "file": "workloads/03-10-1/state/before/items.json",
+            "sha256": "d611dd497879f3f87c32b11401d48d6ffbc9e6bd0508b993457667aaa0ecfee2",
+            "row_count": 20,
+            "representation": "full_rows"
+          },
+          "ledger": {
+            "file": "workloads/03-10-1/state/before/ledger.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "listings": {
+            "file": "workloads/03-10-1/state/before/listings.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "loadouts": {
+            "file": "workloads/03-10-1/state/before/loadouts.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "operations": {
+            "file": "workloads/03-10-1/state/before/operations.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "players": {
+            "file": "workloads/03-10-1/state/before/players.json",
+            "sha256": "ee76971a9c0fa89c50268d48b26fddc3e029963e346bdf448f9211d2c5b4c31a",
+            "row_count": 13,
+            "representation": "full_rows"
+          },
+          "rate_buckets": {
+            "file": "workloads/03-10-1/state/before/rate_buckets.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "rewards": {
+            "file": "workloads/03-10-1/state/before/rewards.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "sessions": {
+            "file": "workloads/03-10-1/state/before/sessions.json",
+            "sha256": "788fec76ba61134c1a6de75a99bf4a03737a8279950b141263b90597062379e4",
+            "row_count": 2,
+            "representation": "full_rows"
+          },
+          "trades": {
+            "file": "workloads/03-10-1/state/before/trades.json",
+            "sha256": "400c853a8a182867169b83566f2abb11dd2db6ee268d0f687e2efe29a9a264c0",
+            "row_count": 11,
+            "representation": "full_rows"
+          }
+        }
+      },
+      "budget": 5,
+      "sql_shapes": [
+        "SELECT sessions.token_hash, sessions.player_id, sessions.expires_at \nFROM sessions \nWHERE sessions.token_hash = %(pk_1)s::VARCHAR",
+        "SELECT players.id, players.username, players.display_name, players.password_hash, players.credits, players.xp, players.active, players.last_trade \nFROM players \nWHERE players.id = %(pk_1)s::VARCHAR",
+        "SELECT trades.id, trades.a, trades.b, trades.revision, trades.offers, trades.confirmations, trades.state \nFROM trades \nWHERE trades.a = %(a_1)s::VARCHAR OR trades.b = %(b_1)s::VARCHAR",
+        "SELECT items.id, items.owner_id, items.definition_id, items.rarity, items.pattern_seed, items.wear, items.variant, items.reservation, items.consumed, items.acquired_at \nFROM items \nWHERE items.id = %(pk_1)s::VARCHAR"
+      ],
+      "expected_response_sha256": "6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34",
+      "actual_response_sha256s": [
+        "6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34"
+      ],
+      "state_after": {
+        "sha256": "922579a4131b69f4d3b8725f7656d640535c7573416f65e9a9f0aa2c1dc845d1",
+        "representation": "full_rows_per_table",
+        "tables": {
+          "audit": {
+            "file": "workloads/03-10-1/state/after/audit.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "game_tickets": {
+            "file": "workloads/03-10-1/state/after/game_tickets.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "items": {
+            "file": "workloads/03-10-1/state/after/items.json",
+            "sha256": "d611dd497879f3f87c32b11401d48d6ffbc9e6bd0508b993457667aaa0ecfee2",
+            "row_count": 20,
+            "representation": "full_rows"
+          },
+          "ledger": {
+            "file": "workloads/03-10-1/state/after/ledger.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "listings": {
+            "file": "workloads/03-10-1/state/after/listings.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "loadouts": {
+            "file": "workloads/03-10-1/state/after/loadouts.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "operations": {
+            "file": "workloads/03-10-1/state/after/operations.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "players": {
+            "file": "workloads/03-10-1/state/after/players.json",
+            "sha256": "ee76971a9c0fa89c50268d48b26fddc3e029963e346bdf448f9211d2c5b4c31a",
+            "row_count": 13,
+            "representation": "full_rows"
+          },
+          "rate_buckets": {
+            "file": "workloads/03-10-1/state/after/rate_buckets.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "rewards": {
+            "file": "workloads/03-10-1/state/after/rewards.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "sessions": {
+            "file": "workloads/03-10-1/state/after/sessions.json",
+            "sha256": "788fec76ba61134c1a6de75a99bf4a03737a8279950b141263b90597062379e4",
+            "row_count": 2,
+            "representation": "full_rows"
+          },
+          "trades": {
+            "file": "workloads/03-10-1/state/after/trades.json",
+            "sha256": "400c853a8a182867169b83566f2abb11dd2db6ee268d0f687e2efe29a9a264c0",
+            "row_count": 11,
+            "representation": "full_rows"
+          }
+        }
+      },
+      "read_only": true,
+      "median_ms": 54.09165,
+      "p95_ms": 66.6315,
+      "query_counts": [
+        33
+      ]
+    },
+    {
+      "trades": 40,
+      "items_per_side": 1,
+      "samples": [
+        {
+          "milliseconds": 215.7632,
+          "statements": 123,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/04-40-1/responses/916ad0b498b1e066f5d1c1c52066a6dfe5f4718f06b24ee8d8687bc073e827f5.json",
+              "sha256": "916ad0b498b1e066f5d1c1c52066a6dfe5f4718f06b24ee8d8687bc073e827f5"
+            },
+            "canonical": {
+              "file": "workloads/04-40-1/canonical-responses/95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010.json",
+              "sha256": "95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 217.5144,
+          "statements": 123,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/04-40-1/responses/916ad0b498b1e066f5d1c1c52066a6dfe5f4718f06b24ee8d8687bc073e827f5.json",
+              "sha256": "916ad0b498b1e066f5d1c1c52066a6dfe5f4718f06b24ee8d8687bc073e827f5"
+            },
+            "canonical": {
+              "file": "workloads/04-40-1/canonical-responses/95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010.json",
+              "sha256": "95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 292.4239,
+          "statements": 123,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/04-40-1/responses/916ad0b498b1e066f5d1c1c52066a6dfe5f4718f06b24ee8d8687bc073e827f5.json",
+              "sha256": "916ad0b498b1e066f5d1c1c52066a6dfe5f4718f06b24ee8d8687bc073e827f5"
+            },
+            "canonical": {
+              "file": "workloads/04-40-1/canonical-responses/95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010.json",
+              "sha256": "95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 212.5867,
+          "statements": 123,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/04-40-1/responses/916ad0b498b1e066f5d1c1c52066a6dfe5f4718f06b24ee8d8687bc073e827f5.json",
+              "sha256": "916ad0b498b1e066f5d1c1c52066a6dfe5f4718f06b24ee8d8687bc073e827f5"
+            },
+            "canonical": {
+              "file": "workloads/04-40-1/canonical-responses/95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010.json",
+              "sha256": "95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 178.6891,
+          "statements": 123,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/04-40-1/responses/916ad0b498b1e066f5d1c1c52066a6dfe5f4718f06b24ee8d8687bc073e827f5.json",
+              "sha256": "916ad0b498b1e066f5d1c1c52066a6dfe5f4718f06b24ee8d8687bc073e827f5"
+            },
+            "canonical": {
+              "file": "workloads/04-40-1/canonical-responses/95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010.json",
+              "sha256": "95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 170.5676,
+          "statements": 123,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/04-40-1/responses/916ad0b498b1e066f5d1c1c52066a6dfe5f4718f06b24ee8d8687bc073e827f5.json",
+              "sha256": "916ad0b498b1e066f5d1c1c52066a6dfe5f4718f06b24ee8d8687bc073e827f5"
+            },
+            "canonical": {
+              "file": "workloads/04-40-1/canonical-responses/95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010.json",
+              "sha256": "95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 192.9079,
+          "statements": 123,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/04-40-1/responses/916ad0b498b1e066f5d1c1c52066a6dfe5f4718f06b24ee8d8687bc073e827f5.json",
+              "sha256": "916ad0b498b1e066f5d1c1c52066a6dfe5f4718f06b24ee8d8687bc073e827f5"
+            },
+            "canonical": {
+              "file": "workloads/04-40-1/canonical-responses/95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010.json",
+              "sha256": "95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 230.6956,
+          "statements": 123,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/04-40-1/responses/916ad0b498b1e066f5d1c1c52066a6dfe5f4718f06b24ee8d8687bc073e827f5.json",
+              "sha256": "916ad0b498b1e066f5d1c1c52066a6dfe5f4718f06b24ee8d8687bc073e827f5"
+            },
+            "canonical": {
+              "file": "workloads/04-40-1/canonical-responses/95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010.json",
+              "sha256": "95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 160.7842,
+          "statements": 123,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/04-40-1/responses/916ad0b498b1e066f5d1c1c52066a6dfe5f4718f06b24ee8d8687bc073e827f5.json",
+              "sha256": "916ad0b498b1e066f5d1c1c52066a6dfe5f4718f06b24ee8d8687bc073e827f5"
+            },
+            "canonical": {
+              "file": "workloads/04-40-1/canonical-responses/95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010.json",
+              "sha256": "95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 168.8208,
+          "statements": 123,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/04-40-1/responses/916ad0b498b1e066f5d1c1c52066a6dfe5f4718f06b24ee8d8687bc073e827f5.json",
+              "sha256": "916ad0b498b1e066f5d1c1c52066a6dfe5f4718f06b24ee8d8687bc073e827f5"
+            },
+            "canonical": {
+              "file": "workloads/04-40-1/canonical-responses/95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010.json",
+              "sha256": "95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010"
+            },
+            "matches_expected": true
+          }
+        }
+      ],
+      "warmups": [
+        {
+          "status": 200,
+          "raw": {
+            "file": "workloads/04-40-1/responses/916ad0b498b1e066f5d1c1c52066a6dfe5f4718f06b24ee8d8687bc073e827f5.json",
+            "sha256": "916ad0b498b1e066f5d1c1c52066a6dfe5f4718f06b24ee8d8687bc073e827f5"
+          },
+          "canonical": {
+            "file": "workloads/04-40-1/canonical-responses/95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010.json",
+            "sha256": "95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010"
+          },
+          "matches_expected": true
+        },
+        {
+          "status": 200,
+          "raw": {
+            "file": "workloads/04-40-1/responses/916ad0b498b1e066f5d1c1c52066a6dfe5f4718f06b24ee8d8687bc073e827f5.json",
+            "sha256": "916ad0b498b1e066f5d1c1c52066a6dfe5f4718f06b24ee8d8687bc073e827f5"
+          },
+          "canonical": {
+            "file": "workloads/04-40-1/canonical-responses/95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010.json",
+            "sha256": "95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010"
+          },
+          "matches_expected": true
+        }
+      ],
+      "expected_response": {
+        "file": "workloads/04-40-1/expected-response.json",
+        "sha256": "95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010"
+      },
+      "state_before": {
+        "sha256": "93fce5b66979f2ad645308abc966c6f8c2937643ba335601afc16af2833d80ca",
+        "representation": "full_rows_per_table",
+        "tables": {
+          "audit": {
+            "file": "workloads/04-40-1/state/before/audit.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "game_tickets": {
+            "file": "workloads/04-40-1/state/before/game_tickets.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "items": {
+            "file": "workloads/04-40-1/state/before/items.json",
+            "sha256": "85e3b58fd00156bd43496299ab94a53f4aa7bb8968320202229e7bfb3fb702d3",
+            "row_count": 80,
+            "representation": "full_rows"
+          },
+          "ledger": {
+            "file": "workloads/04-40-1/state/before/ledger.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "listings": {
+            "file": "workloads/04-40-1/state/before/listings.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "loadouts": {
+            "file": "workloads/04-40-1/state/before/loadouts.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "operations": {
+            "file": "workloads/04-40-1/state/before/operations.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "players": {
+            "file": "workloads/04-40-1/state/before/players.json",
+            "sha256": "a3b2bfe334bdc42c373beabbdaad929b6badb5f0e1ec67113e61562a455da619",
+            "row_count": 43,
+            "representation": "full_rows"
+          },
+          "rate_buckets": {
+            "file": "workloads/04-40-1/state/before/rate_buckets.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "rewards": {
+            "file": "workloads/04-40-1/state/before/rewards.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "sessions": {
+            "file": "workloads/04-40-1/state/before/sessions.json",
+            "sha256": "7ce549672d7e9799c00f4570da21e9ad485c6ec0a36d8f9e28c510177a12ba20",
+            "row_count": 2,
+            "representation": "full_rows"
+          },
+          "trades": {
+            "file": "workloads/04-40-1/state/before/trades.json",
+            "sha256": "c52541bb90c7e2fd46dad321865bcd3514bc56b4d956b93d817728d118976b8d",
+            "row_count": 41,
+            "representation": "full_rows"
+          }
+        }
+      },
+      "budget": 5,
+      "sql_shapes": [
+        "SELECT sessions.token_hash, sessions.player_id, sessions.expires_at \nFROM sessions \nWHERE sessions.token_hash = %(pk_1)s::VARCHAR",
+        "SELECT players.id, players.username, players.display_name, players.password_hash, players.credits, players.xp, players.active, players.last_trade \nFROM players \nWHERE players.id = %(pk_1)s::VARCHAR",
+        "SELECT trades.id, trades.a, trades.b, trades.revision, trades.offers, trades.confirmations, trades.state \nFROM trades \nWHERE trades.a = %(a_1)s::VARCHAR OR trades.b = %(b_1)s::VARCHAR",
+        "SELECT items.id, items.owner_id, items.definition_id, items.rarity, items.pattern_seed, items.wear, items.variant, items.reservation, items.consumed, items.acquired_at \nFROM items \nWHERE items.id = %(pk_1)s::VARCHAR"
+      ],
+      "expected_response_sha256": "95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010",
+      "actual_response_sha256s": [
+        "95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010"
+      ],
+      "state_after": {
+        "sha256": "93fce5b66979f2ad645308abc966c6f8c2937643ba335601afc16af2833d80ca",
+        "representation": "full_rows_per_table",
+        "tables": {
+          "audit": {
+            "file": "workloads/04-40-1/state/after/audit.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "game_tickets": {
+            "file": "workloads/04-40-1/state/after/game_tickets.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "items": {
+            "file": "workloads/04-40-1/state/after/items.json",
+            "sha256": "85e3b58fd00156bd43496299ab94a53f4aa7bb8968320202229e7bfb3fb702d3",
+            "row_count": 80,
+            "representation": "full_rows"
+          },
+          "ledger": {
+            "file": "workloads/04-40-1/state/after/ledger.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "listings": {
+            "file": "workloads/04-40-1/state/after/listings.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "loadouts": {
+            "file": "workloads/04-40-1/state/after/loadouts.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "operations": {
+            "file": "workloads/04-40-1/state/after/operations.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "players": {
+            "file": "workloads/04-40-1/state/after/players.json",
+            "sha256": "a3b2bfe334bdc42c373beabbdaad929b6badb5f0e1ec67113e61562a455da619",
+            "row_count": 43,
+            "representation": "full_rows"
+          },
+          "rate_buckets": {
+            "file": "workloads/04-40-1/state/after/rate_buckets.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "rewards": {
+            "file": "workloads/04-40-1/state/after/rewards.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "sessions": {
+            "file": "workloads/04-40-1/state/after/sessions.json",
+            "sha256": "7ce549672d7e9799c00f4570da21e9ad485c6ec0a36d8f9e28c510177a12ba20",
+            "row_count": 2,
+            "representation": "full_rows"
+          },
+          "trades": {
+            "file": "workloads/04-40-1/state/after/trades.json",
+            "sha256": "c52541bb90c7e2fd46dad321865bcd3514bc56b4d956b93d817728d118976b8d",
+            "row_count": 41,
+            "representation": "full_rows"
+          }
+        }
+      },
+      "read_only": true,
+      "median_ms": 202.7473,
+      "p95_ms": 292.4239,
+      "query_counts": [
+        123
+      ]
+    },
+    {
+      "trades": 40,
+      "items_per_side": 20,
+      "samples": [
+        {
+          "milliseconds": 1720.2148,
+          "statements": 1643,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/05-40-20/responses/cf11b1712c40996892f780226dc0e8d9cc2fcbac1da67e46160d68118e0b6123.json",
+              "sha256": "cf11b1712c40996892f780226dc0e8d9cc2fcbac1da67e46160d68118e0b6123"
+            },
+            "canonical": {
+              "file": "workloads/05-40-20/canonical-responses/b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db.json",
+              "sha256": "b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 1469.439,
+          "statements": 1643,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/05-40-20/responses/cf11b1712c40996892f780226dc0e8d9cc2fcbac1da67e46160d68118e0b6123.json",
+              "sha256": "cf11b1712c40996892f780226dc0e8d9cc2fcbac1da67e46160d68118e0b6123"
+            },
+            "canonical": {
+              "file": "workloads/05-40-20/canonical-responses/b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db.json",
+              "sha256": "b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 1538.9941,
+          "statements": 1643,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/05-40-20/responses/cf11b1712c40996892f780226dc0e8d9cc2fcbac1da67e46160d68118e0b6123.json",
+              "sha256": "cf11b1712c40996892f780226dc0e8d9cc2fcbac1da67e46160d68118e0b6123"
+            },
+            "canonical": {
+              "file": "workloads/05-40-20/canonical-responses/b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db.json",
+              "sha256": "b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 1466.2135,
+          "statements": 1643,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/05-40-20/responses/cf11b1712c40996892f780226dc0e8d9cc2fcbac1da67e46160d68118e0b6123.json",
+              "sha256": "cf11b1712c40996892f780226dc0e8d9cc2fcbac1da67e46160d68118e0b6123"
+            },
+            "canonical": {
+              "file": "workloads/05-40-20/canonical-responses/b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db.json",
+              "sha256": "b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 1652.2952,
+          "statements": 1643,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/05-40-20/responses/cf11b1712c40996892f780226dc0e8d9cc2fcbac1da67e46160d68118e0b6123.json",
+              "sha256": "cf11b1712c40996892f780226dc0e8d9cc2fcbac1da67e46160d68118e0b6123"
+            },
+            "canonical": {
+              "file": "workloads/05-40-20/canonical-responses/b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db.json",
+              "sha256": "b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 1795.1451,
+          "statements": 1643,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/05-40-20/responses/cf11b1712c40996892f780226dc0e8d9cc2fcbac1da67e46160d68118e0b6123.json",
+              "sha256": "cf11b1712c40996892f780226dc0e8d9cc2fcbac1da67e46160d68118e0b6123"
+            },
+            "canonical": {
+              "file": "workloads/05-40-20/canonical-responses/b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db.json",
+              "sha256": "b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 1827.2075,
+          "statements": 1643,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/05-40-20/responses/cf11b1712c40996892f780226dc0e8d9cc2fcbac1da67e46160d68118e0b6123.json",
+              "sha256": "cf11b1712c40996892f780226dc0e8d9cc2fcbac1da67e46160d68118e0b6123"
+            },
+            "canonical": {
+              "file": "workloads/05-40-20/canonical-responses/b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db.json",
+              "sha256": "b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 1617.6453,
+          "statements": 1643,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/05-40-20/responses/cf11b1712c40996892f780226dc0e8d9cc2fcbac1da67e46160d68118e0b6123.json",
+              "sha256": "cf11b1712c40996892f780226dc0e8d9cc2fcbac1da67e46160d68118e0b6123"
+            },
+            "canonical": {
+              "file": "workloads/05-40-20/canonical-responses/b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db.json",
+              "sha256": "b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 1661.9495,
+          "statements": 1643,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/05-40-20/responses/cf11b1712c40996892f780226dc0e8d9cc2fcbac1da67e46160d68118e0b6123.json",
+              "sha256": "cf11b1712c40996892f780226dc0e8d9cc2fcbac1da67e46160d68118e0b6123"
+            },
+            "canonical": {
+              "file": "workloads/05-40-20/canonical-responses/b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db.json",
+              "sha256": "b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 1708.2661,
+          "statements": 1643,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/05-40-20/responses/cf11b1712c40996892f780226dc0e8d9cc2fcbac1da67e46160d68118e0b6123.json",
+              "sha256": "cf11b1712c40996892f780226dc0e8d9cc2fcbac1da67e46160d68118e0b6123"
+            },
+            "canonical": {
+              "file": "workloads/05-40-20/canonical-responses/b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db.json",
+              "sha256": "b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db"
+            },
+            "matches_expected": true
+          }
+        }
+      ],
+      "warmups": [
+        {
+          "status": 200,
+          "raw": {
+            "file": "workloads/05-40-20/responses/cf11b1712c40996892f780226dc0e8d9cc2fcbac1da67e46160d68118e0b6123.json",
+            "sha256": "cf11b1712c40996892f780226dc0e8d9cc2fcbac1da67e46160d68118e0b6123"
+          },
+          "canonical": {
+            "file": "workloads/05-40-20/canonical-responses/b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db.json",
+            "sha256": "b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db"
+          },
+          "matches_expected": true
+        },
+        {
+          "status": 200,
+          "raw": {
+            "file": "workloads/05-40-20/responses/cf11b1712c40996892f780226dc0e8d9cc2fcbac1da67e46160d68118e0b6123.json",
+            "sha256": "cf11b1712c40996892f780226dc0e8d9cc2fcbac1da67e46160d68118e0b6123"
+          },
+          "canonical": {
+            "file": "workloads/05-40-20/canonical-responses/b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db.json",
+            "sha256": "b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db"
+          },
+          "matches_expected": true
+        }
+      ],
+      "expected_response": {
+        "file": "workloads/05-40-20/expected-response.json",
+        "sha256": "b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db"
+      },
+      "state_before": {
+        "sha256": "6fb1481a26542bb9055e14c468d1132cac4b66920e9199f9abd3e4114ca9c62c",
+        "representation": "full_rows_per_table",
+        "tables": {
+          "audit": {
+            "file": "workloads/05-40-20/state/before/audit.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "game_tickets": {
+            "file": "workloads/05-40-20/state/before/game_tickets.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "items": {
+            "file": "workloads/05-40-20/state/before/items.json",
+            "sha256": "7b45eee27ff06c27a36a499ea26175fb350cb9de6505b5c3524552175d149c89",
+            "row_count": 1600,
+            "representation": "full_rows"
+          },
+          "ledger": {
+            "file": "workloads/05-40-20/state/before/ledger.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "listings": {
+            "file": "workloads/05-40-20/state/before/listings.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "loadouts": {
+            "file": "workloads/05-40-20/state/before/loadouts.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "operations": {
+            "file": "workloads/05-40-20/state/before/operations.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "players": {
+            "file": "workloads/05-40-20/state/before/players.json",
+            "sha256": "a3b2bfe334bdc42c373beabbdaad929b6badb5f0e1ec67113e61562a455da619",
+            "row_count": 43,
+            "representation": "full_rows"
+          },
+          "rate_buckets": {
+            "file": "workloads/05-40-20/state/before/rate_buckets.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "rewards": {
+            "file": "workloads/05-40-20/state/before/rewards.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "sessions": {
+            "file": "workloads/05-40-20/state/before/sessions.json",
+            "sha256": "eea8f5d124da78280fa2436a4334c21556e1506999fc279ff4f2b7768e4dfbd6",
+            "row_count": 2,
+            "representation": "full_rows"
+          },
+          "trades": {
+            "file": "workloads/05-40-20/state/before/trades.json",
+            "sha256": "6ce0661d4acc859103a41f1f0707239cf99afad586dfbdb84b543fe06da17a36",
+            "row_count": 41,
+            "representation": "full_rows"
+          }
+        }
+      },
+      "budget": 8,
+      "sql_shapes": [
+        "SELECT sessions.token_hash, sessions.player_id, sessions.expires_at \nFROM sessions \nWHERE sessions.token_hash = %(pk_1)s::VARCHAR",
+        "SELECT players.id, players.username, players.display_name, players.password_hash, players.credits, players.xp, players.active, players.last_trade \nFROM players \nWHERE players.id = %(pk_1)s::VARCHAR",
+        "SELECT trades.id, trades.a, trades.b, trades.revision, trades.offers, trades.confirmations, trades.state \nFROM trades \nWHERE trades.a = %(a_1)s::VARCHAR OR trades.b = %(b_1)s::VARCHAR",
+        "SELECT items.id, items.owner_id, items.definition_id, items.rarity, items.pattern_seed, items.wear, items.variant, items.reservation, items.consumed, items.acquired_at \nFROM items \nWHERE items.id = %(pk_1)s::VARCHAR"
+      ],
+      "expected_response_sha256": "b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db",
+      "actual_response_sha256s": [
+        "b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db"
+      ],
+      "state_after": {
+        "sha256": "6fb1481a26542bb9055e14c468d1132cac4b66920e9199f9abd3e4114ca9c62c",
+        "representation": "full_rows_per_table",
+        "tables": {
+          "audit": {
+            "file": "workloads/05-40-20/state/after/audit.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "game_tickets": {
+            "file": "workloads/05-40-20/state/after/game_tickets.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "items": {
+            "file": "workloads/05-40-20/state/after/items.json",
+            "sha256": "7b45eee27ff06c27a36a499ea26175fb350cb9de6505b5c3524552175d149c89",
+            "row_count": 1600,
+            "representation": "full_rows"
+          },
+          "ledger": {
+            "file": "workloads/05-40-20/state/after/ledger.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "listings": {
+            "file": "workloads/05-40-20/state/after/listings.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "loadouts": {
+            "file": "workloads/05-40-20/state/after/loadouts.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "operations": {
+            "file": "workloads/05-40-20/state/after/operations.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "players": {
+            "file": "workloads/05-40-20/state/after/players.json",
+            "sha256": "a3b2bfe334bdc42c373beabbdaad929b6badb5f0e1ec67113e61562a455da619",
+            "row_count": 43,
+            "representation": "full_rows"
+          },
+          "rate_buckets": {
+            "file": "workloads/05-40-20/state/after/rate_buckets.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "rewards": {
+            "file": "workloads/05-40-20/state/after/rewards.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "sessions": {
+            "file": "workloads/05-40-20/state/after/sessions.json",
+            "sha256": "eea8f5d124da78280fa2436a4334c21556e1506999fc279ff4f2b7768e4dfbd6",
+            "row_count": 2,
+            "representation": "full_rows"
+          },
+          "trades": {
+            "file": "workloads/05-40-20/state/after/trades.json",
+            "sha256": "6ce0661d4acc859103a41f1f0707239cf99afad586dfbdb84b543fe06da17a36",
+            "row_count": 41,
+            "representation": "full_rows"
+          }
+        }
+      },
+      "read_only": true,
+      "median_ms": 1657.12235,
+      "p95_ms": 1827.2075,
+      "query_counts": [
+        1643
+      ]
+    },
+    {
+      "trades": 501,
+      "items_per_side": 0,
+      "samples": [
+        {
+          "milliseconds": 1625.1509,
+          "statements": 504,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/06-501-0/responses/2666e9a9a7a14a791fcaf1a11941f70799b27f423c72db48918ab60ffc55d6cc.json",
+              "sha256": "2666e9a9a7a14a791fcaf1a11941f70799b27f423c72db48918ab60ffc55d6cc"
+            },
+            "canonical": {
+              "file": "workloads/06-501-0/canonical-responses/8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b.json",
+              "sha256": "8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 2704.7057,
+          "statements": 504,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/06-501-0/responses/2666e9a9a7a14a791fcaf1a11941f70799b27f423c72db48918ab60ffc55d6cc.json",
+              "sha256": "2666e9a9a7a14a791fcaf1a11941f70799b27f423c72db48918ab60ffc55d6cc"
+            },
+            "canonical": {
+              "file": "workloads/06-501-0/canonical-responses/8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b.json",
+              "sha256": "8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 1548.7738,
+          "statements": 504,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/06-501-0/responses/2666e9a9a7a14a791fcaf1a11941f70799b27f423c72db48918ab60ffc55d6cc.json",
+              "sha256": "2666e9a9a7a14a791fcaf1a11941f70799b27f423c72db48918ab60ffc55d6cc"
+            },
+            "canonical": {
+              "file": "workloads/06-501-0/canonical-responses/8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b.json",
+              "sha256": "8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 1413.3285,
+          "statements": 504,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/06-501-0/responses/2666e9a9a7a14a791fcaf1a11941f70799b27f423c72db48918ab60ffc55d6cc.json",
+              "sha256": "2666e9a9a7a14a791fcaf1a11941f70799b27f423c72db48918ab60ffc55d6cc"
+            },
+            "canonical": {
+              "file": "workloads/06-501-0/canonical-responses/8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b.json",
+              "sha256": "8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 1023.763,
+          "statements": 504,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/06-501-0/responses/2666e9a9a7a14a791fcaf1a11941f70799b27f423c72db48918ab60ffc55d6cc.json",
+              "sha256": "2666e9a9a7a14a791fcaf1a11941f70799b27f423c72db48918ab60ffc55d6cc"
+            },
+            "canonical": {
+              "file": "workloads/06-501-0/canonical-responses/8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b.json",
+              "sha256": "8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 717.3988,
+          "statements": 504,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/06-501-0/responses/2666e9a9a7a14a791fcaf1a11941f70799b27f423c72db48918ab60ffc55d6cc.json",
+              "sha256": "2666e9a9a7a14a791fcaf1a11941f70799b27f423c72db48918ab60ffc55d6cc"
+            },
+            "canonical": {
+              "file": "workloads/06-501-0/canonical-responses/8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b.json",
+              "sha256": "8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 860.5806,
+          "statements": 504,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/06-501-0/responses/2666e9a9a7a14a791fcaf1a11941f70799b27f423c72db48918ab60ffc55d6cc.json",
+              "sha256": "2666e9a9a7a14a791fcaf1a11941f70799b27f423c72db48918ab60ffc55d6cc"
+            },
+            "canonical": {
+              "file": "workloads/06-501-0/canonical-responses/8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b.json",
+              "sha256": "8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 693.6564,
+          "statements": 504,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/06-501-0/responses/2666e9a9a7a14a791fcaf1a11941f70799b27f423c72db48918ab60ffc55d6cc.json",
+              "sha256": "2666e9a9a7a14a791fcaf1a11941f70799b27f423c72db48918ab60ffc55d6cc"
+            },
+            "canonical": {
+              "file": "workloads/06-501-0/canonical-responses/8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b.json",
+              "sha256": "8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 618.359,
+          "statements": 504,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/06-501-0/responses/2666e9a9a7a14a791fcaf1a11941f70799b27f423c72db48918ab60ffc55d6cc.json",
+              "sha256": "2666e9a9a7a14a791fcaf1a11941f70799b27f423c72db48918ab60ffc55d6cc"
+            },
+            "canonical": {
+              "file": "workloads/06-501-0/canonical-responses/8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b.json",
+              "sha256": "8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 657.6523,
+          "statements": 504,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/06-501-0/responses/2666e9a9a7a14a791fcaf1a11941f70799b27f423c72db48918ab60ffc55d6cc.json",
+              "sha256": "2666e9a9a7a14a791fcaf1a11941f70799b27f423c72db48918ab60ffc55d6cc"
+            },
+            "canonical": {
+              "file": "workloads/06-501-0/canonical-responses/8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b.json",
+              "sha256": "8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b"
+            },
+            "matches_expected": true
+          }
+        }
+      ],
+      "warmups": [
+        {
+          "status": 200,
+          "raw": {
+            "file": "workloads/06-501-0/responses/2666e9a9a7a14a791fcaf1a11941f70799b27f423c72db48918ab60ffc55d6cc.json",
+            "sha256": "2666e9a9a7a14a791fcaf1a11941f70799b27f423c72db48918ab60ffc55d6cc"
+          },
+          "canonical": {
+            "file": "workloads/06-501-0/canonical-responses/8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b.json",
+            "sha256": "8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b"
+          },
+          "matches_expected": true
+        },
+        {
+          "status": 200,
+          "raw": {
+            "file": "workloads/06-501-0/responses/2666e9a9a7a14a791fcaf1a11941f70799b27f423c72db48918ab60ffc55d6cc.json",
+            "sha256": "2666e9a9a7a14a791fcaf1a11941f70799b27f423c72db48918ab60ffc55d6cc"
+          },
+          "canonical": {
+            "file": "workloads/06-501-0/canonical-responses/8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b.json",
+            "sha256": "8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b"
+          },
+          "matches_expected": true
+        }
+      ],
+      "expected_response": {
+        "file": "workloads/06-501-0/expected-response.json",
+        "sha256": "8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b"
+      },
+      "state_before": {
+        "sha256": "03ad8a7859e6198a7c5918b8bfb61a3389463ddffeb1e0167350a4b08697321d",
+        "representation": "full_rows_per_table",
+        "tables": {
+          "audit": {
+            "file": "workloads/06-501-0/state/before/audit.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "game_tickets": {
+            "file": "workloads/06-501-0/state/before/game_tickets.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "items": {
+            "file": "workloads/06-501-0/state/before/items.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "ledger": {
+            "file": "workloads/06-501-0/state/before/ledger.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "listings": {
+            "file": "workloads/06-501-0/state/before/listings.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "loadouts": {
+            "file": "workloads/06-501-0/state/before/loadouts.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "operations": {
+            "file": "workloads/06-501-0/state/before/operations.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "players": {
+            "file": "workloads/06-501-0/state/before/players.json",
+            "sha256": "c0977828d90643d618c01cc3197ad720b32bfe47fc7966b978f83b2e57d21426",
+            "row_count": 504,
+            "representation": "full_rows"
+          },
+          "rate_buckets": {
+            "file": "workloads/06-501-0/state/before/rate_buckets.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "rewards": {
+            "file": "workloads/06-501-0/state/before/rewards.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "sessions": {
+            "file": "workloads/06-501-0/state/before/sessions.json",
+            "sha256": "a696f60a377ccbbf1ad124e38b94635bb41e4d783bc4954bb0b98d1688a6d8c8",
+            "row_count": 2,
+            "representation": "full_rows"
+          },
+          "trades": {
+            "file": "workloads/06-501-0/state/before/trades.json",
+            "sha256": "06a4b2bab54c15757bee25dc0d32fe0f097a5d9a46715779ace39d5ab4a5bfdb",
+            "row_count": 502,
+            "representation": "full_rows"
+          }
+        }
+      },
+      "budget": 5,
+      "sql_shapes": [
+        "SELECT sessions.token_hash, sessions.player_id, sessions.expires_at \nFROM sessions \nWHERE sessions.token_hash = %(pk_1)s::VARCHAR",
+        "SELECT players.id, players.username, players.display_name, players.password_hash, players.credits, players.xp, players.active, players.last_trade \nFROM players \nWHERE players.id = %(pk_1)s::VARCHAR",
+        "SELECT trades.id, trades.a, trades.b, trades.revision, trades.offers, trades.confirmations, trades.state \nFROM trades \nWHERE trades.a = %(a_1)s::VARCHAR OR trades.b = %(b_1)s::VARCHAR"
+      ],
+      "expected_response_sha256": "8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b",
+      "actual_response_sha256s": [
+        "8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b"
+      ],
+      "state_after": {
+        "sha256": "03ad8a7859e6198a7c5918b8bfb61a3389463ddffeb1e0167350a4b08697321d",
+        "representation": "full_rows_per_table",
+        "tables": {
+          "audit": {
+            "file": "workloads/06-501-0/state/after/audit.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "game_tickets": {
+            "file": "workloads/06-501-0/state/after/game_tickets.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "items": {
+            "file": "workloads/06-501-0/state/after/items.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "ledger": {
+            "file": "workloads/06-501-0/state/after/ledger.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "listings": {
+            "file": "workloads/06-501-0/state/after/listings.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "loadouts": {
+            "file": "workloads/06-501-0/state/after/loadouts.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "operations": {
+            "file": "workloads/06-501-0/state/after/operations.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "players": {
+            "file": "workloads/06-501-0/state/after/players.json",
+            "sha256": "c0977828d90643d618c01cc3197ad720b32bfe47fc7966b978f83b2e57d21426",
+            "row_count": 504,
+            "representation": "full_rows"
+          },
+          "rate_buckets": {
+            "file": "workloads/06-501-0/state/after/rate_buckets.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "rewards": {
+            "file": "workloads/06-501-0/state/after/rewards.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "sessions": {
+            "file": "workloads/06-501-0/state/after/sessions.json",
+            "sha256": "a696f60a377ccbbf1ad124e38b94635bb41e4d783bc4954bb0b98d1688a6d8c8",
+            "row_count": 2,
+            "representation": "full_rows"
+          },
+          "trades": {
+            "file": "workloads/06-501-0/state/after/trades.json",
+            "sha256": "06a4b2bab54c15757bee25dc0d32fe0f097a5d9a46715779ace39d5ab4a5bfdb",
+            "row_count": 502,
+            "representation": "full_rows"
+          }
+        }
+      },
+      "read_only": true,
+      "median_ms": 942.1718000000001,
+      "p95_ms": 2704.7057,
+      "query_counts": [
+        504
+      ]
+    }
+  ],
+  "completed": true,
+  "retention": {
+    "responses": "all distinct raw and canonical received bodies; hashes for every warm-up/timed response",
+    "state": "full before/after rows for every authoritative ORM table; per-table and aggregate SHA256",
+    "credentials": "fictional fixture accounts; unusable password markers and SQL session token hashes only; no bearer headers"
+  },
+  "canonicalization": {
+    "json": "UTF-8 json.dumps(sort_keys=True,separators=(comma,colon),allow_nan=False), ensure_ascii=True, no newline",
+    "response": "sort top-level trades by ID; preserve all nested arrays",
+    "state": "parse PostgreSQL to_jsonb rows; sort each table by canonical JSON bytes; aggregate sorted-key table-to-rows object"
+  },
+  "postgresql": "PostgreSQL 17.11 on x86_64-windows, compiled by msvc-19.44.35229, 64-bit",
+  "final_source": {
+    "commit": "701ce2c4d7f8b2872cf1fefa64cb6edd0cd1a3fd",
+    "backend_tree": "67027b4fa17674ef067c84401af76eb1524419ac",
+    "backend_dirty": "",
+    "backend_files": {
+      "backend/app.py": "78816607ee70fe47ae1f1c97f48d4d2a360eebe7c0e64ac73c296dfd53fb8121",
+      "backend/bridge_fixture.py": "00548df28d2ad6a8fdca9eeaed34af39e30bebbb205fb9b69b2d7112434b29db",
+      "backend/migrate.py": "0f06597968c1e0de8461083448306496f4cc53e6a0f3d94dbc0f1b0c003f1d58",
+      "backend/models.py": "5fa4e0ac4157e4ad883d4c2bf1df06d915a395c5303c063a1004aaabd071e09a",
+      "backend/pyproject.toml": "9fd253aaaa3d39616eeb076d991cd2836c4cddcc8f56d72f31776cd134ab0190",
+      "backend/simulate.py": "218299e27743c58eac64f2d5820f3320945321d3d58bdd2caee5d195c536afa2",
+      "backend/uv.lock": "c66ef08d0ef36424da51008f59e3905f544d15dbd602ed6e204c588b4ca93db5",
+      "backend/config/economy.json": "8d85944aff0a6531b8a022350cbe0562295573aff5f3bd96e474e06f192aec7a",
+      "backend/config/simulation-baseline.json": "0a7965dd37a68fd2960d6b6912dffb635fcb26ffa6f251b92a7872c688755a16",
+      "backend/migrations/001_integrity.sql": "83189d1d06cbec62db325dbcf376476bc3aa7c0984d7439bb8048360ff737392",
+      "backend/migrations/002_game_tickets.sql": "c063f4376339b013fc79cda3e6f7782c61654d51fe6e479c658f2e30a1eddd7e",
+      "backend/migrations/003_loadouts.sql": "cc8acafba73b07889b25f2b9ee594cd09094d0ff8fd34d64767e6fcde62ee017",
+      "backend/migrations/004_market_index.sql": "cc51bd7647a6bd6abb272efd9564e089c0cc3d7afa0e76586503b3225535a5af",
+      "backend/tests/test_economy.py": "d3ada3e8590fb30a5a5e812525ccaea4be3778af50903eb2d02de41e201d528a"
+    }
+  },
+  "database_dropped": true
+}

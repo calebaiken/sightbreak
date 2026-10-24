@@ -28,17 +28,19 @@ class BuildManifestTests(unittest.TestCase):
         self.addCleanup(self.temporary.cleanup)
         self.root = pathlib.Path(self.temporary.name)
         self.builds = self.root / "builds"
-        self.current = {"source_commit": "abc", "source_game_tree": "def", "source_content_sha256": "123", "source_game_dirty": False}
+        self.current = {"source_commit": "abc", "source_game_tree": "def", "source_content_sha256": "123", "source_validation_sha256": "456", "source_game_dirty": False, "source_dirty": False}
         for name, value in [("ROOT", self.root), ("BUILDS", self.builds), ("source", lambda: dict(self.current))]:
             mock = patch.object(manifest, name, value)
             mock.start()
             self.addCleanup(mock.stop)
 
-    def make_export(self, target):
+    def make_export(self, target, license_file=False):
         manifest.begin(target)
         artifact = self.builds / manifest.OUTPUTS[target]
         artifact.parent.mkdir(parents=True, exist_ok=True)
         artifact.write_bytes(b"native fixture")
+        if license_file:
+            (self.builds / target / "GODOT-LICENSE.txt").write_text("license fixture")
         manifest.finish(target)
 
     def test_source_change_during_export_rejected(self):
@@ -61,6 +63,49 @@ class BuildManifestTests(unittest.TestCase):
     def test_uncommitted_game_rejected(self):
         self.current["source_game_dirty"] = True
         with self.assertRaisesRegex(SystemExit, "Commit game source"):
+            manifest.package()
+
+    def test_dirty_tooling_rejected_before_export(self):
+        self.current["source_dirty"] = True
+        with self.assertRaisesRegex(SystemExit, "validation tooling"):
+            manifest.begin("linux")
+        self.assertFalse((self.builds / "linux/source.json").exists())
+
+    def test_dirty_source_during_export_rejected(self):
+        manifest.begin("linux")
+        self.current["source_dirty"] = True
+        with self.assertRaisesRegex(SystemExit, "validation tooling"):
+            manifest.finish("linux")
+
+    def test_commit_or_tree_change_during_export_rejected(self):
+        for key, target in zip(("source_commit", "source_game_tree", "source_validation_sha256"), manifest.OUTPUTS):
+            with self.subTest(key=key):
+                original = self.current[key]
+                manifest.begin(target)
+                self.current[key] = "changed-with-same-runtime-bytes"
+                with self.assertRaisesRegex(SystemExit, "changed during export"):
+                    manifest.finish(target)
+                self.current[key] = original
+
+    def test_identical_runtime_from_another_commit_rejected(self):
+        self.make_export("linux")
+        self.current["source_commit"] = "different-commit"
+        with self.assertRaisesRegex(SystemExit, "Stale or incomplete"):
+            manifest.package()
+
+    def test_dirty_tooling_at_packaging_rejected(self):
+        self.make_export("linux")
+        self.current["source_dirty"] = True
+        with self.assertRaisesRegex(SystemExit, "validation tooling"):
+            manifest.package()
+
+    def test_tainted_export_receipt_rejected(self):
+        self.make_export("linux")
+        path = self.builds / "linux/source.json"
+        record = json.loads(path.read_text())
+        record["source_dirty"] = True
+        path.write_text(json.dumps(record))
+        with self.assertRaisesRegex(SystemExit, "Stale or incomplete"):
             manifest.package()
 
     def test_changed_secondary_payload_rejected(self):
@@ -87,9 +132,7 @@ class BuildManifestTests(unittest.TestCase):
 
     def test_all_targets_package_with_current_version_and_license(self):
         for target in manifest.OUTPUTS:
-            self.make_export(target)
-            (self.builds / target / "GODOT-LICENSE.txt").write_text("license fixture")
-            manifest.finish(target)
+            self.make_export(target, license_file=True)
         with patch("builtins.print"):
             manifest.package()
         data = json.loads((self.builds / "manifest.json").read_text())
@@ -110,6 +153,72 @@ class BuildManifestTests(unittest.TestCase):
         self.assertEqual(int(presets["preset.1.options"]["version/code"]), manifest.BUILD_NUMBER)
         self.assertEqual(presets["preset.2.options"]["application/short_version"], f'"{manifest.IOS_VERSION}"')
         self.assertEqual(presets["preset.2.options"]["application/version"], f'"{manifest.BUILD_NUMBER}"')
+        project = pathlib.Path(__file__).resolve().parents[1] / "game/project.godot"
+        self.assertIn(f'config/version="{manifest.VERSION}"', project.read_text().splitlines())
+
+    def test_existing_artifact_cannot_be_re_attested(self):
+        self.make_export("linux")
+        path = self.builds / "linux/source.json"
+        original = path.read_bytes()
+        self.current["source_commit"] = "different-commit"
+        with self.assertRaisesRegex(SystemExit, "fresh empty"):
+            manifest.begin("linux")
+        self.assertEqual(path.read_bytes(), original)
+
+    def test_completed_receipt_cannot_be_finished_again(self):
+        self.make_export("linux")
+        with self.assertRaisesRegex(SystemExit, "already completed"):
+            manifest.finish("linux")
+
+    def test_wrapper_execute_permission_survives_packaging(self):
+        import zipfile
+        for target in manifest.OUTPUTS:
+            manifest.begin(target)
+            artifact = self.builds / manifest.OUTPUTS[target]
+            artifact.parent.mkdir(parents=True, exist_ok=True)
+            artifact.write_bytes(b"native fixture")
+            if target == "linux":
+                wrapper = self.builds / "linux/sightbreak.sh"
+                wrapper.write_text("#!/bin/sh\n")
+                wrapper.chmod(0o755)
+            # Windows chmod does not model POSIX execute bits; exercise that
+            # metadata explicitly there, while POSIX uses the actual file mode.
+            original = pathlib.Path.stat
+            def executable_stat(path, *args, **kwargs):
+                result = original(path, *args, **kwargs)
+                if path.name == "sightbreak.sh":
+                    import os
+                    values = list(result)
+                    values[0] = 0o100755
+                    return os.stat_result(values)
+                return result
+            with patch.object(pathlib.Path, "stat", executable_stat):
+                manifest.finish(target)
+        with patch.object(pathlib.Path, "stat", executable_stat), patch("builtins.print"):
+            manifest.package()
+        with zipfile.ZipFile(self.builds / "sightbreak-linux-debug.zip") as bundle:
+            self.assertEqual((bundle.getinfo("linux/sightbreak.sh").external_attr >> 16) & 0o777, 0o755)
+
+    def test_payload_mutation_between_check_and_archive_rejected(self):
+        for target in manifest.OUTPUTS:
+            self.make_export(target, license_file=True)
+        original = pathlib.Path.read_bytes
+        def mutated(path):
+            if path.name == "GODOT-LICENSE.txt":
+                return b"concurrent changed payload"
+            return original(path)
+        with patch.object(pathlib.Path, "read_bytes", mutated):
+            with self.assertRaisesRegex(SystemExit, "Changed linux payload"):
+                manifest.package()
+        self.assertFalse((self.builds / "manifest.json").exists())
+
+    def test_earlier_packaging_success_is_not_overwritten(self):
+        self.builds.mkdir()
+        path = self.builds / "manifest.json"
+        path.write_bytes(b'{"earlier": true}\n')
+        with self.assertRaisesRegex(SystemExit, "fresh packaging attempt"):
+            manifest.package()
+        self.assertEqual(path.read_bytes(), b'{"earlier": true}\n')
 
     def test_prebuilt_android_template_does_not_override_gradle_sdk(self):
         presets = configparser.ConfigParser(interpolation=None)

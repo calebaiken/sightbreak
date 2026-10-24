@@ -1,0 +1,21 @@
+Command: & 'C:\Users\blith\AppData\Local\Temp\opencode\sol-ai-evidence-20261019\Run-Confirmations.ps1' -Label south
+Harness shell ID: sh_1558c4169001Wpx76hmVXrjBkH
+Harness background: true; timeout: 0
+Exit code: 35
+Raw returned output:
+Process terminated.
+The type initializer for 'Microsoft.PowerShell.Telemetry.ApplicationInsightsTelemetry' threw an exception.
+   at System.Environment.FailFast(System.Runtime.CompilerServices.StackCrawlMarkHandle, System.String, System.Runtime.CompilerServices.ObjectHandleOnStack, System.String)
+   at System.Environment.FailFast(System.Threading.StackCrawlMark ByRef, System.String, System.Exception, System.String)
+   at System.Environment.FailFast(System.String, System.Exception)
+   at Microsoft.PowerShell.UnmanagedPSEntry.Start(System.String[], Int32)
+   at Microsoft.PowerShell.ManagedPSEntry.Main(System.String[])
+System.TypeInitializationException: The type initializer for 'Microsoft.PowerShell.Telemetry.ApplicationInsightsTelemetry' threw an exception.
+ ---> System.OutOfMemoryException: Exception of type 'System.OutOfMemoryException' was thrown.
+   at Microsoft.PowerShell.Telemetry.ApplicationInsightsTelemetry..cctor()
+   --- End of inner exception stack trace ---
+   at Microsoft.PowerShell.Telemetry.ApplicationInsightsTelemetry.SendPSCoreStartupTelemetry(String mode, Double parametersUsed)
+   at Microsoft.PowerShell.ConsoleHost.Start(String bannerText, String helpText, Boolean issProvidedExternally)
+   at Microsoft.PowerShell.UnmanagedPSEntry.Start(String[] args, Int32 argc)
+
+No r2 command-start entry or native Godot log was created; failure was before probe launch.

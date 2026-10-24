@@ -1,0 +1,45 @@
+{
+  "passed": false,
+  "error": "Rendered positive-health/ammunition check failed: ('800 - FUNDS\\nELIMINATED - SPECTATING\\n', 'RELOADING 0.1s\\nFRAG x1 SMOKE x1\\n')",
+  "source": {
+    "source_commit": "2a026e61cabee3c66334066d45e92eb3ec6c2641",
+    "source_game_tree": "172704d0e82c4e74dfc35f218ab2645fd908f970",
+    "source_content_sha256": "7561f44322a7fc35a08e67ba8b3e8dd322f46a45c03ff42e684efa988c0c2407",
+    "source_validation_sha256": "4886bb4fb01b3769b98891c90bf80c28ee865b30f9e489acd6a309d3932b2407",
+    "source_game_dirty": false,
+    "source_dirty": false
+  },
+  "executable_sha256": "58b72b4ed0a67619f7b39e20c60b20214f6976e59b60934bc1cdf9babceaf8aa",
+  "events": [
+    "01-menu",
+    "02-offline-spawn",
+    "03-requisition",
+    "04-move-aim",
+    "05-after-fire",
+    "06-after-reload"
+  ],
+  "controller_sha256": "226723b88a4161b20a82ac4562c2214ea2e67f70525994c9b7ceed3f10fbde00",
+  "watchdog_error": "Export controller exited 1",
+  "watchdog": {
+    "passed": false,
+    "status": "failed",
+    "command": [
+      "/home/runner/work/sightbreak/sightbreak/.venv/bin/python",
+      "-B",
+      "/home/runner/work/sightbreak/sightbreak/scripts/verify_offline_export.py",
+      "--_export-flow-worker",
+      "--display",
+      ":107",
+      "--timeout",
+      "300",
+      "--output",
+      "builds/v3-export-offline"
+    ],
+    "timeout_seconds": 300.0,
+    "process_receipt": "watchdog.process.json",
+    "controller_sha256": "226723b88a4161b20a82ac4562c2214ea2e67f70525994c9b7ceed3f10fbde00",
+    "worker_exit": 1,
+    "seconds": 48.805,
+    "error": "Export controller exited 1"
+  }
+}

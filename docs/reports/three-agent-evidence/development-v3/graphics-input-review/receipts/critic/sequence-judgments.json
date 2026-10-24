@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "status": "final_before_unblinding",
+  "letter_scope": "A/B is consistent across both contact sheets within one sequence, may change between sequences, and must not be translated to still-pair letters.",
+  "mapping_opened": false,
+  "whole_game_acceptance": "UNVERIFIED_NOT_CLAIMED",
+  "sequences": [
+    {
+      "sequence": "01",
+      "condition": "sunlit_normal",
+      "overall_winner": "B",
+      "confidence": "medium",
+      "pickup": {
+        "sheet": "contact-sheets/sequence01-pickup.png",
+        "winner": "B",
+        "confidence": "high",
+        "ticks": [58,66,67,74,78,82],
+        "evidence": "A has excessive high-left tubular sleeve coverage, especially 74/78/82 and a blunt/capped upper arm contour at 78. B enters lower and retains a readable magazine.",
+        "continuity": "No equally obvious large 66-to-67 magazine visibility step at the displayed sheet scale; this does not prove all intervening motion is smooth."
+      },
+      "return_ready": {
+        "sheet": "contact-sheets/sequence01-return-ready.png",
+        "winner": "tie",
+        "confidence": "medium",
+        "ticks": [98,110,118,126,134,146],
+        "evidence": "Comparable hand/base support, release/return, and ready poses; small cuff/shading differences do not establish a meaningful winner."
+      },
+      "regressions_or_limits": ["Lower framing hides some grip detail.","Slab-like fingers and tubular sleeves remain.","Full playback, easing, and settling jitter are unverified."]
+    },
+    {
+      "sequence": "02",
+      "condition": "sunlit_reduced_motion_calm",
+      "overall_winner": "uncertain",
+      "confidence": "medium",
+      "pickup": {
+        "sheet": "contact-sheets/sequence02-pickup.png",
+        "winner": "uncertain",
+        "static_pose_preference": "A",
+        "entry_continuity_preference_at_66_67": "B",
+        "confidence": "medium",
+        "ticks": [58,66,67,74,78,82],
+        "evidence": "A keeps the arm lower at 74/78/82 but changes from an essentially empty/low hand at 66 to most of an upright magazine visible at 67 with comparatively little hand displacement. B avoids that particular early reveal but has the bulkier later sleeve.",
+        "continuity": "66-to-67 is a single declared 60 Hz sample interval, approximately 16.7 ms. Visible entry/visibility step or pop risk; no interpolation/implementation cause inferred."
+      },
+      "return_ready": {
+        "sheet": "contact-sheets/sequence02-return-ready.png",
+        "winner": "tie",
+        "confidence": "medium",
+        "ticks": [98,110,118,126,134,146],
+        "evidence": "Comparable support, open-palm release/return, and ready endpoints."
+      },
+      "regressions_or_limits": ["Pose/framing advantage competes with adjacent-frame magazine entry step.","Reduced-motion compliance, wiring, recoil/sway amplitude, and human comfort remain unverified.","No real-time playback or full motion smoothness assessment."]
+    },
+    {
+      "sequence": "03",
+      "condition": "shade_normal",
+      "overall_winner": "B",
+      "qualified": true,
+      "confidence": "medium",
+      "pickup": {
+        "sheet": "contact-sheets/sequence03-pickup.png",
+        "winner": "B",
+        "confidence": "high",
+        "ticks": [58,66,67,74,78,82],
+        "evidence": "B reduces the large high-left arm silhouette at 74/78/82; A has the broader and more abrupt exposed sleeve. B's sleeve is darker and loses detail.",
+        "continuity": "Sparse normal-pickup samples do not establish smoothness; no equally obvious calm-style 66-to-67 large reveal is established at this sheet scale."
+      },
+      "return_ready": {
+        "sheet": "contact-sheets/sequence03-return-ready.png",
+        "winner": "A",
+        "winner_dimension": "material_and_wrist_detail_readability",
+        "pose_winner": "tie",
+        "confidence": "medium",
+        "ticks": [98,110,118,126,134,146],
+        "evidence": "A preserves more olive cloth/fold, cuff, and palm separation; B becomes a flatter darker sleeve mass. Gun form remains very dark in both."
+      },
+      "regressions_or_limits": ["B is not a clean material-readability win.","Darker is not automatically more physically correct.","Overall B preference weights its larger silhouette improvement above the smaller shaded-detail regression.","Third-person anatomy, world grounding, and full settling motion remain unverified."]
+    }
+  ]
+}

@@ -1,0 +1,332 @@
+{
+  "row": {
+    "mode": "offline",
+    "fault": "resume-not-consumed",
+    "control_passed": true,
+    "error": {
+      "type": "RuntimeError",
+      "message": "Native offline reload did not conserve rendered ammunition"
+    },
+    "controller_passed": false,
+    "synthetic_control_not_native_evidence": true
+  },
+  "trace": [
+    {
+      "t": 0.0,
+      "event": "launch",
+      "name": "xvfb",
+      "command": [
+        "synthetic-xvfb",
+        ":99998",
+        "-screen",
+        "0",
+        "1280x720x24",
+        "-nolisten",
+        "tcp"
+      ]
+    },
+    {
+      "t": 0.0,
+      "event": "native-init-atoms-and-sync",
+      "display": ":99998"
+    },
+    {
+      "t": 0.0,
+      "event": "launch",
+      "name": "client",
+      "command": [
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ci-repair-critic-20261024T085242Z\\controls\\offline-resume-not-consumed\\builds\\linux\\sightbreak.x86_64",
+        "--audio-driver",
+        "Dummy"
+      ]
+    },
+    {
+      "t": 0.0,
+      "event": "focus"
+    },
+    {
+      "t": 0.0,
+      "event": "capture",
+      "image": "01-menu.png",
+      "overlay": null
+    },
+    {
+      "t": 0.0,
+      "event": "click",
+      "x": 248,
+      "y": 319
+    },
+    {
+      "t": 4.0,
+      "event": "capture",
+      "image": "02-offline-spawn.png",
+      "overlay": null
+    },
+    {
+      "t": 4.0,
+      "event": "key",
+      "key": "b",
+      "down": true,
+      "overlay": null
+    },
+    {
+      "t": 4.3,
+      "event": "key",
+      "key": "b",
+      "down": false,
+      "overlay": "requisition"
+    },
+    {
+      "t": 5.3,
+      "event": "capture",
+      "image": "03-requisition.png",
+      "overlay": "requisition"
+    },
+    {
+      "t": 5.3,
+      "event": "key",
+      "key": "Escape",
+      "down": true,
+      "overlay": "requisition"
+    },
+    {
+      "t": 5.6,
+      "event": "key",
+      "key": "Escape",
+      "down": false,
+      "overlay": null
+    },
+    {
+      "t": 6.6,
+      "event": "key",
+      "key": "d",
+      "down": true,
+      "overlay": null
+    },
+    {
+      "t": 6.9,
+      "event": "key",
+      "key": "d",
+      "down": false,
+      "overlay": null
+    },
+    {
+      "t": 6.9,
+      "event": "capture",
+      "image": "04-move-aim.png",
+      "overlay": null
+    },
+    {
+      "t": 6.9,
+      "event": "focus"
+    },
+    {
+      "t": 7.15,
+      "event": "button",
+      "down": true,
+      "overlay": null
+    },
+    {
+      "t": 8.15,
+      "event": "button",
+      "down": false,
+      "overlay": null
+    },
+    {
+      "t": 8.5,
+      "event": "button",
+      "down": true,
+      "overlay": null
+    },
+    {
+      "t": 9.5,
+      "event": "button",
+      "down": false,
+      "overlay": null
+    },
+    {
+      "t": 9.85,
+      "event": "capture",
+      "image": "05-after-fire.png",
+      "overlay": null
+    },
+    {
+      "t": 9.85,
+      "event": "key",
+      "key": "Escape",
+      "down": true,
+      "overlay": null
+    },
+    {
+      "t": 10.15,
+      "event": "key",
+      "key": "Escape",
+      "down": false,
+      "overlay": "field"
+    },
+    {
+      "t": 10.5,
+      "event": "capture",
+      "image": "05-inspection-pause.png",
+      "overlay": "field"
+    },
+    {
+      "t": 10.5,
+      "event": "ocr",
+      "image": "05-inspection-pause",
+      "box": [
+        40,
+        40,
+        780,
+        210
+      ],
+      "current_overlay": "field"
+    },
+    {
+      "t": 15.5,
+      "event": "ocr",
+      "image": "05-after-fire",
+      "box": [
+        0,
+        630,
+        450,
+        720
+      ],
+      "current_overlay": "field"
+    },
+    {
+      "t": 20.5,
+      "event": "ocr",
+      "image": "05-after-fire",
+      "box": [
+        980,
+        625,
+        1280,
+        710
+      ],
+      "current_overlay": "field"
+    },
+    {
+      "t": 25.5,
+      "event": "key",
+      "key": "Escape",
+      "down": true,
+      "overlay": "field"
+    },
+    {
+      "t": 25.8,
+      "event": "key",
+      "key": "Escape",
+      "down": false,
+      "overlay": "field"
+    },
+    {
+      "t": 25.95,
+      "event": "capture",
+      "image": "05b-resumed.png",
+      "overlay": "field"
+    },
+    {
+      "t": 25.95,
+      "event": "key",
+      "key": "r",
+      "down": true,
+      "overlay": "field"
+    },
+    {
+      "t": 26.95,
+      "event": "key",
+      "key": "r",
+      "down": false,
+      "overlay": "field"
+    },
+    {
+      "t": 29.45,
+      "event": "capture",
+      "image": "06-after-reload.png",
+      "overlay": "field"
+    },
+    {
+      "t": 29.45,
+      "event": "key",
+      "key": "Escape",
+      "down": true,
+      "overlay": "field"
+    },
+    {
+      "t": 29.75,
+      "event": "key",
+      "key": "Escape",
+      "down": false,
+      "overlay": "field"
+    },
+    {
+      "t": 30.1,
+      "event": "capture",
+      "image": "06-inspection-pause.png",
+      "overlay": "field"
+    },
+    {
+      "t": 30.1,
+      "event": "ocr",
+      "image": "06-inspection-pause",
+      "box": [
+        40,
+        40,
+        780,
+        210
+      ],
+      "current_overlay": "field"
+    },
+    {
+      "t": 35.1,
+      "event": "ocr",
+      "image": "06-after-reload",
+      "box": [
+        0,
+        630,
+        450,
+        720
+      ],
+      "current_overlay": "field"
+    },
+    {
+      "t": 40.1,
+      "event": "ocr",
+      "image": "06-after-reload",
+      "box": [
+        980,
+        625,
+        1280,
+        710
+      ],
+      "current_overlay": "field"
+    },
+    {
+      "t": 45.1,
+      "event": "close-display"
+    },
+    {
+      "t": 45.1,
+      "event": "terminate",
+      "name": "client"
+    },
+    {
+      "t": 45.1,
+      "event": "wait",
+      "name": "client",
+      "timeout": 10
+    },
+    {
+      "t": 45.1,
+      "event": "terminate",
+      "name": "xvfb"
+    },
+    {
+      "t": 45.1,
+      "event": "wait",
+      "name": "xvfb",
+      "timeout": 10
+    }
+  ]
+}
