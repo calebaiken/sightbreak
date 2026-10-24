@@ -86,3 +86,14 @@ All fake-file/control inputs are retained exactly or by deterministic byte/lengt
 SHA256 specification. No arbitrary filter program or game/helper process runs.
 After mutations, direct physical verification and clean exact-source status are
 required. Separate own/depth outputs and original75de evidence remain immutable.
+
+## Additive whole-binding race propagation
+
+The registered same-length mutation with restored mtime is accepted by the actual
+physical_source_file helper in both views; ctime changes and current bytes differ.
+Before execution register the identical real-read/mutate/restore construction
+through full source_binding on the exclusive temporary Git fixture. Require the
+call itself to reject a mutation occurring within its physical helper call.
+Record returned receipt and current bytes/status separately. This does not impose
+an atomic all-files snapshot or claim future mutations cannot occur after checks.
+Store it separately so the original23-control inputs/results remain byte-exact.

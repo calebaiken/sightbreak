@@ -1,0 +1,11 @@
+{
+  "name": "invalid_utf8",
+  "expected": "REJECT",
+  "actual": "REJECT",
+  "matched": true,
+  "expected_bytes_hex": "ff0a",
+  "actual_bytes_hex": "ff0d0a",
+  "windows": true,
+  "receipt": null,
+  "error": "UnicodeDecodeError: 'utf-8' codec can't decode byte 0xff in position 0: invalid start byte"
+}
