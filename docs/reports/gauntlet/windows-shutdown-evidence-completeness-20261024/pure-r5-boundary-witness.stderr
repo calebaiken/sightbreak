@@ -1,0 +1,57 @@
+test_huge_integer_clock_becomes_explicit_incomplete_error (test_shutdown_study_evidence.EnvelopeTests.test_huge_integer_clock_becomes_explicit_incomplete_error) ... ERROR
+test_publication_receipt_error_preserves_original_invocation_cause (test_shutdown_study_evidence.WrapperTests.test_publication_receipt_error_preserves_original_invocation_cause) ... ERROR
+
+======================================================================
+ERROR: test_huge_integer_clock_becomes_explicit_incomplete_error (test_shutdown_study_evidence.EnvelopeTests.test_huge_integer_clock_becomes_explicit_incomplete_error)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-shutdown-evidence-completeness/scripts/test_shutdown_study_evidence.py", line 184, in test_huge_integer_clock_becomes_explicit_incomplete_error
+    result=self.reject();self.assertTrue(result['evidence_errors'])
+           ^^^^^^^^^^^^^
+  File "/workspace/sightbreak-windows-shutdown-evidence-completeness/scripts/test_shutdown_study_evidence.py", line 43, in reject
+    result=self.load();self.assertFalse(result['strict_passed']);return result
+           ^^^^^^^^^^^
+  File "/workspace/sightbreak-windows-shutdown-evidence-completeness/scripts/test_shutdown_study_evidence.py", line 37, in load
+    def load(self):return study.trial_evidence(self.root,context=self.context)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-windows-shutdown-evidence-completeness/scripts/windows_shutdown_study.py", line 154, in trial_evidence
+    return validate_trial(directory,context=context,leak_parser=typed_leak_rows)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-windows-shutdown-evidence-completeness/scripts/shutdown_study_evidence.py", line 456, in validate_trial
+    evidence.check(name,getattr(evidence,name))
+  File "/workspace/sightbreak-windows-shutdown-evidence-completeness/scripts/shutdown_study_evidence.py", line 162, in check
+    try:action()
+        ^^^^^^^^
+  File "/workspace/sightbreak-windows-shutdown-evidence-completeness/scripts/shutdown_study_evidence.py", line 192, in result
+    need(number(self.result_data.get('elapsed_seconds')),'invalid reported elapsed time')
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-windows-shutdown-evidence-completeness/scripts/shutdown_study_evidence.py", line 44, in number
+    return type(value) in (int,float) and math.isfinite(value) and value>=minimum
+                                          ^^^^^^^^^^^^^^^^^^^^
+OverflowError: int too large to convert to float
+
+======================================================================
+ERROR: test_publication_receipt_error_preserves_original_invocation_cause (test_shutdown_study_evidence.WrapperTests.test_publication_receipt_error_preserves_original_invocation_cause)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-shutdown-evidence-completeness/scripts/test_shutdown_study_evidence.py", line 222, in test_publication_receipt_error_preserves_original_invocation_cause
+    with self.assertRaisesRegex(RuntimeError,'publication failed') as caught:self.invoke(fail)
+                                                                             ^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-windows-shutdown-evidence-completeness/scripts/test_shutdown_study_evidence.py", line 201, in invoke
+    study.real_driver(['scripts/verify_offline_export.py','--output',str(out)],lambda *a,**k:None,out)
+  File "/workspace/sightbreak-windows-shutdown-evidence-completeness/scripts/windows_shutdown_study.py", line 319, in real_driver
+    write(capture/'publication.json',dict(invocation_error=None if invocation_error is None else
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1139, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1143, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1198, in _execute_mock_call
+    raise effect
+OSError: fake receipt write failure
+
+----------------------------------------------------------------------
+Ran 2 tests in 2.414s
+
+FAILED (errors=2)
