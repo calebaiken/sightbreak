@@ -4,9 +4,12 @@ Frozen source `4cf6ac8e744603ed6af122a362036d276754cc76` on
 `codex/windows-route-clock-boundary-20261024`, checkout
 `/workspace/sightbreak-windows-route-clock`, is a SOURCE-ONLY candidate over exact
 `7101350e5d0a2f6e4afb9a913b5b1bcf2107857a`. Preregistration
-`e46680e4acd849c8d8e8125ed4b0a27c9e751320` precedes edits. Fresh independent
-critic is `/root/objective_r2_review_recovery_20261024`; builder does not approve
-its own result. No native/export/CI/retry is released or executed.
+`e46680e4acd849c8d8e8125ed4b0a27c9e751320` precedes edits. The independent
+reviewer is `/root/objective_r2_review_recovery_20261024`, an existing independent
+agent reused after the new-thread limit. It received this new Windows subject
+without builder implementation context; it was not a newly spawned fresh thread.
+Builder does not approve its own result. Independent final 33212b18 accepts exact
+4cf6ac8e SOURCE ONLY; no native/export/CI/retry is released or executed.
 
 ## Actual benchmark and supported correction
 
@@ -112,5 +115,5 @@ Source/pure evidence cannot establish actual Windows route success, input
 consumption, physical timing or reopened cleanup. Largest remaining gap is the
 same ordinary Windows flow at the independently accepted final source under a
 new root admission. Original ObjectDB classes/owners/cause remain UNKNOWN.
-Wait for the fresh source verdict; retain original failures and require separate
-root criteria/release before any new actual run. No Mac review was attempted.
+The independent source verdict is ACCEPT SOURCE ONLY; retain original failures
+and require separate root criteria/release before any new actual run. No Mac review was attempted.
