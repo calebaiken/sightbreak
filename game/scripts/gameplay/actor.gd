@@ -10,6 +10,7 @@ signal utility_deployed(actor_id: int, at: Vector3, kind: String)
 
 const Weapons = preload("res://scripts/gameplay/weapons.gd")
 const CombatEffects = preload("res://scripts/gameplay/combat_effects.gd")
+const TracerEffects = preload("res://scripts/gameplay/tracer_effects.gd")
 const WeaponModel = preload("res://scripts/gameplay/weapon_model.gd")
 const Utility = preload("res://scripts/gameplay/utility.gd")
 const CosmeticMaterial = preload("res://scripts/ui/cosmetic_material.gd")
@@ -154,6 +155,13 @@ var _smoke_node: MeshInstance3D
 var _smoke_material: ShaderMaterial
 const SMOKE_SECONDS := 0.45
 const FLASH_SECONDS := 0.040
+## How much larger an operator's flash is than the one in the local player's own view (about 0.28 m long there), and how
+## much larger again it grows with distance so it stays a few pixels across at the far end of the yard (1.0 up to
+## WORLD_FLASH_NEAR metres, then +WORLD_FLASH_GROWTH per metre, at most WORLD_FLASH_MAX times).
+const WORLD_FLASH_SCALE := 3.0
+const WORLD_FLASH_NEAR := 10.0
+const WORLD_FLASH_GROWTH := 0.03
+const WORLD_FLASH_MAX := 1.9
 var _flash_variation := Vector3.ONE
 ## The equipped weapon's flash size against the rifle's (a pistol's is smaller); 1.0 for every other weapon.
 var _flash_gain := 1.0
@@ -447,14 +455,11 @@ func _construct_body(root: Node3D, side: int) -> void:
 	rifle.material_override = _body_material(Color("1b242b"), 0.48, 0.55)
 	_part(root, Vector3(0.07, 1.27, -0.65), Vector3(0.029, 0.029, 0.16), dark)
 	_part(root, Vector3(0.07, 1.14, -0.38), Vector3(0.054, 0.15, 0.08), dark)
+	# The operator's flash is the first-person flash's shared mesh and material (one lathed bloom, additive), larger by
+	# WORLD_FLASH_SCALE so it still reads at the ranges a player meets an operator at.
 	var muzzle := MeshInstance3D.new()
-	var flash := PrismMesh.new()
-	flash.size = Vector3(0.085, 0.085, 0.16)
-	muzzle.mesh = flash
-	var flash_material := StandardMaterial3D.new()
-	flash_material.albedo_color = Color("ffda8a")
-	flash_material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-	muzzle.material_override = flash_material
+	muzzle.mesh = SBWeaponModel.flash_mesh()
+	muzzle.material_override = SBWeaponModel.world_flash_material()
 	muzzle.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	muzzle.set_meta("body_role", "world_muzzle")
 	root.add_child(muzzle)
@@ -765,6 +770,8 @@ func _fire(hit_sink: Callable = Callable()) -> void:
 				resolve_shot_hit(target, amount, headshot)
 		_impact(trace.position, trace.normal, target != null)
 		impact_created.emit(trace.position, trace.normal, target != null)
+	if TracerEffects.carries(_shot_index):
+		_tracer(trace.position if trace.hit else origin + direction * float(spec["range"]))
 	shot_fired.emit(actor_id, origin, direction)
 	play_shot_effect()
 	_shot_index += 1
@@ -945,6 +952,9 @@ func play_shot_effect() -> void:
 	_muzzle.rotation.z = float(ticks % 29) * 0.22
 	_flash_variation = Vector3(0.85 + float(ticks % 17) * 0.015, 0.85 + float(ticks % 13) * 0.02, 0.78 + float(ticks % 23) * 0.02)
 	_muzzle.scale = _flash_variation * _flash_gain
+	if is_instance_valid(_world_muzzle):
+		_world_muzzle.rotation.z = _muzzle.rotation.z
+		_world_muzzle.scale = _flash_variation * minf(_flash_gain, 1.0) * WORLD_FLASH_SCALE * _flash_distance_gain()
 	_smoke_age = 0.0
 	if is_local:
 		var port: Vector3 = _gun.global_transform * _ejection_point if _ejection_point != Vector3.INF else _gun.global_position + global_basis * Vector3(0.065, 0.02, -0.11)
@@ -972,6 +982,21 @@ func _cosmetic_floor(from: Vector3) -> float:
 
 func _impact(at: Vector3, normal: Vector3, hit_actor: bool) -> void:
 	CombatEffects.for_world(get_parent()).impact(at, normal, hit_actor)
+
+## 1.0 close up, growing with the distance from the viewer's camera to this operator (see WORLD_FLASH_GROWTH).
+func _flash_distance_gain() -> float:
+	var viewer := get_viewport().get_camera_3d() if is_inside_tree() else null
+	if viewer == null:
+		return 1.0
+	var distance := viewer.global_position.distance_to(global_position)
+	return clampf(1.0 + (distance - WORLD_FLASH_NEAR) * WORLD_FLASH_GROWTH, 1.0, WORLD_FLASH_MAX)
+
+## A tracer from this operator's muzzle to where the shot ended (cosmetic; see SBTracerEffects for why the local player's
+## own shots draw none).
+func _tracer(to: Vector3) -> void:
+	if is_local or not is_instance_valid(_world_muzzle) or not _world_muzzle.is_inside_tree():
+		return
+	TracerEffects.for_world(get_parent()).trace(_world_muzzle.global_position, to)
 
 func _deploy_utility(kind: String) -> void:
 	if kind == "grenade":
@@ -1065,7 +1090,10 @@ func tick_visual(delta: float) -> void:
 	_flash = maxf(0, _flash - delta)
 	if _flash > 0.0:
 		# A flash is brightest and widest at the start and shrinks fast over its 40 ms.
-		_muzzle.scale = _flash_variation * _flash_gain * (0.5 + 0.5 * _flash / FLASH_SECONDS)
+		var shrink := 0.5 + 0.5 * _flash / FLASH_SECONDS
+		_muzzle.scale = _flash_variation * _flash_gain * shrink
+		if is_instance_valid(_world_muzzle):
+			_world_muzzle.scale = _flash_variation * minf(_flash_gain, 1.0) * WORLD_FLASH_SCALE * _flash_distance_gain() * shrink
 	hit_feedback_remaining = maxf(0, hit_feedback_remaining - delta)
 	_equip_blend *= exp(-delta * 14.0)
 	_muzzle.visible = _flash > 0 and alive
