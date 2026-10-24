@@ -93,6 +93,22 @@ Before: every world hit threw the same four sparks and one grey puff, whatever i
 
 Open: tracers; a muzzle flash better than one prism; marks that are decals (surface-projected) rather than quads, if curved or sloped geometry arrives; a fade for the last marks before a replacement.
 
+## Environment readability pass (M9)
+
+Three changes to `RelayYard`, each aimed at a defect the independent critic ranked and each measured:
+
+| Defect | Change | Measured |
+| --- | --- | --- |
+| Crate lids clip on LOW and MEDIUM (defect 5) | Lid albedo `92866f` to `776d59` (`CRATE_LID`) | Clipped pixels in the yard-centre view 2.81% to 0.47%; view 5 0.86% to 0.39%; mean luminance of all twelve views changes by at most 1.5 levels |
+| Crane hook looks like it floats (defect 9) | Cable boxes 3.5 cm to 7.5 cm | Not separately rendered in the blind set: the critic's pixel diff shows thin props identical, because the cable only shows from the defender spawn at 26 m and view 9 changed little. Unverified beyond geometry |
+| Far wall is a flat pale slab against empty sky (defect 1) | `_add_far_skyline`: ten blocks and three stacks at 52 to 96 m beyond the attacker-end wall, in two rows, non-solid, batched | Blind critic: skyline gives "a depth layer where the other side shows a flat pale slab"; draw calls unchanged in kind (batched); software frame time 464 to 474 ms (+2%, inside noise) |
+
+Blind comparison, 12 pairs: the new side won 6 (four far views and two crate-lid views), 5 ties (views where only far crate lids differ), the old side won 1 (view 5, where its brighter lids read as sunlit tops against a dark container). Overall verdict "moderately better, not a large change".
+
+Flagged and still open on the skyline: untextured boxes in two flat tones read as a cardboard model; the same six or seven block cluster appears in every north view; the blocks meet a ruler-straight wall top so they look pasted behind it; depth order is inverted (the nearer pale wall at luminance about 200 is brighter than the farther blocks at about 170, where atmospheric perspective wants the reverse); in view 9 the blocks lower the roofline contrast of the grey container. Next: window bands and AO between volumes, a farther row nearer the horizon colour, and variation by side.
+
+Evaluated and rejected: widening the sun's glow (`sun_angle_max` 25 to 40, `sun_curve` 0.35 to 0.6) turns the upper third of the sky into a cream bloom and costs sky contrast; the current small soft disc stays.
+
 ## Relative cost (software rasteriser, relative only)
 
 Median frame time over 40 frames at each of 12 views, same host and load, llvmpipe at 1280x720: LOW 114 ms, MEDIUM 464 ms, HIGH 450 ms, ULTRA 503 ms (median of the 12 view medians; per-view files `m6-final/tier*-timings.json`). The ordering says MEDIUM, HIGH and ULTRA cost about the same on a CPU rasteriser and LOW is four times cheaper (shadows off). It says nothing about GPU frame time: the post pass and SSAO are bandwidth work that a CPU rasteriser prices differently from a phone or a desktop GPU. A device frame-time record is still owed before any tier is raised on a phone.
@@ -114,9 +130,7 @@ Scores before: lighting 4, grounding 4, materials 3, edges 5, depth 2, colour st
 
 ## Next, in order
 
-1. Operator-in-shadow readability capture, then tune fill if a dark-clad silhouette loses contrast.
-2. Skyline behind the attacker-end wall (defect 1) and a soft sun glow (6).
-3. Crane cable and hoist fix (9), floor texture rework against moiré (3), decal wear (7).
+1. Skyline refinement (windows, ordering, variety), floor texture rework against moiré (3), decal wear (7). The operator-in-shadow check is done: contrast holds (see above).
 4. Tracers and a better muzzle flash (bullet holes and surface-aware impacts are done in M8).
 5. Weapon art for the Kestrel 9, Vectorline and Longwatch (separate gauntlet).
 6. LightmapGI bake for one environment section: baking needs a RenderingDevice, so it must run on a machine with a GPU.
