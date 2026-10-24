@@ -200,6 +200,8 @@ def main():
     parser.add_argument('--timeout', type=float, default=300, help='Whole-flow wall deadline, plus separately bounded failure cleanup')
     parser.add_argument('--tesseract', default=os.environ.get('TESSERACT_BIN') or shutil.which('tesseract'))
     parser.add_argument('--hosted-render-priority', choices=('inherited', 'below-normal'), default='inherited')
+    parser.add_argument('--reopened-verbose', action='store_true',
+                        help='Diagnostic engine verbosity for only the reopened process; original deadlines and strict gates apply')
     args = parser.parse_args()
     if args.target != ('windows' if os.name == 'nt' else 'linux') or platform.system() not in ('Linux', 'Windows'):
         parser.error('Run the selected export on native Linux/Windows; macOS gameplay input is UNVERIFIED')
@@ -851,7 +853,8 @@ def main():
         if initial_exit != 0:
             raise RuntimeError('Initial native client did not exit cleanly')
         loaded_trace = out / 'restart-profile-trace'
-        reopened = launch('reopened', [str(executable), '--audio-driver', 'Dummy', *flags, '--',
+        reopened = launch('reopened', [str(executable), '--audio-driver', 'Dummy', *flags,
+                                     *(['--verbose'] if args.reopened_verbose else []), '--',
                                      '--offline-validation', '--offline-trace-dir=' + str(loaded_trace)], env)
         client = reopened
         if args.target == 'windows':

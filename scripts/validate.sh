@@ -109,6 +109,7 @@ if [[ "${1:-}" == --backend ]]; then
 fi
 python3 scripts/test_build_manifest.py
 python3 scripts/test_native_log.py -v
+python3 scripts/test_reopened_shutdown_diagnostic.py -v
 python3 scripts/test_native_observation.py -v
 python3 scripts/test_offline_role_guidance.py -v
 python3 scripts/test_offline_export_ocr.py -v

@@ -16,6 +16,11 @@ on:
         type: boolean
         required: false
         default: false
+      verbose_reopened_shutdown:
+        description: Diagnose only reopened Windows client shutdown with engine verbose output
+        type: boolean
+        required: false
+        default: false
 permissions:
   contents: read
   actions: read
@@ -162,7 +167,7 @@ jobs:
           print(json.dumps(receipt))
       - name: Living-player offline input and settings restart (Windows/Linux)
         if: always() && steps.export.outcome == 'success' && runner.os != 'macOS'
-        run: python scripts/verify_offline_export.py --target ${{ matrix.target }} ${{ runner.os == 'Windows' && '--hosted-render-priority below-normal' || '' }} --display :102 --timeout 300 --output builds/desktop-playability/offline-input
+        run: python scripts/verify_offline_export.py --target ${{ matrix.target }} ${{ runner.os == 'Windows' && '--hosted-render-priority below-normal' || '' }} --display :102 --timeout 300 --output builds/desktop-playability/offline-input ${{ runner.os == 'Windows' && inputs.verbose_reopened_shutdown && '--reopened-verbose' || '' }}
       - name: Real player plant and natural device resolution (Windows/Linux)
         if: always() && steps.export.outcome == 'success' && runner.os != 'macOS'
         run: python scripts/verify_offline_match.py --target ${{ matrix.target }} ${{ runner.os == 'Windows' && '--hosted-render-priority below-normal' || '' }} --scenario plant --display :103 --timeout 180 --output builds/desktop-playability/offline-plant
