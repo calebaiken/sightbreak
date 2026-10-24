@@ -45,6 +45,15 @@ const INDUSTRIAL_STEEL := Color("344148")
 const WEATHERED_GOLD := Color("ae935c")
 const SAFETY_CRIMSON := Color("9c4344")
 const PANEL_PAINT := Color("6f7b7c")
+const CRATE_LID := Color("776d59")
+## Distant buildings for _add_far_skyline: x, z, width, depth, height, colour (near row, then the hazier far row).
+## Sunlit faces render about three times brighter than their albedo, so these read mid-grey on screen, not pale.
+const SKYLINE := [
+	[-34, -52, 26, 14, 19, "3c4a53"], [-6, -56, 18, 12, 28, "394751"], [18, -54, 24, 16, 16, "404e58"],
+	[42, -58, 20, 14, 23, "3d4b55"], [-58, -60, 22, 16, 21, "3f4d57"],
+	[-44, -90, 30, 18, 35, "566670"], [-10, -94, 22, 16, 47, "52626c"], [22, -92, 28, 20, 31, "5a6a74"],
+	[52, -96, 24, 16, 41, "536571"], [-72, -96, 26, 18, 29, "586872"],
+]
 # Sun and shadow fill. The original 0.41 ambient left 19-32% of the defender-side frame below luminance 40 (a
 # near-black navy that hides dark-clad players); 0.85 with a slightly lower sun brings that to about zero while the
 # lit/shaded floor ratio stays near 5:1. Evidence: docs/art/GRAPHICS_BACKLOG.md (M6, variant C).
@@ -204,7 +213,8 @@ func _build() -> void:
 	_container(Vector3(20, 0, 0), Color("7f8988"), 5)
 	for at in [Vector3(-14, 0.65, -5), Vector3(14, 0.65, -5), Vector3(-18, 0.65, 13), Vector3(18, 0.65, 13), Vector3(0, 0.65, 8), Vector3(-3, 0.65, -1), Vector3(3, 0.65, -1)]:
 		_box(at, Vector3(2.5, 1.3, 2.5), Color("7f7560"))
-		_box(at + Vector3(0, 0.67, 0), Vector3(2.55, 0.10, 2.55), Color("92866f"), false)
+		# The lid is the brightest sunlit surface at eye level; 92866f clipped 2.8% of the frame in the yard-centre view.
+		_box(at + Vector3(0, 0.67, 0), Vector3(2.55, 0.10, 2.55), CRATE_LID, false)
 	for site_index in range(2):
 		var at: Vector3 = sites[site_index]
 		var tint := Color("bb955c") if site_index == 0 else Color("6ca5a5")
@@ -231,6 +241,7 @@ func _build() -> void:
 	_add_service_infrastructure()
 	_add_cargo_fittings()
 	_add_route_architecture()
+	_add_far_skyline()
 	for i in range(5):
 		attack_spawns.append(Vector3((i - 2) * 2.2, 0.05, -21))
 		defend_spawns.append(Vector3((i - 2) * 2.2, 0.05, 20.5))
@@ -559,7 +570,8 @@ func _add_transfer_architecture() -> void:
 	_box(Vector3(0, 7.0, 16), Vector3(3.3, 0.65, 1.8), SAFETY_CRIMSON, false, true, "metal")
 	_box(Vector3(0, 6.5, 16), Vector3(1.3, 0.35, 1.1), INDUSTRIAL_STEEL, false)
 	for x in [-0.43, 0.43]:
-		_box(Vector3(x, 5.74, 16), Vector3(0.035, 1.35, 0.035), INDUSTRIAL_STEEL, false)
+		# 3.5 cm cables vanished beyond 20 m and the hook block seemed to float from the defender spawn.
+		_box(Vector3(x, 5.74, 16), Vector3(0.075, 1.35, 0.075), INDUSTRIAL_STEEL, false)
 	_box(Vector3(0, 5.05, 16), Vector3(1.05, 0.28, 0.45), WEATHERED_GOLD, false)
 	_label("RY • 08 T", Vector3(0, 7.03, 15.085), Color("e1d3b4"), 37, PI)
 	# Service walkway is beyond collision perimeter: railings/cable trays create scale.
@@ -671,6 +683,19 @@ func apply_detail_quality(high_quality: bool) -> void:
 	for material: StandardMaterial3D in _surface_materials:
 		material.normal_enabled = high_quality
 		material.roughness_texture = SURFACE_ROUGHNESS[_surface_materials[material]] if high_quality else null
+
+## Distant buildings behind the attacker-end wall. From the defender half that wall was a flat pale slab against empty
+## sky; a hazed ridge of masses at 50 to 95 m gives the far field depth. Colours step toward the fog colour with
+## distance, so the farther row reads as atmosphere, not as a second set of walls. Never reachable, never in a sight
+## line that matters (all beyond the 48 m yard), non-solid, batched like every other box.
+func _add_far_skyline() -> void:
+	for block in SKYLINE:
+		var height: float = block[4]
+		_box(Vector3(block[0], height * 0.5, block[1]), Vector3(block[2], height, block[3]), Color(block[5]), false)
+		# A roof slab and a service stack give each mass a silhouette that is not a bare box.
+		_box(Vector3(block[0], height + 0.4, block[1]), Vector3(block[2] + 1.0, 0.8, block[3] + 1.0), Color(block[5]).darkened(0.4), false)
+	for stack in [Vector2(-20, -74), Vector2(30, -76), Vector2(-60, -78)]:
+		_box(Vector3(stack.x, 21.0, stack.y), Vector3(3.0, 42.0, 3.0), Color("5a6a74"), false)
 
 func _add_route_architecture() -> void:
 	# Broad architectural rhythm and massing matter more than extra small props.

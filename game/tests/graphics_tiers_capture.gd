@@ -5,7 +5,7 @@ extends SceneTree
 ## Isolation overrides, applied after the tier, to attribute a difference to one setting:
 ##   --ssao=0|1
 ##   --msaa=<Viewport.MSAA int>  --aniso=<0..16>  --scale=<3D render scale, above 1 supersamples>
-##   --env=<property>:<value>,...  --light=<property>:<value>,...
+##   --env=<property>:<value>,...  --light=<property>:<value>,...  --sky=<property>:<value>,... (the procedural sky material)
 ##   --only=<view numbers, comma separated> renders just those views.
 ## Timings come from whatever renderer the host has (software rasteriser in CI); compare tiers on the same host
 ## only, never read them as device frame rates.
@@ -45,7 +45,7 @@ func _run() -> void:
 			tier = int(argument.trim_prefix("--tier="))
 		elif argument.begins_with("--only="):
 			only = argument.trim_prefix("--only=").split(",")
-		elif argument.begins_with("--ssao=") or argument.begins_with("--msaa=") or argument.begins_with("--aniso=") or argument.begins_with("--scale=") or argument.begins_with("--env=") or argument.begins_with("--light="):
+		elif argument.begins_with("--ssao=") or argument.begins_with("--msaa=") or argument.begins_with("--aniso=") or argument.begins_with("--scale=") or argument.begins_with("--env=") or argument.begins_with("--light=") or argument.begins_with("--sky="):
 			overrides[argument.get_slice("=", 0).trim_prefix("--")] = argument.get_slice("=", 1)
 		elif argument.begins_with("--size="):
 			var parts := argument.trim_prefix("--size=").split("x")
@@ -78,6 +78,10 @@ func _run() -> void:
 			"env":
 				for pair in String(overrides[key]).split(","):
 					world.find_children("*", "WorldEnvironment", true, false)[0].environment.set(pair.get_slice(":", 0), float(pair.get_slice(":", 1)))
+			"sky":
+				var sky_material = world.find_children("*", "WorldEnvironment", true, false)[0].environment.sky.sky_material
+				for pair in String(overrides[key]).split(","):
+					sky_material.set(pair.get_slice(":", 0), float(pair.get_slice(":", 1)))
 			"light":
 				for pair in String(overrides[key]).split(","):
 					world.find_children("*", "DirectionalLight3D", true, false)[0].set(pair.get_slice(":", 0), float(pair.get_slice(":", 1)))
