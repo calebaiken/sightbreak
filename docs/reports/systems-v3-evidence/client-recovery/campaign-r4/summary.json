@@ -1,0 +1,1189 @@
+{
+  "platform": "Windows-11-10.0.26200-SP0",
+  "python": "3.14.6",
+  "godot": "4.7.2.stable.official.ed1daf0bf",
+  "probe_sha256": "6e4e7a5ee3f8d8c831c3b140c9685c29da8e3434d144d299e22205458ccca927",
+  "harness_sha256": "74d03ff9fb39703cc873f8e30b2f167661363b80fdeabaad4d69b14363050295",
+  "runs": {
+    "baseline": {
+      "source": {
+        "commit": "701ce2c4d7f8b2872cf1fefa64cb6edd0cd1a3fd",
+        "game_tree": "2d2b174c2145e9755ddfc78a1369e74443fcc400",
+        "status": "",
+        "status_after": ""
+      },
+      "cases": [
+        {
+          "kind": "store",
+          "boundary": "before_commit",
+          "recovered": false,
+          "mutation_count": 0,
+          "total_debit": 0,
+          "receipt_reused": false,
+          "credential_persisted": false,
+          "journal_before_kill": false,
+          "journal_after_recovery": false,
+          "requests": [],
+          "probe": {
+            "reason": "no pending receipt after process restart",
+            "recovered": false
+          },
+          "command": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v2-baseline\\game",
+            "--script",
+            "C:\\Users\\blith\\OneDrive\\Documents\\Default Project\\sightbreak\\game\\tests\\transaction_crash_probe.gd"
+          ]
+        },
+        {
+          "kind": "store",
+          "boundary": "after_commit",
+          "recovered": false,
+          "mutation_count": 1,
+          "total_debit": 100,
+          "receipt_reused": false,
+          "credential_persisted": false,
+          "journal_before_kill": false,
+          "journal_after_recovery": false,
+          "requests": [
+            {
+              "definition_id": "key",
+              "idempotency_key": "same-immutable-receipt"
+            }
+          ],
+          "probe": {
+            "reason": "no pending receipt after process restart",
+            "recovered": false
+          },
+          "command": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v2-baseline\\game",
+            "--script",
+            "C:\\Users\\blith\\OneDrive\\Documents\\Default Project\\sightbreak\\game\\tests\\transaction_crash_probe.gd"
+          ]
+        },
+        {
+          "kind": "case",
+          "boundary": "before_commit",
+          "recovered": false,
+          "mutation_count": 0,
+          "total_debit": 0,
+          "receipt_reused": false,
+          "credential_persisted": false,
+          "journal_before_kill": false,
+          "journal_after_recovery": false,
+          "requests": [],
+          "probe": {
+            "reason": "no pending receipt after process restart",
+            "recovered": false
+          },
+          "command": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v2-baseline\\game",
+            "--script",
+            "C:\\Users\\blith\\OneDrive\\Documents\\Default Project\\sightbreak\\game\\tests\\transaction_crash_probe.gd"
+          ]
+        },
+        {
+          "kind": "case",
+          "boundary": "after_commit",
+          "recovered": false,
+          "mutation_count": 1,
+          "total_debit": 100,
+          "receipt_reused": false,
+          "credential_persisted": false,
+          "journal_before_kill": false,
+          "journal_after_recovery": false,
+          "requests": [
+            {
+              "case_id": "case-instance",
+              "idempotency_key": "same-immutable-receipt",
+              "key_id": "key-instance"
+            }
+          ],
+          "probe": {
+            "reason": "no pending receipt after process restart",
+            "recovered": false
+          },
+          "command": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v2-baseline\\game",
+            "--script",
+            "C:\\Users\\blith\\OneDrive\\Documents\\Default Project\\sightbreak\\game\\tests\\transaction_crash_probe.gd"
+          ]
+        },
+        {
+          "kind": "market",
+          "boundary": "before_commit",
+          "recovered": false,
+          "mutation_count": 0,
+          "total_debit": 0,
+          "receipt_reused": false,
+          "credential_persisted": false,
+          "journal_before_kill": false,
+          "journal_after_recovery": false,
+          "requests": [],
+          "probe": {
+            "reason": "no pending receipt after process restart",
+            "recovered": false
+          },
+          "command": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v2-baseline\\game",
+            "--script",
+            "C:\\Users\\blith\\OneDrive\\Documents\\Default Project\\sightbreak\\game\\tests\\transaction_crash_probe.gd"
+          ]
+        },
+        {
+          "kind": "market",
+          "boundary": "after_commit",
+          "recovered": false,
+          "mutation_count": 1,
+          "total_debit": 10000000,
+          "receipt_reused": false,
+          "credential_persisted": false,
+          "journal_before_kill": false,
+          "journal_after_recovery": false,
+          "requests": [
+            {
+              "expected_price": 10000000,
+              "idempotency_key": "same-immutable-receipt"
+            }
+          ],
+          "probe": {
+            "reason": "no pending receipt after process restart",
+            "recovered": false
+          },
+          "command": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v2-baseline\\game",
+            "--script",
+            "C:\\Users\\blith\\OneDrive\\Documents\\Default Project\\sightbreak\\game\\tests\\transaction_crash_probe.gd"
+          ]
+        },
+        {
+          "kind": "store",
+          "boundary": "before_commit",
+          "recovered": false,
+          "mutation_count": 0,
+          "total_debit": 0,
+          "receipt_reused": false,
+          "credential_persisted": false,
+          "journal_before_kill": false,
+          "journal_after_recovery": false,
+          "requests": [],
+          "probe": {
+            "reason": "no pending receipt after process restart",
+            "recovered": false
+          },
+          "command": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v2-baseline\\game",
+            "--script",
+            "C:\\Users\\blith\\OneDrive\\Documents\\Default Project\\sightbreak\\game\\tests\\transaction_crash_probe.gd"
+          ]
+        },
+        {
+          "kind": "store",
+          "boundary": "after_commit",
+          "recovered": false,
+          "mutation_count": 1,
+          "total_debit": 100,
+          "receipt_reused": false,
+          "credential_persisted": false,
+          "journal_before_kill": false,
+          "journal_after_recovery": false,
+          "requests": [
+            {
+              "definition_id": "key",
+              "idempotency_key": "same-immutable-receipt"
+            }
+          ],
+          "probe": {
+            "reason": "no pending receipt after process restart",
+            "recovered": false
+          },
+          "command": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v2-baseline\\game",
+            "--script",
+            "C:\\Users\\blith\\OneDrive\\Documents\\Default Project\\sightbreak\\game\\tests\\transaction_crash_probe.gd"
+          ]
+        },
+        {
+          "kind": "case",
+          "boundary": "before_commit",
+          "recovered": false,
+          "mutation_count": 0,
+          "total_debit": 0,
+          "receipt_reused": false,
+          "credential_persisted": false,
+          "journal_before_kill": false,
+          "journal_after_recovery": false,
+          "requests": [],
+          "probe": {
+            "reason": "no pending receipt after process restart",
+            "recovered": false
+          },
+          "command": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v2-baseline\\game",
+            "--script",
+            "C:\\Users\\blith\\OneDrive\\Documents\\Default Project\\sightbreak\\game\\tests\\transaction_crash_probe.gd"
+          ]
+        },
+        {
+          "kind": "case",
+          "boundary": "after_commit",
+          "recovered": false,
+          "mutation_count": 1,
+          "total_debit": 100,
+          "receipt_reused": false,
+          "credential_persisted": false,
+          "journal_before_kill": false,
+          "journal_after_recovery": false,
+          "requests": [
+            {
+              "case_id": "case-instance",
+              "idempotency_key": "same-immutable-receipt",
+              "key_id": "key-instance"
+            }
+          ],
+          "probe": {
+            "reason": "no pending receipt after process restart",
+            "recovered": false
+          },
+          "command": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v2-baseline\\game",
+            "--script",
+            "C:\\Users\\blith\\OneDrive\\Documents\\Default Project\\sightbreak\\game\\tests\\transaction_crash_probe.gd"
+          ]
+        },
+        {
+          "kind": "market",
+          "boundary": "before_commit",
+          "recovered": false,
+          "mutation_count": 0,
+          "total_debit": 0,
+          "receipt_reused": false,
+          "credential_persisted": false,
+          "journal_before_kill": false,
+          "journal_after_recovery": false,
+          "requests": [],
+          "probe": {
+            "reason": "no pending receipt after process restart",
+            "recovered": false
+          },
+          "command": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v2-baseline\\game",
+            "--script",
+            "C:\\Users\\blith\\OneDrive\\Documents\\Default Project\\sightbreak\\game\\tests\\transaction_crash_probe.gd"
+          ]
+        },
+        {
+          "kind": "market",
+          "boundary": "after_commit",
+          "recovered": false,
+          "mutation_count": 1,
+          "total_debit": 10000000,
+          "receipt_reused": false,
+          "credential_persisted": false,
+          "journal_before_kill": false,
+          "journal_after_recovery": false,
+          "requests": [
+            {
+              "expected_price": 10000000,
+              "idempotency_key": "same-immutable-receipt"
+            }
+          ],
+          "probe": {
+            "reason": "no pending receipt after process restart",
+            "recovered": false
+          },
+          "command": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v2-baseline\\game",
+            "--script",
+            "C:\\Users\\blith\\OneDrive\\Documents\\Default Project\\sightbreak\\game\\tests\\transaction_crash_probe.gd"
+          ]
+        },
+        {
+          "kind": "store",
+          "boundary": "before_commit",
+          "recovered": false,
+          "mutation_count": 0,
+          "total_debit": 0,
+          "receipt_reused": false,
+          "credential_persisted": false,
+          "journal_before_kill": false,
+          "journal_after_recovery": false,
+          "requests": [],
+          "probe": {
+            "reason": "no pending receipt after process restart",
+            "recovered": false
+          },
+          "command": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v2-baseline\\game",
+            "--script",
+            "C:\\Users\\blith\\OneDrive\\Documents\\Default Project\\sightbreak\\game\\tests\\transaction_crash_probe.gd"
+          ]
+        },
+        {
+          "kind": "store",
+          "boundary": "after_commit",
+          "recovered": false,
+          "mutation_count": 1,
+          "total_debit": 100,
+          "receipt_reused": false,
+          "credential_persisted": false,
+          "journal_before_kill": false,
+          "journal_after_recovery": false,
+          "requests": [
+            {
+              "definition_id": "key",
+              "idempotency_key": "same-immutable-receipt"
+            }
+          ],
+          "probe": {
+            "reason": "no pending receipt after process restart",
+            "recovered": false
+          },
+          "command": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v2-baseline\\game",
+            "--script",
+            "C:\\Users\\blith\\OneDrive\\Documents\\Default Project\\sightbreak\\game\\tests\\transaction_crash_probe.gd"
+          ]
+        },
+        {
+          "kind": "case",
+          "boundary": "before_commit",
+          "recovered": false,
+          "mutation_count": 0,
+          "total_debit": 0,
+          "receipt_reused": false,
+          "credential_persisted": false,
+          "journal_before_kill": false,
+          "journal_after_recovery": false,
+          "requests": [],
+          "probe": {
+            "reason": "no pending receipt after process restart",
+            "recovered": false
+          },
+          "command": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v2-baseline\\game",
+            "--script",
+            "C:\\Users\\blith\\OneDrive\\Documents\\Default Project\\sightbreak\\game\\tests\\transaction_crash_probe.gd"
+          ]
+        },
+        {
+          "kind": "case",
+          "boundary": "after_commit",
+          "recovered": false,
+          "mutation_count": 1,
+          "total_debit": 100,
+          "receipt_reused": false,
+          "credential_persisted": false,
+          "journal_before_kill": false,
+          "journal_after_recovery": false,
+          "requests": [
+            {
+              "case_id": "case-instance",
+              "idempotency_key": "same-immutable-receipt",
+              "key_id": "key-instance"
+            }
+          ],
+          "probe": {
+            "reason": "no pending receipt after process restart",
+            "recovered": false
+          },
+          "command": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v2-baseline\\game",
+            "--script",
+            "C:\\Users\\blith\\OneDrive\\Documents\\Default Project\\sightbreak\\game\\tests\\transaction_crash_probe.gd"
+          ]
+        },
+        {
+          "kind": "market",
+          "boundary": "before_commit",
+          "recovered": false,
+          "mutation_count": 0,
+          "total_debit": 0,
+          "receipt_reused": false,
+          "credential_persisted": false,
+          "journal_before_kill": false,
+          "journal_after_recovery": false,
+          "requests": [],
+          "probe": {
+            "reason": "no pending receipt after process restart",
+            "recovered": false
+          },
+          "command": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v2-baseline\\game",
+            "--script",
+            "C:\\Users\\blith\\OneDrive\\Documents\\Default Project\\sightbreak\\game\\tests\\transaction_crash_probe.gd"
+          ]
+        },
+        {
+          "kind": "market",
+          "boundary": "after_commit",
+          "recovered": false,
+          "mutation_count": 1,
+          "total_debit": 10000000,
+          "receipt_reused": false,
+          "credential_persisted": false,
+          "journal_before_kill": false,
+          "journal_after_recovery": false,
+          "requests": [
+            {
+              "expected_price": 10000000,
+              "idempotency_key": "same-immutable-receipt"
+            }
+          ],
+          "probe": {
+            "reason": "no pending receipt after process restart",
+            "recovered": false
+          },
+          "command": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v2-baseline\\game",
+            "--script",
+            "C:\\Users\\blith\\OneDrive\\Documents\\Default Project\\sightbreak\\game\\tests\\transaction_crash_probe.gd"
+          ]
+        }
+      ],
+      "recovered": 0,
+      "total": 18
+    },
+    "candidate": {
+      "source": {
+        "commit": "223ec0cdcb4549503734abe6b156b057b01b577a",
+        "game_tree": "acabadb308994a5bcd8b0a0e0a46c4224425f08d",
+        "status": "",
+        "status_after": ""
+      },
+      "cases": [
+        {
+          "kind": "store",
+          "boundary": "before_commit",
+          "recovered": true,
+          "mutation_count": 1,
+          "total_debit": 100,
+          "receipt_reused": true,
+          "credential_persisted": false,
+          "journal_before_kill": true,
+          "journal_after_recovery": false,
+          "requests": [
+            {
+              "definition_id": "key",
+              "idempotency_key": "same-immutable-receipt"
+            }
+          ],
+          "probe": {
+            "pending": false,
+            "recovered": true,
+            "result": {
+              "credits": 9999900.0,
+              "item": {
+                "id": "one-authoritative-instance"
+              }
+            }
+          },
+          "command": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\OneDrive\\Documents\\Default Project\\sightbreak\\game",
+            "--script",
+            "C:\\Users\\blith\\OneDrive\\Documents\\Default Project\\sightbreak\\game\\tests\\transaction_crash_probe.gd"
+          ]
+        },
+        {
+          "kind": "store",
+          "boundary": "after_commit",
+          "recovered": true,
+          "mutation_count": 1,
+          "total_debit": 100,
+          "receipt_reused": true,
+          "credential_persisted": false,
+          "journal_before_kill": true,
+          "journal_after_recovery": false,
+          "requests": [
+            {
+              "definition_id": "key",
+              "idempotency_key": "same-immutable-receipt"
+            },
+            {
+              "definition_id": "key",
+              "idempotency_key": "same-immutable-receipt"
+            }
+          ],
+          "probe": {
+            "pending": false,
+            "recovered": true,
+            "result": {
+              "credits": 9999900.0,
+              "item": {
+                "id": "one-authoritative-instance"
+              }
+            }
+          },
+          "command": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\OneDrive\\Documents\\Default Project\\sightbreak\\game",
+            "--script",
+            "C:\\Users\\blith\\OneDrive\\Documents\\Default Project\\sightbreak\\game\\tests\\transaction_crash_probe.gd"
+          ]
+        },
+        {
+          "kind": "case",
+          "boundary": "before_commit",
+          "recovered": true,
+          "mutation_count": 1,
+          "total_debit": 100,
+          "receipt_reused": true,
+          "credential_persisted": false,
+          "journal_before_kill": true,
+          "journal_after_recovery": false,
+          "requests": [
+            {
+              "case_id": "case-instance",
+              "idempotency_key": "same-immutable-receipt",
+              "key_id": "key-instance"
+            }
+          ],
+          "probe": {
+            "pending": false,
+            "recovered": true,
+            "result": {
+              "credits": 9999900.0,
+              "item": {
+                "id": "one-authoritative-instance"
+              }
+            }
+          },
+          "command": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\OneDrive\\Documents\\Default Project\\sightbreak\\game",
+            "--script",
+            "C:\\Users\\blith\\OneDrive\\Documents\\Default Project\\sightbreak\\game\\tests\\transaction_crash_probe.gd"
+          ]
+        },
+        {
+          "kind": "case",
+          "boundary": "after_commit",
+          "recovered": true,
+          "mutation_count": 1,
+          "total_debit": 100,
+          "receipt_reused": true,
+          "credential_persisted": false,
+          "journal_before_kill": true,
+          "journal_after_recovery": false,
+          "requests": [
+            {
+              "case_id": "case-instance",
+              "idempotency_key": "same-immutable-receipt",
+              "key_id": "key-instance"
+            },
+            {
+              "case_id": "case-instance",
+              "idempotency_key": "same-immutable-receipt",
+              "key_id": "key-instance"
+            }
+          ],
+          "probe": {
+            "pending": false,
+            "recovered": true,
+            "result": {
+              "credits": 9999900.0,
+              "item": {
+                "id": "one-authoritative-instance"
+              }
+            }
+          },
+          "command": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\OneDrive\\Documents\\Default Project\\sightbreak\\game",
+            "--script",
+            "C:\\Users\\blith\\OneDrive\\Documents\\Default Project\\sightbreak\\game\\tests\\transaction_crash_probe.gd"
+          ]
+        },
+        {
+          "kind": "market",
+          "boundary": "before_commit",
+          "recovered": true,
+          "mutation_count": 1,
+          "total_debit": 10000000,
+          "receipt_reused": true,
+          "credential_persisted": false,
+          "journal_before_kill": true,
+          "journal_after_recovery": false,
+          "requests": [
+            {
+              "expected_price": 10000000,
+              "idempotency_key": "same-immutable-receipt"
+            }
+          ],
+          "probe": {
+            "pending": false,
+            "recovered": true,
+            "result": {
+              "credits": 0.0,
+              "item": {
+                "id": "one-authoritative-instance"
+              }
+            }
+          },
+          "command": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\OneDrive\\Documents\\Default Project\\sightbreak\\game",
+            "--script",
+            "C:\\Users\\blith\\OneDrive\\Documents\\Default Project\\sightbreak\\game\\tests\\transaction_crash_probe.gd"
+          ]
+        },
+        {
+          "kind": "market",
+          "boundary": "after_commit",
+          "recovered": true,
+          "mutation_count": 1,
+          "total_debit": 10000000,
+          "receipt_reused": true,
+          "credential_persisted": false,
+          "journal_before_kill": true,
+          "journal_after_recovery": false,
+          "requests": [
+            {
+              "expected_price": 10000000,
+              "idempotency_key": "same-immutable-receipt"
+            },
+            {
+              "expected_price": 10000000,
+              "idempotency_key": "same-immutable-receipt"
+            }
+          ],
+          "probe": {
+            "pending": false,
+            "recovered": true,
+            "result": {
+              "credits": 0.0,
+              "item": {
+                "id": "one-authoritative-instance"
+              }
+            }
+          },
+          "command": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\OneDrive\\Documents\\Default Project\\sightbreak\\game",
+            "--script",
+            "C:\\Users\\blith\\OneDrive\\Documents\\Default Project\\sightbreak\\game\\tests\\transaction_crash_probe.gd"
+          ]
+        },
+        {
+          "kind": "store",
+          "boundary": "before_commit",
+          "recovered": true,
+          "mutation_count": 1,
+          "total_debit": 100,
+          "receipt_reused": true,
+          "credential_persisted": false,
+          "journal_before_kill": true,
+          "journal_after_recovery": false,
+          "requests": [
+            {
+              "definition_id": "key",
+              "idempotency_key": "same-immutable-receipt"
+            }
+          ],
+          "probe": {
+            "pending": false,
+            "recovered": true,
+            "result": {
+              "credits": 9999900.0,
+              "item": {
+                "id": "one-authoritative-instance"
+              }
+            }
+          },
+          "command": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\OneDrive\\Documents\\Default Project\\sightbreak\\game",
+            "--script",
+            "C:\\Users\\blith\\OneDrive\\Documents\\Default Project\\sightbreak\\game\\tests\\transaction_crash_probe.gd"
+          ]
+        },
+        {
+          "kind": "store",
+          "boundary": "after_commit",
+          "recovered": true,
+          "mutation_count": 1,
+          "total_debit": 100,
+          "receipt_reused": true,
+          "credential_persisted": false,
+          "journal_before_kill": true,
+          "journal_after_recovery": false,
+          "requests": [
+            {
+              "definition_id": "key",
+              "idempotency_key": "same-immutable-receipt"
+            },
+            {
+              "definition_id": "key",
+              "idempotency_key": "same-immutable-receipt"
+            }
+          ],
+          "probe": {
+            "pending": false,
+            "recovered": true,
+            "result": {
+              "credits": 9999900.0,
+              "item": {
+                "id": "one-authoritative-instance"
+              }
+            }
+          },
+          "command": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\OneDrive\\Documents\\Default Project\\sightbreak\\game",
+            "--script",
+            "C:\\Users\\blith\\OneDrive\\Documents\\Default Project\\sightbreak\\game\\tests\\transaction_crash_probe.gd"
+          ]
+        },
+        {
+          "kind": "case",
+          "boundary": "before_commit",
+          "recovered": true,
+          "mutation_count": 1,
+          "total_debit": 100,
+          "receipt_reused": true,
+          "credential_persisted": false,
+          "journal_before_kill": true,
+          "journal_after_recovery": false,
+          "requests": [
+            {
+              "case_id": "case-instance",
+              "idempotency_key": "same-immutable-receipt",
+              "key_id": "key-instance"
+            }
+          ],
+          "probe": {
+            "pending": false,
+            "recovered": true,
+            "result": {
+              "credits": 9999900.0,
+              "item": {
+                "id": "one-authoritative-instance"
+              }
+            }
+          },
+          "command": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\OneDrive\\Documents\\Default Project\\sightbreak\\game",
+            "--script",
+            "C:\\Users\\blith\\OneDrive\\Documents\\Default Project\\sightbreak\\game\\tests\\transaction_crash_probe.gd"
+          ]
+        },
+        {
+          "kind": "case",
+          "boundary": "after_commit",
+          "recovered": true,
+          "mutation_count": 1,
+          "total_debit": 100,
+          "receipt_reused": true,
+          "credential_persisted": false,
+          "journal_before_kill": true,
+          "journal_after_recovery": false,
+          "requests": [
+            {
+              "case_id": "case-instance",
+              "idempotency_key": "same-immutable-receipt",
+              "key_id": "key-instance"
+            },
+            {
+              "case_id": "case-instance",
+              "idempotency_key": "same-immutable-receipt",
+              "key_id": "key-instance"
+            }
+          ],
+          "probe": {
+            "pending": false,
+            "recovered": true,
+            "result": {
+              "credits": 9999900.0,
+              "item": {
+                "id": "one-authoritative-instance"
+              }
+            }
+          },
+          "command": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\OneDrive\\Documents\\Default Project\\sightbreak\\game",
+            "--script",
+            "C:\\Users\\blith\\OneDrive\\Documents\\Default Project\\sightbreak\\game\\tests\\transaction_crash_probe.gd"
+          ]
+        },
+        {
+          "kind": "market",
+          "boundary": "before_commit",
+          "recovered": true,
+          "mutation_count": 1,
+          "total_debit": 10000000,
+          "receipt_reused": true,
+          "credential_persisted": false,
+          "journal_before_kill": true,
+          "journal_after_recovery": false,
+          "requests": [
+            {
+              "expected_price": 10000000,
+              "idempotency_key": "same-immutable-receipt"
+            }
+          ],
+          "probe": {
+            "pending": false,
+            "recovered": true,
+            "result": {
+              "credits": 0.0,
+              "item": {
+                "id": "one-authoritative-instance"
+              }
+            }
+          },
+          "command": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\OneDrive\\Documents\\Default Project\\sightbreak\\game",
+            "--script",
+            "C:\\Users\\blith\\OneDrive\\Documents\\Default Project\\sightbreak\\game\\tests\\transaction_crash_probe.gd"
+          ]
+        },
+        {
+          "kind": "market",
+          "boundary": "after_commit",
+          "recovered": true,
+          "mutation_count": 1,
+          "total_debit": 10000000,
+          "receipt_reused": true,
+          "credential_persisted": false,
+          "journal_before_kill": true,
+          "journal_after_recovery": false,
+          "requests": [
+            {
+              "expected_price": 10000000,
+              "idempotency_key": "same-immutable-receipt"
+            },
+            {
+              "expected_price": 10000000,
+              "idempotency_key": "same-immutable-receipt"
+            }
+          ],
+          "probe": {
+            "pending": false,
+            "recovered": true,
+            "result": {
+              "credits": 0.0,
+              "item": {
+                "id": "one-authoritative-instance"
+              }
+            }
+          },
+          "command": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\OneDrive\\Documents\\Default Project\\sightbreak\\game",
+            "--script",
+            "C:\\Users\\blith\\OneDrive\\Documents\\Default Project\\sightbreak\\game\\tests\\transaction_crash_probe.gd"
+          ]
+        },
+        {
+          "kind": "store",
+          "boundary": "before_commit",
+          "recovered": true,
+          "mutation_count": 1,
+          "total_debit": 100,
+          "receipt_reused": true,
+          "credential_persisted": false,
+          "journal_before_kill": true,
+          "journal_after_recovery": false,
+          "requests": [
+            {
+              "definition_id": "key",
+              "idempotency_key": "same-immutable-receipt"
+            }
+          ],
+          "probe": {
+            "pending": false,
+            "recovered": true,
+            "result": {
+              "credits": 9999900.0,
+              "item": {
+                "id": "one-authoritative-instance"
+              }
+            }
+          },
+          "command": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\OneDrive\\Documents\\Default Project\\sightbreak\\game",
+            "--script",
+            "C:\\Users\\blith\\OneDrive\\Documents\\Default Project\\sightbreak\\game\\tests\\transaction_crash_probe.gd"
+          ]
+        },
+        {
+          "kind": "store",
+          "boundary": "after_commit",
+          "recovered": true,
+          "mutation_count": 1,
+          "total_debit": 100,
+          "receipt_reused": true,
+          "credential_persisted": false,
+          "journal_before_kill": true,
+          "journal_after_recovery": false,
+          "requests": [
+            {
+              "definition_id": "key",
+              "idempotency_key": "same-immutable-receipt"
+            },
+            {
+              "definition_id": "key",
+              "idempotency_key": "same-immutable-receipt"
+            }
+          ],
+          "probe": {
+            "pending": false,
+            "recovered": true,
+            "result": {
+              "credits": 9999900.0,
+              "item": {
+                "id": "one-authoritative-instance"
+              }
+            }
+          },
+          "command": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\OneDrive\\Documents\\Default Project\\sightbreak\\game",
+            "--script",
+            "C:\\Users\\blith\\OneDrive\\Documents\\Default Project\\sightbreak\\game\\tests\\transaction_crash_probe.gd"
+          ]
+        },
+        {
+          "kind": "case",
+          "boundary": "before_commit",
+          "recovered": true,
+          "mutation_count": 1,
+          "total_debit": 100,
+          "receipt_reused": true,
+          "credential_persisted": false,
+          "journal_before_kill": true,
+          "journal_after_recovery": false,
+          "requests": [
+            {
+              "case_id": "case-instance",
+              "idempotency_key": "same-immutable-receipt",
+              "key_id": "key-instance"
+            }
+          ],
+          "probe": {
+            "pending": false,
+            "recovered": true,
+            "result": {
+              "credits": 9999900.0,
+              "item": {
+                "id": "one-authoritative-instance"
+              }
+            }
+          },
+          "command": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\OneDrive\\Documents\\Default Project\\sightbreak\\game",
+            "--script",
+            "C:\\Users\\blith\\OneDrive\\Documents\\Default Project\\sightbreak\\game\\tests\\transaction_crash_probe.gd"
+          ]
+        },
+        {
+          "kind": "case",
+          "boundary": "after_commit",
+          "recovered": true,
+          "mutation_count": 1,
+          "total_debit": 100,
+          "receipt_reused": true,
+          "credential_persisted": false,
+          "journal_before_kill": true,
+          "journal_after_recovery": false,
+          "requests": [
+            {
+              "case_id": "case-instance",
+              "idempotency_key": "same-immutable-receipt",
+              "key_id": "key-instance"
+            },
+            {
+              "case_id": "case-instance",
+              "idempotency_key": "same-immutable-receipt",
+              "key_id": "key-instance"
+            }
+          ],
+          "probe": {
+            "pending": false,
+            "recovered": true,
+            "result": {
+              "credits": 9999900.0,
+              "item": {
+                "id": "one-authoritative-instance"
+              }
+            }
+          },
+          "command": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\OneDrive\\Documents\\Default Project\\sightbreak\\game",
+            "--script",
+            "C:\\Users\\blith\\OneDrive\\Documents\\Default Project\\sightbreak\\game\\tests\\transaction_crash_probe.gd"
+          ]
+        },
+        {
+          "kind": "market",
+          "boundary": "before_commit",
+          "recovered": true,
+          "mutation_count": 1,
+          "total_debit": 10000000,
+          "receipt_reused": true,
+          "credential_persisted": false,
+          "journal_before_kill": true,
+          "journal_after_recovery": false,
+          "requests": [
+            {
+              "expected_price": 10000000,
+              "idempotency_key": "same-immutable-receipt"
+            }
+          ],
+          "probe": {
+            "pending": false,
+            "recovered": true,
+            "result": {
+              "credits": 0.0,
+              "item": {
+                "id": "one-authoritative-instance"
+              }
+            }
+          },
+          "command": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\OneDrive\\Documents\\Default Project\\sightbreak\\game",
+            "--script",
+            "C:\\Users\\blith\\OneDrive\\Documents\\Default Project\\sightbreak\\game\\tests\\transaction_crash_probe.gd"
+          ]
+        },
+        {
+          "kind": "market",
+          "boundary": "after_commit",
+          "recovered": true,
+          "mutation_count": 1,
+          "total_debit": 10000000,
+          "receipt_reused": true,
+          "credential_persisted": false,
+          "journal_before_kill": true,
+          "journal_after_recovery": false,
+          "requests": [
+            {
+              "expected_price": 10000000,
+              "idempotency_key": "same-immutable-receipt"
+            },
+            {
+              "expected_price": 10000000,
+              "idempotency_key": "same-immutable-receipt"
+            }
+          ],
+          "probe": {
+            "pending": false,
+            "recovered": true,
+            "result": {
+              "credits": 0.0,
+              "item": {
+                "id": "one-authoritative-instance"
+              }
+            }
+          },
+          "command": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\OneDrive\\Documents\\Default Project\\sightbreak\\game",
+            "--script",
+            "C:\\Users\\blith\\OneDrive\\Documents\\Default Project\\sightbreak\\game\\tests\\transaction_crash_probe.gd"
+          ]
+        }
+      ],
+      "recovered": 18,
+      "total": 18
+    }
+  },
+  "pass": true
+}

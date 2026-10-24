@@ -1,0 +1,18 @@
+{"event": "client_started", "wall_ns": 1792439661064193900, "monotonic_ns": 257942768214000, "pid": 5864}
+{"event": "request_received", "wall_ns": 1792439661560816700, "monotonic_ns": 257943264845400, "body": {"case_id": "case-instance", "idempotency_key": "706cfebb-25de-5cce-8252-5f4a5548e5a4", "key_id": "key-instance"}}
+{"event": "before_commit_barrier", "wall_ns": 1792439661561377300, "monotonic_ns": 257943265405900}
+{"event": "kill_requested", "wall_ns": 1792439661562005400, "monotonic_ns": 257943266034200, "pid": 5864}
+{"event": "kill_confirmed", "wall_ns": 1792439661580657600, "monotonic_ns": 257943284686700, "pid": 5864, "returncode": 1}
+{"event": "recovery_started", "wall_ns": 1792439661594866900, "monotonic_ns": 257943298896300, "pid": 12768, "phase": "restarted-client"}
+{"event": "request_received", "wall_ns": 1792439662070331800, "monotonic_ns": 257943774369600, "body": {"case_id": "case-instance", "idempotency_key": "706cfebb-25de-5cce-8252-5f4a5548e5a4", "key_id": "key-instance"}}
+{"event": "retry_rejected_before_original_commit", "wall_ns": 1792439662071135900, "monotonic_ns": 257943775173800, "status": 409}
+{"event": "recovery_observation_before_kill", "wall_ns": 1792439662085510500, "monotonic_ns": 257943789548800, "pid": 12768, "phase": "restarted-client", "observation": {"pending": true, "recovered": false, "result": {"_error": "insufficient credits at retry time (409)", "_outcome": "rejected", "_status": 409, "_uncertain": false}}}
+{"event": "recovery_kill_requested", "wall_ns": 1792439662086103700, "monotonic_ns": 257943790141500, "pid": 12768, "phase": "restarted-client"}
+{"event": "recovery_kill_confirmed", "wall_ns": 1792439662107050700, "monotonic_ns": 257943811088900, "pid": 12768, "phase": "restarted-client", "returncode": 1}
+{"event": "recovery_finished", "wall_ns": 1792439662107520800, "monotonic_ns": 257943811558500, "pid": 12768, "returncode": 1, "phase": "restarted-client"}
+{"event": "original_commit_released_after_retry", "wall_ns": 1792439662109860000, "monotonic_ns": 257943813898300, "retained_rejection": true}
+{"event": "transaction_committed_or_replayed", "wall_ns": 1792439662145401900, "monotonic_ns": 257943849441200, "first": true}
+{"event": "recovery_started", "wall_ns": 1792439662162391800, "monotonic_ns": 257943866431200, "pid": 18412, "phase": "after-late-commit"}
+{"event": "request_received", "wall_ns": 1792439662632979400, "monotonic_ns": 257944337027500, "body": {"case_id": "case-instance", "idempotency_key": "706cfebb-25de-5cce-8252-5f4a5548e5a4", "key_id": "key-instance"}}
+{"event": "transaction_committed_or_replayed", "wall_ns": 1792439662655742900, "monotonic_ns": 257944359791700, "first": false}
+{"event": "recovery_finished", "wall_ns": 1792439662941226300, "monotonic_ns": 257944645280200, "pid": 18412, "returncode": 0, "phase": "after-late-commit"}

@@ -1,0 +1,215 @@
+{
+  "schema": 1,
+  "decision": "PASS for scoped record-backed source/binding/dataflow; original blind outcome unchanged",
+  "scope": "One price-400 case per source; no runtime tests or repository edits; original source reads only after outcome freeze",
+  "mapping_sha256": "4ef6ffc75a2ef410a55d576a273626c625582053aba5dc910c1e0bc3dbf19c86",
+  "evidence_commit": "e6fc11b2c103bb45551dd065bb9131851d072d50",
+  "publication_commit": "0e536d94621453adba5469303908536c6e58d952",
+  "original_frozen_artifacts_sha256": {
+    "VERDICT.md": "ce31d12d3def7e7b312ce1a44e30fc654290085796b3b0a5c2bd561e59c904af",
+    "independent-audit.json": "873b727b69b44eb2dd6d9116eb13d34b86e20b268c50783cb291f617ed957f39"
+  },
+  "transformation_audit": {
+    "unchanged_observations": 26,
+    "transformed_observations": 24,
+    "unchanged_sql_stages": 10,
+    "generated_payloads": 4,
+    "all_replays_exact": true,
+    "replacement_records_by_category": {
+      "private_journal_path": 8,
+      "probe_path": 14,
+      "withheld_source_sha256": 64,
+      "OS_environment_path": 72,
+      "private_fixture_path": 8,
+      "project_path": 8,
+      "executable_path": 8
+    },
+    "replacement_occurrences_by_category": {
+      "private_journal_path": 8,
+      "probe_path": 42,
+      "withheld_source_sha256": 96,
+      "OS_environment_path": 132,
+      "private_fixture_path": 24,
+      "project_path": 36,
+      "executable_path": 18
+    },
+    "controller_original_bindings_verified": 69,
+    "withheld_bindings_verified": 19,
+    "all_bound_original_blobs_equal_publication_blobs": true,
+    "zip_git_blob": "47c02e8c41fb4e7cb650839b3969c19013095635"
+  },
+  "frozen_harness": {
+    "commit": "7be70f73ec6a065849d902e7075d2b76e78bdd21",
+    "main_cherry_pick": "9e4fd4f6e1567fbc923d145982301e54afe3d0cc",
+    "file_sha256": {
+      "validate_native_transaction_restart.py": "168b2574f94a660f8fd62bf974136c6e55536e5896ea3ab08fa66e670e61885d",
+      "native_transaction_restart_probe.gd": "f33f1c7e52206aeb3ca54f4a5dc65e07d7e859b323b3b137367d6fd926d314ff"
+    },
+    "controller_copies_and_frozen_git_blobs_identical": true,
+    "cherry_pick_and_publication_scripts_identical": true,
+    "only_changed_paths_in_each_freeze_commit": [
+      "docs/reports/NATIVE_JOURNAL_ONLY_RESTART_PROTOCOL.md",
+      "scripts/native_transaction_restart_probe.gd",
+      "scripts/validate_native_transaction_restart.py"
+    ],
+    "game_and_backend_trees_unchanged_by_each_freeze_commit": true,
+    "prior_harness_diff_reviewed": "31438cbcea6ef08a131ae312c65b94f7e3e882c3"
+  },
+  "arms": {
+    "Set-829261D1": {
+      "source_commit": "7b6f379a3f8c809d0985a64e883cbadfdd78d135",
+      "arm": "candidate-7b6f379",
+      "game_tree": "026b711f887038a9e953b448dcad0f1208e5210b",
+      "backend_tree": "67027b4fa17674ef067c84401af76eb1524419ac",
+      "archive_sha256_reproduced": "2434610f47d0d7503d93cbab7155878fc886f48898c2f9fe85f6a4aaec6c9c01",
+      "complete_source_manifest_entries_verified": 307,
+      "archive_versus_git_LF_to_CRLF_only_files": 286,
+      "other_archive_versus_git_differences": [],
+      "relevant_archived_source_sha256": {
+        "driver": "168b2574f94a660f8fd62bf974136c6e55536e5896ea3ab08fa66e670e61885d",
+        "probe": "f33f1c7e52206aeb3ca54f4a5dc65e07d7e859b323b3b137367d6fd926d314ff",
+        "economy_ui": "310cb4e7aaf110efd6b6d8eebc221231bdb169665a3062b1bc13437af0f9a84b",
+        "economy_api": "246a50de1e68137715f2e1430b6c2f5cd42761f0d64acb26032e7f8668e81e7f",
+        "transaction_journal": "72fa6d9779e621f71d11b5686080c1c12f1f46846fe129be5004f4930a320117",
+        "backend_app": "78816607ee70fe47ae1f1c97f48d4d2a360eebe7c0e64ac73c296dfd53fb8121"
+      },
+      "phases": {
+        "send": {
+          "pid": 20004,
+          "fixture_bytes": 670,
+          "fixture_sha256": "0e86dec47b7f98ce4ac373eb14b167d9dc9a97fff4468358dce253ecf89d61af",
+          "published_redacted_config_bytes": 633,
+          "prelaunch_native_hash_length_keys_source_pid_order_match": true,
+          "redacted_file_hash_recomputed": true,
+          "raw_environment_sha256_recomputed": "f1202ff522071ffdc7acede7c65480223e3d5482cfda4101ce8ab8df9e89cd52",
+          "full_environment_and_argv_purchase_values_absent": true,
+          "native_sources_match_frozen_probe_and_shipping_archive": true,
+          "private_config_retained": false
+        },
+        "recovery": {
+          "pid": 1700,
+          "fixture_bytes": 337,
+          "fixture_sha256": "b579890c1d7cbf7ddf30fe9485b32d70372583c68d1424ba73ef0ed8c4e78c33",
+          "published_redacted_config_bytes": 300,
+          "prelaunch_native_hash_length_keys_source_pid_order_match": true,
+          "redacted_file_hash_recomputed": true,
+          "raw_environment_sha256_recomputed": "f1202ff522071ffdc7acede7c65480223e3d5482cfda4101ce8ab8df9e89cd52",
+          "full_environment_and_argv_purchase_values_absent": true,
+          "native_sources_match_frozen_probe_and_shipping_archive": true,
+          "private_config_retained": false
+        },
+        "second-restart": {
+          "pid": 22640,
+          "fixture_bytes": 337,
+          "fixture_sha256": "b579890c1d7cbf7ddf30fe9485b32d70372583c68d1424ba73ef0ed8c4e78c33",
+          "published_redacted_config_bytes": 300,
+          "prelaunch_native_hash_length_keys_source_pid_order_match": true,
+          "redacted_file_hash_recomputed": true,
+          "raw_environment_sha256_recomputed": "f1202ff522071ffdc7acede7c65480223e3d5482cfda4101ce8ab8df9e89cd52",
+          "full_environment_and_argv_purchase_values_absent": true,
+          "native_sources_match_frozen_probe_and_shipping_archive": true,
+          "private_config_retained": false
+        }
+      },
+      "cache_manifest_entries": 62,
+      "cache_manifest_sha256": "eed66f180bab939f5e99c4ff651389856e604b1d91e34f6c4f6378f699d38127",
+      "historical_archive_and_private_directory_retained": false,
+      "launcher_pid": 22072,
+      "timeline_harness_pid": 23504,
+      "service_launcher_pid": 22940,
+      "service_log_worker_pid": 25140,
+      "pid_ancestry_independently_attested": false
+    },
+    "Set-DB921BCA": {
+      "source_commit": "701ce2c4d7f8b2872cf1fefa64cb6edd0cd1a3fd",
+      "arm": "baseline-701",
+      "game_tree": "2d2b174c2145e9755ddfc78a1369e74443fcc400",
+      "backend_tree": "67027b4fa17674ef067c84401af76eb1524419ac",
+      "archive_sha256_reproduced": "e059f5e213b5f1375c96200da7a2a203d5e45b087037f171bcf756170c1fbe33",
+      "complete_source_manifest_entries_verified": 299,
+      "archive_versus_git_LF_to_CRLF_only_files": 278,
+      "other_archive_versus_git_differences": [],
+      "relevant_archived_source_sha256": {
+        "driver": "168b2574f94a660f8fd62bf974136c6e55536e5896ea3ab08fa66e670e61885d",
+        "probe": "f33f1c7e52206aeb3ca54f4a5dc65e07d7e859b323b3b137367d6fd926d314ff",
+        "economy_ui": "4dcf553e08180727f8aed9b5fd2543123f8b23d6dc63433beb33027550d2f236",
+        "economy_api": "246a50de1e68137715f2e1430b6c2f5cd42761f0d64acb26032e7f8668e81e7f",
+        "transaction_journal": "",
+        "backend_app": "78816607ee70fe47ae1f1c97f48d4d2a360eebe7c0e64ac73c296dfd53fb8121"
+      },
+      "phases": {
+        "send": {
+          "pid": 23852,
+          "fixture_bytes": 670,
+          "fixture_sha256": "6c88e6d480005952c917e3fd7dee0cdaeaa7bcaf8c3cfc215d09c4aa9f6b3ecb",
+          "published_redacted_config_bytes": 633,
+          "prelaunch_native_hash_length_keys_source_pid_order_match": true,
+          "redacted_file_hash_recomputed": true,
+          "raw_environment_sha256_recomputed": "8ad3fdbe949e6324b94168e80dbdc6335536bfaf96f77dcbda84d4cb2f3aefc2",
+          "full_environment_and_argv_purchase_values_absent": true,
+          "native_sources_match_frozen_probe_and_shipping_archive": true,
+          "private_config_retained": false
+        },
+        "recovery": {
+          "pid": 28396,
+          "fixture_bytes": 337,
+          "fixture_sha256": "baf7f9d638e37be2fe5581a9f3c98afc8aad8c8e874570be3f857d287e1bd1b2",
+          "published_redacted_config_bytes": 300,
+          "prelaunch_native_hash_length_keys_source_pid_order_match": true,
+          "redacted_file_hash_recomputed": true,
+          "raw_environment_sha256_recomputed": "8ad3fdbe949e6324b94168e80dbdc6335536bfaf96f77dcbda84d4cb2f3aefc2",
+          "full_environment_and_argv_purchase_values_absent": true,
+          "native_sources_match_frozen_probe_and_shipping_archive": true,
+          "private_config_retained": false
+        },
+        "second-restart": {
+          "pid": 13500,
+          "fixture_bytes": 337,
+          "fixture_sha256": "baf7f9d638e37be2fe5581a9f3c98afc8aad8c8e874570be3f857d287e1bd1b2",
+          "published_redacted_config_bytes": 300,
+          "prelaunch_native_hash_length_keys_source_pid_order_match": true,
+          "redacted_file_hash_recomputed": true,
+          "raw_environment_sha256_recomputed": "8ad3fdbe949e6324b94168e80dbdc6335536bfaf96f77dcbda84d4cb2f3aefc2",
+          "full_environment_and_argv_purchase_values_absent": true,
+          "native_sources_match_frozen_probe_and_shipping_archive": true,
+          "private_config_retained": false
+        }
+      },
+      "cache_manifest_entries": 62,
+      "cache_manifest_sha256": "0adfef4551e349d412e916dd9a57a1b881788555919b33156c66be31f0890b46",
+      "historical_archive_and_private_directory_retained": false,
+      "launcher_pid": 9004,
+      "timeline_harness_pid": 20728,
+      "service_launcher_pid": 11864,
+      "service_log_worker_pid": 12004,
+      "pid_ancestry_independently_attested": false
+    }
+  },
+  "executable_current_file": {
+    "path": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+    "exists": false,
+    "executed": false
+  },
+  "source_reasoning": {
+    "probe_retry": "Frozen probe lines 17-30 read/hash the same parsed text and enforce six retry keys; lines 31-39 set only journal path before UI startup; lines 43-58 authenticate then call zero-argument _retry_pending. Purchase normalization and _perform are send-only.",
+    "driver_input_boundary": "Frozen driver lines 361-394 truncate/capture the same fixture; 424-426 supply only allowlisted environment and fixed argv/cwd; 460-463 build retry_config from exactly RETRY_CONFIG_KEYS. Original transaction remains driver-side oracle context, not a retry argument. --expect-recovered is checked only in final acceptance.",
+    "candidate": "UI lines 65-77 load journal; 504-527 retry requires same owner/server and fresh token, claims captured pending, and sends its path/payload/message/method. Journal lines 34-44 reread/check equality; 51-74 parse/validate/restore integer price; 76-102 stage before dispatch; 113-120 clear on successful resolution. UI 554-582 returns actual HTTP result after refresh.",
+    "baseline": "UI has no journal source/property or startup load. _perform at 509-531 only creates in-memory pending after an uncertain response; _retry_pending at 495-507 returns empty on fresh startup.",
+    "server_and_capture": "API lines 47-79 serializes supplied payload and returns decoded HTTP result. Proxy forwards actual bytes upstream, holds/discards only first response, and forwards retry upstream result. PostgreSQL market_buy replays matching stored Operation before settlement; independent repeatable-read snapshot uses a new connection."
+  },
+  "prior_source_closure_reuse": {
+    "path": "docs\\reports\\native-pg-restart-evidence\\source-binding\\source-binding-completion.json",
+    "sha256": "46c1372312f850df23483f1cc85553bb66c198ef0435974bd320f87db1219b1b",
+    "use": "Reused only as prior bound on identical shipping revisions/backend and disclosed cache/ancestry limits. New archive/input/source bindings and dataflow independently checked here; prior three-price runs are not evidence of the new run."
+  },
+  "remaining_limits": [
+    "Original secret-bearing fixture files and seeded-private.json are absent at their recorded paths. Redacted configs plus source explain their 37-byte password-length difference, but cannot reconstruct the private SHA256 or plaintext token digests.",
+    "Complete source archives reproduce; historical copied cache payloads are not retained in these records. Each 62-entry manifest and same-game-tree identity is bound, not independent historical execution attestation.",
+    "On-disk source hashes, clean-checkout/source-unchanged flags and raw traces are recorder-backed. Loaded/preloaded code, machine execution, and launcher/worker PID ancestry are not independently authenticated.",
+    "journal_snapshot exists is bool(raw): its absence record alone cannot distinguish a nonexistent file from an existing zero-byte file. Baseline source has no persistent journal path and recovered result remains empty either way.",
+    "Producer authoritative_pass/complete_result refer to common settlement invariants; stable_journal_at_kill can mean stable absence. The frozen outcome failure of baseline remains intact.",
+    "No OS sandbox or exhaustive file-access trace. Source dataflow and supplied-input absence are accepted within the declared honest-recorder causal-control scope, without adversarial non-access claims."
+  ],
+  "strongest_remaining_gap": "Unauthenticated historical machine/cache/loaded-code execution and PID ancestry, rather than an unresolved inspected-source dataflow or transformation mismatch. This is a stated limit, not a blocker for scoped record-backed acceptance.",
+  "unresolved_source_or_transformation_blockers": []
+}

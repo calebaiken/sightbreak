@@ -1,0 +1,14 @@
+{"event": "client_started", "wall_ns": 1792439639490783000, "monotonic_ns": 257921194414800, "pid": 9404}
+{"event": "request_received", "wall_ns": 1792439639969540800, "monotonic_ns": 257921673181500, "body": {"case_id": "case-instance", "idempotency_key": "6539293c-a89d-530b-bc57-14b77f30b6eb", "key_id": "key-instance"}}
+{"event": "before_commit_barrier", "wall_ns": 1792439639970197500, "monotonic_ns": 257921673837500}
+{"event": "kill_requested", "wall_ns": 1792439639970884000, "monotonic_ns": 257921674523900, "pid": 9404}
+{"event": "kill_confirmed", "wall_ns": 1792439639990240700, "monotonic_ns": 257921693880900, "pid": 9404, "returncode": 1}
+{"event": "recovery_started", "wall_ns": 1792439640001355800, "monotonic_ns": 257921704996400, "pid": 23580, "phase": "restarted-client"}
+{"event": "recovery_observation_before_kill", "wall_ns": 1792439640430408400, "monotonic_ns": 257922134056700, "pid": 23580, "phase": "restarted-client", "observation": {"reason": "no pending receipt after process restart", "recovered": false}}
+{"event": "recovery_kill_requested", "wall_ns": 1792439640431009400, "monotonic_ns": 257922134657600, "pid": 23580, "phase": "restarted-client"}
+{"event": "recovery_kill_confirmed", "wall_ns": 1792439640450597900, "monotonic_ns": 257922154246600, "pid": 23580, "phase": "restarted-client", "returncode": 1}
+{"event": "recovery_finished", "wall_ns": 1792439640451121100, "monotonic_ns": 257922154769300, "pid": 23580, "returncode": 1, "phase": "restarted-client"}
+{"event": "original_commit_released_after_retry", "wall_ns": 1792439640452634100, "monotonic_ns": 257922156282700, "retained_rejection": false}
+{"event": "transaction_committed_or_replayed", "wall_ns": 1792439640478610500, "monotonic_ns": 257922182260000, "first": true}
+{"event": "recovery_started", "wall_ns": 1792439640489419200, "monotonic_ns": 257922193068300, "pid": 22884, "phase": "after-late-commit"}
+{"event": "recovery_finished", "wall_ns": 1792439641078677700, "monotonic_ns": 257922782338200, "pid": 22884, "returncode": 0, "phase": "after-late-commit"}

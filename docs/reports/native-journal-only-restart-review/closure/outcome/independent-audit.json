@@ -1,0 +1,224 @@
+{
+  "schema": 1,
+  "scope": "One price-400 stable native-client termination case per arm; committed live PostgreSQL; supplied six-key restart inputs.",
+  "identity_accessed": false,
+  "method": "Independent offline parsing, byte hashes, full-row diffs, full receipt comparisons and trace joins; no application/database/network execution.",
+  "integrity": {
+    "zip_sha256": "7a12ec5de2b8344794c60eab1b83cc116f40de5b0cf0360e6cc0a6e84032625f",
+    "manifest_sha256": "26ff68587ab032c55d27cbfc56adcb8d45aa5b377d7aac947516b94a7e4fc2b4",
+    "payload_files_verified": 54,
+    "economic_snapshots_verified": 10,
+    "missing_or_extra_files": [],
+    "hash_or_length_failures": []
+  },
+  "minimal_restart_keys": [
+    "journal",
+    "mode",
+    "owner",
+    "password",
+    "url",
+    "username"
+  ],
+  "arms": {
+    "Set-829261D1": {
+      "status": "supported",
+      "exact_recovery_cases": 1,
+      "cases": 1,
+      "launch_bindings": {
+        "send": {
+          "pid": 20004,
+          "fixture_bytes": 670,
+          "fixture_sha256": "0e86dec47b7f98ce4ac373eb14b167d9dc9a97fff4468358dce253ecf89d61af",
+          "hash_length_keys_pid_and_order_match": true
+        },
+        "recovery": {
+          "pid": 1700,
+          "fixture_bytes": 337,
+          "fixture_sha256": "b579890c1d7cbf7ddf30fe9485b32d70372583c68d1424ba73ef0ed8c4e78c33",
+          "hash_length_keys_pid_and_order_match": true
+        },
+        "second-restart": {
+          "pid": 22640,
+          "fixture_bytes": 337,
+          "fixture_sha256": "b579890c1d7cbf7ddf30fe9485b32d70372583c68d1424ba73ef0ed8c4e78c33",
+          "hash_length_keys_pid_and_order_match": true
+        }
+      },
+      "visible_restart_purchase_inputs_absent": true,
+      "private_fixture_bytes_independently_available": false,
+      "unneutralized_environment_and_source_hashes_available": false,
+      "fresh_same_owner_session_digests": {
+        "send": "df3e37dc1e68f21d8c3fcd2bd214d774681efbe87b56ea708a49e71fbc9c1ca9",
+        "recovery": "6a8d8fe25e57a4c0379a295d3bd888412054d5dfd469d024dca0586d8edf62cc",
+        "second-restart": "b3f87b03bc21f14ed73b3ee8006529a46d9246dafc350661f90182987afd29f6"
+      },
+      "session_counts_by_stage": [
+        2,
+        3,
+        3,
+        4,
+        5
+      ],
+      "all_session_additions_and_expirations_match_login": true,
+      "commit_hold_kill_exit_discard_restart_order_valid": true,
+      "original_purchase_response_delivery_events": 0,
+      "held_and_discarded_response_bytes": 0,
+      "all_five_snapshot_hash_and_connection_pid_bindings_match": true,
+      "initial_settlements": 1,
+      "buyer_debit": 400,
+      "seller_credit": 388,
+      "fee_burn": 12,
+      "initial_row_counts": {
+        "audit": 2,
+        "items": 1,
+        "ledger": 2,
+        "listings": 1,
+        "loadouts": 0,
+        "operations": 0,
+        "players": 2,
+        "rewards": 0,
+        "trades": 0
+      },
+      "committed_row_counts": {
+        "audit": 3,
+        "items": 1,
+        "ledger": 4,
+        "listings": 1,
+        "loadouts": 0,
+        "operations": 1,
+        "players": 2,
+        "rewards": 0,
+        "trades": 0
+      },
+      "all_economic_rows_equal_commit_after_kill_and_both_restarts": true,
+      "operation_id": "03cb151e-511a-451b-93ca-2543276833c7:buy:e056813c-4926-4000-8daa-eac8d6f2d48f:5738ac06-1b84-446c-9f72-77215c6e5809",
+      "operation_request_hash_matches_original_utf8_sha256": "9f5ead2d6a450eff27899d6118ce0ee972bbe29137ef8e5c4ea6090c50458908",
+      "committed_economic_sha256_sorted_default_json": "c45eaf85963a37d8731d2ec8e3a0b8229b0b8707b2d7639e66e65059055fe13a",
+      "journal_present_before_and_after_kill": true,
+      "journal_bytes_after_kill": 303,
+      "journal_sha256_after_kill": "4b860b00769605d69b5710e9d7ef6db162b131ada98c886195f2cee99b3d024c",
+      "pending_restored_exactly_from_captured_record": true,
+      "purchase_counts": {
+        "send": 1,
+        "recovery": 1,
+        "second-restart": 0
+      },
+      "retry_request_bytes_equal_original": true,
+      "all_observed_purchase_expected_prices_are_strict_integers": true,
+      "original_wire_equals_persisted_full_receipt": true,
+      "recovery_wire_equals_persisted_full_receipt": true,
+      "recovery_native_equals_persisted_full_receipt_numeric_semantics": true,
+      "second_restart_empty_pending_and_no_purchase": true,
+      "stderr_bytes_total": 0,
+      "raw_observation_consistency_failures": [],
+      "negative_findings": []
+    },
+    "Set-DB921BCA": {
+      "status": "failed",
+      "exact_recovery_cases": 0,
+      "cases": 1,
+      "launch_bindings": {
+        "send": {
+          "pid": 23852,
+          "fixture_bytes": 670,
+          "fixture_sha256": "6c88e6d480005952c917e3fd7dee0cdaeaa7bcaf8c3cfc215d09c4aa9f6b3ecb",
+          "hash_length_keys_pid_and_order_match": true
+        },
+        "recovery": {
+          "pid": 28396,
+          "fixture_bytes": 337,
+          "fixture_sha256": "baf7f9d638e37be2fe5581a9f3c98afc8aad8c8e874570be3f857d287e1bd1b2",
+          "hash_length_keys_pid_and_order_match": true
+        },
+        "second-restart": {
+          "pid": 13500,
+          "fixture_bytes": 337,
+          "fixture_sha256": "baf7f9d638e37be2fe5581a9f3c98afc8aad8c8e874570be3f857d287e1bd1b2",
+          "hash_length_keys_pid_and_order_match": true
+        }
+      },
+      "visible_restart_purchase_inputs_absent": true,
+      "private_fixture_bytes_independently_available": false,
+      "unneutralized_environment_and_source_hashes_available": false,
+      "fresh_same_owner_session_digests": {
+        "send": "c24de32edd2b2225df3870db6cdb4eb538f8b26f26baa67b89cf8c682e2a9c56",
+        "recovery": "e896e1da3ae6866978273b4cc109e6f8857204d2eba3346d4aeae01f9832b6d1",
+        "second-restart": "ab881d3ad6744c3b9d2acf1b9acc8e8ae2cf525798a02e987f68c3b7dca5076b"
+      },
+      "session_counts_by_stage": [
+        2,
+        3,
+        3,
+        4,
+        5
+      ],
+      "all_session_additions_and_expirations_match_login": true,
+      "commit_hold_kill_exit_discard_restart_order_valid": true,
+      "original_purchase_response_delivery_events": 0,
+      "held_and_discarded_response_bytes": 0,
+      "all_five_snapshot_hash_and_connection_pid_bindings_match": true,
+      "initial_settlements": 1,
+      "buyer_debit": 400,
+      "seller_credit": 388,
+      "fee_burn": 12,
+      "initial_row_counts": {
+        "audit": 2,
+        "items": 1,
+        "ledger": 2,
+        "listings": 1,
+        "loadouts": 0,
+        "operations": 0,
+        "players": 2,
+        "rewards": 0,
+        "trades": 0
+      },
+      "committed_row_counts": {
+        "audit": 3,
+        "items": 1,
+        "ledger": 4,
+        "listings": 1,
+        "loadouts": 0,
+        "operations": 1,
+        "players": 2,
+        "rewards": 0,
+        "trades": 0
+      },
+      "all_economic_rows_equal_commit_after_kill_and_both_restarts": true,
+      "operation_id": "69106eca-e517-4e7c-8ea9-e011d813edd6:buy:bcd963c4-9bba-434d-9731-998a2f9e53d1:7fe3e901-a046-4f33-b048-6a353e36b910",
+      "operation_request_hash_matches_original_utf8_sha256": "b1f1399e9931cd12aa72f9ff43558550cb68bfffeda7ac7f9fc5b86928e43df1",
+      "committed_economic_sha256_sorted_default_json": "1f48ec829fa1adac731438bcd33d0bfe7012a71b277ed7e2706cb03ab91228f9",
+      "journal_present_before_and_after_kill": false,
+      "journal_bytes_after_kill": 0,
+      "journal_sha256_after_kill": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "pending_restored_exactly_from_captured_record": false,
+      "purchase_counts": {
+        "send": 1,
+        "recovery": 0,
+        "second-restart": 0
+      },
+      "retry_request_bytes_equal_original": null,
+      "all_observed_purchase_expected_prices_are_strict_integers": true,
+      "original_wire_equals_persisted_full_receipt": true,
+      "recovery_wire_equals_persisted_full_receipt": false,
+      "recovery_native_equals_persisted_full_receipt_numeric_semantics": false,
+      "second_restart_empty_pending_and_no_purchase": true,
+      "stderr_bytes_total": 0,
+      "raw_observation_consistency_failures": [],
+      "negative_findings": [
+        "No journal exists before or after termination.",
+        "No restored pending transaction or recovery purchase; completed.result is empty despite refreshed balances/inventory.",
+        "Producer authoritative_pass and complete_result are true but do not establish recovery; stable_journal_at_kill is stable absence."
+      ]
+    }
+  },
+  "decision": "win",
+  "winner": "Set-829261D1",
+  "strongest_remaining_gap": "Source-execution provenance is withheld: role placeholders cannot verify the actual driver/probe/app source digests, loaded implementation, or exclusive journal derivation. Cross-process fixture hash/length/key matches support supplied-input absence but do not independently reveal redacted secrets or neutralized path/environment values. This limits attribution, not the observed neutral-label outcome.",
+  "other_preserved_limits": [
+    "Hashes verify supplied packet bytes, not external original-file history or recorder authenticity.",
+    "Original private fixture, pre-neutralization redacted-fixture and environment hashes cannot be rederived from transformed copies.",
+    "Journal survival is measured at a stable termination boundary; no interrupted-write or power-loss claim.",
+    "No OS sandbox or independent file-access trace is supplied; absence in config/environment/argv is not absence from all host files or loaded code.",
+    "This is native headless direct-method receipt recovery; no broader acceptance or extra variation is required by this verdict."
+  ]
+}

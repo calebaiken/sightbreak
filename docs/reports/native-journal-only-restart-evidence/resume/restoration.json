@@ -1,0 +1,30 @@
+{
+  "command": [
+    "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-backend-trade-env\\pgsql\\bin\\pg_ctl.exe",
+    "-D",
+    "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-backend-trade-env\\data",
+    "-l",
+    "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-pr18-native-restart\\.runtime\\native-journal-only-resume\\postgres.log",
+    "-o",
+    "-h 127.0.0.1 -p 55439 -c max_connections=30 -c shared_buffers=32MB",
+    "-t",
+    "30",
+    "-w",
+    "start"
+  ],
+  "started_wall_ns": 1792831101680664400,
+  "preceding_pg_ctl_status": "no server running (retained tool result after session restart)",
+  "existing_postmaster_pid": "15416\nC:/Users/blith/AppData/Local/Temp/opencode/sightbreak-backend-trade-env/data\n1792718754\n55439\n\n127.0.0.1\n\nready   \n",
+  "existing_postmaster_opts": "C:/Users/blith/AppData/Local/Temp/opencode/sightbreak-backend-trade-env/pgsql/bin/postgres.exe \"-D\" \"C:/Users/blith/AppData/Local/Temp/opencode/sightbreak-backend-trade-env/data\" \"-h\" \"127.0.0.1\" \"-p\" \"55439\" \"-c\" \"max_connections=30\" \"-c\" \"shared_buffers=32MB\"\n",
+  "controller_pid": 19792,
+  "returncode": 0,
+  "health": [
+    "PostgreSQL 17.11 on x86_64-windows, compiled by msvc-19.44.35229, 64-bit",
+    55439,
+    10900,
+    "C:/Users/blith/AppData/Local/Temp/opencode/sightbreak-backend-trade-env/data",
+    "2026-10-24 04:38:22.500538-04:00"
+  ],
+  "failed_attempt_database_absent": true,
+  "finished_wall_ns": 1792831108329371100
+}

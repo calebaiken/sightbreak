@@ -1,0 +1,14 @@
+{"event": "client_started", "wall_ns": 1792439633205540500, "monotonic_ns": 257914909059400, "pid": 24420}
+{"event": "request_received", "wall_ns": 1792439633648918500, "monotonic_ns": 257915352444200, "body": {"case_id": "case-instance", "idempotency_key": "706cfebb-25de-5cce-8252-5f4a5548e5a4", "key_id": "key-instance"}}
+{"event": "before_commit_barrier", "wall_ns": 1792439633649319300, "monotonic_ns": 257915352844900}
+{"event": "kill_requested", "wall_ns": 1792439633650209400, "monotonic_ns": 257915353736400, "pid": 24420}
+{"event": "kill_confirmed", "wall_ns": 1792439633669958800, "monotonic_ns": 257915373485700, "pid": 24420, "returncode": 1}
+{"event": "recovery_started", "wall_ns": 1792439633682062600, "monotonic_ns": 257915385589900, "pid": 24568, "phase": "restarted-client"}
+{"event": "recovery_observation_before_kill", "wall_ns": 1792439634102813900, "monotonic_ns": 257915806348200, "pid": 24568, "phase": "restarted-client", "observation": {"reason": "no pending receipt after process restart", "recovered": false}}
+{"event": "recovery_kill_requested", "wall_ns": 1792439634103449000, "monotonic_ns": 257915806983400, "pid": 24568, "phase": "restarted-client"}
+{"event": "recovery_kill_confirmed", "wall_ns": 1792439634124305700, "monotonic_ns": 257915827841300, "pid": 24568, "phase": "restarted-client", "returncode": 1}
+{"event": "recovery_finished", "wall_ns": 1792439634125137700, "monotonic_ns": 257915828672400, "pid": 24568, "returncode": 1, "phase": "restarted-client"}
+{"event": "original_commit_released_after_retry", "wall_ns": 1792439634129602600, "monotonic_ns": 257915833137200, "retained_rejection": false}
+{"event": "transaction_committed_or_replayed", "wall_ns": 1792439634151863900, "monotonic_ns": 257915855399500, "first": true}
+{"event": "recovery_started", "wall_ns": 1792439634162921300, "monotonic_ns": 257915866457000, "pid": 10192, "phase": "after-late-commit"}
+{"event": "recovery_finished", "wall_ns": 1792439634653530500, "monotonic_ns": 257916357075000, "pid": 10192, "returncode": 0, "phase": "after-late-commit"}

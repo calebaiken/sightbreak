@@ -1,0 +1,15 @@
+{"event": "client_started", "wall_ns": 1792438448373553300, "monotonic_ns": 256730055745400, "pid": 24020}
+{"event": "request_received", "wall_ns": 1792438449456867100, "monotonic_ns": 256731139079000, "body": {"case_id": "case-instance", "idempotency_key": "d8afe3c8-41d0-5efd-b1f7-cd831fefed23", "key_id": "key-instance"}}
+{"event": "before_commit_barrier", "wall_ns": 1792438449457960000, "monotonic_ns": 256731140171400}
+{"event": "kill_requested", "wall_ns": 1792438449459282500, "monotonic_ns": 256731141493600, "pid": 24020}
+{"event": "kill_confirmed", "wall_ns": 1792438449484904600, "monotonic_ns": 256731167116300, "pid": 24020, "returncode": 1}
+{"event": "recovery_started", "wall_ns": 1792438449515678400, "monotonic_ns": 256731197891200, "pid": 23008, "phase": "restarted-client"}
+{"event": "request_received", "wall_ns": 1792438450581352300, "monotonic_ns": 256732263583600, "body": {"case_id": "case-instance", "idempotency_key": "d8afe3c8-41d0-5efd-b1f7-cd831fefed23", "key_id": "key-instance"}}
+{"event": "retry_rejected_before_original_commit", "wall_ns": 1792438450582553300, "monotonic_ns": 256732264784900, "status": 409}
+{"event": "recovery_finished", "wall_ns": 1792438450754402800, "monotonic_ns": 256732436637700, "pid": 23008, "returncode": 0, "phase": "restarted-client"}
+{"event": "original_commit_released_after_retry", "wall_ns": 1792438450757919700, "monotonic_ns": 256732440154600, "retained_rejection": true}
+{"event": "transaction_committed_or_replayed", "wall_ns": 1792438450778770000, "monotonic_ns": 256732461005100, "first": true}
+{"event": "recovery_started", "wall_ns": 1792438450801984800, "monotonic_ns": 256732484220800, "pid": 7460, "phase": "after-late-commit"}
+{"event": "request_received", "wall_ns": 1792438451837768900, "monotonic_ns": 256733520023300, "body": {"case_id": "case-instance", "idempotency_key": "d8afe3c8-41d0-5efd-b1f7-cd831fefed23", "key_id": "key-instance"}}
+{"event": "transaction_committed_or_replayed", "wall_ns": 1792438451858796200, "monotonic_ns": 256733541050500, "first": false}
+{"event": "recovery_finished", "wall_ns": 1792438452250722300, "monotonic_ns": 256733932984400, "pid": 7460, "returncode": 0, "phase": "after-late-commit"}

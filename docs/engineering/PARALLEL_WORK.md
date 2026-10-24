@@ -1,6 +1,16 @@
 # Parallel engineering work
 
-## Current integration checkpoint — 2026-10-14
+## Current systems coordination — 2026-10-19
+
+Astra owns the independently reviewable systems slices in PRs #18–#21; Sol owns
+integration and independent QA in [PR #17](https://github.com/calebaiken/sightbreak/pull/17).
+The frozen reference is `701ce2c4d7f8b2872cf1fefa64cb6edd0cd1a3fd`, with PR #16
+`d2439ac` as the development base. Follow the [live systems progress page](SYSTEMS_V3_PROGRESS.md)
+for exact candidates, reconciled PR #3–#8/#10/#15 history, evidence and review status.
+Protocol 6 remains matched, prediction defaults off, and live rewind stays disabled.
+The ownership and Claude/Gemini interface contracts below continue to apply.
+
+## Historical integration checkpoint — 2026-10-14
 
 - Active Codex validation branch: `integration/sightbreak-network-art-preview`, draft [PR9](https://github.com/calebaiken/sightbreak/pull/9), base `codex/network-validation-builds`. Tested/export source60cf125; later documentation commits retain that identity.
 - Main remains e67f2c8. Dependencies: PR1=98ff57c, PR2=64ec598, PR3–8 stack tip89c0e9. Source PR branches and main are untouched by this work; no automatic merges or force pushes.
@@ -10,7 +20,7 @@
 - GitHub API works now; findings posted to PR1,PR2,PR5. This is actual GitHub coordination, not direct communication with Claude.
 - Correct/reverify PR1, reconcile PR3→8 in order, and independently accept PR2 before final integration. Lifecycle needs backend ticket inspection; outbox needs persistent launcher/worker/backend. Keep protocol5 matched, prediction off by default, live rewind disabled. PR9 must not bypass constituent review.
 
-## Historical record (superseded where noted above)
+## Historical record (superseded by the current coordination above)
 
 ## Verified baseline — 2026-10-13
 

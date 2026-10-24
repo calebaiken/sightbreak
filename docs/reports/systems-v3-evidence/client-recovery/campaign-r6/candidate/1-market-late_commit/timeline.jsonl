@@ -1,0 +1,15 @@
+{"event": "client_started", "wall_ns": 1792438996750265000, "monotonic_ns": 257278442326900, "pid": 10040}
+{"event": "request_received", "wall_ns": 1792438997267848900, "monotonic_ns": 257278959920000, "body": {"expected_price": 10000000, "idempotency_key": "9b9b8ab9-425e-5834-b343-9513459c82f7"}}
+{"event": "before_commit_barrier", "wall_ns": 1792438997268508500, "monotonic_ns": 257278960579800}
+{"event": "kill_requested", "wall_ns": 1792438997269118900, "monotonic_ns": 257278961189800, "pid": 10040}
+{"event": "kill_confirmed", "wall_ns": 1792438997284540800, "monotonic_ns": 257278976612600, "pid": 10040, "returncode": 1}
+{"event": "recovery_started", "wall_ns": 1792438997301005600, "monotonic_ns": 257278993078600, "pid": 20188, "phase": "restarted-client"}
+{"event": "request_received", "wall_ns": 1792438997875292700, "monotonic_ns": 257279567375100, "body": {"expected_price": 10000000, "idempotency_key": "9b9b8ab9-425e-5834-b343-9513459c82f7"}}
+{"event": "retry_rejected_before_original_commit", "wall_ns": 1792438997875959700, "monotonic_ns": 257279568042000, "status": 409}
+{"event": "recovery_finished", "wall_ns": 1792438998072529700, "monotonic_ns": 257279764616000, "pid": 20188, "returncode": 0, "phase": "restarted-client"}
+{"event": "original_commit_released_after_retry", "wall_ns": 1792438998075065700, "monotonic_ns": 257279767151600, "retained_rejection": true}
+{"event": "transaction_committed_or_replayed", "wall_ns": 1792438998691552700, "monotonic_ns": 257280383650000, "first": true}
+{"event": "recovery_started", "wall_ns": 1792438998703353200, "monotonic_ns": 257280395450800, "pid": 14372, "phase": "after-late-commit"}
+{"event": "request_received", "wall_ns": 1792438999208890900, "monotonic_ns": 257280900996900, "body": {"expected_price": 10000000, "idempotency_key": "9b9b8ab9-425e-5834-b343-9513459c82f7"}}
+{"event": "transaction_committed_or_replayed", "wall_ns": 1792438999236210400, "monotonic_ns": 257280928317500, "first": false}
+{"event": "recovery_finished", "wall_ns": 1792438999469478900, "monotonic_ns": 257281161589800, "pid": 14372, "returncode": 0, "phase": "after-late-commit"}

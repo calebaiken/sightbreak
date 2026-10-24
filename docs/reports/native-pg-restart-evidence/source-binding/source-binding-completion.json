@@ -1,0 +1,68 @@
+{
+  "verdict": "PASS for bounded source/artifact binding; blind WIN retained separately",
+  "prior_audit_sha256": "9f74ce4f0ac3f8a0a53b4ff26470c1543ca7e978656aae06d2bfd10544d982fc",
+  "blind_verdict_sha256": "750bfb02e65f3f348567b8bf453b4387f931c70549d7c50469d377fc63bec2ee",
+  "mapping_sha256": "70a6936e0ebca5b38559fe013d18b0174cf1689bd6fb85788b059b613c70b2bd",
+  "completed_observation_audit_counts": {
+    "observations": 114,
+    "unchanged_observations": 84,
+    "transformed_observations": 30,
+    "sql_stage_files_byte_identical": 30,
+    "generated_aids": 7,
+    "ancillary_bound_files": 12,
+    "unique_original_bindings": 130,
+    "transformed_path_occurrences": {
+      "private_journal_path": 6,
+      "external_probe_path": 90,
+      "project_path": 18,
+      "executable_path": 18
+    }
+  },
+  "source_archive_resolution": [
+    {
+      "label": "Set-673EECBC",
+      "source_manifest_entries_verified_in_saved_audit": 299,
+      "only_LF_to_CRLF_differences_from_git_blobs": 278,
+      "reproduced_archive_sha256_previously_verified": "e059f5e213b5f1375c96200da7a2a203d5e45b087037f171bcf756170c1fbe33",
+      "relevant_archived_byte_digests": {
+        "backend/app.py": "78816607ee70fe47ae1f1c97f48d4d2a360eebe7c0e64ac73c296dfd53fb8121",
+        "game/scripts/ui/economy_api.gd": "246a50de1e68137715f2e1430b6c2f5cd42761f0d64acb26032e7f8668e81e7f",
+        "game/scripts/ui/economy_ui.gd": "4dcf553e08180727f8aed9b5fd2543123f8b23d6dc63433beb33027550d2f236"
+      },
+      "resolution": "The earlier direct-Git-byte equality assumption was too strong. The complete measured Git archive matched both the recorded archive SHA256 and every source-manifest entry. All blob/archive differences were independently checked to be only LF-to-CRLF conversion."
+    },
+    {
+      "label": "Set-8F5F7604",
+      "source_manifest_entries_verified_in_saved_audit": 307,
+      "only_LF_to_CRLF_differences_from_git_blobs": 286,
+      "reproduced_archive_sha256_previously_verified": "2434610f47d0d7503d93cbab7155878fc886f48898c2f9fe85f6a4aaec6c9c01",
+      "relevant_archived_byte_digests": {
+        "backend/app.py": "78816607ee70fe47ae1f1c97f48d4d2a360eebe7c0e64ac73c296dfd53fb8121",
+        "game/scripts/ui/economy_api.gd": "246a50de1e68137715f2e1430b6c2f5cd42761f0d64acb26032e7f8668e81e7f",
+        "game/scripts/ui/economy_ui.gd": "310cb4e7aaf110efd6b6d8eebc221231bdb169665a3062b1bc13437af0f9a84b",
+        "game/scripts/ui/transaction_journal.gd": "72fa6d9779e621f71d11b5686080c1c12f1f46846fe129be5004f4930a320117"
+      },
+      "resolution": "The earlier direct-Git-byte equality assumption was too strong. The complete measured Git archive matched both the recorded archive SHA256 and every source-manifest entry. All blob/archive differences were independently checked to be only LF-to-CRLF conversion."
+    }
+  ],
+  "ancillary_resolution": "Before interruption, the original executed probe matched the reproduced candidate archive exactly; the calibrated version differed by exactly one unreachable-address literal. The original raw-Git mismatch was the same newline conversion.",
+  "current_probe_resolution_at_source_inspection": "2475 working-tree bytes versus 2424 frozen bytes; independently verified identical after CRLF-to-LF normalization. The frozen probe, retained executed copies, summary digests, and controller copy matched byte-for-byte.",
+  "executable": {
+    "path": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+    "exists_now": true,
+    "executed_by_this_audit": false,
+    "current_bytes_sha256": "ab1824f85bfd8e0e4128182c000c4003a3e042245b2967848d089b2a04b22424",
+    "matches_recorded_pin": true
+  },
+  "unexplained_source_or_transform_mismatches": [],
+  "fixture_assisted_dataflow_concern": "Closed at inspected-source level: driver retry supplies no path/payload; UI loads, claims, and sends the journal transaction. Fixture expected_price is unconditionally read only for normalization, and is not used as recovery input.",
+  "minimal_recovery_config_control_required_for_bounded_acceptance": false,
+  "remaining_limits": [
+    "No minimal-config dynamic control was run; its omission is an empirical corroboration gap, not a remaining source dataflow ambiguity.",
+    "The unmodified driver still requires config.payload.expected_price at line 19 even in retry mode; omission can fail before reaching production recovery.",
+    "Historical cache payloads are not retained; their 62-entry manifests and same-game-tree identity assertions are bound, not independently reconstructed runtime caches.",
+    "Recorded source-before/source-after cleanliness and source-unchanged flags are producer observations, not independent execution attestation.",
+    "Service launcher versus logged worker PID lineage is not captured: 20396/13692 for baseline, 2824/15020 for candidate.",
+    "Stable postcommit process-kill scope only; no new application, native, database, power-loss, or manual-UI test was executed."
+  ]
+}

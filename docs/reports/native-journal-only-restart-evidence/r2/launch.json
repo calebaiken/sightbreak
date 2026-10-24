@@ -1,0 +1,61 @@
+{
+  "harness_commit": "7be70f73ec6a065849d902e7075d2b76e78bdd21",
+  "file_sha256": {
+    "validate_native_transaction_restart.py": "168b2574f94a660f8fd62bf974136c6e55536e5896ea3ab08fa66e670e61885d",
+    "native_transaction_restart_probe.gd": "f33f1c7e52206aeb3ca54f4a5dc65e07d7e859b323b3b137367d6fd926d314ff"
+  },
+  "python": "3.12.14 (main, Sep  1 2026, 14:17:39) [MSC v.1944 64 bit (AMD64)]",
+  "wrapper_sha256": "9e43924a462001502d8f7e48f62fc9a522d9f19cef34d19e863396d055b4e7ab",
+  "arms": [
+    {
+      "label": "baseline-701",
+      "command": [
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-backend-trade-env\\venv312\\Scripts\\python.exe",
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-pr18-native-restart\\scripts\\validate_native_transaction_restart.py",
+        "--source",
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v2-baseline",
+        "--revision",
+        "701ce2c4d7f8b2872cf1fefa64cb6edd0cd1a3fd",
+        "--cache-source",
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v2-baseline\\game\\.godot",
+        "--godot",
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+        "--out",
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-pr18-native-restart\\.runtime\\native-journal-only-r2\\baseline-701",
+        "--repetitions",
+        "1",
+        "--expect-recovered",
+        "0"
+      ],
+      "started_wall_ns": 1792831230268842500,
+      "pid": 9004,
+      "returncode": 0,
+      "finished_wall_ns": 1792831251547311100
+    },
+    {
+      "label": "candidate-7b6f379",
+      "command": [
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-backend-trade-env\\venv312\\Scripts\\python.exe",
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-pr18-native-restart\\scripts\\validate_native_transaction_restart.py",
+        "--source",
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-native-pg-7b6f379",
+        "--revision",
+        "7b6f379a3f8c809d0985a64e883cbadfdd78d135",
+        "--cache-source",
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-native-pg-7b6f379\\game\\.godot",
+        "--godot",
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+        "--out",
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-pr18-native-restart\\.runtime\\native-journal-only-r2\\candidate-7b6f379",
+        "--repetitions",
+        "1",
+        "--expect-recovered",
+        "1"
+      ],
+      "started_wall_ns": 1792831251549305200,
+      "pid": 22072,
+      "returncode": 0,
+      "finished_wall_ns": 1792831267918905400
+    }
+  ]
+}
