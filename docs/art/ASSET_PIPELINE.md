@@ -83,6 +83,22 @@ python3 $T/textures.py $OUT/arms relay_ar_arms game/assets/weapons/relay_ar
 $B $T/render_arms.py <dir> --samples 32                                        # review renders of what ships
 ```
 
+## Rebuilding the Vectorline
+
+```sh
+B=<tools>/bpy-venv/bin/python; T=tools/art; OUT=<scratch>
+$B $T/bake.py $T/vectorline.py $OUT/smg --size 1024 --samples 32                    # ~10 min on 4 vCPU
+$B $T/rebake_part_ao.py $OUT/smg/vectorline.blend magazine $OUT/smg/mag_ao --size 1024 --samples 48
+python3 $T/patch_part_ao.py $OUT/smg/vectorline_occlusion_raw.png $OUT/smg/mag_ao/magazine_ao_on_black.png $OUT/smg/mag_ao/magazine_ao_on_white.png $OUT/smg/vectorline_occlusion_raw.png
+$B $T/export.py $T/vectorline.py $OUT/smg game/assets/weapons/vectorline/vectorline.glb
+python3 $T/textures.py $OUT/smg vectorline game/assets/weapons/vectorline
+$B $T/bake.py $T/vectorline_hands.py $OUT/smg_hands --size 1024 --samples 32
+$B $T/export.py $T/vectorline_hands.py $OUT/smg_hands game/assets/weapons/vectorline/vectorline_hands.glb
+python3 $T/textures.py $OUT/smg_hands vectorline_hands game/assets/weapons/vectorline
+```
+
+`vectorline_body.tres` is the plain material (inspection builds), a copy of `kestrel_9_body.tres` with the paths changed. `vectorline_preview.py` builds the weapon with its hands for `render_views.py` (views `v_player_eye`, `v_left`, `v_right`). `game/tests/viewmodel_fit_capture.gd --weapon=smg --scale= --offset= --rotation=` fits the placement constants in `weapon_model.gd`. A new material needs a row in both `hardsurface.MATERIALS` and `bake.SURFACES`.
+
 ### The reload review loop
 
 Motion is easiest to judge in the game. For one change to the grasp or the carry path:

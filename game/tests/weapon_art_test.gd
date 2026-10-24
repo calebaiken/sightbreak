@@ -115,8 +115,8 @@ func _effects(actor: SBActor) -> void:
 	check(actor._muzzle.mesh == flash and actor._muzzle.material_override is ShaderMaterial and actor._muzzle.material_override.shader.code.contains("blend_add"), "the actor's flash is the shared mesh with the additive shader")
 	var procedural := Node3D.new()
 	root.add_child(procedural)
-	var smg: Dictionary = WeaponModel.build(procedural, "smg", true)
-	check(smg.muzzle.mesh == flash and smg.muzzle.material_override is StandardMaterial3D and smg.muzzle.material_override.blend_mode == BaseMaterial3D.BLEND_MODE_ADD and smg.muzzle.material_override.vertex_color_use_as_albedo, "procedural weapons share the flash mesh with an additive material")
+	var marksman: Dictionary = WeaponModel.build(procedural, "marksman", true)
+	check(marksman.muzzle.mesh == flash and marksman.muzzle.material_override is StandardMaterial3D and marksman.muzzle.material_override.blend_mode == BaseMaterial3D.BLEND_MODE_ADD and marksman.muzzle.material_override.vertex_color_use_as_albedo, "procedural weapons share the flash mesh with an additive material")
 	procedural.queue_free()
 	# Each shot differs, and the flash shrinks fast and is gone after 40 ms.
 	var scales := {}
@@ -265,6 +265,67 @@ func _run() -> void:
 	for part: MeshInstance3D in pistol_parts.paint:
 		check(part.has_meta("detail_orm") and (part.get_meta("detail_orm") as Texture2D).resource_path == WeaponModel.KESTREL_9_ORM, "the pistol's paint part keeps its own baked detail maps under a finish")
 	pistol_holder.queue_free()
+
+	# The Vectorline SMG keeps the same contract.
+	for path in [WeaponModel.VECTORLINE, WeaponModel.VECTORLINE_HANDS, WeaponModel.VECTORLINE_MATERIAL]:
+		check(ResourceLoader.exists(path), "authored asset present: " + path)
+	var smg := WeaponModel._authored_nodes(WeaponModel.VECTORLINE, Transform3D.IDENTITY)
+	for node in ["body", "paint_receiver", "grip", "magazine", "magazine_rounds", "stock", "muzzle", "ejection", "grip_hand", "support_hand", "reticle"]:
+		check(smg.markers.has(node), "smg exports node " + node)
+	var smg_muzzle: Vector3 = smg.anchors["muzzle"]
+	check(smg_muzzle.z < -0.38 and smg_muzzle.z > -0.46 and absf(smg_muzzle.x) < 0.001 and absf(smg_muzzle.y - 0.025) < 0.002, "the SMG's barrel runs along -Z with the bore at 0.025 m and a muzzle 0.425 m from the receiver's rear face")
+	check(smg.anchors["ejection"].x > 0.01, "the SMG ejects to the right")
+	var smg_triangles := 0
+	for mesh_name in smg.meshes:
+		smg_triangles += _triangles(smg.meshes[mesh_name])
+	check(smg_triangles > 8000 and smg_triangles <= 22000, "SMG within 22000 triangles (%d)" % smg_triangles)
+	var smg_orm: Image = (load(WeaponModel.VECTORLINE_ORM) as Texture2D).get_image()
+	if smg_orm.is_compressed():
+		smg_orm.decompress()
+	var smg_uvs: PackedVector2Array = (smg.meshes["magazine"] as Mesh).surface_get_arrays(0)[Mesh.ARRAY_TEX_UV]
+	var smg_dark := 0
+	var smg_occlusion := 0.0
+	for uv in smg_uvs:
+		var texel := smg_orm.get_pixelv(Vector2i(clampi(int(uv.x * smg_orm.get_width()), 0, smg_orm.get_width() - 1), clampi(int(uv.y * smg_orm.get_height()), 0, smg_orm.get_height() - 1)))
+		smg_occlusion += texel.r
+		if texel.r < 0.1:
+			smg_dark += 1
+	# The magazine sits in a well, as the pistol's does, so its occlusion is baked by itself (23 % of its vertices were almost fully
+	# occluded in the first bake, 5.8 % after).
+	check(float(smg_dark) / smg_uvs.size() <= 0.10, "the SMG magazine's baked occlusion is its own: %.1f %% of its vertices are almost fully occluded (limit 10 %%)" % (100.0 * smg_dark / smg_uvs.size()))
+	check(smg_occlusion / smg_uvs.size() >= 0.60, "the SMG magazine's mean baked occlusion is at least 0.60 (%.3f)" % (smg_occlusion / smg_uvs.size()))
+	var smg_hands := WeaponModel._authored_nodes(WeaponModel.VECTORLINE_HANDS, Transform3D.IDENTITY)
+	check(smg_hands.meshes.has("hands") and _triangles(smg_hands.meshes["hands"]) <= HAND_TRIANGLES, "SMG hands are one mesh within %d triangles" % HAND_TRIANGLES)
+	for prefix in ["vectorline", "vectorline_hands"]:
+		for map in ["albedo", "orm", "normal"]:
+			check(_texture_ok("res://assets/weapons/vectorline/%s_%s.png" % [prefix, map], 1024), "%s %s is square, power of two, at most 1024" % [prefix, map])
+	var smg_holder := Node3D.new()
+	root.add_child(smg_holder)
+	var smg_parts: Dictionary = WeaponModel.build(smg_holder, "smg", true)
+	check(smg_parts.paint.size() == 1 and smg_parts.magazine != null and smg_parts.muzzle != null, "authored SMG exposes one paint part (the whole upper), the magazine and the muzzle")
+	check(smg_holder.get_child_count() <= 6 and not smg_holder.has_node("stock"), "first-person SMG with hands is at most six draw nodes (body, paint, grip, magazine, hands, flash) and leaves the stock out (%d)" % smg_holder.get_child_count())
+	check(smg_parts.magazine.get_child_count() == 1, "the SMG's cartridge follows its magazine")
+	var smg_base := Transform3D(Basis.from_euler(WeaponModel.vectorline_rotation).scaled(Vector3.ONE * WeaponModel.vectorline_scale), WeaponModel.vectorline_offset)
+	var smg_pivot: Vector3 = smg_base * WeaponModel.VECTORLINE_PIVOT
+	check(smg_parts.pivot is Vector3 and smg_parts.pivot.distance_to(smg_pivot) < 0.001, "the SMG reports its balance point as the weapon node's pivot")
+	var smg_port: Vector3 = smg_base * (smg.anchors["ejection"] as Vector3) - smg_pivot
+	check(smg_parts.ejection is Vector3 and smg_parts.ejection.distance_to(smg_port) < 0.001, "casings leave from the SMG's ejection port")
+	check(is_equal_approx(float(smg_parts.flash_scale), WeaponModel.VECTORLINE_FLASH_SCALE), "the SMG reports its flash size")
+	for part: MeshInstance3D in smg_parts.paint:
+		check(part.has_meta("detail_orm") and (part.get_meta("detail_orm") as Texture2D).resource_path == WeaponModel.VECTORLINE_ORM, "the SMG's paint part keeps its own baked detail maps under a finish")
+	smg_holder.queue_free()
+	var smg_inspect := Node3D.new()
+	root.add_child(smg_inspect)
+	WeaponModel.build(smg_inspect, "smg", false)
+	check(smg_inspect.has_node("stock") and not smg_inspect.has_node("hands"), "inspection keeps the SMG's stock and has no hands")
+	smg_inspect.queue_free()
+	WeaponModel.use_authored = false
+	var smg_procedural_holder := Node3D.new()
+	root.add_child(smg_procedural_holder)
+	var smg_procedural: Dictionary = WeaponModel.build(smg_procedural_holder, "smg", true)
+	check(smg_procedural.paint.size() == 2 and smg_procedural.magazine != null and smg_procedural.muzzle != null and is_equal_approx(float(smg_procedural.flash_scale), WeaponModel.SMG_FLASH_SCALE), "the procedural SMG still builds when authored assets are off, with its own flash size")
+	smg_procedural_holder.queue_free()
+	WeaponModel.use_authored = true
 
 	# Built through the same path as the game: roles, batching budget, finish detail.
 	var holder := Node3D.new()
@@ -674,7 +735,7 @@ func _run() -> void:
 		var built: Dictionary = WeaponModel.build(build_holder, variant[0], true)
 		var split := _projections(build_holder)
 		var context := "first-person %s (authored %s, rigged arms %s, hand assets %s)" % variant
-		var authored_rifle: bool = (variant[0] == "rifle" or variant[0] == "sidearm") and variant[1]
+		var authored_rifle: bool = (variant[0] == "rifle" or variant[0] == "sidearm" or variant[0] == "smg") and variant[1]
 		check(built.viewmodel == authored_rifle, context + " reports its projection")
 		if authored_rifle:
 			check(split.camera.is_empty(), context + ": every mesh draws with the viewmodel projection (camera projection: %s)" % [split.camera])
