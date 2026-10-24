@@ -1,6 +1,6 @@
 # Next session
 
-Updated 2026-10-24 16:32 UTC. **SIGHTBREAK — Steam-Ready v1.0**,
+Updated 2026-10-24 16:58 UTC. **SIGHTBREAK — Steam-Ready v1.0**,
 IN PROGRESS / PRIMARY, [issue #25](https://github.com/calebaiken/sightbreak/issues/25).
 No native goal creation/update API or goal ID is exposed; only stop-goal is
 available. No native goal ID has been verified. Read AGENTS.md and the canonical
@@ -22,11 +22,11 @@ root ref was stale because the fetch configuration covers main; actual ls-remote
 and GitHub PR metadata agree. Never reset the newer local work to that stale ref.
 No shared merge, history rewrite, release or production deployment is authorized.
 
-## Current checkpoint — 2026-10-24 16:32 UTC
+## Current checkpoint — 2026-10-24 16:58 UTC
 
 SIGHTBREAK — Steam-Ready v1.0 remains IN PROGRESS / PRIMARY in issue25.
 Root `/workspace/sightbreak-v1-recovered`, branch
-`codex/v1-executor-recovery-20261023`, pushed checkpoint `a027912c`, draft PR31
+`codex/v1-executor-recovery-20261023`, pushed checkpoint `06d80955`, draft PR31
 above PR27. Preserve PR27→24→23→22→16 and separate contributor/V3 branches.
 Runtime source stays exact `4cf6ac8e` / 508 non-document paths. All whole G1–G19
 remain open; G20 is persistence only. No native goal ID is exposed.
@@ -54,14 +54,27 @@ remain open; G20 is persistence only. No native goal ID is exposed.
    rejections versus invalid derived fixtures and the baseline adapter. Preserve
    every failure; do not weaken assertions or retime descendants without precise
    adjudication. Whole-reader/readiness/207-row replay remain BLOCKED/unexecuted.
+   R3 remains the critic's fixed target: its priority matrix finds eight known
+   structural contradictions masked as UNKNOWN. Root implemented queued R4 source
+   `52d2fe5e` / handoff `d84e8d80`: prefix validation first, 12 focused passes;
+   literal 135 has 45 failure events/one error (one extra expected-error substring,
+   still a correct rejection). No old assertion changes. Original 26 frozen report
+   members remain exact. Derived four-field proposal `a45a2b68` is unadjudicated;
+   do not switch the active critic target implicitly.
 3. **Receipt candidate rejected; correction preparing.** Source `0f478a07` /
    handoff `99a864a8` has 58 maintained passes in both independent views but fresh
    controls reproduce 14 false accepts, one false reject and publication overwrite.
-   Existing source critic is sealing exact findings; no acceptance from builder 69.
+   Immutable interim source REJECT `7f6e601e` is pushed: 849 members / 205,366,615
+   uncompressed bytes; manifest d8d82357. Preserve originals without a full second
+   copy. Final audit/narrative continues; no acceptance from 69 builder passes.
    R2 builder owns `/workspace/sightbreak-windows-shutdown-evidence-completeness-r2`,
    branch `codex/windows-shutdown-evidence-completeness-r2-20261024`, prereg
-   `43198ae8`. It waits for the sealed source-linked verdict before edits, then
-   must implement one producer-link model rather than patching examples only.
+   `43198ae8`. It verified the interim corpus and started source repair under the
+   producer-link model: initial 149 process-relation controls match and the three
+   publication-collision scenarios pass. One old fault-injection test misses the
+   new exclusive writer and needs precise adjudication. Old fixtures/helpers/
+   assertions are unchanged; versioned capture/action construction needs separate
+   independent adjudication before amendment. Not a source-ready candidate.
    Public collection remains BLOCKED; no actual trial/API/driver action occurred.
 4. **Windows math repair awaits separate review.** Original source `b16b012d` /
    handoff `25603855` independently REJECTED `eac72c2e`: both views, 15 controls /
@@ -78,8 +91,12 @@ remain open; G20 is persistence only. No native goal ID is exposed.
    `bc91e973`, `41c2dbe2`, `88a9443f` address lifetime/zombie accounting and the
    old four-Git-call test construction. Existing windows_shutdown agent now
    independently adjudicates these ROOT proposals; the source critic's queued
-   scopes were cancelled before activation, avoiding duplicate review. No new
-   API/guard/code change or native retry is permitted by a proposal alone.
+   scopes were cancelled before activation, avoiding duplicate review. Independent
+   adjudication `e4685e48` rejects the incomplete lifetime proposal and narrowly
+   supports only the named timing-constructor/baseline amendment. No new reap API
+   or blanket erasure. That agent is now assigned as physical-binding builder
+   from root's clean 88 checkout/new own branch; a DIFFERENT reviewer must assess
+   its implementation. No binder acceptance or native retry follows.
 
 Accepted source slices remain expiry `2d4214c4` / critic `09b2a1f7`, binary codec
 `329d3ff5` / `9fa673ab`, and POSIX physical binding `ebc1a941` / `f05741f8`.
