@@ -23,4 +23,5 @@ class Result(unittest.TextTestResult):
 sys.setprofile(profile)
 try:r=unittest.TextTestRunner(verbosity=2,resultclass=Result).run(suite)
 finally:sys.setprofile(None);stream.close()
+failures=[dict(kind='failure',test=t.id(),calls=by_test.get(t.id(),[]),traceback=trace) for t,trace in r.failures]+[dict(kind='error',test=t.id(),calls=by_test.get(t.id(),[]),traceback=trace) for t,trace in r.errors]
 (out/'INDEX.json').write_text(json.dumps(index,indent=2)+'\n');(out/'FAILURES.json').write_text(json.dumps(failures,indent=2)+'\n');summary=dict(source=str(root),reader_sha256=hashlib.sha256(reader.read_bytes()).hexdigest(),methods=r.testsRun,failure_events=len(r.failures),errors=len(r.errors),skips=len(r.skipped),captured_calls=len(index),raw_jsonl_sha256=digest.hexdigest(),gzip_sha256=hashlib.sha256((out/'CALLS.jsonl.gz').read_bytes()).hexdigest(),candidate_functions_or_test_assertions_replaced=False,cpu_affinity=[4],native_executed=False,new207_replay_executed=False);(out/'SUMMARY.json').write_text(json.dumps(summary,indent=2)+'\n');print(json.dumps(summary,indent=2));raise SystemExit(not r.wasSuccessful())
