@@ -129,6 +129,47 @@ class IntervalNecessities(unittest.TestCase):
         bad[-1]['stream_ack'] = 4
         self.assertEqual(self.analyze(bad), 'INVALID')
 
+    def test_coalesced_latest_pop_still_binds_later_observed_ack(self):
+        model = uncertain_history()
+        model.rpc(9, 3, 16200, 16200)
+        model.complete_tick(18000)
+        model.complete_tick(19500)
+        self.assertEqual(model.rows[-1]['reason'], 'authority_tick')
+        self.assertEqual(model.rows[-1]['latest']['input_consumed']['sequence'], 3)
+        self.assertEqual(self.analyze(model.rows), 'UNKNOWN')
+        bad = deepcopy(model.rows)
+        bad[-1]['stream_ack'] = 4
+        self.assertEqual(self.analyze(bad), 'INVALID')
+
+    def test_backlog_discard_and_remaining_queue_have_conservative_global_bounds(self):
+        model = uncertain_history()
+        for sequence in range(3, 11):
+            model.rpc(9, sequence, 16200+sequence*20, 16200+sequence*20)
+        model.complete_tick(18000)
+        model.complete_tick(19500)
+        self.assertEqual(model.rows[-1]['stream_skipped'], 6)
+        self.assertEqual(model.rows[-1]['stream_ack'], 9)
+        self.assertEqual(model.rows[-1]['queue_count'], 1)
+        self.assertEqual(self.analyze(model.rows), 'UNKNOWN')
+        bad = deepcopy(model.rows)
+        bad[-1]['queue_count'] = 0
+        self.assertEqual(self.analyze(bad), 'INVALID')
+
+    def test_observed_disconnect_reset_and_new_generation_can_restart_sequence(self):
+        model = uncertain_history()
+        model.disconnect(9, 16200)
+        model.disconnect(10, 16300)
+        model.reset_empty_guest(18000)
+        model.connect(9, 18100)
+        model.bind(9, 3, 18200)
+        model.rpc(9, 1, 18300, 18300, fire=False)
+        model.complete_tick(20000)
+        model.complete_tick(21500)
+        self.assertEqual(model.epoch, 3)
+        self.assertEqual(model.peers[9]['generation'], 3)
+        self.assertEqual(model.rows[-1]['stream_ack'], 1)
+        self.assertEqual(self.analyze(model.rows), 'UNKNOWN')
+
 
 if __name__ == '__main__':
     unittest.main()
