@@ -12,6 +12,12 @@ var weapon_id := "rifle"
 var _hands := false
 var _materials: Dictionary = {}
 var _authored: Array[MeshInstance3D] = []
+## How large this weapon's muzzle flash is, relative to the rifle's (the shared flash mesh is sized for a rifle).
+var _flash_scale := 1.0
+## The baked detail maps the cosmetic finish keeps on this model's paint parts (set by the authored builders).
+var _detail_orm := RELAY_AR_ORM
+var _detail_normal := RELAY_AR_NORMAL
+var _detail_albedo := RELAY_AR_ALBEDO
 var _ejection := Vector3.INF
 var _pivot := Vector3.ZERO
 var _arms_placement := Transform3D()
@@ -59,6 +65,15 @@ const RELAY_AR_HANDS_TEXTURES := "res://assets/weapons/relay_ar/relay_ar_hands"
 const RELAY_AR_ARMS := "res://assets/weapons/relay_ar/relay_ar_arms.glb"
 const RELAY_AR_TEXTURES := "res://assets/weapons/relay_ar/relay_ar"
 const RELAY_AR_ARMS_TEXTURES := "res://assets/weapons/relay_ar/relay_ar_arms"
+## The Kestrel 9 sidearm (tools/art/kestrel_9.py): same contract as the Relay AR, procedural gloves for now.
+const KESTREL_9 := "res://assets/weapons/kestrel_9/kestrel_9.glb"
+const KESTREL_9_MATERIAL := "res://assets/weapons/kestrel_9/kestrel_9_body.tres"
+const KESTREL_9_ORM := "res://assets/weapons/kestrel_9/kestrel_9_orm.png"
+const KESTREL_9_NORMAL := "res://assets/weapons/kestrel_9/kestrel_9_normal.png"
+const KESTREL_9_ALBEDO := "res://assets/weapons/kestrel_9/kestrel_9_albedo.png"
+const KESTREL_9_TEXTURES := "res://assets/weapons/kestrel_9/kestrel_9"
+const KESTREL_9_HANDS := "res://assets/weapons/kestrel_9/kestrel_9_hands.glb"
+const KESTREL_9_HANDS_TEXTURES := "res://assets/weapons/kestrel_9/kestrel_9_hands"
 const ViewmodelShading = preload("res://scripts/gameplay/viewmodel_shading.gd")
 ## Viewmodel placement inside the camera-attached weapon node (presentation only).
 ## The weapon node rests 0.235 m right, 0.235 m down and 0.42 m ahead of the eye.
@@ -82,6 +97,22 @@ const RELAY_AR_UPRIGHT_OFFSET := Vector3(0, -0.015, -0.07)
 ## unchanged: the actor adds the pivot to the node's rest position and the models are
 ## offset by the same amount.
 const RELAY_AR_PIVOT := Vector3(0.0, 0.0, -0.19)
+## The Kestrel 9's placement, fitted in the same way (a larger scale than the rifle's 1.0: a real-scale pistol is
+## 0.195 m long and would read small beside a viewmodel field of view built for a 0.95 m rifle).
+static var kestrel_9_scale := 1.1
+static var kestrel_9_rotation := Vector3(0.025, 0.07, -0.03)
+static var kestrel_9_offset := Vector3(-0.085, 0.185, 0.03)
+## A pistol's flash is smaller than a rifle's: the shared flash mesh is sized for the rifle and covered the pistol's sights.
+const KESTREL_9_FLASH_SCALE := 0.62
+## The tan magazine bakes to a dark brown (mean sRGB 84, 77, 66) under the grime and contact occlusion; this gain brings it
+## back to the warm anchor of the silhouette the brief asks for, between graphite hands and a dark slide.
+const KESTREL_9_MAGAZINE_GAIN := 1.7
+## The pistol's graphite frame is what the player sees between the hands, so it is darkened less than the rifle's grip
+## (GRIP_DARKEN 0.24 drew a black column in shade and against the sun) and keeps a fill floor so it keeps its form.
+const KESTREL_9_GRIP_DARKEN := 0.55
+const KESTREL_9_UPRIGHT_OFFSET := Vector3(0, 0.0, -0.02)
+## Balance point between the hands in the GLB's axes (barrel along -Z): about the middle of the grip.
+const KESTREL_9_PIVOT := Vector3(0.0, -0.02, -0.06)
 ## Captures switch these off for before/after comparisons; gameplay never reads them.
 static var use_authored := true
 static var use_rigged_arms := true
@@ -99,11 +130,11 @@ static func build(parent: Node3D, id: String, hands: bool = false) -> Dictionary
 	for child in parent.get_children():
 		parent.remove_child(child)
 		child.queue_free()
-	var key := "%s|%s|%s|%s|%s|%s|%s|%s" % [id, hands, use_authored, use_rigged_arms, use_hand_assets, relay_ar_scale, relay_ar_offset, relay_ar_rotation]
+	var key := "%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s" % [id, hands, use_authored, use_rigged_arms, use_hand_assets, relay_ar_scale, relay_ar_offset, relay_ar_rotation, kestrel_9_scale, kestrel_9_offset, kestrel_9_rotation]
 	if not _packed.has(key):
 		_packed[key] = _pack(id, hands)
 	var instance: Node = (_packed[key] as PackedScene).instantiate()
-	var result := {"paint": [] as Array[MeshInstance3D], "magazine": null, "muzzle": null, "ejection": instance.get_meta("ejection", Vector3.INF), "pivot": instance.get_meta("pivot", Vector3.ZERO),
+	var result := {"paint": [] as Array[MeshInstance3D], "magazine": null, "muzzle": null, "ejection": instance.get_meta("ejection", Vector3.INF), "pivot": instance.get_meta("pivot", Vector3.ZERO), "flash_scale": instance.get_meta("flash_scale", 1.0),
 		"viewmodel": instance.get_meta("viewmodel", false), "arms": null, "arms_player": null, "arms_skeleton": null}
 	for child in instance.get_children():
 		instance.remove_child(child)
@@ -128,13 +159,7 @@ static func _add_arms(parent: Node3D, placement: Transform3D, result: Dictionary
 	arms.name = "arms"
 	arms.transform = placement
 	arms.set_meta("weapon_role", "arms")
-	var material := ViewmodelShading.surface(RELAY_AR_ARMS_TEXTURES)
-	material.set_shader_parameter("viewmodel_lift", ARMS_LIFT) # the arms' fill floor: charcoal gloves keep some form in shade
-	material.set_shader_parameter("viewmodel_rim", ARMS_RIM)
-	material.set_shader_parameter("viewmodel_floor", ARMS_FLOOR)
-	material.set_shader_parameter("viewmodel_specular", ARMS_SPECULAR)
-	material.set_shader_parameter("viewmodel_sheen", ARMS_SHEEN)
-	material.set_shader_parameter("viewmodel_reflect", ARMS_REFLECT)
+	var material := glove_material(RELAY_AR_ARMS_TEXTURES)
 	for mesh: MeshInstance3D in arms.find_children("*", "MeshInstance3D", true, false):
 		mesh.material_override = material
 		mesh.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
@@ -148,6 +173,18 @@ static func _add_arms(parent: Node3D, placement: Transform3D, result: Dictionary
 		player.assigned_animation = "reload"
 		player.seek(0.0, true)
 		result.arms_player = player
+
+## The first-person material of any gloved hands: the viewmodel shading with the arms' tuning (a fill floor so charcoal
+## gloves keep some form in shade, and no warm sheen, which turned them tan in sun).
+static func glove_material(textures: String) -> ShaderMaterial:
+	var material := ViewmodelShading.surface(textures)
+	material.set_shader_parameter("viewmodel_lift", ARMS_LIFT)
+	material.set_shader_parameter("viewmodel_rim", ARMS_RIM)
+	material.set_shader_parameter("viewmodel_floor", ARMS_FLOOR)
+	material.set_shader_parameter("viewmodel_specular", ARMS_SPECULAR)
+	material.set_shader_parameter("viewmodel_sheen", ARMS_SHEEN)
+	material.set_shader_parameter("viewmodel_reflect", ARMS_REFLECT)
+	return material
 
 static func _pack(id: String, hands: bool) -> PackedScene:
 	var root := Node3D.new()
@@ -165,14 +202,16 @@ static func _pack(id: String, hands: bool) -> PackedScene:
 	if not model._authored.is_empty():
 		# Baked occlusion and surface normals survive any cosmetic finish.
 		for part in model._paint_parts:
-			part.set_meta("detail_orm", load(RELAY_AR_ORM))
-			part.set_meta("detail_normal", load(RELAY_AR_NORMAL))
-			part.set_meta("detail_albedo", load(RELAY_AR_ALBEDO))
+			part.set_meta("detail_orm", load(model._detail_orm))
+			part.set_meta("detail_normal", load(model._detail_normal))
+			part.set_meta("detail_albedo", load(model._detail_albedo))
 	model._muzzle.set_meta("weapon_role", "muzzle")
 	if model._ejection != Vector3.INF:
 		root.set_meta("ejection", model._ejection)
 	if model._pivot != Vector3.ZERO:
 		root.set_meta("pivot", model._pivot)
+	if model._flash_scale != 1.0:
+		root.set_meta("flash_scale", model._flash_scale)
 	if model._rigged:
 		root.set_meta("arms_placement", model._arms_placement)
 	if model._hands and not model._authored.is_empty():
@@ -281,18 +320,18 @@ func _sleeve(from: Vector3, to: Vector3, tint: Color) -> void:
 	panel.quaternion = seam.quaternion
 	panel.material_override = _material(tint.darkened(0.18), 0.96, 0)
 
-func _glove(at: Vector3, support: bool = false) -> void:
+func _glove(at: Vector3, support: bool = false, size: float = 1.0) -> void:
 	var tint := Color("3c463f")
-	var palm := _chamfer(at, Vector3(0.088, 0.08, 0.115), tint)
+	var palm := _chamfer(at, Vector3(0.088, 0.08, 0.115) * size, tint)
 	palm.material_override = _material(tint, 0.89, 0)
 	for i in range(4):
-		var finger := _chamfer(at + Vector3(0.036, 0.023 - i * 0.016, -0.035), Vector3(0.029, 0.014, 0.072), tint.lightened(0.035))
+		var finger := _chamfer(at + Vector3(0.036, 0.023 - i * 0.016, -0.035) * size, Vector3(0.029, 0.014, 0.072) * size, tint.lightened(0.035))
 		finger.material_override = _material(tint.lightened(0.035), 0.9, 0)
 		finger.rotation.y = -0.14 if support else 0.1
-	var thumb := _chamfer(at + Vector3(-0.039, 0.025, -0.022), Vector3(0.025, 0.036, 0.075), tint)
+	var thumb := _chamfer(at + Vector3(-0.039, 0.025, -0.022) * size, Vector3(0.025, 0.036, 0.075) * size, tint)
 	thumb.rotation.x = -0.35
 	thumb.material_override = _material(tint, 0.89, 0)
-	var knuckle := _chamfer(at + Vector3(0, 0.018, 0.048), Vector3(0.069, 0.033, 0.018), Color("24312e"))
+	var knuckle := _chamfer(at + Vector3(0, 0.018, 0.048) * size, Vector3(0.069, 0.033, 0.018) * size, Color("24312e"))
 	knuckle.material_override = _material(Color("24312e"), 0.85, 0)
 
 func _batch_magazine() -> void:
@@ -389,6 +428,8 @@ func _build_gun() -> void:
 	var muzzle_at := Vector3.INF
 	if weapon_id == "rifle" and use_authored and ResourceLoader.exists(RELAY_AR):
 		muzzle_at = _build_authored_rifle()
+	elif weapon_id == "sidearm" and use_authored and ResourceLoader.exists(KESTREL_9):
+		muzzle_at = _build_authored_pistol()
 	elif weapon_id == "sidearm":
 		_chamfer(Vector3(0, 0.022, -0.16), Vector3(0.085, 0.075, 0.31), edge, true)
 		_chamfer(Vector3(0, -0.023, -0.12), Vector3(0.074, 0.052, 0.26), metal)
@@ -602,6 +643,61 @@ func _add_authored(part_name: String, mesh: Mesh, at: Transform3D, material: Mat
 	_gun.add_child(part)
 	_authored.append(part)
 	return part
+
+## Adds the authored Kestrel 9 and its hands; returns the muzzle position. The same contract as the rifle (paint slide,
+## graphite grip, tan magazine with its round, `muzzle` and `ejection` markers). The hands are a static authored pair
+## (tools/art/kestrel_9_hands.py); without that asset they are the procedural gloves, placed from the model's anchors
+## and scaled to a pistol grip. There are no rigged arms for the pistol yet, so a reload moves the magazine only.
+func _build_authored_pistol() -> Vector3:
+	var placement := Transform3D(Basis.from_euler(kestrel_9_rotation).scaled(Vector3.ONE * kestrel_9_scale), kestrel_9_offset) if _hands else Transform3D(Basis.IDENTITY.scaled(Vector3.ONE * kestrel_9_scale), KESTREL_9_UPRIGHT_OFFSET)
+	if _hands:
+		_pivot = placement * KESTREL_9_PIVOT
+		placement.origin -= _pivot
+	_viewmodel = _hands
+	_flash_scale = KESTREL_9_FLASH_SCALE
+	_detail_orm = KESTREL_9_ORM
+	_detail_normal = KESTREL_9_NORMAL
+	_detail_albedo = KESTREL_9_ALBEDO
+	var pistol := _authored_nodes(KESTREL_9, placement)
+	var material: Material = ViewmodelShading.surface(KESTREL_9_TEXTURES, 0.84, 0.60) if _hands else load(KESTREL_9_MATERIAL)
+	var grip_material: Material = material
+	if _hands:
+		grip_material = ViewmodelShading.surface(KESTREL_9_TEXTURES, 0.84 * KESTREL_9_GRIP_DARKEN, 0.60)
+		(grip_material as ShaderMaterial).set_shader_parameter("viewmodel_lift", 0.35)
+		(grip_material as ShaderMaterial).set_shader_parameter("viewmodel_floor", 0.22)
+	else:
+		grip_material = (load(KESTREL_9_MATERIAL) as BaseMaterial3D).duplicate()
+		(grip_material as BaseMaterial3D).albedo_color = Color(0.86 * KESTREL_9_GRIP_DARKEN, 0.86 * KESTREL_9_GRIP_DARKEN, 0.86 * KESTREL_9_GRIP_DARKEN)
+	var magazine_material: Material = material
+	if _hands:
+		magazine_material = ViewmodelShading.surface(KESTREL_9_TEXTURES, 0.84 * KESTREL_9_MAGAZINE_GAIN, 0.90)
+	else:
+		magazine_material = (load(KESTREL_9_MATERIAL) as BaseMaterial3D).duplicate()
+		(magazine_material as BaseMaterial3D).albedo_color = Color(0.86, 0.86, 0.86) * KESTREL_9_MAGAZINE_GAIN
+	for part_name in ["body", "paint_slide", "magazine", "grip"]:
+		var part := _add_authored(part_name, pistol.meshes[part_name], pistol.markers[part_name], grip_material if part_name == "grip" else (magazine_material if part_name == "magazine" else material))
+		if part_name.begins_with("paint_"):
+			_paint_parts.append(part)
+	_magazine = _gun.get_node("magazine")
+	_magazine_rest = _magazine.position
+	var rounds := MeshInstance3D.new()
+	rounds.name = "magazine_rounds"
+	rounds.mesh = pistol.meshes["magazine_rounds"]
+	rounds.material_override = magazine_material
+	rounds.transform = _magazine.transform.affine_inverse() * pistol.markers["magazine_rounds"]
+	_magazine.add_child(rounds)
+	if _hands and use_hand_assets and ResourceLoader.exists(KESTREL_9_HANDS):
+		var hands := _authored_nodes(KESTREL_9_HANDS, placement)
+		_add_authored("hands", hands.meshes["hands"], hands.markers["hands"], glove_material(KESTREL_9_HANDS_TEXTURES))
+	elif _hands:
+		var grip: Vector3 = pistol.anchors["grip_hand"]
+		var support: Vector3 = pistol.anchors["support_hand"]
+		var size := kestrel_9_scale * 0.62
+		_glove(placement * (grip + Vector3(0.010, -0.002, 0.012) * kestrel_9_scale), false, size)
+		_sleeve(Vector3(0.11, -0.37, 0.43), placement * (grip + Vector3(0.016, -0.030, 0.060) * kestrel_9_scale), Color("28353c"))
+		_glove(placement * (support + Vector3(-0.010, -0.014, 0.0) * kestrel_9_scale), true, size)
+	_ejection = pistol.markers["ejection"].origin
+	return pistol.markers["muzzle"].origin
 
 ## Adds the authored rifle's meshes and hands; returns the muzzle position.
 func _build_authored_rifle() -> Vector3:

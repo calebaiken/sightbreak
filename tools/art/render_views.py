@@ -42,12 +42,24 @@ VIEWS = {
     'right_34': (Vector((0.78, 0.42, 0.30)), None, 28, 0.92, False),
     'side_profile': (Vector((1, 0, 0)), None, 0, 0.94, True),
     'top_perspective': (Vector((0.35, -0.55, 0.95)), None, 30, 0.92, False),
+    # Added for the sidearm, SMG and marksman review loop: the angles a player sees (behind the weapon, down the
+    # sights) and the ones a silhouette check needs (front, underside).
+    'rear_34': (Vector((0.55, -0.80, 0.38)), None, 28, 0.92, False),
+    'front_34': (Vector((0.55, 0.85, 0.25)), None, 28, 0.92, False),
+    'under_34': (Vector((0.50, 0.25, -0.70)), None, 28, 0.92, False),
+    'sight_picture': (Vector((0.0, -1.0, 0.16)), None, 22, 0.80, False),
     'receiver_closeup': (Vector((0.80, 0.25, 0.32)), ['paint_upper', 'paint_lower', 'bolt', 'dust', 'deflector', 'charging'], 24, 0.95, False),
     'grip_magazine_closeup': (Vector((0.75, 0.35, 0.18)), ['grip', 'magazine', 'trigger', 'mag_release', 'release_fence'], 26, 0.92, False),
     'materials_closeup': (Vector((0.70, 0.45, 0.40)), ['barrel_nut', 'screw', 'pin1'], 18, 0.55, False),
     'support_hand': (Vector((-0.85, -0.25, 0.35)), ['glove_left'], 30, 0.9, False),
+    # The Kestrel 9 with both hands, from where the player's eye is (behind, a little left and above) and from the left.
+    'k9_player_eye': (Vector((-0.35, -0.90, 0.40)), ['paint_slide', 'grip', 'magazine', 'glove_right', 'glove_left'], 24, 0.85, False),
+    'k9_left': (Vector((-0.95, -0.10, 0.18)), ['paint_slide', 'grip', 'magazine', 'glove_right', 'glove_left'], 24, 0.85, False),
+    'k9_right': (Vector((0.95, -0.15, 0.18)), ['paint_slide', 'grip', 'magazine', 'glove_right', 'glove_left'], 24, 0.85, False),
     'firing_hand': (Vector((-0.80, 0.30, 0.10)), ['glove_right'], 30, 0.9, False),
 }
+
+NO_FLOOR = ('under_34',)
 
 scene = bpy.context.scene
 scene.render.engine = 'CYCLES'
@@ -158,6 +170,9 @@ for name, (direction, parts, fov, fill, ortho) in VIEWS.items():
                        + (c - target).dot(d) for c in corners)
         camera.location = target + d * distance
     camera.rotation_euler = (target - camera.location).to_track_quat('-Z', 'Y').to_euler()
+    # Views from below would look through the floor at nothing: hide it for those.
+    floor.hide_render = name in NO_FLOOR
     scene.render.filepath = str(out_dir / f'{name}.png')
     bpy.ops.render.render(write_still=True)
+    floor.hide_render = False
     print('VIEW', name, scene.render.filepath)
