@@ -40,7 +40,18 @@ root ref was stale because the fetch configuration covers main; actual ls-remote
 and GitHub PR metadata agree. Never reset the newer local work to that stale ref.
 No shared merge, history rewrite, release or production deployment is authorized.
 
-**Next action: one separately admitted collector compilation/API preflight.**
+**Next action: one separately admitted actual Windows collector trial.**
+Qualifier `qualifier/windows-collector-c324-20261024` is fixed at exact c324.
+Actual absent/create/readback receipts are committed and pushed in817f7a83 at
+`docs/reports/gauntlet/windows-collector-actual-20261024/ROOT_QUALIFIER_CREATION.json`.
+Fresh actual critic `/root/windows_collector_actual_critic_20261024` preregistered
+728906f9 and prepared74f17acd/06a6edb8; final admission is pending these receipts.
+Read it, commit/push ONE root release, then use existing desktop-alpha workflow
+with lane=windows and observe_windows_input=true. No such dispatch is released
+or started yet. Preserve original ordinary240-second/no-delay schedule, separate
+delayed controls, living/settings/focus and earned-progression gates.
+
+**Completed bounded collector source and native preflight.**
 Collector-only source `c32415148db1f110bbc7eadfca3793d4693429ff`, reports handoff
 `c3c974e8`, branch `codex/windows-input-collector-20261023`, is independently
 ACCEPTED SOURCE ONLY by `a379a268` after preregistration `16d5766a`. Both source
@@ -55,16 +66,27 @@ Frozen runtime checkout `/workspace/sightbreak-collector-preflight-c324` is clea
 detached at exact c324; all 507 non-doc files are materialized and byte-bound.
 Initialization proof `/workspace/collector-preflight-c324-initialized.json` retains
 the first sparse tools omission and successful full repeat. No engine ran.
-Fresh actual critic `/root/collector_native_preflight_critic_20261024` has
-preregistered `15cdc599` and is finishing admission/one-run wrapper. Read its final
-handoff before a committed/pushed root release; no such release exists yet.
+Fresh actual critic `/root/collector_native_preflight_critic_20261024` preregistered
+15cdc599. Root rejected the first wrapper's late-exit boundary before execution;
+corrected b82be2a4 preserves420/5 and ten pure controls. Root release236413df was
+committed/pushed before the sole wrapper, exec83052/chunk4a98bd. Actual terminal
+53626a exits0; independent final22b28729 ACCEPTS the bounded preflight. Exactly742
+checks/zero failures/maxerror0.075834; native completion14.830052s, total15.012425s.
+All507source/138UIDs, eight logs, isolation and seven observed process identities
+verify under2668predicates. All25raw+outer form26-member archive3,459,108bytes,
+SHA256f035e36afffd7f16ace853b039d06e8beae375394545071e98db989946d5c591.
+No enabled emitter or external export fixture ran; versionstderr and finite
+sampling/one empty terminal sample remain limits. Source cache stays absent.
 Expected unchanged movement_prediction suite is 742 checks: 725 existing +17
 new collector gates/projection/disabled-state controls. Pinned Godot4.7.2,
 CPUs0,1 for child runtime, CPU4 for supervisor/analysis, original phase timeouts,
 whole420 seconds and owned cleanup5 seconds are binding. Output is fixed fresh
 `builds/collector-native-preflight-c324-20261024/native` under frozen checkout.
-No retry, graphical launch, export or CI is released. Enabled trace emission and
-actual Windows input still require later separate verification.
+The sole local preflight is terminal; no retry is allowed. Enabled trace emission,
+export and actual Windows input require the separate upcoming actual admission.
+Root integration b436a641 copies exactly four reviewed files and verifies all507
+non-doc identities against c324. The optional reader remains absent. The initial
+root tools-prefix omission was restored and the full comparison rerun.
 
 **Executed correction: strict fingerprint boolean types.**
 Root finished interrupted preregistration `602980d7` in the same owned Linux
