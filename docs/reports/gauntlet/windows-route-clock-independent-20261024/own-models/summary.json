@@ -1,0 +1,69 @@
+{
+  "candidate": "4cf6ac8e744603ed6af122a362036d276754cc76",
+  "baseline": "7101350e5d0a2f6e4afb9a913b5b1bcf2107857a",
+  "source_sha256": "2b2a67d99e723caabc52d6ded00927280921694985d0b99ffeb22f05fee21963",
+  "baseline_sha256": "cf295eab7f43280803b9649a5c54bd2c2fec45a0b13427d98d7ec42463ea812e",
+  "candidate_helper_ast_sha256": "6fa481b1432aa5322cf48d8b3e9872f8108c72303517b418c579a5eab19ac9dc",
+  "base_helper_ast_sha256": "fb4346cae5197d171103493d943ad5026673a8e62cf4321434a5596047738e63",
+  "cpu_affinity": [
+    4
+  ],
+  "cases": 313,
+  "passed": 308,
+  "failures": [
+    {
+      "index": 225,
+      "name": "frozen_route",
+      "failures": [
+        "frozen-route model exceeded original watchdog allowance"
+      ],
+      "error": {
+        "type": "TimeoutError",
+        "message": "Original route deadline expired during native key pulse"
+      }
+    },
+    {
+      "index": 226,
+      "name": "frozen_route",
+      "failures": [
+        "frozen-route model exceeded original watchdog allowance"
+      ],
+      "error": {
+        "type": "TimeoutError",
+        "message": "Original route deadline expired during native key pulse"
+      }
+    },
+    {
+      "index": 227,
+      "name": "frozen_route",
+      "failures": [
+        "frozen-route model exceeded original watchdog allowance"
+      ],
+      "error": {
+        "type": "TimeoutError",
+        "message": "Original route deadline expired during native key pulse"
+      }
+    },
+    {
+      "index": 264,
+      "name": "invalid_route_backward_always",
+      "failures": [
+        "fault/invalid request dispatched a down"
+      ],
+      "error": {
+        "type": "RuntimeError",
+        "message": "HARNESS ABORT: model exceeded 100000 clock reads"
+      }
+    },
+    {
+      "index": 284,
+      "name": "invalid_watch_backward_always",
+      "failures": [
+        "unexpected outcome",
+        "fault/invalid request dispatched a down"
+      ],
+      "error": null
+    }
+  ],
+  "native_executed": false
+}
