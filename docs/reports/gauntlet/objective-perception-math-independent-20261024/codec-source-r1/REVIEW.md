@@ -112,3 +112,11 @@ Reproduction uses run_maintained.py and independent_controls.py with explicit
 Use fresh output directories and CPU4. prepare_views.py is a one-time initializer
 that deliberately refuses to overwrite its own existing exact view. Original
 commands/tool chunks, complete unittest output and structured results are retained.
+
+Final-packaging history: the first whitespace assertion exited2 for one added
+blank line at EOF in the authored PURE_TOOL_RECEIPTS.json wrapper. The shell then
+continued to intermediate commit90f9c40b; that checkpoint lacked the final manifest
+and was not a completed seal. Original wrapper gzip and failed checks are retained.
+Only JSON wrapper formatting was normalized, with parsed values/tool chunks
+unchanged. Current source and full report whitespace checks pass. No source or
+test changed or reran because of this packaging correction.
