@@ -1,0 +1,27 @@
+test_01_false_and_missing_predicates_cannot_complete (__main__.GuardControls.test_01_false_and_missing_predicates_cannot_complete) ... ok
+test_02_same_inode_change_and_preimage_collision_preserve_bytes (__main__.GuardControls.test_02_same_inode_change_and_preimage_collision_preserve_bytes) ... ok
+test_03_namespace_identity_is_checked_before_successful_return (__main__.GuardControls.test_03_namespace_identity_is_checked_before_successful_return) ... FAIL
+test_04_opened_file_is_closed_when_initial_identity_read_fails (__main__.GuardControls.test_04_opened_file_is_closed_when_initial_identity_read_fails) ... FAIL
+test_05_all_closes_attempted_and_primary_cause_retained (__main__.GuardControls.test_05_all_closes_attempted_and_primary_cause_retained) ... ok
+
+======================================================================
+FAIL: test_03_namespace_identity_is_checked_before_successful_return (__main__.GuardControls.test_03_namespace_identity_is_checked_before_successful_return)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/shutdown-study-evidence-independent-20261024/docs/reports/gauntlet/shutdown-study-evidence-independent-20261024/r2-staged-consumer-v3-adjudication/extra_controls.py", line 72, in test_03_namespace_identity_is_checked_before_successful_return
+    self.assertTrue(swapped);self.assertIsNotNone(error,'Visible root namespace replacement must prevent successful update return')
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None : Visible root namespace replacement must prevent successful update return
+
+======================================================================
+FAIL: test_04_opened_file_is_closed_when_initial_identity_read_fails (__main__.GuardControls.test_04_opened_file_is_closed_when_initial_identity_read_fails)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/shutdown-study-evidence-independent-20261024/docs/reports/gauntlet/shutdown-study-evidence-independent-20261024/r2-staged-consumer-v3-adjudication/extra_controls.py", line 91, in test_04_opened_file_is_closed_when_initial_identity_read_fails
+    self.assertTrue(all(states),'Every exclusive-open object needs a close attempt despite identity failure')
+AssertionError: False is not true : Every exclusive-open object needs a close attempt despite identity failure
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.467s
+
+FAILED (failures=2)

@@ -1,0 +1,78 @@
+{
+  "passed": false,
+  "target": "windows",
+  "host": "Windows-synthetic-data-format-fixture",
+  "controller_command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "scripts/verify_offline_export.py",
+    "--target",
+    "windows",
+    "--hosted-render-priority",
+    "below-normal",
+    "--display",
+    ":102",
+    "--timeout",
+    "300",
+    "--output",
+    "/workspace/reviews/shutdown-study-evidence-independent-20261024/docs/reports/gauntlet/shutdown-study-evidence-independent-20261024/r2-staged-consumer-v3-adjudication/pure-r1/capture-publication-error"
+  ],
+  "captures": [
+    {
+      "name": "01-menu",
+      "dimensions": [
+        640,
+        360
+      ]
+    },
+    {
+      "name": "02-offline-spawn",
+      "dimensions": [
+        640,
+        360
+      ]
+    },
+    {
+      "name": "03-requisition",
+      "dimensions": [
+        640,
+        360
+      ]
+    },
+    {
+      "name": "04-move-aim",
+      "dimensions": [
+        640,
+        360
+      ]
+    }
+  ],
+  "shutdown_study_observations": [],
+  "error": "OSError: original one-shot capture publication error",
+  "commands": [
+    {
+      "name": "client",
+      "command": [
+        "C:/synthetic-export/windows/SIGHTBREAK.exe",
+        "--audio-driver",
+        "Dummy",
+        "--position",
+        "0,0",
+        "--resolution",
+        "640x360",
+        "--",
+        "--offline-validation",
+        "--offline-trace-dir=/workspace/reviews/shutdown-study-evidence-independent-20261024/docs/reports/gauntlet/shutdown-study-evidence-independent-20261024/r2-staged-consumer-v3-adjudication/pure-r1/capture-publication-error/initial-offline-trace"
+      ],
+      "pid": 101,
+      "started_seconds": 0.0
+    }
+  ],
+  "ocr_commands": [],
+  "events": [
+    "01-menu",
+    "02-offline-spawn",
+    "03-requisition",
+    "04-move-aim"
+  ],
+  "elapsed_seconds": 20.019999999999982
+}
