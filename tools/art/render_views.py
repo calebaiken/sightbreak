@@ -57,6 +57,11 @@ VIEWS = {
     'k9_left': (Vector((-0.95, -0.10, 0.18)), ['paint_slide', 'grip', 'magazine', 'glove_right', 'glove_left'], 24, 0.85, False),
     'k9_right': (Vector((0.95, -0.15, 0.18)), ['paint_slide', 'grip', 'magazine', 'glove_right', 'glove_left'], 24, 0.85, False),
     'firing_hand': (Vector((-0.80, 0.30, 0.10)), ['glove_right'], 30, 0.9, False),
+    # The Vectorline with both hands: from the player's eye (behind, a little left and above), the left and the right. The stock is left
+    # out of the framing (it is behind the camera in first person).
+    'v_player_eye': (Vector((-0.30, -0.95, 0.40)), ['paint_', 'grip', 'magazine', 'glove_right', 'glove_left', 'sight', 'muzzle_block', 'hand_stop'], 28, 0.85, False),
+    'v_left': (Vector((-0.95, -0.05, 0.18)), ['paint_', 'grip', 'magazine', 'glove_right', 'glove_left', 'sight', 'muzzle_block', 'hand_stop'], 28, 0.85, False),
+    'v_right': (Vector((0.95, -0.10, 0.18)), ['paint_', 'grip', 'magazine', 'glove_right', 'glove_left', 'sight', 'muzzle_block', 'hand_stop'], 28, 0.85, False),
 }
 
 NO_FLOOR = ('under_34',)

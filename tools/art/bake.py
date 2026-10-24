@@ -59,6 +59,8 @@ SURFACES = {
     # Graphite furniture (the grip, the stock, the hand stop): darker than the tan magazine and the olive gloves, with the
     # blue-grey of the receiver's paint, so a glove on the grip has an edge against it.
     'grip_polymer': ((0.046, 0.047, 0.052), 0.0, 0.74, (0.090, 0.092, 0.098), 0.0, 0.56, 0.20, 0.0),
+    # The Vectorline's rear end plate: about the magazine's earth-tone (a first, lighter version blew out to cream in sun), the one warm thing on the black receiver.
+    'plate': ((0.090, 0.074, 0.052), 0.0, 0.60, (0.14, 0.115, 0.085), 0.0, 0.46, 0.20, 0.0),
     'rubber': ((0.020, 0.020, 0.021), 0.0, 0.88, (0.035, 0.035, 0.036), 0.0, 0.80, 0.25, 0.6),
     'glass': ((0.012, 0.025, 0.022), 0.0, 0.05, (0.012, 0.025, 0.022), 0.0, 0.05, 0.0, 0.0),
     'brass': ((0.42, 0.27, 0.08), 1.0, 0.32, (0.55, 0.40, 0.16), 1.0, 0.22, 0.05, 0.0),

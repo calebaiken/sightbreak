@@ -74,6 +74,16 @@ const KESTREL_9_ALBEDO := "res://assets/weapons/kestrel_9/kestrel_9_albedo.png"
 const KESTREL_9_TEXTURES := "res://assets/weapons/kestrel_9/kestrel_9"
 const KESTREL_9_HANDS := "res://assets/weapons/kestrel_9/kestrel_9_hands.glb"
 const KESTREL_9_HANDS_TEXTURES := "res://assets/weapons/kestrel_9/kestrel_9_hands"
+## The Vectorline SMG (tools/art/vectorline.py): the Relay AR's contract with one paint mesh for the whole upper (graphite grip, tan
+## magazine with its round, `muzzle` and `ejection` markers, a `stock` that stays out of first person), static authored hands.
+const VECTORLINE := "res://assets/weapons/vectorline/vectorline.glb"
+const VECTORLINE_MATERIAL := "res://assets/weapons/vectorline/vectorline_body.tres"
+const VECTORLINE_ORM := "res://assets/weapons/vectorline/vectorline_orm.png"
+const VECTORLINE_NORMAL := "res://assets/weapons/vectorline/vectorline_normal.png"
+const VECTORLINE_ALBEDO := "res://assets/weapons/vectorline/vectorline_albedo.png"
+const VECTORLINE_TEXTURES := "res://assets/weapons/vectorline/vectorline"
+const VECTORLINE_HANDS := "res://assets/weapons/vectorline/vectorline_hands.glb"
+const VECTORLINE_HANDS_TEXTURES := "res://assets/weapons/vectorline/vectorline_hands"
 const ViewmodelShading = preload("res://scripts/gameplay/viewmodel_shading.gd")
 ## Viewmodel placement inside the camera-attached weapon node (presentation only).
 ## The weapon node rests 0.235 m right, 0.235 m down and 0.42 m ahead of the eye.
@@ -102,6 +112,21 @@ const RELAY_AR_PIVOT := Vector3(0.0, 0.0, -0.19)
 static var kestrel_9_scale := 1.05
 static var kestrel_9_rotation := Vector3(0.025, 0.07, -0.03)
 static var kestrel_9_offset := Vector3(-0.085, 0.160, 0.03)
+## The Vectorline's placement, fitted the same way (viewmodel_fit_capture.gd --weapon=smg).
+static var vectorline_scale := 1.15
+static var vectorline_rotation := Vector3(0.03, 0.14, -0.04)
+static var vectorline_offset := Vector3(-0.01, 0.12, 0.03)
+## Flash size against the rifle's, fitted on bright warm pixels as the pistol's was (at 1.0 the SMG's drew 1.6 times the rifle's area backlit and 0.66 times in sun).
+const VECTORLINE_FLASH_SCALE := 0.95
+const VECTORLINE_GAIN := 1.2
+const VECTORLINE_GRIP_DARKEN := 0.50
+## The fill's strength on the SMG's near-black upper (ViewmodelShading.FLOOR is 0.10): in shade the receiver, the gloves and the sleeve
+## all fell within a few levels of each other and of the ground.
+const VECTORLINE_FLOOR := 0.16
+const VECTORLINE_MAGAZINE_GAIN := 1.7
+const VECTORLINE_UPRIGHT_OFFSET := Vector3(0, -0.01, 0.10)
+## Balance point between the hands in the GLB's axes (barrel along -Z): between the grip and the support hand.
+const VECTORLINE_PIVOT := Vector3(0.0, -0.03, -0.17)
 ## A pistol's flash is smaller than a rifle's: the shared flash mesh is sized for the rifle and covered the pistol's sights.
 const KESTREL_9_FLASH_SCALE := 0.62
 ## The procedural SMG's and marksman's muzzles sit further down the view than the rifle's, so the shared flash drew less of the
@@ -137,7 +162,7 @@ static func build(parent: Node3D, id: String, hands: bool = false) -> Dictionary
 	for child in parent.get_children():
 		parent.remove_child(child)
 		child.queue_free()
-	var key := "%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s" % [id, hands, use_authored, use_rigged_arms, use_hand_assets, relay_ar_scale, relay_ar_offset, relay_ar_rotation, kestrel_9_scale, kestrel_9_offset, kestrel_9_rotation]
+	var key := "%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s" % [id, hands, use_authored, use_rigged_arms, use_hand_assets, relay_ar_scale, relay_ar_offset, relay_ar_rotation, kestrel_9_scale, kestrel_9_offset, kestrel_9_rotation, vectorline_scale, vectorline_offset, vectorline_rotation]
 	if not _packed.has(key):
 		_packed[key] = _pack(id, hands)
 	var instance: Node = (_packed[key] as PackedScene).instantiate()
@@ -437,6 +462,8 @@ func _build_gun() -> void:
 		muzzle_at = _build_authored_rifle()
 	elif weapon_id == "sidearm" and use_authored and ResourceLoader.exists(KESTREL_9):
 		muzzle_at = _build_authored_pistol()
+	elif weapon_id == "smg" and use_authored and ResourceLoader.exists(VECTORLINE):
+		muzzle_at = _build_authored_smg()
 	elif weapon_id == "sidearm":
 		_chamfer(Vector3(0, 0.022, -0.16), Vector3(0.085, 0.075, 0.31), edge, true)
 		_chamfer(Vector3(0, -0.023, -0.12), Vector3(0.074, 0.052, 0.26), metal)
@@ -715,6 +742,66 @@ func _build_authored_pistol() -> Vector3:
 		_glove(placement * (support + Vector3(-0.010, -0.014, 0.0) * kestrel_9_scale), true, size)
 	_ejection = pistol.markers["ejection"].origin
 	return pistol.markers["muzzle"].origin
+
+## Adds the authored Vectorline and its hands; returns the muzzle position. The same contract as the rifle, with a static
+## authored pair of hands (tools/art/vectorline_hands.py; without that asset, procedural gloves placed from the model's
+## anchors). There are no rigged arms for the SMG yet, so a reload moves the magazine only.
+func _build_authored_smg() -> Vector3:
+	var placement := Transform3D(Basis.from_euler(vectorline_rotation).scaled(Vector3.ONE * vectorline_scale), vectorline_offset) if _hands else Transform3D(Basis.IDENTITY.scaled(Vector3.ONE * vectorline_scale), VECTORLINE_UPRIGHT_OFFSET)
+	if _hands:
+		_pivot = placement * VECTORLINE_PIVOT
+		placement.origin -= _pivot
+	_viewmodel = _hands
+	_flash_scale = VECTORLINE_FLASH_SCALE
+	_detail_orm = VECTORLINE_ORM
+	_detail_normal = VECTORLINE_NORMAL
+	_detail_albedo = VECTORLINE_ALBEDO
+	var smg := _authored_nodes(VECTORLINE, placement)
+	var material: Material = ViewmodelShading.surface(VECTORLINE_TEXTURES, VECTORLINE_GAIN, 0.60) if _hands else load(VECTORLINE_MATERIAL)
+	if _hands:
+		(material as ShaderMaterial).set_shader_parameter("viewmodel_floor", VECTORLINE_FLOOR)
+	var grip_material: Material = material
+	if _hands:
+		grip_material = ViewmodelShading.surface(VECTORLINE_TEXTURES, VECTORLINE_GAIN * VECTORLINE_GRIP_DARKEN, 0.60)
+		(grip_material as ShaderMaterial).set_shader_parameter("viewmodel_lift", 0.35)
+		(grip_material as ShaderMaterial).set_shader_parameter("viewmodel_floor", 0.22)
+	else:
+		grip_material = (load(VECTORLINE_MATERIAL) as BaseMaterial3D).duplicate()
+		(grip_material as BaseMaterial3D).albedo_color = Color(0.86 * VECTORLINE_GRIP_DARKEN, 0.86 * VECTORLINE_GRIP_DARKEN, 0.86 * VECTORLINE_GRIP_DARKEN)
+	var magazine_material: Material = material
+	if _hands:
+		magazine_material = ViewmodelShading.surface(VECTORLINE_TEXTURES, VECTORLINE_GAIN * VECTORLINE_MAGAZINE_GAIN, 0.90)
+	else:
+		magazine_material = (load(VECTORLINE_MATERIAL) as BaseMaterial3D).duplicate()
+		(magazine_material as BaseMaterial3D).albedo_color = Color(0.86, 0.86, 0.86) * VECTORLINE_MAGAZINE_GAIN
+	var part_names := ["body", "paint_receiver", "magazine", "grip"]
+	# The stock is behind the camera in first person; it is drawn only for inspection.
+	if not _hands and smg.meshes.has("stock"):
+		part_names.append("stock")
+	for part_name in part_names:
+		var part := _add_authored(part_name, smg.meshes[part_name], smg.markers[part_name], grip_material if part_name == "grip" else (magazine_material if part_name == "magazine" else material))
+		if part_name.begins_with("paint_"):
+			_paint_parts.append(part)
+	_magazine = _gun.get_node("magazine")
+	_magazine_rest = _magazine.position
+	var rounds := MeshInstance3D.new()
+	rounds.name = "magazine_rounds"
+	rounds.mesh = smg.meshes["magazine_rounds"]
+	rounds.material_override = magazine_material
+	rounds.transform = _magazine.transform.affine_inverse() * smg.markers["magazine_rounds"]
+	_magazine.add_child(rounds)
+	if _hands and use_hand_assets and ResourceLoader.exists(VECTORLINE_HANDS):
+		var hands := _authored_nodes(VECTORLINE_HANDS, placement)
+		_add_authored("hands", hands.meshes["hands"], hands.markers["hands"], glove_material(VECTORLINE_HANDS_TEXTURES))
+	elif _hands:
+		var grip: Vector3 = smg.anchors["grip_hand"]
+		var support: Vector3 = smg.anchors["support_hand"]
+		_glove(placement * (grip + Vector3(0.012, -0.004, 0.010)))
+		_sleeve(Vector3(0.16, -0.36, 0.43), placement * (grip + Vector3(0.020, -0.040, 0.075)), Color("28353c"))
+		_glove(placement * (support + Vector3(-0.012, -0.022, 0.0)), true)
+		_sleeve(Vector3(-0.26, -0.33, 0.12), placement * (support + Vector3(-0.030, -0.070, 0.070)), Color("28353c"))
+	_ejection = smg.markers["ejection"].origin
+	return smg.markers["muzzle"].origin
 
 ## Adds the authored rifle's meshes and hands; returns the muzzle position.
 func _build_authored_rifle() -> Vector3:

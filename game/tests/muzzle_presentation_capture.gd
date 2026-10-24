@@ -2,10 +2,11 @@ extends SceneTree
 ## Shots as a player sees them: the first-person flash of each weapon, and operators firing at 8, 22 and 40 m (the
 ## flash on their own bodies and, once it exists, the tracer). Fixture poses stepped by hand at 60 Hz, so the 40 ms
 ## flash is captured while it is lit even though the software rasteriser renders a frame in 0.3 s or more.
-##   --capture-dir=<dir> --prefix=<name> --size=WxH (default 1280x720) --weapons=sidearm,smg,rifle,marksman
+##   --capture-dir=<dir> --prefix=<name> --size=WxH (default 1280x720) --weapons=sidearm,smg,rifle,marksman --procedural (the procedural models)
 const Actor = preload("res://scripts/gameplay/actor.gd")
 const Arena = preload("res://scripts/gameplay/arena.gd")
 const Weapons = preload("res://scripts/gameplay/weapons.gd")
+const WeaponModel = preload("res://scripts/gameplay/weapon_model.gd")
 const VIEWS := {
 	"backlit": [Vector3(0, 0.05, -19), PI - 0.08],
 	"sunlit": [Vector3(3, 0.05, -12), 0.35],
@@ -50,6 +51,8 @@ func _run() -> void:
 			prefix = argument.trim_prefix("--prefix=")
 		elif argument.begins_with("--weapons="):
 			wanted = Array(argument.trim_prefix("--weapons=").split(","))
+		elif argument == "--procedural":
+			WeaponModel.use_authored = false
 		elif argument.begins_with("--size="):
 			var parts := argument.trim_prefix("--size=").split("x")
 			if parts.size() == 2:

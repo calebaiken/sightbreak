@@ -200,9 +200,19 @@ func _run() -> void:
 	# real reload/equip transforms; these do not assert aesthetic quality.
 	check(player._knees.size() == 2 and player._arms.size() == 2, "operator has two articulated knees and weapon-support arms")
 	check(player._head.mesh is SphereMesh, "helmet silhouette uses curved geometry")
+	# The SMG is authored (tools/art/vectorline.py): one paint part for the whole upper, and eight nodes in the actor's weapon
+	# (body, paint, magazine, grip, hands, flash, the spare magazine and the muzzle smoke: the pistol's count too; the rifle's
+	# nine add its rigged arms). weapon_art_test holds the model's own budget of seven.
+	check(player._gun.get_child_count() <= 8, "authored first-person attachments stay within eight nodes")
+	check(player._paint_parts.size() == 1, "the authored SMG has one batched finish part and a separately animated magazine")
+	check(player._magazine.get_child_count() == 1, "magazine ribs batch into one draw node following reload transform")
+	# The procedural marksman keeps the batching contract the SMG had before it was authored.
+	player.inventory.append("marksman")
+	player._equip("marksman")
 	check(player._gun.get_child_count() <= 6, "static first-person attachments batch into at most six draw nodes")
 	check(player._paint_parts.size() == 2, "shared model retains separately animated magazine and batched finish")
-	check(player._magazine.get_child_count() == 1, "magazine ribs batch into one draw node following reload transform")
+	check(player._magazine.get_child_count() == 1, "the marksman's magazine ribs batch into one draw node following reload transform")
+	player._equip("smg")
 	player.show_hit_feedback(true, true)
 	check(player.hit_feedback_remaining == 0.18 and player.hit_feedback_headshot and player.hit_feedback_lethal, "confirmed headshot kill exposes feedback independently of HUD")
 	var feedback_state: Dictionary = player.snapshot()
