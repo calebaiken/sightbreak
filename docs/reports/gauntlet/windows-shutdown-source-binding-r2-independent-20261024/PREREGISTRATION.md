@@ -52,3 +52,37 @@ those historical expectations. No engine, API, native/helper trial, actual repla
 CI, Windows/Mac, codec or field-of-view activation. Pure tests/static/read-only
 source checks only. Guard public-path dispatch sentinels, retain exact evidence,
 seal/commit/push the own review and send scoped result back to root.
+
+## Registered concrete source-derived controls before execution
+
+Static inspection finds direct physical reads of all non-doc paths, a NUL tree
+parser, explicit POSIX owner-execute-bit semantics and a bounded Windows CRLF
+exception. Register the following independent paired controls now:
+
+- Exact clean513-file real source binds; public real preflight stays exit2/
+  BLOCKED and guarded collect invokes no owner/runtime identity/native driver.
+- Original appended-marker model source hidden by assume-unchanged must reject;
+  plain skip-worktree alteration is retained separately even if porcelain catches
+  it first. Restore bytes/flags and retain original/altered specifications.
+- Exclusive temporary Git fixtures with model and non-model source: ordinary,
+  spaces, Unicode, tabs and newline names bind using exact physical paths.
+  Changed model/non-model bytes under both index flags reject; missing and leaf-
+  symlink entries reject. POSIX owner executable-bit gain/loss rejects; clean
+  executable and ordinary files bind. No NTFS executable-bit result is inferred.
+- Working attributes declaring a filter cannot redefine canonical frozen blob
+  bytes. Use a disabled optional filter declaration with no external filter
+  program; retain changed physical bytes under an index flag and require reject.
+- Windows helper mode permits only exact strict-UTF8 LF-to-CRLF conversion with
+  no existing CR/NUL; plain equal binary bytes remain valid. Linux conversion,
+  partial/mixed conversion, invalid UTF8, NUL and preexisting CR changes reject.
+  Mode receipt must say NTFS executable bits not measured.
+- Actual read followed by same-length mutation without restored timestamps must
+  reject. Challenge a same-length mutation that restores prior mtime before the
+  final lstat: record ctime, bytes and returned receipt. This tests a same-call
+  mutation, not atomic whole-filesystem or already-loaded-bytecode attestation.
+  An accepted stale receipt would be assessed only against that narrow claim.
+
+All fake-file/control inputs are retained exactly or by deterministic byte/length/
+SHA256 specification. No arbitrary filter program or game/helper process runs.
+After mutations, direct physical verification and clean exact-source status are
+required. Separate own/depth outputs and original75de evidence remain immutable.
