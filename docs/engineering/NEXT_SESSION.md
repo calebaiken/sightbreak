@@ -1,6 +1,6 @@
 # Next session
 
-Updated 2026-10-24 17:51 UTC. **SIGHTBREAK — Steam-Ready v1.0**,
+Updated 2026-10-24 18:10 UTC. **SIGHTBREAK — Steam-Ready v1.0**,
 IN PROGRESS / PRIMARY, [issue #25](https://github.com/calebaiken/sightbreak/issues/25).
 No native goal creation/update API or goal ID is exposed; only stop-goal is
 available. No native goal ID has been verified. Read AGENTS.md and the canonical
@@ -22,7 +22,71 @@ root ref was stale because the fetch configuration covers main; actual ls-remote
 and GitHub PR metadata agree. Never reset the newer local work to that stale ref.
 No shared merge, history rewrite, release or production deployment is authorized.
 
-## Current checkpoint — 2026-10-24 17:51 UTC
+## Current checkpoint — 2026-10-24 18:10 UTC
+
+SIGHTBREAK — Steam-Ready v1.0 remains IN PROGRESS / PRIMARY, issue25.
+Root `/workspace/sightbreak-v1-recovered`, branch
+`codex/v1-executor-recovery-20261023`, prior pushed checkpoint75d5ac53,
+draft PR31 over PR27; preserve the existing dependency stack and ownership.
+Root game source stays exact4cf6ac8e /508non-doc paths. No whole G1–G19 closes;
+G20 is persistence only. No native goal ID is exposed.
+
+- **Physical binder independently ACCEPTED_COMPONENT_ONLY.** Source71b779b7 /
+  handoffb5c698bc, different Root critic0ff67211, full report retained at
+  `docs/reports/gauntlet/fov-physical-binding-root-independent-20261024/REVIEW.md`.
+  Both own and initialized source views pass20 local-Git/pure controls plus62
+  maintained methods,0failures/errors/skips/forbidden calls. All527files/modes,
+  522protected; per-path receipts match. Exact old binder accepts all3 hidden
+  source changes; candidate rejects all3. All5 original timing assertions actually
+  execute. Presence-only donor guard is explicitly NOT execution proof: an in-memory
+  false-branch variant retains the old hash but executes0; current test executes5.
+  Original protection JSON, all outside test bytes and LinuxKernel-through-main
+  remain exact. Depth setup failure retained; second view one visible commit,
+  shared objects disclosed. No atomic/loaded-code/NTFS/native/lifetime approval.
+- **R5 independent REVISE, begin R6.** Exact8b52601c /handoff1e045025 has sealed
+  DIFFERENT critic43a89037. All49historical controls and3060 bounded model outcomes
+  match, but3 later necessary ACK/queue contradictions remain UNKNOWN after earlier
+  ownership uncertainty. Corrected explicit callback projection completes13000
+  pops9/10 before later rows; incomplete first probe retained/excluded. Literal149
+  remains45failureevents/1error/0skips, identical raw bytes in both views. No whole
+  reader/replay qualification. Exact23-leaf named constructor-only proposal is
+  supported, preserving every assertion/tail/mutation. Objective agent is R6
+  builder on a NEW own branch from1e, oldR5 stays frozen; source-derived independent
+  necessary facts must reject those3 without forcing uncertain history consistent.
+  SAME Windows critic is reserved after freeze; it did not build R3/R4/R5/R6.
+- **Receipt R2 concrete proposal under same independent review.** Builder7ef59cdc
+  freezes UNEXECUTED staged consumer/compiler SHA868e424f..., application recipe
+  and unchanged source/fault boundaries. Same receipt critic continues exact
+  pre-edit adjudication; prior3f30 permits clock only, not full consumer/route/data.
+  No proposed fixture was silently applied, no successful future captures may
+  exist before a launch-fault stage. Original0f receipt remains REJECT67a2e53b;
+  full205MiB evidence is preserved in its original sealed branch, not duplicated.
+- **Select next systems dependency:** a complete descriptor-bound exited/zombie/
+  reaped protocol responding to e468 and rejected8cc/85c. Objective agent has a
+  bounded source-only design assignment before R6 implementation; no production
+  edit/newAPI/protection scope is permitted without separate exact adjudication.
+  Simply filtering live() would lose owed adopted-zombie reaping. Missing child-list
+  capability and sole consumed Linux550 rejection remain blockers, never retried.
+- **Windows math cleanup/audit source** ab864/bede remains scoped independent
+  ACCEPTf43e756f: both96selected+15independent+3coupled, publiccollectBLOCKED.
+  It is not a native/API/SDK/retention/FOV qualification or leak fix.
+- **Owner decision pending:** shutdown R2 contract3698b545, independent96d85c93,
+  is presented to Caleb; changed study AND capability runs must wait for forwarded
+  approval. Fixed193MiB study storage/160MiB retrieved ZIP caps, partial/unavailable
+  evidence inconclusive, hard routing/enforcement/envelope/Windows prereqs remain.
+  No main/workflow-registration change, no replacement task or duplicate native run.
+
+Actual Windows40089125575 remains strict FAIL_WARNINGS/leak NONREPRODUCTION;
+original40080238905 three-object shutdown leak unresolved. Linux readiness/software
+warning, Mac ordinary gameplay/OCR, touch numeric/strict/owned-child cleanup and
+physical/human/Intel/signing/Steam gates remain open. The automatic Mac source-review
+cybersecurity-risk stop remains recorded without retry or bypass. Pure controls are
+not native or performance evidence. Keep default-off tracing/privacy, authority,
+economy and cross-platform constraints. Continue R6→independent review, receipt
+proposal→exact permitted source repair, lifetime proposal→different adjudication;
+retain failures→update gates→commit/push→select next dependency.
+
+## Historical checkpoint — 2026-10-24 17:51 UTC
 
 SIGHTBREAK — Steam-Ready v1.0 remains IN PROGRESS / PRIMARY in issue25.
 Root `/workspace/sightbreak-v1-recovered`, branch
