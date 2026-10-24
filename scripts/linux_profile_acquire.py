@@ -32,7 +32,7 @@ PINS = REPORT / 'pins.json'
 INSTALL = Path('/workspace/tools/godot-4.7.2')
 LANE_LOCK = Path('/tmp/sightbreak-linux-profile-overhead.lock')
 ACQUISITION_LOCK = Path('/tmp/sightbreak-linux-profile-acquisition.lock')
-ACCEPTED = {'scripts/linux_profile_overhead.py': 'd601956d4378f758c7d63c6d467e5a35acfd6207e6f3ef4629fa82b1e0923af9',
+ACCEPTED = {'scripts/linux_profile_overhead.py': '3498d701b689abbd1dfb88b4ba8274b092c7e7e3885d1ac3bca52ca1940d8b32',
             'scripts/diagnostics/linux_profile_overhead.gd': '5597cd43f13ad3e9b1a8c36ed5a36a963de1ebf353cc6be24e0e74f92ff4d890',
             'scripts/diagnostics/linux_profile_overhead.tscn': 'acc3cd62c2a72005c112014ed24320093d6f772d5c0f459cda5f24e3cf05fe61'}
 CAPS = {'preflight': 60, 'stage': 45, 'version': 15, 'import': 120, 'import-inventory': 30,

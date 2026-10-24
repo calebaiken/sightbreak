@@ -365,6 +365,11 @@ def validate_condition(record, expected):
         item = report[name]
         require(hashlib.sha256(item['serialized'].encode()).hexdigest() == item['sha256'], 'Invalid fingerprint hash')
         content = strict_json(item['serialized'])
+        for key in ('caller_is_main_thread', 'caller_is_render_thread'):
+            require(type(content.get('settings')) is dict
+                    and content['settings'].get(key) is True
+                    and content['settings'][key] is report['settings'][key],
+                    'Invalid fingerprint thread readback: ' + key)
         require(content['source_ledger_sha256'] == expected['source_ledger_sha256'] and content['nodes']
                 and content['settings'] == report['settings'], 'Incomplete fingerprint')
     require(report['fingerprint_initial'] == report['fingerprint_terminal'], 'Scene changed during condition')

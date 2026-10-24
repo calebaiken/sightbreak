@@ -114,6 +114,32 @@ class ReadbackControls(unittest.TestCase):
             del row['fixture']['settings'][key]
             with self.assertRaisesRegex(diagnostic.Invalid, 'thread readback'):
                 diagnostic.validate_condition(row, self.expected)
+        snapshots = ('fingerprint_initial', 'fingerprint_terminal')
+        for key in ('caller_is_main_thread', 'caller_is_render_thread'):
+            for names in ((snapshots[0],), (snapshots[1],), snapshots):
+                for invalid in (False, None, 0, 1, 1.0, 'true', [], {}, '__missing__'):
+                    with self.subTest(key=key, snapshots=names, invalid=invalid):
+                        row = manual_record(0)
+                        for name in names:
+                            content = json.loads(row['fixture'][name]['serialized'])
+                            if invalid == '__missing__':
+                                del content['settings'][key]
+                            else:
+                                content['settings'][key] = invalid
+                            serialized = json.dumps(content, sort_keys=True)
+                            row['fixture'][name] = {'serialized': serialized,
+                                'sha256': hashlib.sha256(serialized.encode()).hexdigest()}
+                        with self.assertRaisesRegex(diagnostic.Invalid, 'fingerprint thread readback'):
+                            diagnostic.validate_condition(row, self.expected)
+            # Both snapshots can retain real boolean true under rebuilt hashes.
+            row = manual_record(0)
+            for name in snapshots:
+                content = json.loads(row['fixture'][name]['serialized'])
+                content['settings'][key] = True
+                serialized = json.dumps(content, sort_keys=True)
+                row['fixture'][name] = {'serialized': serialized,
+                    'sha256': hashlib.sha256(serialized.encode()).hexdigest()}
+            diagnostic.validate_condition(row, self.expected)
 
     def test_full_argv_preserves_explicit_safe_intent_even_when_state_matches(self):
         # unsafe maps to the same engine state; only exact full argv can reject it.
