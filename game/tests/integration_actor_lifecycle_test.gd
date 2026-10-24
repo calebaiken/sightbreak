@@ -27,7 +27,7 @@ func run() -> void:
 		check(actor._arms_time > 0.4 and actor._arms_time < 0.5, "reload seeks authority timer")
 		var old: WeakRef = weakref(actor._arms_player)
 		actor._equip("sidearm")
-		check(actor._arms_player == null and actor._arms_skeleton == null and not actor._viewmodel, "sidearm clears arms/first-person-shader contract")
+		check(actor._arms_player == null and actor._arms_skeleton == null and actor._viewmodel, "sidearm clears the rifle's rigged arms and draws the authored pistol with the first-person shader")
 		actor.tick_visual(1.0/60.0)
 		await process_frame
 		await process_frame

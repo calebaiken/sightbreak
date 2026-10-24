@@ -58,6 +58,24 @@ python3 $T/textures.py $OUT/hands relay_ar_hands game/assets/weapons/relay_ar
 
 The rigged arms replace the v2 hands as the default; the v2 hands above remain the fallback.
 
+## Rebuilding the Kestrel 9
+
+```sh
+B=<tools>/bpy-venv/bin/python; T=tools/art; OUT=<scratch>
+$B $T/bake.py $T/kestrel_9.py $OUT/pistol --size 1024 --samples 32                 # ~10 min on 4 vCPU
+$B $T/rebake_part_ao.py $OUT/pistol/kestrel_9.blend magazine $OUT/pistol/mag_ao --size 1024 --samples 48
+python3 $T/patch_part_ao.py $OUT/pistol/kestrel_9_occlusion_raw.png $OUT/pistol/mag_ao/magazine_ao_on_black.png $OUT/pistol/mag_ao/magazine_ao_on_white.png $OUT/pistol/kestrel_9_occlusion_raw.png
+$B $T/export.py $T/kestrel_9.py $OUT/pistol game/assets/weapons/kestrel_9/kestrel_9.glb
+python3 $T/textures.py $OUT/pistol kestrel_9 game/assets/weapons/kestrel_9
+$B $T/bake.py $T/kestrel_9_hands.py $OUT/pistol_hands --size 1024 --samples 32
+$B $T/export.py $T/kestrel_9_hands.py $OUT/pistol_hands game/assets/weapons/kestrel_9/kestrel_9_hands.glb
+python3 $T/textures.py $OUT/pistol_hands kestrel_9_hands game/assets/weapons/kestrel_9
+./scripts/godot.sh --headless --editor --quit                                     # import
+./scripts/godot.sh --headless --script res://tests/weapon_art_test.gd             # contract
+```
+
+`kestrel_9_preview.py` builds the pistol with its hands for `render_views.py` (views `k9_player_eye`, `k9_left`, `k9_right`); `game/tests/viewmodel_fit_capture.gd` renders one first-person frame with the placement overridden from the command line (`--scale`, `--offset`, `--rotation`), which is how the placement constants in `weapon_model.gd` were fitted.
+
 ```sh
 $B $T/arms_build.py $OUT/arms --size 2048 --samples 48                        # mesh, rig, grip solve, bake, clip, GLB
 cp $OUT/arms/relay_ar_arms.glb game/assets/weapons/relay_ar/

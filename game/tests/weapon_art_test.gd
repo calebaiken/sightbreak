@@ -115,8 +115,8 @@ func _effects(actor: SBActor) -> void:
 	check(actor._muzzle.mesh == flash and actor._muzzle.material_override is ShaderMaterial and actor._muzzle.material_override.shader.code.contains("blend_add"), "the actor's flash is the shared mesh with the additive shader")
 	var procedural := Node3D.new()
 	root.add_child(procedural)
-	var sidearm: Dictionary = WeaponModel.build(procedural, "sidearm", true)
-	check(sidearm.muzzle.mesh == flash and sidearm.muzzle.material_override is StandardMaterial3D and sidearm.muzzle.material_override.blend_mode == BaseMaterial3D.BLEND_MODE_ADD and sidearm.muzzle.material_override.vertex_color_use_as_albedo, "procedural weapons share the flash mesh with an additive material")
+	var smg: Dictionary = WeaponModel.build(procedural, "smg", true)
+	check(smg.muzzle.mesh == flash and smg.muzzle.material_override is StandardMaterial3D and smg.muzzle.material_override.blend_mode == BaseMaterial3D.BLEND_MODE_ADD and smg.muzzle.material_override.vertex_color_use_as_albedo, "procedural weapons share the flash mesh with an additive material")
 	procedural.queue_free()
 	# Each shot differs, and the flash shrinks fast and is gone after 40 ms.
 	var scales := {}
@@ -215,6 +215,56 @@ func _run() -> void:
 	check(occlusion_total / magazine_uvs.size() >= 0.70, "the magazine's mean baked occlusion is at least 0.70 (%.3f)" % (occlusion_total / magazine_uvs.size()))
 	var material: ORMMaterial3D = load(WeaponModel.RELAY_AR_MATERIAL)
 	check(material.albedo_texture != null and material.orm_texture != null and material.normal_enabled and material.normal_texture != null, "rifle material binds albedo, ORM and normal maps")
+
+	# The Kestrel 9 sidearm keeps the same contract as the rifle.
+	for path in [WeaponModel.KESTREL_9, WeaponModel.KESTREL_9_HANDS, WeaponModel.KESTREL_9_MATERIAL]:
+		check(ResourceLoader.exists(path), "authored asset present: " + path)
+	var pistol := WeaponModel._authored_nodes(WeaponModel.KESTREL_9, Transform3D.IDENTITY)
+	for node in ["body", "paint_slide", "grip", "magazine", "magazine_rounds", "muzzle", "ejection", "grip_hand", "support_hand"]:
+		check(pistol.markers.has(node), "pistol exports node " + node)
+	var pistol_muzzle: Vector3 = pistol.anchors["muzzle"]
+	check(pistol_muzzle.z < -0.15 and pistol_muzzle.z > -0.25 and absf(pistol_muzzle.x) < 0.001 and absf(pistol_muzzle.y - 0.025) < 0.002, "the pistol's barrel runs along -Z with the bore at 0.025 m and a real 0.18 m muzzle")
+	check(pistol.anchors["ejection"].x > 0.01, "the pistol ejects to the right")
+	var pistol_triangles := 0
+	for mesh_name in pistol.meshes:
+		pistol_triangles += _triangles(pistol.meshes[mesh_name])
+	check(pistol_triangles > 3000 and pistol_triangles <= 14000, "pistol within 14000 triangles (%d)" % pistol_triangles)
+	# The pistol's magazine leaves the well on reload, so its baked occlusion must be its own as well (the first bake had
+	# 81 % of its vertices almost fully occluded and the magazine drew black between the hands).
+	var pistol_orm: Image = (load(WeaponModel.KESTREL_9_ORM) as Texture2D).get_image()
+	if pistol_orm.is_compressed():
+		pistol_orm.decompress()
+	var pistol_uvs: PackedVector2Array = (pistol.meshes["magazine"] as Mesh).surface_get_arrays(0)[Mesh.ARRAY_TEX_UV]
+	var pistol_dark := 0
+	var pistol_occlusion := 0.0
+	for uv in pistol_uvs:
+		var texel := pistol_orm.get_pixelv(Vector2i(clampi(int(uv.x * pistol_orm.get_width()), 0, pistol_orm.get_width() - 1), clampi(int(uv.y * pistol_orm.get_height()), 0, pistol_orm.get_height() - 1)))
+		pistol_occlusion += texel.r
+		if texel.r < 0.1:
+			pistol_dark += 1
+	check(float(pistol_dark) / pistol_uvs.size() <= 0.10, "the pistol magazine's baked occlusion is its own: %.1f %% of its vertices are almost fully occluded (limit 10 %%)" % (100.0 * pistol_dark / pistol_uvs.size()))
+	# 0.60, not the rifle's 0.70: the pistol magazine is 24 mm wide, so the 3.5 cm contact distance of the bake occludes
+	# more of its own ribs and recesses (measured 0.64 after the fix against 0.16 before).
+	check(pistol_occlusion / pistol_uvs.size() >= 0.60, "the pistol magazine's mean baked occlusion is at least 0.60 (%.3f)" % (pistol_occlusion / pistol_uvs.size()))
+	var pistol_hands := WeaponModel._authored_nodes(WeaponModel.KESTREL_9_HANDS, Transform3D.IDENTITY)
+	check(pistol_hands.meshes.has("hands") and _triangles(pistol_hands.meshes["hands"]) <= HAND_TRIANGLES, "pistol hands are one mesh within %d triangles" % HAND_TRIANGLES)
+	for prefix in ["kestrel_9", "kestrel_9_hands"]:
+		for map in ["albedo", "orm", "normal"]:
+			check(_texture_ok("res://assets/weapons/kestrel_9/%s_%s.png" % [prefix, map], 1024), "%s %s is square, power of two, at most 1024" % [prefix, map])
+	var pistol_holder := Node3D.new()
+	root.add_child(pistol_holder)
+	var pistol_parts: Dictionary = WeaponModel.build(pistol_holder, "sidearm", true)
+	check(pistol_parts.paint.size() == 1 and pistol_parts.magazine != null and pistol_parts.muzzle != null, "authored pistol exposes paint, magazine and muzzle roles")
+	check(pistol_holder.get_child_count() <= 7, "first-person pistol with hands is at most seven draw nodes (%d)" % pistol_holder.get_child_count())
+	check(pistol_parts.magazine.get_child_count() == 1, "the pistol's cartridge follows its magazine")
+	var pistol_base := Transform3D(Basis.from_euler(WeaponModel.kestrel_9_rotation).scaled(Vector3.ONE * WeaponModel.kestrel_9_scale), WeaponModel.kestrel_9_offset)
+	var pistol_pivot: Vector3 = pistol_base * WeaponModel.KESTREL_9_PIVOT
+	check(pistol_parts.pivot is Vector3 and pistol_parts.pivot.distance_to(pistol_pivot) < 0.001, "the pistol reports its balance point as the weapon node's pivot")
+	var pistol_port: Vector3 = pistol_base * (pistol.anchors["ejection"] as Vector3) - pistol_pivot
+	check(pistol_parts.ejection is Vector3 and pistol_parts.ejection.distance_to(pistol_port) < 0.001, "casings leave from the pistol's ejection port")
+	for part: MeshInstance3D in pistol_parts.paint:
+		check(part.has_meta("detail_orm") and (part.get_meta("detail_orm") as Texture2D).resource_path == WeaponModel.KESTREL_9_ORM, "the pistol's paint part keeps its own baked detail maps under a finish")
+	pistol_holder.queue_free()
 
 	# Built through the same path as the game: roles, batching budget, finish detail.
 	var holder := Node3D.new()
@@ -352,6 +402,8 @@ func _run() -> void:
 	var reveal_paint: Array[String] = _vertex_overrides(reveal)
 	check(reveal_paint.is_empty(), "the case reveal draws its reward with the engine's transform %s" % [reveal_paint])
 	reveal.queue_free()
+	# The procedural sidearm is the fallback when the authored Kestrel 9 is switched off.
+	WeaponModel.use_authored = false
 	var sidearm := Actor.new()
 	sidearm.configure(8, 0, "Procedural fixture", true)
 	root.add_child(sidearm)
@@ -360,6 +412,7 @@ func _run() -> void:
 	var sidearm_paint: Array[String] = _vertex_overrides(sidearm._gun)
 	check(sidearm.weapon_id == "sidearm" and not sidearm._viewmodel and sidearm._paint_parts.size() > 0 and sidearm._finish.shader == CosmeticMaterial.shader() and sidearm_paint.is_empty(), "procedural first-person sidearm keeps the world finish %s" % [sidearm_paint])
 	sidearm.queue_free()
+	WeaponModel.use_authored = true
 	# The reload as a mechanical sequence: leave the handguard, reach, grasp, slide the old
 	# magazine out along its well, let it go, fetch the replacement, bring it up, line it up,
 	# enter, push to the stop, keep hold until it is seated, then let go and return. The clip is
@@ -621,7 +674,7 @@ func _run() -> void:
 		var built: Dictionary = WeaponModel.build(build_holder, variant[0], true)
 		var split := _projections(build_holder)
 		var context := "first-person %s (authored %s, rigged arms %s, hand assets %s)" % variant
-		var authored_rifle: bool = variant[0] == "rifle" and variant[1]
+		var authored_rifle: bool = (variant[0] == "rifle" or variant[0] == "sidearm") and variant[1]
 		check(built.viewmodel == authored_rifle, context + " reports its projection")
 		if authored_rifle:
 			check(split.camera.is_empty(), context + ": every mesh draws with the viewmodel projection (camera projection: %s)" % [split.camera])
@@ -629,7 +682,8 @@ func _run() -> void:
 			check(split.viewmodel.is_empty(), context + ": every mesh draws with the camera's projection (viewmodel: %s)" % [split.viewmodel])
 		var hands_drawn := _has_fabric(build_holder)
 		if authored_rifle and variant[3]:
-			hands_drawn = build_holder.has_node("arms") if variant[2] else build_holder.has_node("hands")
+			# The pistol has static authored hands only; the rifle has rigged arms by default.
+			hands_drawn = build_holder.has_node("arms") if (variant[2] and variant[0] == "rifle") else build_holder.has_node("hands")
 		check(hands_drawn, context + " draws its hands")
 		build_holder.queue_free()
 	WeaponModel.use_authored = true

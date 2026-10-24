@@ -155,6 +155,8 @@ var _smoke_material: ShaderMaterial
 const SMOKE_SECONDS := 0.45
 const FLASH_SECONDS := 0.040
 var _flash_variation := Vector3.ONE
+## The equipped weapon's flash size against the rifle's (a pistol's is smaller); 1.0 for every other weapon.
+var _flash_gain := 1.0
 var _crouching: bool = false
 var _gun_color := Color("9aabb5")
 var _paint_parts: Array[MeshInstance3D] = []
@@ -515,6 +517,7 @@ func _build_gun() -> void:
 			_magazine.get_parent().add_child(_magazine_spare)
 			_magazine_spare.transform = _magazine_rest_transform
 	_muzzle = model.muzzle
+	_flash_gain = float(model.get("flash_scale", 1.0))
 	_smoke_node = null
 	if _viewmodel and is_local and is_instance_valid(_muzzle) and _muzzle.get_parent() != null:
 		# A grey puff that leaves the muzzle after a shot and thins out over SMOKE_SECONDS (presentation only).
@@ -941,7 +944,7 @@ func play_shot_effect() -> void:
 	var ticks := Time.get_ticks_msec()
 	_muzzle.rotation.z = float(ticks % 29) * 0.22
 	_flash_variation = Vector3(0.85 + float(ticks % 17) * 0.015, 0.85 + float(ticks % 13) * 0.02, 0.78 + float(ticks % 23) * 0.02)
-	_muzzle.scale = _flash_variation
+	_muzzle.scale = _flash_variation * _flash_gain
 	_smoke_age = 0.0
 	if is_local:
 		var port: Vector3 = _gun.global_transform * _ejection_point if _ejection_point != Vector3.INF else _gun.global_position + global_basis * Vector3(0.065, 0.02, -0.11)
@@ -1062,7 +1065,7 @@ func tick_visual(delta: float) -> void:
 	_flash = maxf(0, _flash - delta)
 	if _flash > 0.0:
 		# A flash is brightest and widest at the start and shrinks fast over its 40 ms.
-		_muzzle.scale = _flash_variation * (0.5 + 0.5 * _flash / FLASH_SECONDS)
+		_muzzle.scale = _flash_variation * _flash_gain * (0.5 + 0.5 * _flash / FLASH_SECONDS)
 	hit_feedback_remaining = maxf(0, hit_feedback_remaining - delta)
 	_equip_blend *= exp(-delta * 14.0)
 	_muzzle.visible = _flash > 0 and alive
