@@ -40,7 +40,13 @@ def decision(label, before, aid=6, interact=False):
     after['actors'][str(aid)]['input'] = cmd
     candidates = [{'id': int(i), 'distance': math.dist(actor['position'], a['position']), 'reason': ('range' if math.dist(actor['position'], a['position']) > 38 else 'visibility')} for i, a in before['actors'].items() if a['alive'] and a['team'] != actor['team']]
     destination = [15, 0, 10]
+    defenders = [(math.dist(a['position'], before['objective_position']), int(i)) for i, a in before['actors'].items() if a['alive'] and a['team'] == 1]
+    defuser = before['objective'] == 'planted' and actor['team'] == 1 and aid == (min(defenders)[1] if defenders else 0)
+    if defuser:
+        destination = copy.deepcopy(before['objective_position'])
     obs = {'enabled': True, 'operation': 'decision', 'status': 'complete', 'candidates': candidates, 'rng_before': before['rng'], 'plan': {'destination': destination, 'interact': interact, 'primary_site': 1}, 'movement_mode': 'interact' if interact else 'navigate', 'navigation_waypoint': actor['position'], 'navigation_destination': None if interact else destination, 'target_distance': None, 'aligned': None, 'decision': {'actor_id': aid, 'target_id': 0, 'role': ('defuser' if interact and actor['team'] == 1 else ('carrier' if aid == before['carrier'] else ('anchor' if actor['team'] == 1 else 'escort'))), 'destination': destination, 'interact': interact, 'stuck': 0.0, 'command': cmd, 'rng_after': after['rng']}}
+    if defuser:
+        obs['decision']['role'] = 'defuser'
     return {'label': label, 'tick': before['tick'], 'elapsed': before['elapsed'], 'dt': .12, 'actor_id': aid, 'position': actor['position'], 'before': before, 'after': after, 'observation': obs}
 
 
@@ -157,6 +163,31 @@ class ObjectiveOracleTests(unittest.TestCase):
         for field in ('dt', 'before', 'after'):
             self.mutate('AUTHORITY', lambda r: True, lambda r, key=field: r.pop(key))
 
+    def test_freshness_call_cannot_describe_another_actor(self):
+        self.mutate('CALL', lambda r: r['case'] == 'live_complete', lambda r: r['output']['decision'].update(actor_id=7))
+
+    def test_direct_perception_requires_an_eligible_target(self):
+        self.mutate('CALL', lambda r: r['case'] == 'direct_perception', lambda r: r['output'].update(target_id=10))
+
+    def test_decision_role_must_exist_in_source(self):
+        self.mutate('DECISION', lambda r: r['label'] == 'pose_122', lambda r: r['observation']['decision'].update(role='invented_role_not_in_source'))
+
+    def test_defuser_cannot_forge_destination_or_legal_role(self):
+        def move_plan(row):
+            row['observation']['plan']['destination'] = [999, 0, 999]
+            row['observation']['decision']['destination'] = [999, 0, 999]
+        self.mutate('DECISION', lambda r: r['label'] == 'control_defuse', move_plan)
+        self.mutate('DECISION', lambda r: r['label'] == 'control_defuse', lambda r: r['observation']['decision'].update(role='anchor'))
+
+    def test_nearest_defuser_keeps_device_plan_outside_interaction_range(self):
+        before = protected(127)
+        before.update(objective='planted', objective_position=[-15, 0, 10], objective_timer=35.0)
+        before['actors']['6'].update(team=1, position=[-15, 0, 6])
+        row = decision('control_defuse', before)
+        oracle.decision(row)
+        self.assertFalse(row['observation']['decision']['interact'])
+        self.assertEqual(row['observation']['plan']['destination'], [-15, 0, 10])
+
     def test_complete_commands_and_scalar_boundaries(self):
         for field in oracle.COMMAND:
             self.mutate('DECISION', lambda r: True, lambda r, key=field: r['observation']['decision']['command'].pop(key))
@@ -200,8 +231,8 @@ class ObjectiveOracleTests(unittest.TestCase):
         self.assertTrue(oracle.source_audit(ROOT)['source_erasure_passed'])
 
     def test_inventory_rejects_probe_utility_hidden_marker_and_resource_changes(self):
-        files = json.loads((ROOT / oracle.R2 / 'acquisition-inventory.json').read_text())['files']
-        extras = [oracle.REPORT + '/benchmark-identity.json', oracle.REPORT + '/original-timeout-slice.jsonl', oracle.R2 + '/acquisition-inventory.json', oracle.R2 + '/source-reference/original-0527715-bot_ai.gd.txt']
+        files = json.loads((ROOT / oracle.ACQUISITION_INVENTORY).read_text())['files']
+        extras = [oracle.REPORT + '/benchmark-identity.json', oracle.REPORT + '/original-timeout-slice.jsonl', oracle.ACQUISITION_INVENTORY, oracle.R2 + '/source-reference/original-0527715-bot_ai.gd.txt']
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)
             for path in list(files) + extras:

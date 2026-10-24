@@ -14,6 +14,7 @@ import subprocess
 ROOT = Path(__file__).resolve().parents[1]
 REPORT = 'docs/reports/gauntlet/m5-objective-observability'
 R2 = REPORT + '/correction-r2'
+ACQUISITION_INVENTORY = 'docs/reports/gauntlet/m5-objective-observability-r3-20261024/acquisition-inventory.json'
 PREFIX = 'BOT_OBJECTIVE_'
 POSES = [120, 122, 127]
 CONTROLS = ['plant', 'defuse', 'wrong_site', 'moving', 'no_interact']
@@ -22,6 +23,7 @@ DT = 1 / 60
 IDS = {str(i) for i in range(1, 11)}
 BOOL_COMMAND = {'interact', 'fire', 'reload', 'jump', 'crouch', 'smoke', 'grenade'}
 COMMAND = BOOL_COMMAND | {'move', 'look', 'weapon'}
+DECISION_ROLES = {'rifle', 'defuser', 'post_plant_hold', 'retake_cover', 'recover_device', 'carrier', 'split_flank', 'entry', 'escort', 'investigate_sound', 'anchor', 'rotate_investigate', 'pursue_memory'}
 ACTOR_FIELDS = {'team', 'kills', 'assists', 'deaths', 'position', 'velocity', 'yaw', 'pitch', 'alive', 'health', 'weapon', 'ammo', 'reserve', 'reload', 'deploy', 'ammo_store', 'inventory', 'credits', 'grenades', 'smokes', 'recoil', 'rng', 'cooldowns', 'shot_index', 'fire_previous', 'jump_previous', 'grenade_previous', 'smoke_previous', 'crouching', 'head_height', 'floor_contact', 'collision_disabled', 'collision_height', 'collision_position', 'input'}
 STATE_FIELDS = {'actors', 'utilities', 'rng', 'bots', 'teams', 'heard', 'objective', 'carrier', 'objective_position', 'objective_timer', 'contributions', 'interaction_progress', 'damage_history', 'round', 'attack_score', 'defend_score', 'bot_clock', 'interactions', 'time_left', 'tick', 'elapsed', 'phase'}
 OBJECTIVE_FIELDS = {'objective', 'carrier', 'objective_position', 'objective_timer', 'contributions', 'interaction_progress', 'interactions', 'phase', 'time_left', 'attack_score', 'defend_score'}
@@ -89,7 +91,7 @@ def source_audit(root=ROOT):
     raw = (root / REPORT / 'original-timeout-slice.jsonl').read_bytes()
     require(digest(raw) == identity['selected_bytes_sha256'], 'changed original slice')
     require(raw == (root / 'game/tests/fixtures/bot_objective_timeout.jsonl').read_bytes(), 'changed fixture bytes')
-    inventory = json.loads((root / R2 / 'acquisition-inventory.json').read_text())
+    inventory = json.loads((root / ACQUISITION_INVENTORY).read_text())
     require(inventory['scope'] == 'complete_tracked_game_and_scripts', 'wrong inventory scope')
     files = inventory['files']
     require(all(path.startswith(('game/', 'scripts/')) and '..' not in Path(path).parts for path in files), 'invalid inventory path')
@@ -235,7 +237,7 @@ def observation(obs, complete=True):
     require(set(obs) == required, 'decision observation schema')
     dec = obs['decision']
     require(set(dec) == {'actor_id', 'target_id', 'role', 'destination', 'interact', 'stuck', 'command', 'rng_after'}, 'decision result schema')
-    require(integer(dec['actor_id'], 1, 10) and integer(dec['target_id'], 0, 10) and type(dec['role']) is str and dec['role'] and type(dec['interact']) is bool and number(dec['stuck']) and dec['stuck'] >= 0, 'typed decision roles')
+    require(integer(dec['actor_id'], 1, 10) and integer(dec['target_id'], 0, 10) and type(dec['role']) is str and dec['role'] in DECISION_ROLES and type(dec['interact']) is bool and number(dec['stuck']) and dec['stuck'] >= 0, 'typed decision roles')
     command(dec['command'])
     require(dec['command']['interact'] == dec['interact'], 'interaction command mismatch')
     require(set(obs['plan']) == {'destination', 'interact', 'primary_site'} and vector(obs['plan']['destination'], 3) and type(obs['plan']['interact']) is bool and integer(obs['plan']['primary_site'], 0, 1), 'plan schema')
@@ -278,6 +280,9 @@ def decision(row):
         defenders = [(math.dist(a['position'], before['objective_position']), int(i)) for i, a in before['actors'].items() if a['alive'] and a['team'] == 1]
         nearest = min(defenders)[1] if defenders else 0
         expected_interact = row['actor_id'] == nearest and math.dist(actor['position'], before['objective_position']) <= 2.6
+        require((obs['decision']['role'] == 'defuser') == (row['actor_id'] == nearest), 'defuser role contradicts protected identity')
+        if row['actor_id'] == nearest:
+            require(same(obs['plan']['destination'], before['objective_position']), 'defuser destination contradicts device')
     require(obs['decision']['interact'] == expected_interact, 'plan interaction contradicts objective pose')
     if actor['team'] == 0 and row['actor_id'] == before['carrier'] and before['objective'] == 'carried':
         require(same(obs['plan']['destination'], [-15 if obs['plan']['primary_site'] == 0 else 15, 0, 10]), 'carrier plan destination contradicts site')
@@ -390,9 +395,11 @@ def verify_records(rows, root=ROOT):
         if name == 'empty_default': require(out == {}, 'default output not empty')
         elif name in ('live_complete', 'branch_change'):
             observation(out)
+            require(out['decision']['actor_id'] == 6, 'freshness call describes another actor')
             if name == 'branch_change': require(out['decision']['target_id'] == 0 and out['target_distance'] is None and out['aligned'] is None and out['navigation_destination'] != [999, 999, 999], 'branch output stale')
         elif name == 'direct_perception':
             require(set(out) == {'enabled', 'operation', 'status', 'candidates', 'target_id'} and out['enabled'] is True and out['operation'] == 'perception' and out['status'] == 'complete' and integer(out['target_id'], 0, 10) and type(out['candidates']) is list, 'direct perception stale result')
+            require(out['target_id'] == 0 or any(type(candidate) is dict and candidate.get('id') == out['target_id'] and candidate.get('reason') == 'eligible' for candidate in out['candidates']), 'direct perception selected an unperceived target')
         else:
             wanted = {'live_to_dead': 'dead', 'live_to_post': 'non_live', 'offline_to_online': 'blocked'}.get(name, 'disabled')
             require(same(out, {'enabled': wanted != 'disabled', 'operation': 'decision', 'status': wanted}), 'stale early-return/gated output')
