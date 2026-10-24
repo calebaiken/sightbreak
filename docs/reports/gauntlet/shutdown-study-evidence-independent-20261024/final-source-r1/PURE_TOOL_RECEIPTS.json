@@ -1,0 +1,184 @@
+{
+  "note": "Original pure tool receipts; all tests are CPU4 Python, not native performance data.",
+  "startups": [
+    {
+      "status": "fulfilled",
+      "value": {
+        "label": "own-maintained",
+        "command": "taskset -c 4 python3 -B /workspace/reviews/shutdown-study-evidence-independent-20261024/docs/reports/gauntlet/shutdown-study-evidence-independent-20261024/final-source-r1/run_maintained.py --source /workspace/reviews/shutdown-study-evidence-independent-20261024 --data /workspace/reviews/shutdown-study-evidence-independent-20261024/docs/reports/gauntlet/shutdown-study-evidence-independent-20261024/final-source-r1 --output /workspace/reviews/shutdown-study-evidence-independent-20261024/docs/reports/gauntlet/shutdown-study-evidence-independent-20261024/final-source-r1/own-maintained",
+        "result": {
+          "chunk_id": "1bfc6d",
+          "wall_time_seconds": 1.001190313,
+          "session_id": 98664,
+          "original_token_count": 0,
+          "output": ""
+        }
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "label": "own-independent",
+        "command": "taskset -c 4 python3 -B /workspace/reviews/shutdown-study-evidence-independent-20261024/docs/reports/gauntlet/shutdown-study-evidence-independent-20261024/final-source-r1/independent_controls.py --source /workspace/reviews/shutdown-study-evidence-independent-20261024 --data /workspace/reviews/shutdown-study-evidence-independent-20261024/docs/reports/gauntlet/shutdown-study-evidence-independent-20261024/final-source-r1 --output /workspace/reviews/shutdown-study-evidence-independent-20261024/docs/reports/gauntlet/shutdown-study-evidence-independent-20261024/final-source-r1/own-independent",
+        "result": {
+          "chunk_id": "1c24a1",
+          "wall_time_seconds": 1.000645995,
+          "session_id": 14612,
+          "original_token_count": 0,
+          "output": ""
+        }
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "label": "depth-maintained",
+        "command": "taskset -c 4 python3 -B /workspace/reviews/shutdown-study-evidence-independent-20261024/docs/reports/gauntlet/shutdown-study-evidence-independent-20261024/final-source-r1/run_maintained.py --source /workspace/reviews/shutdown-study-evidence-independent-depth1-20261024 --data /workspace/reviews/shutdown-study-evidence-independent-20261024/docs/reports/gauntlet/shutdown-study-evidence-independent-20261024/final-source-r1 --output /workspace/reviews/shutdown-study-evidence-independent-20261024/docs/reports/gauntlet/shutdown-study-evidence-independent-20261024/final-source-r1/depth-maintained",
+        "result": {
+          "chunk_id": "80a0a1",
+          "wall_time_seconds": 1.001196832,
+          "session_id": 77670,
+          "original_token_count": 0,
+          "output": ""
+        }
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "label": "depth-independent",
+        "command": "taskset -c 4 python3 -B /workspace/reviews/shutdown-study-evidence-independent-20261024/docs/reports/gauntlet/shutdown-study-evidence-independent-20261024/final-source-r1/independent_controls.py --source /workspace/reviews/shutdown-study-evidence-independent-depth1-20261024 --data /workspace/reviews/shutdown-study-evidence-independent-20261024/docs/reports/gauntlet/shutdown-study-evidence-independent-20261024/final-source-r1 --output /workspace/reviews/shutdown-study-evidence-independent-20261024/docs/reports/gauntlet/shutdown-study-evidence-independent-20261024/final-source-r1/depth-independent",
+        "result": {
+          "chunk_id": "180961",
+          "wall_time_seconds": 1.014763797,
+          "session_id": 12712,
+          "original_token_count": 0,
+          "output": ""
+        }
+      }
+    }
+  ],
+  "first_polls": [
+    {
+      "status": "fulfilled",
+      "value": {
+        "session": 98664,
+        "result": {
+          "chunk_id": "8dbd9c",
+          "wall_time_seconds": 5.001185921,
+          "session_id": 98664,
+          "original_token_count": 0,
+          "output": ""
+        }
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "session": 14612,
+        "result": {
+          "chunk_id": "f84789",
+          "wall_time_seconds": 0.000036921,
+          "exit_code": 1,
+          "original_token_count": 169,
+          "output": "{\"source\": \"/workspace/reviews/shutdown-study-evidence-independent-20261024\", \"methods\": 9, \"failure_events\": 17, \"failed_methods\": 5, \"errors\": 0, \"skips\": 0, \"loader_cases\": 81, \"false_accepts\": [\"capture-wrong-phase\", \"capture-wrong-actor\", \"capture-missing-two-frames\", \"capture-dead-after-capture\", \"pause-not-paused\", \"paused-time-advanced\", \"reload-deadline-false\", \"reload-watchdog-bool\", \"settings-living-false\", \"wrong-callback-job-label\", \"job-before-callback-clock\", \"missing-active-identities\", \"controller-birth-u65\", \"controller-handle-u65\"], \"false_rejects\": [\"source-permitted-relative-output-positive\"], \"candidate_exceptions\": [], \"native_invocations\": 0}\n"
+        }
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "session": 77670,
+        "result": {
+          "chunk_id": "6b8b33",
+          "wall_time_seconds": 5.000919372,
+          "session_id": 77670,
+          "original_token_count": 0,
+          "output": ""
+        }
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "session": 12712,
+        "result": {
+          "chunk_id": "b4c3b0",
+          "wall_time_seconds": 0.000095086,
+          "exit_code": 1,
+          "original_token_count": 171,
+          "output": "{\"source\": \"/workspace/reviews/shutdown-study-evidence-independent-depth1-20261024\", \"methods\": 9, \"failure_events\": 17, \"failed_methods\": 5, \"errors\": 0, \"skips\": 0, \"loader_cases\": 81, \"false_accepts\": [\"capture-wrong-phase\", \"capture-wrong-actor\", \"capture-missing-two-frames\", \"capture-dead-after-capture\", \"pause-not-paused\", \"paused-time-advanced\", \"reload-deadline-false\", \"reload-watchdog-bool\", \"settings-living-false\", \"wrong-callback-job-label\", \"job-before-callback-clock\", \"missing-active-identities\", \"controller-birth-u65\", \"controller-handle-u65\"], \"false_rejects\": [\"source-permitted-relative-output-positive\"], \"candidate_exceptions\": [], \"native_invocations\": 0}\n"
+        }
+      }
+    }
+  ],
+  "maintained_polls": [
+    {
+      "status": "fulfilled",
+      "value": {
+        "session": 98664,
+        "result": {
+          "chunk_id": "d10470",
+          "wall_time_seconds": 0.000084249,
+          "exit_code": 0,
+          "original_token_count": 167,
+          "output": "{\"source\": \"/workspace/reviews/shutdown-study-evidence-independent-20261024\", \"suites\": [{\"name\": \"old28\", \"methods\": 28, \"failures\": 0, \"errors\": 0, \"skips\": 0, \"successful\": true}, {\"name\": \"evidence30\", \"methods\": 30, \"failures\": 0, \"errors\": 0, \"skips\": 0, \"successful\": true}], \"methods\": 58, \"baseline_adapter_queries\": [{\"command\": [\"git\", \"show\", \"8ee93ac725d519c9f6d7f1ffbb3f7c9ee960baf8:scripts/verify_offline_export.py\"], \"baseline_sha256\": \"cb36d944b5d1a70bd1d1f5aeaadf37104887dd4584ab1cf36ea3b5b1b40f3313\", \"served_from_bound_file\": true}], \"unchanged_binding_methods_not_repeated\": 11, \"native_invocations\": 0, \"real_git_or_processes_during_tests\": 0}\n"
+        }
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "session": 77670,
+        "result": {
+          "chunk_id": "5e04c3",
+          "wall_time_seconds": 0.000030056,
+          "exit_code": 0,
+          "original_token_count": 169,
+          "output": "{\"source\": \"/workspace/reviews/shutdown-study-evidence-independent-depth1-20261024\", \"suites\": [{\"name\": \"old28\", \"methods\": 28, \"failures\": 0, \"errors\": 0, \"skips\": 0, \"successful\": true}, {\"name\": \"evidence30\", \"methods\": 30, \"failures\": 0, \"errors\": 0, \"skips\": 0, \"successful\": true}], \"methods\": 58, \"baseline_adapter_queries\": [{\"command\": [\"git\", \"show\", \"8ee93ac725d519c9f6d7f1ffbb3f7c9ee960baf8:scripts/verify_offline_export.py\"], \"baseline_sha256\": \"cb36d944b5d1a70bd1d1f5aeaadf37104887dd4584ab1cf36ea3b5b1b40f3313\", \"served_from_bound_file\": true}], \"unchanged_binding_methods_not_repeated\": 11, \"native_invocations\": 0, \"real_git_or_processes_during_tests\": 0}\n"
+        }
+      }
+    }
+  ],
+  "benchmark_startups": [
+    {
+      "status": "fulfilled",
+      "value": {
+        "label": "own-old75",
+        "result": {
+          "chunk_id": "bb1592",
+          "wall_time_seconds": 0.550554197,
+          "exit_code": 0,
+          "original_token_count": 211,
+          "output": "[{\"mode\": \"literal\", \"original_source_label\": \"c90fedfd56a09bd0ba13cce5565ccd160891c3fb\", \"actual_module_path\": \"/workspace/reviews/shutdown-study-evidence-independent-20261024/scripts/windows_shutdown_study.py\", \"actual_frozen_source\": \"0f478a078277fdb0d711837bef67cf14262d9d8f\", \"code_sha256\": \"97ea5481a0e975451baaea358542de706ecd10f40ba2c96d8c03f5dba99c908b\", \"passed\": false, \"attempts\": 4, \"cleanup_calls\": 0}, {\"mode\": \"metadata-adapted\", \"original_source_label\": \"0f478a078277fdb0d711837bef67cf14262d9d8f\", \"actual_module_path\": \"/workspace/reviews/shutdown-study-evidence-independent-20261024/scripts/windows_shutdown_study.py\", \"actual_frozen_source\": \"0f478a078277fdb0d711837bef67cf14262d9d8f\", \"code_sha256\": \"aeb60e26cd693601f09914e794ad0bd6c93ac957a1c23a3a51afdb8a3e746dbd\", \"passed\": false, \"attempts\": 4, \"cleanup_calls\": 0}]\n"
+        }
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "label": "depth-old75",
+        "result": {
+          "chunk_id": "9d17ec",
+          "wall_time_seconds": 0.538647295,
+          "exit_code": 0,
+          "original_token_count": 214,
+          "output": "[{\"mode\": \"literal\", \"original_source_label\": \"c90fedfd56a09bd0ba13cce5565ccd160891c3fb\", \"actual_module_path\": \"/workspace/reviews/shutdown-study-evidence-independent-depth1-20261024/scripts/windows_shutdown_study.py\", \"actual_frozen_source\": \"0f478a078277fdb0d711837bef67cf14262d9d8f\", \"code_sha256\": \"97ea5481a0e975451baaea358542de706ecd10f40ba2c96d8c03f5dba99c908b\", \"passed\": false, \"attempts\": 4, \"cleanup_calls\": 0}, {\"mode\": \"metadata-adapted\", \"original_source_label\": \"0f478a078277fdb0d711837bef67cf14262d9d8f\", \"actual_module_path\": \"/workspace/reviews/shutdown-study-evidence-independent-depth1-20261024/scripts/windows_shutdown_study.py\", \"actual_frozen_source\": \"0f478a078277fdb0d711837bef67cf14262d9d8f\", \"code_sha256\": \"aeb60e26cd693601f09914e794ad0bd6c93ac957a1c23a3a51afdb8a3e746dbd\", \"passed\": false, \"attempts\": 4, \"cleanup_calls\": 0}]\n"
+        }
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "label": "archived-negatives",
+        "result": {
+          "chunk_id": "093523",
+          "wall_time_seconds": 1.000595909,
+          "session_id": 43744,
+          "original_token_count": 0,
+          "output": ""
+        }
+      }
+    }
+  ]
+}

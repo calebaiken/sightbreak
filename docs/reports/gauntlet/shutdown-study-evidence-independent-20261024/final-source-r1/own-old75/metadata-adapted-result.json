@@ -1,0 +1,669 @@
+{
+  "source": "0f478a078277fdb0d711837bef67cf14262d9d8f",
+  "cpu": [
+    4
+  ],
+  "native_invocations": 0,
+  "input": {
+    "each_trial_files": {
+      "results.json": "{\"passed\":true}\n"
+    },
+    "all_other_receipts_absent": true,
+    "owner": "synthetic controller-only rows",
+    "identity": {}
+  },
+  "expected_passed": false,
+  "actual_passed": false,
+  "calls": 4,
+  "cleanup_calls": 0,
+  "report": {
+    "schema": 1,
+    "order": [
+      "ordinary",
+      "verbose",
+      "verbose",
+      "ordinary"
+    ],
+    "identity": {},
+    "trials": [
+      {
+        "index": 1,
+        "arm": "ordinary",
+        "verbose": false,
+        "attempted": true,
+        "job_queries": [
+          {
+            "label": "trial1/before",
+            "verified": true,
+            "active_processes": 1,
+            "process_ids": [
+              99
+            ]
+          },
+          {
+            "label": "trial1/after",
+            "verified": true,
+            "active_processes": 1,
+            "process_ids": [
+              99
+            ]
+          }
+        ],
+        "output": "/tmp/tmpu21ydsw6/out/01-ordinary",
+        "profile": "new isolated driver-owned state",
+        "flow_seconds": 300,
+        "close_seconds": 20,
+        "driver_arguments": [
+          "scripts/verify_offline_export.py",
+          "--target",
+          "windows",
+          "--hosted-render-priority",
+          "below-normal",
+          "--display",
+          ":102",
+          "--timeout",
+          "300",
+          "--output",
+          "/tmp/tmpu21ydsw6/out/01-ordinary"
+        ],
+        "started_monotonic": 45259.747160268,
+        "started_wall_unix_ns": 1792859487581417905,
+        "finished_monotonic": 45259.747191659,
+        "finished_wall_unix_ns": 1792859487581448669,
+        "evidence": {
+          "schema": 1,
+          "scope": "Retained producer evidence envelope only; independent gameplay/native qualification required",
+          "availability": {
+            "required_files": 53,
+            "present_required_files": 1,
+            "baseline_files": 51
+          },
+          "evidence_complete": false,
+          "strict_passed": false,
+          "evidence_errors": [
+            "missing required file: 01-menu.png",
+            "missing required file: 02-offline-spawn.png",
+            "missing required file: 03-requisition.png",
+            "missing required file: 04-move-aim.png",
+            "missing required file: 05-after-fire.png",
+            "missing required file: 06-after-reload.png",
+            "missing required file: 06b-scoreboard.png",
+            "missing required file: 06c-next-round.png",
+            "missing required file: 06d-funded-requisition.png",
+            "missing required file: 06e-purchased-smg.png",
+            "missing required file: 06f-switched-sidearm.png",
+            "missing required file: 06g-switched-primary.png",
+            "missing required file: 07-field-menu.png",
+            "missing required file: 07b-field-settings.png",
+            "missing required file: 07c-settings-changed.png",
+            "missing required file: 07d-explicit-resume.png",
+            "missing required file: 08-return-menu.png",
+            "missing required file: 09-reopened-menu.png",
+            "missing required file: 10-reopened-loaded-settings.png",
+            "missing required file: 11a-restored-focus-still-paused.png",
+            "missing required file: 11b-resumed-held-input-neutral.png",
+            "missing required file: 11c-fresh-press-movement.png",
+            "missing required file: ocr-current.png",
+            "missing required file: ocr-stdout/001.log",
+            "missing required file: ocr-stdout/002.log",
+            "missing required file: ocr-stdout/003.log",
+            "missing required file: ocr-stdout/004.log",
+            "missing required file: ocr-stdout/005.log",
+            "missing required file: ocr-stdout/006.log",
+            "missing required file: ocr-stdout/007.log",
+            "missing required file: ocr-stdout/008.log",
+            "missing required file: ocr-stdout/009.log",
+            "missing required file: ocr-stdout/010.log",
+            "missing required file: ocr-stdout/011.log",
+            "missing required file: ocr-stdout/012.log",
+            "missing required file: ocr-stdout/013.log",
+            "missing required file: ocr-stdout/014.log",
+            "missing required file: ocr-stdout/015.log",
+            "missing required file: ocr-stdout/016.log",
+            "missing required file: commands.json",
+            "missing required file: actions.json",
+            "missing required file: ocr-commands.json",
+            "missing required file: client.log",
+            "missing required file: reopened.log",
+            "missing required file: ocr-stderr.log",
+            "missing required file: initial-offline-trace/events.jsonl",
+            "missing required file: initial-offline-trace/status.json",
+            "missing required file: restart-profile-trace/events.jsonl",
+            "missing required file: restart-profile-trace/status.json",
+            "missing required file: state/roaming/Godot/app_userdata/SIGHTBREAK/offline_training.json",
+            "missing required file: controller-stdout.log",
+            "missing required file: controller-stderr.log",
+            "result: KeyError: 'commands.json'",
+            "captures: KeyError: 'captures'",
+            "ocr_records: ValueError: OCR count differs",
+            "source_and_commands: KeyError: 'source'",
+            "traces_and_profile: KeyError: 'initial-offline-trace/events.jsonl'",
+            "process_and_closes: ValueError: two result close receipts missing",
+            "logs: ValueError: required controller stdout missing",
+            "hud_and_subreceipts: KeyError: 'ocr-stdout/001.log'"
+          ],
+          "strict_errors": [],
+          "independent_qualification": "UNREVIEWED",
+          "all_files": [
+            {
+              "path": "results.json",
+              "bytes": 16,
+              "sha256": "1ea63e7fda68e7ce49b013af8410102e9228f7591e79ef602dd23d95556d03bc"
+            }
+          ],
+          "extra_files": [],
+          "result": {
+            "passed": true
+          },
+          "close_observations": [],
+          "original_stream_retention_complete": false,
+          "native_logs": [],
+          "typed_leak_observations": []
+        },
+        "evidence_error": "missing required file: 01-menu.png; missing required file: 02-offline-spawn.png; missing required file: 03-requisition.png; missing required file: 04-move-aim.png; missing required file: 05-after-fire.png; missing required file: 06-after-reload.png; missing required file: 06b-scoreboard.png; missing required file: 06c-next-round.png; missing required file: 06d-funded-requisition.png; missing required file: 06e-purchased-smg.png; missing required file: 06f-switched-sidearm.png; missing required file: 06g-switched-primary.png; missing required file: 07-field-menu.png; missing required file: 07b-field-settings.png; missing required file: 07c-settings-changed.png; missing required file: 07d-explicit-resume.png; missing required file: 08-return-menu.png; missing required file: 09-reopened-menu.png; missing required file: 10-reopened-loaded-settings.png; missing required file: 11a-restored-focus-still-paused.png; missing required file: 11b-resumed-held-input-neutral.png; missing required file: 11c-fresh-press-movement.png; missing required file: ocr-current.png; missing required file: ocr-stdout/001.log; missing required file: ocr-stdout/002.log; missing required file: ocr-stdout/003.log; missing required file: ocr-stdout/004.log; missing required file: ocr-stdout/005.log; missing required file: ocr-stdout/006.log; missing required file: ocr-stdout/007.log; missing required file: ocr-stdout/008.log; missing required file: ocr-stdout/009.log; missing required file: ocr-stdout/010.log; missing required file: ocr-stdout/011.log; missing required file: ocr-stdout/012.log; missing required file: ocr-stdout/013.log; missing required file: ocr-stdout/014.log; missing required file: ocr-stdout/015.log; missing required file: ocr-stdout/016.log; missing required file: commands.json; missing required file: actions.json; missing required file: ocr-commands.json; missing required file: client.log; missing required file: reopened.log; missing required file: ocr-stderr.log; missing required file: initial-offline-trace/events.jsonl; missing required file: initial-offline-trace/status.json; missing required file: restart-profile-trace/events.jsonl; missing required file: restart-profile-trace/status.json; missing required file: state/roaming/Godot/app_userdata/SIGHTBREAK/offline_training.json; missing required file: controller-stdout.log; missing required file: controller-stderr.log; result: KeyError: 'commands.json'; captures: KeyError: 'captures'; ocr_records: ValueError: OCR count differs; source_and_commands: KeyError: 'source'; traces_and_profile: KeyError: 'initial-offline-trace/events.jsonl'; process_and_closes: ValueError: two result close receipts missing; logs: ValueError: required controller stdout missing; hud_and_subreceipts: KeyError: 'ocr-stdout/001.log'",
+        "strict_passed": false
+      },
+      {
+        "index": 2,
+        "arm": "verbose",
+        "verbose": true,
+        "attempted": true,
+        "job_queries": [
+          {
+            "label": "trial2/before",
+            "verified": true,
+            "active_processes": 1,
+            "process_ids": [
+              99
+            ]
+          },
+          {
+            "label": "trial2/after",
+            "verified": true,
+            "active_processes": 1,
+            "process_ids": [
+              99
+            ]
+          }
+        ],
+        "output": "/tmp/tmpu21ydsw6/out/02-verbose",
+        "profile": "new isolated driver-owned state",
+        "flow_seconds": 300,
+        "close_seconds": 20,
+        "driver_arguments": [
+          "scripts/verify_offline_export.py",
+          "--target",
+          "windows",
+          "--hosted-render-priority",
+          "below-normal",
+          "--display",
+          ":102",
+          "--timeout",
+          "300",
+          "--output",
+          "/tmp/tmpu21ydsw6/out/02-verbose",
+          "--reopened-verbose"
+        ],
+        "started_monotonic": 45259.747563297,
+        "started_wall_unix_ns": 1792859487581820487,
+        "finished_monotonic": 45259.747593853,
+        "finished_wall_unix_ns": 1792859487581850796,
+        "evidence": {
+          "schema": 1,
+          "scope": "Retained producer evidence envelope only; independent gameplay/native qualification required",
+          "availability": {
+            "required_files": 53,
+            "present_required_files": 1,
+            "baseline_files": 51
+          },
+          "evidence_complete": false,
+          "strict_passed": false,
+          "evidence_errors": [
+            "missing required file: 01-menu.png",
+            "missing required file: 02-offline-spawn.png",
+            "missing required file: 03-requisition.png",
+            "missing required file: 04-move-aim.png",
+            "missing required file: 05-after-fire.png",
+            "missing required file: 06-after-reload.png",
+            "missing required file: 06b-scoreboard.png",
+            "missing required file: 06c-next-round.png",
+            "missing required file: 06d-funded-requisition.png",
+            "missing required file: 06e-purchased-smg.png",
+            "missing required file: 06f-switched-sidearm.png",
+            "missing required file: 06g-switched-primary.png",
+            "missing required file: 07-field-menu.png",
+            "missing required file: 07b-field-settings.png",
+            "missing required file: 07c-settings-changed.png",
+            "missing required file: 07d-explicit-resume.png",
+            "missing required file: 08-return-menu.png",
+            "missing required file: 09-reopened-menu.png",
+            "missing required file: 10-reopened-loaded-settings.png",
+            "missing required file: 11a-restored-focus-still-paused.png",
+            "missing required file: 11b-resumed-held-input-neutral.png",
+            "missing required file: 11c-fresh-press-movement.png",
+            "missing required file: ocr-current.png",
+            "missing required file: ocr-stdout/001.log",
+            "missing required file: ocr-stdout/002.log",
+            "missing required file: ocr-stdout/003.log",
+            "missing required file: ocr-stdout/004.log",
+            "missing required file: ocr-stdout/005.log",
+            "missing required file: ocr-stdout/006.log",
+            "missing required file: ocr-stdout/007.log",
+            "missing required file: ocr-stdout/008.log",
+            "missing required file: ocr-stdout/009.log",
+            "missing required file: ocr-stdout/010.log",
+            "missing required file: ocr-stdout/011.log",
+            "missing required file: ocr-stdout/012.log",
+            "missing required file: ocr-stdout/013.log",
+            "missing required file: ocr-stdout/014.log",
+            "missing required file: ocr-stdout/015.log",
+            "missing required file: ocr-stdout/016.log",
+            "missing required file: commands.json",
+            "missing required file: actions.json",
+            "missing required file: ocr-commands.json",
+            "missing required file: client.log",
+            "missing required file: reopened.log",
+            "missing required file: ocr-stderr.log",
+            "missing required file: initial-offline-trace/events.jsonl",
+            "missing required file: initial-offline-trace/status.json",
+            "missing required file: restart-profile-trace/events.jsonl",
+            "missing required file: restart-profile-trace/status.json",
+            "missing required file: state/roaming/Godot/app_userdata/SIGHTBREAK/offline_training.json",
+            "missing required file: controller-stdout.log",
+            "missing required file: controller-stderr.log",
+            "result: KeyError: 'commands.json'",
+            "captures: KeyError: 'captures'",
+            "ocr_records: ValueError: OCR count differs",
+            "source_and_commands: KeyError: 'source'",
+            "traces_and_profile: KeyError: 'initial-offline-trace/events.jsonl'",
+            "process_and_closes: ValueError: two result close receipts missing",
+            "logs: ValueError: required controller stdout missing",
+            "hud_and_subreceipts: KeyError: 'ocr-stdout/001.log'"
+          ],
+          "strict_errors": [],
+          "independent_qualification": "UNREVIEWED",
+          "all_files": [
+            {
+              "path": "results.json",
+              "bytes": 16,
+              "sha256": "1ea63e7fda68e7ce49b013af8410102e9228f7591e79ef602dd23d95556d03bc"
+            }
+          ],
+          "extra_files": [],
+          "result": {
+            "passed": true
+          },
+          "close_observations": [],
+          "original_stream_retention_complete": false,
+          "native_logs": [],
+          "typed_leak_observations": []
+        },
+        "evidence_error": "missing required file: 01-menu.png; missing required file: 02-offline-spawn.png; missing required file: 03-requisition.png; missing required file: 04-move-aim.png; missing required file: 05-after-fire.png; missing required file: 06-after-reload.png; missing required file: 06b-scoreboard.png; missing required file: 06c-next-round.png; missing required file: 06d-funded-requisition.png; missing required file: 06e-purchased-smg.png; missing required file: 06f-switched-sidearm.png; missing required file: 06g-switched-primary.png; missing required file: 07-field-menu.png; missing required file: 07b-field-settings.png; missing required file: 07c-settings-changed.png; missing required file: 07d-explicit-resume.png; missing required file: 08-return-menu.png; missing required file: 09-reopened-menu.png; missing required file: 10-reopened-loaded-settings.png; missing required file: 11a-restored-focus-still-paused.png; missing required file: 11b-resumed-held-input-neutral.png; missing required file: 11c-fresh-press-movement.png; missing required file: ocr-current.png; missing required file: ocr-stdout/001.log; missing required file: ocr-stdout/002.log; missing required file: ocr-stdout/003.log; missing required file: ocr-stdout/004.log; missing required file: ocr-stdout/005.log; missing required file: ocr-stdout/006.log; missing required file: ocr-stdout/007.log; missing required file: ocr-stdout/008.log; missing required file: ocr-stdout/009.log; missing required file: ocr-stdout/010.log; missing required file: ocr-stdout/011.log; missing required file: ocr-stdout/012.log; missing required file: ocr-stdout/013.log; missing required file: ocr-stdout/014.log; missing required file: ocr-stdout/015.log; missing required file: ocr-stdout/016.log; missing required file: commands.json; missing required file: actions.json; missing required file: ocr-commands.json; missing required file: client.log; missing required file: reopened.log; missing required file: ocr-stderr.log; missing required file: initial-offline-trace/events.jsonl; missing required file: initial-offline-trace/status.json; missing required file: restart-profile-trace/events.jsonl; missing required file: restart-profile-trace/status.json; missing required file: state/roaming/Godot/app_userdata/SIGHTBREAK/offline_training.json; missing required file: controller-stdout.log; missing required file: controller-stderr.log; result: KeyError: 'commands.json'; captures: KeyError: 'captures'; ocr_records: ValueError: OCR count differs; source_and_commands: KeyError: 'source'; traces_and_profile: KeyError: 'initial-offline-trace/events.jsonl'; process_and_closes: ValueError: two result close receipts missing; logs: ValueError: required controller stdout missing; hud_and_subreceipts: KeyError: 'ocr-stdout/001.log'",
+        "strict_passed": false
+      },
+      {
+        "index": 3,
+        "arm": "verbose",
+        "verbose": true,
+        "attempted": true,
+        "job_queries": [
+          {
+            "label": "trial3/before",
+            "verified": true,
+            "active_processes": 1,
+            "process_ids": [
+              99
+            ]
+          },
+          {
+            "label": "trial3/after",
+            "verified": true,
+            "active_processes": 1,
+            "process_ids": [
+              99
+            ]
+          }
+        ],
+        "output": "/tmp/tmpu21ydsw6/out/03-verbose",
+        "profile": "new isolated driver-owned state",
+        "flow_seconds": 300,
+        "close_seconds": 20,
+        "driver_arguments": [
+          "scripts/verify_offline_export.py",
+          "--target",
+          "windows",
+          "--hosted-render-priority",
+          "below-normal",
+          "--display",
+          ":102",
+          "--timeout",
+          "300",
+          "--output",
+          "/tmp/tmpu21ydsw6/out/03-verbose",
+          "--reopened-verbose"
+        ],
+        "started_monotonic": 45259.756902976,
+        "started_wall_unix_ns": 1792859487591160670,
+        "finished_monotonic": 45259.756944818,
+        "finished_wall_unix_ns": 1792859487591201829,
+        "evidence": {
+          "schema": 1,
+          "scope": "Retained producer evidence envelope only; independent gameplay/native qualification required",
+          "availability": {
+            "required_files": 53,
+            "present_required_files": 1,
+            "baseline_files": 51
+          },
+          "evidence_complete": false,
+          "strict_passed": false,
+          "evidence_errors": [
+            "missing required file: 01-menu.png",
+            "missing required file: 02-offline-spawn.png",
+            "missing required file: 03-requisition.png",
+            "missing required file: 04-move-aim.png",
+            "missing required file: 05-after-fire.png",
+            "missing required file: 06-after-reload.png",
+            "missing required file: 06b-scoreboard.png",
+            "missing required file: 06c-next-round.png",
+            "missing required file: 06d-funded-requisition.png",
+            "missing required file: 06e-purchased-smg.png",
+            "missing required file: 06f-switched-sidearm.png",
+            "missing required file: 06g-switched-primary.png",
+            "missing required file: 07-field-menu.png",
+            "missing required file: 07b-field-settings.png",
+            "missing required file: 07c-settings-changed.png",
+            "missing required file: 07d-explicit-resume.png",
+            "missing required file: 08-return-menu.png",
+            "missing required file: 09-reopened-menu.png",
+            "missing required file: 10-reopened-loaded-settings.png",
+            "missing required file: 11a-restored-focus-still-paused.png",
+            "missing required file: 11b-resumed-held-input-neutral.png",
+            "missing required file: 11c-fresh-press-movement.png",
+            "missing required file: ocr-current.png",
+            "missing required file: ocr-stdout/001.log",
+            "missing required file: ocr-stdout/002.log",
+            "missing required file: ocr-stdout/003.log",
+            "missing required file: ocr-stdout/004.log",
+            "missing required file: ocr-stdout/005.log",
+            "missing required file: ocr-stdout/006.log",
+            "missing required file: ocr-stdout/007.log",
+            "missing required file: ocr-stdout/008.log",
+            "missing required file: ocr-stdout/009.log",
+            "missing required file: ocr-stdout/010.log",
+            "missing required file: ocr-stdout/011.log",
+            "missing required file: ocr-stdout/012.log",
+            "missing required file: ocr-stdout/013.log",
+            "missing required file: ocr-stdout/014.log",
+            "missing required file: ocr-stdout/015.log",
+            "missing required file: ocr-stdout/016.log",
+            "missing required file: commands.json",
+            "missing required file: actions.json",
+            "missing required file: ocr-commands.json",
+            "missing required file: client.log",
+            "missing required file: reopened.log",
+            "missing required file: ocr-stderr.log",
+            "missing required file: initial-offline-trace/events.jsonl",
+            "missing required file: initial-offline-trace/status.json",
+            "missing required file: restart-profile-trace/events.jsonl",
+            "missing required file: restart-profile-trace/status.json",
+            "missing required file: state/roaming/Godot/app_userdata/SIGHTBREAK/offline_training.json",
+            "missing required file: controller-stdout.log",
+            "missing required file: controller-stderr.log",
+            "result: KeyError: 'commands.json'",
+            "captures: KeyError: 'captures'",
+            "ocr_records: ValueError: OCR count differs",
+            "source_and_commands: KeyError: 'source'",
+            "traces_and_profile: KeyError: 'initial-offline-trace/events.jsonl'",
+            "process_and_closes: ValueError: two result close receipts missing",
+            "logs: ValueError: required controller stdout missing",
+            "hud_and_subreceipts: KeyError: 'ocr-stdout/001.log'"
+          ],
+          "strict_errors": [],
+          "independent_qualification": "UNREVIEWED",
+          "all_files": [
+            {
+              "path": "results.json",
+              "bytes": 16,
+              "sha256": "1ea63e7fda68e7ce49b013af8410102e9228f7591e79ef602dd23d95556d03bc"
+            }
+          ],
+          "extra_files": [],
+          "result": {
+            "passed": true
+          },
+          "close_observations": [],
+          "original_stream_retention_complete": false,
+          "native_logs": [],
+          "typed_leak_observations": []
+        },
+        "evidence_error": "missing required file: 01-menu.png; missing required file: 02-offline-spawn.png; missing required file: 03-requisition.png; missing required file: 04-move-aim.png; missing required file: 05-after-fire.png; missing required file: 06-after-reload.png; missing required file: 06b-scoreboard.png; missing required file: 06c-next-round.png; missing required file: 06d-funded-requisition.png; missing required file: 06e-purchased-smg.png; missing required file: 06f-switched-sidearm.png; missing required file: 06g-switched-primary.png; missing required file: 07-field-menu.png; missing required file: 07b-field-settings.png; missing required file: 07c-settings-changed.png; missing required file: 07d-explicit-resume.png; missing required file: 08-return-menu.png; missing required file: 09-reopened-menu.png; missing required file: 10-reopened-loaded-settings.png; missing required file: 11a-restored-focus-still-paused.png; missing required file: 11b-resumed-held-input-neutral.png; missing required file: 11c-fresh-press-movement.png; missing required file: ocr-current.png; missing required file: ocr-stdout/001.log; missing required file: ocr-stdout/002.log; missing required file: ocr-stdout/003.log; missing required file: ocr-stdout/004.log; missing required file: ocr-stdout/005.log; missing required file: ocr-stdout/006.log; missing required file: ocr-stdout/007.log; missing required file: ocr-stdout/008.log; missing required file: ocr-stdout/009.log; missing required file: ocr-stdout/010.log; missing required file: ocr-stdout/011.log; missing required file: ocr-stdout/012.log; missing required file: ocr-stdout/013.log; missing required file: ocr-stdout/014.log; missing required file: ocr-stdout/015.log; missing required file: ocr-stdout/016.log; missing required file: commands.json; missing required file: actions.json; missing required file: ocr-commands.json; missing required file: client.log; missing required file: reopened.log; missing required file: ocr-stderr.log; missing required file: initial-offline-trace/events.jsonl; missing required file: initial-offline-trace/status.json; missing required file: restart-profile-trace/events.jsonl; missing required file: restart-profile-trace/status.json; missing required file: state/roaming/Godot/app_userdata/SIGHTBREAK/offline_training.json; missing required file: controller-stdout.log; missing required file: controller-stderr.log; result: KeyError: 'commands.json'; captures: KeyError: 'captures'; ocr_records: ValueError: OCR count differs; source_and_commands: KeyError: 'source'; traces_and_profile: KeyError: 'initial-offline-trace/events.jsonl'; process_and_closes: ValueError: two result close receipts missing; logs: ValueError: required controller stdout missing; hud_and_subreceipts: KeyError: 'ocr-stdout/001.log'",
+        "strict_passed": false
+      },
+      {
+        "index": 4,
+        "arm": "ordinary",
+        "verbose": false,
+        "attempted": true,
+        "job_queries": [
+          {
+            "label": "trial4/before",
+            "verified": true,
+            "active_processes": 1,
+            "process_ids": [
+              99
+            ]
+          },
+          {
+            "label": "trial4/after",
+            "verified": true,
+            "active_processes": 1,
+            "process_ids": [
+              99
+            ]
+          }
+        ],
+        "output": "/tmp/tmpu21ydsw6/out/04-ordinary",
+        "profile": "new isolated driver-owned state",
+        "flow_seconds": 300,
+        "close_seconds": 20,
+        "driver_arguments": [
+          "scripts/verify_offline_export.py",
+          "--target",
+          "windows",
+          "--hosted-render-priority",
+          "below-normal",
+          "--display",
+          ":102",
+          "--timeout",
+          "300",
+          "--output",
+          "/tmp/tmpu21ydsw6/out/04-ordinary"
+        ],
+        "started_monotonic": 45259.757422341,
+        "started_wall_unix_ns": 1792859487591679599,
+        "finished_monotonic": 45259.757492659,
+        "finished_wall_unix_ns": 1792859487591749689,
+        "evidence": {
+          "schema": 1,
+          "scope": "Retained producer evidence envelope only; independent gameplay/native qualification required",
+          "availability": {
+            "required_files": 53,
+            "present_required_files": 1,
+            "baseline_files": 51
+          },
+          "evidence_complete": false,
+          "strict_passed": false,
+          "evidence_errors": [
+            "missing required file: 01-menu.png",
+            "missing required file: 02-offline-spawn.png",
+            "missing required file: 03-requisition.png",
+            "missing required file: 04-move-aim.png",
+            "missing required file: 05-after-fire.png",
+            "missing required file: 06-after-reload.png",
+            "missing required file: 06b-scoreboard.png",
+            "missing required file: 06c-next-round.png",
+            "missing required file: 06d-funded-requisition.png",
+            "missing required file: 06e-purchased-smg.png",
+            "missing required file: 06f-switched-sidearm.png",
+            "missing required file: 06g-switched-primary.png",
+            "missing required file: 07-field-menu.png",
+            "missing required file: 07b-field-settings.png",
+            "missing required file: 07c-settings-changed.png",
+            "missing required file: 07d-explicit-resume.png",
+            "missing required file: 08-return-menu.png",
+            "missing required file: 09-reopened-menu.png",
+            "missing required file: 10-reopened-loaded-settings.png",
+            "missing required file: 11a-restored-focus-still-paused.png",
+            "missing required file: 11b-resumed-held-input-neutral.png",
+            "missing required file: 11c-fresh-press-movement.png",
+            "missing required file: ocr-current.png",
+            "missing required file: ocr-stdout/001.log",
+            "missing required file: ocr-stdout/002.log",
+            "missing required file: ocr-stdout/003.log",
+            "missing required file: ocr-stdout/004.log",
+            "missing required file: ocr-stdout/005.log",
+            "missing required file: ocr-stdout/006.log",
+            "missing required file: ocr-stdout/007.log",
+            "missing required file: ocr-stdout/008.log",
+            "missing required file: ocr-stdout/009.log",
+            "missing required file: ocr-stdout/010.log",
+            "missing required file: ocr-stdout/011.log",
+            "missing required file: ocr-stdout/012.log",
+            "missing required file: ocr-stdout/013.log",
+            "missing required file: ocr-stdout/014.log",
+            "missing required file: ocr-stdout/015.log",
+            "missing required file: ocr-stdout/016.log",
+            "missing required file: commands.json",
+            "missing required file: actions.json",
+            "missing required file: ocr-commands.json",
+            "missing required file: client.log",
+            "missing required file: reopened.log",
+            "missing required file: ocr-stderr.log",
+            "missing required file: initial-offline-trace/events.jsonl",
+            "missing required file: initial-offline-trace/status.json",
+            "missing required file: restart-profile-trace/events.jsonl",
+            "missing required file: restart-profile-trace/status.json",
+            "missing required file: state/roaming/Godot/app_userdata/SIGHTBREAK/offline_training.json",
+            "missing required file: controller-stdout.log",
+            "missing required file: controller-stderr.log",
+            "result: KeyError: 'commands.json'",
+            "captures: KeyError: 'captures'",
+            "ocr_records: ValueError: OCR count differs",
+            "source_and_commands: KeyError: 'source'",
+            "traces_and_profile: KeyError: 'initial-offline-trace/events.jsonl'",
+            "process_and_closes: ValueError: two result close receipts missing",
+            "logs: ValueError: required controller stdout missing",
+            "hud_and_subreceipts: KeyError: 'ocr-stdout/001.log'"
+          ],
+          "strict_errors": [],
+          "independent_qualification": "UNREVIEWED",
+          "all_files": [
+            {
+              "path": "results.json",
+              "bytes": 16,
+              "sha256": "1ea63e7fda68e7ce49b013af8410102e9228f7591e79ef602dd23d95556d03bc"
+            }
+          ],
+          "extra_files": [],
+          "result": {
+            "passed": true
+          },
+          "close_observations": [],
+          "original_stream_retention_complete": false,
+          "native_logs": [],
+          "typed_leak_observations": []
+        },
+        "evidence_error": "missing required file: 01-menu.png; missing required file: 02-offline-spawn.png; missing required file: 03-requisition.png; missing required file: 04-move-aim.png; missing required file: 05-after-fire.png; missing required file: 06-after-reload.png; missing required file: 06b-scoreboard.png; missing required file: 06c-next-round.png; missing required file: 06d-funded-requisition.png; missing required file: 06e-purchased-smg.png; missing required file: 06f-switched-sidearm.png; missing required file: 06g-switched-primary.png; missing required file: 07-field-menu.png; missing required file: 07b-field-settings.png; missing required file: 07c-settings-changed.png; missing required file: 07d-explicit-resume.png; missing required file: 08-return-menu.png; missing required file: 09-reopened-menu.png; missing required file: 10-reopened-loaded-settings.png; missing required file: 11a-restored-focus-still-paused.png; missing required file: 11b-resumed-held-input-neutral.png; missing required file: 11c-fresh-press-movement.png; missing required file: ocr-current.png; missing required file: ocr-stdout/001.log; missing required file: ocr-stdout/002.log; missing required file: ocr-stdout/003.log; missing required file: ocr-stdout/004.log; missing required file: ocr-stdout/005.log; missing required file: ocr-stdout/006.log; missing required file: ocr-stdout/007.log; missing required file: ocr-stdout/008.log; missing required file: ocr-stdout/009.log; missing required file: ocr-stdout/010.log; missing required file: ocr-stdout/011.log; missing required file: ocr-stdout/012.log; missing required file: ocr-stdout/013.log; missing required file: ocr-stdout/014.log; missing required file: ocr-stdout/015.log; missing required file: ocr-stdout/016.log; missing required file: commands.json; missing required file: actions.json; missing required file: ocr-commands.json; missing required file: client.log; missing required file: reopened.log; missing required file: ocr-stderr.log; missing required file: initial-offline-trace/events.jsonl; missing required file: initial-offline-trace/status.json; missing required file: restart-profile-trace/events.jsonl; missing required file: restart-profile-trace/status.json; missing required file: state/roaming/Godot/app_userdata/SIGHTBREAK/offline_training.json; missing required file: controller-stdout.log; missing required file: controller-stderr.log; result: KeyError: 'commands.json'; captures: KeyError: 'captures'; ocr_records: ValueError: OCR count differs; source_and_commands: KeyError: 'source'; traces_and_profile: KeyError: 'initial-offline-trace/events.jsonl'; process_and_closes: ValueError: two result close receipts missing; logs: ValueError: required controller stdout missing; hud_and_subreceipts: KeyError: 'ocr-stdout/001.log'",
+        "strict_passed": false
+      }
+    ],
+    "attempts": 4,
+    "passed": false,
+    "scope": "Four diagnostic trials only; original defect remains open",
+    "observer": "existing offline trace in both arms; not observer-free shipping",
+    "completed_all_four": true,
+    "final_job": {
+      "label": "study/final",
+      "verified": true,
+      "active_processes": 1,
+      "process_ids": [
+        99
+      ]
+    },
+    "job_queries": [
+      {
+        "label": "trial1/before",
+        "verified": true,
+        "active_processes": 1,
+        "process_ids": [
+          99
+        ]
+      },
+      {
+        "label": "trial1/after",
+        "verified": true,
+        "active_processes": 1,
+        "process_ids": [
+          99
+        ]
+      },
+      {
+        "label": "trial2/before",
+        "verified": true,
+        "active_processes": 1,
+        "process_ids": [
+          99
+        ]
+      },
+      {
+        "label": "trial2/after",
+        "verified": true,
+        "active_processes": 1,
+        "process_ids": [
+          99
+        ]
+      },
+      {
+        "label": "trial3/before",
+        "verified": true,
+        "active_processes": 1,
+        "process_ids": [
+          99
+        ]
+      },
+      {
+        "label": "trial3/after",
+        "verified": true,
+        "active_processes": 1,
+        "process_ids": [
+          99
+        ]
+      },
+      {
+        "label": "trial4/before",
+        "verified": true,
+        "active_processes": 1,
+        "process_ids": [
+          99
+        ]
+      },
+      {
+        "label": "trial4/after",
+        "verified": true,
+        "active_processes": 1,
+        "process_ids": [
+          99
+        ]
+      },
+      {
+        "label": "study/final",
+        "verified": true,
+        "active_processes": 1,
+        "process_ids": [
+          99
+        ]
+      }
+    ]
+  },
+  "interpretation": "Synthetic missing-receipt trust-boundary false success; no source-emitted/native outcome claim"
+}

@@ -1,0 +1,25 @@
+{
+  "model": {
+    "status": "BLOCKED",
+    "reasons": [
+      "No source-backed finite maximum: png_bytes",
+      "No source-backed finite maximum: native_combined_stdout_stderr_bytes",
+      "No source-backed finite maximum: trace_jsonl_bytes",
+      "No source-backed finite maximum: actions_status_results_profile_state_bytes",
+      "No source-backed finite maximum: ocr_stderr_bytes",
+      "No source-backed finite maximum: controller_job_receipts_bytes",
+      "Existing OCR overflow keeps a prefix; complete failure stream not guaranteed",
+      "No source-backed maximum for ZIP members/names/index overhead",
+      "No source-backed maximum indivisible archive member"
+    ],
+    "archive_count": 2,
+    "archive_bytes": 33554432,
+    "ocr_prefix_capacity_per_trial": 33554432,
+    "conservative_all_trials_bytes": null,
+    "execution_authorized": false
+  },
+  "owner_calls": 0,
+  "identity_calls": 0,
+  "driver_calls": 0,
+  "actual_physical_preflight_rerun": false
+}

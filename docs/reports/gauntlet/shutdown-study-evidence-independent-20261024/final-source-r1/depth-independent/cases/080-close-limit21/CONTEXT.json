@@ -1,0 +1,438 @@
+{
+  "identity": {
+    "source": {
+      "source_dirty": false,
+      "source_game_dirty": false,
+      "source_commit": "1111111111111111111111111111111111111111",
+      "source_game_tree": "2222222222222222222222222222222222222222",
+      "source_content_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+      "source_validation_sha256": "4444444444444444444444444444444444444444444444444444444444444444"
+    },
+    "artifact_record": {
+      "source_dirty": false,
+      "source_game_dirty": false,
+      "source_commit": "1111111111111111111111111111111111111111",
+      "source_game_tree": "2222222222222222222222222222222222222222",
+      "source_content_sha256": "3333333333333333333333333333333333333333333333333333333333333333",
+      "source_validation_sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+      "target": "windows",
+      "version": "0.3.3-dev",
+      "build_number": 6,
+      "export_completed": true,
+      "built_at_utc": "2026-10-24T00:00:00+00:00",
+      "artifact": {
+        "path": "windows/SIGHTBREAK.exe",
+        "bytes": 4096,
+        "sha256": "5555555555555555555555555555555555555555555555555555555555555555",
+        "mode": 420,
+        "archive_mode": 420
+      },
+      "payload": [
+        {
+          "path": "windows/SIGHTBREAK.exe",
+          "bytes": 4096,
+          "sha256": "5555555555555555555555555555555555555555555555555555555555555555",
+          "mode": 420,
+          "archive_mode": 420
+        },
+        {
+          "path": "windows/GODOT-LICENSE.txt",
+          "bytes": 100,
+          "sha256": "6666666666666666666666666666666666666666666666666666666666666666",
+          "mode": 420,
+          "archive_mode": 420
+        },
+        {
+          "path": "windows/GODOT-COPYRIGHT.txt",
+          "bytes": 300,
+          "sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+          "mode": 420,
+          "archive_mode": 420
+        }
+      ]
+    },
+    "payload": [
+      {
+        "path": "windows/SIGHTBREAK.exe",
+        "bytes": 4096,
+        "sha256": "5555555555555555555555555555555555555555555555555555555555555555",
+        "mode": 420,
+        "archive_mode": 420
+      },
+      {
+        "path": "windows/GODOT-LICENSE.txt",
+        "bytes": 100,
+        "sha256": "6666666666666666666666666666666666666666666666666666666666666666",
+        "mode": 420,
+        "archive_mode": 420
+      },
+      {
+        "path": "windows/GODOT-COPYRIGHT.txt",
+        "bytes": 300,
+        "sha256": "7777777777777777777777777777777777777777777777777777777777777777",
+        "mode": 420,
+        "archive_mode": 420
+      }
+    ],
+    "embedded_pck": {
+      "storage": "embedded exact original pack range",
+      "offset": 1012,
+      "bytes": 3072,
+      "sha256": "8888888888888888888888888888888888888888888888888888888888888888",
+      "pack_version": 4,
+      "engine_version": [
+        4,
+        7,
+        2
+      ]
+    },
+    "host": {
+      "node": "SYNTHETIC-NOT-A-NATIVE-HOST",
+      "platform": "Windows-synthetic-data-format-fixture",
+      "python": "3.12.0"
+    }
+  },
+  "trial": {
+    "index": 1,
+    "arm": "ordinary",
+    "verbose": false,
+    "attempted": true,
+    "job_queries": [
+      {
+        "label": "trial1/before",
+        "verified": true,
+        "active_processes": 1,
+        "process_ids": [
+          99
+        ],
+        "monotonic": 44575.727986054,
+        "wall_unix_ns": 1792858803562246324,
+        "job_handle": 7,
+        "baseline_pid": 99,
+        "total_processes": 9,
+        "terminated_processes": 0,
+        "processes": [
+          {
+            "pid": 99,
+            "creation_filetime": 1099,
+            "handle_value": 2099,
+            "member_of_outer_job": true
+          }
+        ],
+        "held_processes": [
+          {
+            "pid": 99,
+            "creation_filetime": 1099,
+            "handle_value": 2099,
+            "observed_exited": false,
+            "exit_code": 259
+          }
+        ]
+      },
+      {
+        "label": "trial1/after",
+        "verified": true,
+        "active_processes": 1,
+        "process_ids": [
+          99
+        ],
+        "monotonic": 44576.30087163,
+        "wall_unix_ns": 1792858804135128481,
+        "job_handle": 7,
+        "baseline_pid": 99,
+        "total_processes": 60,
+        "terminated_processes": 0,
+        "processes": [
+          {
+            "pid": 99,
+            "creation_filetime": 1099,
+            "handle_value": 2099,
+            "member_of_outer_job": true
+          }
+        ],
+        "held_processes": [
+          {
+            "pid": 99,
+            "creation_filetime": 1099,
+            "handle_value": 2099,
+            "observed_exited": false,
+            "exit_code": 259
+          },
+          {
+            "pid": 101,
+            "creation_filetime": 1101,
+            "handle_value": 2101,
+            "observed_exited": true,
+            "exit_code": 0
+          },
+          {
+            "pid": 201,
+            "creation_filetime": 1201,
+            "handle_value": 2201,
+            "observed_exited": true,
+            "exit_code": 0
+          }
+        ]
+      }
+    ],
+    "output": "/tmp/tmpaxsk_24n/study/01-ordinary",
+    "profile": "new isolated driver-owned state",
+    "flow_seconds": 300,
+    "close_seconds": 20,
+    "driver_arguments": [
+      "scripts/verify_offline_export.py",
+      "--target",
+      "windows",
+      "--hosted-render-priority",
+      "below-normal",
+      "--display",
+      ":102",
+      "--timeout",
+      "300",
+      "--output",
+      "/tmp/tmpaxsk_24n/study/01-ordinary"
+    ],
+    "started_monotonic": 44575.74018781,
+    "started_wall_unix_ns": 1792858803574446395,
+    "observations": [
+      {
+        "event": "native_launch",
+        "monotonic": 44575.742459323,
+        "wall_unix_ns": 1792858803576716892,
+        "name": "client",
+        "pid": 101,
+        "job": {
+          "label": "trial1/native_launch",
+          "verified": true,
+          "active_processes": 2,
+          "process_ids": [
+            99,
+            101
+          ],
+          "monotonic": 44575.742468246,
+          "wall_unix_ns": 1792858803576725139,
+          "job_handle": 7,
+          "baseline_pid": 99,
+          "total_processes": 15,
+          "terminated_processes": 0,
+          "processes": [
+            {
+              "pid": 99,
+              "creation_filetime": 1099,
+              "handle_value": 2099,
+              "member_of_outer_job": true
+            },
+            {
+              "pid": 101,
+              "creation_filetime": 1101,
+              "handle_value": 2101,
+              "member_of_outer_job": true
+            }
+          ],
+          "held_processes": [
+            {
+              "pid": 99,
+              "creation_filetime": 1099,
+              "handle_value": 2099,
+              "observed_exited": false,
+              "exit_code": 259
+            },
+            {
+              "pid": 101,
+              "creation_filetime": 1101,
+              "handle_value": 2101,
+              "observed_exited": false,
+              "exit_code": 259
+            }
+          ]
+        },
+        "native_root_identity": {
+          "pid": 101,
+          "creation_filetime": 1101,
+          "handle_value": 2101,
+          "member_of_outer_job": true
+        }
+      },
+      {
+        "event": "close_wait_finished",
+        "monotonic": 44575.983458255,
+        "wall_unix_ns": 1792858803817715220,
+        "process": "client",
+        "pid": 101,
+        "close_limit_seconds": 21,
+        "request_before_monotonic": 44575.983388181,
+        "request_before_wall_unix_ns": 1792858803817645438,
+        "request_returned_monotonic": 44575.983390311,
+        "request_returned_wall_unix_ns": 1792858803817647143,
+        "wait_finished_monotonic": 44575.983392013,
+        "wait_finished_wall_unix_ns": 1792858803817648848,
+        "exit_code": 0,
+        "job": {
+          "label": "trial1/close_wait_finished",
+          "verified": true,
+          "active_processes": 1,
+          "process_ids": [
+            99
+          ],
+          "monotonic": 44575.983468562,
+          "wall_unix_ns": 1792858803817725422,
+          "job_handle": 7,
+          "baseline_pid": 99,
+          "total_processes": 43,
+          "terminated_processes": 0,
+          "processes": [
+            {
+              "pid": 99,
+              "creation_filetime": 1099,
+              "handle_value": 2099,
+              "member_of_outer_job": true
+            }
+          ],
+          "held_processes": [
+            {
+              "pid": 99,
+              "creation_filetime": 1099,
+              "handle_value": 2099,
+              "observed_exited": false,
+              "exit_code": 259
+            },
+            {
+              "pid": 101,
+              "creation_filetime": 1101,
+              "handle_value": 2101,
+              "observed_exited": true,
+              "exit_code": 0
+            }
+          ]
+        }
+      },
+      {
+        "event": "native_launch",
+        "monotonic": 44575.996204347,
+        "wall_unix_ns": 1792858803830461337,
+        "name": "reopened",
+        "pid": 201,
+        "job": {
+          "label": "trial1/native_launch",
+          "verified": true,
+          "active_processes": 2,
+          "process_ids": [
+            99,
+            201
+          ],
+          "monotonic": 44575.996212151,
+          "wall_unix_ns": 1792858803830468993,
+          "job_handle": 7,
+          "baseline_pid": 99,
+          "total_processes": 44,
+          "terminated_processes": 0,
+          "processes": [
+            {
+              "pid": 99,
+              "creation_filetime": 1099,
+              "handle_value": 2099,
+              "member_of_outer_job": true
+            },
+            {
+              "pid": 201,
+              "creation_filetime": 1201,
+              "handle_value": 2201,
+              "member_of_outer_job": true
+            }
+          ],
+          "held_processes": [
+            {
+              "pid": 99,
+              "creation_filetime": 1099,
+              "handle_value": 2099,
+              "observed_exited": false,
+              "exit_code": 259
+            },
+            {
+              "pid": 101,
+              "creation_filetime": 1101,
+              "handle_value": 2101,
+              "observed_exited": true,
+              "exit_code": 0
+            },
+            {
+              "pid": 201,
+              "creation_filetime": 1201,
+              "handle_value": 2201,
+              "observed_exited": false,
+              "exit_code": 259
+            }
+          ]
+        },
+        "native_root_identity": {
+          "pid": 201,
+          "creation_filetime": 1201,
+          "handle_value": 2201,
+          "member_of_outer_job": true
+        }
+      },
+      {
+        "event": "close_wait_finished",
+        "monotonic": 44576.047624886,
+        "wall_unix_ns": 1792858803881881768,
+        "process": "reopened",
+        "pid": 201,
+        "close_limit_seconds": 20,
+        "request_before_monotonic": 44576.047596114,
+        "request_before_wall_unix_ns": 1792858803881853266,
+        "request_returned_monotonic": 44576.047597545,
+        "request_returned_wall_unix_ns": 1792858803881854457,
+        "wait_finished_monotonic": 44576.047598996,
+        "wait_finished_wall_unix_ns": 1792858803881855827,
+        "exit_code": 0,
+        "job": {
+          "label": "trial1/close_wait_finished",
+          "verified": true,
+          "active_processes": 1,
+          "process_ids": [
+            99
+          ],
+          "monotonic": 44576.047635716,
+          "wall_unix_ns": 1792858803881892621,
+          "job_handle": 7,
+          "baseline_pid": 99,
+          "total_processes": 56,
+          "terminated_processes": 0,
+          "processes": [
+            {
+              "pid": 99,
+              "creation_filetime": 1099,
+              "handle_value": 2099,
+              "member_of_outer_job": true
+            }
+          ],
+          "held_processes": [
+            {
+              "pid": 99,
+              "creation_filetime": 1099,
+              "handle_value": 2099,
+              "observed_exited": false,
+              "exit_code": 259
+            },
+            {
+              "pid": 101,
+              "creation_filetime": 1101,
+              "handle_value": 2101,
+              "observed_exited": true,
+              "exit_code": 0
+            },
+            {
+              "pid": 201,
+              "creation_filetime": 1201,
+              "handle_value": 2201,
+              "observed_exited": true,
+              "exit_code": 0
+            }
+          ]
+        }
+      }
+    ],
+    "finished_monotonic": 44576.300861155,
+    "finished_wall_unix_ns": 1792858804135119707
+  }
+}

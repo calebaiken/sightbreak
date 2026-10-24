@@ -1,0 +1,169 @@
+test_01_coherent_positive_variants_and_relative_caller_path (__main__.ReceiptControls.test_01_coherent_positive_variants_and_relative_caller_path) ... 
+  test_01_coherent_positive_variants_and_relative_caller_path (__main__.ReceiptControls.test_01_coherent_positive_variants_and_relative_caller_path) (case='source-permitted-relative-output-positive') ... FAIL
+test_02_all_independently_derived53_required_omissions (__main__.ReceiptControls.test_02_all_independently_derived53_required_omissions) ... ok
+test_03_named_capture_context_and_two_frame_relationships (__main__.ReceiptControls.test_03_named_capture_context_and_two_frame_relationships) ... 
+  test_03_named_capture_context_and_two_frame_relationships (__main__.ReceiptControls.test_03_named_capture_context_and_two_frame_relationships) (case='capture-wrong-phase') ... FAIL
+  test_03_named_capture_context_and_two_frame_relationships (__main__.ReceiptControls.test_03_named_capture_context_and_two_frame_relationships) (case='capture-wrong-actor') ... FAIL
+  test_03_named_capture_context_and_two_frame_relationships (__main__.ReceiptControls.test_03_named_capture_context_and_two_frame_relationships) (case='capture-missing-two-frames') ... FAIL
+  test_03_named_capture_context_and_two_frame_relationships (__main__.ReceiptControls.test_03_named_capture_context_and_two_frame_relationships) (case='capture-dead-after-capture') ... FAIL
+test_04_pause_and_source_constant_receipts (__main__.ReceiptControls.test_04_pause_and_source_constant_receipts) ... 
+  test_04_pause_and_source_constant_receipts (__main__.ReceiptControls.test_04_pause_and_source_constant_receipts) (case='pause-not-paused') ... FAIL
+  test_04_pause_and_source_constant_receipts (__main__.ReceiptControls.test_04_pause_and_source_constant_receipts) (case='paused-time-advanced') ... FAIL
+  test_04_pause_and_source_constant_receipts (__main__.ReceiptControls.test_04_pause_and_source_constant_receipts) (case='reload-deadline-false') ... FAIL
+  test_04_pause_and_source_constant_receipts (__main__.ReceiptControls.test_04_pause_and_source_constant_receipts) (case='reload-watchdog-bool') ... FAIL
+  test_04_pause_and_source_constant_receipts (__main__.ReceiptControls.test_04_pause_and_source_constant_receipts) (case='settings-living-false') ... FAIL
+test_05_callback_job_relationships_and_x64_boundaries (__main__.ReceiptControls.test_05_callback_job_relationships_and_x64_boundaries) ... 
+  test_05_callback_job_relationships_and_x64_boundaries (__main__.ReceiptControls.test_05_callback_job_relationships_and_x64_boundaries) (case='wrong-callback-job-label') ... FAIL
+  test_05_callback_job_relationships_and_x64_boundaries (__main__.ReceiptControls.test_05_callback_job_relationships_and_x64_boundaries) (case='job-before-callback-clock') ... FAIL
+  test_05_callback_job_relationships_and_x64_boundaries (__main__.ReceiptControls.test_05_callback_job_relationships_and_x64_boundaries) (case='missing-active-identities') ... FAIL
+  test_05_callback_job_relationships_and_x64_boundaries (__main__.ReceiptControls.test_05_callback_job_relationships_and_x64_boundaries) (case='controller-birth-u65') ... FAIL
+  test_05_callback_job_relationships_and_x64_boundaries (__main__.ReceiptControls.test_05_callback_job_relationships_and_x64_boundaries) (case='controller-handle-u65') ... FAIL
+test_06_actual_byte_formats_and_synchronized_close_types (__main__.ReceiptControls.test_06_actual_byte_formats_and_synchronized_close_types) ... ok
+test_07_missing_close_propagates_with_complete_files_and_optimistic_loader (__main__.ReceiptControls.test_07_missing_close_propagates_with_complete_files_and_optimistic_loader) ... ok
+test_08_wrapper_originals_and_publication_receipt_collision (__main__.ReceiptControls.test_08_wrapper_originals_and_publication_receipt_collision) ... 
+  test_08_wrapper_originals_and_publication_receipt_collision (__main__.ReceiptControls.test_08_wrapper_originals_and_publication_receipt_collision) (postcondition='collision-is-error', scenario='receipt-collision') ... FAIL
+  test_08_wrapper_originals_and_publication_receipt_collision (__main__.ReceiptControls.test_08_wrapper_originals_and_publication_receipt_collision) (postcondition='original-receipt-bytes-retained', scenario='receipt-collision') ... FAIL
+test_09_actual_fixed_model_blocks_public_main_before_effects (__main__.ReceiptControls.test_09_actual_fixed_model_blocks_public_main_before_effects) ... ok
+
+======================================================================
+FAIL: test_01_coherent_positive_variants_and_relative_caller_path (__main__.ReceiptControls.test_01_coherent_positive_variants_and_relative_caller_path) (case='source-permitted-relative-output-positive')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/shutdown-study-evidence-independent-20261024/docs/reports/gauntlet/shutdown-study-evidence-independent-20261024/final-source-r1/independent_controls.py", line 77, in record
+    self.assertIs(result['strict_passed'],expected)
+AssertionError: False is not True
+
+======================================================================
+FAIL: test_03_named_capture_context_and_two_frame_relationships (__main__.ReceiptControls.test_03_named_capture_context_and_two_frame_relationships) (case='capture-wrong-phase')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/shutdown-study-evidence-independent-20261024/docs/reports/gauntlet/shutdown-study-evidence-independent-20261024/final-source-r1/independent_controls.py", line 77, in record
+    self.assertIs(result['strict_passed'],expected)
+AssertionError: True is not False
+
+======================================================================
+FAIL: test_03_named_capture_context_and_two_frame_relationships (__main__.ReceiptControls.test_03_named_capture_context_and_two_frame_relationships) (case='capture-wrong-actor')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/shutdown-study-evidence-independent-20261024/docs/reports/gauntlet/shutdown-study-evidence-independent-20261024/final-source-r1/independent_controls.py", line 77, in record
+    self.assertIs(result['strict_passed'],expected)
+AssertionError: True is not False
+
+======================================================================
+FAIL: test_03_named_capture_context_and_two_frame_relationships (__main__.ReceiptControls.test_03_named_capture_context_and_two_frame_relationships) (case='capture-missing-two-frames')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/shutdown-study-evidence-independent-20261024/docs/reports/gauntlet/shutdown-study-evidence-independent-20261024/final-source-r1/independent_controls.py", line 77, in record
+    self.assertIs(result['strict_passed'],expected)
+AssertionError: True is not False
+
+======================================================================
+FAIL: test_03_named_capture_context_and_two_frame_relationships (__main__.ReceiptControls.test_03_named_capture_context_and_two_frame_relationships) (case='capture-dead-after-capture')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/shutdown-study-evidence-independent-20261024/docs/reports/gauntlet/shutdown-study-evidence-independent-20261024/final-source-r1/independent_controls.py", line 77, in record
+    self.assertIs(result['strict_passed'],expected)
+AssertionError: True is not False
+
+======================================================================
+FAIL: test_04_pause_and_source_constant_receipts (__main__.ReceiptControls.test_04_pause_and_source_constant_receipts) (case='pause-not-paused')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/shutdown-study-evidence-independent-20261024/docs/reports/gauntlet/shutdown-study-evidence-independent-20261024/final-source-r1/independent_controls.py", line 77, in record
+    self.assertIs(result['strict_passed'],expected)
+AssertionError: True is not False
+
+======================================================================
+FAIL: test_04_pause_and_source_constant_receipts (__main__.ReceiptControls.test_04_pause_and_source_constant_receipts) (case='paused-time-advanced')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/shutdown-study-evidence-independent-20261024/docs/reports/gauntlet/shutdown-study-evidence-independent-20261024/final-source-r1/independent_controls.py", line 77, in record
+    self.assertIs(result['strict_passed'],expected)
+AssertionError: True is not False
+
+======================================================================
+FAIL: test_04_pause_and_source_constant_receipts (__main__.ReceiptControls.test_04_pause_and_source_constant_receipts) (case='reload-deadline-false')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/shutdown-study-evidence-independent-20261024/docs/reports/gauntlet/shutdown-study-evidence-independent-20261024/final-source-r1/independent_controls.py", line 77, in record
+    self.assertIs(result['strict_passed'],expected)
+AssertionError: True is not False
+
+======================================================================
+FAIL: test_04_pause_and_source_constant_receipts (__main__.ReceiptControls.test_04_pause_and_source_constant_receipts) (case='reload-watchdog-bool')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/shutdown-study-evidence-independent-20261024/docs/reports/gauntlet/shutdown-study-evidence-independent-20261024/final-source-r1/independent_controls.py", line 77, in record
+    self.assertIs(result['strict_passed'],expected)
+AssertionError: True is not False
+
+======================================================================
+FAIL: test_04_pause_and_source_constant_receipts (__main__.ReceiptControls.test_04_pause_and_source_constant_receipts) (case='settings-living-false')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/shutdown-study-evidence-independent-20261024/docs/reports/gauntlet/shutdown-study-evidence-independent-20261024/final-source-r1/independent_controls.py", line 77, in record
+    self.assertIs(result['strict_passed'],expected)
+AssertionError: True is not False
+
+======================================================================
+FAIL: test_05_callback_job_relationships_and_x64_boundaries (__main__.ReceiptControls.test_05_callback_job_relationships_and_x64_boundaries) (case='wrong-callback-job-label')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/shutdown-study-evidence-independent-20261024/docs/reports/gauntlet/shutdown-study-evidence-independent-20261024/final-source-r1/independent_controls.py", line 77, in record
+    self.assertIs(result['strict_passed'],expected)
+AssertionError: True is not False
+
+======================================================================
+FAIL: test_05_callback_job_relationships_and_x64_boundaries (__main__.ReceiptControls.test_05_callback_job_relationships_and_x64_boundaries) (case='job-before-callback-clock')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/shutdown-study-evidence-independent-20261024/docs/reports/gauntlet/shutdown-study-evidence-independent-20261024/final-source-r1/independent_controls.py", line 77, in record
+    self.assertIs(result['strict_passed'],expected)
+AssertionError: True is not False
+
+======================================================================
+FAIL: test_05_callback_job_relationships_and_x64_boundaries (__main__.ReceiptControls.test_05_callback_job_relationships_and_x64_boundaries) (case='missing-active-identities')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/shutdown-study-evidence-independent-20261024/docs/reports/gauntlet/shutdown-study-evidence-independent-20261024/final-source-r1/independent_controls.py", line 77, in record
+    self.assertIs(result['strict_passed'],expected)
+AssertionError: True is not False
+
+======================================================================
+FAIL: test_05_callback_job_relationships_and_x64_boundaries (__main__.ReceiptControls.test_05_callback_job_relationships_and_x64_boundaries) (case='controller-birth-u65')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/shutdown-study-evidence-independent-20261024/docs/reports/gauntlet/shutdown-study-evidence-independent-20261024/final-source-r1/independent_controls.py", line 77, in record
+    self.assertIs(result['strict_passed'],expected)
+AssertionError: True is not False
+
+======================================================================
+FAIL: test_05_callback_job_relationships_and_x64_boundaries (__main__.ReceiptControls.test_05_callback_job_relationships_and_x64_boundaries) (case='controller-handle-u65')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/shutdown-study-evidence-independent-20261024/docs/reports/gauntlet/shutdown-study-evidence-independent-20261024/final-source-r1/independent_controls.py", line 77, in record
+    self.assertIs(result['strict_passed'],expected)
+AssertionError: True is not False
+
+======================================================================
+FAIL: test_08_wrapper_originals_and_publication_receipt_collision (__main__.ReceiptControls.test_08_wrapper_originals_and_publication_receipt_collision) (postcondition='collision-is-error', scenario='receipt-collision')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/shutdown-study-evidence-independent-20261024/docs/reports/gauntlet/shutdown-study-evidence-independent-20261024/final-source-r1/independent_controls.py", line 205, in test_08_wrapper_originals_and_publication_receipt_collision
+    with self.subTest(postcondition='collision-is-error'):self.assertIsNotNone(error,'receipt collision silently succeeded')
+                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unexpectedly None : receipt collision silently succeeded
+
+======================================================================
+FAIL: test_08_wrapper_originals_and_publication_receipt_collision (__main__.ReceiptControls.test_08_wrapper_originals_and_publication_receipt_collision) (postcondition='original-receipt-bytes-retained', scenario='receipt-collision')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/shutdown-study-evidence-independent-20261024/docs/reports/gauntlet/shutdown-study-evidence-independent-20261024/final-source-r1/independent_controls.py", line 206, in test_08_wrapper_originals_and_publication_receipt_collision
+    with self.subTest(postcondition='original-receipt-bytes-retained'):self.assertEqual((capture/'publication.json').read_bytes(),marker)
+                                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: b'{\n  "invocation_error": null,\n  "public[443 chars]n}\n' != b'preexisting unique publication bytes\x00\xff'
+
+----------------------------------------------------------------------
+Ran 9 tests in 92.112s
+
+FAILED (failures=17)
