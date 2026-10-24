@@ -1,0 +1,23 @@
+{
+  "name": "read_race_restore_mtime_False",
+  "expected": "REJECT",
+  "actual": "REJECT",
+  "matched": true,
+  "expected_bytes_hex": "6f726967696e616c2062797465730a",
+  "current_bytes_hex": "6368616e676564212062797465730a",
+  "before": {
+    "size": 15,
+    "mtime_ns": 1792851412797797177,
+    "ctime_ns": 1792851412797797177,
+    "ino": 74758
+  },
+  "after": {
+    "size": 15,
+    "mtime_ns": 1792851412797865435,
+    "ctime_ns": 1792851412797865435,
+    "ino": 74758
+  },
+  "receipt": null,
+  "error": "ValueError: source changed during physical read: /tmp/tmpalkj94tk/runtime/space source.txt",
+  "scope": "Same-call mutation after an actual read; not a whole-filesystem atomicity claim"
+}
