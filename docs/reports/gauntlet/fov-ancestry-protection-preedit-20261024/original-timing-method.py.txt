@@ -1,0 +1,14 @@
+    def test_source_git_children_receive_only_remaining_whole_deadline(self):
+        clock=FakeClock();timeouts=[]
+        def output(command,**options):
+            timeouts.append(options['timeout']);clock.sleep(.1)
+            return 'a'*40 if options.get('text') else b''
+        def run(command,**options):
+            timeouts.append(options['timeout']);clock.sleep(.1);return SimpleNamespace(returncode=0)
+        with patch.object(acquisition.subprocess,'check_output',side_effect=output),patch.object(acquisition.subprocess,'run',side_effect=run),patch.object(acquisition,'digest',return_value='b'*64):
+            binding=acquisition.source_binding('a'*40,deadline=101.,clock=clock)
+        self.assertEqual(binding['commit'],'a'*40);self.assertEqual(len(timeouts),4)
+        self.assertTrue(all(0<t<=1 for t in timeouts));self.assertEqual(timeouts,sorted(timeouts,reverse=True))
+        clock.now=101.
+        with patch.object(acquisition.subprocess,'check_output',side_effect=AssertionError('must not spawn late')),self.assertRaises(RuntimeError):
+            acquisition.source_binding('a'*40,deadline=101.,clock=clock)
