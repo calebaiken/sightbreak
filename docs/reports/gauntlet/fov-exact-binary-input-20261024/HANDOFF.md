@@ -47,7 +47,9 @@ fixed file identity. It never recovers inputs through decimal/string-to-float.
 Pinned ed1 API/marshalling references and hashes are retained.
 
 Constructed Vector3 intentionally applies native real_t quantization after exact
-double decoding. Scalar companions preserve signedzero. Schema2 output echoes
+double decoding. These exact inputs preserve the canonical Python serialization reconstruction only;
+they do not restore missing historical engine bits, target memory/seen/sighting
+state or LOS evidence. Scalar companions preserve signedzero. Schema2 output echoes
 all decoded input companions/ordinal/transport identity. A strict adapter validates
 those additions then applies unchanged original schema1 numeric/parser gates to
 canonical semantic cases with current program/wire hashes. No output/input bits,
