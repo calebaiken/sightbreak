@@ -1,3 +1,32 @@
+## Reopened shutdown diagnostic source handoff — 2026-10-24
+
+Own branch `codex/windows-reopened-shutdown-diagnostics-20261024` in
+`/workspace/sightbreak-windows-reopened-shutdown`, exact source
+`7101350e5d0a2f6e4afb9a913b5b1bcf2107857a`, over exact c3241514.
+Preregistration e939c30f precedes source. Official Windows run 40080238905 /
+job 120832097220 completes FAILURE: initial/reopened exits both 0, flow
+111.141 seconds, cleanup_errors empty, reopened.log warns of three leaked
+ObjectDB instances. Types/retaining owners/cause are UNKNOWN. Driver warning is
+separate and retained. Independent actual reconstruction belongs to the existing
+actual critic; this source task does not replace it.
+
+No cause-supported production fix was found. Candidate adds default-off
+`--reopened-verbose` only to the reopened engine argv before `--`, and a default-
+false Windows-only workflow adapter on the same living/settings/restart step.
+Native-log gates and all Godot source remain exact. Original schedules, whole
+300 seconds, close 20 seconds, phase budgets, cleanup, controls, privacy and
+economy remain unchanged. Own source checks pass 182 methods (179 pass / same
+three Windows skips), shell syntax, nine bad-variant controls and full 507-path
+original source erasure. Builder claims no source approval or native acceptance.
+
+Evidence and repeat commands are under
+`docs/reports/gauntlet/windows-reopened-shutdown-20261024/FINDINGS.md`.
+Fresh source critic `/root/reopened_verbose_source_critic_20261024` is assigned.
+No Godot/native/export/CI/replay/retry is released or executed here. Root must
+separately admit any actual diagnostic after source review. Largest gap remains
+actual verbose leaked-instance identity; verbosity itself supplies no allocation
+stack or retaining-owner proof. The automated Mac file-handling block is intact.
+
 # Next session
 
 Updated 2026-10-23, 12:05 UTC. Continue **SIGHTBREAK — Steam-Ready v1.0**,

@@ -6,6 +6,16 @@ Statuses: `NOT STARTED`, `IN PROGRESS`, `FAILED`, `VERIFIED`, `BLOCKED EXTERNALL
 
 ## Current execution
 
+Reopened-client shutdown diagnostic source 7101350e is pending independent source
+review on its own branch, preregistered at e939c30f against actual Windows run
+40080238905 / job 120832097220. Both native exits are 0; strict reopened log reports
+three unidentified ObjectDB leaks. No cause-supported gameplay/resource change is
+claimed. Default-off reopened-only engine verbosity preserves original schedules,
+budgets and gates; 182 pure methods pass with the same three Windows-only skips,
+and all 507 original non-doc identities erase exactly. No native/export/CI/retry
+ran; root admission and actual verbose identity remain outstanding. Whole gates
+are unchanged.
+
 The mission remains IN PROGRESS / PRIMARY. Current root implementation includes
 two independently verified bot weapon fixes, strict native-log detection and the
 source-accepted initial Windows route pulse (`da7bc797`). The latest full

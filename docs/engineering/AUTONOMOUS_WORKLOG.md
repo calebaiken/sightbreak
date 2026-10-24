@@ -617,3 +617,20 @@ all route guards. Root release e587392d starts one exact f242a2f Linux controlle
 measurement after actual precriteria 4e97721b; heavy local work is held. Touch
 108d1cdc is source-ready, no new native; Mac AX component source implementation
 continues. Mission remains ACTIVE; continue exact NEXT_SESSION queue.
+
+
+## 2026-10-24 — Reopened-client shutdown diagnostic source
+
+Actual official Windows run 40080238905 / job 120832097220 is the retained bar:
+normal exits 0/0 but strict reopened log rejects three unidentified ObjectDB
+instances; full flow 111.141 seconds and cleanup_errors empty. Preregistered at
+e939c30f before minimal source 7101350e, own branch
+codex/windows-reopened-shutdown-diagnostics-20261024. Read-only source review found
+no supported cause. Added default-off reopened-only engine verbosity and a Windows
+workflow adapter, preserving the same flow and all original strict gates/budgets.
+182 pure methods pass (179 pass / three existing Windows skips), nine bad variants
+reject, shell syntax and full 507-path source erasure pass. Fresh independent
+source critic is assigned; builder does not approve itself. No native/CI/export
+or retry ran. Details and original hashes are in
+../reports/gauntlet/windows-reopened-shutdown-20261024/FINDINGS.md. Largest gap is
+actual verbose object identity and supported retaining-owner diagnosis.
