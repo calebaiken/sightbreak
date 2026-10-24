@@ -1,0 +1,526 @@
+{
+  "results": [
+    {
+      "name": "FullExpiryReaderControls.test_new_positive_lifecycle_projection_and_old_helper_unchanged",
+      "methods": 1,
+      "failures": 0,
+      "errors": 0,
+      "skips": 0,
+      "candidate_credit": true
+    },
+    {
+      "name": "ExpiryHistoryControls.test_missing_legacy_connected_foundation_stays_unknown_then_later_invalid",
+      "methods": 1,
+      "failures": 0,
+      "errors": 0,
+      "skips": 0,
+      "candidate_credit": false
+    },
+    {
+      "name": "additive_companion_and_scope",
+      "methods": 2,
+      "failures": 0,
+      "errors": 0,
+      "skips": 0
+    }
+  ],
+  "analyze_calls": 5,
+  "current_calls": 3,
+  "historical_calls": 2,
+  "calls": [
+    {
+      "ordinal": 1,
+      "phase": "A",
+      "lane": "CURRENT",
+      "candidate_credit": true,
+      "reader_sha256": "fab0711b9f239654a31cac745d4778eed8691d617eccea39c7fccabc6593fdf0",
+      "function_pointer": 140241987748224,
+      "code_pointer": 398144144,
+      "code_filename": "/workspace/reviews/r6-literal-repair-preedit-independent-20261024/docs/reports/gauntlet/r6-literal-repair-preedit-independent-20261024/bound-source/current/scripts/analyze_input_consumption.py",
+      "client_sha256": "751af7160625104ac7f7b182e677477f8dd075a87a270b04423d028856c24526",
+      "authority_sha256": "025f76bb601d53577bb01fef1b3bb7a4df1770c4fbcd139c18a07586a2621588",
+      "result": {
+        "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+        "diagnostic_complete": true,
+        "transition_status": "CONSISTENT",
+        "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+        "roles": {
+          "client": {
+            "records": 7,
+            "coverage": [
+              "client_attempt",
+              "client_connected",
+              "client_tick",
+              "input_send_called",
+              "ready",
+              "snapshot_applied",
+              "welcome_received"
+            ],
+            "counters": {
+              "ready": 1,
+              "client_attempt": 1,
+              "client_connected": 1,
+              "welcome_received": 1,
+              "client_tick": 2,
+              "snapshot_applied": 1,
+              "input_send_called": 1
+            },
+            "max_observation_gap_msec": 1000,
+            "max_snapshot_age_msec": 3000,
+            "pending_saturation_indices": [],
+            "accepted_events": [],
+            "consumed_events": [],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [
+              {
+                "transport_id": 9,
+                "local_attempt": 1,
+                "local_id": 1,
+                "wall_unix_msec": 104000
+              }
+            ],
+            "binding_events": [],
+            "local_attempts": 1
+          },
+          "authority": {
+            "records": 7,
+            "coverage": [
+              "authority_tick",
+              "input_accepted",
+              "input_consumed",
+              "input_received",
+              "peer_bound",
+              "peer_connected",
+              "ready"
+            ],
+            "counters": {
+              "ready": 1,
+              "peer_connected": 1,
+              "peer_bound": 1,
+              "input_received": 1,
+              "input_accepted": 1,
+              "input_consumed": 1,
+              "authority_tick": 1
+            },
+            "max_observation_gap_msec": 5000,
+            "max_snapshot_age_msec": -1,
+            "pending_saturation_indices": [],
+            "accepted_events": [
+              {
+                "index": 5,
+                "epoch": 1,
+                "count": 1,
+                "first": 1,
+                "last": 1,
+                "fire": 1,
+                "reload": 0,
+                "moving": 0,
+                "wall_msec": 9000
+              }
+            ],
+            "consumed_events": [
+              {
+                "index": 6,
+                "sequence": 1,
+                "fire": true,
+                "reload": false,
+                "move": [
+                  0.0,
+                  0.0
+                ],
+                "peer": 9,
+                "actor": 1,
+                "generation": 1,
+                "wall_msec": 10000
+              }
+            ],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [],
+            "binding_events": [
+              {
+                "peer": 9,
+                "generation": 1,
+                "bound_actor": 1,
+                "wall_unix_msec": 103000
+              }
+            ],
+            "local_attempts": 0
+          }
+        },
+        "errors": [],
+        "attempt_generation_links": [
+          {
+            "client_local_attempt": 1,
+            "peer": 9,
+            "generation": 1,
+            "bound_actor": 1,
+            "wall_unix_msec": 103000
+          }
+        ]
+      },
+      "actual_status": "CONSISTENT"
+    },
+    {
+      "ordinal": 2,
+      "phase": "B",
+      "lane": "HISTORICAL",
+      "candidate_credit": false,
+      "reader_sha256": "d2cab3af7e441615a37caedb259b1311eb0b5b1cde46719c1000181223facba1",
+      "function_pointer": 140241987600608,
+      "code_pointer": 395576832,
+      "code_filename": "/workspace/reviews/r6-literal-repair-preedit-independent-20261024/docs/reports/gauntlet/r6-literal-repair-preedit-independent-20261024/bound-source/historical/analyze_input_consumption.py",
+      "client_sha256": "751af7160625104ac7f7b182e677477f8dd075a87a270b04423d028856c24526",
+      "authority_sha256": "9c1e507ba8c67009e6bf3ba95f842ddfc030b0d45f2d3b04d3813e0a2f31bf4d",
+      "result": {
+        "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+        "diagnostic_complete": false,
+        "transition_status": "UNKNOWN",
+        "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+        "roles": {
+          "client": {
+            "records": 7,
+            "coverage": [
+              "client_attempt",
+              "client_connected",
+              "client_tick",
+              "input_send_called",
+              "ready",
+              "snapshot_applied",
+              "welcome_received"
+            ],
+            "counters": {
+              "ready": 1,
+              "client_attempt": 1,
+              "client_connected": 1,
+              "welcome_received": 1,
+              "client_tick": 2,
+              "snapshot_applied": 1,
+              "input_send_called": 1
+            },
+            "max_observation_gap_msec": 1000,
+            "max_snapshot_age_msec": 3000,
+            "pending_saturation_indices": [],
+            "accepted_events": [],
+            "consumed_events": [],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [
+              {
+                "transport_id": 9,
+                "local_attempt": 1,
+                "local_id": 1,
+                "wall_unix_msec": 104000
+              }
+            ],
+            "binding_events": [],
+            "local_attempts": 1
+          }
+        },
+        "errors": [
+          "authority: expiry lacks a source-faithful prior lifecycle projection for peer 9 generation 1"
+        ]
+      },
+      "actual_status": "UNKNOWN"
+    },
+    {
+      "ordinal": 3,
+      "phase": "B",
+      "lane": "HISTORICAL",
+      "candidate_credit": false,
+      "reader_sha256": "d2cab3af7e441615a37caedb259b1311eb0b5b1cde46719c1000181223facba1",
+      "function_pointer": 140241987600608,
+      "code_pointer": 395576832,
+      "code_filename": "/workspace/reviews/r6-literal-repair-preedit-independent-20261024/docs/reports/gauntlet/r6-literal-repair-preedit-independent-20261024/bound-source/historical/analyze_input_consumption.py",
+      "client_sha256": "751af7160625104ac7f7b182e677477f8dd075a87a270b04423d028856c24526",
+      "authority_sha256": "e95ca1fff45615fa8fbc3b090df57287ba3473a87cff48c219edaa95a617e99f",
+      "result": {
+        "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+        "diagnostic_complete": false,
+        "transition_status": "INVALID",
+        "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+        "roles": {
+          "client": {
+            "records": 7,
+            "coverage": [
+              "client_attempt",
+              "client_connected",
+              "client_tick",
+              "input_send_called",
+              "ready",
+              "snapshot_applied",
+              "welcome_received"
+            ],
+            "counters": {
+              "ready": 1,
+              "client_attempt": 1,
+              "client_connected": 1,
+              "welcome_received": 1,
+              "client_tick": 2,
+              "snapshot_applied": 1,
+              "input_send_called": 1
+            },
+            "max_observation_gap_msec": 1000,
+            "max_snapshot_age_msec": 3000,
+            "pending_saturation_indices": [],
+            "accepted_events": [],
+            "consumed_events": [],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [
+              {
+                "transport_id": 9,
+                "local_attempt": 1,
+                "local_id": 1,
+                "wall_unix_msec": 104000
+              }
+            ],
+            "binding_events": [],
+            "local_attempts": 1
+          }
+        },
+        "errors": [
+          "authority: input stage has no current observed peer-generation binding"
+        ]
+      },
+      "actual_status": "INVALID"
+    },
+    {
+      "ordinal": 4,
+      "phase": "companion",
+      "lane": "CURRENT",
+      "candidate_credit": true,
+      "reader_sha256": "fab0711b9f239654a31cac745d4778eed8691d617eccea39c7fccabc6593fdf0",
+      "function_pointer": 140241987748224,
+      "code_pointer": 398144144,
+      "code_filename": "/workspace/reviews/r6-literal-repair-preedit-independent-20261024/docs/reports/gauntlet/r6-literal-repair-preedit-independent-20261024/bound-source/current/scripts/analyze_input_consumption.py",
+      "client_sha256": "751af7160625104ac7f7b182e677477f8dd075a87a270b04423d028856c24526",
+      "authority_sha256": "f0b6819538de3b1a8dc90205e138ca4f39881b1d43bd62a0e94c7e0d7e90b17b",
+      "result": {
+        "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+        "diagnostic_complete": true,
+        "transition_status": "CONSISTENT",
+        "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+        "roles": {
+          "client": {
+            "records": 7,
+            "coverage": [
+              "client_attempt",
+              "client_connected",
+              "client_tick",
+              "input_send_called",
+              "ready",
+              "snapshot_applied",
+              "welcome_received"
+            ],
+            "counters": {
+              "ready": 1,
+              "client_attempt": 1,
+              "client_connected": 1,
+              "welcome_received": 1,
+              "client_tick": 2,
+              "snapshot_applied": 1,
+              "input_send_called": 1
+            },
+            "max_observation_gap_msec": 1000,
+            "max_snapshot_age_msec": 3000,
+            "pending_saturation_indices": [],
+            "accepted_events": [],
+            "consumed_events": [],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [
+              {
+                "transport_id": 9,
+                "local_attempt": 1,
+                "local_id": 1,
+                "wall_unix_msec": 104000
+              }
+            ],
+            "binding_events": [],
+            "local_attempts": 1
+          },
+          "authority": {
+            "records": 8,
+            "coverage": [
+              "authority_tick",
+              "input_accepted",
+              "input_consumed",
+              "input_received",
+              "peer_bound",
+              "peer_connected",
+              "peer_expired",
+              "ready"
+            ],
+            "counters": {
+              "ready": 1,
+              "peer_connected": 1,
+              "peer_bound": 1,
+              "input_received": 1,
+              "input_accepted": 1,
+              "input_consumed": 1,
+              "authority_tick": 1,
+              "peer_expired": 1
+            },
+            "max_observation_gap_msec": 28000,
+            "max_snapshot_age_msec": -1,
+            "pending_saturation_indices": [],
+            "accepted_events": [
+              {
+                "index": 5,
+                "epoch": 1,
+                "count": 1,
+                "first": 1,
+                "last": 1,
+                "fire": 1,
+                "reload": 0,
+                "moving": 0,
+                "wall_msec": 9000
+              }
+            ],
+            "consumed_events": [
+              {
+                "index": 6,
+                "sequence": 1,
+                "fire": true,
+                "reload": false,
+                "move": [
+                  0.0,
+                  0.0
+                ],
+                "peer": 9,
+                "actor": 1,
+                "generation": 1,
+                "wall_msec": 10000
+              }
+            ],
+            "expiry_events": [
+              {
+                "index": 8,
+                "peer": 9,
+                "generation": 1,
+                "wall_msec": 39000,
+                "wall_unix_msec": 139000,
+                "input_age_msec": 30000
+              }
+            ],
+            "disconnect_events": [],
+            "welcome_events": [],
+            "binding_events": [
+              {
+                "peer": 9,
+                "generation": 1,
+                "bound_actor": 1,
+                "wall_unix_msec": 103000
+              }
+            ],
+            "local_attempts": 0
+          }
+        },
+        "errors": [],
+        "attempt_generation_links": [
+          {
+            "client_local_attempt": 1,
+            "peer": 9,
+            "generation": 1,
+            "bound_actor": 1,
+            "wall_unix_msec": 103000
+          }
+        ]
+      },
+      "actual_status": "CONSISTENT"
+    },
+    {
+      "ordinal": 5,
+      "phase": "companion",
+      "lane": "CURRENT",
+      "candidate_credit": true,
+      "reader_sha256": "fab0711b9f239654a31cac745d4778eed8691d617eccea39c7fccabc6593fdf0",
+      "function_pointer": 140241987748224,
+      "code_pointer": 398144144,
+      "code_filename": "/workspace/reviews/r6-literal-repair-preedit-independent-20261024/docs/reports/gauntlet/r6-literal-repair-preedit-independent-20261024/bound-source/current/scripts/analyze_input_consumption.py",
+      "client_sha256": "751af7160625104ac7f7b182e677477f8dd075a87a270b04423d028856c24526",
+      "authority_sha256": "9c1e507ba8c67009e6bf3ba95f842ddfc030b0d45f2d3b04d3813e0a2f31bf4d",
+      "result": {
+        "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+        "diagnostic_complete": false,
+        "transition_status": "INVALID",
+        "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+        "roles": {
+          "client": {
+            "records": 7,
+            "coverage": [
+              "client_attempt",
+              "client_connected",
+              "client_tick",
+              "input_send_called",
+              "ready",
+              "snapshot_applied",
+              "welcome_received"
+            ],
+            "counters": {
+              "ready": 1,
+              "client_attempt": 1,
+              "client_connected": 1,
+              "welcome_received": 1,
+              "client_tick": 2,
+              "snapshot_applied": 1,
+              "input_send_called": 1
+            },
+            "max_observation_gap_msec": 1000,
+            "max_snapshot_age_msec": 3000,
+            "pending_saturation_indices": [],
+            "accepted_events": [],
+            "consumed_events": [],
+            "expiry_events": [],
+            "disconnect_events": [],
+            "welcome_events": [
+              {
+                "transport_id": 9,
+                "local_attempt": 1,
+                "local_id": 1,
+                "wall_unix_msec": 104000
+              }
+            ],
+            "binding_events": [],
+            "local_attempts": 1
+          }
+        },
+        "errors": [
+          "authority: successful connection has an impossible initial lifecycle projection"
+        ]
+      },
+      "actual_status": "INVALID"
+    }
+  ],
+  "restoration": [
+    {
+      "method": "FullExpiryReaderControls.test_new_positive_lifecycle_projection_and_old_helper_unchanged",
+      "restored": true,
+      "other_globals_unchanged": true
+    },
+    {
+      "method": "ExpiryHistoryControls.test_missing_legacy_connected_foundation_stays_unknown_then_later_invalid",
+      "restored": true,
+      "other_globals_unchanged": true
+    },
+    {
+      "method": "FullExpiryReaderControls.test_new_positive_lifecycle_projection_and_old_helper_unchanged",
+      "restored": true,
+      "other_globals_unchanged": true
+    },
+    {
+      "method": "ExpiryHistoryControls.test_missing_legacy_connected_foundation_stays_unknown_then_later_invalid",
+      "restored": true,
+      "other_globals_unchanged": true
+    }
+  ],
+  "current_projection_calls_by_phase": {
+    "companion": 1
+  },
+  "current_reader_module_globals_unchanged": true,
+  "existing18_adapter_not_executed": true,
+  "original158_status": "NOT PASS",
+  "actual207_or_native_API_proc_engine_study_capability_calls": 0
+}
