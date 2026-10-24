@@ -30,7 +30,7 @@ for name in ['own-final','depth-final']:
  views.append(dict(view=name,pure_methods=227,pure_pass=224,pure_skip=3,retained=139,queue=13,aggregate=5,generated=36948,generated_feasible=5896,generated_infeasible=31052,shell_syntax_checks=sum(r['group']=='shell-syntax' for r in runs['records']),generated_gzip_sha256=s['gzip_sha256']))
 # All final model/corpus input/results (apart from path-bearing summaries) match.
 parity=[];serialization_differences=[]
-for group in ['queue-models','aggregate-models','generated-histories','causal-cases','retained-controls','selected-pure']:
+for group in ['queue-models','aggregate-models','generated-histories','causal-cases','retained-controls']:
  left=P/'own-final'/group;right=P/'depth-final'/group;members=0
  for f in left.rglob('*'):
   if f.is_file() and f.name not in {'SUMMARY.json','results.json'}:
@@ -41,6 +41,8 @@ for group in ['queue-models','aggregate-models','generated-histories','causal-ca
     serialization_differences.append(dict(group=group,path=f.relative_to(left).as_posix(),parsed_objects_identical=True,reason='Frozen builder correction iterates CONTROL_KEYS set; serialized object key order differs.'))
    else:members+=1
  parity.append(dict(group=group,byte_identical_members=members))
+pure_summaries=[json.loads((P/name/'selected-pure/SUMMARY.json').read_text()) for name in ['own-final','depth-final']]
+assert [[{k:r[k] for k in ['name','methods','failures','errors','skips']} for r in summary['rows']] for summary in pure_summaries][0]==[[{k:r[k] for k in ['name','methods','failures','errors','skips']} for r in summary['rows']] for summary in pure_summaries][1]
 fresh=[]
 for group in ['causal-v3','epoch-ties']:
  own=P/('own-'+group);depth=P/('depth-'+group)
