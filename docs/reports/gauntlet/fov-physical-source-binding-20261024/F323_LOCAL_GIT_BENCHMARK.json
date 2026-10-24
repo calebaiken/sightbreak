@@ -1,0 +1,38 @@
+{
+  "scope": "new local temporary Git replicas of prior f323 source-binding failure triggers; not native/replay",
+  "cases": [
+    {
+      "case": "acquire-bytes",
+      "source_path": "scripts/acquire_fov_math_reference.py",
+      "index_flag": "assume-unchanged",
+      "old_accepted": true,
+      "new_rejected": true,
+      "new_error": {
+        "type": "RuntimeError",
+        "message": "physical source bytes differ: /tmp/tmpunv6uub8/scripts/acquire_fov_math_reference.py"
+      }
+    },
+    {
+      "case": "executable",
+      "source_path": "scripts/acquire_fov_math_reference.py",
+      "index_flag": "assume-unchanged",
+      "old_accepted": true,
+      "new_rejected": true,
+      "new_error": {
+        "type": "RuntimeError",
+        "message": "physical source executable mode differs: /tmp/tmpoogpugpz/scripts/acquire_fov_math_reference.py"
+      }
+    },
+    {
+      "case": "imported-helper",
+      "source_path": "scripts/native_log.py",
+      "index_flag": "assume-unchanged",
+      "old_accepted": true,
+      "new_rejected": true,
+      "new_error": {
+        "type": "RuntimeError",
+        "message": "physical source bytes differ: /tmp/tmpd_8u7myp/scripts/native_log.py"
+      }
+    }
+  ]
+}

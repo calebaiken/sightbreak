@@ -1,0 +1,20 @@
+test_source_git_children_receive_only_remaining_whole_deadline (builtins.LiteralOldTiming.test_source_git_children_receive_only_remaining_whole_deadline) ... ERROR
+
+======================================================================
+ERROR: test_source_git_children_receive_only_remaining_whole_deadline (builtins.LiteralOldTiming.test_source_git_children_receive_only_remaining_whole_deadline)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<exact-old-method>", line 10, in test_source_git_children_receive_only_remaining_whole_deadline
+  File "/workspace/sightbreak-fov-owned-ancestry-r3/scripts/acquire_fov_math_reference.py", line 111, in source_binding
+    records=source_tree(git('ls-tree','-r','-z','--full-tree',expected))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-fov-owned-ancestry-r3/scripts/acquire_fov_math_reference.py", line 65, in source_tree
+    require(type(raw) is bytes and raw.endswith(b'\0'),'missing/truncated source tree')
+  File "/workspace/sightbreak-fov-owned-ancestry-r3/scripts/acquire_fov_math_reference.py", line 36, in require
+    raise RuntimeError(message)
+RuntimeError: missing/truncated source tree
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (errors=1)
