@@ -34,17 +34,22 @@ PR27→24→23→22→16 and contributor ownership. Runtime source remains exact
   verdicts match in each initialized source view; 254 selected pure methods pass
   with three inherited skips. All 32 old impossible completions reject and eight
   feasible siblings remain consistent. Whole-reader lifecycle foundation remains
-  BLOCKED; the old connected fixture is source-inconsistent. Builder continues
-  emitter-derived foundation work under prereg `2ac54432` on the same R7 branch.
-  Original constructors and twelve source snapshots are retained before edits.
-  Old-helper construction amendments need separate independent adjudication.
+  BLOCKED; the old connected fixture is source-inconsistent. Foundation model source `72868589` / handoff `9e3b85db` is sealed on the same
+  R7 branch under prereg `2ac54432`: 18 builder pure checks, 54 concrete witnesses,
+  eight old-reader false completes and ten mutation controls. Original reader,
+  constructors, assertions and twelve source snapshots remain unchanged. Existing
+  objective critic is adjudicating the precise pre-edit six-row proposal. No
+  old-helper amendment or whole-reader acceptance follows from builder results.
   The 207-row replay is UNEXECUTED.
 - Ancestry source `8cc38cdc` / handoff `9807106c` is independently REJECTED
   `85cba435`: coarse birth ticks alias a reused PID, importing a foreign child in
   two pure schedules. Sixty-two maintained passes do not override that result.
   Held-lifetime/API protection amendment `7b98abd8` and zombie-accounting issue
   `bc91e973` are recorded before code. Do not filter exited handles out of cleanup
-  and silently miss zombies. No guard change or native retry is released.
+  and silently miss zombies. No guard change or native retry is released. Separate physical-binding prereg
+  `41c2dbe2` / issue `88a9443f` identifies an old protected four-Git-call timing
+  fixture conflict before code. That narrow pre-edit adjudication is queued;
+  no binding implementation or old-test change has occurred.
 - Shutdown receipt source `0f478a07` / handoff `99a864a8` is sealed for the existing
   independent critic. Builder reports 69 unique pure passes in each source view,
   source-derived receipt checks and corrected empty-directory wrapper staging.
@@ -73,7 +78,10 @@ PR27→24→23→22→16 and contributor ownership. Runtime source remains exact
   `/root/input_reader_r4_builder_20261024` has preregistered `e9b4f00e` before
   tests in `/workspace/reviews/windows-fov-math-acquisition-independent-20261024`.
   It did not implement this math component; receipt source review uses a different
-  critic. No fresh-thread or builder self-approval claim.
+  critic. Original math builder is separately preregistering finalizer/audit source
+  repair after the frozen b16 findings. The critic must finish b16 first; do not
+  substitute targets, self-approve, touch the held foundation or run native work.
+  No fresh-thread or builder self-approval claim.
 
 Windows run40089125575 remains strict FAIL_WARNINGS / leak NONREPRODUCTION
 (critic `e88d2cb9`), despite successful workflow, player objectives, stock rounds
