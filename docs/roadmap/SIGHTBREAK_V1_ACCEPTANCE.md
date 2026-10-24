@@ -20,13 +20,16 @@ signing, credentials and unavailable hosts stay explicitly blocked until observe
 A script, simulated match, software render or successful export cannot silently
 satisfy a different gate. No deployment, Steam publication or paid action is implied.
 
-Current source-only status at 16:00 UTC: R7 expiry component independently
-accepts `09b2a1f7`; whole-reader foundation and actual replay remain blocked.
-Ancestry `8cc38cdc` independently fails `85cba435`. Receipt candidate `0f478a07`
-awaits the separate critic. Revised bounded capture R2 `3698b545` incorporates supported R1 findings and
-is accepted for owner decision by critic `96d85c93`; approval remains pending; no changed study/capability execution is
-released. These statuses close no whole release gate. Read the current checkpoint
-in the canonical progress record for exact branches, evidence and continuation.
+At 16:32 UTC, expiry component `09b2a1f7` retains its independent acceptance.
+The implemented authority foundation `ca9a04cd` / handoff `db954429` is REVISE:
+134 literal methods, 44 failure events and one error. Independent critique is
+active; whole-reader acceptance and the 207-row replay remain blocked. Receipt
+candidate `0f478` is independently rejected on fresh controls; R2 correction is
+preparing. Original Windows math `b16` is REJECTED `eac72c2e`; repair `ab864` /
+`bede` has 101 builder passes per view and awaits separate review. Shutdown
+contract R2 `3698` is independently accepted for owner decision only. Approval
+is pending; no changed study or capability run is authorized. No whole release
+gate closes. Exact owners and failures are in the progress and resume records.
 
 Historical bounded evidence includes the independently passing recovered afca2f1
 aggregate, narrow bot dry-primary comparison, ten-account settlement/recovery,
