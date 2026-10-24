@@ -1,0 +1,25 @@
+{
+  "scope": "Independent pure source critique; no native or complete-acquisition claim",
+  "checkout_head": "342c3641ab2fccd1fc875c84188a8395a9b93a96",
+  "frozen_source": "342c3641ab2fccd1fc875c84188a8395a9b93a96",
+  "reader_path": "/workspace/reviews/windows-input-consumption-r3-fresh-source/.local/depth-one-source/scripts/analyze_input_consumption.py",
+  "reader_sha256": "cb5897cb61d774499af0d4ac17252773ecaf91a954f75968f5eddebb26983eea",
+  "cpu_affinity": [
+    4
+  ],
+  "cases_total": 52,
+  "expectations_met": 42,
+  "false_accepts": [
+    "same_peer_second_live_generation",
+    "binding_counter_claims_hidden_lifecycle_event",
+    "emitted_reason_counter_does_not_increment",
+    "latest_accepted_deleted_without_reset",
+    "direct_accepted_has_empty_queue",
+    "consumed_ack_disagrees_with_command",
+    "consumed_actor_projection_disagrees",
+    "second_accept_without_receive_counter_increment",
+    "accepted_latest_differs_from_synchronous_receive",
+    "second_peer_pop_without_any_acceptance"
+  ],
+  "false_rejects": []
+}
