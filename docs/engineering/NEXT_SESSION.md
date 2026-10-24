@@ -40,20 +40,25 @@ root ref was stale because the fetch configuration covers main; actual ls-remote
 and GitHub PR metadata agree. Never reset the newer local work to that stale ref.
 No shared merge, history rewrite, release or production deployment is authorized.
 
-**Next action: one separately admitted actual Windows collector trial.**
-Qualifier `qualifier/windows-collector-c324-20261024` is fixed at exact c324.
-Actual absent/create/readback receipts are committed and pushed in817f7a83 at
-`docs/reports/gauntlet/windows-collector-actual-20261024/ROOT_QUALIFIER_CREATION.json`.
-Fresh actual critic `/root/windows_collector_actual_critic_20261024` preregistered
-728906f9 and prepared74f17acd/06a6edb8; final admissionc0ad241c was read and integrated. The existing desktop-alpha
-workflow uses lane=windows and observe_windows_input=true. Root release2d17a3ab was committed/pushed before the sole dispatch. Actual run
-40080238905, job120832097220, attempt1, created2026-10-24T09:00:29Z, is ACTIVE.
-Source c324/ref/inputs are exact; actual tool receipts are in
-`docs/reports/gauntlet/windows-collector-actual-20261024/ROOT_DISPATCH_RECEIPTS.json`.
-Fresh critic is reactivated and monitoring this same run. At09:03:53UTC, export/
-package inspection passed and16 native regressions were active; no gameplay
-verdict. Do not dispatch again, rerun or alter the qualifier. Preserve original ordinary240-second/no-delay schedule, separate
-delayed controls, living/settings/focus and earned-progression gates.
+**Active Windows trial: review the existing attempt; do not redispatch.**
+Run [40080238905](https://github.com/calebaiken/sightbreak/actions/runs/40080238905),
+job120832097220, attempt1, exactc324 on
+`qualifier/windows-collector-c324-20261024`, created09:00:29 UTC. Preregistration
+728906f9, final admissionc0ad241c and root release2d17a3ab precede the sole
+request. Exact request and qualifier receipts are committed in the component's
+ROOT_DISPATCH_RECEIPTS.json and ROOT_QUALIFIER_CREATION.json. Critic
+`/root/windows_collector_actual_critic_20261024` owns actual reconstruction.
+
+At09:19:16 UTC the stock full-match step remains active within its original
+1,800 seconds. Living/settings step30 failed; selected overall qualification
+therefore cannot pass. Other reached producer steps report success, including
+ordinary undelayed input, both delayed wrappers and plant. Do not promote those
+statuses before raw verification. Supported partial logs end mid-record; they
+show the living route and focus capture markers were reached, then the exact
+source raises `Reopened export failed clean shutdown` at line1022. Reopened
+exit versus strict-log cause remains UNKNOWN until official originals arrive.
+Original failures, limits, budgets and one-tick objective tolerance remain intact.
+No retry, rerun, alternate reference or new native lane is released.
 
 **Completed bounded collector source and native preflight.**
 Collector-only source `c32415148db1f110bbc7eadfca3793d4693429ff`, reports handoff
@@ -114,12 +119,16 @@ traces pass and one valid unordered batch fails. ReaderR3 `342c3641` is frozen
 with uncommitted packaging results in `/workspace/sightbreak-windows-input-consumption-r2`,
 branch `codex/windows-input-consumption-r3-20261023`; no final independent verdict.
 The collector intentionally excludes that reader, its tests and validate changes.
-Mac `/workspace/sightbreak-mac-semantic-deploy` was preserved at preregistration
-8b6bdacc with nine uncommitted paths. Builder `/root/mac_semantic_resume_builder_20261024`
-is now resuming that same owned work, preserving an UNVERIFIED recovery snapshot
-before edits, CPU4/pure-only. Inspect its current HEAD/status before any action;
-no native or CI release exists.
-Ordinary Mac gameplay is unverified despite the accepted read-only AX evidence.
+Mac source a96a7ae5 and handoff aff10f11 are pushed, preserving interrupted WIP
+543ce5cb on the same owned branch. Builder's two source views pass 164 pure
+methods. Fresh critic preregistered ddfa2a53, reported a blocking initial-file
+identity defect, then its turn was stopped by an automated possible-cybersecurity-
+risk flag. No final independent source verdict exists. Record and 14-file
+retention inventory are in `docs/reports/gauntlet/mac-semantic-review-stop-20261024`;
+original partial files remain in `/workspace/reviews/mac-semantic-resumed-20261024`.
+Do not retry that blocked review through another account, model or environment.
+No Mac source correction, native action or CI release was requested after the stop.
+Ordinary Mac gameplay remains unverified despite prior read-only AX acceptance.
 Bot objectiveR2 remains unqualified: the fresh review checkout is
 `/workspace/reviews/m5-objective-observability-r2-fresh-source` at4e9ef3c3;
 source-consistency negatives include wrong actor/target, objective transition and

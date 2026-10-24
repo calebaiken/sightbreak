@@ -15,8 +15,9 @@ full507-path composition and both178-method source runs verify, with three old
 Windows skips. The rejected optional reader remains separate. Independent native preflight22b28729 accepts742checks/0 in14.830052s, with
 source/UID/log/isolation/observed-cleanup scope. Root integrationb436a641 matches
 all507 candidate non-doc identities. One admitted Windows run40080238905/job120832097220 is active at fixedc324
-under release2d17a3ab. Ordinary input and living/settings/focus failures remain
-unresolved until actual independent review.
+under release2d17a3ab. Its living/settings producer failed late at reopened
+shutdown; full-match and independent raw reconstruction are still pending.
+Successful producer statuses do not establish component acceptance.
 
 Root completed strict fingerprint-type correction8da2add4, independently
 ACCEPTED SOURCE ONLY by3a0fcddb. All69 maintained plus10 original methods pass
@@ -24,8 +25,9 @@ both views, plus190 new independent cases. Original370 files/three outer records
 377-member archive remain exact. This fixes numeric masquerading as booleans in
 both hashed snapshots. The Linux V-Sync blocker persists; no R4/H1 result exists.
 
-Mac read-only d5277180 remains scoped VERIFIED, ordinary gameplay unverified;
-interrupted semantic-target work is preserved. Touch numeric/strict/full-cleanup
+Mac read-only d5277180 remains scoped VERIFIED, ordinary gameplay unverified.
+Semantic candidate a96a7ae5 has a partial independent file-identity defect finding;
+an automated safety flag interrupted that review. Source/native acceptance is held. Touch numeric/strict/full-cleanup
 FAIL remains binding. Bot objective and Windows reader corrections still require
 independent qualification. Exact branches, failures and next execution are in
 [NEXT_SESSION](../engineering/NEXT_SESSION.md).
