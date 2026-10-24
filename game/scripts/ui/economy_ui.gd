@@ -554,9 +554,12 @@ func _perform(path: String, payload := {}, message := "Transaction confirmed.", 
 func _send_transaction(path: String, payload: Dictionary, message: String, method: int, recovering: bool) -> Dictionary:
 	busy = true
 	_message("Waiting for server confirmation…")
+	# Capture any known item identity before awaiting HTTP: a concurrent refresh can
+	# remove a sold listing or consumed case. These are checks, never API payload fields.
+	var receipt_context := _receipt_context(path, payload)
 	var result := await api.request(path, method, payload)
 	busy = false
-	if not pending_transaction.is_empty() and not result.has("_error") and not _valid_receipt_result(path, result):
+	if not pending_transaction.is_empty() and not result.has("_error") and not _valid_receipt_result(path, payload, result, receipt_context):
 		result = {"_error": "The server's transaction confirmation was incomplete. Its original receipt is saved.", "_outcome": "unknown", "_uncertain": true}
 	if not pending_transaction.is_empty() and _receipt_resolved(result, recovering):
 		if transaction_journal.clear(pending_transaction) == OK:
@@ -594,15 +597,92 @@ func _receipt_resolved(result: Dictionary, recovering: bool) -> bool:
 		return false
 	return outcome in ["not_sent", "not_reached", "rejected"] and code not in [401, 403, 429]
 
-func _valid_receipt_result(path: String, result: Dictionary) -> bool:
+func _receipt_context(path: String, payload: Dictionary) -> Dictionary:
+	if path == "/cases/open":
+		for item in inventory:
+			if item is Dictionary and item.get("id") == payload.get("case_id"):
+				return {"case_definition": item.get("definition_id"), "collection": item.get("collection")}
+	elif path.begins_with("/market/") and path.ends_with("/buy"):
+		for listing in listings:
+			if listing is Dictionary and listing.get("id") == path.get_slice("/", 2) and listing.get("item") is Dictionary:
+				return {"item_id": listing.item.get("id")}
+	return {}
+
+## backend/app.py's item_json + the three remember() response contracts. A plausible
+## item ID alone is not confirmation. Old receipts do not echo listing/receipt IDs,
+## so restart validation cannot invent that association when no item context exists.
+func _valid_receipt_result(path: String, payload: Dictionary, result: Dictionary, context: Dictionary = {}) -> bool:
 	var item: Variant = result.get("item")
-	if not item is Dictionary or not item.get("id") is String or str(item.id).is_empty():
+	if not item is Dictionary or not _valid_receipt_item(item):
 		return false
 	if path == "/cases/open":
-		return _receipt_integer(result.get("roll"), 0, 9999) and result.get("table_version") is String and not str(result.table_version).is_empty()
+		if item.kind != "weapon_skin" or item.id in [payload.get("case_id"), payload.get("key_id")]:
+			return false
+		if context.has("case_definition"):
+			if not context.case_definition is String or not context.case_definition.ends_with("_case"):
+				return false
+			if item.definition_id != context.case_definition.trim_suffix("_case") + "_" + item.rarity.to_lower() or item.collection != context.collection:
+				return false
+		return _receipt_integer(result.get("roll"), 0, 9999) and _receipt_text(result.get("table_version"))
 	if not _receipt_integer(result.get("credits"), 0, 9007199254740991):
 		return false
-	return path == "/store/buy" or _receipt_integer(result.get("fee"), 0, 10000000)
+	if path == "/store/buy":
+		return item.definition_id == payload.get("definition_id") and item.kind == ("key" if item.definition_id == "key" else "case")
+	var parts := path.split("/")
+	if parts.size() != 4 or parts[1] != "market" or parts[2].is_empty() or parts[3] != "buy":
+		return false
+	if context.has("item_id") and item.id != context.item_id:
+		return false
+	var price: Variant = payload.get("expected_price")
+	return _receipt_integer(result.get("fee"), 0, int(price) if price != null else 10000000)
+
+func _valid_receipt_item(item: Dictionary) -> bool:
+	if not _receipt_uuid(item.get("id")):
+		return false
+	for field in ["definition_id", "rarity", "variant", "collection", "kind", "name"]:
+		if not _receipt_text(item.get(field)):
+			return false
+	if item.definition_id.length() > 100 or item.rarity.length() > 24 or item.variant.length() > 24:
+		return false
+	if item.kind not in ["key", "case", "weapon_skin"] or not _receipt_integer(item.get("pattern_seed"), 0, 2147483647):
+		return false
+	var wear: Variant = item.get("wear")
+	if not (wear is int or wear is float) or not is_finite(float(wear)) or float(wear) < 0.0 or float(wear) > 1.0:
+		return false
+	# Every successful purchase/mint is serialized after clearing reservations and
+	# before consumption. Replays return that original snapshot, not current inventory.
+	for field in ["reserved", "trade_eligible", "marketplace_eligible"]:
+		if not item.get(field) is bool or item[field] != (field != "reserved"):
+			return false
+	return _receipt_timestamp(item.get("acquired_at"))
+
+func _receipt_text(value: Variant) -> bool:
+	return value is String and not value.strip_edges().is_empty()
+
+func _receipt_uuid(value: Variant) -> bool:
+	if not value is String or value.length() != 36:
+		return false
+	for index in value.length():
+		if index in [8, 13, 18, 23]:
+			if value[index] != "-":
+				return false
+		elif value[index].to_lower() not in "0123456789abcdef":
+			return false
+	return true
+
+func _receipt_timestamp(value: Variant) -> bool:
+	if not value is String:
+		return false
+	# item_json emits datetime.isoformat() with a timezone; reject malformed dates
+	# without invoking Time's error-logging parser on untrusted response data.
+	var pattern := RegEx.create_from_string("^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])T([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\\.[0-9]{1,6})?(Z|[+-]([01][0-9]|2[0-3]):[0-5][0-9])$")
+	if pattern.search(value) == null:
+		return false
+	var year := int(value.substr(0, 4))
+	var month := int(value.substr(5, 2))
+	var day := int(value.substr(8, 2))
+	var days := [31, 29 if year % 4 == 0 and (year % 100 != 0 or year % 400 == 0) else 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+	return year > 0 and day <= days[month - 1]
 
 func _receipt_integer(value: Variant, minimum: int, maximum: int) -> bool:
 	return (value is int or value is float) and is_finite(float(value)) and float(value) == floor(float(value)) and float(value) >= minimum and float(value) <= maximum

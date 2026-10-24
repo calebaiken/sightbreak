@@ -1,6 +1,7 @@
 extends SceneTree
 const UI = preload("res://scripts/ui/economy_ui.gd")
 const FINISH = preload("res://scripts/ui/cosmetic_material.gd")
+const RECEIPTS = preload("res://tests/economy_receipt_fixtures.gd")
 var failures: Array[String] = []
 var checks := 0
 
@@ -13,10 +14,10 @@ class RecoveryAPI extends EconomyAPI:
 			if fail_next:
 				fail_next = false
 				return {"_error": "Simulated lost response after commit", "_uncertain": true}
-			return {"item": {"id": "already-committed-instance"}, "credits": 0}
+			return {"item": RECEIPTS.item(), "credits": 0}
 		match path:
 			"/me": return {"credits": 0}
-			"/inventory": return {"items": [{"id": "already-committed-instance"}]}
+			"/inventory": return {"items": [RECEIPTS.item()]}
 			"/catalog": return {}
 			"/loadout": return {"slots": {}}
 		return {}
@@ -53,7 +54,7 @@ func run() -> void:
 	check(wrong.has("_error") and fake.calls.size() == 1, "Recovery cannot cross accounts")
 	fake.player_id = "original-account"
 	var recovered: Dictionary = await ui._retry_pending()
-	check(recovered.item.id == "already-committed-instance", "Recovery uses server's previously committed instance")
+	check(recovered.item.id == RECEIPTS.ITEM_ID, "Recovery uses server's previously committed instance")
 	check(fake.calls.size() == 2 and fake.calls[0] == fake.calls[1], "Retry sends identical endpoint, method and original receipt payload")
 	check(ui.pending_transaction.is_empty() and not ui.retry_button.visible, "Confirmed recovery clears pending state")
 	check(ui.inventory.size() == 1, "Recovered ownership is refreshed from server")

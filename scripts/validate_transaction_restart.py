@@ -48,6 +48,14 @@ def run_case(exe: Path, root: Path, directory: Path, kind: str, boundary: str) -
     late = boundary in ("late_commit", "recovery_kill")
     token = "fixture-memory-only-credential"
     price = 10000000 if kind == "market" else 100
+    item = {"id": "c0000000-0000-4000-8000-000000000001",
+            "definition_id": "obsidian_common" if kind == "case" else "key",
+            "rarity": "Common", "pattern_seed": 123, "wear": 0.125, "variant": "standard",
+            "collection": "Obsidian" if kind == "case" else "Universal",
+            "kind": "weapon_skin" if kind == "case" else "key",
+            "name": "Obsidian / Graphite" if kind == "case" else "Collection key",
+            "reserved": False, "trade_eligible": True, "marketplace_eligible": True,
+            "acquired_at": "2026-10-24T08:00:00.123456+00:00"}
 
     def event(name, **fields):
         with event_lock, (directory / "timeline.jsonl").open("a", encoding="utf-8") as log:
@@ -70,7 +78,7 @@ def run_case(exe: Path, root: Path, directory: Path, kind: str, boundary: str) -
                 pass  # Expected: the first client is deliberately terminated.
 
         def do_GET(self):
-            self.respond({"items": [{"id": "one-authoritative-instance"}], "slots": {}, "credits": 10000000 - price})
+            self.respond({"items": [item], "slots": {}, "credits": 10000000 - price})
 
         def do_POST(self):
             nonlocal hold
@@ -108,7 +116,7 @@ def run_case(exe: Path, root: Path, directory: Path, kind: str, boundary: str) -
                         return
                     response = json.loads(old[1])
                 else:
-                    response = {"item": {"id": "one-authoritative-instance"}, "credits": 10000000 - price}
+                    response = {"item": item, "credits": 10000000 - price}
                     if kind == "case":
                         response.update(roll=0, table_version="1")
                     elif kind == "market":

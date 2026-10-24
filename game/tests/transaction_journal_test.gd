@@ -1,6 +1,7 @@
 extends SceneTree
 const UI = preload("res://scripts/ui/economy_ui.gd")
 const JOURNAL = preload("res://scripts/ui/transaction_journal.gd")
+const RECEIPTS = preload("res://tests/economy_receipt_fixtures.gd")
 var checks := 0
 var failures: Array[String] = []
 var receipt_path := "user://journal_test_%d.json" % OS.get_process_id()
@@ -95,7 +96,7 @@ func run() -> void:
 		api.token = "memory-only-again"
 		await ui._retry_pending()
 		check(not ui.pending_transaction.is_empty() and FileAccess.file_exists(receipt_path), "Retry failure %s preserves earlier uncertainty" % str(response))
-	api.reply = {"item": {"id": "committed-once"}, "credits": 0, "fee": 300000}
+	api.reply = {"item": RECEIPTS.item(), "credits": 0, "fee": 300000}
 	await ui._retry_pending()
 	check(ui.pending_transaction.is_empty() and not FileAccess.file_exists(receipt_path), "Authoritative confirmation clears both memory and disk")
 	for call in api.calls:
@@ -140,7 +141,7 @@ func run() -> void:
 	await ui._perform("/store/buy", {"idempotency_key": "handoff-k", "definition_id": "key"})
 	var other := make_ui()
 	var other_api := other.api as StubAPI
-	api.reply = {"item": {"id": "handoff-item"}, "credits": 0}
+	api.reply = {"item": RECEIPTS.item(), "credits": 0}
 	await ui._retry_pending()
 	var stale: Dictionary = await other._retry_pending()
 	check(stale.has("_error") and other_api.calls.is_empty(), "A stale claimant does not resend a resolved receipt")

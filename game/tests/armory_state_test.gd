@@ -15,6 +15,7 @@ extends SceneTree
 const UI = preload("res://scripts/ui/economy_ui.gd")
 const DESIGN = preload("res://scripts/ui/design_tokens.gd")
 const SAFE_AREA = preload("res://scripts/ui/safe_area.gd")
+const RECEIPTS = preload("res://tests/economy_receipt_fixtures.gd")
 const SCALES := [0.85, 1.0, 1.15, 1.3, 1.4]
 var failures: Array[String] = []
 var checks := 0
@@ -57,7 +58,18 @@ class FakeAPI extends EconomyAPI:
 			if path == "/store/buy" or path.ends_with("/buy"):
 				charges += 1
 				credits -= 150
-			result = {"item": {"id": "fixture-item"}, "credits": credits, "fee": 4, "roll": 0, "table_version": "1"}
+			var bought := RECEIPTS.item(str(payload.get("definition_id", "key")))
+			if path == "/cases/open":
+				for owned in world.get("inventory", {}).get("items", []):
+					if owned.id == payload.get("case_id"):
+						bought = RECEIPTS.item(str(owned.definition_id).trim_suffix("_case") + "_common")
+						bought.collection = owned.collection
+			elif path.begins_with("/market/"):
+				for listing in world.get("market", {}).get("listings", []):
+					if listing.id == path.get_slice("/", 2):
+						bought = listing.item.duplicate(true)
+						bought.merge({"reserved": false, "trade_eligible": true, "marketplace_eligible": true}, true)
+			result = {"item": bought, "credits": credits, "fee": 4, "roll": 0, "table_version": "1"}
 			if not key.is_empty():
 				applied[key] = result
 		if lose_response_once:
