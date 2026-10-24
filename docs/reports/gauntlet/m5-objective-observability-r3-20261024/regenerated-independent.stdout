@@ -1,0 +1,299 @@
+{"name": "complete_synthetic_positive", "expected_rejection": false, "accepted": true, "met_expectation": true, "input_sha256": "27f2e2c88e7010fb4b7769cb1e846e839f08354d1deb0bc63075e6fc58ce6f29", "baseline_sha256": "27f2e2c88e7010fb4b7769cb1e846e839f08354d1deb0bc63075e6fc58ce6f29", "changed": false, "wall_seconds": 7.1752075429976685, "detail": {"observable_contract_passed": true, "decision_rows": 202, "interaction_rows": 605, "movement_modes": {"navigate": 139, "interact": 63}, "perception_results": {"range": 37, "visibility": 740}, "scope": "current_source_reconstruction_not_historical_cause_or_G2_acceptance"}}
+{"name": "freshness_complete_decision_for_wrong_actor", "expected_rejection": true, "accepted": false, "met_expectation": true, "input_sha256": "3fd69ea2aef0622782d937c3264b1ac1678ca3e08f7c93b97bacd9043b3c72ac", "baseline_sha256": "27f2e2c88e7010fb4b7769cb1e846e839f08354d1deb0bc63075e6fc58ce6f29", "changed": true, "wall_seconds": 3.6622385699993174, "detail": "ValueError: freshness call describes another actor"}
+{"name": "direct_perception_selects_target_without_candidates", "expected_rejection": true, "accepted": false, "met_expectation": true, "input_sha256": "bbfcb9407d3e61f6a857dd523e5eca8eeb7cb98df5c6603dcd989cd9adad70f7", "baseline_sha256": "27f2e2c88e7010fb4b7769cb1e846e839f08354d1deb0bc63075e6fc58ce6f29", "changed": true, "wall_seconds": 3.317989140999998, "detail": "ValueError: direct perception selected an unperceived target"}
+{"name": "nearest_defuser_ignores_device_destination", "expected_rejection": true, "accepted": false, "met_expectation": true, "input_sha256": "9f211fd0612815c17c05decb8ffd3594830256c489b0e014e9bf7d9bd4ee965a", "baseline_sha256": "27f2e2c88e7010fb4b7769cb1e846e839f08354d1deb0bc63075e6fc58ce6f29", "changed": true, "wall_seconds": 3.3525805650024267, "detail": "ValueError: defuser destination contradicts device"}
+{"name": "decision_role_not_produced_by_source", "expected_rejection": true, "accepted": false, "met_expectation": true, "input_sha256": "e459d157f03b80efbec8499e12b72c226bc22cf4ea31bdc835dcbe439cfdd924", "baseline_sha256": "27f2e2c88e7010fb4b7769cb1e846e839f08354d1deb0bc63075e6fc58ce6f29", "changed": true, "wall_seconds": 2.5012228029991093, "detail": "ValueError: typed decision roles"}
+{"name": "fabricated_target_score_navigation_and_bot_memory", "expected_rejection": true, "accepted": true, "met_expectation": false, "input_sha256": "2c56a7de270cabc480aef47411f5544ca9731b07c497739eca3475524875210c", "baseline_sha256": "27f2e2c88e7010fb4b7769cb1e846e839f08354d1deb0bc63075e6fc58ce6f29", "changed": true, "wall_seconds": 6.484971836001932, "detail": {"observable_contract_passed": true, "decision_rows": 202, "interaction_rows": 605, "movement_modes": {"navigate": 139, "interact": 63}, "perception_results": {"range": 37, "eligible": 1, "visibility": 739}, "scope": "current_source_reconstruction_not_historical_cause_or_G2_acceptance"}}
+{"name": "in_range_in_fov_candidate_falsely_rejected_by_fov", "expected_rejection": true, "accepted": true, "met_expectation": false, "input_sha256": "901791fefffdb77decb6da237e6b7c19055e448b0178e42517c56afc203b334e", "baseline_sha256": "27f2e2c88e7010fb4b7769cb1e846e839f08354d1deb0bc63075e6fc58ce6f29", "changed": true, "wall_seconds": 3.2327765679983713, "detail": {"observable_contract_passed": true, "decision_rows": 202, "interaction_rows": 605, "movement_modes": {"navigate": 139, "interact": 63}, "perception_results": {"range": 37, "fov": 1, "visibility": 739}, "scope": "current_source_reconstruction_not_historical_cause_or_G2_acceptance"}}
+{"name": "forward_credits_added_without_kill_or_reward", "expected_rejection": true, "accepted": true, "met_expectation": false, "input_sha256": "1cf4396a801571a675ba1f0f8af93938962be2380c7f3f7ac56a7a765ae9b5b6", "baseline_sha256": "27f2e2c88e7010fb4b7769cb1e846e839f08354d1deb0bc63075e6fc58ce6f29", "changed": true, "wall_seconds": 3.048877443001402, "detail": {"observable_contract_passed": true, "decision_rows": 202, "interaction_rows": 605, "movement_modes": {"navigate": 139, "interact": 63}, "perception_results": {"range": 37, "visibility": 740}, "scope": "current_source_reconstruction_not_historical_cause_or_G2_acceptance"}}
+{"name": "forward_objective_plants_before_consumer_without_progress", "expected_rejection": true, "accepted": true, "met_expectation": false, "input_sha256": "ad83909b8dddde7200679e62ebaf6399a2c69456af893e85ef16d27dfb686435", "baseline_sha256": "27f2e2c88e7010fb4b7769cb1e846e839f08354d1deb0bc63075e6fc58ce6f29", "changed": true, "wall_seconds": 3.161364772997331, "detail": {"observable_contract_passed": true, "decision_rows": 202, "interaction_rows": 605, "movement_modes": {"navigate": 139, "interact": 63}, "perception_results": {"range": 37, "visibility": 740}, "scope": "current_source_reconstruction_not_historical_cause_or_G2_acceptance"}}
+{"name": "forward_progress_injected_then_correctly_cleared", "expected_rejection": true, "accepted": true, "met_expectation": false, "input_sha256": "32430965edf806bdd9118e75b776f115261d326c4728bda2c17a39e26bc3fc00", "baseline_sha256": "27f2e2c88e7010fb4b7769cb1e846e839f08354d1deb0bc63075e6fc58ce6f29", "changed": true, "wall_seconds": 3.1318137270027364, "detail": {"observable_contract_passed": true, "decision_rows": 202, "interaction_rows": 605, "movement_modes": {"navigate": 139, "interact": 63}, "perception_results": {"range": 37, "visibility": 740}, "scope": "current_source_reconstruction_not_historical_cause_or_G2_acceptance"}}
+{"name": "isolated_control_stationary_actor_teleports", "expected_rejection": true, "accepted": true, "met_expectation": false, "input_sha256": "27a7778a9ba3ccc0e950096be5beba0fa4ab64b08320c1bd50ff04fdb4b6ff87", "baseline_sha256": "27f2e2c88e7010fb4b7769cb1e846e839f08354d1deb0bc63075e6fc58ce6f29", "changed": true, "wall_seconds": 3.5087010780007404, "detail": {"observable_contract_passed": true, "decision_rows": 202, "interaction_rows": 605, "movement_modes": {"navigate": 139, "interact": 63}, "perception_results": {"range": 37, "visibility": 740}, "scope": "current_source_reconstruction_not_historical_cause_or_G2_acceptance"}}
+{"name": "isolated_control_match_rng_changes_without_bot_call", "expected_rejection": true, "accepted": true, "met_expectation": false, "input_sha256": "c45482b849ebc54b7cf8a766475e7c0f546dd2721ac3ce7ab9689bfde5971d25", "baseline_sha256": "27f2e2c88e7010fb4b7769cb1e846e839f08354d1deb0bc63075e6fc58ce6f29", "changed": true, "wall_seconds": 3.1810315799993987, "detail": {"observable_contract_passed": true, "decision_rows": 202, "interaction_rows": 605, "movement_modes": {"navigate": 139, "interact": 63}, "perception_results": {"range": 37, "visibility": 740}, "scope": "current_source_reconstruction_not_historical_cause_or_G2_acceptance"}}
+{"name": "forward_action_phase_reassigns_actor_team", "expected_rejection": true, "accepted": true, "met_expectation": false, "input_sha256": "bbdb96ec3a13bfe873b60f43c3485e71cd78770e11af8487fe75587b3dab5590", "baseline_sha256": "27f2e2c88e7010fb4b7769cb1e846e839f08354d1deb0bc63075e6fc58ce6f29", "changed": true, "wall_seconds": 3.5713429110001016, "detail": {"observable_contract_passed": true, "decision_rows": 202, "interaction_rows": 605, "movement_modes": {"navigate": 139, "interact": 63}, "perception_results": {"range": 37, "visibility": 740}, "scope": "current_source_reconstruction_not_historical_cause_or_G2_acceptance"}}
+{
+  "source": "dce89495d04c9d3fefece0f8c7929e2e01b8e7df",
+  "fixture": "/workspace/sightbreak-objective-observability-r3",
+  "cpu_affinity": [
+    4
+  ],
+  "native_executed": false,
+  "distinct_inputs": 13,
+  "positive_accepted": true,
+  "real_mutations": 12,
+  "mutations_rejected": 4,
+  "false_passes": [
+    "fabricated_target_score_navigation_and_bot_memory",
+    "in_range_in_fov_candidate_falsely_rejected_by_fov",
+    "forward_credits_added_without_kill_or_reward",
+    "forward_objective_plants_before_consumer_without_progress",
+    "forward_progress_injected_then_correctly_cleared",
+    "isolated_control_stationary_actor_teleports",
+    "isolated_control_match_rng_changes_without_bot_call",
+    "forward_action_phase_reassigns_actor_team"
+  ],
+  "results": [
+    {
+      "name": "complete_synthetic_positive",
+      "expected_rejection": false,
+      "accepted": true,
+      "met_expectation": true,
+      "input_sha256": "27f2e2c88e7010fb4b7769cb1e846e839f08354d1deb0bc63075e6fc58ce6f29",
+      "baseline_sha256": "27f2e2c88e7010fb4b7769cb1e846e839f08354d1deb0bc63075e6fc58ce6f29",
+      "changed": false,
+      "wall_seconds": 7.1752075429976685,
+      "detail": {
+        "observable_contract_passed": true,
+        "decision_rows": 202,
+        "interaction_rows": 605,
+        "movement_modes": {
+          "navigate": 139,
+          "interact": 63
+        },
+        "perception_results": {
+          "range": 37,
+          "visibility": 740
+        },
+        "scope": "current_source_reconstruction_not_historical_cause_or_G2_acceptance"
+      }
+    },
+    {
+      "name": "freshness_complete_decision_for_wrong_actor",
+      "expected_rejection": true,
+      "accepted": false,
+      "met_expectation": true,
+      "input_sha256": "3fd69ea2aef0622782d937c3264b1ac1678ca3e08f7c93b97bacd9043b3c72ac",
+      "baseline_sha256": "27f2e2c88e7010fb4b7769cb1e846e839f08354d1deb0bc63075e6fc58ce6f29",
+      "changed": true,
+      "wall_seconds": 3.6622385699993174,
+      "detail": "ValueError: freshness call describes another actor"
+    },
+    {
+      "name": "direct_perception_selects_target_without_candidates",
+      "expected_rejection": true,
+      "accepted": false,
+      "met_expectation": true,
+      "input_sha256": "bbfcb9407d3e61f6a857dd523e5eca8eeb7cb98df5c6603dcd989cd9adad70f7",
+      "baseline_sha256": "27f2e2c88e7010fb4b7769cb1e846e839f08354d1deb0bc63075e6fc58ce6f29",
+      "changed": true,
+      "wall_seconds": 3.317989140999998,
+      "detail": "ValueError: direct perception selected an unperceived target"
+    },
+    {
+      "name": "nearest_defuser_ignores_device_destination",
+      "expected_rejection": true,
+      "accepted": false,
+      "met_expectation": true,
+      "input_sha256": "9f211fd0612815c17c05decb8ffd3594830256c489b0e014e9bf7d9bd4ee965a",
+      "baseline_sha256": "27f2e2c88e7010fb4b7769cb1e846e839f08354d1deb0bc63075e6fc58ce6f29",
+      "changed": true,
+      "wall_seconds": 3.3525805650024267,
+      "detail": "ValueError: defuser destination contradicts device"
+    },
+    {
+      "name": "decision_role_not_produced_by_source",
+      "expected_rejection": true,
+      "accepted": false,
+      "met_expectation": true,
+      "input_sha256": "e459d157f03b80efbec8499e12b72c226bc22cf4ea31bdc835dcbe439cfdd924",
+      "baseline_sha256": "27f2e2c88e7010fb4b7769cb1e846e839f08354d1deb0bc63075e6fc58ce6f29",
+      "changed": true,
+      "wall_seconds": 2.5012228029991093,
+      "detail": "ValueError: typed decision roles"
+    },
+    {
+      "name": "fabricated_target_score_navigation_and_bot_memory",
+      "expected_rejection": true,
+      "accepted": true,
+      "met_expectation": false,
+      "input_sha256": "2c56a7de270cabc480aef47411f5544ca9731b07c497739eca3475524875210c",
+      "baseline_sha256": "27f2e2c88e7010fb4b7769cb1e846e839f08354d1deb0bc63075e6fc58ce6f29",
+      "changed": true,
+      "wall_seconds": 6.484971836001932,
+      "detail": {
+        "observable_contract_passed": true,
+        "decision_rows": 202,
+        "interaction_rows": 605,
+        "movement_modes": {
+          "navigate": 139,
+          "interact": 63
+        },
+        "perception_results": {
+          "range": 37,
+          "eligible": 1,
+          "visibility": 739
+        },
+        "scope": "current_source_reconstruction_not_historical_cause_or_G2_acceptance"
+      }
+    },
+    {
+      "name": "in_range_in_fov_candidate_falsely_rejected_by_fov",
+      "expected_rejection": true,
+      "accepted": true,
+      "met_expectation": false,
+      "input_sha256": "901791fefffdb77decb6da237e6b7c19055e448b0178e42517c56afc203b334e",
+      "baseline_sha256": "27f2e2c88e7010fb4b7769cb1e846e839f08354d1deb0bc63075e6fc58ce6f29",
+      "changed": true,
+      "wall_seconds": 3.2327765679983713,
+      "detail": {
+        "observable_contract_passed": true,
+        "decision_rows": 202,
+        "interaction_rows": 605,
+        "movement_modes": {
+          "navigate": 139,
+          "interact": 63
+        },
+        "perception_results": {
+          "range": 37,
+          "fov": 1,
+          "visibility": 739
+        },
+        "scope": "current_source_reconstruction_not_historical_cause_or_G2_acceptance"
+      }
+    },
+    {
+      "name": "forward_credits_added_without_kill_or_reward",
+      "expected_rejection": true,
+      "accepted": true,
+      "met_expectation": false,
+      "input_sha256": "1cf4396a801571a675ba1f0f8af93938962be2380c7f3f7ac56a7a765ae9b5b6",
+      "baseline_sha256": "27f2e2c88e7010fb4b7769cb1e846e839f08354d1deb0bc63075e6fc58ce6f29",
+      "changed": true,
+      "wall_seconds": 3.048877443001402,
+      "detail": {
+        "observable_contract_passed": true,
+        "decision_rows": 202,
+        "interaction_rows": 605,
+        "movement_modes": {
+          "navigate": 139,
+          "interact": 63
+        },
+        "perception_results": {
+          "range": 37,
+          "visibility": 740
+        },
+        "scope": "current_source_reconstruction_not_historical_cause_or_G2_acceptance"
+      }
+    },
+    {
+      "name": "forward_objective_plants_before_consumer_without_progress",
+      "expected_rejection": true,
+      "accepted": true,
+      "met_expectation": false,
+      "input_sha256": "ad83909b8dddde7200679e62ebaf6399a2c69456af893e85ef16d27dfb686435",
+      "baseline_sha256": "27f2e2c88e7010fb4b7769cb1e846e839f08354d1deb0bc63075e6fc58ce6f29",
+      "changed": true,
+      "wall_seconds": 3.161364772997331,
+      "detail": {
+        "observable_contract_passed": true,
+        "decision_rows": 202,
+        "interaction_rows": 605,
+        "movement_modes": {
+          "navigate": 139,
+          "interact": 63
+        },
+        "perception_results": {
+          "range": 37,
+          "visibility": 740
+        },
+        "scope": "current_source_reconstruction_not_historical_cause_or_G2_acceptance"
+      }
+    },
+    {
+      "name": "forward_progress_injected_then_correctly_cleared",
+      "expected_rejection": true,
+      "accepted": true,
+      "met_expectation": false,
+      "input_sha256": "32430965edf806bdd9118e75b776f115261d326c4728bda2c17a39e26bc3fc00",
+      "baseline_sha256": "27f2e2c88e7010fb4b7769cb1e846e839f08354d1deb0bc63075e6fc58ce6f29",
+      "changed": true,
+      "wall_seconds": 3.1318137270027364,
+      "detail": {
+        "observable_contract_passed": true,
+        "decision_rows": 202,
+        "interaction_rows": 605,
+        "movement_modes": {
+          "navigate": 139,
+          "interact": 63
+        },
+        "perception_results": {
+          "range": 37,
+          "visibility": 740
+        },
+        "scope": "current_source_reconstruction_not_historical_cause_or_G2_acceptance"
+      }
+    },
+    {
+      "name": "isolated_control_stationary_actor_teleports",
+      "expected_rejection": true,
+      "accepted": true,
+      "met_expectation": false,
+      "input_sha256": "27a7778a9ba3ccc0e950096be5beba0fa4ab64b08320c1bd50ff04fdb4b6ff87",
+      "baseline_sha256": "27f2e2c88e7010fb4b7769cb1e846e839f08354d1deb0bc63075e6fc58ce6f29",
+      "changed": true,
+      "wall_seconds": 3.5087010780007404,
+      "detail": {
+        "observable_contract_passed": true,
+        "decision_rows": 202,
+        "interaction_rows": 605,
+        "movement_modes": {
+          "navigate": 139,
+          "interact": 63
+        },
+        "perception_results": {
+          "range": 37,
+          "visibility": 740
+        },
+        "scope": "current_source_reconstruction_not_historical_cause_or_G2_acceptance"
+      }
+    },
+    {
+      "name": "isolated_control_match_rng_changes_without_bot_call",
+      "expected_rejection": true,
+      "accepted": true,
+      "met_expectation": false,
+      "input_sha256": "c45482b849ebc54b7cf8a766475e7c0f546dd2721ac3ce7ab9689bfde5971d25",
+      "baseline_sha256": "27f2e2c88e7010fb4b7769cb1e846e839f08354d1deb0bc63075e6fc58ce6f29",
+      "changed": true,
+      "wall_seconds": 3.1810315799993987,
+      "detail": {
+        "observable_contract_passed": true,
+        "decision_rows": 202,
+        "interaction_rows": 605,
+        "movement_modes": {
+          "navigate": 139,
+          "interact": 63
+        },
+        "perception_results": {
+          "range": 37,
+          "visibility": 740
+        },
+        "scope": "current_source_reconstruction_not_historical_cause_or_G2_acceptance"
+      }
+    },
+    {
+      "name": "forward_action_phase_reassigns_actor_team",
+      "expected_rejection": true,
+      "accepted": true,
+      "met_expectation": false,
+      "input_sha256": "bbdb96ec3a13bfe873b60f43c3485e71cd78770e11af8487fe75587b3dab5590",
+      "baseline_sha256": "27f2e2c88e7010fb4b7769cb1e846e839f08354d1deb0bc63075e6fc58ce6f29",
+      "changed": true,
+      "wall_seconds": 3.5713429110001016,
+      "detail": {
+        "observable_contract_passed": true,
+        "decision_rows": 202,
+        "interaction_rows": 605,
+        "movement_modes": {
+          "navigate": 139,
+          "interact": 63
+        },
+        "perception_results": {
+          "range": 37,
+          "visibility": 740
+        },
+        "scope": "current_source_reconstruction_not_historical_cause_or_G2_acceptance"
+      }
+    }
+  ]
+}

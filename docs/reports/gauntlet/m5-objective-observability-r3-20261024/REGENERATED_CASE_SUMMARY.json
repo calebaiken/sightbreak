@@ -1,0 +1,202 @@
+{
+  "initial_summary_helper_error": "First read attempted membership test on JSON integer lines and exited TypeError after printing all13case facts; no verifier execution/result was affected. Corrected to dictionaries only.",
+  "cases": [
+    {
+      "name": "complete_synthetic_positive",
+      "accepted": true,
+      "met_expectation": true,
+      "detail": {
+        "observable_contract_passed": true,
+        "decision_rows": 202,
+        "interaction_rows": 605,
+        "movement_modes": {
+          "navigate": 139,
+          "interact": 63
+        },
+        "perception_results": {
+          "range": 37,
+          "visibility": 740
+        },
+        "scope": "current_source_reconstruction_not_historical_cause_or_G2_acceptance"
+      }
+    },
+    {
+      "name": "freshness_complete_decision_for_wrong_actor",
+      "accepted": false,
+      "met_expectation": true,
+      "detail": "ValueError: freshness call describes another actor"
+    },
+    {
+      "name": "direct_perception_selects_target_without_candidates",
+      "accepted": false,
+      "met_expectation": true,
+      "detail": "ValueError: direct perception selected an unperceived target"
+    },
+    {
+      "name": "nearest_defuser_ignores_device_destination",
+      "accepted": false,
+      "met_expectation": true,
+      "detail": "ValueError: defuser destination contradicts device"
+    },
+    {
+      "name": "decision_role_not_produced_by_source",
+      "accepted": false,
+      "met_expectation": true,
+      "detail": "ValueError: typed decision roles"
+    },
+    {
+      "name": "fabricated_target_score_navigation_and_bot_memory",
+      "accepted": true,
+      "met_expectation": false,
+      "detail": {
+        "observable_contract_passed": true,
+        "decision_rows": 202,
+        "interaction_rows": 605,
+        "movement_modes": {
+          "navigate": 139,
+          "interact": 63
+        },
+        "perception_results": {
+          "range": 37,
+          "eligible": 1,
+          "visibility": 739
+        },
+        "scope": "current_source_reconstruction_not_historical_cause_or_G2_acceptance"
+      }
+    },
+    {
+      "name": "in_range_in_fov_candidate_falsely_rejected_by_fov",
+      "accepted": true,
+      "met_expectation": false,
+      "detail": {
+        "observable_contract_passed": true,
+        "decision_rows": 202,
+        "interaction_rows": 605,
+        "movement_modes": {
+          "navigate": 139,
+          "interact": 63
+        },
+        "perception_results": {
+          "range": 37,
+          "fov": 1,
+          "visibility": 739
+        },
+        "scope": "current_source_reconstruction_not_historical_cause_or_G2_acceptance"
+      }
+    },
+    {
+      "name": "forward_credits_added_without_kill_or_reward",
+      "accepted": true,
+      "met_expectation": false,
+      "detail": {
+        "observable_contract_passed": true,
+        "decision_rows": 202,
+        "interaction_rows": 605,
+        "movement_modes": {
+          "navigate": 139,
+          "interact": 63
+        },
+        "perception_results": {
+          "range": 37,
+          "visibility": 740
+        },
+        "scope": "current_source_reconstruction_not_historical_cause_or_G2_acceptance"
+      }
+    },
+    {
+      "name": "forward_objective_plants_before_consumer_without_progress",
+      "accepted": true,
+      "met_expectation": false,
+      "detail": {
+        "observable_contract_passed": true,
+        "decision_rows": 202,
+        "interaction_rows": 605,
+        "movement_modes": {
+          "navigate": 139,
+          "interact": 63
+        },
+        "perception_results": {
+          "range": 37,
+          "visibility": 740
+        },
+        "scope": "current_source_reconstruction_not_historical_cause_or_G2_acceptance"
+      }
+    },
+    {
+      "name": "forward_progress_injected_then_correctly_cleared",
+      "accepted": true,
+      "met_expectation": false,
+      "detail": {
+        "observable_contract_passed": true,
+        "decision_rows": 202,
+        "interaction_rows": 605,
+        "movement_modes": {
+          "navigate": 139,
+          "interact": 63
+        },
+        "perception_results": {
+          "range": 37,
+          "visibility": 740
+        },
+        "scope": "current_source_reconstruction_not_historical_cause_or_G2_acceptance"
+      }
+    },
+    {
+      "name": "isolated_control_stationary_actor_teleports",
+      "accepted": true,
+      "met_expectation": false,
+      "detail": {
+        "observable_contract_passed": true,
+        "decision_rows": 202,
+        "interaction_rows": 605,
+        "movement_modes": {
+          "navigate": 139,
+          "interact": 63
+        },
+        "perception_results": {
+          "range": 37,
+          "visibility": 740
+        },
+        "scope": "current_source_reconstruction_not_historical_cause_or_G2_acceptance"
+      }
+    },
+    {
+      "name": "isolated_control_match_rng_changes_without_bot_call",
+      "accepted": true,
+      "met_expectation": false,
+      "detail": {
+        "observable_contract_passed": true,
+        "decision_rows": 202,
+        "interaction_rows": 605,
+        "movement_modes": {
+          "navigate": 139,
+          "interact": 63
+        },
+        "perception_results": {
+          "range": 37,
+          "visibility": 740
+        },
+        "scope": "current_source_reconstruction_not_historical_cause_or_G2_acceptance"
+      }
+    },
+    {
+      "name": "forward_action_phase_reassigns_actor_team",
+      "accepted": true,
+      "met_expectation": false,
+      "detail": {
+        "observable_contract_passed": true,
+        "decision_rows": 202,
+        "interaction_rows": 605,
+        "movement_modes": {
+          "navigate": 139,
+          "interact": 63
+        },
+        "perception_results": {
+          "range": 37,
+          "visibility": 740
+        },
+        "scope": "current_source_reconstruction_not_historical_cause_or_G2_acceptance"
+      }
+    }
+  ]
+}
