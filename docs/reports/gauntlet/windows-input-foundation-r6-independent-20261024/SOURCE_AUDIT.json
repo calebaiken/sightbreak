@@ -1,0 +1,3670 @@
+{
+  "source": "6ef4d145ab70ed943c54ec26865e0c884b64b1a9",
+  "base": "8b52601ca29d807f54ed318114d10d849c267e83",
+  "paths": 522,
+  "protected": 520,
+  "changes": [
+    "scripts/analyze_input_consumption.py",
+    "scripts/test_input_consumption_intervals.py"
+  ],
+  "old_methods": 149,
+  "old_assert_calls_all_files": 331,
+  "old_reader_byte_erasure_exact": true,
+  "game_tree_exact": true,
+  "members": [
+    {
+      "path": ".claude/agents/gameplay-builder.md",
+      "mode": "100644",
+      "blob": "ec6cc8aefa20fcc2acdc78c695bbc012844b0651",
+      "bytes": 1552,
+      "sha256": "4ecfc8650ee756148fcf89440477a3c5f208eabf8f6468c83bb84b86fb806741"
+    },
+    {
+      "path": ".claude/agents/harsh-critic.md",
+      "mode": "100644",
+      "blob": "73d94d50fb382c369149b03598a24286207cb991",
+      "bytes": 1956,
+      "sha256": "51cab9d460bc639efebec1adcd5dd256f61939b8c7985d673112904bc84f3b1c"
+    },
+    {
+      "path": ".claude/agents/integration-reviewer.md",
+      "mode": "100644",
+      "blob": "bf0b2d562717a8fe6a69ee31b6f609488e9a70ee",
+      "bytes": 1892,
+      "sha256": "8df1ef8b6dc8ad78af7ae05890dfcb3200b2f9db19d94c78602515870a7e7280"
+    },
+    {
+      "path": ".claude/agents/qa-regression.md",
+      "mode": "100644",
+      "blob": "119512c09e5afb03fdfcbe78d2abed00ce5be265",
+      "bytes": 1764,
+      "sha256": "77281e785e7d39aeb93ee8ffae1138453f14599602c501dc1bacafa0b7caf19e"
+    },
+    {
+      "path": ".claude/agents/visual-ux-builder.md",
+      "mode": "100644",
+      "blob": "56b74d0caa04505f0e5a6402079eb671ae77ddb0",
+      "bytes": 1634,
+      "sha256": "9c0387e4de69a682b8f7a7100a88ecba357bd5915e375ec6af352b5761b9deea"
+    },
+    {
+      "path": ".claude/settings.json",
+      "mode": "100644",
+      "blob": "042ef7aa8fa3e75559d33b4fda2aefd16c0960c7",
+      "bytes": 640,
+      "sha256": "627790ca6e751154d18f508c0599f5b1caeafa4ee09389345a33fbac9b24a681"
+    },
+    {
+      "path": ".claude/skills/gauntlet-loop/LICENSE",
+      "mode": "100644",
+      "blob": "da6ab6cc8f333d7e89a99812866df8f24374d47c",
+      "bytes": 18657,
+      "sha256": "9ba9550ad48438d0836ddab3da480b3b69ffa0aac7b7878b5a0039e7ab429411"
+    },
+    {
+      "path": ".claude/skills/gauntlet-loop/PROVENANCE.md",
+      "mode": "100644",
+      "blob": "6312604a6ded875aa3e910696e023d227b1f4fec",
+      "bytes": 1359,
+      "sha256": "027d0e7d3e1757749f5023522f42de144143ef9517b5bc9d53e488468e55ccf9"
+    },
+    {
+      "path": ".claude/skills/gauntlet-loop/SKILL.md",
+      "mode": "100644",
+      "blob": "5c33caa59ceeb553a064b952054a0112162e5a92",
+      "bytes": 8152,
+      "sha256": "6a345a43bf58966c83d50b6caf8be34a3fee725fb3c75778ed33fa206352b835"
+    },
+    {
+      "path": ".claude/skills/no-ai-slop/LICENSE",
+      "mode": "100644",
+      "blob": "644ebee1944d0e7d03c66a25977ff0a8a8e1c7ae",
+      "bytes": 1067,
+      "sha256": "b7a7fe370cc4c9e974528c7cea7841cf8ac886bc9ed947edb11b289441fba4a8"
+    },
+    {
+      "path": ".claude/skills/no-ai-slop/PROVENANCE.md",
+      "mode": "100644",
+      "blob": "82cc932acebb923124dd418981b77702f0ad9dc8",
+      "bytes": 1430,
+      "sha256": "8333dc9333bfe481cf5e5415f84043b5dd1e090fcb72607b32b4e13bb82ead43"
+    },
+    {
+      "path": ".claude/skills/no-ai-slop/SKILL.md",
+      "mode": "100644",
+      "blob": "e2008aa08d688846b0373b83d7c3d33b85eaabdd",
+      "bytes": 10853,
+      "sha256": "992b365f51a2f62cf4c1c5ed22049a9ee551dfea677550c1a72b371c0ceadd62"
+    },
+    {
+      "path": ".claude/skills/no-ai-slop/eval.md",
+      "mode": "100644",
+      "blob": "e912b3e9246ded24b14116682c23702a4d083dc7",
+      "bytes": 3214,
+      "sha256": "8ad8d83ed1abe7fc054ad74966bfca64fc182bc71f59d701b24b962c39d11ad7"
+    },
+    {
+      "path": ".claude/skills/sightbreak-gauntlet/SKILL.md",
+      "mode": "100644",
+      "blob": "94f9b506605c15935eed4d7ecdc32d857be180f6",
+      "bytes": 4145,
+      "sha256": "cebaffde27e5dab4767c6e8743d1db85092adea1b1ba120a39a41e31018858e5"
+    },
+    {
+      "path": ".gitattributes",
+      "mode": "100644",
+      "blob": "b2df72f173e03235a2b9130cdf826980910e70fc",
+      "bytes": 406,
+      "sha256": "ddc7189b61a3b888e30aa40d239439a3df343c63fe270c702afc790112a69ca0"
+    },
+    {
+      "path": ".github/workflows/desktop-alpha.yml",
+      "mode": "100644",
+      "blob": "eb24a4a19ca66aaa81ff3fe6d090a48d94b6ee2d",
+      "bytes": 18248,
+      "sha256": "5b662868c7cdc80f77ebb8c6767ff1d6b983a81870e668effabe95bd1cdde075"
+    },
+    {
+      "path": ".github/workflows/engineering.yml",
+      "mode": "100644",
+      "blob": "789d240fbf93d0005509268deb4dd775a0ad5a8d",
+      "bytes": 1695,
+      "sha256": "ace5b05ff5735b7fcee17708e037036f7a917a554772c27843c906c40b0ca976"
+    },
+    {
+      "path": ".github/workflows/macos-render-diagnostic.yml",
+      "mode": "100644",
+      "blob": "2790f4b000da6148c9c7983cd9c7621e710e2412",
+      "bytes": 3649,
+      "sha256": "976805ea86041d9659566d8627aeb150b4d8af49ce87ee6dcbb4b51d660a0e88"
+    },
+    {
+      "path": ".github/workflows/market-refresh-pure.yml",
+      "mode": "100644",
+      "blob": "a264bdaf701cd42e5e4273528f0835371b6a7bcc",
+      "bytes": 1226,
+      "sha256": "06a6b37a85756af4bd0f62c78ef121a01f999ea089a7758631049b5e3268b27b"
+    },
+    {
+      "path": ".github/workflows/three-agent-artifacts.yml",
+      "mode": "100644",
+      "blob": "1d838e522a5397474ddf75d9fc4e144607213cf0",
+      "bytes": 1496,
+      "sha256": "215add9dffbbb9c578094ee810253bdce10bf000c966e775a5cccc9f32447539"
+    },
+    {
+      "path": ".gitignore",
+      "mode": "100644",
+      "blob": "2656be372697f84bda233de21b650d9d8308026c",
+      "bytes": 136,
+      "sha256": "4efd3a60bff2e667e0c60b30bea5be4c19386ad1492d7ea973cc2e7e2e814baa"
+    },
+    {
+      "path": "AGENTS.md",
+      "mode": "100644",
+      "blob": "418002deb671a28fa8f1d08c4af554b3e16f0bf6",
+      "bytes": 3897,
+      "sha256": "d859151211a8a70fc39f1586b0a4e47779f88bdb777b54381b6ace918a9f778a"
+    },
+    {
+      "path": "CLAUDE.md",
+      "mode": "100644",
+      "blob": "407c119656bae5701b333ba3e99fe7bdae19eaf4",
+      "bytes": 3397,
+      "sha256": "e60b37c1ee13b5032ad27ce5fd295704bcd77f3fb5d36081d79010e0078b16d1"
+    },
+    {
+      "path": "README.md",
+      "mode": "100644",
+      "blob": "657b11a8ee09e6e1ab111d76e845764600580dfd",
+      "bytes": 12766,
+      "sha256": "606cc37d4ce5f0fdee03c691c32d04088f585dc2be355ee12026373fb4c3aa2f"
+    },
+    {
+      "path": "backend/app.py",
+      "mode": "100644",
+      "blob": "bb15f054d622fc4f6164248a2f4453d20a3e7fff",
+      "bytes": 29815,
+      "sha256": "478440d35840f2a60dad08793b73ec1aa983ce5b5cc2414445cf78f79ea19549"
+    },
+    {
+      "path": "backend/bridge_fixture.py",
+      "mode": "100644",
+      "blob": "b8ff2aebebb3bb2a2750c2b12284c25606962926",
+      "bytes": 3702,
+      "sha256": "ae889701f38f8d4674d91ced0b42184e0870eda56d5efcacc966e446fe24557d"
+    },
+    {
+      "path": "backend/config/economy.json",
+      "mode": "100644",
+      "blob": "fe7f8e0c17cbae4ecd5177835de5e0a06db5bfa0",
+      "bytes": 604,
+      "sha256": "c019cc326b1f986f4b550d5f2d02e8adc133551f46ae470e93f28e81f2aec900"
+    },
+    {
+      "path": "backend/config/simulation-baseline.json",
+      "mode": "100644",
+      "blob": "0e3eb68eeb28e9583d1b4405c0ba20fe194ad252",
+      "bytes": 1440,
+      "sha256": "64bb3eaef083cac8b00ba84bbb608036156bcedae06cc32bfe454d250f813951"
+    },
+    {
+      "path": "backend/dev-api.sh",
+      "mode": "100755",
+      "blob": "8bb7360a131bab2ee70319879b0bb5b2ea53cd99",
+      "bytes": 960,
+      "sha256": "a8f885fc87fd495d467897b136b066816065bf24d2bb88eae11c7b579b7cff40"
+    },
+    {
+      "path": "backend/dev-db.sh",
+      "mode": "100755",
+      "blob": "d3942005473723a2aa1362f78b028217661ff606",
+      "bytes": 715,
+      "sha256": "94c7274e1d2408de85eb4584e7cd500a9291692b2e74b38d48a782f3e2900fc1"
+    },
+    {
+      "path": "backend/migrate.py",
+      "mode": "100644",
+      "blob": "4a7489172c94077e79df0b02cf19f80b9fe55170",
+      "bytes": 474,
+      "sha256": "a0a777c16a8e24bb3aed10f9172ef4c9ff00b0fb11bdd36e5afda4356eb9057a"
+    },
+    {
+      "path": "backend/migrations/001_integrity.sql",
+      "mode": "100644",
+      "blob": "7aaac12f4d22d4b9d4698c4e6ab9ef401a9b1e77",
+      "bytes": 867,
+      "sha256": "5cc44b7f5741c03fe789fe511d89f3078403b13c3c449fe7c48299efeba2d3fc"
+    },
+    {
+      "path": "backend/migrations/002_game_tickets.sql",
+      "mode": "100644",
+      "blob": "c37f018b9b536f96940bcfc7cad83329997c57f0",
+      "bytes": 604,
+      "sha256": "512164b2c24b8b4a9fe9cddd6f47b3b30c00690589d003b3fb056287b66fd8eb"
+    },
+    {
+      "path": "backend/migrations/003_loadouts.sql",
+      "mode": "100644",
+      "blob": "9e70fd0529d3aaaa62e31346175297114ab86cea",
+      "bytes": 301,
+      "sha256": "4a112a8624560448c883ccc68471f0cdd70b86ea740393dcee1e0a3928a64b90"
+    },
+    {
+      "path": "backend/migrations/004_market_index.sql",
+      "mode": "100644",
+      "blob": "c8bb739299510670c665ba687598d7a891608051",
+      "bytes": 253,
+      "sha256": "5f07aa686d3b8afee2c34263f5c85ab97579dad63298fe5343fa06ccf7806dc0"
+    },
+    {
+      "path": "backend/models.py",
+      "mode": "100644",
+      "blob": "8dc03d668a696f889d89b71c07602b02593befaa",
+      "bytes": 5710,
+      "sha256": "06833d10fa0b0764e9f24221e61b61868c4ca7c75aca60aca090cdfc62264c03"
+    },
+    {
+      "path": "backend/pyproject.toml",
+      "mode": "100644",
+      "blob": "2069a235656320af83545cd56c57d55a99355ef5",
+      "bytes": 322,
+      "sha256": "d36318f38cf14ddc4c7acad1a1d0dddfc00edfebb22b11f5cb757916f27ed27d"
+    },
+    {
+      "path": "backend/simulate.py",
+      "mode": "100644",
+      "blob": "401b400d97e1b472629975c27fc64d67e76d4984",
+      "bytes": 4751,
+      "sha256": "e5d492ed94b55030d9d1c9786e568ceba564a0f54d61aed0a7013a5a31f62d4f"
+    },
+    {
+      "path": "backend/tests/test_economy.py",
+      "mode": "100644",
+      "blob": "2214ba53daec34713c1535aae5f194661e4b39bf",
+      "bytes": 34533,
+      "sha256": "0deead5a97d515650134cbe3a1f7eca497eff45facdf69a099ac221585a6ace3"
+    },
+    {
+      "path": "backend/uv.lock",
+      "mode": "100644",
+      "blob": "cc63c8426301a44a0b13d82339b1177cd0f10b90",
+      "bytes": 122287,
+      "sha256": "2119d77cf759dd11a184feda49f8ac791459d76fa76127889a9415cb28060a5c"
+    },
+    {
+      "path": "game/assets/environments/relay_sky.tres",
+      "mode": "100644",
+      "blob": "654e47b1dc428895406969253a0b68d5eb7ccd25",
+      "bytes": 453,
+      "sha256": "bc0591de17eca1bc24d3d6d8e47916bc81ffc5cca42518fa68547c544a55bbd3"
+    },
+    {
+      "path": "game/assets/icon.svg",
+      "mode": "100644",
+      "blob": "a9bf7a6ca6cd0cfdf61f963349c9715f88b9b04e",
+      "bytes": 305,
+      "sha256": "921bfd903cd944004ec3784f89df1570e55f5f9abad126a48cbf14819d8501a7"
+    },
+    {
+      "path": "game/assets/icon.svg.import",
+      "mode": "100644",
+      "blob": "a2a74038da270192cf33afe444c79696c3501661",
+      "bytes": 1020,
+      "sha256": "9b48fb27282e20a5408a15c911b83134130c1fa359d172c35d02d46a7690d76f"
+    },
+    {
+      "path": "game/assets/materials/asphalt.png",
+      "mode": "100644",
+      "blob": "1091e72e72acae0deb7ff7f9a10be4ee0278dc64",
+      "bytes": 16397,
+      "sha256": "98f1fd1c36054732f75afdab9c6589705a2530632be4eadb425112e3a84dfa17"
+    },
+    {
+      "path": "game/assets/materials/asphalt.png.import",
+      "mode": "100644",
+      "blob": "4b402576e114968dd34d107d9b2be07efac9d7e2",
+      "bytes": 941,
+      "sha256": "0a64670d3fbf7408218ede64ce052c67a335f95551d6a036e5b1085d7a1f0c1a"
+    },
+    {
+      "path": "game/assets/materials/asphalt_normal.png",
+      "mode": "100644",
+      "blob": "9806b05215a6a0a245118114dddfe865f615c8ef",
+      "bytes": 29590,
+      "sha256": "f2172843949b12a38685c2ada654b36ac4fcee3b220c03d45bb0387d694b44f8"
+    },
+    {
+      "path": "game/assets/materials/asphalt_normal.png.import",
+      "mode": "100644",
+      "blob": "2fa4160b4f91c6a1c184e2b10bbfb3dc7f5f5f9e",
+      "bytes": 962,
+      "sha256": "2f82b4be561615c6e2585703c49d0ad494172afdce089f9bc059ff0b1e052b3d"
+    },
+    {
+      "path": "game/assets/materials/asphalt_roughness.png",
+      "mode": "100644",
+      "blob": "c2eed56388067814d39babdcef0c0abdb98f1887",
+      "bytes": 13319,
+      "sha256": "3521ec69a51f2b12cc7b915894fedf60e2ee108ab465bbba8ea3c9258e6b59d1"
+    },
+    {
+      "path": "game/assets/materials/asphalt_roughness.png.import",
+      "mode": "100644",
+      "blob": "c99b7e0c71c441e5c7b6b1c42aa72ffd7a929805",
+      "bytes": 970,
+      "sha256": "26c0396c4d37b431676a7b3a4a4e5eb4368e0b0cff1e2214ebe6e14eca11a89f"
+    },
+    {
+      "path": "game/assets/materials/concrete.png",
+      "mode": "100644",
+      "blob": "850af89a73cfda9c9a1cc8267e8c1270243a2f1e",
+      "bytes": 11847,
+      "sha256": "1be37aedca4928a3d6b2f5979f66794290533c09da1145bb71ef4f9371951b75"
+    },
+    {
+      "path": "game/assets/materials/concrete.png.import",
+      "mode": "100644",
+      "blob": "90573851c1e392fbf0733576466c98cf7ef4758b",
+      "bytes": 944,
+      "sha256": "07d7db1ffb90551e47de8a23897529718f9387773cddbe492f4e25ca28b2e253"
+    },
+    {
+      "path": "game/assets/materials/concrete_normal.png",
+      "mode": "100644",
+      "blob": "6090a9c4118dc108e789e896c7f5127297484bc3",
+      "bytes": 20654,
+      "sha256": "f75cef208d4757ff2443c5839d4fcd1d5a74a02ae1cbed136d70d6278f5e936b"
+    },
+    {
+      "path": "game/assets/materials/concrete_normal.png.import",
+      "mode": "100644",
+      "blob": "58c20fa698c00ce4d414e309326c2aa8e717346a",
+      "bytes": 965,
+      "sha256": "2a79b925bd4f782ab4cd2a8bec18f1537284013f1554fb927cb6d11f44834ce9"
+    },
+    {
+      "path": "game/assets/materials/concrete_roughness.png",
+      "mode": "100644",
+      "blob": "dbff504516c3e1d2a4c3d8d1165c770b620bf949",
+      "bytes": 10035,
+      "sha256": "fd9e4ce8f85de5157c684ace81620434a9f5b3a2cf438109f3ea9251099886a6"
+    },
+    {
+      "path": "game/assets/materials/concrete_roughness.png.import",
+      "mode": "100644",
+      "blob": "ed003d9c08266c96f9d70acfa4bd9c18f7972ef6",
+      "bytes": 974,
+      "sha256": "592d7e1530936ec7096c769b3907b4bb52033fa3a8fbbd81e7e7b5f71ab09bb6"
+    },
+    {
+      "path": "game/assets/materials/painted_metal.png",
+      "mode": "100644",
+      "blob": "fc37bd63c77b0fa6d682519b2464be74ba6c79cc",
+      "bytes": 9188,
+      "sha256": "2d88cae203fcf96dd601d9b06a61470455bc615d30ed474792086a4c7917dff2"
+    },
+    {
+      "path": "game/assets/materials/painted_metal.png.import",
+      "mode": "100644",
+      "blob": "2812bae7da42111fec088d941f1b058e39434bdb",
+      "bytes": 959,
+      "sha256": "8729d7927ca7ed6234dd39622bf1528eee7fce90f2822e56b73dbd34a8388277"
+    },
+    {
+      "path": "game/assets/materials/painted_metal_normal.png",
+      "mode": "100644",
+      "blob": "e732a67ed77a5efc244625ee20b624011c43e1c0",
+      "bytes": 21091,
+      "sha256": "26290601784fd08e572d8376bf4d9c60be5ac18319e84aebc11339a1b449692e"
+    },
+    {
+      "path": "game/assets/materials/painted_metal_normal.png.import",
+      "mode": "100644",
+      "blob": "cf44c72ee5c58e4461627379cfd25ad665719071",
+      "bytes": 980,
+      "sha256": "392fa3aa651981b12481a6f0756185919f3278ae94575be72cd3df8a7f157588"
+    },
+    {
+      "path": "game/assets/materials/painted_metal_roughness.png",
+      "mode": "100644",
+      "blob": "7201e584dd7447de2026134a6cede3211255322f",
+      "bytes": 10206,
+      "sha256": "b81126616dcd83bed5f1cc4730625f0faf3ddf6387aa64d29750a03fd570aca6"
+    },
+    {
+      "path": "game/assets/materials/painted_metal_roughness.png.import",
+      "mode": "100644",
+      "blob": "a8d25424da6dc40629ea95c702a380adf3563e4f",
+      "bytes": 989,
+      "sha256": "3f6e0301a56a57df7cf226e39ea3eac6a6c3880d39614b5a9a272d9a102766c8"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar.glb",
+      "mode": "100644",
+      "blob": "5fede01d0bba4cadc477d75482589c4d9e9b6aad",
+      "bytes": 1206464,
+      "sha256": "14fd8025096b698d6e367d81972de0620f9b0b41522a5c20009dd5dc2720531b"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar.glb.import",
+      "mode": "100644",
+      "blob": "4b4fb0f7edcc3e2d60b07fbd3256f81e16c3ecfa",
+      "bytes": 1162,
+      "sha256": "cf7c9d7d3218f3cc45d5d8b31d8bcc9fadf80d7d59fd04dfbf4845b53c41922a"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_albedo.png",
+      "mode": "100644",
+      "blob": "c268b3dbad0499710d1e3f64cc7f556a4a9672ef",
+      "bytes": 794319,
+      "sha256": "a2c52666ba9b53af650b1e4a4746e8020dfb50f28c42468739f795edfb1227ee"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_albedo.png.import",
+      "mode": "100644",
+      "blob": "560754fe6a5b4114bf5262418d6c036fc02aef0f",
+      "bytes": 1219,
+      "sha256": "bba60244c3851c50116bdd5b0b6aa8be252291678669242aca8fbda98834cec3"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_arms.glb",
+      "mode": "100644",
+      "blob": "159af6a305f97e43658c61a6f9d279fba00f5411",
+      "bytes": 466968,
+      "sha256": "7c5fedb29d6dade6170493a6db0fd82b3c7343a1d92e83247ac8be9a2bf056fe"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_arms.glb.import",
+      "mode": "100644",
+      "blob": "108572ee1a81251c7bcf4a2b097930220a849f2d",
+      "bytes": 1180,
+      "sha256": "c369fb37c907795e3094fbc586970af707e058bab2eb4f4b814f0e66436a705d"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_arms_albedo.png",
+      "mode": "100644",
+      "blob": "f0b41d0f3741eed77b27d8a16dfc72c346ea21b6",
+      "bytes": 318674,
+      "sha256": "eb9c78cb6dc38e1e085bbd5a32a8b5e170d970a7d008b3c0df9454886d6308e9"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_arms_albedo.png.import",
+      "mode": "100644",
+      "blob": "9bca2a701fcee90cd206215f3ad095034a23206e",
+      "bytes": 1244,
+      "sha256": "77e4c1367cc99ce3b10b7cb25c926f091f573f491ac35954b312c0cdad36fe37"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_arms_normal.png",
+      "mode": "100644",
+      "blob": "eccb6af12283cb99628f2235e5fd746e15bb7d1e",
+      "bytes": 904653,
+      "sha256": "543a14ba47528ee4f910cd06d0b5e38b0767b52481a460093a92a58b9339c5fd"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_arms_normal.png.import",
+      "mode": "100644",
+      "blob": "8beca535f320d153bb69380ce2221321ff889bbf",
+      "bytes": 1244,
+      "sha256": "0b4fa945b5c34a13fd7efe7304868ebacf692048059acfd28ff1ffc386742228"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_arms_orm.png",
+      "mode": "100644",
+      "blob": "a5d567d87352f013485758b822faa4b06e420b0c",
+      "bytes": 638947,
+      "sha256": "c0cd3df2d13768ee954558f10bc105b7827acf462ab5ebfdc77a6904bb7086d9"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_arms_orm.png.import",
+      "mode": "100644",
+      "blob": "c0831f44ce0de26f7f344f429f78c7a56d1f9b2f",
+      "bytes": 1229,
+      "sha256": "a379ad51aafd119f7cf22523fbb9c2f4dbd7e9c4592f4b9ca1417553bc24dc07"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_body.tres",
+      "mode": "100644",
+      "blob": "9cf39175fa98184f63b7c42077d4482ca6d7f774",
+      "bytes": 586,
+      "sha256": "6d47219b87e7a78e72a1c65580adb3cb14a9a9c1ebf66b9220fe50c12eb84c63"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_hands.glb",
+      "mode": "100644",
+      "blob": "69c69fa414f13acfc937c6f00780f28dd4d38a53",
+      "bytes": 332912,
+      "sha256": "51311fc63710511877dfc85fd166e540d32b4ab402f41b8600d1ce81d49f9145"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_hands.glb.import",
+      "mode": "100644",
+      "blob": "8d4f293400fdd12c2a7744a9e88db0666cf659b2",
+      "bytes": 1181,
+      "sha256": "18c42a21551b8b85ab094e17c03e610d24753c42f72587e8d414f8d84ee88b22"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_hands.tres",
+      "mode": "100644",
+      "blob": "028a75a46a480cc4a534ea958380f85d249a292c",
+      "bytes": 563,
+      "sha256": "2f65701c923821a44a8c3149fc101fe86b51dcbfb3023c55a4638d1b2181210e"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_hands_albedo.png",
+      "mode": "100644",
+      "blob": "db6acd004e7e649c9d40064dec26cb724b39bece",
+      "bytes": 312251,
+      "sha256": "1f7a63f40ede03adde9e216e6516843e90f754f9d0156a4b083f3dc0e836a59f"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_hands_albedo.png.import",
+      "mode": "100644",
+      "blob": "cd392a06b97db889373a371993c73fc5982a2bb0",
+      "bytes": 1248,
+      "sha256": "7d0ed357ff643930db416c0a99544c9646a078bcf73021b7e5e1e266cdab6490"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_hands_normal.png",
+      "mode": "100644",
+      "blob": "94880e6aa9b5ced3a1e831f7255caff822fb1626",
+      "bytes": 508567,
+      "sha256": "84ec38382ea152e01ec368b0650b8f7c52159b793d637d1588992e3a90be28dd"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_hands_normal.png.import",
+      "mode": "100644",
+      "blob": "b2d3dd92b81ed6ea35ced7d0062e8aaf0d6f76ed",
+      "bytes": 1249,
+      "sha256": "4bafe43d31fd585761fa519b7ee9ca7227da8caa4b65db4c64d6389280e89b9e"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_hands_orm.png",
+      "mode": "100644",
+      "blob": "2f3630d72e8145d782c1d9c9f1daa3ab54b813be",
+      "bytes": 912368,
+      "sha256": "4f4872577d5330b646a8357edaab874a65ed40659521b6decc94e84949dd3b60"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_hands_orm.png.import",
+      "mode": "100644",
+      "blob": "a6ffebc547f355455757e6690b84387c1a4c2ce0",
+      "bytes": 1234,
+      "sha256": "61d45bfc97a33db7f3501adb79e57557bb345d503b57fd1bd88bc3c95303022d"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_normal.png",
+      "mode": "100644",
+      "blob": "9127c6eeedb31b94dbb6c2814dab6f3aed9adfe5",
+      "bytes": 533679,
+      "sha256": "5dd138a2e6061130e1358b213ffd8c370fd1740c2a4089854439bf1ba602103d"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_normal.png.import",
+      "mode": "100644",
+      "blob": "7eff2d0e1a0b3b8eaa9c9538c662809165273b0f",
+      "bytes": 1219,
+      "sha256": "b4101a122a2706f7055fa64936fbcf07fbe8564c50ddf403abea5f2b93f196a0"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_orm.png",
+      "mode": "100644",
+      "blob": "251e41cbc00341868e20769842474cd83ef6e066",
+      "bytes": 1458170,
+      "sha256": "e646c694ae9a71ba428f86dcde25f729a5e0f09bbc75d0a80ec0b013e32ef4f5"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_orm.png.import",
+      "mode": "100644",
+      "blob": "fd9e341668dfe21ce99d6c4f1eed6600678bab94",
+      "bytes": 1204,
+      "sha256": "ec0811a0f6ced0a4ea1fb87756fc6063ccbac14d6b0c6589e8250dbad10ccb28"
+    },
+    {
+      "path": "game/export_presets.cfg",
+      "mode": "100644",
+      "blob": "9abdc8c5baead637ab7ac26841c2e1fa2a9a5ca6",
+      "bytes": 3670,
+      "sha256": "f5e1cbcbafc0b145aa960fe1b7114585c9368f8dd88f98f0687d0d04ef8714f7"
+    },
+    {
+      "path": "game/main.tscn",
+      "mode": "100644",
+      "blob": "d5d17595a4f3ba40788c24a73fb903660affdfc6",
+      "bytes": 163,
+      "sha256": "b4000844bb8a4ab7767027a9a4966d285cff13e53c356efb94bbabc787b8a293"
+    },
+    {
+      "path": "game/project.godot",
+      "mode": "100644",
+      "blob": "cdfef244f9afe3415dcb8c2c1f6f3d04a1967a56",
+      "bytes": 1020,
+      "sha256": "2916998610c4fa397b853c8f0e7a89b6c8a947177bc69202d6b034b6bf163465"
+    },
+    {
+      "path": "game/scripts/gameplay/actor.gd",
+      "mode": "100644",
+      "blob": "430169676a1fedef687bd156d579e827cf0e6182",
+      "bytes": 59412,
+      "sha256": "38155fb501bfb8db7fb2a0c72352d247cfb66afddb8ec7f18f0585b20d29f872"
+    },
+    {
+      "path": "game/scripts/gameplay/actor.gd.uid",
+      "mode": "100644",
+      "blob": "1f9255be4e01cbbe9694518e471d88f9693a486f",
+      "bytes": 20,
+      "sha256": "3eaa63e4c54e64c5c8a938f1cf387d370b119b288a916fc798e3fd751d443b4b"
+    },
+    {
+      "path": "game/scripts/gameplay/arena.gd",
+      "mode": "100644",
+      "blob": "d70e4ac4f9a3f16948743849e5ea98cba7a7a5a9",
+      "bytes": 35138,
+      "sha256": "ba0b4545931b2bdf77cb0e1e6ae0662e5c7c7345c4f6436cca665faddb4265c5"
+    },
+    {
+      "path": "game/scripts/gameplay/arena.gd.uid",
+      "mode": "100644",
+      "blob": "c8f162af297a0118714b2a88e0dbf33d0d476b76",
+      "bytes": 20,
+      "sha256": "e47fd30d74fe97549b83d4e48c42252f4985629b9bbb27616961a3dae1c78545"
+    },
+    {
+      "path": "game/scripts/gameplay/bot_ai.gd",
+      "mode": "100644",
+      "blob": "403dd72df8dc5a9a9321ff8fb59aa545b4de7248",
+      "bytes": 31569,
+      "sha256": "742ae5c96becf4e27071423e0bdd604a13b528c201d38df52f837359fe9214cb"
+    },
+    {
+      "path": "game/scripts/gameplay/bot_ai.gd.uid",
+      "mode": "100644",
+      "blob": "9883e43bf0b5450d14f1bc243ff04302c12d183f",
+      "bytes": 20,
+      "sha256": "a6692c795e33e1c5ce896a203cb7c972e751c090aaa0637a0dcb88a8aa950efe"
+    },
+    {
+      "path": "game/scripts/gameplay/combat_effects.gd",
+      "mode": "100644",
+      "blob": "690ac3d0b2ae370e375cd11615002c36a75966fb",
+      "bytes": 7470,
+      "sha256": "8c53b9bba3640c481f253f9310c4d85f65c200d44cc96a7097fccd63b1c79528"
+    },
+    {
+      "path": "game/scripts/gameplay/combat_effects.gd.uid",
+      "mode": "100644",
+      "blob": "18d83ab1a71dbf9e51a935d4260b589a74b897a0",
+      "bytes": 19,
+      "sha256": "2edd3a5dd46895e65fc1a0d14c8db9fc64c6481190cd473f8b4ab181defc81f7"
+    },
+    {
+      "path": "game/scripts/gameplay/match.gd",
+      "mode": "100644",
+      "blob": "1729e7de87726048e604d158d44430ea7306af1c",
+      "bytes": 71755,
+      "sha256": "80c1cc2fceeb44dd4bf8c9726a8f6a77124e649a8535a9e508ea6d904ec9f238"
+    },
+    {
+      "path": "game/scripts/gameplay/match.gd.uid",
+      "mode": "100644",
+      "blob": "3c9c1ecbcbfb0daab047a65480c145080e571bf1",
+      "bytes": 20,
+      "sha256": "a82a41ef7ebef423beeece08ba0950458f47aa2f83bd43e11cdf0ff8c1d588f9"
+    },
+    {
+      "path": "game/scripts/gameplay/reload_audio.gd",
+      "mode": "100644",
+      "blob": "83624ffe5075b68b1f07f5dfe9b65dd2824c499d",
+      "bytes": 10910,
+      "sha256": "984446b54bbdfa74d3bd27ed07e3bac335a7959b8fb5cfacbe5e9609f421ef34"
+    },
+    {
+      "path": "game/scripts/gameplay/reload_audio.gd.uid",
+      "mode": "100644",
+      "blob": "3a5c17b6e787eb456fab7c4cb5be7e6621682f89",
+      "bytes": 20,
+      "sha256": "bbab98553d2702e923877f17d11e84b72e78e4a6f1339a34af6f19aa771b3dfe"
+    },
+    {
+      "path": "game/scripts/gameplay/reload_phases.gd",
+      "mode": "100644",
+      "blob": "21c1c8046cb5182fce6233b7a81035753e10139e",
+      "bytes": 3990,
+      "sha256": "8af430e76f3eda34ed0703c9ffb15cd68fec40a24e5ad3657ffe2f66a2936590"
+    },
+    {
+      "path": "game/scripts/gameplay/reload_phases.gd.uid",
+      "mode": "100644",
+      "blob": "4b7a6492d6c84a3643f037860671a2b2a728fcef",
+      "bytes": 20,
+      "sha256": "e927780e93bfd7a744df64620d484fc7be50818e7ed7823dc6ac03d374596d7f"
+    },
+    {
+      "path": "game/scripts/gameplay/utility.gd",
+      "mode": "100644",
+      "blob": "4f61d29639f18761dbafde3ffa2f4f5fe434aa0e",
+      "bytes": 13270,
+      "sha256": "8709d9e50da1c5bb32301a9f178c90f6b002ee8e25836469c90229bb47c90226"
+    },
+    {
+      "path": "game/scripts/gameplay/utility.gd.uid",
+      "mode": "100644",
+      "blob": "5a3617a5dd255ac4c295f5c59713265d984b7653",
+      "bytes": 19,
+      "sha256": "33ecc30cdddedc981065182055d3f2cc537daba88c41686f2ee987a590c25dd3"
+    },
+    {
+      "path": "game/scripts/gameplay/viewmodel_shading.gd",
+      "mode": "100644",
+      "blob": "00c64573c1f294e7895665bb79846b83e66380ef",
+      "bytes": 12990,
+      "sha256": "5aa479c7b52fb4bd9c57790580b6c3fc2e633f7af73ccdbdbe6dfda7927fafbd"
+    },
+    {
+      "path": "game/scripts/gameplay/viewmodel_shading.gd.uid",
+      "mode": "100644",
+      "blob": "742eaeb7df681aad1e16ae6a01f28daf39e9d25b",
+      "bytes": 19,
+      "sha256": "6b1f24ac0ce82ef5f780c1c189822ad90dc0b4fcce977daddea6a5e7a173571d"
+    },
+    {
+      "path": "game/scripts/gameplay/weapon_model.gd",
+      "mode": "100644",
+      "blob": "e5ecdff0b8ef5f039e81233b9b8f79df41e8c2ae",
+      "bytes": 33369,
+      "sha256": "66577272d2fefdce0830062c9438f07905470151edccb0b8c46d01a9463be865"
+    },
+    {
+      "path": "game/scripts/gameplay/weapon_model.gd.uid",
+      "mode": "100644",
+      "blob": "aac3b001612af78082334e19fa34603a28bf86f1",
+      "bytes": 20,
+      "sha256": "4c9f3511236d320a0f1e712366a9498909c859d0c9ff860a918bbb39eaa10b10"
+    },
+    {
+      "path": "game/scripts/gameplay/weapons.gd",
+      "mode": "100644",
+      "blob": "89431953e3fc9c34341c43cdc24ca858bc2d44e2",
+      "bytes": 1232,
+      "sha256": "e5038af222b3dc91bc727cae5b3bc2735c68f0f1da4b75091ecc8ba421ca8932"
+    },
+    {
+      "path": "game/scripts/gameplay/weapons.gd.uid",
+      "mode": "100644",
+      "blob": "23819f565cb13b904a79ce7f2a4eda9512479f95",
+      "bytes": 20,
+      "sha256": "e7e7398bb6988974cf780307eb6e8c11d63d6555e26802d31bedd071b762da67"
+    },
+    {
+      "path": "game/scripts/main.gd",
+      "mode": "100644",
+      "blob": "996edab146d70c72f654876259f2fb16eb5b5a65",
+      "bytes": 93271,
+      "sha256": "0e94a4580715011f9b2f425de34c03a3843b9e10d6ce7637ce41bff9a25da320"
+    },
+    {
+      "path": "game/scripts/main.gd.uid",
+      "mode": "100644",
+      "blob": "6d84d705691de47fb1cea57d3d70034519423ca4",
+      "bytes": 19,
+      "sha256": "25af0727af64188fc5674acce955e81807e1a322e68ee2599fd0ed938fc590ea"
+    },
+    {
+      "path": "game/scripts/network/economy_bridge.gd",
+      "mode": "100644",
+      "blob": "870cba1d87c84ec5a714a7eeef6f9376ae4ccd03",
+      "bytes": 4089,
+      "sha256": "baa483390ea6638b3f05e22c1703915f1eb6513b5edf0e9f0f41e1262dd3910e"
+    },
+    {
+      "path": "game/scripts/network/economy_bridge.gd.uid",
+      "mode": "100644",
+      "blob": "d3226d362a983d1125ef837d1ede6e5d8ea25fb9",
+      "bytes": 20,
+      "sha256": "5b64574d5d6bf0b4373f4ed4f164bf33ebf81a7ed8ee11582a1d6085fa952bd7"
+    },
+    {
+      "path": "game/scripts/network/hit_history.gd",
+      "mode": "100644",
+      "blob": "24fce18e94307ff5e4b908a24ec6a05050362e27",
+      "bytes": 4307,
+      "sha256": "74511e07149f4a35e9c1c05f4f6f50e81078825d89944f5ff47f141282648bdf"
+    },
+    {
+      "path": "game/scripts/network/hit_history.gd.uid",
+      "mode": "100644",
+      "blob": "cb99a1a2bced8afddba27e1590017b3435c72ecf",
+      "bytes": 20,
+      "sha256": "81df99ab77ae037fcaad7fc20f345910afa1bf42a37bffae1f22c61d5740e55c"
+    },
+    {
+      "path": "game/scripts/network/input_gate.gd",
+      "mode": "100644",
+      "blob": "bf23a5b8c6e634121fca9f5daeb2a4d731ff6538",
+      "bytes": 1349,
+      "sha256": "4717f892f56d0f5e70aeb321454a986c714be74f150b907f77a90ed380e23c77"
+    },
+    {
+      "path": "game/scripts/network/input_gate.gd.uid",
+      "mode": "100644",
+      "blob": "a28a8edabb6db1fe34ce9f7a5305a4b4eadc10d6",
+      "bytes": 20,
+      "sha256": "017488da7bb12ae3c0f45ca511bbf4e1c7ef8c4578748d62a09e55bacc7b2f46"
+    },
+    {
+      "path": "game/scripts/network/input_stream.gd",
+      "mode": "100644",
+      "blob": "f0516be1ab2416d36ba3b62f37083f371364f3a4",
+      "bytes": 3463,
+      "sha256": "b455205d827134830637f03457cc67e4e321721d91a7d840941fc74e1b26c88e"
+    },
+    {
+      "path": "game/scripts/network/input_stream.gd.uid",
+      "mode": "100644",
+      "blob": "e3e4a54c1e2265d10fb9183396d7e067507b7581",
+      "bytes": 20,
+      "sha256": "950f015490e9c537c45ffd35a79ec9bc79e20977ab87d69acd3cae629d0b8046"
+    },
+    {
+      "path": "game/scripts/network/movement_prediction.gd",
+      "mode": "100644",
+      "blob": "f83dc4514c6c2f64f582b1860f0c3fd65ccd66cf",
+      "bytes": 3786,
+      "sha256": "3d3da91d04e4430d0d2f51675caf00b33596eecb9d187672eb0a8a793d4ceee3"
+    },
+    {
+      "path": "game/scripts/network/movement_prediction.gd.uid",
+      "mode": "100644",
+      "blob": "7a7a4e134bb30b8e8a0a9eae0fca53aab3f1e937",
+      "bytes": 20,
+      "sha256": "55f1a493b00f95dcf319b0ef30913f43eca7d336bb179e1604c6305024265f4f"
+    },
+    {
+      "path": "game/scripts/network/movement_step.gd",
+      "mode": "100644",
+      "blob": "8350095e0096ab97c6098e9b982c596102af8ee5",
+      "bytes": 1839,
+      "sha256": "b87767729428b3b8af30bcf07c429094460f3b9a64f9087c9edcf40f0bb1e769"
+    },
+    {
+      "path": "game/scripts/network/movement_step.gd.uid",
+      "mode": "100644",
+      "blob": "eabb524c069235b09395dfa75b38bc3a0f0e8583",
+      "bytes": 20,
+      "sha256": "bdcc74cbad76121285c250b3baa39fb1ba2c68f9c51688bea64ee99cc1a70f60"
+    },
+    {
+      "path": "game/scripts/network/peer_lifecycle.gd",
+      "mode": "100644",
+      "blob": "2ccaf99bc18f1f76ad94089190e4d31ece4a90eb",
+      "bytes": 2321,
+      "sha256": "8a57cc07bdc007fe143a5e8c51c99238732fcc4acf9f209fd4718af937f22078"
+    },
+    {
+      "path": "game/scripts/network/peer_lifecycle.gd.uid",
+      "mode": "100644",
+      "blob": "d659d1b097be90fec9d835a3c5321f7e0bf9b742",
+      "bytes": 20,
+      "sha256": "37b4b3ce489e927c6f5eb72acf289174ad7d8f9a826d2e790ad80fe1d498225a"
+    },
+    {
+      "path": "game/scripts/network/reconnect_policy.gd",
+      "mode": "100644",
+      "blob": "6912de1d4309778bdcb707ace00465c001cea985",
+      "bytes": 721,
+      "sha256": "356e79de9a38c42802667a972333b232d6591cfcda20f3e73b3080ac56f970eb"
+    },
+    {
+      "path": "game/scripts/network/reconnect_policy.gd.uid",
+      "mode": "100644",
+      "blob": "84d8057108554df36c2ce521b81800b724827912",
+      "bytes": 20,
+      "sha256": "e29fc304bc16474d668685751fe54939e16aaeca7f843efe76f77870d7853888"
+    },
+    {
+      "path": "game/scripts/network/result_outbox.gd",
+      "mode": "100644",
+      "blob": "5e66816d9e6092f955acb58ab17794b7ea0e3e99",
+      "bytes": 3254,
+      "sha256": "e543aa181085c7d5eb905748867f5345bf889872bb4827a06be7c0da057ab90d"
+    },
+    {
+      "path": "game/scripts/network/result_outbox.gd.uid",
+      "mode": "100644",
+      "blob": "cc3af4a907b31a9c4082e2ebc637a58b5c96d21d",
+      "bytes": 20,
+      "sha256": "5c250f04dfd33fe54ae213977579e54c470397fdf222dee71c2580832ee0b5b5"
+    },
+    {
+      "path": "game/scripts/network/snapshot_buffer.gd",
+      "mode": "100644",
+      "blob": "5787cd7dbac005085b85f40a5976c411a42364f9",
+      "bytes": 3558,
+      "sha256": "525d9b04eac990b9aaaaf63deb1821ed50a2e795a7a93b7f54404a05eba7b798"
+    },
+    {
+      "path": "game/scripts/network/snapshot_buffer.gd.uid",
+      "mode": "100644",
+      "blob": "5c92879d26c803a69b6a5eec35a0a29b3c0b29c0",
+      "bytes": 20,
+      "sha256": "79a42d0d996d6b1e4a7fa08e176a09f1710475816ad64f12c21181a4b8bdc582"
+    },
+    {
+      "path": "game/scripts/network/snapshot_schema.gd",
+      "mode": "100644",
+      "blob": "ffd4fde4a263aa9c656a39327dec39ebe421ba60",
+      "bytes": 3846,
+      "sha256": "7a946932ad376027f8e7ba6b9609fdc6185cfc887ef9cd65b725bdc2844e23af"
+    },
+    {
+      "path": "game/scripts/network/snapshot_schema.gd.uid",
+      "mode": "100644",
+      "blob": "d3d3d86a0a5c0522bc61e22b3082e5d7e2876751",
+      "bytes": 20,
+      "sha256": "a77b903643c0dd7b627704592da35f80c4d9ad1ef88090e9de71fac4a833f25b"
+    },
+    {
+      "path": "game/scripts/network/state_privacy.gd",
+      "mode": "100644",
+      "blob": "6bc4e5bbf0961034b4c32d25702983150d28567c",
+      "bytes": 9155,
+      "sha256": "2a4796c74212ffe1d005551c51c90997839b38a5d93842ff9319a6c3f94e0b13"
+    },
+    {
+      "path": "game/scripts/network/state_privacy.gd.uid",
+      "mode": "100644",
+      "blob": "364e28b72b7fdfdd52ec28f57411627d0fde8cc3",
+      "bytes": 19,
+      "sha256": "4629fc2f091af1c5eadf66058f75e80c6ea08ed353b1e58d55d9d9dd33f3c7a6"
+    },
+    {
+      "path": "game/scripts/offline_diagnostics.gd",
+      "mode": "100644",
+      "blob": "b5908b682731dcf45381a11eeb197e85b72dc7a1",
+      "bytes": 15632,
+      "sha256": "f3c08ac3cdfd7acca59662caebf579812573fcb6267306aa916522bcba24217c"
+    },
+    {
+      "path": "game/scripts/offline_diagnostics.gd.uid",
+      "mode": "100644",
+      "blob": "f8e89af0495e2891d89f299735b92e90d273619f",
+      "bytes": 20,
+      "sha256": "1ba7b29da868ee736312190b2f6e3c966713a16c823236a10ae5d0bd6390b47f"
+    },
+    {
+      "path": "game/scripts/profile.gd",
+      "mode": "100644",
+      "blob": "f5d230e3bdcd9014d96bc2a108869c1c58624d0e",
+      "bytes": 4078,
+      "sha256": "0c6223a22ce1bae7b09d3e862a8652a863e44d2e454632e13fe378ba726da7e5"
+    },
+    {
+      "path": "game/scripts/profile.gd.uid",
+      "mode": "100644",
+      "blob": "8137e6fb6d4706532d754136f1088b357df1b9c1",
+      "bytes": 20,
+      "sha256": "285e6d1d10360c9899b7f7c977403d93a613e21d6c9df6eb979c01e497770759"
+    },
+    {
+      "path": "game/scripts/ui/case_reveal.gd",
+      "mode": "100644",
+      "blob": "c45a380de27f353c190affe367d2cfccbb70adb3",
+      "bytes": 979,
+      "sha256": "87cb95b48e7cce9a505f4ce820232584741350fab5fa09b3b7816706f45c2be6"
+    },
+    {
+      "path": "game/scripts/ui/case_reveal.gd.uid",
+      "mode": "100644",
+      "blob": "2a55813298c802b9f4e2243b158a81f208aaa23e",
+      "bytes": 19,
+      "sha256": "de52c218b6f32a367064cb605ee41deb9b4f6be5c082cc1ae5c488ebd69b7c24"
+    },
+    {
+      "path": "game/scripts/ui/confirm_sheet.gd",
+      "mode": "100644",
+      "blob": "8e8fd6d02db8bb3caf2838f76194ed2b68d2ba4e",
+      "bytes": 7276,
+      "sha256": "09cc1fd8bae711ae31d2523f6cd299bcac428b63d3cea6fc8727fcae0eb75c0d"
+    },
+    {
+      "path": "game/scripts/ui/confirm_sheet.gd.uid",
+      "mode": "100644",
+      "blob": "49f859d22d7b935d42186401055ee00bdd69bdb8",
+      "bytes": 19,
+      "sha256": "8336739494f4607f3acfacebcc5e0068f66b749bbb1250da5c6d02bef13c3d27"
+    },
+    {
+      "path": "game/scripts/ui/cosmetic_material.gd",
+      "mode": "100644",
+      "blob": "483f05c3b66be720a660ccb044a929abcf1e2526",
+      "bytes": 6619,
+      "sha256": "6a07d4f8ef5e6a2ec42003b6cd24b7078c64f69459ab65afcabc4c76178d2d12"
+    },
+    {
+      "path": "game/scripts/ui/cosmetic_material.gd.uid",
+      "mode": "100644",
+      "blob": "be28b52007d1d4fe6864f5e0761441bbec5d474f",
+      "bytes": 20,
+      "sha256": "1f8b8b2a51e016842660dd147bda8e5c1620d10a7cd999b2883ca8546a4dc36e"
+    },
+    {
+      "path": "game/scripts/ui/design_tokens.gd",
+      "mode": "100644",
+      "blob": "544831bb702600249c7faa90e20bee87536ae0d1",
+      "bytes": 9553,
+      "sha256": "0bebe1a145b101d6d6281b6304f9fba9ef128c0cf84083a1c1ac3d499e1ec2a8"
+    },
+    {
+      "path": "game/scripts/ui/design_tokens.gd.uid",
+      "mode": "100644",
+      "blob": "824e778229c64a8607e2379166ef4a3734966ff3",
+      "bytes": 20,
+      "sha256": "c56f6eeab61679b5039170a9395f0cd18a7ec2569de921c1d945cd472b846432"
+    },
+    {
+      "path": "game/scripts/ui/display_models.gd",
+      "mode": "100644",
+      "blob": "22f85a3aa4073a23211f8e1b8d57d46dc3989df0",
+      "bytes": 5146,
+      "sha256": "0141ba9efd6e1681edae1df6663a98364451dc597d815b387ec602e40178fbea"
+    },
+    {
+      "path": "game/scripts/ui/display_models.gd.uid",
+      "mode": "100644",
+      "blob": "02273a554e12be28d8ef17caf89dd792f0daaadf",
+      "bytes": 20,
+      "sha256": "b6c62cbbad7bc1121b403c64bb20837096e2a98303778ec3d5d83fee6e5c68f6"
+    },
+    {
+      "path": "game/scripts/ui/economy_api.gd",
+      "mode": "100644",
+      "blob": "595662a12bdc3828b78decb8b7c3c341faddb346",
+      "bytes": 4422,
+      "sha256": "f2e0f3e9f75e610e0187bc617f9ae277505eff6167ef43ee95f1174f6635144c"
+    },
+    {
+      "path": "game/scripts/ui/economy_api.gd.uid",
+      "mode": "100644",
+      "blob": "8e6a6fe0e603af8b278ba3ad2d8a7cd002cc32bd",
+      "bytes": 19,
+      "sha256": "de51ee3bd89098622e1d5126c0963490b1297d3e109c12b592a34dadbf300994"
+    },
+    {
+      "path": "game/scripts/ui/economy_ui.gd",
+      "mode": "100644",
+      "blob": "c482c553264781db2a66a373ab4e4496fb59531a",
+      "bytes": 77874,
+      "sha256": "a6580d176216af48c447eacaf3d293d7862fb8af0f56db7a4a3b9fd4398f450b"
+    },
+    {
+      "path": "game/scripts/ui/economy_ui.gd.uid",
+      "mode": "100644",
+      "blob": "36963dfa7b92525c9c560def0d6778714834a0fe",
+      "bytes": 20,
+      "sha256": "665402ce1f4c6d4bc28813e8b63d5a2a4809a0fac5d0856662fe2ca7b8e57985"
+    },
+    {
+      "path": "game/scripts/ui/item_inspector.gd",
+      "mode": "100644",
+      "blob": "834c08b346ae558c1d6f5bb2e961d164ea764d55",
+      "bytes": 7385,
+      "sha256": "bce8385267d8c75ebbf07c74a78f7c790fa51791bcf2127a02198eaa20bee50b"
+    },
+    {
+      "path": "game/scripts/ui/item_inspector.gd.uid",
+      "mode": "100644",
+      "blob": "e66d56b37a18e7d3d43ea62ee2dce61bb341e538",
+      "bytes": 20,
+      "sha256": "cb5cc2ecbecfad3212d01d4fdf6e692e7a51c1a97ede97a6faf3cd9c2ce8e377"
+    },
+    {
+      "path": "game/scripts/ui/radar.gd",
+      "mode": "100644",
+      "blob": "d17c52ee6be54438c52660e31b981753f76abeec",
+      "bytes": 3718,
+      "sha256": "75e6c9d059d8d8580cae698bdf6cf6075dd9f0eb95181fdcbc32e5130e10ff06"
+    },
+    {
+      "path": "game/scripts/ui/radar.gd.uid",
+      "mode": "100644",
+      "blob": "31f2402f7b1ae5115751553845e3981e788882f0",
+      "bytes": 20,
+      "sha256": "b5807cc468bdf840cbd5b795db1a59b590bd74475f44b3a07042b0bcbcb96753"
+    },
+    {
+      "path": "game/scripts/ui/safe_area.gd",
+      "mode": "100644",
+      "blob": "a05b2a13bdc78b9ba64e11343d88245178452473",
+      "bytes": 1421,
+      "sha256": "afe4487dc4797dc69e64c2173781f2c1493fdd6451dd8c767401f5236a6a2667"
+    },
+    {
+      "path": "game/scripts/ui/safe_area.gd.uid",
+      "mode": "100644",
+      "blob": "bb31445f79b74a191b68bdad24a4ace5a251375a",
+      "bytes": 20,
+      "sha256": "bd8567551a0805c05d137fd907e6d912485c5359ff8a66f9e769610e4986bb4d"
+    },
+    {
+      "path": "game/scripts/ui/touch_controls.gd",
+      "mode": "100644",
+      "blob": "4c13c454f1935491110fc682058a36ee53c2c926",
+      "bytes": 11053,
+      "sha256": "7c74a120fe9c87deb0ee5c3c68a5393591525d473cea31eda9d9ae3dfb53462b"
+    },
+    {
+      "path": "game/scripts/ui/touch_controls.gd.uid",
+      "mode": "100644",
+      "blob": "00f6091a47f82f84a31b54b0b9785ccd79d836f4",
+      "bytes": 19,
+      "sha256": "2f4e64596905c7df3561425084553306fd4810e06e68a34b6bab3c7402e938a0"
+    },
+    {
+      "path": "game/scripts/ui/transaction_journal.gd",
+      "mode": "100644",
+      "blob": "cbac7a494f14c88127196c848a3f874892e7b94c",
+      "bytes": 6138,
+      "sha256": "3a7e060f7d5c3a65f4b983edf3c56d008cb070a8948bdcb128681bd4ce562d03"
+    },
+    {
+      "path": "game/scripts/ui/transaction_journal.gd.uid",
+      "mode": "100644",
+      "blob": "6b9eeeab5e36978a061ba51797c9aedf7264e5f3",
+      "bytes": 19,
+      "sha256": "df5a7d954c992ac8f8adc62ef3cd8f2ee9619d07e62de105a1b91cf1b76ce543"
+    },
+    {
+      "path": "game/scripts/ui/weapon_glyph.gd",
+      "mode": "100644",
+      "blob": "cfb16cf3b2c4533f1594de09649b195c58fb019d",
+      "bytes": 2551,
+      "sha256": "c2cdb0190071897a261e43ce05482e4b92b5ba230b5fce0b44c1b9a215b59cb7"
+    },
+    {
+      "path": "game/scripts/ui/weapon_glyph.gd.uid",
+      "mode": "100644",
+      "blob": "417bc046f46d268ef71720cc6cc6f9140b81e2d0",
+      "bytes": 20,
+      "sha256": "4e32c3ff7dc53f06876b73099802bea938a0f5a3b119a581649cf682772ba97d"
+    },
+    {
+      "path": "game/tests/account_match_probe.gd",
+      "mode": "100644",
+      "blob": "0d15d044e1f54d53945fa5d915cde8538f7386c3",
+      "bytes": 4872,
+      "sha256": "0c93ad592ece35a67e270364ab0642f68db76efcd5a20851674e12833830c728"
+    },
+    {
+      "path": "game/tests/account_match_probe.gd.uid",
+      "mode": "100644",
+      "blob": "0946950d1262217a71c68bc8b0a941aa3e4bfabe",
+      "bytes": 19,
+      "sha256": "9e1c2394ebbcf58e468664a7f055cf3b383e2c258b3e88d3c13d65d475419340"
+    },
+    {
+      "path": "game/tests/account_network_probe.gd",
+      "mode": "100644",
+      "blob": "ec511af01ed2c2a64c159ad3d4e4e1f0b13cd859",
+      "bytes": 4051,
+      "sha256": "0ed918fd425bba97bd69bb37eb76da8a2136b3d3237741e8ee6af1afadbba889"
+    },
+    {
+      "path": "game/tests/account_network_probe.gd.uid",
+      "mode": "100644",
+      "blob": "34b1ebb55945ff4b5849126e4cad4c5a1900a425",
+      "bytes": 19,
+      "sha256": "4f7b3dc3c02c41c3ef206b9b2f86fcaebbcc43df59a681654c2bc4c819ed37d6"
+    },
+    {
+      "path": "game/tests/activity_provenance_probe.gd",
+      "mode": "100644",
+      "blob": "a3767a311c09c04ab1502c18968180250ac8de93",
+      "bytes": 4713,
+      "sha256": "36248a43571a882eb09fe90feeb6a671ebc64b4aa2517794ecc3e87d2014f2fd"
+    },
+    {
+      "path": "game/tests/activity_provenance_probe.gd.uid",
+      "mode": "100644",
+      "blob": "5b493c5537998ee0536ad0ca2f40a86b67b853bc",
+      "bytes": 20,
+      "sha256": "4eec9d5e8f3b88fa9befe37e818a6b7128ff07265ddfa9fcb35459ef335c5639"
+    },
+    {
+      "path": "game/tests/activity_provenance_test.gd",
+      "mode": "100644",
+      "blob": "128c6a85d8c8100fc3f0f6462140bcb789b7d40b",
+      "bytes": 6378,
+      "sha256": "7557492239be701961e9fd2a855401cbea3fdb929a8a2c39ab2424d9321b2904"
+    },
+    {
+      "path": "game/tests/activity_provenance_test.gd.uid",
+      "mode": "100644",
+      "blob": "8d577e09cd2c161a9da18d7562b156548fb3ab40",
+      "bytes": 20,
+      "sha256": "b8923019bf188d636da8b30ae86e674c965c256a8c3e98175c8ab314fa26ee6e"
+    },
+    {
+      "path": "game/tests/actor_test.gd",
+      "mode": "100644",
+      "blob": "e4c1f41cfdda2a97b4ba778c1b9ab6658fe829d9",
+      "bytes": 13699,
+      "sha256": "8a87d4db2543ed3164ecc24812fd36e20a76691b08d7ddbe0f4e5fc5285fe2e9"
+    },
+    {
+      "path": "game/tests/actor_test.gd.uid",
+      "mode": "100644",
+      "blob": "ea39fd4c70a0cd2128158d70fa4a971acad718ab",
+      "bytes": 20,
+      "sha256": "9c7ede052da83b37127cffdd67dd1e565a71f1617b8b3b2a209bc6ee5b65f74c"
+    },
+    {
+      "path": "game/tests/admission_capacity_probe.gd",
+      "mode": "100644",
+      "blob": "42aa8abfd36ffe585bf0d59fa4c03cc0a63a2e6e",
+      "bytes": 1765,
+      "sha256": "b01e4526ff1605feb711f7b0aba9b3cffd534410c437f0334e688aad220d4282"
+    },
+    {
+      "path": "game/tests/admission_capacity_probe.gd.uid",
+      "mode": "100644",
+      "blob": "2447ba36614fada2b788315eeae16e865bf8e637",
+      "bytes": 20,
+      "sha256": "5a6cc13b3d7286f5b2aceca173c686500517c21d20d57c7f1f65c5b4b6ac5156"
+    },
+    {
+      "path": "game/tests/armory_state_test.gd",
+      "mode": "100644",
+      "blob": "a72df59ee032ff80591a12187cbff81de5cae344",
+      "bytes": 43583,
+      "sha256": "e55a6968c8ec80d4b65d9761419cb2540c8ae89c4c35476d0276fb319acb78a5"
+    },
+    {
+      "path": "game/tests/armory_state_test.gd.uid",
+      "mode": "100644",
+      "blob": "b020178f497d687eefb40d7ad1e4f14a717fdff5",
+      "bytes": 20,
+      "sha256": "efb6fc18453dce34f66215cd882f83104d3e3c5f216573ac7c97ba763d502a60"
+    },
+    {
+      "path": "game/tests/armory_ui_test.gd",
+      "mode": "100644",
+      "blob": "1c588aa365c190875a5c5063fd1e4e993525602e",
+      "bytes": 32647,
+      "sha256": "18f177d82bd9873e24c102365cc3f002906b6071dfd6a205d2e37a54c4c0bf36"
+    },
+    {
+      "path": "game/tests/armory_ui_test.gd.uid",
+      "mode": "100644",
+      "blob": "903c2ea6c734a3defe2d6f716c257dc59e73cf83",
+      "bytes": 20,
+      "sha256": "233bda8e928b7c445636d54866a408ad08ce2975e2b5219b20fe67f3a7e3f29c"
+    },
+    {
+      "path": "game/tests/authority_order_test.gd",
+      "mode": "100644",
+      "blob": "dbad899a925f984e656c396eb0ec90e92d50f0a6",
+      "bytes": 12888,
+      "sha256": "87e79a6baa19475fbb0c7cf2567d39a26c7b93efc585ff052cd0f2d37f002277"
+    },
+    {
+      "path": "game/tests/authority_order_test.gd.uid",
+      "mode": "100644",
+      "blob": "b9b6e1db195792eb3367d363c7a4c017833b4e68",
+      "bytes": 20,
+      "sha256": "797857be788d0db6be89f1af96bad77a0227ed4dca709f7ad2a89dd4992dd3e9"
+    },
+    {
+      "path": "game/tests/bot_ai_regression_test.gd",
+      "mode": "100644",
+      "blob": "76805cef0b4f547bcda09eb49911ffbc42de09bf",
+      "bytes": 14123,
+      "sha256": "0a7caffaabf92f4f1f259cd22221adb14df9b9b22e0a400d47c74d660c0cf5c6"
+    },
+    {
+      "path": "game/tests/bot_ai_regression_test.gd.uid",
+      "mode": "100644",
+      "blob": "925c968e39d0108e44bd3e236c858e29b7676957",
+      "bytes": 20,
+      "sha256": "6e6715ac8eccaa5a94392aee12d86741d3628aa69d7935092ae4d6d520ab826a"
+    },
+    {
+      "path": "game/tests/bot_dry_weapon_test.gd",
+      "mode": "100644",
+      "blob": "5a287612402a53d231dd96b10d772da140c16846",
+      "bytes": 10617,
+      "sha256": "059a49bdf1e755a049e0fa4a904d303eb5fc9ce1fd05cbfc993ee9881aa46863"
+    },
+    {
+      "path": "game/tests/bot_dry_weapon_test.gd.uid",
+      "mode": "100644",
+      "blob": "a584488847c7fa814d96a17d50344e5d3ae28dfa",
+      "bytes": 20,
+      "sha256": "3419e403173aee9cc00c1d5b31429ca7ad02fcf662fabf2240261fe547cf66dc"
+    },
+    {
+      "path": "game/tests/bot_exhausted_primary_probe.gd",
+      "mode": "100644",
+      "blob": "4b87b4f77dab76470120a71b69945cc072f196ae",
+      "bytes": 26527,
+      "sha256": "540d24dda8e58f4685030e81b55ac3778ccbf31a89f76f9873ac598c32770731"
+    },
+    {
+      "path": "game/tests/bot_exhausted_primary_probe.gd.uid",
+      "mode": "100644",
+      "blob": "237e884deaca3407c9412f58a9cc8e31d970b8c0",
+      "bytes": 18,
+      "sha256": "fed3c3ead085cc1445615fadb7824b5ccba403e4bbf546508d282388169aa613"
+    },
+    {
+      "path": "game/tests/bot_exhausted_primary_test.gd",
+      "mode": "100644",
+      "blob": "5ec2a743b646ddf0f21b127fa50acf3f2bcb2f4b",
+      "bytes": 6738,
+      "sha256": "ff52fec23962f18c7ce17e06ac63681960f456efbe9e115c5d9e3c8873364f75"
+    },
+    {
+      "path": "game/tests/bot_exhausted_primary_test.gd.uid",
+      "mode": "100644",
+      "blob": "b3a2ec6c4ef37374f0acdc05453747d77c870a5e",
+      "bytes": 20,
+      "sha256": "32402e90c962acf7685e8f92db020a2707d9d41a2594ff7185b55c19b5f358b3"
+    },
+    {
+      "path": "game/tests/bot_lifecycle_test.gd",
+      "mode": "100644",
+      "blob": "73c993a06b7a9f842eea9893a48bc6e9dc535909",
+      "bytes": 2277,
+      "sha256": "ffcbe6ff948fbf07eb1f1b9b80bba62875989c6ad45e1a9cdc97f8ff765407d6"
+    },
+    {
+      "path": "game/tests/bot_lifecycle_test.gd.uid",
+      "mode": "100644",
+      "blob": "8b7459a582b5127f55b1e8360b00b2552f39beb5",
+      "bytes": 20,
+      "sha256": "ada98866bd0dbbc095d24df9c1b87cad3140f892ad7410af6104b4d1fccb2407"
+    },
+    {
+      "path": "game/tests/bot_match_test.gd",
+      "mode": "100644",
+      "blob": "14066b9affc9714be70e7a6f8b6771c8fb3ec8b6",
+      "bytes": 1440,
+      "sha256": "9ff5c11e57e321671c3dd58852a90f57066d09bb4808cf1fc99ed704365b2c08"
+    },
+    {
+      "path": "game/tests/bot_match_test.gd.uid",
+      "mode": "100644",
+      "blob": "042f7689fda6da2f45b1d097fa77ad7f5562a968",
+      "bytes": 20,
+      "sha256": "8b08f6df7213a2e795d32f9f442988795eabaf53b4ad6f35a9bb3d829874b02d"
+    },
+    {
+      "path": "game/tests/bot_squad_observation.gd",
+      "mode": "100644",
+      "blob": "369397a4b5a5b1ab1f310b1d00b24b67bbb0f402",
+      "bytes": 3461,
+      "sha256": "7cafb196f28fc7c9d7dabc24c1d7201b496680e5b30095e6f01aa5adf68e2565"
+    },
+    {
+      "path": "game/tests/bot_squad_observation.gd.uid",
+      "mode": "100644",
+      "blob": "a97ccb28034bd7e0cbbf343e5a9613e50e7f8e13",
+      "bytes": 19,
+      "sha256": "91e2442cb2010709e909205904416e68e936bef56af77f96ec7ff4578862bd1d"
+    },
+    {
+      "path": "game/tests/bot_squad_symmetry_test.gd",
+      "mode": "100644",
+      "blob": "d4a22f832db01d640770560d5221ba80015bfe2e",
+      "bytes": 9318,
+      "sha256": "0f2ce7e26d85405c633b4cda6807f8a2f36acd5f3fdb2766ea99238ab907dc77"
+    },
+    {
+      "path": "game/tests/bot_squad_symmetry_test.gd.uid",
+      "mode": "100644",
+      "blob": "cf52a74ae3d7601a9ab3b184e2d231d636a42a0a",
+      "bytes": 20,
+      "sha256": "962f5671279ae80e634d25345eed7716558b30f269b7a35cd467e5a975673903"
+    },
+    {
+      "path": "game/tests/bridge_transport_test.gd",
+      "mode": "100644",
+      "blob": "24a6f33e3d2e71263095cb9d83b3023ea9463332",
+      "bytes": 868,
+      "sha256": "7e4218cc46349b183833c1fc45a2c8f17dfbbc3c727c02846ca1d5a6601ffb9b"
+    },
+    {
+      "path": "game/tests/bridge_transport_test.gd.uid",
+      "mode": "100644",
+      "blob": "948de3e85901a981fda0a10577f1d3b414b4b583",
+      "bytes": 19,
+      "sha256": "19c54957d98bb34646a2e0856e8d73c9146f12386d9d3ac6019f5c2dbf25dbb0"
+    },
+    {
+      "path": "game/tests/combat_presentation_capture.gd",
+      "mode": "100644",
+      "blob": "fdb8fb9bf1a9c2de78c19eb0d73a3690ff399679",
+      "bytes": 2769,
+      "sha256": "ae4cfdc2aadf15eeb25c0beb1dbd41e11cf680e1062ba6e24ddbe4e885391dff"
+    },
+    {
+      "path": "game/tests/combat_presentation_capture.gd.uid",
+      "mode": "100644",
+      "blob": "3175cbe9a9c3e57706a648f0d4e6faf7b7e4aa35",
+      "bytes": 20,
+      "sha256": "a39ac030aca0d7c7c363cf4d5fdbf077dd3d0d6f0acc9560905347ed6bb407af"
+    },
+    {
+      "path": "game/tests/connection_lifecycle_probe.gd",
+      "mode": "100644",
+      "blob": "1f0854b99481955f58dc6da80a36e0c99c4c13bb",
+      "bytes": 2541,
+      "sha256": "416b975217d2d90b0b19c6b3974ac25c98e3598f3a07647bff451a28d125fbef"
+    },
+    {
+      "path": "game/tests/connection_lifecycle_probe.gd.uid",
+      "mode": "100644",
+      "blob": "38bfa60fcf1f6e03ff6862f3881482e4561858a2",
+      "bytes": 19,
+      "sha256": "2285fb9a59bf49039d23f34e9fab33dd7efe001c4f004e0385e86b2c8964fdd8"
+    },
+    {
+      "path": "game/tests/cosmetic_lifecycle_test.gd",
+      "mode": "100644",
+      "blob": "2d0919efefc9ee1f417a8fd1b45e4d0888266bb1",
+      "bytes": 2708,
+      "sha256": "b7562fe9aa72ae1ee09bcf8b9623cffdf48aa5ea31ff6a78e26cecc2603a613d"
+    },
+    {
+      "path": "game/tests/cosmetic_lifecycle_test.gd.uid",
+      "mode": "100644",
+      "blob": "b62986af789f6f50ad0571c4d562fa9d980c6623",
+      "bytes": 20,
+      "sha256": "d1cf9fed91837e306e0bb3796df547b1eab159a799feaeea3dd8ea7767794396"
+    },
+    {
+      "path": "game/tests/cosmetic_presentation_test.gd",
+      "mode": "100644",
+      "blob": "06c36a0f8534b7f27a340645550cf21e4fe92c5b",
+      "bytes": 6004,
+      "sha256": "58628c45897245e910f0037a442523a3fbdad1cb12fa6eece4082f4caaee9c44"
+    },
+    {
+      "path": "game/tests/cosmetic_presentation_test.gd.uid",
+      "mode": "100644",
+      "blob": "2af06435554d95c7e1cc333145b268ce0707c446",
+      "bytes": 20,
+      "sha256": "1ebb4d5f97976c21db88d942c623e0cd6cec542b21714b9796217a934a814004"
+    },
+    {
+      "path": "game/tests/economy_recovery_test.gd",
+      "mode": "100644",
+      "blob": "94e53cbae3cee5e355bae603b05b6578f18570b4",
+      "bytes": 3589,
+      "sha256": "432d4406aaf18e4c71fe9abc610eaf384475698ab49ba9669b3e8ea800121d98"
+    },
+    {
+      "path": "game/tests/economy_recovery_test.gd.uid",
+      "mode": "100644",
+      "blob": "da94244ad9377cde44a9b8a424f950ee2c84f447",
+      "bytes": 19,
+      "sha256": "fc6675b5878e1587bd6b474f84629dbba3e50d286b32854e459d4eff2dcad35a"
+    },
+    {
+      "path": "game/tests/economy_ui_test.gd",
+      "mode": "100644",
+      "blob": "d63703e9a69bda72d0c7e4278b24db82ead3d86c",
+      "bytes": 10466,
+      "sha256": "334200fc5d5869b578812e714b88ec57f7bfdc4091d8096bd34854c4fb72bc88"
+    },
+    {
+      "path": "game/tests/economy_ui_test.gd.uid",
+      "mode": "100644",
+      "blob": "6f211f02341a3ea8721493f13bbf2abcd5b2be61",
+      "bytes": 20,
+      "sha256": "62c770b3e00cb93833a2717270488134de5bce9ea9f3f4c7790bf60e0626e47d"
+    },
+    {
+      "path": "game/tests/environment_probe.gd",
+      "mode": "100644",
+      "blob": "aaf52f081d0fa885378614ee75e7b6f69899d932",
+      "bytes": 2131,
+      "sha256": "fbb5975a13c8debca10e9c05238ddaa8eaa09066b6fda442eb2ff8b8b2c0d0d7"
+    },
+    {
+      "path": "game/tests/environment_probe.gd.uid",
+      "mode": "100644",
+      "blob": "b88460f97b45dd30c32ee47bcad11292a6b378b2",
+      "bytes": 20,
+      "sha256": "851d0340f71f1e3593d1894c4959481cf17fe273a313626e506f39c4ede0867b"
+    },
+    {
+      "path": "game/tests/fixtures/backend_world.json",
+      "mode": "100644",
+      "blob": "5bacf2d8c524eddd57ecdcbabf8df327cb4fc8b3",
+      "bytes": 14270,
+      "sha256": "3d5b1b5c440414b01316109a85edd127f49fbdcd860e78ca862f2fbaeb70dfa6"
+    },
+    {
+      "path": "game/tests/gunplay_rules_probe.gd",
+      "mode": "100644",
+      "blob": "f9c29705fa6ad2f7e24274f33e0525ad178d53c0",
+      "bytes": 19211,
+      "sha256": "d8fcbabb739e903d6273ea8d1e59f6d03f8e358a434536f90f9ce02ad38e9488"
+    },
+    {
+      "path": "game/tests/gunplay_rules_probe.gd.uid",
+      "mode": "100644",
+      "blob": "e888ada968918528a256b944afd0acdbb3c3956f",
+      "bytes": 20,
+      "sha256": "a66abf0fb7780db88d19958038aafbcb5465d59b283ee1b32b7d0d24e3e3226c"
+    },
+    {
+      "path": "game/tests/handshake_attack_probe.gd",
+      "mode": "100644",
+      "blob": "b06ad40e9344de015804f58a9025425ba8e7e1e2",
+      "bytes": 3054,
+      "sha256": "b64666e97063ed23f8b02e79a75ca2f1f6fde470a3ae0368bb7a9d20d8f68e41"
+    },
+    {
+      "path": "game/tests/handshake_attack_probe.gd.uid",
+      "mode": "100644",
+      "blob": "809c05b816cb64a19e3e439efe435bba59932946",
+      "bytes": 20,
+      "sha256": "1e57542cc2bd4747ae43c844b1555114aed16f36e05169dd7baaad8b9cf8162b"
+    },
+    {
+      "path": "game/tests/handshake_server_probe.gd",
+      "mode": "100644",
+      "blob": "7d80e89bd194f7b81ab0578db77608ed9b7ac863",
+      "bytes": 1741,
+      "sha256": "1bdf3fa90fc701ff7dc336390397d3e2c8e98abb5887b6cb60083afc9b349b14"
+    },
+    {
+      "path": "game/tests/handshake_server_probe.gd.uid",
+      "mode": "100644",
+      "blob": "f40bf7fb6b5b6afbd9da8152e37376796709c545",
+      "bytes": 20,
+      "sha256": "fc58e49db5106492169cc6383d8bd3e1cbf56c1d765352d9a996140dfb64c95e"
+    },
+    {
+      "path": "game/tests/hit_feedback_test.gd",
+      "mode": "100644",
+      "blob": "d312b02e63836e544ca25534c10d5e87611b1e90",
+      "bytes": 2533,
+      "sha256": "1df4b84bd45a86385f9421c04a7baaa6c56c35dcf5071360d3532aeb50740336"
+    },
+    {
+      "path": "game/tests/hit_feedback_test.gd.uid",
+      "mode": "100644",
+      "blob": "3758990f741c9b478d44a19a23a46e72a8a2981e",
+      "bytes": 20,
+      "sha256": "9f478a5fdd62e48b54cb4683c3af9f7fee24ce831299e1516a0805df42120188"
+    },
+    {
+      "path": "game/tests/hit_history_test.gd",
+      "mode": "100644",
+      "blob": "02b09c9b6898fa5e65c98294e6cef670b76250f4",
+      "bytes": 3577,
+      "sha256": "7c686f558a21fd511d61d1a05653be3c0f0dd7fe68d46f039bd5d584bc01606c"
+    },
+    {
+      "path": "game/tests/hit_history_test.gd.uid",
+      "mode": "100644",
+      "blob": "9db64f85877514fef0bb9d31325956140f0583cb",
+      "bytes": 20,
+      "sha256": "c902a41ede1c9a72dca5d8b41e0e1226cb4ebb1acc21f5cbe26d8b00d0b060ab"
+    },
+    {
+      "path": "game/tests/hit_volume_test.gd",
+      "mode": "100644",
+      "blob": "971c5ac3d9743971341bb71a80b09b0e0516b912",
+      "bytes": 11636,
+      "sha256": "f60392b0d4cfba829da4afbb584c6fab3ee580b3be8598aaff6c2e2a009e9881"
+    },
+    {
+      "path": "game/tests/hit_volume_test.gd.uid",
+      "mode": "100644",
+      "blob": "bf99de2bf117d1f4f319bf67a23a0d0a42f87a2b",
+      "bytes": 20,
+      "sha256": "4ac436db3c4f49195e804b2e3e2945d0cff9b2dcdd5e91d3db762d29625cbc22"
+    },
+    {
+      "path": "game/tests/hud_objective_hint_test.gd",
+      "mode": "100644",
+      "blob": "69c52ab0c565a0960cf12b64b96e6fe5508c2d20",
+      "bytes": 14404,
+      "sha256": "73d9898aac7b3cf9eb2c7fcf5ce62f7384051a6d65cb7d3409ae487dd0326e49"
+    },
+    {
+      "path": "game/tests/hud_objective_hint_test.gd.uid",
+      "mode": "100644",
+      "blob": "fe5a37af6b3d15493b0bc3a82006ad88db13290e",
+      "bytes": 20,
+      "sha256": "8dd7bfa1825df70b3b951f7607e88abb21eda67b9a97ffd8cecfddbeef7ae14f"
+    },
+    {
+      "path": "game/tests/hud_overflow_test.gd",
+      "mode": "100644",
+      "blob": "0f45f3446817d119a7012f0f747a5db7cea279e3",
+      "bytes": 9643,
+      "sha256": "470dd79d42fcf2dc6b4d3f53d448a8cd75c9ea166407182e7961097f29253cc8"
+    },
+    {
+      "path": "game/tests/hud_overflow_test.gd.uid",
+      "mode": "100644",
+      "blob": "3f9c05020905b58ce7e182c89d7ac33fe22dc6cf",
+      "bytes": 20,
+      "sha256": "2c8de90ddadb39cdf617194e9926a69772ba8baf2341e81eed78759877be44b2"
+    },
+    {
+      "path": "game/tests/independent_reconnect_review_test.gd",
+      "mode": "100644",
+      "blob": "77cd3773a1419eeab3c4160174a848b480c4b91e",
+      "bytes": 5532,
+      "sha256": "495120c975d9fbd02ffc640d9a4cdb9963a77897c0792ad337161202f976a3f5"
+    },
+    {
+      "path": "game/tests/independent_reconnect_review_test.gd.uid",
+      "mode": "100644",
+      "blob": "ae6c635b56cfa81e6e0115945f853640689cf036",
+      "bytes": 20,
+      "sha256": "3da2f9827fb7e1b5b9d86aaad12fb0b3080bef3e080dcc597dd7466f960a631a"
+    },
+    {
+      "path": "game/tests/independent_resume_admission_test.gd",
+      "mode": "100644",
+      "blob": "aa2b42a2fd39eeeff7f553caa1997129ad2b6124",
+      "bytes": 4922,
+      "sha256": "8a33d8424ad659773644f1cff1a82e9d14a7c7947c2353a2ab276871ee465fea"
+    },
+    {
+      "path": "game/tests/independent_resume_admission_test.gd.uid",
+      "mode": "100644",
+      "blob": "8f865e68653bf4f32c4d0f1c94cac878d8a390f0",
+      "bytes": 20,
+      "sha256": "5ee6893e1af65a4533d4bf3d49e27c0ca3214a91ff6705ccfb62245350738148"
+    },
+    {
+      "path": "game/tests/independent_resume_alias_test.gd",
+      "mode": "100644",
+      "blob": "3a7119c9612ca51f5546456912bdb81fc003b9b9",
+      "bytes": 6515,
+      "sha256": "e69c019036c4a56ec86a1f7d9ce7f21a1ca7525f5334969f1bbb4e2090a7e8e4"
+    },
+    {
+      "path": "game/tests/independent_resume_alias_test.gd.uid",
+      "mode": "100644",
+      "blob": "5bc379670f054babf1badb1a9df02d304f61dc81",
+      "bytes": 20,
+      "sha256": "b8668103b6567a8c6176d6a6e739c87f424414df303b46ce08723c9130dc6527"
+    },
+    {
+      "path": "game/tests/input_freshness_probe.gd",
+      "mode": "100644",
+      "blob": "273bc998ef6370f698bba71b7a9e3f27add785fc",
+      "bytes": 7979,
+      "sha256": "ec6ed6a056d8a50c1b6554d0a741742802ec42fb26c056711be5790e2dbf9f97"
+    },
+    {
+      "path": "game/tests/input_freshness_probe.gd.uid",
+      "mode": "100644",
+      "blob": "5da43815513e284ec63fc1990d7cfbc33a5763d2",
+      "bytes": 20,
+      "sha256": "2ed13210ff00960ce310c88890de0d62aa5056c2fce2b026ef41ec112ab6c232"
+    },
+    {
+      "path": "game/tests/input_lifecycle_test.gd",
+      "mode": "100644",
+      "blob": "b8767fbafe114a9b9b3bbb8f8e04fefca23c50a4",
+      "bytes": 3450,
+      "sha256": "ab35db57f1627d0261c3df062d325225afa884e8435c2148831d1caade3ad6a0"
+    },
+    {
+      "path": "game/tests/input_lifecycle_test.gd.uid",
+      "mode": "100644",
+      "blob": "8e39160ffd82960212c286af618b1d6cadfb8819",
+      "bytes": 20,
+      "sha256": "e845c5ecefe542d3e5c4cd0ab9cde3a0a02936af1f1c067ec1de54e315c8704c"
+    },
+    {
+      "path": "game/tests/input_mode_test.gd",
+      "mode": "100644",
+      "blob": "e720077619b4b77a4a63fdbd445c305e0cb7a9fa",
+      "bytes": 18286,
+      "sha256": "3683b784175ec82b402383e46698f560da3e30b563e2dfe0c4263b676c74e52f"
+    },
+    {
+      "path": "game/tests/input_mode_test.gd.uid",
+      "mode": "100644",
+      "blob": "488325abfeb7cf69bab03f1408dd0b7f18d48a73",
+      "bytes": 20,
+      "sha256": "1fc06210c59cb2f738cb7020f1498a6dfdd1e3d3df060ffaabff4942f97aa5c6"
+    },
+    {
+      "path": "game/tests/input_stream_test.gd",
+      "mode": "100644",
+      "blob": "58eb11d5fc981f2ef7f886bace5c447570942305",
+      "bytes": 3395,
+      "sha256": "08433f325afcfc82fbecdb218537bfd5f598fbb9a794c3f5646a4fc78deb5913"
+    },
+    {
+      "path": "game/tests/input_stream_test.gd.uid",
+      "mode": "100644",
+      "blob": "3e3baeac666a61f12018bf482463c2d2fe0d3cb3",
+      "bytes": 20,
+      "sha256": "a93b3477447b5983a7222a2477140554df7162135b63e350493c44db3bd4df55"
+    },
+    {
+      "path": "game/tests/integration_actor_lifecycle_test.gd",
+      "mode": "100644",
+      "blob": "41649902feda54283f1a669864f85bb650884cb6",
+      "bytes": 2739,
+      "sha256": "bc8b1d87dcd5465762ebf8e95eef8fdff04cce71e1f6e1243eeecb3b5daec170"
+    },
+    {
+      "path": "game/tests/integration_actor_lifecycle_test.gd.uid",
+      "mode": "100644",
+      "blob": "f812b46ec0f4a25ec0d8dfb3d2ed96f5eada3f39",
+      "bytes": 20,
+      "sha256": "8b8b03ca8d86c87da94c5c62143416b6a3cfcd5172a894153fd76381658a3f41"
+    },
+    {
+      "path": "game/tests/integration_aspect_probe.gd",
+      "mode": "100644",
+      "blob": "93ce7396f2a56715b551536e97c14347ec41c00d",
+      "bytes": 4001,
+      "sha256": "c214af8a1504686e0f14362d55f20546ed18e77d8d1a8ae0c89e4f05b6e28780"
+    },
+    {
+      "path": "game/tests/integration_aspect_probe.gd.uid",
+      "mode": "100644",
+      "blob": "976d0c797b77edd440e2d8e9432071f391c011c9",
+      "bytes": 19,
+      "sha256": "d48f777802a5258e1d0ffc4cd835867d1c9f3f6aef038fed9a92e5d1c4abfc11"
+    },
+    {
+      "path": "game/tests/integration_render_profile.gd",
+      "mode": "100644",
+      "blob": "d2a226bc73c0c39ee9a0caca0ce1eabcf15b6a81",
+      "bytes": 6535,
+      "sha256": "5b3c923f83b3b82faca2e603173e381acadde5c6b06adb79687033ff2d074cc7"
+    },
+    {
+      "path": "game/tests/integration_render_profile.gd.uid",
+      "mode": "100644",
+      "blob": "cbcc559fbcfa5428d0499528e4a54ca66c177a80",
+      "bytes": 20,
+      "sha256": "bfb3ee8fb96b6131956c8bf7c29297483171c5f5afd3d17a5c5805fe6d529fc3"
+    },
+    {
+      "path": "game/tests/landscape_ui_test.gd",
+      "mode": "100644",
+      "blob": "61332a14c0a252d9cb61f485d6cacbe47b2cdf99",
+      "bytes": 15871,
+      "sha256": "7ed80843b1b6859c71af3e82106ad0a82c2890e0af9c4c9592f9211cd1d46b4a"
+    },
+    {
+      "path": "game/tests/landscape_ui_test.gd.uid",
+      "mode": "100644",
+      "blob": "03b2bec9be88c219762d957a801144ca4188c651",
+      "bytes": 20,
+      "sha256": "ea1d4901dc71e8994ab0d5e6a92e67ab61d7df0902148d5297d34fc1f7de69e9"
+    },
+    {
+      "path": "game/tests/lost_welcome_test.gd",
+      "mode": "100644",
+      "blob": "25a10368524115aa8d4870a845ef50a04f3f8c19",
+      "bytes": 3102,
+      "sha256": "1b873f5376f054f854e0ef57e6481c034c22627bec25af4c648a974681e6bd60"
+    },
+    {
+      "path": "game/tests/lost_welcome_test.gd.uid",
+      "mode": "100644",
+      "blob": "ed1998e9ff6c5ddba627370da0dfc5a9e2fedfe1",
+      "bytes": 20,
+      "sha256": "eb1474ede47d7f7b25d6cff9bf81b6cfc2daae50121a22fd4fbb25d6b8a5c46f"
+    },
+    {
+      "path": "game/tests/main_test.gd",
+      "mode": "100644",
+      "blob": "f0d7a22b584985f30ce5797aee910666b898f3f5",
+      "bytes": 7916,
+      "sha256": "4e65086634461d7ab0d4c0ddd206216a7aaca3691c98fb021df3525fa2e26de6"
+    },
+    {
+      "path": "game/tests/main_test.gd.uid",
+      "mode": "100644",
+      "blob": "a53033d305d6144c77d60be002972b8ccb63460e",
+      "bytes": 20,
+      "sha256": "a7a3fcaefe370513ba593ade847db7c921270a0ed656c5f4d1cc5d181683f0ae"
+    },
+    {
+      "path": "game/tests/match_test.gd",
+      "mode": "100644",
+      "blob": "3056d92afc3ce1c8e65c783728281aac6704828c",
+      "bytes": 14830,
+      "sha256": "e8e7f11834b80b1a97d0451924b17ad05c97e86f3cd5947eeb56c86e1e917e0d"
+    },
+    {
+      "path": "game/tests/match_test.gd.uid",
+      "mode": "100644",
+      "blob": "412a448550910a46c92235e4bb61da718905efdc",
+      "bytes": 20,
+      "sha256": "12d7d39629e1066877079ed28bc8947396cc29c0a2de469e919ad742a4f753e2"
+    },
+    {
+      "path": "game/tests/menu_capture.gd",
+      "mode": "100644",
+      "blob": "2f3f8fc73b92cd4be53798885ee5da06abfae478",
+      "bytes": 1857,
+      "sha256": "7d94496ba73bdefcfc1323fff24f7dadf72ece68ec11f3cb96669d0734da72ff"
+    },
+    {
+      "path": "game/tests/menu_capture.gd.uid",
+      "mode": "100644",
+      "blob": "879eca2b09ef3fcdd3807dd61a6ad267a4dcfd9f",
+      "bytes": 20,
+      "sha256": "133799121657f96b2e6c96379ba05f9cd3e0326d134c29b93b3086511f668bbd"
+    },
+    {
+      "path": "game/tests/menu_contrast_probe.gd",
+      "mode": "100644",
+      "blob": "f30e1f27fba4de2bf7d5c2dd946a5bf6b4d16b56",
+      "bytes": 4232,
+      "sha256": "7c66610e6e1ee342520b85bdeb9d468a2f0058aaef2d58c25bfa68ebf20dcd65"
+    },
+    {
+      "path": "game/tests/menu_contrast_probe.gd.uid",
+      "mode": "100644",
+      "blob": "288bfeb7cf9658da3d17f1ec205669f2004f62d6",
+      "bytes": 20,
+      "sha256": "f2bccfa9e2382004e00b89030f2697c4e37a05b59a182ed36818b97620d56324"
+    },
+    {
+      "path": "game/tests/menu_focus_test.gd",
+      "mode": "100644",
+      "blob": "01292e5995f07ce927f18c6132d5a7e1b86a23c1",
+      "bytes": 2715,
+      "sha256": "25b4136d79d2de20e2d880e05ebf9a7849de93363dd77bed7d37f5e42d980d96"
+    },
+    {
+      "path": "game/tests/menu_focus_test.gd.uid",
+      "mode": "100644",
+      "blob": "e89d9f76a6085400d2f2aa6d01cec6b21b5d90d3",
+      "bytes": 20,
+      "sha256": "13888d531481b431273bc889a3052f227d7a43cc5107a0b16ab87c39b233ab71"
+    },
+    {
+      "path": "game/tests/menu_occlusion_probe.gd",
+      "mode": "100644",
+      "blob": "75e1fe48825b7687cdbc84eec8b7510b4e7c043e",
+      "bytes": 2523,
+      "sha256": "9c64291b598831df760402996454371fd03206175c510f92068e70e94197ba62"
+    },
+    {
+      "path": "game/tests/menu_occlusion_probe.gd.uid",
+      "mode": "100644",
+      "blob": "f3aa1e6a8b95f202b1e82d6eabcfe3c8bf56c410",
+      "bytes": 20,
+      "sha256": "df235349934498dbb84b82720d00811b618a7470274991a635b23e931796da66"
+    },
+    {
+      "path": "game/tests/menu_state_test.gd",
+      "mode": "100644",
+      "blob": "7162f3f15db1ab0b00fa697f6d6b25e97f57b37b",
+      "bytes": 9258,
+      "sha256": "09633e467edcb1ea137fd914310d302d8e600dd9bfd135cc4e8852c8d7a1cf07"
+    },
+    {
+      "path": "game/tests/menu_state_test.gd.uid",
+      "mode": "100644",
+      "blob": "734cd066af339350b05a6164afaeab2f66466588",
+      "bytes": 20,
+      "sha256": "50ebd169a00aa47f074bab506c3c3fb7cf748560ee2135127a661b8bda8d62bb"
+    },
+    {
+      "path": "game/tests/movement_prediction_test.gd",
+      "mode": "100644",
+      "blob": "5fbdf8312624eae237203d73bb2831a5f1d0e7a7",
+      "bytes": 6558,
+      "sha256": "574adfb0f17ce00e31b8db0eabb7ab3192e4556cd3002095bb2b6df00c94494b"
+    },
+    {
+      "path": "game/tests/movement_prediction_test.gd.uid",
+      "mode": "100644",
+      "blob": "177f61047f27205207026650066fc2d63605fe15",
+      "bytes": 20,
+      "sha256": "d7f76ca9d53b7f9d0011d65a45bfa35fb4bd66f3c97b412c70cc9b33ef7f2b26"
+    },
+    {
+      "path": "game/tests/native_economy_test.gd",
+      "mode": "100644",
+      "blob": "bbc5bed2b6097b585a1dd9bead28549ddc833270",
+      "bytes": 11025,
+      "sha256": "b6918cf7be61bf7b2e481b247d787353d290b776f20f859504db7240e7f74d6a"
+    },
+    {
+      "path": "game/tests/native_economy_test.gd.uid",
+      "mode": "100644",
+      "blob": "157435345da115ccfbae8883b372e96391fac1ee",
+      "bytes": 20,
+      "sha256": "c4944c08a658ea1118e034bab37be80c481e5112096e4dbc5615d9999b274195"
+    },
+    {
+      "path": "game/tests/network_probe.gd",
+      "mode": "100644",
+      "blob": "aa82cc5b3e325da9f43614109bec8ecfadd9733d",
+      "bytes": 4305,
+      "sha256": "8981ca0006b44a1836809230d333175166530001ed85aaf1110ab7a04c912406"
+    },
+    {
+      "path": "game/tests/network_probe.gd.uid",
+      "mode": "100644",
+      "blob": "96eaca14b5e4775c07dcfde295890a10d425a189",
+      "bytes": 20,
+      "sha256": "d2d9afedf89d3d3485f52a6c8794cd7e634c75d62bc851480b80c2951f82520b"
+    },
+    {
+      "path": "game/tests/network_profile.gd",
+      "mode": "100644",
+      "blob": "466c2faab1c5a0c03770ac8758459926c8c8ccfa",
+      "bytes": 1868,
+      "sha256": "5801746d8d863c2c9dda68fba14b8b583cbdc1dc5ff0aa31693c183725a03ef6"
+    },
+    {
+      "path": "game/tests/network_profile.gd.uid",
+      "mode": "100644",
+      "blob": "51883a5fec1076868c35c14c2ddbc63bd47813bb",
+      "bytes": 20,
+      "sha256": "87401f8a8dcaee1e58ffd565dd826ae8861248552c18a00f8520341c8a8f7ef5"
+    },
+    {
+      "path": "game/tests/network_simulation_probe.gd",
+      "mode": "100644",
+      "blob": "5594fc67a9a22480d817a365c0dc9d0be4262dd7",
+      "bytes": 13515,
+      "sha256": "29755952bc361cb81ba035c0bf5ecd0d69aa920711d74a50c823296e6cc26461"
+    },
+    {
+      "path": "game/tests/network_simulation_probe.gd.uid",
+      "mode": "100644",
+      "blob": "9f95aff3946d57c486d362bfd907c79e43102c28",
+      "bytes": 20,
+      "sha256": "78654fda6d37e4ba289cffa7c2e7b3d88ae838d787ac2a9924d1d6932637becb"
+    },
+    {
+      "path": "game/tests/offline_diagnostics_test.gd",
+      "mode": "100644",
+      "blob": "8a61d5a0db19c4e1f944c09bbf26d3910964b4bb",
+      "bytes": 9341,
+      "sha256": "f82f60ae002a7aae761c5efdbe1e5ebec3aa6d7ac73f5ea198c1b70155eba607"
+    },
+    {
+      "path": "game/tests/offline_diagnostics_test.gd.uid",
+      "mode": "100644",
+      "blob": "67bb9cfbc9010c92f86bb3214128a17cf5d4e535",
+      "bytes": 20,
+      "sha256": "2808d59c8dcd0357fd003b9e6a38cf9efafba1b28913a134225621f21fa1b9a4"
+    },
+    {
+      "path": "game/tests/paint_visibility_test.gd",
+      "mode": "100644",
+      "blob": "2238de6ca1133f00572715333b94d7b825560391",
+      "bytes": 3938,
+      "sha256": "768c8512b5fb9ef40ec9642417900ee48408a9da31e769d5eb66475064d61e94"
+    },
+    {
+      "path": "game/tests/paint_visibility_test.gd.uid",
+      "mode": "100644",
+      "blob": "6e866606b146bc8bfe2a57ed7c412fa4ab520b20",
+      "bytes": 20,
+      "sha256": "7b7a83a180b809ccc260b9f9eb4e55431ebbbd7a05961da0f0e141a9a7f19d33"
+    },
+    {
+      "path": "game/tests/peer_lifecycle_test.gd",
+      "mode": "100644",
+      "blob": "fabf876f82f0c81a78503f4f342623543b5c2846",
+      "bytes": 2437,
+      "sha256": "64186ff17669d41a28c0ff6580e490f522f0e67598d79e5e552697babcb35a93"
+    },
+    {
+      "path": "game/tests/peer_lifecycle_test.gd.uid",
+      "mode": "100644",
+      "blob": "bc3b62bb6fc6ca1231374f7c42e19bb23b686f1c",
+      "bytes": 19,
+      "sha256": "0fc997b94d9e4f28d515b510608023cf6fa40ed2e956bf98c95a7f0bd86e03d6"
+    },
+    {
+      "path": "game/tests/postgres_receipt_probe.gd",
+      "mode": "100644",
+      "blob": "ed1d8532ff1edd6666ca7e8fcf8cb00ed1e15142",
+      "bytes": 2286,
+      "sha256": "4128aa1c96d5793f9e1a381b37c05f4df93890341276c48fe69bbf77d98e0e77"
+    },
+    {
+      "path": "game/tests/postgres_receipt_probe.gd.uid",
+      "mode": "100644",
+      "blob": "940f06f1bcd806629efbfe25f8dcf8590b42fe51",
+      "bytes": 20,
+      "sha256": "625b462b9f71b83df79adfab870d09b04a591a9d938388e37d2db60fd28e1e16"
+    },
+    {
+      "path": "game/tests/profile_test.gd",
+      "mode": "100644",
+      "blob": "ff21f56150dc2f504f315a629c9364889c5da434",
+      "bytes": 2111,
+      "sha256": "d5dff08902daf8f36c913e936feabaa86ac647c43c25713eabe4a03a1275a4bb"
+    },
+    {
+      "path": "game/tests/profile_test.gd.uid",
+      "mode": "100644",
+      "blob": "23da56a730ef3fe60a1e40e8da992f2b4d5ebe54",
+      "bytes": 20,
+      "sha256": "29eb23b96101f15546445013fa306cc9963a56de125eaae2d34cd891272ddec0"
+    },
+    {
+      "path": "game/tests/protocol_client_probe.gd",
+      "mode": "100644",
+      "blob": "e628cbbed5127d2b69ed4e2aed8a1036f20e9f52",
+      "bytes": 2246,
+      "sha256": "3e353f2fa6e3ed6a63609c58611485ae177ed021a91c3e5b58638de471beb20a"
+    },
+    {
+      "path": "game/tests/protocol_client_probe.gd.uid",
+      "mode": "100644",
+      "blob": "78f0704d9845dd9225c5765edd11d75034e9cdc9",
+      "bytes": 20,
+      "sha256": "fcd13c2510219c0ec47de43ce5d6263f59a48bebac1e28f2b6510222356fdb19"
+    },
+    {
+      "path": "game/tests/receipt_lifecycle_probe.gd",
+      "mode": "100644",
+      "blob": "238d9215e4f421d38da16d2b625f5245bfec03d9",
+      "bytes": 3158,
+      "sha256": "544d2b6b7907c8bd1e90361d077c6ba4123b3e54371e6f9668ea7266a353bf46"
+    },
+    {
+      "path": "game/tests/receipt_lifecycle_probe.gd.uid",
+      "mode": "100644",
+      "blob": "4a807f1f89cc2798502088c617f9773bf68e0fd1",
+      "bytes": 20,
+      "sha256": "b5caaafdc5ea6914f153a88e97a98f6373064433097591addba7d559265d64b8"
+    },
+    {
+      "path": "game/tests/reconnect_policy_test.gd",
+      "mode": "100644",
+      "blob": "5f324808ad1313e3f4da0731d095588a56d8fb28",
+      "bytes": 1436,
+      "sha256": "041232bd145ba3fb0250ecc11d8d96aa8f9a06bb736158d86add08b6f986edbf"
+    },
+    {
+      "path": "game/tests/reconnect_policy_test.gd.uid",
+      "mode": "100644",
+      "blob": "a9facd4e049de7027db4cba25c81f224a8c1e5fe",
+      "bytes": 20,
+      "sha256": "c9fc87b3331ace74021e7b385acfe097e881fc35cc9b7f39584716e271c81fbe"
+    },
+    {
+      "path": "game/tests/reload_audio_capture.gd",
+      "mode": "100644",
+      "blob": "fdd8601522b122320f9e23ebbd3c6e666b5306ac",
+      "bytes": 15246,
+      "sha256": "8d37c5b390d537cb49c542f2fe49348bab3dfc9c9cc0f6e6057652bd6f798013"
+    },
+    {
+      "path": "game/tests/reload_audio_capture.gd.uid",
+      "mode": "100644",
+      "blob": "fa66d4339785ba536510f4501dbaa7cf60133489",
+      "bytes": 19,
+      "sha256": "2595e7a56bd4b57dbf23c80f1533112750391b668cf822661a3661fbcb7dac35"
+    },
+    {
+      "path": "game/tests/reload_audio_test.gd",
+      "mode": "100644",
+      "blob": "b8e2bc74f7c39efd1cb4592ed4b3277d2125786d",
+      "bytes": 14192,
+      "sha256": "9c5368cf666db83ad09b10bba2524a8e7664d3eb75d2d35fdbd6c1dbca31da9d"
+    },
+    {
+      "path": "game/tests/reload_audio_test.gd.uid",
+      "mode": "100644",
+      "blob": "1670f1a6d54776cf69a18a3920dfd534df9313c6",
+      "bytes": 20,
+      "sha256": "3b1833ba3794f712eb03edde279795fc4a61c15de9720b0922307085d0e55196"
+    },
+    {
+      "path": "game/tests/reload_discolour_probe.gd",
+      "mode": "100644",
+      "blob": "7da289a304ed44958bc49bb70fb403ad427f0a07",
+      "bytes": 21682,
+      "sha256": "e8ae1141303ca74e3e1a8c049cefc75332f3acdc8d30dfc28d50810481fbe4a7"
+    },
+    {
+      "path": "game/tests/reload_discolour_probe.gd.uid",
+      "mode": "100644",
+      "blob": "fe2d1b81ac228bf5ea909c0fa1d4383f0e561320",
+      "bytes": 20,
+      "sha256": "085d07e8e5ee1ccea09483636dc8e0ddef753d8a1bfbf544d853c15695d68edd"
+    },
+    {
+      "path": "game/tests/reload_legibility_probe.gd",
+      "mode": "100644",
+      "blob": "b394a5184e85dd180f9c34adf36b08e33a2b6f2d",
+      "bytes": 12209,
+      "sha256": "2ff71d94791b7a59c1156dd9688c3739a472b38694db98d2f8a5e24113cbd6c9"
+    },
+    {
+      "path": "game/tests/reload_legibility_probe.gd.uid",
+      "mode": "100644",
+      "blob": "a1957647854059b3b86c05202fd15af73d89d739",
+      "bytes": 19,
+      "sha256": "589d6ea6e1b5c58a34820f3b8b9127e27476c53da68cc8cbca0ea3dae56a5012"
+    },
+    {
+      "path": "game/tests/reload_perf_probe.gd",
+      "mode": "100644",
+      "blob": "5f9e948bc59449ec6ca576ead787800bebd9b703",
+      "bytes": 6342,
+      "sha256": "13f3c52edfeb84ccbb1ef475e48f6798bc9ed9ce5374fcee2b903b4040f8d8a3"
+    },
+    {
+      "path": "game/tests/reload_perf_probe.gd.uid",
+      "mode": "100644",
+      "blob": "8b7ae4e094654b547fd620467f7574253a719c28",
+      "bytes": 19,
+      "sha256": "75e610168a0d9000b517c743129a23750e4f50d5207d696f162cd96c118d9205"
+    },
+    {
+      "path": "game/tests/reload_sequence_capture.gd",
+      "mode": "100644",
+      "blob": "be240c59728e98e5c31ccfec5f3d94be12d8757b",
+      "bytes": 6873,
+      "sha256": "328ae6751a5cf5063e5a568ab060ee15b9b70ec55ee9c8b8952b515e48df4a49"
+    },
+    {
+      "path": "game/tests/reload_sequence_capture.gd.uid",
+      "mode": "100644",
+      "blob": "c4b32615ad83144c03ab0dcf317621eca33f5bbc",
+      "bytes": 20,
+      "sha256": "0d511d91f5559a3e7d20c38ed388f62398fd05a1ad6b0a4d45047c6168b8caf3"
+    },
+    {
+      "path": "game/tests/reload_sequence_test.gd",
+      "mode": "100644",
+      "blob": "6a059d9352fcb3fe94e84876ec3697f85b8381a2",
+      "bytes": 44248,
+      "sha256": "3510974a872d31b2dc170fef96b0e9d95a2a87fec7dc4b0535bc9119c6efc3c9"
+    },
+    {
+      "path": "game/tests/reload_sequence_test.gd.uid",
+      "mode": "100644",
+      "blob": "95a221c71325b5273d01ac0ce929ca0eb3ad1b4c",
+      "bytes": 20,
+      "sha256": "6d2f7561cbd21f4b57490489a19169b75dc86ec7b209b6af3aa42f7ff2ccb136"
+    },
+    {
+      "path": "game/tests/reload_visibility_test.gd",
+      "mode": "100644",
+      "blob": "c2e14d404a60038f1d153c63d9be57c7eb693f8f",
+      "bytes": 20396,
+      "sha256": "edae4dcff9385735b56e0f928d439dd97affabbee8bfca28e6dde295a8cdaa8a"
+    },
+    {
+      "path": "game/tests/reload_visibility_test.gd.uid",
+      "mode": "100644",
+      "blob": "d4341577b2e8ad4532cba81f33d210663f3b8b63",
+      "bytes": 19,
+      "sha256": "e614c4957c02b50d833f02e6a795ba816bcebb58de87221d94a696d14faa5852"
+    },
+    {
+      "path": "game/tests/render_benchmark.gd",
+      "mode": "100644",
+      "blob": "69b90c06249b4c47fb0efcb9800d0b451a0ebe5b",
+      "bytes": 4953,
+      "sha256": "cd97c7fb69d8bc424f6be0a69214cf9301988e4d03f38dbec1ebb73310db424d"
+    },
+    {
+      "path": "game/tests/render_benchmark.gd.uid",
+      "mode": "100644",
+      "blob": "7a075bd7b1b6418aecd5c06151fb26b3f9ca46b4",
+      "bytes": 19,
+      "sha256": "f5041c273b6793f3aede604e764e29bf83e3539b4c3e58acb44ace77f594d66b"
+    },
+    {
+      "path": "game/tests/render_budget_test.gd",
+      "mode": "100644",
+      "blob": "993a8acce12a79084775ff914f49bc93d82148d6",
+      "bytes": 7032,
+      "sha256": "01213ff65838999ba6d73839ce5353d64ab7f388ccf0c65fec408a3789e60e19"
+    },
+    {
+      "path": "game/tests/render_budget_test.gd.uid",
+      "mode": "100644",
+      "blob": "4ed8cc9351d60c18a5f95476ee049f0360cfea7f",
+      "bytes": 19,
+      "sha256": "5f6be7d043d778d5c78fbc0ef2b225b8673bd664d418c7a1b2f13e0ba936948b"
+    },
+    {
+      "path": "game/tests/render_lifecycle_test.gd",
+      "mode": "100644",
+      "blob": "e7521c043ce4f6e9f6ed05615bc6e0af8951d969",
+      "bytes": 1916,
+      "sha256": "4f46ef6a8ec0f6594570ae9d770dc3db366f291e9c752928b36310702171ca1e"
+    },
+    {
+      "path": "game/tests/render_lifecycle_test.gd.uid",
+      "mode": "100644",
+      "blob": "1cccbd3b89559e8a8c56c918998b13f4e0f76f99",
+      "bytes": 19,
+      "sha256": "443dbfcdcbf7d1236b77b0323388ecf126ef73b810d646883c5a65c8e8f20cc7"
+    },
+    {
+      "path": "game/tests/render_probe.gd",
+      "mode": "100644",
+      "blob": "c6ef90c797b6ff770b8f37c64a390946099f4ccb",
+      "bytes": 2492,
+      "sha256": "4097c453591e5a5836449ee3620b322fbf498d5669bf8f09dcfeee8c47d1eab3"
+    },
+    {
+      "path": "game/tests/render_probe.gd.uid",
+      "mode": "100644",
+      "blob": "eda0e1db1b698fbfd4cc4f5b71ac68d65b6aab15",
+      "bytes": 20,
+      "sha256": "30f03aa414ff39001426aa6ec298c05ca602f89dd3fb88a2111509f9d8102cff"
+    },
+    {
+      "path": "game/tests/result_outbox_crash_probe.gd",
+      "mode": "100644",
+      "blob": "f83d72f077443b70f9c6558731e3c3fdc884c5eb",
+      "bytes": 1269,
+      "sha256": "d5e21ed8c953859ac375328dc39ae2ef45669d6f5f8808008c185b8faa66a8e1"
+    },
+    {
+      "path": "game/tests/result_outbox_crash_probe.gd.uid",
+      "mode": "100644",
+      "blob": "f001e7e96ea66219355e19ee50a8f23f05b55ec9",
+      "bytes": 20,
+      "sha256": "b0a4bf60b41add9176e32a62fe30f29915161ba600c1ee81faca950129e7b598"
+    },
+    {
+      "path": "game/tests/result_outbox_test.gd",
+      "mode": "100644",
+      "blob": "9728ba452d3d9e091be63961e4116ebd311ffa13",
+      "bytes": 2309,
+      "sha256": "89f2015367fafcabbdfa9652b5e429a93a65501d6d9b61993c7bf1ff8b3a7019"
+    },
+    {
+      "path": "game/tests/result_outbox_test.gd.uid",
+      "mode": "100644",
+      "blob": "e5ed88c9d3cb15f6363c8bb15a546515e1b1c7b5",
+      "bytes": 19,
+      "sha256": "adbd3c5364e5b66529f4c8d50a54ec8c976a1c6ca449596c843be6788b36f103"
+    },
+    {
+      "path": "game/tests/resume_auth_loss_test.gd",
+      "mode": "100644",
+      "blob": "f0920b3b6e1f42fe08bac14f69b4cb30c76ae9ed",
+      "bytes": 3217,
+      "sha256": "3b23e09d5b7d35b32775e1dd722bd9de42d914d4602403272e24a4dc8f15274e"
+    },
+    {
+      "path": "game/tests/resume_auth_loss_test.gd.uid",
+      "mode": "100644",
+      "blob": "37ac5bd850e0ba2c2582601b691194e29117652a",
+      "bytes": 20,
+      "sha256": "9e2a54d6c164bc6eacb3be302cbbddcf43ee177285aaebf8643e4419a5580d8d"
+    },
+    {
+      "path": "game/tests/reward_bridge_test.gd",
+      "mode": "100644",
+      "blob": "e8aaa062c80e2910cceda3107e4d3ed42a53b149",
+      "bytes": 2504,
+      "sha256": "aaa23d3a74c77e4c07f2e403782487fa2dd1fbc36a7d94f6a0cd29da91fc71d6"
+    },
+    {
+      "path": "game/tests/reward_bridge_test.gd.uid",
+      "mode": "100644",
+      "blob": "eb3caf9d5c43138f6e89c495afe26328628d4fb3",
+      "bytes": 20,
+      "sha256": "5aa01f11201c7acae38ad4398f8786f7ba37318ef6c9f09734738882f130a861"
+    },
+    {
+      "path": "game/tests/smoke_presentation_test.gd",
+      "mode": "100644",
+      "blob": "3700d464b867c3ccb12b40bc8e865a6492ee7f97",
+      "bytes": 5662,
+      "sha256": "f31c906ab1d20aaad4641825daa0167b2072d8fb14b2f8b7d90ea5aac3b1cd4c"
+    },
+    {
+      "path": "game/tests/smoke_presentation_test.gd.uid",
+      "mode": "100644",
+      "blob": "1ecc92d49b7b1f7eac20cf612a0e565ccf3b6097",
+      "bytes": 20,
+      "sha256": "99e64c09b944b6a18fe1903ffa4dbf70ecb8dd96d7510eb7389e615d406222ba"
+    },
+    {
+      "path": "game/tests/smoke_render_probe.gd",
+      "mode": "100644",
+      "blob": "e2216f72c8904251c22eab67582bd82c0f7ca9f7",
+      "bytes": 7494,
+      "sha256": "73f63aa463b2fc9d260ad95c75da879f6adae53b65c5675bf7403dfcd8d49be3"
+    },
+    {
+      "path": "game/tests/smoke_render_probe.gd.uid",
+      "mode": "100644",
+      "blob": "4de7d64736456b64cd3f0104f80e9e9603115a4d",
+      "bytes": 19,
+      "sha256": "40ecdbc083ec010f9ff5d8068d56f85d5e2d5a3a5e4f1a177f50a2309fbf0b85"
+    },
+    {
+      "path": "game/tests/smoke_visual_capture.gd",
+      "mode": "100644",
+      "blob": "80d657246aadb7bb86e7b03a246bef450b78f231",
+      "bytes": 5277,
+      "sha256": "352b2112d7b010e6d085319f3a25897b806a550f0db0d75630867206f38199c4"
+    },
+    {
+      "path": "game/tests/smoke_visual_capture.gd.uid",
+      "mode": "100644",
+      "blob": "b7efd7c415f7d4adac2741caa4548d4160ace133",
+      "bytes": 20,
+      "sha256": "60cd70a8263b5be8123b5951d59d590d850416c41ab249cf7fef56f981afb3c4"
+    },
+    {
+      "path": "game/tests/snapshot_buffer_test.gd",
+      "mode": "100644",
+      "blob": "cdc93e39a1fd0f0f4c0e503f160a782cf45cfb58",
+      "bytes": 3172,
+      "sha256": "77a53643321577f44de0b70f4e7f3306205a00ed6a7bd5b868e062a2185c2374"
+    },
+    {
+      "path": "game/tests/snapshot_buffer_test.gd.uid",
+      "mode": "100644",
+      "blob": "4168b85cf0c03305a123309f5341984769a01f60",
+      "bytes": 19,
+      "sha256": "22b7e8e24261ac2b48820057832bbc4605314b504f207e1ff634864ad1df4a8c"
+    },
+    {
+      "path": "game/tests/state_privacy_test.gd",
+      "mode": "100644",
+      "blob": "d1fda5b44bf71ad2c178db477df24eb40eb78637",
+      "bytes": 6530,
+      "sha256": "a6bd9fcafc3b375691dacfeb60ad319a126ece72ebe77b2b800df1dc26604575"
+    },
+    {
+      "path": "game/tests/state_privacy_test.gd.uid",
+      "mode": "100644",
+      "blob": "fc007ac84d79f3b9f93f100f697a28f35d4132c8",
+      "bytes": 20,
+      "sha256": "2e7b9f1ae9891de5ed2394b3ced6b13a11c7dd633ee42381f91e670b563f7fa0"
+    },
+    {
+      "path": "game/tests/touch_test.gd",
+      "mode": "100644",
+      "blob": "8315298878007e159ce60c0bc373977badd9f976",
+      "bytes": 8250,
+      "sha256": "c958f4a40438aad68aae88b86357ab56188fed32e6717b067ca1786d1c50f42a"
+    },
+    {
+      "path": "game/tests/touch_test.gd.uid",
+      "mode": "100644",
+      "blob": "268e5dc001bde46b2eaeb59b5a6a5f70ef037840",
+      "bytes": 20,
+      "sha256": "bc663ea221175d2b3687021fefea65b4f86514667d8e6676c97704da54c9cb26"
+    },
+    {
+      "path": "game/tests/transaction_crash_probe.gd",
+      "mode": "100644",
+      "blob": "ede200db5a6f32c0aeba65b09be67cce8c1fa977",
+      "bytes": 1675,
+      "sha256": "a7f8cdf098c758eca347d2239a1416d403fadaa19c435e603290d886dc475797"
+    },
+    {
+      "path": "game/tests/transaction_crash_probe.gd.uid",
+      "mode": "100644",
+      "blob": "9c53c471c8e3d2691f839938eb8400bb3e27a422",
+      "bytes": 20,
+      "sha256": "a1747052b0cf9120479982536596a784d9a7ae271008af11cf806f0da3f72495"
+    },
+    {
+      "path": "game/tests/transaction_journal_test.gd",
+      "mode": "100644",
+      "blob": "8ecb954c89972fda55e520e03b38eb4b966c9abc",
+      "bytes": 8168,
+      "sha256": "5d459648d8794ae0eaa024ed993a52e71144523bbf783f5196e42d370599d38b"
+    },
+    {
+      "path": "game/tests/transaction_journal_test.gd.uid",
+      "mode": "100644",
+      "blob": "13f346c682a35fa5800cfd3bd52897d9c3e7b339",
+      "bytes": 20,
+      "sha256": "ee9a5283b6c858eb8b277f56f7f2e9012c04f3d1450c34a482a4b6b58177f9f5"
+    },
+    {
+      "path": "game/tests/transaction_lock_probe.gd",
+      "mode": "100644",
+      "blob": "898adbead22757f25c5b63d7b4c89b995eb0c553",
+      "bytes": 840,
+      "sha256": "fe636478298a219054c8051055bf739baa2aa5acc337d99b4622c0be26932a32"
+    },
+    {
+      "path": "game/tests/transaction_lock_probe.gd.uid",
+      "mode": "100644",
+      "blob": "18e624b5f08c9b7d9cae6377ed3bec2f9894090a",
+      "bytes": 20,
+      "sha256": "e50270e38d5c37645d06e9abd60912434eda148da8fbb9f9e76a758b444d21ad"
+    },
+    {
+      "path": "game/tests/ux_contract_test.gd",
+      "mode": "100644",
+      "blob": "8590c4b1b8d26cedb0e12428a6510ee150e3b946",
+      "bytes": 20057,
+      "sha256": "8f03cb7296971eda8920819954e89bdea8ea4614aefcfb42340f3d81cca2e1e2"
+    },
+    {
+      "path": "game/tests/ux_contract_test.gd.uid",
+      "mode": "100644",
+      "blob": "dce2ef3ff1ad2e2d24752ce3a22d7f1d2310ae47",
+      "bytes": 20,
+      "sha256": "62c33fa2676ef5a2ac8d7c60c34ddbca49a0bd2fd57c7f1faf7a4cf0c335d1ea"
+    },
+    {
+      "path": "game/tests/viewmodel_light_probe.gd",
+      "mode": "100644",
+      "blob": "cf37319b052fe4df32fab66e92c531aabd9b2644",
+      "bytes": 13524,
+      "sha256": "2df3788a196ee8380181be45db95419384bc9160590b2887734b1284eff28f77"
+    },
+    {
+      "path": "game/tests/viewmodel_light_probe.gd.uid",
+      "mode": "100644",
+      "blob": "3b20db0712fade35deb0873644026114751f4a84",
+      "bytes": 20,
+      "sha256": "c5977c6cf987b63b22558c93af63d1f41dae877b6c2c8b5b0253bd7b43632c33"
+    },
+    {
+      "path": "game/tests/visual_scene.gd",
+      "mode": "100644",
+      "blob": "d4cdad0be8db065838e03a314910b5c3ee1a7996",
+      "bytes": 1331,
+      "sha256": "185ef9096120fbd4ff139b67cf8cb312650c4a5d32acbe9c47f244bd536adbf6"
+    },
+    {
+      "path": "game/tests/visual_scene.gd.uid",
+      "mode": "100644",
+      "blob": "35e3642b3dddcd112c26a821f7abb0e02c877c9b",
+      "bytes": 19,
+      "sha256": "08bf7c8716cecbed2516f2a7c0992b30ba65a797ee8955e197f660b297981aea"
+    },
+    {
+      "path": "game/tests/weapon_art_capture.gd",
+      "mode": "100644",
+      "blob": "54790ae31b8b43222c9b91e0ba0a97b25a674032",
+      "bytes": 3897,
+      "sha256": "2f9f20d851b76b1f52f4e0a043f5e6ff757df702062b562e1c1c975bc6cac93e"
+    },
+    {
+      "path": "game/tests/weapon_art_capture.gd.uid",
+      "mode": "100644",
+      "blob": "92dfaa0bbdf1d8e460438b1348083b51139e88d6",
+      "bytes": 19,
+      "sha256": "50cc5b6311820846962839954f044257f1bf3f0d21ef6fc2af4624c47170dbc6"
+    },
+    {
+      "path": "game/tests/weapon_art_test.gd",
+      "mode": "100644",
+      "blob": "b75626ad3771c987089c34cf964b5b74b2467288",
+      "bytes": 48488,
+      "sha256": "78775cd6482897351eeb6eb8ca4491a2667d2957425400e8181937ba2d4e81b2"
+    },
+    {
+      "path": "game/tests/weapon_art_test.gd.uid",
+      "mode": "100644",
+      "blob": "ec742a3383ab19ed5886a3fb9c8df03a8fede008",
+      "bytes": 20,
+      "sha256": "7b5ccb39462011304023b3e5baecdb669feb98f83b74b154b70ffe986d2a78a0"
+    },
+    {
+      "path": "game/tests/weapon_integrity_test.gd",
+      "mode": "100644",
+      "blob": "a2498927ff15c54199568f89449190a05208f091",
+      "bytes": 13451,
+      "sha256": "81720bcf65628c3462293c1960436504e5ebd74798e08f31453ccba89f66b34f"
+    },
+    {
+      "path": "game/tests/weapon_integrity_test.gd.uid",
+      "mode": "100644",
+      "blob": "2c264b926df3c304882b477874b0fd4af461a49b",
+      "bytes": 18,
+      "sha256": "60b418583c7df729d09b3bea934759f406631315d97f3309be2a8d25dfbd5914"
+    },
+    {
+      "path": "game/tests/weapon_motion_capture.gd",
+      "mode": "100644",
+      "blob": "6effad5c3dd2934164d74ea22059daa7deb0f067",
+      "bytes": 3911,
+      "sha256": "56c1b0845de082e549be61f4dac4bc177b4acac486f8a73948d42b62862980b8"
+    },
+    {
+      "path": "game/tests/weapon_motion_capture.gd.uid",
+      "mode": "100644",
+      "blob": "b7763d7e193ae7300b3bbcd89a553b787698ddba",
+      "bytes": 20,
+      "sha256": "fb7f43e94a01ab5f1e96b04738b3e519326ad5b6cd9e3cc87ab1694652299399"
+    },
+    {
+      "path": "game/tests/weapon_render_benchmark.gd",
+      "mode": "100644",
+      "blob": "c71d7fe5b5ba91d0886abdc85f405238468b92ef",
+      "bytes": 3313,
+      "sha256": "004242f8b3077c7d05123ea454d908dada7974bae47403b600826d83fd11e75f"
+    },
+    {
+      "path": "game/tests/weapon_render_benchmark.gd.uid",
+      "mode": "100644",
+      "blob": "b52d093359c73a18f12d18f571b07feecdeea2c6",
+      "bytes": 20,
+      "sha256": "fa0b4f51560825ef60befae5459aae5e2dce60a8b790325a4354e0a5465cdca1"
+    },
+    {
+      "path": "game/tests/world_test.gd",
+      "mode": "100644",
+      "blob": "412d021c383c7bba7774be0d7398d9deee8a6c36",
+      "bytes": 5186,
+      "sha256": "4d2412f1091d7dbd91d497029060bfe01d1e2d5f582902e117da5dbee64d132c"
+    },
+    {
+      "path": "game/tests/world_test.gd.uid",
+      "mode": "100644",
+      "blob": "a8dcb16c12c380d45bc66376e5cecad54896111c",
+      "bytes": 19,
+      "sha256": "95afdbc1c4df747d947744cab64aa1bd32f0ef760b051371443e62412ca0858a"
+    },
+    {
+      "path": "scripts/analyze_input_consumption.py",
+      "mode": "100644",
+      "blob": "06697d856f4796a4c4e6aab2fbb0a319e2f18d17",
+      "bytes": 79081,
+      "sha256": "fab0711b9f239654a31cac745d4778eed8691d617eccea39c7fccabc6593fdf0"
+    },
+    {
+      "path": "scripts/build_manifest.py",
+      "mode": "100644",
+      "blob": "3087a172f8a6194d0ce7b6ada078703653dbb626",
+      "bytes": 11707,
+      "sha256": "64482563194b3a0bcbc766fa7bedbb064f055e2bba34f82bb743f221aa6f0560"
+    },
+    {
+      "path": "scripts/capture_desktop_layouts.py",
+      "mode": "100644",
+      "blob": "8a749bd9474fe27603e41b388cc4966ba0bbce74",
+      "bytes": 31659,
+      "sha256": "9d1ca1d2b727d5488942b1fee0470e232ce8b6b1c618e739bcb7dc9fc2f6782c"
+    },
+    {
+      "path": "scripts/capture_reload_matrix.sh",
+      "mode": "100755",
+      "blob": "40ad8175b25c1b90d1c86ca223dbeedf33f6d381",
+      "bytes": 2675,
+      "sha256": "af4d41dc3640b46e8c42c586ca1e563c6cb1c6744867f2daea9f66e461498f9a"
+    },
+    {
+      "path": "scripts/diagnose_macos_render.py",
+      "mode": "100644",
+      "blob": "02cd54571acc098383abdea618b8ba360a908c97",
+      "bytes": 9303,
+      "sha256": "4c27fdb0d8fd83ce6fc158228eadc4208106add36a9344bd6fa7bcb49dbe91f7"
+    },
+    {
+      "path": "scripts/diagnose_macos_startup.py",
+      "mode": "100644",
+      "blob": "7e9d13ee0ba394a35e693d6b98c34e5c774e310d",
+      "bytes": 21822,
+      "sha256": "03e63e2e4cdd0ffae70d4fb2f512cb4c58e6a85e1f414eeb1d88c2e4ee1c4428"
+    },
+    {
+      "path": "scripts/diagnose_native_input_mode.py",
+      "mode": "100644",
+      "blob": "07adeca365aead7d5b28d2b27810b11e75120e47",
+      "bytes": 13861,
+      "sha256": "ca470657792a8c0d2e3a87d19a6f48f177665648279bb89645edef8462062f35"
+    },
+    {
+      "path": "scripts/diagnostics/linux_profile_overhead.gd",
+      "mode": "100644",
+      "blob": "645b713e2d670f09aaea30ed0a6116086f0ec9f7",
+      "bytes": 16337,
+      "sha256": "1e3f4094f2439a7ae054455c5f7e2ca4a993a15067affebce57e760569ee1dae"
+    },
+    {
+      "path": "scripts/diagnostics/linux_profile_overhead.tscn",
+      "mode": "100644",
+      "blob": "7173fa6746e961698cc980f70188b9973135a117",
+      "bytes": 195,
+      "sha256": "acc3cd62c2a72005c112014ed24320093d6f772d5c0f459cda5f24e3cf05fe61"
+    },
+    {
+      "path": "scripts/diagnostics/render_feature_probe.gd",
+      "mode": "100644",
+      "blob": "c83f164a81de623541453bd860210bbae18f3066",
+      "bytes": 3054,
+      "sha256": "7ffcc1451ae46226b8efe76cf8924e697d7c8268b434af827bfd4bba339670f3"
+    },
+    {
+      "path": "scripts/export.py",
+      "mode": "100644",
+      "blob": "6d36a11a839c5eddd01e98effe229e824a220703",
+      "bytes": 2787,
+      "sha256": "9c327cc83a79226755d29968f18c2e853704b123c5cbd34e3bc86e3e6d605d4c"
+    },
+    {
+      "path": "scripts/export.sh",
+      "mode": "100755",
+      "blob": "6280ac67df8f54b9c73cf3609fa7f0d029baf259",
+      "bytes": 155,
+      "sha256": "19b5b9c6387b0a1c55ed766436dc9fd2378709f0ecd9cfccecc20f0f4c7f9249"
+    },
+    {
+      "path": "scripts/export_catalog_fixture.py",
+      "mode": "100644",
+      "blob": "efdf852607b2b308b341e0e47dbbc4c507ed6a83",
+      "bytes": 5350,
+      "sha256": "7ed9bc17839b7e6ce4c1e7bdf2b994ae10ecb18073b22d14903f72d6d96a5973"
+    },
+    {
+      "path": "scripts/export_ios.py",
+      "mode": "100644",
+      "blob": "a1c9cffbc5a73aa80c772ebf508064b392d4a6ef",
+      "bytes": 3325,
+      "sha256": "fb7493cd88e7b86fc7bc071eaac4600a3e31a5592f539d478ffd4b1359880b46"
+    },
+    {
+      "path": "scripts/fixtures/export_integration.gd",
+      "mode": "100644",
+      "blob": "75ee0adb6a44315fbd746ba2c91a71c2191cbacc",
+      "bytes": 7709,
+      "sha256": "ff45b3f96864ff1298f45388977817ef0c44f7eeaccff543a27e82c292e93912"
+    },
+    {
+      "path": "scripts/fixtures/macos_ordinary_source/default_capture_body.swift.txt",
+      "mode": "100644",
+      "blob": "d9f969a4670a53d201623d4de602512016d668a8",
+      "bytes": 3601,
+      "sha256": "1b0f4c909a3bb274083ab72e40baf507f8b7f1984c52b1b02e08443747deabd1"
+    },
+    {
+      "path": "scripts/fixtures/macos_ordinary_source/reference.json",
+      "mode": "100644",
+      "blob": "913309766284102e53296a99c1bd238d19ad9bd0",
+      "bytes": 833,
+      "sha256": "47d2484fe191af3a374dbb586474af53d36448d48acf3c8e00ed7a9f6b45d92a"
+    },
+    {
+      "path": "scripts/fixtures/native_log/.gitattributes",
+      "mode": "100644",
+      "blob": "b4a8de09425eed6f5ac606bf25dd02a0ac099af4",
+      "bytes": 93,
+      "sha256": "6c76fdcac29b2aa0831202495ea85bfb60c28b0aa742b0068dfafbe55662894f"
+    },
+    {
+      "path": "scripts/fixtures/native_log/input-mode.log",
+      "mode": "100644",
+      "blob": "29fe318726e0519bc43130d289692e72e4be232b",
+      "bytes": 2000315,
+      "sha256": "a50a819152083c3d73564f21a5f15d36571c1b79c7178831667092f07537a218"
+    },
+    {
+      "path": "scripts/fixtures/native_log/provenance.json",
+      "mode": "100644",
+      "blob": "952f6829ec1e14ec2d0d7981cebafcffc06614b5",
+      "bytes": 4814,
+      "sha256": "6dd7416827f1173656680c5cf088eb5545315d94b95a60afcf1534c51532b414"
+    },
+    {
+      "path": "scripts/fixtures/network_soak.gd",
+      "mode": "100644",
+      "blob": "cbd7213be8c2cd566556309628c87dfe4715687e",
+      "bytes": 4186,
+      "sha256": "ff34af512c23f9ed5c68654b6b2e278e7678f69a170c7678045d38d7c8a88efb"
+    },
+    {
+      "path": "scripts/fixtures/offline_capture_observations.json",
+      "mode": "100644",
+      "blob": "0d9bd7288f505e708ff883d681a3533085828e78",
+      "bytes": 26766,
+      "sha256": "9c6aaae17954d8abc7ec8b16aec00ebd76ba36ecc591666d672af2d80cbc23cf"
+    },
+    {
+      "path": "scripts/fixtures/offline_focus_observations.json",
+      "mode": "100644",
+      "blob": "eab4fa14aeea2ef65e9ded227edc06fc94e6a9ff",
+      "bytes": 28087,
+      "sha256": "4089d937638d94d3d82736f5e19b3295dc32dace3f385ce60c3c3df9942670b3"
+    },
+    {
+      "path": "scripts/generate_surfaces.py",
+      "mode": "100644",
+      "blob": "c1208cc86e8b10deee85d0467dc3995cb0c40b40",
+      "bytes": 3956,
+      "sha256": "c0f55ead8860b2c3dcd4272ab0a0dc68621b003adb608ae4f5ae29f1afec2049"
+    },
+    {
+      "path": "scripts/godot.sh",
+      "mode": "100755",
+      "blob": "1c6f6c925d0f46b754028e358a81a582274eddcf",
+      "bytes": 153,
+      "sha256": "30b637a99a8bba52cff281fcef8aa639c1b6197953c0cc35e5ac634575e7ca34"
+    },
+    {
+      "path": "scripts/input_consumption_foundation_model.py",
+      "mode": "100644",
+      "blob": "c65699b6450a4c4af234fd62d222056390848b1d",
+      "bytes": 10192,
+      "sha256": "19b869626fc9b2488a4a220aeddf68e7d3590a63ce4392e56cc3be62c4ceb53e"
+    },
+    {
+      "path": "scripts/linux_frame_sampler.py",
+      "mode": "100644",
+      "blob": "0e53d94919f9ada6c43d26e435fdfddcb06e2a6d",
+      "bytes": 12126,
+      "sha256": "9fa5d7134e66031872cef7463bc730f17756a696165a31e6fd55da30a48a553b"
+    },
+    {
+      "path": "scripts/linux_profile_overhead.py",
+      "mode": "100644",
+      "blob": "7f52e724c739918c79e1c8c0547fa897f5f18f03",
+      "bytes": 42495,
+      "sha256": "3d495f74c7799e58616288a8812c29829c45b426ae737fcc73a5712c63782561"
+    },
+    {
+      "path": "scripts/macos_deploy_ocr.py",
+      "mode": "100644",
+      "blob": "e02434fc9777b92cb6f945a8adc7ffe2a42aa6c9",
+      "bytes": 7062,
+      "sha256": "ed523c8badcad9f7d6060e52eb5759b72d2736937fe35a87782544f725a512fd"
+    },
+    {
+      "path": "scripts/macos_native_input.py",
+      "mode": "100644",
+      "blob": "98990989c69393a55a0e6e9ff8f208cf8c321c78",
+      "bytes": 16651,
+      "sha256": "82e53581bd36a1c258bf67d9b3067cd7bcd639f44015c4723f4bf1f3b2a102d6"
+    },
+    {
+      "path": "scripts/macos_ordinary_input.py",
+      "mode": "100644",
+      "blob": "9e11a896c1e4b60772ce4605749b0834b469109d",
+      "bytes": 18355,
+      "sha256": "c763aa4129f74a7d9fc6ac932d6312d7ffafac2a05a90701c9037ed9d200ded7"
+    },
+    {
+      "path": "scripts/macos_window_capture.swift",
+      "mode": "100644",
+      "blob": "0a95764f8531ea841e495695ecdbece2d642b31d",
+      "bytes": 12058,
+      "sha256": "6b64561032d86b60dc1276aea1a642f427b48a1b5257934e89b71afb4269f71f"
+    },
+    {
+      "path": "scripts/measure_bot_squad_symmetry.py",
+      "mode": "100644",
+      "blob": "96ca40de764257d167341bac042aca2dead0ae91",
+      "bytes": 4212,
+      "sha256": "af4760c87435ba6d01a130c65b87877a76d1db6cde724af1fe0246e415c71519"
+    },
+    {
+      "path": "scripts/native_approach.py",
+      "mode": "100644",
+      "blob": "34493e63f4db62f78d0c880d0803cc17700c456d",
+      "bytes": 6370,
+      "sha256": "d58b9530958e746a487ed45cf57e8dc2012df6ef0676173f63be2d054efeb6b0"
+    },
+    {
+      "path": "scripts/native_focus_fence.py",
+      "mode": "100644",
+      "blob": "f578b9f7b72ae50ae262fae883f708054fa1aa1d",
+      "bytes": 8533,
+      "sha256": "d8ab8995fa5e5aa201d2839f5758f971380b1bf090311888c3bcd78a8efe63a5"
+    },
+    {
+      "path": "scripts/native_log.py",
+      "mode": "100644",
+      "blob": "4394d69d5813e33184f0e269e5b383061fc21c33",
+      "bytes": 390,
+      "sha256": "8684252c3ec4ca466fe24a31f938a7614b8ce993c91041b0a2c42d2d483f94e1"
+    },
+    {
+      "path": "scripts/native_observation.py",
+      "mode": "100644",
+      "blob": "8c36c7f3e30866c512923da9c94257ad175c857b",
+      "bytes": 2941,
+      "sha256": "4fb0778090888420a4bdb30c09dc0046bc48bc7ee65b6ba68a66320a18e4689a"
+    },
+    {
+      "path": "scripts/native_settings_route.py",
+      "mode": "100644",
+      "blob": "9ccbe6c691577c17d744185321c62db4590dc39f",
+      "bytes": 6021,
+      "sha256": "7ca33fde40a35e7383d8225abc23dbb8d9e2b59c0d16d6c90572c6110c85a102"
+    },
+    {
+      "path": "scripts/package_qa_receipts.py",
+      "mode": "100644",
+      "blob": "0410baac440c7b5d31346daf86b484d7383d2aa0",
+      "bytes": 5259,
+      "sha256": "457531ea5cb9962a7f16c1e7f528e4689dc12e034d0f9305c57787e0d2ac001a"
+    },
+    {
+      "path": "scripts/postgres_receipt_oracle.py",
+      "mode": "100644",
+      "blob": "343a698dedfbeb22139af136bb200e28bc511fb7",
+      "bytes": 13651,
+      "sha256": "2a556ea866f47d6622baaaaab1ad33ac0d764b8cad0cd70cb357645af9bcbaea"
+    },
+    {
+      "path": "scripts/probe_macos_input.py",
+      "mode": "100644",
+      "blob": "d4d1a5944446fe808dc6d10cb824e0473f1a31a5",
+      "bytes": 16175,
+      "sha256": "6b675b7fa98448ee33ab77d24af201293bc0dac3ed14733eb26165cba7c1d134"
+    },
+    {
+      "path": "scripts/profile_import.py",
+      "mode": "100644",
+      "blob": "b6b6e9bf61d454d51de924bd4c1b75b16047f5ec",
+      "bytes": 2881,
+      "sha256": "1e76934a3f4f6579e7c87c4a8690e95eedfce761728abc1524c434300c45bbd9"
+    },
+    {
+      "path": "scripts/profile_render.sh",
+      "mode": "100755",
+      "blob": "3b65be9eaeca79442035d468925f6fe56c6ae801",
+      "bytes": 2428,
+      "sha256": "3fcc9462ab7bbcf36d09e80175899bf67efa6e04c67b966339923d378978f762"
+    },
+    {
+      "path": "scripts/qualify_ios_compile.py",
+      "mode": "100644",
+      "blob": "67ced21eee201fe906a9bb376e8c2fc985a22114",
+      "bytes": 19022,
+      "sha256": "9ff00bfc43ef0bc1f65afaf9d65423e77c1b4929d4fad47c12e023841c08ca2b"
+    },
+    {
+      "path": "scripts/reload_negative_controls.py",
+      "mode": "100644",
+      "blob": "3f28ec5de194d36e642ff707c93122f5a7329b3d",
+      "bytes": 18085,
+      "sha256": "5e13c065bb5c0f5f71838a87749d37ca21b76cbc1f8ba74849cde4123adbe19b"
+    },
+    {
+      "path": "scripts/run_native_regressions.py",
+      "mode": "100644",
+      "blob": "843dba19da88a5b2d20bc5977031fbcd29ad776d",
+      "bytes": 13696,
+      "sha256": "c441a65fd0434e7c72e42b90bcf392e28adff8f838ead0c0fcb0176dc1d0875f"
+    },
+    {
+      "path": "scripts/run_network_campaign.py",
+      "mode": "100644",
+      "blob": "edd59163200ff036c559fd13381fd78b9fe696fe",
+      "bytes": 3613,
+      "sha256": "ca405f8489ad0dfcd9e8401d0d17378e5175bff03de7b0c9122ab134955cfd43"
+    },
+    {
+      "path": "scripts/serve-account-match.sh",
+      "mode": "100755",
+      "blob": "c626a3aeb838ed9c07cf2ed29c1abc7a051e60ee",
+      "bytes": 2446,
+      "sha256": "031cda2dbd31bad19ab29b4b245e11a62ff363f2651df8ec3bcfc55a417722c7"
+    },
+    {
+      "path": "scripts/session_brief.sh",
+      "mode": "100755",
+      "blob": "8ae0f172de0a5affdaa9f9bc6559afda606bcebf",
+      "bytes": 988,
+      "sha256": "e15c7c9438000ea95c971f8c7cc0d2ee1e3b75f31bd0226c76fe511b182de859"
+    },
+    {
+      "path": "scripts/setup-android.sh",
+      "mode": "100755",
+      "blob": "a1d19b0bff58d0b2b1483092655ba55817525d56",
+      "bytes": 3535,
+      "sha256": "9137d2db7c53e91b00507a0b5137275cdfab2942b93dc3e1675c26f9ce89d483"
+    },
+    {
+      "path": "scripts/setup.sh",
+      "mode": "100755",
+      "blob": "c6320c8dc0b55e4988ec7a3cc4e9ca2a82a15d4f",
+      "bytes": 155,
+      "sha256": "95e18dd78fa44fc7787d1a99c50d49f5c26df4a2cd53dbec186d3060c6d87f63"
+    },
+    {
+      "path": "scripts/simulate_network.py",
+      "mode": "100644",
+      "blob": "199e2177828925065fed35f7a25e2863a9a933da",
+      "bytes": 17851,
+      "sha256": "20407da796a3d7e455f917378276ffecf26aff61ef6a8fe26fa9404d1621e8e9"
+    },
+    {
+      "path": "scripts/test_account_isolated.py",
+      "mode": "100644",
+      "blob": "0ed38bc7a459074cb17635ca97bc3a1cfc1d3e83",
+      "bytes": 2318,
+      "sha256": "b68ef89e3bd6f26d1c4a344a14bbcf7df192845d39304959d815dc5b89d8a909"
+    },
+    {
+      "path": "scripts/test_account_match.py",
+      "mode": "100644",
+      "blob": "bf2b10819f65cfc83a7726f4d7584e3e3a5be9b5",
+      "bytes": 28633,
+      "sha256": "ca19b4eb60e389f611564d7bc2f64a86455d0d722948ae86dd076d9b64fde45b"
+    },
+    {
+      "path": "scripts/test_account_match_output.py",
+      "mode": "100644",
+      "blob": "a5f9f5f87b64ca92df5575f229d78222b6d8eec6",
+      "bytes": 7445,
+      "sha256": "72a077e037689248326507afafcfc48902cfd66c69837287b268b7407188b869"
+    },
+    {
+      "path": "scripts/test_account_network.py",
+      "mode": "100644",
+      "blob": "afc28a50db874d10d1c4d28c7353c500cfb2c5c5",
+      "bytes": 4311,
+      "sha256": "b21c2319e39d70b28391a06ef8dc22bcbb84a1fa98e387aae087782d15bdfa57"
+    },
+    {
+      "path": "scripts/test_account_network_output.py",
+      "mode": "100644",
+      "blob": "d59bdcf5c867693686a413ecfb0b9d58343b9db1",
+      "bytes": 1924,
+      "sha256": "4420a1e50775be72624f7f1fa6e613c2ed01097079beddd7ecf37f42855b2591"
+    },
+    {
+      "path": "scripts/test_activity_provenance.py",
+      "mode": "100644",
+      "blob": "08d7fd43dae9fa1670aac0674f20d3ece8cd8725",
+      "bytes": 6885,
+      "sha256": "7360860296677cc8faf67c133acf414c0dceb1c6dfd4364d4319d83a8aec5a33"
+    },
+    {
+      "path": "scripts/test_admission_capacity.py",
+      "mode": "100644",
+      "blob": "a3e47e461d6685407476b580cf1a704895306505",
+      "bytes": 5337,
+      "sha256": "0a0e0bdc38de89f0b6610df1f2316550d5b0962345c4e154434e8dc85a963bd6"
+    },
+    {
+      "path": "scripts/test_bridge_transport.py",
+      "mode": "100644",
+      "blob": "dcc118d8b434faa0e6f472c19f7ac6109ee9bd9c",
+      "bytes": 2748,
+      "sha256": "19a8437fab3473f650c43841a6e66b88997ebe2f1664a8c5d316abac012cf729"
+    },
+    {
+      "path": "scripts/test_build_manifest.py",
+      "mode": "100644",
+      "blob": "763519e2bab83d8fc06aead292edc6139479537b",
+      "bytes": 10870,
+      "sha256": "40f516bf27bc8a225d7308aaa7100701862fee2680ec7268407f6ce97c41bc31"
+    },
+    {
+      "path": "scripts/test_connection_lifecycle.py",
+      "mode": "100644",
+      "blob": "f46affcfb98fec6a7bd10ee32086f3832656a5a9",
+      "bytes": 2322,
+      "sha256": "f8c97f8c06cd54f7920b9d9e6a1a7c98982625ddb9fadb35a9f8f506422700a5"
+    },
+    {
+      "path": "scripts/test_diagnose_native_input_mode.py",
+      "mode": "100644",
+      "blob": "2a57ea9bf1d7db58afb005043f0ec18750598d4e",
+      "bytes": 15589,
+      "sha256": "ab09c9263b3c6611c7b86dedd51dd98a22ffc05656feedcf30fb89bc3bac036f"
+    },
+    {
+      "path": "scripts/test_focus_resume_timing.py",
+      "mode": "100644",
+      "blob": "910905ca23c5aea320d578dfc07c51940d7d9cd6",
+      "bytes": 7545,
+      "sha256": "0b680df173fd6effe371218e8bb8a6469c6b9bce159dac3192d3ad9a7cc908a6"
+    },
+    {
+      "path": "scripts/test_full_account_reconnect.py",
+      "mode": "100644",
+      "blob": "bf91f2d03439a7f074dfa871dd5907c40ab54391",
+      "bytes": 6907,
+      "sha256": "5bc799c3a8c37e2df8fe984cc2288a3b09ab712813084e3062c6b6489f40bfdf"
+    },
+    {
+      "path": "scripts/test_handshake_hardening.sh",
+      "mode": "100755",
+      "blob": "be0962fc35aab7a30be572d3a23346abd46b54f0",
+      "bytes": 4625,
+      "sha256": "c4a036eda70252b78094fa034857fd3295dbde26ddc00295828c7cc4d5a7505a"
+    },
+    {
+      "path": "scripts/test_hud_fixture_cleanup.py",
+      "mode": "100644",
+      "blob": "b59b44b39628b53b191d742a3914c8d42d651be7",
+      "bytes": 6385,
+      "sha256": "86fc3f3af458f91a3b838304a7bf093c9f54e85bf37a8dbab2b115e5bc7f82ba"
+    },
+    {
+      "path": "scripts/test_input_consumption_absorbing.py",
+      "mode": "100644",
+      "blob": "55a8b45917910bc16f0ea13d475382ffc95ffaf4",
+      "bytes": 17182,
+      "sha256": "211e0edbf656d0b9a2ed76cbc8a2aa91911f4d5316de50da7fa3b3e9c7b703a7"
+    },
+    {
+      "path": "scripts/test_input_consumption_deterministic_phase.py",
+      "mode": "100644",
+      "blob": "2553d78b1dde6b4d2922e29e16eed84696b888bf",
+      "bytes": 20668,
+      "sha256": "54c803cc267de61c896a820ea93a3a1be0333f70ecaec6a62ddda5ad3b98870d"
+    },
+    {
+      "path": "scripts/test_input_consumption_expiry.py",
+      "mode": "100644",
+      "blob": "db24ffc645af3dcfdf55e2da9b5bf2771ba0dc47",
+      "bytes": 22951,
+      "sha256": "d642c4f0be7fbe2e34c08ca46f45b23eb27a787212d94504e8a6609440f505b7"
+    },
+    {
+      "path": "scripts/test_input_consumption_foundation_enforcement.py",
+      "mode": "100644",
+      "blob": "dcc64d0f7bebd61e01409e81f84f63d66dd2d7ec",
+      "bytes": 8620,
+      "sha256": "d25d15b873e81f950337996d0469cf6cb43cd43d14c2257fc1774f513c27d103"
+    },
+    {
+      "path": "scripts/test_input_consumption_foundation_model.py",
+      "mode": "100644",
+      "blob": "11737acc6c031bd16e7cb2afade20e5f026df239",
+      "bytes": 12464,
+      "sha256": "974a272b70abc28674766401debbf26cce72faf4df46817b63ff534d3b076a8e"
+    },
+    {
+      "path": "scripts/test_input_consumption_identity.py",
+      "mode": "100644",
+      "blob": "815c86acb883f797aea511c49b86c2b96bda9800",
+      "bytes": 6017,
+      "sha256": "1a04eb4a5c15f82491df8c7d295c6545fe5db5ae0bcbb80822969e6e1d676f56"
+    },
+    {
+      "path": "scripts/test_input_consumption_intervals.py",
+      "mode": "100644",
+      "blob": "395780ebb0adff76b741b532bbeaee5a8bf6a479",
+      "bytes": 7498,
+      "sha256": "1a89b20ff441df216cab496802c2e9d2aa8304bc513b5482ef03df715fcbb77a"
+    },
+    {
+      "path": "scripts/test_input_consumption_lifecycle.py",
+      "mode": "100644",
+      "blob": "3c64a08018f0171e758dcf296e229e09b9d9e5e5",
+      "bytes": 7194,
+      "sha256": "972e6f949b0251534079ad36999c5cbeb0a146e78d405dbfdd0bbdccf394892a"
+    },
+    {
+      "path": "scripts/test_input_consumption_observation.py",
+      "mode": "100644",
+      "blob": "d6481616713680fb82ff1af6892f8104c3e1c492",
+      "bytes": 17392,
+      "sha256": "af8d1f10482b9513a20f204eee8f17afb94ee4bb549df40b5cea4bd618f859cd"
+    },
+    {
+      "path": "scripts/test_input_consumption_receipts.py",
+      "mode": "100644",
+      "blob": "77866a4900f7c744816200c780505bb2a6316d5a",
+      "bytes": 4257,
+      "sha256": "dcb668a45a4ebc7647ebfb7193ff9746ca4179b845ef4dd462b107f638e87047"
+    },
+    {
+      "path": "scripts/test_input_consumption_state.py",
+      "mode": "100644",
+      "blob": "be03d1e3e7d4f0f5c1f307bdd2721572f9ebd4d2",
+      "bytes": 7889,
+      "sha256": "02f17ef1925bb030b7f0098cac0674bc2f2db919a102650004757b116940b172"
+    },
+    {
+      "path": "scripts/test_input_consumption_stream.py",
+      "mode": "100644",
+      "blob": "e53c149c2c2b327df0f6689c32e101a1faac8d09",
+      "bytes": 10100,
+      "sha256": "da27d8fb7b434fded3439c22d3cdbc569298263b8b0bff57f0a206577448db72"
+    },
+    {
+      "path": "scripts/test_input_consumption_transitions.py",
+      "mode": "100644",
+      "blob": "68acde5dc06b6164def9527188cb8ddf72d42ab2",
+      "bytes": 17357,
+      "sha256": "f41c9c9a1d84e97f484576cb797960270f4f2c8e1e9f35ad874908997c8ade54"
+    },
+    {
+      "path": "scripts/test_input_freshness.py",
+      "mode": "100644",
+      "blob": "83a7ba2c2038873bff46389f3a45b8a16d96aa4d",
+      "bytes": 13708,
+      "sha256": "5c84f2a8cdd58832f2087cebaafbe183a39808cfbc3fb2cfb2cb8dfe7c556317"
+    },
+    {
+      "path": "scripts/test_linux_frame_sampler.py",
+      "mode": "100644",
+      "blob": "d4d57a75e396807e241ad65f3d26765b15187ca8",
+      "bytes": 14970,
+      "sha256": "9d5e6898480b96e3704e109da0db721bb40f9e6953a3bdea1c1b06d78b0d6bfb"
+    },
+    {
+      "path": "scripts/test_linux_gpu_profile.py",
+      "mode": "100644",
+      "blob": "5e705dacb35a5bc67775234c954840c19aceb133",
+      "bytes": 7281,
+      "sha256": "acfcf6d0f070b7169e1ebb7908adf1d236b37e1df52652298198a024b392eb08"
+    },
+    {
+      "path": "scripts/test_linux_profile_overhead.py",
+      "mode": "100644",
+      "blob": "27a87a20511c3be27d049644da6eb2e03a418cc8",
+      "bytes": 37689,
+      "sha256": "1af3a14ea9c29a6e9c51894245110a4799d712b223065142ab8d37fd083e3557"
+    },
+    {
+      "path": "scripts/test_macos_deploy_ocr.py",
+      "mode": "100644",
+      "blob": "fa6935caa24486bad70a521748d2b51201359334",
+      "bytes": 16115,
+      "sha256": "e5b46bc4aa739e80ba53e9e4d4c01f3efe1ee48e17344c6e29ba3750646d9d16"
+    },
+    {
+      "path": "scripts/test_macos_focus.py",
+      "mode": "100644",
+      "blob": "c9d06c71fb0496bdf63c93b45c9b19039f911d37",
+      "bytes": 7237,
+      "sha256": "45d19c668f13105c0c33eb2e61d1935885748e0ecdbb93a1e059d9c35d17124b"
+    },
+    {
+      "path": "scripts/test_macos_menu.py",
+      "mode": "100644",
+      "blob": "096863d28d29324444ede8f01bb4954708398268",
+      "bytes": 10147,
+      "sha256": "a7f0b5e2cd9a1fb8b931ebe3000c443c2b61d3d48af44f33f1980a29bcf4b67c"
+    },
+    {
+      "path": "scripts/test_macos_ordinary.py",
+      "mode": "100644",
+      "blob": "0ecc429464dfe2c05e87a03b28cf5c7f130d36c6",
+      "bytes": 16483,
+      "sha256": "e34b57807689d1f12b725e7dc7092a8645f9880f3673c64653d5ef5c068877cc"
+    },
+    {
+      "path": "scripts/test_macos_ordinary_controller.py",
+      "mode": "100644",
+      "blob": "380562c83018bcd4e8a158bc5dd7fac421a8e296",
+      "bytes": 17394,
+      "sha256": "51048628829ac6c67a0ed6b50af3d43254068fe691a5e272181015894abb42b5"
+    },
+    {
+      "path": "scripts/test_macos_ordinary_paths.py",
+      "mode": "100644",
+      "blob": "063aa66aaba312540836d59c927587767519973c",
+      "bytes": 2665,
+      "sha256": "4a971061a9ca7f5a9e870c835247dbc33021d0a5b31af9a42664e578aa3b74d6"
+    },
+    {
+      "path": "scripts/test_macos_ordinary_startup.py",
+      "mode": "100644",
+      "blob": "bf0148661819519a647296feef8408f7a2d6b601",
+      "bytes": 15139,
+      "sha256": "8f35cbef2186d87ef37937f2d35259e0fb405555ed3b83643409a84c5f5a4137"
+    },
+    {
+      "path": "scripts/test_macos_render_diagnostic.py",
+      "mode": "100644",
+      "blob": "d3385b37bd225f30b8b5da5da6ccf5115380c2d0",
+      "bytes": 2291,
+      "sha256": "29eacb280b30902d078410cfc2a76513256a014386abb3b079ef4c911e021802"
+    },
+    {
+      "path": "scripts/test_macos_screen_identity.py",
+      "mode": "100644",
+      "blob": "2f8ee27ad8eb78484dc4dc7c8698429d76ca33e1",
+      "bytes": 5360,
+      "sha256": "d287d012d109764b036fc271737edc2f8ed62142d4c374598515efa3e87217cd"
+    },
+    {
+      "path": "scripts/test_native_approach.py",
+      "mode": "100644",
+      "blob": "9b358f64564f0512ff34045beab1316d759bc38d",
+      "bytes": 9037,
+      "sha256": "056aafd7aa0f71a0c0b28c86176616f7a5937746572aedf4f91125a6d3caf3cc"
+    },
+    {
+      "path": "scripts/test_native_economy.py",
+      "mode": "100644",
+      "blob": "d0c348f2e68b57a2bfafa4ebf750204f795f3376",
+      "bytes": 4515,
+      "sha256": "4bc910e617e4ac88aa643fd6099d7582f935e164edabe75f098b359b862b6128"
+    },
+    {
+      "path": "scripts/test_native_first_leak.py",
+      "mode": "100644",
+      "blob": "b49f35c745f0a77c2f32b1dcef31ac18d9824794",
+      "bytes": 11818,
+      "sha256": "903e629ad45e4dbcfda6c17575aa3c52031dfff735418982294524ca93273aeb"
+    },
+    {
+      "path": "scripts/test_native_focus_fence.py",
+      "mode": "100644",
+      "blob": "73e6004002d47f0ded509b80dfc5876f25e18b31",
+      "bytes": 15235,
+      "sha256": "8b3991e1568a3178cdc87daaa741cba165bb1c8d7b78b6682a008ae61056f677"
+    },
+    {
+      "path": "scripts/test_native_log.py",
+      "mode": "100644",
+      "blob": "c316d4be50ad5d21c0e8c021fc5ddfe8ea9df094",
+      "bytes": 4125,
+      "sha256": "9f63e8251365e12c767eede681386cfd9d27904c15fd07ed7e7635c321849f31"
+    },
+    {
+      "path": "scripts/test_native_observation.py",
+      "mode": "100644",
+      "blob": "076e6da2d5b8eb402305a259e1a63e41585eecf4",
+      "bytes": 6671,
+      "sha256": "09c813ade6a89bccbd3d672cbbbb6725de0f045c8760e1f8a09a7d91174a66c6"
+    },
+    {
+      "path": "scripts/test_native_route_pulse.py",
+      "mode": "100644",
+      "blob": "32d54ceeee0f70d2b172281c45257e478cb29e06",
+      "bytes": 20550,
+      "sha256": "00c31db63546cce15ea91fb11f0d21aadb9882e7b998bbece3b3763b34d88855"
+    },
+    {
+      "path": "scripts/test_native_settings_route.py",
+      "mode": "100644",
+      "blob": "ec2bed259ef0eff4295503ed58a242a43e8837e9",
+      "bytes": 7003,
+      "sha256": "ba93bbc5be8001475e538c675911229fc880934832a1e905a144570c7327e4bc"
+    },
+    {
+      "path": "scripts/test_native_suite_cleanup.py",
+      "mode": "100644",
+      "blob": "3fec6a0b93ad0c34585cec72abdcc0e2dfbb8dfe",
+      "bytes": 6666,
+      "sha256": "d1df6f33f504a2b8a2a2bd4ce469864850b682e565d61a1acc1f0acd57285a01"
+    },
+    {
+      "path": "scripts/test_native_suite_isolation.py",
+      "mode": "100644",
+      "blob": "ea55e62a86b8ad0a16502b9e69c0e1e202748d0f",
+      "bytes": 6180,
+      "sha256": "89520d49e4563d4ea0592a6f42df7d487c0e1171d1c8e2e13e8cfae5cb6922c4"
+    },
+    {
+      "path": "scripts/test_native_window_lifetime.py",
+      "mode": "100644",
+      "blob": "10d0451fd3e6b17c5e15e2965eee125065b805a1",
+      "bytes": 14944,
+      "sha256": "c38931d5d78754411c87ec4ee34048451274616bd184bf45ed42c12462de17a8"
+    },
+    {
+      "path": "scripts/test_network.sh",
+      "mode": "100755",
+      "blob": "0abe219e9b2809c100ba00248edffdb08fe6968a",
+      "bytes": 2585,
+      "sha256": "2e514dd0a329d68f77a5c77d39395dfb8b9dae2ad83668978b8bef583c9fee75"
+    },
+    {
+      "path": "scripts/test_network_soak.py",
+      "mode": "100644",
+      "blob": "505c53c4d519e0ee11c586cacb9a6eaea1c0339d",
+      "bytes": 2989,
+      "sha256": "4d3b98eb4f5aeccff3611cde2b0e1851c44d0597a86fb8043ec6346c92e6616b"
+    },
+    {
+      "path": "scripts/test_offline_capture_fences.py",
+      "mode": "100644",
+      "blob": "37066ca150d0bfdc5b1f88e4c019ec152e49a594",
+      "bytes": 12063,
+      "sha256": "af76584bb4ceac11daeed35f97bb5b0518c64b2334e80b6f55b39f2bde78bc09"
+    },
+    {
+      "path": "scripts/test_offline_export_ocr.py",
+      "mode": "100644",
+      "blob": "b79391feb95e64fc83694ee02fd5c7dd1ccaf8e4",
+      "bytes": 1690,
+      "sha256": "36ac2c47eb6a78fd53fb16a75c0a68d969c28eb1e31084e0ae1bf8bf8c01ae4b"
+    },
+    {
+      "path": "scripts/test_offline_role_guidance.py",
+      "mode": "100644",
+      "blob": "8930acce08e02c3c4bab2ade0611c9223b118a90",
+      "bytes": 2635,
+      "sha256": "e21ee6c9c6e793ca8476168fa8b33054d8e40ff7a37d303f4b1cc99ab523aa26"
+    },
+    {
+      "path": "scripts/test_package_qa_receipts.py",
+      "mode": "100644",
+      "blob": "6980ddf5e74631c5601b6b32c2b088266e61122d",
+      "bytes": 6572,
+      "sha256": "6a6bdbbdb2a614757ee596924b1764cd5dc774e12e90cff6ceddd3cb0d2e34b5"
+    },
+    {
+      "path": "scripts/test_postgres_receipt_guards.py",
+      "mode": "100644",
+      "blob": "9433ec19fe49868fa80400830561a443c13edc5e",
+      "bytes": 17314,
+      "sha256": "7a4d54f041dd68abd2f4e6605ff3e13fbbcbb2264a5d727f2aa39f3f7ba7fef0"
+    },
+    {
+      "path": "scripts/test_postgres_receipt_oracle.py",
+      "mode": "100644",
+      "blob": "9caf8f8b6358316b3c17664733b56e3b6ca0f56e",
+      "bytes": 10744,
+      "sha256": "9eaf3c8d6ca0ebf6a04388c0a4161c260f9eca38375f0dbfbfc48e1324077120"
+    },
+    {
+      "path": "scripts/test_postgres_receipt_recovery.py",
+      "mode": "100644",
+      "blob": "60a2ec8c46720b248868ca211b1fa980fd2d8f8a",
+      "bytes": 44988,
+      "sha256": "082cf70b0d7a8773721c6e39e2d737066a3883674495299de63c63d3d77136d7"
+    },
+    {
+      "path": "scripts/test_postgres_receipt_refresh.py",
+      "mode": "100644",
+      "blob": "6980feeb48bab86a2ad672354366113cfb735b4a",
+      "bytes": 22330,
+      "sha256": "bda56eeb82c4fd89eae7af305bc1f5863b59e311d4b3d3b3b5f98d769dae200c"
+    },
+    {
+      "path": "scripts/test_probe_macos_input.py",
+      "mode": "100644",
+      "blob": "3ae39435dc16bd11b1f7abc22a23cca18a6cea5c",
+      "bytes": 7543,
+      "sha256": "bb42a7d923ec374cda03fe0acf29f6be5a464f7e7ef54a7c25b5815b5272035a"
+    },
+    {
+      "path": "scripts/test_protocol_compat.sh",
+      "mode": "100755",
+      "blob": "f940354005035308ca2c5813cb3191fd1a605df4",
+      "bytes": 7867,
+      "sha256": "f867d06cbc08667f68a107a093a749a78a3c5308e71e7278c00f54478322ad2c"
+    },
+    {
+      "path": "scripts/test_qualify_ios_compile.py",
+      "mode": "100644",
+      "blob": "ec384d960425e0682d8313b955842cd388f537d0",
+      "bytes": 14188,
+      "sha256": "991ca6099e1c009de3b449da8e2e60ea3ddb778de35310a8f4c0dacf9171063e"
+    },
+    {
+      "path": "scripts/test_reload_contact.py",
+      "mode": "100644",
+      "blob": "fd9a450a99d8396e7b1b48eb56476a36c118dec8",
+      "bytes": 6566,
+      "sha256": "1419254561bcdc1ebbe2fdd012f62007862d509532eaa47ff04013bd35167ac6"
+    },
+    {
+      "path": "scripts/test_render.sh",
+      "mode": "100755",
+      "blob": "422c7598c034a9f7252d0a4b4c1b2f9cc96f2138",
+      "bytes": 1734,
+      "sha256": "6c8ba7375261acc756ad6088897867ee0e5b878bbf79cf61671c797a7d3bb95c"
+    },
+    {
+      "path": "scripts/test_rendered_layout_hud.py",
+      "mode": "100644",
+      "blob": "67caaf5fe483e0a8885fb78a5ab401fa48a3a289",
+      "bytes": 8021,
+      "sha256": "3266553466a450199fb242ed7372e29c211279ef147ae7fa146b42eb3609da29"
+    },
+    {
+      "path": "scripts/test_result_outbox.py",
+      "mode": "100644",
+      "blob": "b417a5f2187db6bd60bc5a37a01d223cbf7341ee",
+      "bytes": 7767,
+      "sha256": "faf1c3502975a3a91513c5a10c5f2ea63107fbdef56d628389cdec28b0720280"
+    },
+    {
+      "path": "scripts/test_reward_bridge.py",
+      "mode": "100644",
+      "blob": "2ecdb38b9d7ae52b96e0cc470468ddc0c411cb58",
+      "bytes": 2666,
+      "sha256": "c5ba2619e342862611911c375017abe6a2d5eff62e3a1f1a8bef547877ecf09b"
+    },
+    {
+      "path": "scripts/test_transaction_restart_oracle.py",
+      "mode": "100644",
+      "blob": "eca6801a1e64a74e85b8c20ab11f6eec907d2ca2",
+      "bytes": 4720,
+      "sha256": "fa18b663c06de0b7a4c7c2438ea4b4c1627e1f90c99e8fbc0643a8b3ae4c2f58"
+    },
+    {
+      "path": "scripts/toolchain.py",
+      "mode": "100644",
+      "blob": "216e38b5c45bace1fef79519ffe99527267b911b",
+      "bytes": 8024,
+      "sha256": "69245ee9ee8772ea1e77eab18983f40979cf6fd6087f5114e15375127de16733"
+    },
+    {
+      "path": "scripts/validate.sh",
+      "mode": "100755",
+      "blob": "f4165a43d74dfb10b0cd7340d19cbf314db2c7d4",
+      "bytes": 9110,
+      "sha256": "c10a5390883cc99c7b9614fff8812eee8647e180acc8e8a8aab3334469c9a7cd"
+    },
+    {
+      "path": "scripts/validate_matrix.py",
+      "mode": "100644",
+      "blob": "3c4de7f4e8768dcb5d66e1cc2af4f1fbae4c257e",
+      "bytes": 8844,
+      "sha256": "08d6ba2916303e825f5a2107499a49737c5e0af24c6ba6f307adaa25e7b97c28"
+    },
+    {
+      "path": "scripts/validate_transaction_restart.py",
+      "mode": "100644",
+      "blob": "eaab554bdf01968abf9dde8f30dae4213b16a138",
+      "bytes": 23451,
+      "sha256": "9a6c82d7267eab42f084d47c3dc96066d648e19849b94a4e83ad6510716435a4"
+    },
+    {
+      "path": "scripts/verify_builds.py",
+      "mode": "100644",
+      "blob": "f9b4b936c8327f1ab5dae7cff3a926ac5053ec9c",
+      "bytes": 13921,
+      "sha256": "b809b72aab14410b4f942d86ec8e4230c6ca1c4f94fcb682f17549e97a875ff1"
+    },
+    {
+      "path": "scripts/verify_integration_export.py",
+      "mode": "100644",
+      "blob": "b7fab40228d8a37825fc33b80c7b303a0cd4e9cf",
+      "bytes": 53903,
+      "sha256": "cf295eab7f43280803b9649a5c54bd2c2fec45a0b13427d98d7ec42463ea812e"
+    },
+    {
+      "path": "scripts/verify_macos_menu.py",
+      "mode": "100644",
+      "blob": "b4a87bfa45de3515632c8f1ed2aeda2e5ea8b3d7",
+      "bytes": 19100,
+      "sha256": "6a449cf49f553f1f89fc8c522cacaa62e43ea6e790b628ecca5e74f7c083b14c"
+    },
+    {
+      "path": "scripts/verify_macos_ordinary.py",
+      "mode": "100644",
+      "blob": "e263e846bb3ba5240d8adc574baaea862f313e85",
+      "bytes": 29731,
+      "sha256": "9e7d52338865e6b5c4ad32b32d44f83fea39d1e6645931e678c91feb21412518"
+    },
+    {
+      "path": "scripts/verify_offline_export.py",
+      "mode": "100644",
+      "blob": "928de21452f10b906ee2da16ffd251f4e9fd0c63",
+      "bytes": 65897,
+      "sha256": "ddeb838c1cf3682e0fcf11b098f1f175c4d51ac3eadb85878932290547635308"
+    },
+    {
+      "path": "scripts/verify_offline_match.py",
+      "mode": "100644",
+      "blob": "e242ed83ddd332c0624df6f2ec59ad689d181b52",
+      "bytes": 49962,
+      "sha256": "f6f45ed28feceb1140e02bf5faffc6293c7d3cac96e83a5e1ab2d70dd07baabf"
+    },
+    {
+      "path": "server/result_outbox.py",
+      "mode": "100644",
+      "blob": "0fe0438c719109b4573eb1019b361e63375d7b4a",
+      "bytes": 11823,
+      "sha256": "fba748d01c29208419f33ed4f76f194ebde1ff495c915bf76b73381386b226ce"
+    },
+    {
+      "path": "server/tests/test_result_outbox.py",
+      "mode": "100644",
+      "blob": "370530d97c661fb8cdc2cdea49b45dcf826826bf",
+      "bytes": 6268,
+      "sha256": "880efe28185793c2d74f83d5433c175f8ea2bcdd7637269c810ea811448ce09b"
+    },
+    {
+      "path": "server/tests/test_supervision.py",
+      "mode": "100644",
+      "blob": "2dd3e1ff5703d4e9e8bf203f9ccaef23be4304b3",
+      "bytes": 2864,
+      "sha256": "468cf8e6f3485f2554b39c572a1593e8ce30596c908a708ec1f32ef5e898af40"
+    },
+    {
+      "path": "tools/art/REFERENCES.md",
+      "mode": "100644",
+      "blob": "79c2a6a80a4bf8d5484625a5b133e698f7e7651a",
+      "bytes": 2511,
+      "sha256": "7f40ca3bc39e0a7f681915a105b3409c92ef1953373f29acb553a57e35e16f0f"
+    },
+    {
+      "path": "tools/art/arms_build.py",
+      "mode": "100644",
+      "blob": "a62f90a1bdf2b00b70a56eb0bce48864736354ec",
+      "bytes": 72447,
+      "sha256": "a4bf84c93f2734cfeef3a6f215f667d0a152fd838cf8759b1777ad3eecda7d42"
+    },
+    {
+      "path": "tools/art/bake.py",
+      "mode": "100644",
+      "blob": "dd40e4adf1d315b40dc511c8d429612f1f3be4f0",
+      "bytes": 14087,
+      "sha256": "6df329e7ecb64373578639b0ade09ace477bad11376b954437e965f1412c192c"
+    },
+    {
+      "path": "tools/art/compare_stages.py",
+      "mode": "100644",
+      "blob": "9244388f4c6eb0680d5836be454e10c7f3be42b2",
+      "bytes": 1428,
+      "sha256": "d384af78bf9c47fcc4ab29804622ec56071051c379236ded6a485071247648db"
+    },
+    {
+      "path": "tools/art/export.py",
+      "mode": "100644",
+      "blob": "31c370f6eb61d2d2e1a5c7f9e9e09c9f20c8e33f",
+      "bytes": 3458,
+      "sha256": "362bf525e2caab2c69188ac3a875081ca7c20c19c932901d4ee325930a759c4d"
+    },
+    {
+      "path": "tools/art/hardsurface.py",
+      "mode": "100644",
+      "blob": "e3b796dcf1f8a8e0049cc9d353a67d7839c22cd6",
+      "bytes": 8722,
+      "sha256": "1876e0acee325118431e912868947f11dd3eaa8c641b29ee228d35369bd8963c"
+    },
+    {
+      "path": "tools/art/motion_sheet.py",
+      "mode": "100644",
+      "blob": "d38e3586ab69d27861e5a46d441f6ad431d60549",
+      "bytes": 2570,
+      "sha256": "5a3fea8a432794654e686f9a47caa36bc332701149e9cb6be2c6982d720e3f89"
+    },
+    {
+      "path": "tools/art/patch_part_ao.py",
+      "mode": "100644",
+      "blob": "2c83d829d87f4dc7ddc384d364a87733ccc2a53c",
+      "bytes": 1576,
+      "sha256": "9e2872118bcf0d4f9d94e2234f2b7ad3218bcb9e8a9e3a3701f97af4566d81d8"
+    },
+    {
+      "path": "tools/art/preview_glove.py",
+      "mode": "100644",
+      "blob": "351b623c17e299b75d0e55b9a5d61814febd0a21",
+      "bytes": 4084,
+      "sha256": "2cae7c23a50022408df5f8b46005f00d209aedff99ebdac402a9dcc2d9dcdfd7"
+    },
+    {
+      "path": "tools/art/rebake_part_ao.py",
+      "mode": "100644",
+      "blob": "8c33be215c4329a462cdb961e70070751b6e5004",
+      "bytes": 2861,
+      "sha256": "5c0a52df7bc9d157bb0ee3762b3973239d0487b1400aa8865266067b59176fc4"
+    },
+    {
+      "path": "tools/art/relay_ar.py",
+      "mode": "100644",
+      "blob": "d95a88ccb8e04c4ac1ed4adfea9a3bfc8ce1169c",
+      "bytes": 23817,
+      "sha256": "99e2eff84b5e0081f6612c4f58b688c2c00729ce18329147c6896c01a179cae7"
+    },
+    {
+      "path": "tools/art/relay_ar_arms.py",
+      "mode": "100644",
+      "blob": "647137082a33c1534c2ab7f960548a026108d5dd",
+      "bytes": 20462,
+      "sha256": "0ce146e4df7248ac8e1a6d195460a0fb278889cd6502e549567174c99b1fdc2a"
+    },
+    {
+      "path": "tools/art/relay_ar_hands.py",
+      "mode": "100644",
+      "blob": "0fb2b5c69f5825824a7ef26c95e8d54fbf749b51",
+      "bytes": 11014,
+      "sha256": "75cca6158920fe116be5ead493f838f69aa2aeb6a94234bf7c33a44e9bfa8a16"
+    },
+    {
+      "path": "tools/art/render_arms.py",
+      "mode": "100644",
+      "blob": "6b83d9dd611878a7422268973073cb39d2fc4e1f",
+      "bytes": 6860,
+      "sha256": "b7366534fe16789675aad0f556a23b76b8fb3fbb3492dc396eed12cffe8ea952"
+    },
+    {
+      "path": "tools/art/render_views.py",
+      "mode": "100644",
+      "blob": "7ee50a6ee3b507f503a6dc5d7300aea08c175afc",
+      "bytes": 7595,
+      "sha256": "f102a2878fb985f70ee7684352f0f33456169e922e84004c325bc5d77e03272c"
+    },
+    {
+      "path": "tools/art/sdf.py",
+      "mode": "100644",
+      "blob": "9ae3a6ae50e99572016f556877dc7b5ab7164825",
+      "bytes": 9383,
+      "sha256": "86cb607d973bf3dd2f8d6da579f86a1626ffefdc587447a2e64a1ec3481a7f61"
+    },
+    {
+      "path": "tools/art/spectrogram.py",
+      "mode": "100644",
+      "blob": "81fbaff47d15824a8734ea6506500b145a15c0d7",
+      "bytes": 1769,
+      "sha256": "a662714e712cff3ded48f9e9efa08b0e43df4a58fa2d6f156cb93448ab539df9"
+    },
+    {
+      "path": "tools/art/textures.py",
+      "mode": "100644",
+      "blob": "c9620899284a0964a53e88b8b7c6bb7c8e96038c",
+      "bytes": 1520,
+      "sha256": "f4615170056a70d48f7e0c8a127f7f2c55264fda0a4eed286cbdcd9aa1fa9262"
+    },
+    {
+      "path": "tools/art/viewmodel_fit.py",
+      "mode": "100644",
+      "blob": "12d30f654547747e1ee3fbde366a8044e4ed8d25",
+      "bytes": 7056,
+      "sha256": "6a4cf903dda986326d6c6bf9b0559331404b41dd56ec1e460d5db13b273ea967"
+    }
+  ]
+}

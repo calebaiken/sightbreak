@@ -1,0 +1,164 @@
+{
+  "group": "priority-r1",
+  "name": "unchanged-counter-changed-latest",
+  "expected": "INVALID",
+  "actual": "INVALID",
+  "matched": true,
+  "result": {
+    "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+    "diagnostic_complete": false,
+    "transition_status": "INVALID",
+    "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+    "roles": {
+      "client": {
+        "records": 7,
+        "coverage": [
+          "client_attempt",
+          "client_connected",
+          "client_tick",
+          "input_send_called",
+          "ready",
+          "snapshot_applied",
+          "welcome_received"
+        ],
+        "counters": {
+          "ready": 1,
+          "client_attempt": 1,
+          "client_connected": 1,
+          "welcome_received": 1,
+          "client_tick": 2,
+          "snapshot_applied": 1,
+          "input_send_called": 1
+        },
+        "max_observation_gap_msec": 1000,
+        "max_snapshot_age_msec": 3000,
+        "pending_saturation_indices": [],
+        "accepted_events": [],
+        "consumed_events": [],
+        "expiry_events": [],
+        "disconnect_events": [],
+        "welcome_events": [
+          {
+            "transport_id": 9,
+            "local_attempt": 1,
+            "local_id": 1,
+            "wall_unix_msec": 104000
+          }
+        ],
+        "binding_events": [],
+        "local_attempts": 1
+      }
+    },
+    "errors": [
+      "authority: latest metadata changed without a stage counter increment"
+    ]
+  },
+  "original_result": {
+    "name": "unchanged-counter-changed-latest",
+    "expected": "INVALID",
+    "actual": "INVALID",
+    "matched": true,
+    "schema_error": null,
+    "candidate": {
+      "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+      "diagnostic_complete": false,
+      "transition_status": "INVALID",
+      "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+      "roles": {
+        "client": {
+          "records": 7,
+          "coverage": [
+            "client_attempt",
+            "client_connected",
+            "client_tick",
+            "input_send_called",
+            "ready",
+            "snapshot_applied",
+            "welcome_received"
+          ],
+          "counters": {
+            "ready": 1,
+            "client_attempt": 1,
+            "client_connected": 1,
+            "welcome_received": 1,
+            "client_tick": 2,
+            "snapshot_applied": 1,
+            "input_send_called": 1
+          },
+          "max_observation_gap_msec": 1000,
+          "max_snapshot_age_msec": 3000,
+          "pending_saturation_indices": [],
+          "accepted_events": [],
+          "consumed_events": [],
+          "expiry_events": [],
+          "disconnect_events": [],
+          "welcome_events": [
+            {
+              "transport_id": 9,
+              "local_attempt": 1,
+              "local_id": 1,
+              "wall_unix_msec": 104000
+            }
+          ],
+          "binding_events": [],
+          "local_attempts": 1
+        }
+      },
+      "errors": [
+        "authority: latest metadata changed without a stage counter increment"
+      ]
+    },
+    "prior": {
+      "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+      "diagnostic_complete": false,
+      "transition_status": "INVALID",
+      "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+      "roles": {
+        "client": {
+          "records": 7,
+          "coverage": [
+            "client_attempt",
+            "client_connected",
+            "client_tick",
+            "input_send_called",
+            "ready",
+            "snapshot_applied",
+            "welcome_received"
+          ],
+          "counters": {
+            "ready": 1,
+            "client_attempt": 1,
+            "client_connected": 1,
+            "welcome_received": 1,
+            "client_tick": 2,
+            "snapshot_applied": 1,
+            "input_send_called": 1
+          },
+          "max_observation_gap_msec": 1000,
+          "max_snapshot_age_msec": 3000,
+          "pending_saturation_indices": [],
+          "accepted_events": [],
+          "consumed_events": [],
+          "expiry_events": [],
+          "disconnect_events": [],
+          "welcome_events": [
+            {
+              "transport_id": 9,
+              "local_attempt": 1,
+              "local_id": 1,
+              "wall_unix_msec": 104000
+            }
+          ],
+          "binding_events": [],
+          "local_attempts": 1
+        }
+      },
+      "errors": [
+        "authority: latest metadata changed without a stage counter increment"
+      ]
+    },
+    "provenance": "exact frozen R3 bytes"
+  },
+  "client_sha256": "751af7160625104ac7f7b182e677477f8dd075a87a270b04423d028856c24526",
+  "authority_sha256": "437f299cc313c1b419cde0a48d33ca591fbf1e805c3e38c14e2e7bf043c07fb5"
+}

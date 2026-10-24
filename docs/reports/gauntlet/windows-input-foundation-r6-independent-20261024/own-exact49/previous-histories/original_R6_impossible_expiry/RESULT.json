@@ -1,0 +1,116 @@
+{
+  "group": "previous-histories",
+  "name": "original_R6_impossible_expiry",
+  "expected": "INVALID",
+  "actual": "INVALID",
+  "matched": true,
+  "result": {
+    "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+    "diagnostic_complete": false,
+    "transition_status": "INVALID",
+    "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+    "roles": {
+      "client": {
+        "records": 7,
+        "coverage": [
+          "client_attempt",
+          "client_connected",
+          "client_tick",
+          "input_send_called",
+          "ready",
+          "snapshot_applied",
+          "welcome_received"
+        ],
+        "counters": {
+          "ready": 1,
+          "client_attempt": 1,
+          "client_connected": 1,
+          "welcome_received": 1,
+          "client_tick": 2,
+          "snapshot_applied": 1,
+          "input_send_called": 1
+        },
+        "max_observation_gap_msec": 1000,
+        "max_snapshot_age_msec": 3000,
+        "pending_saturation_indices": [],
+        "accepted_events": [],
+        "consumed_events": [],
+        "expiry_events": [],
+        "disconnect_events": [],
+        "welcome_events": [
+          {
+            "transport_id": 9,
+            "local_attempt": 1,
+            "local_id": 1,
+            "wall_unix_msec": 113000
+          }
+        ],
+        "binding_events": [],
+        "local_attempts": 1
+      }
+    },
+    "errors": [
+      "authority: peer expiry contradicts lifecycle history: no persistent eligible lifecycle hypothesis matches all observed prefixes"
+    ]
+  },
+  "original_result": {
+    "name": "original_R6_impossible_expiry",
+    "prior_expected": "INVALID",
+    "prior_actual": "INVALID",
+    "expected": "INVALID",
+    "actual": "INVALID",
+    "matched": true,
+    "versioned_policy_adjudication": false,
+    "result": {
+      "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+      "diagnostic_complete": false,
+      "transition_status": "INVALID",
+      "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+      "roles": {
+        "client": {
+          "records": 7,
+          "coverage": [
+            "client_attempt",
+            "client_connected",
+            "client_tick",
+            "input_send_called",
+            "ready",
+            "snapshot_applied",
+            "welcome_received"
+          ],
+          "counters": {
+            "ready": 1,
+            "client_attempt": 1,
+            "client_connected": 1,
+            "welcome_received": 1,
+            "client_tick": 2,
+            "snapshot_applied": 1,
+            "input_send_called": 1
+          },
+          "max_observation_gap_msec": 1000,
+          "max_snapshot_age_msec": 3000,
+          "pending_saturation_indices": [],
+          "accepted_events": [],
+          "consumed_events": [],
+          "expiry_events": [],
+          "disconnect_events": [],
+          "welcome_events": [
+            {
+              "transport_id": 9,
+              "local_attempt": 1,
+              "local_id": 1,
+              "wall_unix_msec": 113000
+            }
+          ],
+          "binding_events": [],
+          "local_attempts": 1
+        }
+      },
+      "errors": [
+        "authority: authority lifecycle history is impossible: "
+      ]
+    }
+  },
+  "client_sha256": "985bd1a9d2dab2b61aa4cd6f0fe8e77ab769d0a10aa3861f024b918d00966abe",
+  "authority_sha256": "96fd8d51798750cfaf2d1a092b6cf52b0320ede117e296176447dfe488885d49"
+}
