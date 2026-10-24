@@ -110,3 +110,21 @@ files and unknown extras, with exact bytes/hashes. No vacuous empty-list proof.
 The project gauntlet and no-ai-slop skills are reused. Root's explicit source-only
 scope overrides native capture, new-thread and canonical mission expansion in
 those skills. No new independent critic is spawned or fresh-context claim made.
+
+## Activated against immutable critic checkpoint
+
+Root explicitly accepted immutable interim7f6e601e3984a0f728e3ff955e2e238020413b70
+as the retained source-supported corpus before repair; final narrative is not a
+new prerequisite. Remote readback equals7f6; all849 members /205366615 bytes
+match both manifest and committed Git bytes. Manifest SHA256 is
+d8d82357403c55c674d913f5361214e6268b9e1d1cb88a54a9fe8d053d922124. Only bounded
+reference documents/rig/summaries are copied in critic-7f6-reference; all originals
+remain at the critic-owned path, with no whole-corpus duplication or edits.
+
+All14 false accepts, the permitted-relative-path false reject and publication
+metadata collision are now source-supported exact retained findings. Proceed
+with the linked model, not just these examples. Versioned positive construction
+changes still require the DIFFERENT critic's adjudication before old fixture/
+helper edits. Source/default driver/binding/ownership/retention gates stay exact.
+Any original-format positives rejected for newly confirmed source contradictions
+must be explicitly reported as obsolete, with their original outcomes retained.
