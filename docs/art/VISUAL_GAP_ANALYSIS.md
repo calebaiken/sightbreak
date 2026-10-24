@@ -30,7 +30,7 @@
 | Other weapons (sidearm, SMG, marksman) | Procedural | Procedural (fallback path unchanged) | All three need the same pipeline | High |
 | Operators (third person) | Primitive bodies, sphere helmets, articulated knees and arms | Unchanged | Full character production: sculpt-quality silhouettes, gear and team readability | High |
 | Environment | Box-built yard, three tiling PBR sets, vertex-colour batches, one sun with two cascades, Filmic tonemap, depth haze | Unchanged | Modular hero props, trim sheets, decals, baked or probe lighting, reflection probes | High |
-| Lighting tiers | LOW (no shadows) and STANDARD, with a render-scale slider | Unchanged | Desktop-showcase and flagship tiers are not defined; the viewmodel ignores the tier | Medium |
+| Lighting tiers | LOW (no shadows) and STANDARD, with a render-scale slider | Four tiers (LOW, MEDIUM, HIGH, ULTRA) in one tested table; shadow fill raised on all tiers; HIGH and ULTRA add a post-resolved tonemap, anisotropic filtering, and on ULTRA ambient occlusion and 4x MSAA | The viewmodel ignores the tier; no device frame-time record; HIGH and ULTRA are desktop-only | Medium |
 | Smokes and effects | Layered smoke presentation, pooled casings, sparks and dust | Unchanged | No volumetric interaction or bullet clearing; no shell or brass model | Medium |
 
 ## Realistic ceiling on this stack
@@ -38,8 +38,9 @@
 SIGHTBREAK uses Godot's GL Compatibility renderer on desktop and mobile. That rules out several of the techniques the reports attribute to CS2's look:
 - screen-space reflections;
 - SDFGI and screen-space indirect lighting;
-- SSAO;
 - the volumetric fog that the Forward+ renderer provides.
+
+SSAO was listed here until it was measured: it renders in Compatibility on 4.7.2, but its effect on this map is small and it needs the post pass (`GRAPHICS_BACKLOG.md`).
 
 What remains attainable is:
 - strong PBR assets with baked occlusion;
