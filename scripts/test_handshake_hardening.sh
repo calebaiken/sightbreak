@@ -18,7 +18,7 @@ run_godot() { # state-dir args...
 (run_godot "$out_dir/state/import" --import >/dev/null 2>&1)
 port=$(( 30200 + (RANDOM % 400) * 8 ))
 wait_ready() { for attempt in $(seq 1 100); do grep -q SIGHTBREAK_SERVER_READY "$1" && return 0; sleep 0.1; done; return 1; }
-for scenario in spam fractional huge good_then_bad bad_then_good; do
+for scenario in spam fractional huge good_then_bad bad_then_good stale_layout unreadable_layout; do
   port=$((port + 1))
   (run_godot "$out_dir/state/server-$scenario" -- --server --port=$port > "$out_dir/attack-$scenario.server.log" 2>&1) &
   server_pid=$!
@@ -28,7 +28,7 @@ for scenario in spam fractional huge good_then_bad bad_then_good; do
   fi
   kill "$server_pid" 2>/dev/null; wait "$server_pid" 2>/dev/null
 done
-for scenario in hang_up reject_then_hang_up accepted_text; do
+for scenario in hang_up reject_then_hang_up accepted_text accepted_stale_layout; do
   port=$((port + 1))
   (run_godot "$out_dir/state/probe-server-$scenario" --script res://tests/handshake_server_probe.gd -- --port=$port --scenario=$scenario > "$out_dir/hostile-$scenario.server.log" 2>&1) &
   server_pid=$!
@@ -50,7 +50,7 @@ def attack(name):
     match = re.search(r"^HANDSHAKE_ATTACK (.*)$", log, re.M)
     server = (out / f"attack-{name}.server.log").read_text(errors="replace")
     return (json.loads(match.group(1)) if match else {}), server
-for name in ("spam", "fractional", "huge", "bad_then_good"):
+for name in ("spam", "fractional", "huge", "bad_then_good", "stale_layout", "unreadable_layout"):
     data, server = attack(name)
     rejected = server.count("PROTOCOL_REJECTED")
     errors = len(re.findall(r"^(ERROR|SCRIPT ERROR)", server, re.M))
@@ -63,7 +63,8 @@ result("good_then_bad", bool(data) and data["admitted"] and rejected == 0 and er
        f"admitted={data.get('admitted')} server_rejections={rejected} server_errors={errors}")
 expect = {"hang_up": "closed the connection during the version check",
           "reject_then_hang_up": "closed the connection during the version check",
-          "accepted_text": "Version mismatch"}
+          "accepted_text": "Version mismatch",
+          "accepted_stale_layout": "Relay Yard layout"}
 for name, phrase in expect.items():
     log = (out / f"hostile-{name}.client.log").read_text(errors="replace") if (out / f"hostile-{name}.client.log").exists() else ""
     notices = re.findall(r"^PROTOCOL_NOTICE ([0-9.]+) (.*)$", log, re.M)

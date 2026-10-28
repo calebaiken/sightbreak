@@ -24,6 +24,8 @@ run_godot render-budget --headless --script res://tests/render_budget_test.gd
 run_godot smoke-presentation --headless --script res://tests/smoke_presentation_test.gd
 run_godot match --headless --script res://tests/match_test.gd
 run_godot authority-order --headless --script res://tests/authority_order_test.gd
+# The handshake compares the Relay Yard layout as well as the protocol number.
+run_godot handshake-layout --headless --script res://tests/handshake_layout_test.gd
 run_godot state-privacy --headless --script res://tests/state_privacy_test.gd
 run_godot snapshot-buffer --headless --script res://tests/snapshot_buffer_test.gd
 run_godot input-stream --headless --script res://tests/input_stream_test.gd

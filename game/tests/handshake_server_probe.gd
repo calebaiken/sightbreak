@@ -1,7 +1,7 @@
 extends SceneTree
 ## Hostile handshake server for scripts/test_handshake_hardening.sh: answers the
 ## stock client's hello in ways a real server never should.
-## Args: --port=N --scenario=hang_up|reject_then_hang_up|accepted_text
+## Args: --port=N --scenario=hang_up|reject_then_hang_up|accepted_text|accepted_stale_layout
 const Match = preload("res://scripts/gameplay/match.gd")
 var scenario := ""
 var api: SceneMultiplayer
@@ -9,8 +9,12 @@ var api: SceneMultiplayer
 func _initialize() -> void:
 	_run.call_deferred()
 
-func _reply(accepted: Variant) -> PackedByteArray:
-	return JSON.stringify({"game": "sightbreak", "protocol": Match.PROTOCOL_VERSION, "build": "probe", "accepted": accepted, "reason": "Probe server refuses this client."}).to_utf8_buffer()
+## A null layout leaves the field out, as every build before it existed did.
+func _reply(accepted: Variant, layout: Variant = RelayYard.LAYOUT_REVISION) -> PackedByteArray:
+	var hello := {"game": "sightbreak", "protocol": Match.PROTOCOL_VERSION, "build": "probe", "accepted": accepted, "reason": "Probe server refuses this client."}
+	if layout != null:
+		hello["layout"] = layout
+	return JSON.stringify(hello).to_utf8_buffer()
 
 func _on_hello(peer: int, _data: PackedByteArray) -> void:
 	match scenario:
@@ -22,6 +26,10 @@ func _on_hello(peer: int, _data: PackedByteArray) -> void:
 			api.disconnect_peer(peer)
 		"accepted_text":
 			api.send_auth(peer, _reply("yes"))
+			api.complete_auth(peer)
+		"accepted_stale_layout":
+			# A server that admits on the protocol number alone: it accepts, with no layout in its hello.
+			api.send_auth(peer, _reply(true, null))
 			api.complete_auth(peer)
 
 func _run() -> void:
