@@ -724,7 +724,12 @@ static func _hello_mismatch(hello: Dictionary, own: String, other: String) -> St
 		return "This %s uses network protocol %d; this %s sent %s." % [own, PROTOCOL_VERSION, other, "protocol %d" % protocol if protocol >= 0 else "no readable protocol"]
 	var layout := _hello_layout(hello)
 	if layout != RelayYard.LAYOUT_REVISION:
-		return "This %s uses Relay Yard layout %d; this %s sent %s." % [own, RelayYard.LAYOUT_REVISION, other, "layout %d" % layout if layout >= 0 else "no readable layout"]
+		var sent := "layout %d" % layout
+		if not hello.has("layout"):
+			sent = "no layout (a build from before layouts were announced)"
+		elif layout < 0:
+			sent = "no readable layout"
+		return "This %s uses Relay Yard layout %d; this %s sent %s." % [own, RelayYard.LAYOUT_REVISION, other, sent]
 	return ""
 
 func _server_handshake(peer_id: int, data: PackedByteArray) -> void:

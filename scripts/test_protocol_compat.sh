@@ -27,16 +27,21 @@ if [[ ! -f "$release_dir/game/project.godot" ]]; then
   git -C "$repo_dir" archive "$release_ref" | tar -x -C "$release_dir"
 fi
 # Actual prior published input/RPC contract, not just a synthetic version edit.
+previous_ref="89c0e997c9f706d91b02e5ac412853c4d35cd112"
+previous_dir="$out_dir/previous-${previous_ref:0:7}"
+mkdir -p "$previous_dir"
+git -C "$repo_dir" archive "$previous_ref" game | tar -x -C "$previous_dir"
+# The real build from before Relay Yard layout 2: same protocol, no layout field in its hello.
 legacy_ref="${LEGACY_LAYOUT_REF:-830bf2ba51146d7bd314261ff58044deea259e1b}"
+if ! git -C "$repo_dir" cat-file -e "$legacy_ref^{commit}" 2>/dev/null; then
+  echo "LEGACY_LAYOUT_REF $legacy_ref is not in this clone: fetch the full history, or set LEGACY_LAYOUT_REF to the last commit before layout 2." >&2
+  exit 2
+fi
 legacy_dir="$out_dir/legacy-${legacy_ref:0:7}"
 if [[ ! -f "$legacy_dir/game/project.godot" ]]; then
   mkdir -p "$legacy_dir"
   git -C "$repo_dir" archive "$legacy_ref" game | tar -x -C "$legacy_dir"
 fi
-previous_ref="89c0e997c9f706d91b02e5ac412853c4d35cd112"
-previous_dir="$out_dir/previous-${previous_ref:0:7}"
-mkdir -p "$previous_dir"
-git -C "$repo_dir" archive "$previous_ref" game | tar -x -C "$previous_dir"
 future_dir="$out_dir/future"
 rm -rf "$future_dir"; mkdir -p "$future_dir"
 (cd "$repo_dir" && tar --exclude=game/.godot -cf - game) | tar -xf - -C "$future_dir"
@@ -78,7 +83,7 @@ expect = {
     'previous:current': 'explicit mismatch', 'current:previous': 'explicit mismatch',
     # Same protocol, different yard. A legacy client is refused by this server; this client refuses a legacy
     # server that admitted it on the protocol number alone (the server never has a rejection to log).
-    'legacy:current': 'explicit mismatch', 'current:legacy': 'client refuses server layout',
+    'legacy:current': 'server refuses stale layout', 'current:legacy': 'client refuses server layout',
 }
 rows, failures = [], []
 for combo, wanted in expect.items():
@@ -108,6 +113,11 @@ for combo, wanted in expect.items():
     elif wanted == 'client reports missing handshake':
         ok = summary['final_state'] == 'failed' and any('No version handshake' in n for n in summary['notices']) and failed_at and failed_at[0] <= 6.5 and admitted == 0
         outcome = f"failed after {failed_at[0]:.1f} s, no retries" if failed_at else 'did not fail'
+    elif wanted == 'server refuses stale layout':
+        # The reason must be the layout, not the protocol: the legacy build speaks protocol 6 like this one.
+        ok = (summary['final_state'] == 'failed' and any('Version mismatch' in n and 'Relay Yard layout' in n for n in summary['notices'])
+              and bool(failed_at) and failed_at[0] <= 2.0 and admitted == 0 and 'PROTOCOL_REJECTED' in server_log and 'client_layout=1' in server_log)
+        outcome = f"rejected after {failed_at[0]:.1f} s for its layout, reason shown" if failed_at else 'not rejected'
     elif wanted == 'client refuses server layout':
         ok = summary['final_state'] == 'failed' and any('Version mismatch' in n and 'Relay Yard layout' in n for n in summary['notices']) and bool(failed_at) and failed_at[0] <= 2.0 and admitted == 0
         outcome = f"refused after {failed_at[0]:.1f} s with the layout reason shown" if failed_at else 'not refused'

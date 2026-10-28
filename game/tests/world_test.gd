@@ -16,7 +16,7 @@ func run() -> void:
 	root.add_child(arena)
 	await process_frame
 	# Revision 1 had 25 obstacles (4 walls, 6 containers, 9 crates, 6 poles). Revision 2 adds a declared
-	# set of 12 layout solids; every other presentation change must still add none.
+	# set of 13 layout solids; every other presentation change must still add none.
 	check(Arena.LAYOUT_REVISION == 2 and arena.layout_solids == 13, "revision 2 layout adds exactly its 13 declared solids")
 	check(arena._obstacles.size() == 25 + arena.layout_solids, "presentation preserves the 25 original navigation obstacles beside the layout solids")
 	check(arena.sites == [Vector3(-15, 0, 10), Vector3(15, 0, 10)], "objective coordinates remain unchanged")

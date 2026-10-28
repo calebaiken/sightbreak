@@ -3,10 +3,10 @@ extends SceneTree
 ## world every authoritative move and shot resolves in. Pure checks of the parsing and the decision; the real
 ## server and client processes are covered by scripts/test_handshake_hardening.sh and scripts/test_protocol_compat.sh.
 
-## SHA-256 of the yard's collision solids for each revision, from _layout_fingerprint. A peer on another revision resolves hits
+## SHA-256 of the yard's collision shapes for each revision, from _layout_fingerprint. A peer on another revision resolves hits
 ## and movement in a different world, so a change to the solids must come with a new RelayYard.LAYOUT_REVISION (the handshake
 ## refuses mixed layouts) and a new entry here.
-const LAYOUT_FINGERPRINTS := {2: "f15066b6469df3ff02458df978db860374be78d4a85b8297c817af34af877d5e"}
+const LAYOUT_FINGERPRINTS := {2: "1f3ad7502d87c85e49a6b8473236563cfb8cfff45b22eaafda723fcc11f28469"}
 var checks := 0
 var failures := 0
 
@@ -22,13 +22,18 @@ func _hello(protocol: Variant, layout: Variant = RelayYard.LAYOUT_REVISION, acce
 		hello["layout"] = layout
 	return hello
 
-## Every collision solid, to the millimetre and in a fixed order, hashed.
+## Every collision shape in the yard (the floor and walls as well as the cargo), to the millimetre and in a fixed order, hashed.
 static func _layout_fingerprint() -> String:
 	var arena := RelayYard.new()
 	arena._build()
 	var rows: Array[String] = []
-	for box: AABB in arena._obstacles:
-		rows.append("%.3f,%.3f,%.3f,%.3f,%.3f,%.3f" % [box.position.x, box.position.y, box.position.z, box.size.x, box.size.y, box.size.z])
+	for collision: CollisionShape3D in arena.find_children("*", "CollisionShape3D", true, false):
+		var at: Vector3 = (collision.get_parent() as Node3D).position + collision.position
+		var box := collision.shape as BoxShape3D
+		if box == null:
+			rows.append("%s %.3f,%.3f,%.3f" % [collision.shape.get_class(), at.x, at.y, at.z])
+		else:
+			rows.append("box %.3f,%.3f,%.3f,%.3f,%.3f,%.3f" % [at.x, at.y, at.z, box.size.x, box.size.y, box.size.z])
 	arena.free()
 	rows.sort()
 	return "\n".join(rows).sha256_text()
@@ -56,7 +61,7 @@ func _initialize() -> void:
 	# Decision.
 	var mismatch := func(protocol: Variant, layout: Variant) -> String: return TacticalMatch._hello_mismatch(_hello(protocol, layout), "server", "client")
 	check(mismatch.call(6, current).is_empty(), "matching protocol and layout are admitted")
-	check(mismatch.call(6, null) != "" and "layout 1" in mismatch.call(6, null), "a build without the layout field is refused as layout 1")
+	check(mismatch.call(6, null) != "" and "no layout" in mismatch.call(6, null) and "layout 1" not in mismatch.call(6, null), "a build without the layout field is refused, and said to have sent none")
 	check("Relay Yard layout %d" % current in mismatch.call(6, null), "the reason names this build's layout")
 	check("layout %d" % (current + 1) in mismatch.call(6, current + 1), "a newer layout is refused with its number")
 	check("no readable layout" in mismatch.call(6, 2.5) and "no readable layout" in mismatch.call(6, "two"), "an unreadable layout says so")
@@ -66,6 +71,6 @@ func _initialize() -> void:
 
 	# The same decision, from the other end, names the sides the right way round.
 	var from_client: String = TacticalMatch._hello_mismatch(_hello(6, null), "client", "server")
-	check(from_client.begins_with("This client uses Relay Yard layout") and "this server sent layout 1" in from_client, "the client names itself and the server correctly")
+	check(from_client.begins_with("This client uses Relay Yard layout") and "this server sent no layout" in from_client, "the client names itself and the server correctly")
 	print("HANDSHAKE_LAYOUT_TEST checks=%d failures=%d" % [checks, failures])
 	quit(1 if failures else 0)
