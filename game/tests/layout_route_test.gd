@@ -2,13 +2,19 @@ extends SceneTree
 ## Relay Yard revision 2 closes the straight line from the attacker spawn to a site, so a player has to walk the yard.
 ## This drives a real attacker through the engine's physics, the other nine held idle:
 ##   - along the route the bots use (Arena.bot_navigation), from three spawn slots to each site, and plants;
-##   - along the scripted player of the native verifier, read from PLANT_ROUTE_SITE_A_REVISION_2 in
-##     scripts/verify_offline_match.py so the two cannot drift apart, every leg a straight line, so a corner that clips the
-##     body shows up, and plants;
-##   - through each of the four lane-divider doors, on the graph (a crossing, not a detour) and with a body.
+##   - along the scripted player of the native verifier, from the position the plant fixture gives the human
+##     (offline_diagnostics.gd) over the waypoints in PLANT_ROUTE_SITE_A_REVISION_2 (scripts/verify_offline_match.py), both
+##     read from their sources so the three cannot drift apart. Every leg is a straight line, so a corner that clips the
+##     body shows up. It plants, and the old straight line from the same start is shown to end against the site shield;
+##   - through each of the four lane-divider doors, on the graph (a crossing, not a detour) and with a body;
+##   - the native focus test's W press from the stock human spawn, which needs the body to be able to move after it has already
+##     been held into the screen wall (see _focus_press).
 ## The navigation grid is 2 m and the divider doors 2.5 m wide; this is where a mismatch between that graph and the
 ## collision world would show. It asserts the yard is traversable and plantable, not that it is fun or balanced.
 const VERIFIER := "../scripts/verify_offline_match.py"
+const FIXTURE := "res://scripts/offline_diagnostics.gd"
+## The straight line the verifier walked before the layout had a shield beside site A: fixture start to the plant point.
+const OLD_STRAIGHT_END := Vector3(-15.0, 0.0, 8.0)
 const SPAWN_SLOTS := [0, 2, 4]
 ## Inner doors (x = 10, between the divider and the mid hub) and outer doors (x = 17.25, between the divider and the wall cargo).
 const DOOR_X := [-17.25, -10.0, 10.0, 17.25]
@@ -97,6 +103,39 @@ func _verifier_route() -> Array[Vector3]:
 		route.append(Vector3(float(point.get_string(1)), 0.0, float(point.get_string(2))))
 	return route
 
+## Where the plant fixture puts the human attacker, from the fixture's own source. Zero when it cannot be read.
+func _fixture_start() -> Vector3:
+	var file := FileAccess.open(FIXTURE, FileAccess.READ)
+	if file == null:
+		return Vector3.ZERO
+	var found := RegEx.create_from_string("scenario == \"plant\":\\s*attackers\\[0\\] = Vector3\\((-?[0-9.]+), ([0-9.]+), (-?[0-9.]+)\\)").search(file.get_as_text())
+	if found == null:
+		return Vector3.ZERO
+	return Vector3(float(found.get_string(1)), float(found.get_string(2)), float(found.get_string(3)))
+
+## Holds `move` for `seconds` of simulated time, looking along `yaw`.
+func _hold(seconds: float, move: Vector2, yaw: float) -> void:
+	var held := 0.0
+	while held < seconds:
+		game.set_local_input({"move": move, "look": Vector2(yaw, 0.0)})
+		await physics_frame
+		held += STEP
+
+## The native focus test (scripts/verify_offline_export.py) holds W through a focus loss, releases it, presses W again and
+## requires the body to move. The screen wall is 2.2 m ahead of the attacker spawn row, so a body square to it stops dead and
+## the second press goes nowhere; a turn of the mouse, however small, lets it slide along the wall. Returns how far the second
+## press moved the body.
+func _focus_press(start: Vector3, turn: float) -> float:
+	var actor := await _start_match(start)
+	var yaw := actor.yaw + turn
+	await _hold(3.0, Vector2(0, 1), yaw)
+	await _hold(1.0, Vector2.ZERO, yaw)
+	var before := actor.global_position
+	await _hold(3.0, Vector2(0, 1), yaw)
+	var moved := before.distance_to(actor.global_position)
+	await _end_match()
+	return moved
+
 func _plant_route(label: String, start: Vector3, points_for: Callable) -> void:
 	var actor := await _start_match(start)
 	var points: Array[Vector3] = points_for.call(game.arena, actor.global_position)
@@ -140,11 +179,24 @@ func _run() -> void:
 			var to_site := func(arena: RelayYard, from: Vector3) -> Array[Vector3]: return _nav_route(arena, from, arena.sites[site_index])
 			await _plant_route("bot route to site %s from slot %d" % ["AB"[site_index], slot], spawns[slot], to_site)
 	var route := _verifier_route()
-	check(route.size() >= 4, "the native verifier's plant route can be read from %s" % VERIFIER)
-	if route.size() >= 4:
-		await _plant_route("scripted player route to site A", spawns[2], func(_arena: RelayYard, _from: Vector3) -> Array[Vector3]: return route)
+	var fixture := _fixture_start()
+	check(route.size() >= 2, "the native verifier's plant route can be read from %s" % VERIFIER)
+	check(fixture != Vector3.ZERO, "the plant fixture's start for the human can be read from %s" % FIXTURE)
+	if route.size() >= 2 and fixture != Vector3.ZERO:
+		await _plant_route("scripted player route to site A", fixture, func(_arena: RelayYard, _from: Vector3) -> Array[Vector3]: return route)
+		check(route[route.size() - 1].distance_to(OLD_STRAIGHT_END) < 0.01, "the verifier's route ends at the point the straight line used to reach")
+		var actor := await _start_match(fixture)
+		var seconds := await _walk(actor, [OLD_STRAIGHT_END])
+		check(seconds < 0.0 or game.arena.is_at_site(actor.global_position) < 0, "the old straight line from the fixture start is blocked by the site shield (if this fails, the detour in %s is no longer needed)" % VERIFIER)
+		await _end_match()
 	for x: float in DOOR_X:
 		await _through_door(x)
+	var square := await _focus_press(spawns[0], 0.0)
+	check(square < 0.01, "square to the screen wall the body stops dead (moved %.2f m), which is why the focus test turns first" % square)
+	for turn: float in [0.03, -0.03, 0.14, -0.14]:
+		var moved := await _focus_press(spawns[0], turn)
+		check(moved > 0.15, "after a turn of %+.2f rad the second W press still moves the body (moved %.2f m)" % [turn, moved])
+		print("LAYOUT_FOCUS_PRESS turn=%+.2f moved=%.2fm" % [turn, moved])
 	Engine.time_scale = 1.0
 	Engine.physics_ticks_per_second = 60
 	# The AudioServer releases transient playback objects on its mixer cycles; quitting before they run is reported as a leak.
