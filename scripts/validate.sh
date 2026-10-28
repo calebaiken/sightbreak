@@ -15,6 +15,8 @@ run_godot actor --headless --script res://tests/actor_test.gd
 run_godot world --headless --script res://tests/world_test.gd
 # Relay Yard layout rules: spawn protection, route length and route exposure (see the probe's ASSERT_ constants).
 run_godot map-sightlines --headless --script res://tests/map_sightline_probe.gd -- --assert
+# Attackers can still walk to both sites on foot (the bots' route and the native verifier's scripted route) and plant.
+run_godot layout-routes --headless --audio-driver Dummy --script res://tests/layout_route_test.gd
 run_godot hit-feedback --headless --script res://tests/hit_feedback_test.gd
 run_godot weapon-integrity --headless --script res://tests/weapon_integrity_test.gd
 run_godot gunplay-rules --headless --audio-driver Dummy --script res://tests/gunplay_rules_probe.gd
