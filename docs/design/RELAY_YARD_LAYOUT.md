@@ -1,6 +1,6 @@
 # Relay Yard layout, revision 2
 
-Status: **implemented and measured with bots; not human-playtested.** Evidence and raw data: [docs/reports/gauntlet/relay-yard-layout](../reports/gauntlet/relay-yard-layout/README.md).
+Status: **implemented and measured with bots; not human-playtested.** The layout was designed and first measured in draft PR #26 (`claude/relay-yard-tactical-layout-v1`, where its images, critic reviews and raw logs live). It is integrated here onto the v1 playability stack (PR #31), re-measured there with fair actor ordering, and given a handshake identity so mixed builds are refused. See [the integration report](../reports/relay-yard-integration/README.md) for those numbers and their limits. The tables below are PR #26's original measurements, kept as the design record.
 
 ## Why the layout changed
 
@@ -90,15 +90,17 @@ Under the stock tick order (`actors.values()` in id order), actors 1-5 win 71% o
 
 The authoritative tick runs `tick_authority` for each actor in id order, so in a same-tick trade the lower id fires and kills first. It is probably a real fairness defect for networked play too, where player ids are seats. It lives in `match.gd` (Codex-owned shared code), so it is not changed here. A fix would rotate or shuffle the processing order each tick; it needs its own PR and a regression test. Logged in the worklog.
 
-**Update (M3).** Fixed outside this branch, in draft PR #28 (`claude/fair-actor-order-v1`). There were two causes: the id-ordered tick, and bot habits keyed on raw id parity. A per-tick shuffle alone left ids 1-5 at 61%; with the habits made squad-symmetric the pooled normal result is 49.9% (46.8% to 53.1%) over 72 matches. The attacker win rates in the table above (59% normal, 67% hard) were measured before the fix and are confounded; on the unchanged pad, with symmetric squads, attackers win about a quarter of normal rounds. They need re-measuring on this layout once PR #28 is in.
+**Update (M3).** Fixed outside PR #26, in draft PR #28 (`claude/fair-actor-order-v1`). There were two causes: the id-ordered tick, and bot habits keyed on raw id parity. A per-tick shuffle alone left ids 1-5 at 61%; with the habits made squad-symmetric the pooled normal result is 49.9% (46.8% to 53.1%) over 72 matches. The attacker win rates in the table above (59% normal, 67% hard) were measured before the fix and are confounded.
+
+**Update (integration).** The v1 playability stack (PR #31) resolves same-tick trades with its own movement, action and contact phases (`authority_order_test.gd`), so the table's win rates can be re-measured on it. They are in the [integration report](../reports/relay-yard-integration/README.md): with fair ordering, attackers win about 64% of normal rounds on this layout, against about 25% on the open pad. That is no longer an attacker-starved game, and it is now somewhat attacker-favoured; tuning it is separate work.
 
 ## Compatibility notes for other contributors
 
-- **Mixed builds.** Layout is part of the build. The handshake carries the protocol (6) and a build string, but nothing that distinguishes layouts. A client and a server on different layouts would disagree about hits and movement. Treat the layout as protocol-affecting and match builds, or bump the protocol in a Codex-owned change.
-- **Native scenario scripts.** `scripts/verify_offline_match.py` walked the plant scenario in a straight line from spawn to site A. That line is now blocked. The script follows `PLANT_ROUTE_SITE_A_REVISION_2`: a route through the west exit, written for the layout before the mid exit was closed again and **re-checked against the final geometry** (every leg is clear under the bots' obstacle map). Not run natively here (no native Windows or Linux export or OCR stack in this session); Codex's CI must confirm. The defuse route is unchanged geometry.
+- **Mixed builds.** The layout is the collision world every authoritative move and shot resolves in, so it is part of the compatibility contract. The handshake hello now carries `layout` (`LAYOUT_REVISION`) beside the protocol, which stays 6. A hello without the field is a build from before it existed and counts as revision 1, so a server on this layout refuses it and this client refuses a server that sends none. **Increment `LAYOUT_REVISION` with any change to the solids that affect collision.** `handshake_layout_test.gd` covers the decision, `test_handshake_hardening.sh` the hostile cases and `test_protocol_compat.sh` a real legacy build against this one in both directions.
+- **Native scenario scripts.** `scripts/verify_offline_match.py` walked the plant scenario in a straight line from spawn to site A. That line is now blocked. The script follows `PLANT_ROUTE_SITE_A_REVISION_2`: a route through the west exit, **re-checked against the final geometry** (every leg is clear under the bots' obstacle map). Not run natively here (no native Windows or Linux export or OCR stack); the native CI must confirm. What is checked: `layout_route_test.gd` walks that same route, leg by leg in a straight line, through the engine's physics and plants, so a corner that clips the body fails the test. The defuse route is unchanged geometry.
 - **Frozen tests.** `world_test` and `actor_test` froze 25 obstacles and 26 bodies. They now assert 25 plus `layout_solids` (13) and the revision. No threshold was relaxed and no fixture needed to move.
 - **Radar.** `radar.gd` draws `arena._obstacles`, so the minimap follows the layout with no change.
-- **Bots.** Only `DEFENDER_ANCHORS` changed. Paths come from the navigation graph.
+- **Bots.** Only `DEFENDER_ANCHORS` changed. Paths come from the navigation graph. `SITE_HOLD_OFFSETS` (the attackers' escort holds) still follow the open-pad layout; see the integration report for the one deadlock that follows from it.
 
 ## Reproduce
 
@@ -109,7 +111,7 @@ Xvfb :99 -screen 0 1920x1080x24 +extension GLX +render -noreset &
 DISPLAY=:99 scripts/measure_relay_yard.sh out/relay-yard --both-starts --seeds "41 42 43 44 45 46" --difficulties "normal hard" --jobs 4
 ```
 
-To measure the old layout, run the same script from a checkout of `db3981e` after copying `game/tests/{bot_objective_metrics,map_overview_capture,map_sightline_probe,map_viewpoints_capture}.gd` and `scripts/{measure_relay_yard.sh,summarize_bot_metrics.py}` into it. Matches take about two minutes each on four vCPUs.
+`bot_objective_metrics.gd` raises the physics tick rate with `--time-scale`, so every step stays 1/60 s of game time (Godot scales the physics delta by `Engine.time_scale`). To measure the old layout, run the same script from a checkout of `db3981e` after copying `game/tests/{bot_objective_metrics,map_overview_capture,map_sightline_probe,map_viewpoints_capture}.gd` and `scripts/{measure_relay_yard.sh,summarize_bot_metrics.py}` into it. Matches take about two minutes each on four vCPUs.
 
 ## Next
 
