@@ -133,6 +133,20 @@ The same pass also showed that the first version of `layout_route_test.gd` leake
 2. **Idle-bot detector hits are unexplained.** The detector flags a bot with no target that has not moved for 8 s while far from its destination. Twelve flagged positions from the pre-door-node run were replayed with a lone actor using the bots' own navigation step; every one walked out and reached its destination with no stall, so they are not geometry traps. The old yard shows the same kind of hit, more often (129 unique on `normal` before, 62 after; 148 on `hard`, 25 after). Not claimed as a defect.
 3. **Existing bot tests step physics at 1/15 s.** `bot_match_test`, `bot_lifecycle_test` and `bot_squad_observation` set `Engine.time_scale = 4` without raising the tick rate, and Godot scales the physics delta by the time scale. Their results are valid for what they assert, but the statistics that rest on them (bot symmetry, the 12-round matches) were not taken at the production step. `gunplay_rules_probe` already asserts the 60 Hz step. Left unchanged here.
 
+## Validation on the final tree
+
+Commit `44c4b02e` (everything after it changes documentation only). Linux x86_64, Godot 4.7.2, Xvfb with Mesa llvmpipe for the rendered groups.
+
+| Run | Result |
+| --- | --- |
+| `scripts/validate_matrix.py --render --protocol`, the CI entry point | **75 groups, 0 failed.** The tree was clean at start and end, and no child process log contains a leaked-object line (`nested-resource-cleanup`). It includes every Godot suite in `validate.sh` (the rendered reload and viewmodel groups under Xvfb), the two-client and ten-client network soaks, the connection lifecycle, the 10-combination protocol matrix, the 11 hostile-handshake scenarios and the render lifecycle. |
+| The Python unit tests at the end of `validate.sh`, which the matrix does not run | 11 files, all OK (three skips in `test_native_observation` are inherited). `verify_offline_match.py` compiles. |
+| 27 headless suites on `830bf2ba`, before any change | All passed. No existing test pointed at this defect; it was found by the audit above. |
+
+One thing the first matrix run caught that `validate.sh` alone would not: the CI's log gate (`scripts/native_log.py`) fails on `ObjectDB ... leaked`, which `validate.sh`'s `^ERROR:` rule ignores. The new route test leaked two objects at exit until it waited for the audio server; that run is not counted above.
+
+**Not run:** the `--backend` groups (PostgreSQL, account and economy, native economy). Docker is not usable in this container. They are unverified for this change, which touches no backend code. No native Windows, macOS or Linux export, and no device, was run.
+
 ## Not verified
 
 - Native Windows, macOS and Linux exports. `scripts/verify_offline_match.py` follows the new route (`PLANT_ROUTE_SITE_A_REVISION_2`) but was not run; `layout_route_test.gd` walks the same legs through the physics instead.
