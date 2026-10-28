@@ -38,6 +38,11 @@ import toolchain
 # a shield (arena.gd "SITE A ENTRY", x -20 to -15, z 3.25 to 5.75) between that start and site A, so the straight line to
 # (-15, 8) ends against its east face. These waypoints (x, z) go round the east end and finish at the same point.
 PLANT_ROUTE_SITE_A_REVISION_2 = [(-13.4, 2.6), (-13.4, 7.0), (-15, 8)]
+# The smoke covers the walk and the plant. Thrown due north from the fixture start (yaw pi) it used to land on site A, but the
+# same throw now hits the shield and drops behind the player, and the defenders then shoot the walk. Turning 0.25 rad east
+# clears the end of the shield and lands it at about (-13.7, 7.2), on the last leg of the route.
+PLANT_SMOKE_YAW = math.pi + 0.25
+PLANT_SMOKE_PITCH = -0.8
 
 RULES = {'buy_seconds': 15, 'round_seconds': 100, 'device_seconds': 35,
          'plant_seconds': 3, 'defuse_seconds': 5, 'win_score': 7}
@@ -398,7 +403,7 @@ def main():
             if state['objective_carrier'] != local(state)['id'] or local(state)['team'] != 0:
                 raise RuntimeError('Plant fixture did not start the ordinary living attacker carrier')
             invalid_interaction()
-            consumed = smoke(sensitivity, math.pi, pitch=-0.8)
+            consumed = smoke(sensitivity, PLANT_SMOKE_YAW, pitch=PLANT_SMOKE_PITCH)
             # Ordinary projectile fuse is1.6s. Establish cover before entering
             # the exposed site; waiting never changes the utility or bot rules.
             wait(lambda item: item.get('elapsed', 0) >= consumed['elapsed'] + 1.7,

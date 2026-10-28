@@ -6,6 +6,9 @@ extends SceneTree
 ##     (offline_diagnostics.gd) over the waypoints in PLANT_ROUTE_SITE_A_REVISION_2 (scripts/verify_offline_match.py), both
 ##     read from their sources so the three cannot drift apart. Every leg is a straight line, so a corner that clips the
 ##     body shows up. It plants, and the old straight line from the same start is shown to end against the site shield;
+##   - the same plant with the five defenders live at the fixture's positions, under the smoke the verifier throws
+##     (PLANT_SMOKE_YAW and PLANT_SMOKE_PITCH): the smoke lands on the end of the route and the human arms the device alive,
+##     where the old throw, due north, hits the shield and lands behind the player;
 ##   - through each of the four lane-divider doors, on the graph (a crossing, not a detour) and with a body;
 ##   - the native focus test's W press from the stock human spawn, which needs the body to be able to move after it has already
 ##     been held into the screen wall (see _focus_press).
@@ -15,6 +18,9 @@ const VERIFIER := "../scripts/verify_offline_match.py"
 const FIXTURE := "res://scripts/offline_diagnostics.gd"
 ## The straight line the verifier walked before the layout had a shield beside site A: fixture start to the plant point.
 const OLD_STRAIGHT_END := Vector3(-15.0, 0.0, 8.0)
+## The smoke fuse the verifier waits out before it walks, and the rest at each waypoint its steering needs to settle.
+const SMOKE_FUSE_WAIT := 1.7
+const WAYPOINT_REST := 1.5
 const SPAWN_SLOTS := [0, 2, 4]
 ## Inner doors (x = 10, between the divider and the mid hub) and outer doors (x = 17.25, between the divider and the wall cargo).
 const DOOR_X := [-17.25, -10.0, 10.0, 17.25]
@@ -36,11 +42,12 @@ func _initialize() -> void:
 	_run.call_deferred()
 
 ## One idle-bot match with the local attacker (the device carrier) standing at `at`.
-func _start_match(at: Vector3) -> SBActor:
+func _start_match(at: Vector3, bots_idle: bool = true) -> SBActor:
 	game = TacticalMatch.new()
 	game.configure({"mode": "offline", "difficulty": "normal"})
 	root.add_child(game)
-	game._bot_clock = 1.0e12
+	if bots_idle:
+		game._bot_clock = 1.0e12
 	game.phase = "live"
 	game.time_left = TacticalMatch.ROUND_SECONDS
 	var actor := game.local_actor()
@@ -113,6 +120,51 @@ func _fixture_start() -> Vector3:
 		return Vector3.ZERO
 	return Vector3(float(found.get_string(1)), float(found.get_string(2)), float(found.get_string(3)))
 
+## The aim the verifier throws its plant smoke with, as (yaw, pitch), from its own source. Zero when it cannot be read.
+func _verifier_smoke() -> Vector2:
+	var file := FileAccess.open(ProjectSettings.globalize_path("res://").path_join(VERIFIER).simplify_path(), FileAccess.READ)
+	if file == null:
+		return Vector2.ZERO
+	var source := file.get_as_text()
+	var yaw := RegEx.create_from_string("PLANT_SMOKE_YAW\\s*=\\s*math\\.pi\\s*\\+\\s*(-?[0-9.]+)").search(source)
+	var pitch := RegEx.create_from_string("PLANT_SMOKE_PITCH\\s*=\\s*(-?[0-9.]+)").search(source)
+	if yaw == null or pitch == null:
+		return Vector2.ZERO
+	return Vector2(PI + float(yaw.get_string(1)), float(pitch.get_string(1)))
+
+## Where the plant fixture puts the five defenders, from the fixture's own source. Empty when it cannot be read.
+func _fixture_defenders() -> Array[Vector3]:
+	var row: Array[Vector3] = []
+	var file := FileAccess.open(FIXTURE, FileAccess.READ)
+	if file == null:
+		return row
+	var found := RegEx.create_from_string("defenders\\[index\\] = Vector3\\(([0-9.]+) \\+ index \\* ([0-9.]+), ([0-9.]+), ([0-9.]+)\\)").search(file.get_as_text())
+	if found == null:
+		return row
+	for index in 5:
+		row.append(Vector3(float(found.get_string(1)) + index * float(found.get_string(2)), float(found.get_string(3)), float(found.get_string(4))))
+	return row
+
+## Throws the human's smoke along (yaw, pitch) and returns where the cloud detonated, or Vector3.INF if none did.
+func _throw_smoke(actor: SBActor, aim: Vector2) -> Vector3:
+	for tick in 12:
+		game.set_local_input({"move": Vector2.ZERO, "look": aim})
+		await physics_frame
+	game.set_local_input({"move": Vector2.ZERO, "look": aim, "smoke": true})
+	await physics_frame
+	await _hold_aimed(SMOKE_FUSE_WAIT + 0.4, aim)
+	for child in game.get_children():
+		if child is SBUtility and child.kind == "smoke" and child._detonated:
+			return child.position
+	return Vector3.INF
+
+func _hold_aimed(seconds: float, aim: Vector2) -> void:
+	var held := 0.0
+	while held < seconds:
+		game.set_local_input({"move": Vector2.ZERO, "look": aim, "smoke": false})
+		await physics_frame
+		held += STEP
+
 ## Holds `move` for `seconds` of simulated time, looking along `yaw`.
 func _hold(seconds: float, move: Vector2, yaw: float) -> void:
 	var held := 0.0
@@ -135,6 +187,28 @@ func _focus_press(start: Vector3, turn: float) -> float:
 	var moved := before.distance_to(actor.global_position)
 	await _end_match()
 	return moved
+
+## The plant scenario as the native verifier plays it: the human at the fixture start, the defenders on the fixture's row and every
+## bot live, the smoke thrown first, the route walked with a rest at each waypoint, then the plant. Returns true when the device
+## is armed with the human alive. `aim` is the smoke's (yaw, pitch); `cover` receives where the cloud landed.
+func _plant_under_fire(start: Vector3, route: Array[Vector3], defenders_at: Array[Vector3], aim: Vector2, cover: Array[Vector3]) -> bool:
+	var actor := await _start_match(start, false)
+	var defenders: Array[SBActor] = []
+	for other: SBActor in game.actors.values():
+		if other.team == 1:
+			defenders.append(other)
+	defenders.sort_custom(func(a: SBActor, b: SBActor) -> bool: return a.actor_id < b.actor_id)
+	for index in mini(defenders.size(), defenders_at.size()):
+		defenders[index].global_position = defenders_at[index]
+	await physics_frame
+	cover.append(await _throw_smoke(actor, aim))
+	var reached := true
+	for point in route:
+		reached = reached and await _walk(actor, [point]) >= 0.0
+		await _hold(WAYPOINT_REST, Vector2.ZERO, actor.yaw)
+	var armed := reached and actor.alive and await _plant(actor)
+	await _end_match()
+	return armed
 
 func _plant_route(label: String, start: Vector3, points_for: Callable) -> void:
 	var actor := await _start_match(start)
@@ -189,6 +263,24 @@ func _run() -> void:
 		var seconds := await _walk(actor, [OLD_STRAIGHT_END])
 		check(seconds < 0.0 or game.arena.is_at_site(actor.global_position) < 0, "the old straight line from the fixture start is blocked by the site shield (if this fails, the detour in %s is no longer needed)" % VERIFIER)
 		await _end_match()
+		var smoke := _verifier_smoke()
+		var row := _fixture_defenders()
+		check(smoke != Vector2.ZERO, "the verifier's smoke aim can be read from %s" % VERIFIER)
+		check(row.size() == 5, "the plant fixture's defender row can be read from %s" % FIXTURE)
+		if smoke != Vector2.ZERO and row.size() == 5:
+			var plant_point := route[route.size() - 1]
+			var cover: Array[Vector3] = []
+			var armed := await _plant_under_fire(fixture, route, row, smoke, cover)
+			var landed: Vector3 = cover[0]
+			check(landed != Vector3.INF and Vector2(landed.x - plant_point.x, landed.z - plant_point.z).length() <= SBUtility.CONCEALMENT_RADIUS - 0.5, "the verifier's smoke lands on the plant point (landed at %s)" % str(landed))
+			check(armed, "with the defenders live, the verifier's walk under its smoke arms the device with the human alive")
+			print("LAYOUT_PLANT_UNDER_FIRE smoke_landed=%s armed=%s" % [str(landed.snapped(Vector3.ONE * 0.1)), armed])
+			var old_cover: Array[Vector3] = []
+			var old_aim := Vector2(PI, smoke.y)
+			var bystander := await _start_match(fixture)
+			old_cover.append(await _throw_smoke(bystander, old_aim))
+			await _end_match()
+			check(old_cover[0] == Vector3.INF or Vector2(old_cover[0].x - plant_point.x, old_cover[0].z - plant_point.z).length() > SBUtility.CONCEALMENT_RADIUS, "the old due-north throw no longer covers the plant point: the shield stops it (landed at %s)" % str(old_cover[0]))
 	for x: float in DOOR_X:
 		await _through_door(x)
 	var square := await _focus_press(spawns[0], 0.0)
