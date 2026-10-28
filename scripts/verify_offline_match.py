@@ -34,6 +34,9 @@ from verify_integration_export import NativeUI, WinUI, windows_job
 import toolchain
 
 
+# Waypoints (x, z) from an attacker spawn row to site A under Relay Yard layout revision 2 (arena.gd LAYOUT_REVISION).
+PLANT_ROUTE_SITE_A_REVISION_2 = [(-16.5, -20), (-16.5, -14), (-12.5, -14), (-11, -10), (-10, -4), (-9.75, -2), (-10, 2), (-15, 8)]
+
 RULES = {'buy_seconds': 15, 'round_seconds': 100, 'device_seconds': 35,
          'plant_seconds': 3, 'defuse_seconds': 5, 'win_score': 7}
 
@@ -368,6 +371,10 @@ def main():
         result['partial_checks']['interrupted_E_reset'] = True
         capture('04-interrupted-hold-reset')
 
+    def move_via(points, seconds=15):
+        for x, z in points:
+            move_to(x, z, seconds)
+
     def smoke(sensitivity, yaw, pitch=-1.2):
         before_smokes = local()['smokes']
         if before_smokes < 1:
@@ -394,7 +401,9 @@ def main():
             # the exposed site; waiting never changes the utility or bot rules.
             wait(lambda item: item.get('elapsed', 0) >= consumed['elapsed'] + 1.7,
                  5, 'Ordinary smoke fuse advances in authoritative simulation time')
-            move_to(-15, 8)
+            # Relay Yard layout revision 2 closes the straight spawn-to-site line. Waypoints follow the west exit,
+            # the inner lane and the east door of the lane divider; every leg is clear under the bots' obstacle map.
+            move_via(PLANT_ROUTE_SITE_A_REVISION_2)
             expected_state, goal, required, minimum_distance = 'carried', 'planted', 3, 4.2
         else:
             if local(state)['team'] != 1:

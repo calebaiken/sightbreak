@@ -2,6 +2,12 @@ extends SceneTree
 ## Real-engine command oracle. --observe saves the deliberately failing baseline.
 ## Paired actors are assigned equal roles/poses; this is an artificial fixture.
 const DT := 0.12
+## Fixture positions sit in the open x = -10 corridor of Relay Yard revision 2. The open pad's x = -14 and x = -22 lines now run
+## through the west exit block, a lane divider and the screen wall; the "actual clear LOS" check is what proves these are open.
+const START := Vector3(-10, 0, -10)
+const CLOSE_ENEMY := Vector3(-10, 0, 2)
+const LONG_BOT := Vector3(-10, 0, -15)
+const LONG_ENEMY := Vector3(-10, 0, 11)
 var m: TacticalMatch
 var checks := 0
 var failures: Array[String] = []
@@ -59,7 +65,7 @@ func _sample(id: int, difficulty: String, team: int, kind: String) -> Dictionary
 		other.position = Vector3(100 + other.actor_id * 4, 0, 100)
 	var bot: SBActor = m.actors[id]
 	bot.team = team
-	bot.reset_for_round(Vector3(-14, 0, -10))
+	bot.reset_for_round(START)
 	bot.yaw = PI
 	bot.pitch = 0
 	m._reset_bot_state(bot)
@@ -69,10 +75,10 @@ func _sample(id: int, difficulty: String, team: int, kind: String) -> Dictionary
 	var enemy: SBActor = m.actors[target_id]
 	if kind in ["close", "long"]:
 		enemy.team = 1 - team
-		enemy.reset_for_round(Vector3(-14, 0, 2))
+		enemy.reset_for_round(CLOSE_ENEMY)
 		if kind == "long":
-			bot.position = Vector3(-22, 0, -18)
-			enemy.position = Vector3(-22, 0, 8)
+			bot.position = LONG_BOT
+			enemy.position = LONG_ENEMY
 	elif kind in ["smoke", "spent_smoke", "empty_smoke", "smoke_near", "smoke_far", "carrier_smoke"]:
 		bot.position = m.arena.sites[0] + Vector3(0, 0, -8)
 		if team == 1: m.objective_state = "planted"
