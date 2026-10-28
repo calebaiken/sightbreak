@@ -1,9 +1,9 @@
 extends SceneTree
 ## Hostile handshake client for scripts/test_handshake_hardening.sh: speaks raw
 ## SceneMultiplayer authentication to a stock dedicated server.
-## Args: --port=N --scenario=spam|fractional|huge|good_then_bad|bad_then_good
+## Args: --port=N --scenario=spam|fractional|huge|good_then_bad|bad_then_good|stale_layout|unreadable_layout
 ## Prints HANDSHAKE_ATTACK {scenario, admitted, replies, dropped_after}.
-## "Good" hellos carry this build's PROTOCOL_VERSION; mismatched ones carry the next.
+## "Good" hellos carry this build's PROTOCOL_VERSION and Relay Yard layout; mismatched ones carry the next protocol.
 const Match = preload("res://scripts/gameplay/match.gd")
 const GOOD := Match.PROTOCOL_VERSION
 const BAD := Match.PROTOCOL_VERSION + 1
@@ -21,8 +21,12 @@ func _initialize() -> void:
 func now() -> float:
 	return (Time.get_ticks_msec() - started) / 1000.0
 
-func _hello(protocol: Variant) -> PackedByteArray:
-	return JSON.stringify({"game": "sightbreak", "protocol": protocol, "build": "probe", "accepted": true, "reason": ""}).to_utf8_buffer()
+## A null layout leaves the field out, as every build before it existed did.
+func _hello(protocol: Variant, layout: Variant = RelayYard.LAYOUT_REVISION) -> PackedByteArray:
+	var hello := {"game": "sightbreak", "protocol": protocol, "build": "probe", "accepted": true, "reason": ""}
+	if layout != null:
+		hello["layout"] = layout
+	return JSON.stringify(hello).to_utf8_buffer()
 
 func _run() -> void:
 	for argument in OS.get_cmdline_user_args():
@@ -67,6 +71,13 @@ func _attack(peer: int) -> void:
 			await create_timer(0.3).timeout
 			if api.get_authenticating_peers().has(peer):
 				api.complete_auth(peer)
+		"stale_layout":
+			# The right protocol from a build that predates the layout field.
+			api.send_auth(peer, _hello(GOOD, null))
+			api.complete_auth(peer)
+		"unreadable_layout":
+			api.send_auth(peer, _hello(GOOD, "two"))
+			api.complete_auth(peer)
 		"bad_then_good":
 			api.send_auth(peer, _hello(BAD))
 			await create_timer(0.2).timeout

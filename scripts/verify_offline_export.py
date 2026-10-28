@@ -900,6 +900,12 @@ def main():
             'scope': 'fresh stock match after settings restart', 'passed': False,
             'context_fence': {}, 'fresh_press': {}, 'capture_context': {}}
         fence = FocusContextFence(focus_start, focus_receipt['context_fence'])
+        # Relay Yard layout revision 2 stands a screen wall 2.2 m ahead of the attacker spawn row. Held W would run the
+        # body square into it and the later fresh press would then have nowhere to go; turn a little first, so the
+        # body slides along the wall instead of stopping dead.
+        ui.relative_motion(50, 0)
+        trace('focus_test_yaw_offset', dx=50, dy=0)
+        pause(.25)
 
         def require_focus_context(state, stage='focus_context', **context):
             return fence.require(state, stage, **context)

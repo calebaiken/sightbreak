@@ -85,11 +85,11 @@ const SITE_HOLD_OFFSETS := {
 
 ## Defender pre-plant anchor positions covering West Freight (Site A), Mid, and East Relay (Site B).
 const DEFENDER_ANCHORS := [
-	Vector3(-15.0, 0.0, 12.0),
-	Vector3(15.0, 0.0, 12.0),
-	Vector3(-12.0, 0.0, 6.0),
-	Vector3(12.0, 0.0, 6.0),
-	Vector3(0.0, 0.0, 9.0)
+	Vector3(-17.5, 0.0, 9.0),
+	Vector3(17.5, 0.0, 9.0),
+	Vector3(-11.5, 0.0, 11.5),
+	Vector3(11.5, 0.0, 11.5),
+	Vector3(0.0, 0.0, 14.5)
 ]
 
 ## Mid-yardStaging waypoints for split/flank attacker approaches before converging on site.

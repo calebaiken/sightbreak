@@ -11,6 +11,8 @@ signal elimination_reported(killer_id: int, victim_id: int, headshot: bool)
 ## arguments or snapshot meaning differ must never be admitted together; they would
 ## stall silently. Bump this with any such change. 0.3.0 had no handshake.
 const PROTOCOL_VERSION := 6
+## Hellos from builds that predate the layout field shipped the open pad, which is Relay Yard revision 1.
+const LEGACY_LAYOUT := 1
 const HANDSHAKE_SECONDS := 5.0
 const JOIN_TIMEOUT_SECONDS := 20.0
 const HELLO_LIMIT := 512
@@ -684,7 +686,7 @@ func _connection_failed() -> void:
 
 ## The hello both sides exchange during SceneMultiplayer authentication.
 func _hello(accepted: bool, reason: String) -> PackedByteArray:
-	return JSON.stringify({"game": "sightbreak", "protocol": PROTOCOL_VERSION, "build": str(ProjectSettings.get_setting("application/config/version", "")), "accepted": accepted, "reason": reason}).to_utf8_buffer()
+	return JSON.stringify({"game": "sightbreak", "protocol": PROTOCOL_VERSION, "layout": RelayYard.LAYOUT_REVISION, "build": str(ProjectSettings.get_setting("application/config/version", "")), "accepted": accepted, "reason": reason}).to_utf8_buffer()
 
 ## Untrusted peer data: bounded size, a JSON object or nothing.
 static func _read_hello(data: PackedByteArray) -> Dictionary:
@@ -702,6 +704,34 @@ static func _hello_protocol(hello: Dictionary) -> int:
 	var number := float(value)
 	return int(number) if is_finite(number) and number == floorf(number) and number >= 0.0 and number < 1000000.0 else -1
 
+## The hello's Relay Yard layout revision. A hello without the field comes from a build that predates it (revision 1);
+## anything but a whole number is unreadable (-1), as for the protocol number.
+static func _hello_layout(hello: Dictionary) -> int:
+	if not hello.has("layout"):
+		return LEGACY_LAYOUT
+	var value: Variant = hello.get("layout")
+	if not (value is float or value is int):
+		return -1
+	var number := float(value)
+	return int(number) if is_finite(number) and number == floorf(number) and number >= 0.0 and number < 1000000.0 else -1
+
+## Why a hello cannot be admitted, or "" when its protocol and Relay Yard layout both match this build. The layout is the
+## collision world every authoritative move and shot resolves in: peers on different revisions disagree about hits and
+## movement even when the protocol number is the same. `own` and `other` name the two ends for the message.
+static func _hello_mismatch(hello: Dictionary, own: String, other: String) -> String:
+	var protocol := _hello_protocol(hello)
+	if protocol != PROTOCOL_VERSION:
+		return "This %s uses network protocol %d; this %s sent %s." % [own, PROTOCOL_VERSION, other, "protocol %d" % protocol if protocol >= 0 else "no readable protocol"]
+	var layout := _hello_layout(hello)
+	if layout != RelayYard.LAYOUT_REVISION:
+		var sent := "layout %d" % layout
+		if not hello.has("layout"):
+			sent = "no layout (a build from before layouts were announced)"
+		elif layout < 0:
+			sent = "no readable layout"
+		return "This %s uses Relay Yard layout %d; this %s sent %s." % [own, RelayYard.LAYOUT_REVISION, other, sent]
+	return ""
+
 func _server_handshake(peer_id: int, data: PackedByteArray) -> void:
 	# Only a peer's first hello counts. Later ones are ignored, so a peer cannot
 	# re-arm its drop timer, multiply replies or reverse a decision.
@@ -716,28 +746,32 @@ func _server_handshake(peer_id: int, data: PackedByteArray) -> void:
 	packet_peer.set_timeout(32, 3000, 5000)
 	var api := multiplayer as SceneMultiplayer
 	var hello := _read_hello(data)
-	var protocol := _hello_protocol(hello)
-	if protocol == PROTOCOL_VERSION:
+	var reason := _hello_mismatch(hello, "server", "client")
+	if reason.is_empty():
 		api.send_auth(peer_id, _hello(true, ""))
 		api.complete_auth(peer_id)
 		return
 	# Never admitted: no join, slot or account ticket is touched for this peer.
-	var reason := "This server uses network protocol %d; this client sent %s." % [PROTOCOL_VERSION, "protocol %d" % protocol if protocol >= 0 else "no readable protocol"]
 	api.send_auth(peer_id, _hello(false, reason))
 	_handshake_drops[peer_id] = Time.get_ticks_msec() + 500
-	print("PROTOCOL_REJECTED peer=%d client_protocol=%d" % [peer_id, protocol])
+	print("PROTOCOL_REJECTED peer=%d client_protocol=%d client_layout=%d" % [peer_id, _hello_protocol(hello), _hello_layout(hello)])
 
 func _client_handshake(peer_id: int, data: PackedByteArray) -> void:
 	var hello := _read_hello(data)
-	var protocol := _hello_protocol(hello)
-	if hello.get("accepted") is bool and hello.accepted and protocol == PROTOCOL_VERSION:
+	var accepted: bool = hello.get("accepted") is bool and hello.accepted
+	# A server that accepts on the protocol number alone (a build before the layout field) is still refused here: this
+	# client would play on a different yard than the one the server resolves moves and shots in.
+	var mismatch := _hello_mismatch(hello, "client", "server") if accepted else ""
+	if accepted and mismatch.is_empty():
 		(multiplayer as SceneMultiplayer).complete_auth(peer_id)
 		connection_state = "joining"
 		_state_clock = 0.0
 		return
-	var detail := str(hello.get("reason", "")).left(200) if not hello.is_empty() else "The server's version handshake could not be read."
-	_fail_connection("Version mismatch: this client uses SIGHTBREAK network protocol %d. %s Install the same SIGHTBREAK version as the server to join." % [PROTOCOL_VERSION, detail])
-	print("PROTOCOL_CLIENT_REJECTED server_protocol=%d" % protocol)
+	var detail := mismatch if not mismatch.is_empty() else (str(hello.get("reason", "")).left(200) if not hello.is_empty() else "The server's version handshake could not be read.")
+	# The protocol number is only worth stating when it is what differs; a layout mismatch is on the same protocol.
+	var protocol_note := "this client uses SIGHTBREAK network protocol %d. " % PROTOCOL_VERSION if _hello_protocol(hello) != PROTOCOL_VERSION else ""
+	_fail_connection("Version mismatch: %s%s Install the same SIGHTBREAK version as the server to join." % [protocol_note, detail])
+	print("PROTOCOL_CLIENT_REJECTED server_protocol=%d server_layout=%d" % [_hello_protocol(hello), _hello_layout(hello)])
 
 func _send_hello(peer_id: int) -> void:
 	if _authority or peer_id != 1:

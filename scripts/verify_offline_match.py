@@ -34,6 +34,16 @@ from verify_integration_export import NativeUI, WinUI, windows_job
 import toolchain
 
 
+# The plant fixture (offline_diagnostics.gd fixture_for) starts the human at (-15, 2). Relay Yard layout revision 2 stands
+# a shield (arena.gd "SITE A ENTRY", x -20 to -15, z 3.25 to 5.75) between that start and site A, so the straight line to
+# (-15, 8) ends against its east face. These waypoints (x, z) go round the east end and finish at the same point.
+PLANT_ROUTE_SITE_A_REVISION_2 = [(-13.4, 2.6), (-13.4, 7.0), (-15, 8)]
+# The smoke covers the walk and the plant. Thrown due north from the fixture start (yaw pi) it used to land on site A, but the
+# same throw now hits the shield and drops behind the player, and the defenders then shoot the walk. Turning 0.25 rad east
+# clears the end of the shield and lands it at about (-13.7, 7.2), on the last leg of the route.
+PLANT_SMOKE_YAW = math.pi + 0.25
+PLANT_SMOKE_PITCH = -0.8
+
 RULES = {'buy_seconds': 15, 'round_seconds': 100, 'device_seconds': 35,
          'plant_seconds': 3, 'defuse_seconds': 5, 'win_score': 7}
 
@@ -368,6 +378,10 @@ def main():
         result['partial_checks']['interrupted_E_reset'] = True
         capture('04-interrupted-hold-reset')
 
+    def move_via(points, seconds=15):
+        for x, z in points:
+            move_to(x, z, seconds)
+
     def smoke(sensitivity, yaw, pitch=-1.2):
         before_smokes = local()['smokes']
         if before_smokes < 1:
@@ -389,12 +403,12 @@ def main():
             if state['objective_carrier'] != local(state)['id'] or local(state)['team'] != 0:
                 raise RuntimeError('Plant fixture did not start the ordinary living attacker carrier')
             invalid_interaction()
-            consumed = smoke(sensitivity, math.pi, pitch=-0.8)
+            consumed = smoke(sensitivity, PLANT_SMOKE_YAW, pitch=PLANT_SMOKE_PITCH)
             # Ordinary projectile fuse is1.6s. Establish cover before entering
             # the exposed site; waiting never changes the utility or bot rules.
             wait(lambda item: item.get('elapsed', 0) >= consumed['elapsed'] + 1.7,
                  5, 'Ordinary smoke fuse advances in authoritative simulation time')
-            move_to(-15, 8)
+            move_via(PLANT_ROUTE_SITE_A_REVISION_2)
             expected_state, goal, required, minimum_distance = 'carried', 'planted', 3, 4.2
         else:
             if local(state)['team'] != 1:
