@@ -25,6 +25,13 @@ var _surface_materials: Dictionary = {}
 
 const LAYOUT_REVISION := 2
 const NAVIGATION_STEP := 2
+## Centres of the outer 2.5 m lane-divider doors, a node either side of each divider and one in the door. With solids grown
+## by the bots' 0.55 m margin the door is a 1.4 m strip, and both 2 m grid columns that bound it fall inside the grown boxes,
+## so the grid alone leaves these doors off the graph and every bot detours to the inner ones.
+const DOOR_WAYPOINTS: Array[Vector3] = [
+	Vector3(-17.25, 0, -4.6), Vector3(-17.25, 0, -2.0), Vector3(-17.25, 0, 0.6),
+	Vector3(17.25, 0, -4.6), Vector3(17.25, 0, -2.0), Vector3(17.25, 0, 0.6)
+]
 var sites: Array[Vector3] = [Vector3(-15, 0, 10), Vector3(15, 0, 10)]
 var attack_spawns: Array[Vector3] = []
 var defend_spawns: Array[Vector3] = []
@@ -289,6 +296,10 @@ func _build_navigation() -> void:
 			if _clear_path(at, at + Vector3(0.01, 0, 0.01)):
 				_navigation.add_point(waypoints.size(), at)
 				waypoints.append(at)
+	for door in DOOR_WAYPOINTS:
+		if _clear_path(door, door + Vector3(0.01, 0, 0.01)):
+			_navigation.add_point(waypoints.size(), door)
+			waypoints.append(door)
 	for i in range(waypoints.size()):
 		for j in range(i + 1, waypoints.size()):
 			if waypoints[i].distance_to(waypoints[j]) <= 4.3 and _clear_path(waypoints[i], waypoints[j]):
