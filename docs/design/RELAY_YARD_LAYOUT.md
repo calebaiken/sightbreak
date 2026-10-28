@@ -31,7 +31,7 @@ Mid is a hub, reached from the side lanes through the crossings between the nort
 
 Supporting changes:
 
-- Navigation grid 3 m -> 2 m (`NAVIGATION_STEP`). The 2.5 m divider doors are narrower than a 3 m grid could follow.
+- Navigation grid 3 m -> 2 m (`NAVIGATION_STEP`). The 2.5 m divider doors are narrower than a 3 m grid could follow. Even at 2 m the outer doors (x = +-17.25) fall between grid columns that the bots' 0.55 m obstacle margin removes, so six explicit nodes (`DOOR_WAYPOINTS`) put them on the graph; `layout_route_test.gd` requires every door to be a crossing, not a detour.
 - `_container` takes `along_x` and a `tag`. Every layout container gets the same hardware fittings as the originals and a unique stencil. The label plate follows the stencil length (it overflowed for 15-character lines); this also applies to the original containers.
 - Floor stencils "01 / FREIGHT" and "02 / RELAY" moved into the west and east exits and shrunk so the new wall no longer overprints them.
 - Colour code kept: west red, east teal, neutral grey for blocks and screen ends.
@@ -92,7 +92,7 @@ The authoritative tick runs `tick_authority` for each actor in id order, so in a
 
 **Update (M3).** Fixed outside PR #26, in draft PR #28 (`claude/fair-actor-order-v1`). There were two causes: the id-ordered tick, and bot habits keyed on raw id parity. A per-tick shuffle alone left ids 1-5 at 61%; with the habits made squad-symmetric the pooled normal result is 49.9% (46.8% to 53.1%) over 72 matches. The attacker win rates in the table above (59% normal, 67% hard) were measured before the fix and are confounded.
 
-**Update (integration).** The v1 playability stack (PR #31) resolves same-tick trades with its own movement, action and contact phases (`authority_order_test.gd`), so the table's win rates can be re-measured on it. They are in the [integration report](../reports/relay-yard-integration/README.md): with fair ordering, attackers win about 64% of normal rounds on this layout, against about 25% on the open pad. That is no longer an attacker-starved game, and it is now somewhat attacker-favoured; tuning it is separate work.
+**Update (integration).** The v1 playability stack (PR #31) resolves same-tick trades with its own movement, action and contact phases (`authority_order_test.gd`), so the table's win rates can be re-measured on it. They are in the [integration report](../reports/relay-yard-integration/README.md): with fair ordering, attackers win about 62% of normal rounds on this layout, against about 25% on the open pad. That is no longer an attacker-starved game, and it is now somewhat attacker-favoured; tuning it is separate work.
 
 ## Compatibility notes for other contributors
 
